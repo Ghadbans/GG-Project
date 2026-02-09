@@ -1574,11 +1574,6 @@ Route.route("/item-shop").get(async (req, res) => {
   }
 });
 
-  } catch (error) {
-  res.status(500).json({ msg: "service error" })
-}
-})
-
 Route.route("/get-last-saved-item/:category").get(async (req, res, next) => {
   const category = req.params.category;
   try {
