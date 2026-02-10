@@ -68,20 +68,64 @@ app.get('/debug-db', async (req, res) => {
   }
 });
 
+const GrantAccess = require("./model/grantAccessSchema");
+
 app.get('/init-admin', async (req, res) => {
   try {
     const existingUser = await User.findOne({ employeeName: 'GG' });
-    if (existingUser) return res.send('User GG already exists');
+    if (existingUser) {
+      existingUser.role = 'CEO';
+      await existingUser.save();
+      return res.send('User GG already exists. Role updated to CEO.');
+    }
 
     const hashedPassword = await bcrypt.hash('123456', 10);
     const user = new User({
       employeeName: 'GG',
       employeeEmail: 'admin@globalgate.sarl',
       password: hashedPassword,
-      role: 'Admin'
+      role: 'CEO'
     });
     await user.save();
-    res.send('User GG created with password 123456');
+    res.send('User GG created as CEO with password 123456');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
+
+app.get('/init-permissions', async (req, res) => {
+  try {
+    const user = await User.findOne({ employeeName: 'GG' });
+    if (!user) return res.status(404).send('User GG not found. Please run /init-admin first.');
+
+    // Check if permissions exist, if so, update them to full access
+    let grantAccess = await GrantAccess.findOne({ userID: user._id });
+
+    const modules = [
+      "Customer", "Item", "Item-Out", "Item-Return", "Item-Purchase",
+      "Estimate", "Invoice", "Payment", "Project", "Purchase",
+      "Maintenance", "Expenses", "Rate", "Employee", "Pay-Roll",
+      "Grant-Access", "Purchase-Order", "Point-Of-Sell"
+    ].map((name, index) => ({
+      id: index + 1,
+      moduleName: name,
+      access: { readM: true, createM: true, viewM: true, editM: true, deleteM: true }
+    }));
+
+    if (grantAccess) {
+      grantAccess.modules = modules;
+      await grantAccess.save();
+      return res.send('Permissions for GG updated to FULL ACCESS.');
+    }
+
+    grantAccess = new GrantAccess({
+      employeeName: user.employeeName,
+      userID: user._id,
+      modules
+    });
+
+    await grantAccess.save();
+    res.send('Full permissions granted to CEO GG.');
   } catch (error) {
     res.status(500).send(error.message);
   }
