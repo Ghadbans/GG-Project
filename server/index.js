@@ -52,6 +52,7 @@ app.use(cors());
 // RESTful API root
 app.use('/auth', authRoutes);
 app.use("/endpoint", userRoute);
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED!'));
 
 
 // PORT
