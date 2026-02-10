@@ -151,7 +151,7 @@ function SupplierFormUpdate() {
       const fetchUser = async () => {
         if (storesUserId) {
         try {
-          const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({userName: Name, role: Role}));
@@ -196,7 +196,7 @@ function SupplierFormUpdate() {
         const fetchData = async () => {
          if (navigator.onLine) {
            try {
-             const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-Supplier/${id}`)
+             const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-Supplier/${id}`)
              setSupplierName(res.data.data.supplierName);
              setStoreName(res.data.data.storeName);
              setCustomerPhone1(res.data.data.customerPhone1);
@@ -272,7 +272,7 @@ function SupplierFormUpdate() {
           dateNotification:dateComment
         };
         try {
-           await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
+           await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/',data)
         
         } catch (error) {
           console.log(error)
@@ -285,7 +285,7 @@ function SupplierFormUpdate() {
           }; 
          if (navigator.onLine) {
            try {
-             const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-Supplier/${id}`,data)
+             const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-Supplier/${id}`,data)
              if (res) {
                handleCreateComment();
                handleOpen();

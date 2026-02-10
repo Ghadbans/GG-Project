@@ -147,7 +147,7 @@ function InvoiceForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -173,7 +173,7 @@ function InvoiceForm() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-invoice';
   const [invoiceDate, setInvoiceDate] = useState(() => {
     const date = new Date()
     return date
@@ -214,7 +214,7 @@ function InvoiceForm() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-invoice')
           setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -231,7 +231,7 @@ function InvoiceForm() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
           setItemInformation(res.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -249,10 +249,10 @@ function InvoiceForm() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -553,7 +553,7 @@ function InvoiceForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -582,7 +582,7 @@ function InvoiceForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -741,7 +741,7 @@ function InvoiceForm() {
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -779,7 +779,7 @@ function InvoiceForm() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-invoice', data);
+        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-invoice', data);
         if (res) {
           setReferenceInfo(res.data.data.invoiceNumber)
           // Open Loading View

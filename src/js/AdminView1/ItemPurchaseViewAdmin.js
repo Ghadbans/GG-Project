@@ -141,7 +141,7 @@ function ItemPurchaseViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -167,7 +167,7 @@ function ItemPurchaseViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -210,7 +210,7 @@ function ItemPurchaseViewAdmin() {
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/itemPurchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/itemPurchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
@@ -307,7 +307,7 @@ function ItemPurchaseViewAdmin() {
       if (idView !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${idView}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-itemPurchase/${idView}`)
             setItemPurchaseView(res.data.data)
           } catch (error) {
             console.log(error)
@@ -346,7 +346,7 @@ function ItemPurchaseViewAdmin() {
     const fetchId = async () => {
       if (DeleteId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${DeleteId}`)
+          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-itemPurchase/${DeleteId}`)
           setProjectName(res.data.data.projectName);
           setItems(res.data.data.items);
           setReason(res.data.data.reason)
@@ -366,11 +366,11 @@ function ItemPurchaseViewAdmin() {
     const fetchData2 = async () => {
       try {
         if (projectName) {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase')
           setPurchase(res.data.data.filter((row) => row.projectName._id === projectName._id));
-          const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
+          const resMaintenance = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance')
           setMaintenance(resMaintenance.data.data.filter((row) => row._id === projectName._id));
-          const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          const resInvoice = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
           setInvoice(resInvoice.data.data.filter((row) => row._id === projectName._id));
         }
       } catch (error) {
@@ -443,7 +443,7 @@ function ItemPurchaseViewAdmin() {
   const handleUpdatePurchase = async () => {
     if (updatePurchaseArray !== null && updateInvoiceArray === null && updateMaintenanceArray === null) {
       const updateRequestInvoice = updatePurchaseArray.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${row.id}`, {
+        return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-purchase/${row.id}`, {
           items: row.items,
           purchaseAmount2: row.purchaseAmount2
         })
@@ -455,7 +455,7 @@ function ItemPurchaseViewAdmin() {
       }
     } else if (updatePurchaseArray === null && updateInvoiceArray === null && updateMaintenanceArray !== null) {
       const updateRequestMaintenance = updateMaintenanceArray.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${row.id}`, {
+        return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-maintenance/${row.id}`, {
           items: row.items,
         })
       })
@@ -466,7 +466,7 @@ function ItemPurchaseViewAdmin() {
       }
     } else if (updatePurchaseArray === null && updateMaintenanceArray === null && updateInvoiceArray !== null) {
       const updateRequestInvoice = updateInvoiceArray.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${row.id}`, {
+        return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${row.id}`, {
           items: row.items,
         })
       })
@@ -508,7 +508,7 @@ function ItemPurchaseViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -520,7 +520,7 @@ function ItemPurchaseViewAdmin() {
           Converted: false,
           IpRelated: {}
         }
-        await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchaseOrder/${purChaseOrderId}`, data);
+        await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-purchaseOrder/${purChaseOrderId}`, data);
       } catch (error) {
         console.log(error)
       }
@@ -528,7 +528,7 @@ function ItemPurchaseViewAdmin() {
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/CalculateTotal')
     } catch (error) {
       console.log(error)
     }
@@ -536,7 +536,7 @@ function ItemPurchaseViewAdmin() {
   const handleDeleteUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-itemPurchase/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-itemPurchase/${DeleteId}`);
       if (res) {
         onStatusUpdate();
         handleQty();
@@ -559,7 +559,7 @@ function ItemPurchaseViewAdmin() {
         status: 'Paid',
         itemPurchaseDate: new Date()
       }
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-itemPurchase/${idInfo}`, data);
+      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-itemPurchase/${idInfo}`, data);
       if (res) {
         setUpdateS(true);
         handleDeleteOpenLoading();
@@ -574,7 +574,7 @@ function ItemPurchaseViewAdmin() {
       const data = {
         status: 'UnPaid'
       }
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-itemPurchase/${idInfo}`, data);
+      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-itemPurchase/${idInfo}`, data);
       if (res) {
         setUpdateS(true);
         handleDeleteOpenLoading();

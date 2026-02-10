@@ -20,7 +20,7 @@ import dayjs from 'dayjs';
 
 function RetainerInvoiceForm() {
   const navigate = useNavigate();
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-retainerinvoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-retainerinvoice';
   const [customerID,setCustomerID] = useState("");
   const invoiceDate =dayjs('2023-10-02');
   const [referenceNumber,setReferenceNumber] = useState("");

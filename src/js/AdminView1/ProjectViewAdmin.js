@@ -132,7 +132,7 @@ function ProjectViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -156,7 +156,7 @@ function ProjectViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -200,7 +200,7 @@ function ProjectViewAdmin() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/project-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/project-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -263,7 +263,7 @@ function ProjectViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -274,7 +274,7 @@ function ProjectViewAdmin() {
       const projectsToSynced = syncedProjects.filter((row) => row.synced === false)
       for (const projectInfo of projectsToSynced) {
         try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-projects', projectInfo)
+          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-projects', projectInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoProject = res.data.data.projectName
@@ -289,7 +289,7 @@ function ProjectViewAdmin() {
       const projectsToSyncedUpdate = syncedProjects.filter((row) => row.updateS === false)
       for (const projectInfoUpdate of projectsToSyncedUpdate) {
         try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-projects/${projectInfoUpdate._id}`, projectInfoUpdate)
+          await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-projects/${projectInfoUpdate._id}`, projectInfoUpdate)
           await db.projectSchema.update(projectInfoUpdate.projectNumber, { synced: true, updateS: true })
           handleOpenOffline();
         } catch (error) {
@@ -312,7 +312,7 @@ function ProjectViewAdmin() {
     const fetchDataHidden = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/hidden')
           setHiddenRow(res.data.data.map((row) => row.idRow))
           setHidden(res.data.data)
           localStorage.removeItem('Hidden')
@@ -383,7 +383,7 @@ function ProjectViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-projects/${idToDelete}`)
+        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-projects/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -404,7 +404,7 @@ function ProjectViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -412,7 +412,7 @@ function ProjectViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-projects/${idToDelete}`);
+      return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-projects/${idToDelete}`);
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -427,7 +427,7 @@ function ProjectViewAdmin() {
   const handleDelete = async () => {
     try {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-projects/${idToDelete}`)
+        await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-projects/${idToDelete}`)
       })
       await Promise.all(deletePromises);
       handleOpenModal();
@@ -447,10 +447,10 @@ function ProjectViewAdmin() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
+          await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-hidden', {
             idRow: id, hiddenByCEO: true
           })
         }

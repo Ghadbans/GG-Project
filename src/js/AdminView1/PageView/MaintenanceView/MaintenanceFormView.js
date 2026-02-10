@@ -155,7 +155,7 @@ function MaintenanceFormView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -180,7 +180,7 @@ function MaintenanceFormView() {
     dispatch(logOut());
     navigate('/')
   }
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-maintenance';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-maintenance';
   const [serviceDate, setServiceDate] = useState(() => {
     const date = new Date()
     return date
@@ -230,7 +230,7 @@ function MaintenanceFormView() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-maintenance')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-maintenance')
           setServiceNumber(parseInt(res.data.serviceNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -249,10 +249,10 @@ function MaintenanceFormView() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
         resRate.data.data.map((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -359,7 +359,7 @@ function MaintenanceFormView() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -389,7 +389,7 @@ function MaintenanceFormView() {
     const fetchEmployee = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
           setEmployee(res.data.data);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -413,7 +413,7 @@ function MaintenanceFormView() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
           setItemInformation(res.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -625,7 +625,7 @@ function MaintenanceFormView() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -708,7 +708,7 @@ function MaintenanceFormView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }

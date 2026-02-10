@@ -72,7 +72,7 @@ function MessageAdminView({ name, role }) {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/message')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/message')
         setMessageInfo(res.data.data.reverse())
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -82,7 +82,7 @@ function MessageAdminView({ name, role }) {
   }, [])
   useEffect(() => {
     if (navigator.onLine) {
-      const socket = io('https://gg-project-production.up.railway.app')
+      const socket = io('https://gg-project-productionn.up.railway.app')
       socket.on('newMessage', (newMessage) => {
         setMessageInfo([newMessage, ...messageInfo])
         setBadgeNumber(badgeNumber + 1)
@@ -118,7 +118,7 @@ function MessageAdminView({ name, role }) {
     const fetchData = async () => {
       if (idEdit !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-message/${idEdit}`);
+          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-message/${idEdit}`);
           setUpdatedMessage(res.data.data.message)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -163,7 +163,7 @@ function MessageAdminView({ name, role }) {
   const handleDeleteUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-message/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-message/${DeleteId}`);
       if (res) {
         setUpdateD('Delete')
         handleOpen();
@@ -179,7 +179,7 @@ function MessageAdminView({ name, role }) {
       message: updatedMessage
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-message/${idEdit}`, data);
+      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-message/${idEdit}`, data);
       if (res) {
         setUpdateD('true')
         handleOpen();
@@ -199,7 +199,7 @@ function MessageAdminView({ name, role }) {
       message
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-message/', data)
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-message/', data)
       if (res) {
         setUpdateD('saved')
         setMessage("");

@@ -132,7 +132,7 @@ function EstimateViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -161,7 +161,7 @@ function EstimateViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -203,7 +203,7 @@ function EstimateViewAdmin() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/estimate-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/estimate-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -292,7 +292,7 @@ function EstimateViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -303,7 +303,7 @@ function EstimateViewAdmin() {
       const estimateToSynced = syncedEstimate.filter((row) => row.synced === false)
       for (const estimateInfo of estimateToSynced) {
         try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-estimation', estimateInfo)
+          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-estimation', estimateInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoNumber = res.data.data.estimateNumber
@@ -318,7 +318,7 @@ function EstimateViewAdmin() {
       const estimateToSyncedUpdate = syncedEstimate.filter((row) => row.updateS === false)
       for (const estimateInfoUpdate of estimateToSyncedUpdate) {
         try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${estimateInfoUpdate._id}`, estimateInfoUpdate)
+          await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-estimation/${estimateInfoUpdate._id}`, estimateInfoUpdate)
           await db.estimateSchema.update(estimateInfoUpdate._id, { synced: true, updateS: true })
           handleOpenOffline();
         } catch (error) {
@@ -341,7 +341,7 @@ function EstimateViewAdmin() {
     const fetchDataHidden = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/hidden')
           setHiddenRow(res.data.data.map((row) => row.idRow))
           setHidden(res.data.data)
           await Promise.all(res.data.data.map(async (item) => {
@@ -413,7 +413,7 @@ function EstimateViewAdmin() {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-estimation/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-estimation/${DeleteId}`);
       if (res) {
         handleDeleteOpenLoading();
       }
@@ -425,7 +425,7 @@ function EstimateViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${idToDelete}`)
+        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-estimation/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -446,7 +446,7 @@ function EstimateViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -454,7 +454,7 @@ function EstimateViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-estimation/${idToDelete}`)
+      return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-estimation/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -470,7 +470,7 @@ function EstimateViewAdmin() {
   const [estimateN, setEstimateN] = useState(0)
   useEffect(() => {
     if (updateId !== null) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${updateId}`)
+      axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-estimation/${updateId}`)
         .then(res => {
           // get the response data here
           setStatus(res.data.data.status);
@@ -490,7 +490,7 @@ function EstimateViewAdmin() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/', data)
     } catch (error) {
       console.log(error)
     }
@@ -501,7 +501,7 @@ function EstimateViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${updateId}`, data)
+      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-estimation/${updateId}`, data)
       if (res) {
         handleCreateComment();
         handleOpenLoading();
@@ -521,10 +521,10 @@ function EstimateViewAdmin() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
+          await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-hidden', {
             idRow: id, hiddenByCEO: true
           })
         }

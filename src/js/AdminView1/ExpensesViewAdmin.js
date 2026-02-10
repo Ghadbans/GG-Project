@@ -61,7 +61,7 @@ function ExpensesViewAdmin() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role, id:res.data.data._id}));
@@ -90,7 +90,7 @@ function ExpensesViewAdmin() {
   const [invoice,setInvoice] = useState([]);
   const [hidden, setHidden] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/dailyexpense';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/dailyexpense';
   
   useEffect(()=> {
   axios.get(apiUrl)
@@ -106,7 +106,7 @@ function ExpensesViewAdmin() {
   });
 },[])
 useEffect(()=> {
-  axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+  axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
   .then(res => {
     // Handle the response data here
     const result = res.data.data.filter((row)=> row.Ref && (
@@ -121,7 +121,7 @@ useEffect(()=> {
   });
   },[])
   useEffect(()=> {
-    axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
+    axios.get('https://gg-project-productionn.up.railway.app/endpoint/hidden')
     .then(res => {
       // Handle the response data here
       setHidden(res.data.data)

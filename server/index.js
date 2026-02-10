@@ -49,11 +49,43 @@ app.use(function (req, res, next) {
 });
 // CORS
 app.use(cors());
+const bcrypt = require('bcrypt');
+const User = require("./model/employeeUserSchema");
+
 // RESTful API root
 app.use('/auth', authRoutes);
 app.use("/endpoint", userRoute);
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED!'));
 
+// DEBUG & INIT ROUTES
+app.get('/debug-db', async (req, res) => {
+  try {
+    const state = mongoose.connection.readyState; // 0: disconnected, 1: connected, 2: connecting, 3: disconnecting
+    const userCount = await User.countDocuments();
+    res.json({ state, userCount, msg: 'DB Connection OK' });
+  } catch (error) {
+    res.status(500).json({ error: error.message, state: mongoose.connection.readyState });
+  }
+});
+
+app.get('/init-admin', async (req, res) => {
+  try {
+    const existingUser = await User.findOne({ employeeName: 'GG' });
+    if (existingUser) return res.send('User GG already exists');
+
+    const hashedPassword = await bcrypt.hash('123456', 10);
+    const user = new User({
+      employeeName: 'GG',
+      employeeEmail: 'admin@globalgate.sarl',
+      password: hashedPassword,
+      role: 'Admin'
+    });
+    await user.save();
+    res.send('User GG created with password 123456');
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+});
 
 // PORT
 const port = process.env.PORT || 8080;

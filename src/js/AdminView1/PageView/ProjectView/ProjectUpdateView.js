@@ -153,7 +153,7 @@ function ProjectUpdateView() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -192,7 +192,7 @@ function ProjectUpdateView() {
       const fetchData = async () => {
       if (navigator.onLine) {
           try {
-         const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-projects/${id}`)
+         const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-projects/${id}`)
          setCustomerName(res.data.data.customerName);
          setProjectName(res.data.data.projectName);
          setStatus(res.data.data.status);
@@ -223,9 +223,9 @@ function ProjectUpdateView() {
           const handleFetch = async () => {
            if (navigator.onLine) {
              try {
-               const resCustomer = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+               const resCustomer = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
                setCustomer(resCustomer.data.data.reverse());
-               const res= await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+               const res= await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase')
                res.data.data.filter((row)=>row.projectName !== undefined && row.projectName._id === id)
                .map((row)=> setPurchase(row._id))
              } catch (error) {
@@ -357,7 +357,7 @@ const handleUpdatePurchase = async () => {
     if (purchase !== null) {
        if (navigator.onLine) {
          try {
-           await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${purchase}`,data)
+           await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-purchase/${purchase}`,data)
            const resLocal = await db.purchaseSchema.get({_id:purchase})
            await db.purchaseSchema.update(resLocal.purchaseNumber,{...data, updateS: true})
          } catch (error) {
@@ -378,7 +378,7 @@ const handleCreateComment = async () => {
     dateNotification: new Date()
   };
   try {
-     await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
+     await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/',data)
   } catch (error) {
    console.log(error)
   }
@@ -397,7 +397,7 @@ const handleSubmit =async (e)=>{
     }; 
    if (navigator.onLine) {
      try{
-       const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-projects/${id}`,data);
+       const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-projects/${id}`,data);
        if (res) {
          // Open Loading View
          await db.projectSchema.update(data.projectNumber,{...data, updateS: true})

@@ -113,7 +113,7 @@ function PaymentInformationUpdate() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -148,7 +148,7 @@ useEffect(()=> {
   const fetchCustomer = async () => {
     if (navigator.onLine) {
       try {
-        const res = await   axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+        const res = await   axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
         setCustomer(res.data.data.reverse());
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -184,7 +184,7 @@ const [PaymentReceivedUSD,setPaymentReceivedUSD] = useState(0)
 useEffect(()=>{
   const fetchlastNumber = async () => {
     try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payment/${id}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-payment/${id}`)
         setCreditOld(res.data.data.remaining);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -195,7 +195,7 @@ useEffect(()=>{
 useEffect(()=>{
   const fetchlastNumber = async () => {
     try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payment/${id}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-payment/${id}`)
         setCustomerName(res.data.data.customerName);
         setCustomerId(res.data.data.customerName._id);
         setAmount(res.data.data.amount);
@@ -219,7 +219,7 @@ useEffect(()=>{
   const fetchlastNumber = async () => {
    if (navigator.onLine) {
      try {
-       const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+       const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
        resRate.data.data.map((row)=> setRate(row.rate))
      } catch (error) {
        console.error('Error fetching data:', error);
@@ -255,7 +255,7 @@ useEffect(()=> {
   const fetchData = async ()=> {
        if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
          if (customerId !== null) {
             const filterData = res.data.data.filter((row)=>  row.customerName._id === customerId);
             setOldInvoice(filterData)
@@ -358,7 +358,7 @@ useEffect(()=>{
     if (customerId) {
     if (navigator.onLine) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customerId}`)
+          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-customer/${customerId}`)
           setOldCredit(res.data.data.credit)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -420,7 +420,7 @@ const handleUpdateInvoice = async () => {
  if (navigator.onLine) {
    const updateRequest = invoiceUpdate!== null ? 
    invoiceUpdate.map(({id, data})=>{
-     return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`,data)
+     return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${id}`,data)
     }):null
   if (updateRequest !== null) {
      try {
@@ -444,7 +444,7 @@ const handleUpdateCredit = async () => {
   }
   if (navigator.onLine) {
     try {
-     await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${customerId}`,data) 
+     await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-customer/${customerId}`,data) 
      await db.customerSchema.update(customerId,{...data,updateS:true})
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -507,7 +507,7 @@ const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber) => {
     dateNotification:new Date()
   }
   try {
-    await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
+    await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
   } catch (error) {
     console.log(error)
   }
@@ -530,7 +530,7 @@ const handleSubmit = async (e) => {
   }
   if (navigator.onLine) {
     try{
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-payment/${id}`,data); 
+      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-payment/${id}`,data); 
       if (res) {
         const ReferenceInfo = res.data.data._id
          const ReferenceInfoNumber = res.data.data.paymentNumber

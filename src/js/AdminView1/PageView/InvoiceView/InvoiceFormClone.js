@@ -145,7 +145,7 @@ function InvoiceFormClone() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -171,7 +171,7 @@ function InvoiceFormClone() {
       navigate('/')
     }
   
-    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
+    const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-invoice';
    const [invoiceDate,setInvoiceDate] =useState(()=>{
       const date = new Date()
       return date
@@ -205,7 +205,7 @@ function InvoiceFormClone() {
         const fetchlastNumber = async () => {
          if (navigator.onLine) {
            try {
-             const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
+             const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-invoice')
              setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
            } catch (error) {
              console.error('Error fetching data:', error);
@@ -222,7 +222,7 @@ function InvoiceFormClone() {
                         const fetchData = async () => {
                          if (navigator.onLine) {
                            try {
-                             const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${id}`)
+                             const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${id}`)
                              setCustomerName(res.data.data.customerName);
                              setInvoiceSubject(res.data.data.invoiceSubject);
                              setInvoiceDefect(res.data.data.invoiceDefect);
@@ -260,7 +260,7 @@ function InvoiceFormClone() {
                           const fetchlastNumber = async () => {
                            if (navigator.onLine) {
                              try {
-                               const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
+                               const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-invoice')
                                setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
                              } catch (error) {
                                console.error('Error fetching data:', error);
@@ -277,7 +277,7 @@ function InvoiceFormClone() {
                           const fetchItem = async()=> {
                           if (navigator.onLine) {
                               try {
-                                const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+                                const res = await  axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
                                 setItemInformation(res.data.data.reverse()) 
                               } catch (error) {
                                 console.error('Error fetching data:', error);
@@ -496,7 +496,7 @@ function InvoiceFormClone() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
           itemName:{
             _id:res.data.data._id,
@@ -523,7 +523,7 @@ function InvoiceFormClone() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await   axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await   axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -661,7 +661,7 @@ function InvoiceFormClone() {
         dateNotification:dateComment
       }
       try {
-        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }

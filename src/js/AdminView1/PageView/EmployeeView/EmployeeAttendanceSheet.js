@@ -111,7 +111,7 @@ const handleCloseModal = () => {
   const fetchData = async () => {
     if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeattendance')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employeeattendance')
           setAttendance(res.data.data.filter((row)=> row.observation !== "Stopped"));
           await Promise.all(res.data.data.map( async (item,i)=>{
            await db.employeeAttendanceSchema.put({...item, idInfo:i+1,synced: true,updateS:true})
@@ -131,7 +131,7 @@ const handleCloseModal = () => {
         const EmployeeToSynced = syncedEmployee.filter((row)=>row.synced === false)
        for(const EmployeeInfo of EmployeeToSynced){
         try {
-           await axios.post('https://gg-project-production.up.railway.app/endpoint/create-employeeattendance',EmployeeInfo)
+           await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-employeeattendance',EmployeeInfo)
            await db.employeeAttendanceSchema.delete(EmployeeInfo.employeeId)
            handleOpenOffline();
         } catch (error) {
@@ -141,7 +141,7 @@ const handleCloseModal = () => {
         const EmployeeToSyncedUpdate = syncedEmployee.filter((row)=>row.updateS === false)
         for(const EmployeeInfoUpdate of EmployeeToSyncedUpdate){
           try {
-             await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-employeeattendance/${EmployeeInfoUpdate._id}`,EmployeeInfoUpdate)
+             await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-employeeattendance/${EmployeeInfoUpdate._id}`,EmployeeInfoUpdate)
              await db.employeeAttendanceSchema.update(EmployeeInfoUpdate.idInfo, { synced:true,updateS:true})
              handleOpenOffline();
           } catch (error) {
@@ -165,7 +165,7 @@ const handleCloseModal = () => {
     const fetchEmployeeName = async ()=>{
      if (navigator.onLine) {
        try {
-         const resEmployee = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+         const resEmployee = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
          setEmployee(resEmployee.data.data.filter((row)=> row.status === 'Employed' ));
        } catch (error) {
          console.error('Error fetching data:', error);
@@ -227,7 +227,7 @@ useEffect(()=>{
     if (idView !== null) {
    if (navigator.onLine) {
      try {
-         const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeattendance/${idView}`)
+         const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeattendance/${idView}`)
          setEmployeeAttendanceInfo(res.data.data)
      } catch (error) {
        console.log(error)

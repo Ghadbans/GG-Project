@@ -152,7 +152,7 @@ function DailyExpenseAdminView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -190,21 +190,21 @@ function DailyExpenseAdminView() {
     const fetchData = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemPurchase')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemPurchase')
           setItemPurchase(res.data.data.filter((row) => row.status && row.status === "Paid"));
-          const resPO = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchaseOrder')
+          const resPO = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchaseOrder')
           setPurchaseOrder(resPO.data.data.filter((row) => row.status && row.status === 'Purchase'));
-          const expenseResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
+          const expenseResponse = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense')
           setExpenses(expenseResponse.data.data);
-          const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
+          const resPayment = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/payment')
           setPayment(resPayment.data.data.filter((row) => row.modes !== 'Credit-Account'))
-          const cashResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash')
+          const cashResponse = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/cash')
           setCash(cashResponse.data.data);
-          const rateResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+          const rateResponse = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
           rateResponse.data.data.map((row) => setRate(row.rate))
-          const resPayRoll = await axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll')
+          const resPayRoll = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/payRoll')
           setPayRoll(resPayRoll.data.data.filter((row) => row.status !== undefined ? row.status === 'Paid' : null))
-          const resPos = await axios.get('https://gg-project-production.up.railway.app/endpoint/pos')
+          const resPos = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/pos')
           setPos(resPos.data.data.map((row) => ({ ...row, amountTotalFc: row.totalFC - row.creditFC, amountTotalUsd: row.totalUSD - row.creditUsd })))
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -382,7 +382,7 @@ function DailyExpenseAdminView() {
       if (viewId !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-cash/${viewId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-cash/${viewId}`)
             setCashDate(res.data.data.cashDate)
             setAmount(res.data.data.amount)
           } catch (error) {
@@ -406,7 +406,7 @@ function DailyExpenseAdminView() {
       if (viewIdStatus !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-cash/${viewIdStatus}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-cash/${viewIdStatus}`)
             setCashDate(res.data.data.cashDate)
             setStatusInfo(res.data.data.status !== undefined ? res.data.data.status : '')
             setRestInfoFc(res.data.data.returnAmountFC !== undefined ? res.data.data.returnAmountFC : 0)
@@ -469,7 +469,7 @@ function DailyExpenseAdminView() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-cash/${viewId}`, data);
+        const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-cash/${viewId}`, data);
         if (res) {
           await db.cashSchema.update(indexId, { ...data, updateS: true })
           handleOpen();
@@ -593,7 +593,7 @@ function DailyExpenseAdminView() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-cash/${viewIdStatus}`, data);
+        const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-cash/${viewIdStatus}`, data);
         if (res) {
           await db.cashSchema.update(indexId, { ...data, updateS: true })
           handleOpen();

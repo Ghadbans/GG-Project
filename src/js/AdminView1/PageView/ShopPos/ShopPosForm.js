@@ -151,7 +151,7 @@ function ShopPosForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -178,7 +178,7 @@ function ShopPosForm() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-invoice';
   const [invoiceDate, setInvoiceDate] = useState(() => {
     const date = new Date()
     return date
@@ -229,7 +229,7 @@ function ShopPosForm() {
     setLoadingItems(true);
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${page}&limit=48&search=${encodeURIComponent(searchTerm.trim())}&sort=-_id`);
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${page}&limit=48&search=${encodeURIComponent(searchTerm.trim())}&sort=-_id`);
         setTotalPages(res.data.totalPages);
         setItemsList(res.data.items ? res.data.items.filter(item => item.typeItem === 'Goods') : []);
       } catch (error) {
@@ -275,9 +275,9 @@ function ShopPosForm() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rateReturn')
+          const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rateReturn')
           resRate.data.data.map((row) => setRate(row.rateR))
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-pos')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-pos')
           setFactureNumber(parseInt(res.data.factureNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -296,7 +296,7 @@ function ShopPosForm() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
           setItemInformation(res.data.data.filter((row) => row.typeItem === "Goods").map((row) => ({
             ...row,
             ItemNumber: row.itemUpc.newCode + '-0' + row.itemUpc.itemNumber
@@ -468,7 +468,7 @@ function ShopPosForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -497,7 +497,7 @@ function ShopPosForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -713,7 +713,7 @@ function ShopPosForm() {
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -730,7 +730,7 @@ function ShopPosForm() {
   const [saving, setSaving] = useState('')
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/CalculateTotal')
     } catch (error) {
       console.log(error)
     }
@@ -758,7 +758,7 @@ function ShopPosForm() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-pos', data);
+        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-pos', data);
         if (res) {
           setReferenceInfo(res.data.data.factureNumber)
           handleQty()

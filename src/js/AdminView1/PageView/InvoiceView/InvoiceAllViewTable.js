@@ -45,7 +45,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 function InvoiceAllViewTable() {
   {/** Get Invoice */}
   const [invoice,setInvoice] = useState([]);
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/invoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/invoice';
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {
@@ -61,7 +61,7 @@ function InvoiceAllViewTable() {
 {/** Get Expenses */}
 const [expenses,setExpenses] = useState([])
 useEffect(()=> {
-axios.get('https://gg-project-production.up.railway.app/endpoint/dailyexpense')
+axios.get('https://gg-project-productionn.up.railway.app/endpoint/dailyexpense')
 .then(res => {
   // Handle the response data here
   setExpenses(res.data.data);
@@ -83,13 +83,13 @@ axios.get('https://gg-project-production.up.railway.app/endpoint/dailyexpense')
     ))          .map((row)=>row._id)
     const RefId =idRef.toString()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-dailyexpense/${RefId}`);
+      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-dailyexpense/${RefId}`);
       alert(res.data.msg); // This will be the deleted document
     } catch (error) {
       console.error(error);
     }
   try {
-    const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-invoice/${id}`);
+    const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-invoice/${id}`);
     alert(res.data.msg); // This will be the deleted document
   } catch (error) {
     console.error(error);

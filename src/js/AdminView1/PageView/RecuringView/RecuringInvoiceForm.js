@@ -20,7 +20,7 @@ import dayjs from 'dayjs';
 
 function RecuringInvoiceForm() {
   const navigate = useNavigate();
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-recurringinvoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-recurringinvoice';
   const [customerID,setCustomerID] = useState("");
   const [customerProfile,setCustomerProfile] = useState("");
   const [repeat,setRepeat] = useState("");

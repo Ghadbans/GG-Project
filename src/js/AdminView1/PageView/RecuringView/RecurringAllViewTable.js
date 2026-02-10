@@ -46,7 +46,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 function RecurringAllViewTable() {
   const [recurring,setRecurring] = useState([])
   
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/recurringinvoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/recurringinvoice';
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {

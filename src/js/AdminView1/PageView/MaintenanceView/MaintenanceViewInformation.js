@@ -165,7 +165,7 @@ function MaintenanceViewInformation() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -194,7 +194,7 @@ function MaintenanceViewInformation() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -227,10 +227,10 @@ function MaintenanceViewInformation() {
           console.log('🔍 [FILTERED API] Fetching maintenance related data for:', id);
           // Use professional filtered endpoints (Zoho CRM approach)
           const [resItem, resItemOut, resIReturn, resPlaning] = await Promise.all([
-            axios.get('https://gg-project-production.up.railway.app/endpoint/item'),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemOut/project/${id}`), // Maintenance often shares project ID
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemReturn/project/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/planing/project/${id}`)
+            axios.get('https://gg-project-productionn.up.railway.app/endpoint/item'),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/itemOut/project/${id}`), // Maintenance often shares project ID
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/itemReturn/project/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/planing/project/${id}`)
           ]);
 
           SetItems(resItem.data.data)
@@ -271,7 +271,7 @@ function MaintenanceViewInformation() {
     const fetchMaintenanceList = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance');
           setMaintenanceList(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching maintenance list:', error);
@@ -316,7 +316,7 @@ function MaintenanceViewInformation() {
     const getMaintenance = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${id}`)
+          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-maintenance/${id}`)
           if (res.data && res.data.data) {
             setReferenceName(res.data.data.ReferenceName);
             setCustomerName1(res.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
@@ -413,7 +413,7 @@ function MaintenanceViewInformation() {
   const handleSynced = async (e) => {
     e.preventDefault()
     const updatePurchase = relatedPurchase.map((row) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${row._id}`, {
+      return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-maintenance/${row._id}`, {
         items: row.items
       })
     })
@@ -437,7 +437,7 @@ function MaintenanceViewInformation() {
     const fetchINvoice = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
           const filteredInvoice = res.data.data.filter((row) => row.invoiceName === referenceName)
           const filteredInvoice2 = res.data.data.filter((row) => row.ReferenceName === id)
           setInvoice2(filteredInvoice2);
@@ -490,10 +490,10 @@ function MaintenanceViewInformation() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -546,7 +546,7 @@ function MaintenanceViewInformation() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/', data)
       if (res) {
         setReason("");
         handleOpen();

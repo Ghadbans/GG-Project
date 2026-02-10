@@ -151,7 +151,7 @@ function PurchaseForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -203,7 +203,7 @@ function PurchaseForm() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchaseOrder')
+          const resItemOut = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-purchaseOrder')
           setOutNumber(parseInt(resItemOut.data.outNumber) + 1)
         } catch (error) {
           setOutNumber(1)
@@ -217,16 +217,16 @@ function PurchaseForm() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const resItem = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
         setItemInformation(resItem.data.data.reverse())
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
         res.data.data.map((row) => setRate(row.rate))
-        const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+        const resPurchase = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase')
+        const resProject = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects')
         setProject(resProject.data.data.filter((row) => resPurchase.data.data.find((Item) => Item.projectName._id === row._id)).reverse());
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
+        const resMaintenance = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance')
         setMaintenance(resMaintenance.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+        const resInvoice = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
         const newData = resInvoice.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
         setInvoice(newData)
       } catch (error) {
@@ -249,7 +249,7 @@ function PurchaseForm() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -378,7 +378,7 @@ function PurchaseForm() {
     const fetchId = async () => {
       if (projectName !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase')
           res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
             .map((row) =>
               SetItems(
@@ -395,7 +395,7 @@ function PurchaseForm() {
       }
       else if (serviceNumber !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance')
           res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
             .map((row) =>
               SetItems(row.items
@@ -410,7 +410,7 @@ function PurchaseForm() {
       }
       else if (invoiceName !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
           res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
             .map((row) =>
               SetItems(row.items
@@ -684,7 +684,7 @@ function PurchaseForm() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -706,7 +706,7 @@ function PurchaseForm() {
       reference, Create, totalUSD, total, totalFC
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchaseOrder', data);
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-purchaseOrder', data);
       if (res) {
         // Open Loading View
         const ReferenceInfo = res.data.data._id

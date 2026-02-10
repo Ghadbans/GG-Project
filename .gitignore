@@ -6,3 +6,4 @@ build/
 GG Backup 08Feb26/
 *.bson
 *.asar
+.vercel

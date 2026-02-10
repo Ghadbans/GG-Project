@@ -153,7 +153,7 @@ function PurchaseFormUpdate() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -203,7 +203,7 @@ function PurchaseFormUpdate() {
   const fetchData = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-purchase/${id}`)
         setCustomerName(res.data.data.customerName);
         setPurchaseDate(res.data.data.purchaseDate);
         setProjectName(res.data.data.projectName);
@@ -236,7 +236,7 @@ function PurchaseFormUpdate() {
   const fetchItem = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
         setItemInformation(res.data.data.reverse())
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -255,10 +255,10 @@ function PurchaseFormUpdate() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -546,7 +546,7 @@ function PurchaseFormUpdate() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -575,7 +575,7 @@ function PurchaseFormUpdate() {
     const fetchProject = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects')
           setProject(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -684,7 +684,7 @@ function PurchaseFormUpdate() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/', data)
     } catch (error) {
       console.log(error)
     }
@@ -701,7 +701,7 @@ function PurchaseFormUpdate() {
     };
     if (navigator.onLine) {
       try {
-        const response = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${id}`, data)
+        const response = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-purchase/${id}`, data)
         if (response) {
           handleCreateComment()
           const resLocal = await db.purchaseSchema.get({ _id: id })

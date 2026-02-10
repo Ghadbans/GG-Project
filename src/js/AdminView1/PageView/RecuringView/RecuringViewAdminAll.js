@@ -28,7 +28,7 @@ function RecuringViewAdminAll() {
   let {id} = useParams()
   const [recurring,setRecurring] = useState([])
 //get request
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/recurringinvoice';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/recurringinvoice';
 //axios request with useEffect
 useEffect(()=>{
   axios.get(apiUrl)

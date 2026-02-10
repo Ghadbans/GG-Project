@@ -16,10 +16,10 @@ function CompanyProfile() {
 
   const [profile,setProfile]= useState([])
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-companyProfile';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-companyProfile';
 
   useEffect(()=> {
-    axios.get('https://gg-project-production.up.railway.app/endpoint/companyProfile')
+    axios.get('https://gg-project-productionn.up.railway.app/endpoint/companyProfile')
     .then(res => {
       // Handle the response data here
       setProfile(res.data);

@@ -151,7 +151,7 @@ function AdminHome() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -205,25 +205,25 @@ function AdminHome() {
       if (navigator.onLine && !user.isHibernating) {
         try {
           const currentYear = dayjs(date).format('YYYY');
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           const CustomerInfo = res.data.data.map((item) => ({
             ...item,
             id: item._id,
           }))
           setCustomer(CustomerInfo.filter((row) => row.credit !== undefined && row.credit > 0))
           setCustomer1(res.data.data);
-          const resExpenses = await axios.get(`https://gg-project-production.up.railway.app/endpoint/dailyExpense-Information?page=1&limit=1000&filterField=expenseDate&filterValue=${currentYear}`);
+          const resExpenses = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/dailyExpense-Information?page=1&limit=1000&filterField=expenseDate&filterValue=${currentYear}`);
           setExpenses(resExpenses.data.itemI);
-          const resItemPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemPurchase')
+          const resItemPurchase = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemPurchase')
           setItemPurchase(resItemPurchase.data.data.filter(row => dayjs(row.itemPurchaseDate).format('YYYY') === currentYear && (row.status === undefined || row.status === "Paid")))
-          const resPayRoll = await axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll')
+          const resPayRoll = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/payRoll')
           setPayRoll(resPayRoll.data.data.filter(row => dayjs(row.month).format('YYYY') === currentYear))
-          const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
+          const resPayment = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/payment')
           setPayment(resPayment.data.data.filter(row => dayjs(row.paymentDate).format('YYYY') === currentYear).map((row) => ({
             ...row,
             amount: row.amount - row.remaining
           })))
-          const resPosInvoice = await axios.get(`https://gg-project-production.up.railway.app/endpoint/pos-Information?page=1&limit=500&filterField=invoiceDate&filterValue=${currentYear}`)
+          const resPosInvoice = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/pos-Information?page=1&limit=500&filterField=invoiceDate&filterValue=${currentYear}`)
           setPosInvoice(resPosInvoice.data.itemI.filter((row) => row.status === 'Paid').map((row) => ({
             ...row,
             id: row._id,
@@ -241,16 +241,16 @@ function AdminHome() {
             infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / row.rate,
             infoCostFC: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0))
           })).reverse())
-          const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item-shop?page=1&limit=500')
+          const resItem = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=1&limit=500')
           const ItemInfo = resItem.data.items.map((item) => ({
             ...item,
             id: item._id,
             ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber
           }))
           setItem(ItemInfo.reverse())
-          const resCode = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemCode')
+          const resCode = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemCode')
           setCategory(resCode.data.data)
-          const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          const resInvoice = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
           setInvoice(resInvoice.data.data.filter((row) => row.status === 'Paid' && dayjs(row.invoiceDate).format('YYYY') === currentYear).map((row) => ({
             ...row,
             id: row._id,
@@ -265,7 +265,7 @@ function AdminHome() {
             infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
           })).reverse())
 
-          const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
+          const resMaintenance = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance')
           setRelatedMaintenance(resMaintenance.data.data)
           setMaintenance(resMaintenance.data.data.filter((row) => row.status === 'Close' && dayjs(row.serviceDate).format('YYYY') === currentYear).map((row) =>
           ({
@@ -281,7 +281,7 @@ function AdminHome() {
             infoSell: row.subTotal,
             infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
           })).reverse())
-          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+          const resPurchase = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase')
           setPurchase(resPurchase.data.data.map((row) => {
             const relatedInvoice = resInvoice.data.data.find((Item) => Item.ReferenceName2 === row._id)
             return ({
@@ -294,7 +294,7 @@ function AdminHome() {
               infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
             })
           }))
-          const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+          const resProject = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects')
           setProject(resProject.data.data.filter((row) => row.status === 'Completed').map((row) => ({
             ...row,
             id: row._id,
@@ -302,11 +302,11 @@ function AdminHome() {
             visitField: dayjs(row.visitDate).format('DD/MM/YYYY'),
             startField: dayjs(row.startDate).format('DD/MM/YYYY'),
           })))
-          const resEmployee = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+          const resEmployee = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
           setEmployee(resEmployee.data.data.reverse())
-          const resAttendance = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeattendance')
+          const resAttendance = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employeeattendance')
           setAttendance(resAttendance.data.data.filter((row) => dayjs(row.timeIn).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY') && (row.observation === 'P' || row.observation === 'S' || row.observation === 'A' || row.observation === 'H')))
-          const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
+          const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
           setNotification(resNotification.data.data.filter((row) => dayjs(row.dateNotification).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY')).reverse())
         } catch (error) {
           console.error("Error in fetchAll:", error);
@@ -412,7 +412,7 @@ function AdminHome() {
 
   const fetchValue = async () => {
     try {
-      const resItemOutItemReturn = await axios.get('https://gg-project-production.up.railway.app/endpoint/item-usage')
+      const resItemOutItemReturn = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item-usage')
       setItemValue(resItemOutItemReturn.data?.map((item) => ({
         ...item,
         id: item.itemId,

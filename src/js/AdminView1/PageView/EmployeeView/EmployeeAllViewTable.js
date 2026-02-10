@@ -67,7 +67,7 @@ function EmployeeAllViewTable() {
   useEffect(()=> {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
       .then(res => {
         // Handle the response data here
         const Name = res.data.data.employeeName;
@@ -86,7 +86,7 @@ function EmployeeAllViewTable() {
   },[dispatch])
   const [employee,setEmployee]= useState([])
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/employee';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/employee';
 
   useEffect(()=> {
   axios.get(apiUrl)
@@ -124,7 +124,7 @@ const handleCloseModal = () => {
 };
 const handleDelete = async () => {
   try {
-       const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employee/${DeleteId}`);
+       const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-employee/${DeleteId}`);
        if (res) {
         handleOpenModal();
       }

@@ -129,7 +129,7 @@ function EmployeeAttendanceForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -172,7 +172,7 @@ function EmployeeAttendanceForm() {
     const fetchEmployee = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
           setEmployee(res.data.data.filter((row) => row.status !== 'Fired' && row.status !== 'Resign').map((row2) => ({
             id: row2._id,
             name: row2.employeeName,
@@ -263,7 +263,7 @@ function EmployeeAttendanceForm() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -278,7 +278,7 @@ function EmployeeAttendanceForm() {
     if (navigator.onLine) {
       try {
         // Create an array of functions that return promises, so we don't start them all at once
-        const attendancePromises = employee.map((row) => () => axios.post('https://gg-project-production.up.railway.app/endpoint/create-employeeattendance', row));
+        const attendancePromises = employee.map((row) => () => axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-employeeattendance', row));
 
         // Process in chunks
         for (let i = 0; i < attendancePromises.length; i += chunkSize) {

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import db from '../dexieDb';
 
-const BASE_URL = 'https://gg-project-production.up.railway.app/endpoint';
+const BASE_URL = 'https://gg-project-productionn.up.railway.app/endpoint';
 
 /**
  * Centralized Sync Service for Hybrid Architecture

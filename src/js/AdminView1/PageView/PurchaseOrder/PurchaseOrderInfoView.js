@@ -143,7 +143,7 @@ function PurchaseOrderInfoView() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -178,9 +178,9 @@ function PurchaseOrderInfoView() {
     const fetchData = async () => {
      if (navigator.onLine) {
        try {
-      const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchaseOrder')
+      const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchaseOrder')
       setPurchase(res.data.data.reverse());
-      const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')   
+      const resItem = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')   
       SetItems(resItem.data.data)
       setLoadingData(false)
        } catch (error) {
@@ -203,7 +203,7 @@ useEffect(()=> {
   const fetchDataRelated = async () => {
 if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchaseOrder/${id}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-purchaseOrder/${id}`)
         setPurchaseNumber(res.data.data.outNumber);
         setFilteredPurchase(res.data.data.itemsQtyArray);
       } catch (error) {
@@ -308,10 +308,10 @@ if (navigator.onLine) {
     useEffect(()=> {
       const fetchComment = async () => {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
           const resp = res.data.data.filter((row)=> row.CommentInfo.idInfo === id)
                        setComments(resp.reverse())
-                       const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
+                       const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
                        setNotification(resNotification.data.data.filter((row)=> row.idInfo === id))
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -365,7 +365,7 @@ if (navigator.onLine) {
           dateComment
         };
         try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/',data)
+          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/',data)
           if (res) {
             setReason("");
             handleOpen();

@@ -145,7 +145,7 @@ function PayRollUpdateFormView() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -222,7 +222,7 @@ useEffect (() => {
   const fetchData = async () => {
    if (navigator.onLine) {
      try {
-       const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payRoll/${id}`)
+       const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-payRoll/${id}`)
        setPayNumber(res.data.data.payNumber);
        setPayDate(res.data.data.payDate);
        setMonth(res.data.data.month);
@@ -289,9 +289,9 @@ useEffect(()=>{
   const handleFetch = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
         setEmployee(res.data.data.filter((row)=> row.status === 'Employed'|| row.status === 'Resign'));
-        const resPRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
+        const resPRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/paymentRate')
         resPRate.data.data.map((row)=> setRate(row.paymentRate));
         res.data.data.filter((row)=> row._id === employeeName.id).map((row)=>setEmployeeId(row.employeeId))
         res.data.data.filter((row)=> row._id === employeeName.id).map((row)=>setEmployeeRole(row.employeeRole))
@@ -318,7 +318,7 @@ useEffect(()=> {
   const fetchExpense = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense')
         const resultTransport = res.data.data.filter((row)=> dayjs(row.expenseDate).format('MM/YYYY') === dayjs(month).format('MM/YYYY') && row.accountName === 'Employee' && row.expenseCategory.expensesCategory === 'Transport')
         .map((row)=>({
           employeeName: row.employeeName.filter((Item)=> Item.idRow === employeeName.id)
@@ -555,7 +555,7 @@ useEffect(()=> {
           dateNotification: new Date()
           };
           try {
-            const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
+            const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/',data)
             if (res) {
               setReason("");
             }
@@ -586,7 +586,7 @@ useEffect(()=> {
           }
            if (navigator.onLine) {
              try{
-             const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-payRoll/${id}`,data);
+             const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-payRoll/${id}`,data);
              if (res) {
                // Open Loading View
                await db.payRollSchema.update(payNumber,{...data, updateS: true})

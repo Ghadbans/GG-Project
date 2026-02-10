@@ -154,7 +154,7 @@ function MaintenanceUpdateView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -224,7 +224,7 @@ function MaintenanceUpdateView() {
     const fetchData = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${id}`)
+          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-maintenance/${id}`)
           setServiceDate(res.data.data.serviceDate);
           setVisitDate(res.data.data.visitDate);
           setItemDescriptionInfo(res.data.data.itemDescriptionInfo);
@@ -280,10 +280,10 @@ function MaintenanceUpdateView() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
         resRate.data.data.map((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -397,9 +397,9 @@ function MaintenanceUpdateView() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
           setItemInformation(res.data.data.reverse());
-          const resC = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const resC = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           setCustomer(resC.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -581,7 +581,7 @@ function MaintenanceUpdateView() {
     const fetchEmployee = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
           setEmployee(res.data.data);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -676,7 +676,7 @@ function MaintenanceUpdateView() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -776,7 +776,7 @@ function MaintenanceUpdateView() {
       dateNotification: dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/', data)
       if (res) {
         setReason("");
       }
@@ -804,7 +804,7 @@ function MaintenanceUpdateView() {
     };
     if (navigator.onLine) {
       try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${id}`, data);
+        const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-maintenance/${id}`, data);
         if (res) {
           // Open Loading View
           await db.maintenanceSchema.update(data.serviceNumber, { ...data, updateS: true })

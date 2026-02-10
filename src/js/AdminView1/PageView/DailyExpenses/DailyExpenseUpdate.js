@@ -131,7 +131,7 @@ function DailyExpenseUpdate() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -181,7 +181,7 @@ function DailyExpenseUpdate() {
         const fetchData = async () => {
          if (navigator.onLine) {
            try {
-             const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-expense/${id}`)
+             const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-expense/${id}`)
              setExpenseCategory(res.data.data.expenseCategory);
              setDescription(res.data.data.description);
              setExpenseDate(res.data.data.expenseDate);
@@ -224,9 +224,9 @@ function DailyExpenseUpdate() {
       const fetchData = async () => {
         if (navigator.onLine) {
           try {
-            const projectResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-            const categoryResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
-            const employeeResponse = await  axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+            const projectResponse = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects')
+            const categoryResponse = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expensesCategory')
+            const employeeResponse = await  axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
             setProject(projectResponse.data.data);
             setProject2(projectResponse.data.data.filter((row)=> row.status === "On-Going"));
             setCategories(categoryResponse.data.data);
@@ -250,7 +250,7 @@ function DailyExpenseUpdate() {
       const fetchData = async () => {
        if (navigator.onLine) {
          try {
-           const cashResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash') 
+           const cashResponse = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/cash') 
            setCash(cashResponse.data.data.filter((row)=> dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(expenseDate).format('DD/MM/YYYY'))
                                          .map((row)=> row.status)); 
          } catch (error) {
@@ -444,7 +444,7 @@ function DailyExpenseUpdate() {
             dateNotification:dateComment
       };
       try {
-       await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
+       await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/',data)
       } catch (error) {
        console.log(error)
       }
@@ -459,7 +459,7 @@ const handleSubmit = async (e) => {
     }
 if (navigator.onLine) {
       try {
-          const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-expense/${id}`,data);
+          const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-expense/${id}`,data);
           if (res) {
             await db.dailyExpenseSchema.update(expenseNumber,{...data, updateS: true})
             handleCreateComment();

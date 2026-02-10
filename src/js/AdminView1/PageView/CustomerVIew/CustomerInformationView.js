@@ -163,7 +163,7 @@ function CustomerInformationView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -188,7 +188,7 @@ function CustomerInformationView() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -207,12 +207,12 @@ function CustomerInformationView() {
   const [customer, setCustomer] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [selectOptions, setSelectOptions] = useState('')
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/customer';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/customer';
   useEffect(() => {
     const fetchData = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
           setLoadingData(false);
         } catch (error) {
@@ -283,13 +283,13 @@ function CustomerInformationView() {
           // Use professional filtered endpoints (Zoho CRM approach)
           // Backend now returns ONLY relevant data for this customer
           const [resCustomer, resEstimate, resInvoice, resPurchase, resMaintenance, resPayment, resPos] = await Promise.all([
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/estimation/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/invoice/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/purchase/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/maintenance/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/payment/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/pos/customer/${id}`)
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-customer/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/estimation/customer/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/invoice/customer/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/purchase/customer/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/maintenance/customer/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/payment/customer/${id}`),
+            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/pos/customer/${id}`)
           ]);
 
           setCustomerInfo(resCustomer.data.data.Customer);
@@ -448,7 +448,7 @@ function CustomerInformationView() {
     };
     if (navigator.onLine) {
       try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${id}`, data)
+        const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-customer/${id}`, data)
         if (res) {
           setIsCredit('true')
           handleOpen();
@@ -637,10 +637,10 @@ function CustomerInformationView() {
     const fetchComment = async () => {
 
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -699,7 +699,7 @@ function CustomerInformationView() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/', data)
       if (res) {
         setReason("");
         handleOpen();

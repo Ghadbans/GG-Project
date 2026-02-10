@@ -89,7 +89,7 @@ function ItemReportInfo({onMonth,onItem}) {
     useEffect(() => {
         const fetchComment = async () => {
             try {
-                const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification');
+                const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification');
                 const fetchData = resNotification.data.data.filter((item) => item.person.endsWith(' Created'));
                 setNotification(fetchData);
             } catch (error) {

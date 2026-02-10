@@ -146,7 +146,7 @@ function EstimateViewAdminAll() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -171,7 +171,7 @@ function EstimateViewAdminAll() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -193,14 +193,14 @@ function EstimateViewAdminAll() {
 
   const [item, SetItems] = useState([]);
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/estimation';
+  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/estimation';
   useEffect(() => {
     const fetchData = async () => {
       if (navigator.onLine) {
         try {
           const res = await axios.get(apiUrl)
           setEstimate(res.data.data);
-          const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const resItem = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
           SetItems(resItem.data.data)
           setLoadingData(false)
         } catch (error) {
@@ -229,10 +229,10 @@ function EstimateViewAdminAll() {
       if (navigator.onLine) {
         try {
           const [invoiceResponse, purchaseResponse] = await Promise.all([
-            axios.get('https://gg-project-production.up.railway.app/endpoint/invoice'),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+            axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice'),
+            axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase')
           ])
-          const resEst = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${id}`)
+          const resEst = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-estimation/${id}`)
           setCustomerName1(resEst.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
           setEstimateNumber1(resEst.data.data.estimateNumber);
           setItems(resEst.data.data.items);
@@ -262,7 +262,7 @@ function EstimateViewAdminAll() {
       if (purchase.length > 0) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+            const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
             const filteredInvoice = res.data.data.filter((row) => purchase ? purchase.find((Item) => row._id === Item.ReferenceName2) : '')
             setInvoice2(filteredInvoice);
           } catch (error) {
@@ -332,10 +332,10 @@ function EstimateViewAdminAll() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -390,7 +390,7 @@ function EstimateViewAdminAll() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/', data)
       if (res) {
         setReason("");
         handleOpen();

@@ -4,7 +4,7 @@ import { Checkbox , Typography} from '@mui/material';
 import { NavLink } from 'react-router-dom';
 function RecurringInformation() {
     const [recurring,setRecurring] = useState([])
-    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/recurringinvoice';
+    const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/recurringinvoice';
     useEffect(()=> {
     axios.get(apiUrl)
     .then(res => {

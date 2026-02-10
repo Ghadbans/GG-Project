@@ -149,7 +149,7 @@ function DailyExpenses() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -179,7 +179,7 @@ function DailyExpenses() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -239,7 +239,7 @@ function DailyExpenses() {
   const fetchItems = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/dailyExpense-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
+        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/dailyExpense-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -287,7 +287,7 @@ function DailyExpenses() {
     const fetchCash = async () => {
       if (navigator.onLine) {
         try {
-          const resCash = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash')
+          const resCash = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/cash')
           resCash.data.data.filter((row) => dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(cashDate).format('DD/MM/YYYY'))
             .map((row) => setRelatedDate(row.cashDate))
         } catch (error) {
@@ -305,7 +305,7 @@ function DailyExpenses() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-cash')
+          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-cash')
           setCashNumber(parseInt(res.data.cashNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -436,7 +436,7 @@ function DailyExpenses() {
       expensesCategory
     }
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-expensesCategory', data);
+      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-expensesCategory', data);
       if (res) {
         handleOpenModal();
       }
@@ -455,7 +455,7 @@ function DailyExpenses() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -468,7 +468,7 @@ function DailyExpenses() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-cash', data);
+        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-cash', data);
         if (res) {
           const ReferenceInfo = res.data.data._id
           const ReferenceInfoNumber = res.data.data.cashNumber
@@ -490,7 +490,7 @@ function DailyExpenses() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-expense/${idToDelete}`)
+        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-expense/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -511,14 +511,14 @@ function DailyExpenses() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-expense/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-expense/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -530,7 +530,7 @@ function DailyExpenses() {
     e.preventDefault()
     if (navigator.onLine) {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-expense/${idToDelete}`)
+        return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-expense/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -605,7 +605,7 @@ function DailyExpenses() {
       if (idView !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-expense/${idView}`)
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-expense/${idView}`)
             setExpensesView(res.data.data)
           } catch (error) {
             console.log(error)

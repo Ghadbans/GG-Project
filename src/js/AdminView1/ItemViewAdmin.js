@@ -133,7 +133,7 @@ function ItemViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`);
+            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`);
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -157,7 +157,7 @@ function ItemViewAdmin() {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
+        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
         res.data.data.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules));
       } catch (error) {
@@ -222,7 +222,7 @@ function ItemViewAdmin() {
   // Data load is now handled directly by fetchItems with pagination.
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
       setLoadingData(false);
       SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
       const formatDate = res.data.itemI.map((item) => ({
@@ -274,7 +274,7 @@ function ItemViewAdmin() {
   const handleLoadMargin = async (e) => {
     e.preventDefault();
     try {
-      const resLow = await axios.get('https://gg-project-production.up.railway.app/endpoint/low-margin-item');
+      const resLow = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/low-margin-item');
       setLowMargin(resLow.data.data.map((item) => ({
         ...item,
         id: item._id,
@@ -349,7 +349,7 @@ function ItemViewAdmin() {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-item/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-item/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -362,7 +362,7 @@ function ItemViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idToDelete}`);
+        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idToDelete}`);
       });
       try {
         const res = await Promise.all(deletePromises);
@@ -385,7 +385,7 @@ function ItemViewAdmin() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data);
+      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data);
     } catch (error) {
       console.log(error);
     }
@@ -394,7 +394,7 @@ function ItemViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault();
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-item/${idToDelete}`);
+      return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-item/${idToDelete}`);
     });
     try {
       const res = await Promise.all(deletePromises);
