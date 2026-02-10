@@ -56,7 +56,7 @@ app.use("/endpoint", userRoute);
 
 // PORT
 const port = process.env.PORT || 8080;
-server.listen(port, () => {
+server.listen(port, "0.0.0.0", () => {
   console.log("PORT Connected on: " + port);
 });
 // Find 404 and hand over to error handler
