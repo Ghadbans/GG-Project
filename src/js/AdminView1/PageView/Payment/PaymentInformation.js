@@ -20,7 +20,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 function PaymentInformation({onId}) {
     const [payment, setPayment] = useState([])
     const [payment2, SetPayment2] = useState({})
-    const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/payment';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/payment';
     useEffect(()=> {
       const fetchPayment = async () => {
       if (navigator.onLine) {

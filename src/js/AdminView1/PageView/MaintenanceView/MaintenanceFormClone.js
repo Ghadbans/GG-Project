@@ -156,7 +156,7 @@ function MaintenanceFormClone() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -181,7 +181,7 @@ function MaintenanceFormClone() {
       dispatch(logOut());
       navigate('/')
     }
-    const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/create-maintenance';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-maintenance';
     const [serviceDate,setServiceDate] = useState(()=>{
        const date = new Date()
        return date
@@ -218,7 +218,7 @@ function MaintenanceFormClone() {
         const fetchData = async () => {
           if (navigator.onLine) {
             try {
-              const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-maintenance/${id}`)
+              const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${id}`)
               setCustomerName(res.data.data.customerName);
               setItemDescriptionInfo(res.data.data.itemDescriptionInfo);
               setBrand(res.data.data.brand);
@@ -255,7 +255,7 @@ function MaintenanceFormClone() {
     useEffect(()=>{
       const fetchlastNumber = async () => {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-maintenance')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-maintenance')
           setServiceNumber(parseInt(res.data.serviceNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -289,7 +289,7 @@ function MaintenanceFormClone() {
     useEffect(()=> {
       const fetchCustomer = async () => {
         try {
-          const res = await   axios.get('https://globalgate-backend-production.up.railway.app/endpoint/customer')
+          const res = await   axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -314,7 +314,7 @@ const handleCreateCustomer = (newCustomer)=> {
   useEffect(()=> {
     const fetchEmployee = async()=> {
       try {
-        const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/employee')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
         setEmployee(res.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -333,7 +333,7 @@ const handleCreateCustomer = (newCustomer)=> {
   useEffect(()=>{
     const fetchItem = async()=> {
       try {
-        const res = await  axios.get('https://globalgate-backend-production.up.railway.app/endpoint/item')
+        const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
         setItemInformation(res.data.data.reverse()) 
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -481,7 +481,7 @@ const handleCloseItemUpdate = async() => {
 setOpenItemUpdate(false);
 if (idItem) {
   try {
-    const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${idItem}`)
+    const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
     SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
       itemName:{
         _id:res.data.data._id,
@@ -562,7 +562,7 @@ if (idItem) {
       dateNotification:new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
     } catch (error) {
       console.log(error)
     }

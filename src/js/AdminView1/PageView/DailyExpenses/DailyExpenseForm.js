@@ -143,7 +143,7 @@ function DailyExpenseForm() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -204,9 +204,9 @@ function DailyExpenseForm() {
                     const fetchData = async () => {
                       if (navigator.onLine) {
                         try {
-                          const projectResponse = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/projects')
-                          const categoryResponse = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/expensesCategory')
-                          const employeeResponse = await  axios.get('https://globalgate-backend-production.up.railway.app/endpoint/employee')
+                          const projectResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+                          const categoryResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
+                          const employeeResponse = await  axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
                           setProject(projectResponse.data.data);
                           setProject2(projectResponse.data.data.filter((row)=> row.status === "On-Going"));
                           setCategories(categoryResponse.data.data);
@@ -230,7 +230,7 @@ function DailyExpenseForm() {
       const fetchlastNumber = async () => {
        if (navigator.onLine) {
          try {
-           const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-expense')
+           const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-expense')
            setExpenseNumber(parseInt(res.data.expenseNumber) + 1)
          } catch (error) {
            console.error('Error fetching data:', error);
@@ -263,9 +263,9 @@ function DailyExpenseForm() {
         const fetchData = async () => {
          if (navigator.onLine) {
            try {
-             const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/rate')
+             const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
              res.data.data.map((row)=> setRate(row.rate))
-             const cashResponse = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/cash') 
+             const cashResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash') 
              setCash(cashResponse.data.data.filter((row)=> dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(expenseDate).format('DD/MM/YYYY'))
                                            .map((row)=> row.status)); 
            } catch (error) {
@@ -286,7 +286,7 @@ function DailyExpenseForm() {
               const fetchData = async () => {
               if (navigator.onLine) {
                   try {
-                    const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/paymentRate')
+                    const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
                     res.data.data.map((row)=> setPayRate(row.paymentRate));
                   } catch (error) {
                     console.error('Error fetching data:', error);
@@ -459,7 +459,7 @@ const handleSubmitCategory = async(e)=> {
     expensesCategory
   }
   try{
-    const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-expensesCategory',data); 
+    const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-expensesCategory',data); 
     if (res) {
       handleOpenModal();
       setCategories([...categories, res.data.data ])
@@ -478,7 +478,7 @@ const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber,Refere
     dateNotification:dateComment
   }
   try {
-    await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+    await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
   } catch (error) {
     console.log(error)
   }
@@ -497,7 +497,7 @@ const handleSubmit = async (e) => {
   }
     if (navigator.onLine) {
       try {
-          const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-expense',data);
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-expense',data);
           if (res) {
               handleOpen();
               const ReferenceInfo = res.data.data._id

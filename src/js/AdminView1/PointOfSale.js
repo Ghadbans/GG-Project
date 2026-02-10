@@ -135,7 +135,7 @@ function PointOfSale() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -160,7 +160,7 @@ function PointOfSale() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -220,13 +220,13 @@ function PointOfSale() {
   const [loadingData, setLoadingData] = useState(true);
   const [rate, setRate] = useState(0);
 
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/item';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/item';
 
   useEffect(() => {
     const fetchRate = async () => {
       try {
         if (navigator.onLine) {
-          const resRate = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/rate');
+          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate');
           resRate.data.data.forEach((row) => setRate(row.rate));
         } else {
           const offLineRate = await db.rateSchema.toArray();
@@ -243,7 +243,7 @@ function PointOfSale() {
     setLoadingData(true);
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/item-shop?page=${page}&limit=30&search=${encodeURIComponent(searchTerm.trim())}`);
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${page}&limit=30&search=${encodeURIComponent(searchTerm.trim())}`);
         setTotalPages(res.data.totalPages);
         SetItems(res.data.items); // Server already filters for "Goods" and sorts by newest
         setLoadingData(false);

@@ -54,7 +54,7 @@ function NotificationVIewInfo() {
 useEffect(()=>{
       const fetchNotification = async() =>{
         try {
-          const notificationResponse = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/notification');
+          const notificationResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification');
           setNotificationAll(notificationResponse.data.data.reverse())
         } catch (error) {
           console.log(error)
@@ -68,7 +68,7 @@ useEffect(()=>{
 
     useEffect(()=>{
       if (navigator.onLine) {
-        const socket = io('https://globalgate-backend-production.up.railway.app')
+        const socket = io('https://gg-project-production.up.railway.app')
         const storedNotification = JSON.parse(localStorage.getItem('ArrayNotification')) || []
         setNotification(storedNotification)
         setBadgeNumber(storedNotification.length)

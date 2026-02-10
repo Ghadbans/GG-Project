@@ -30,7 +30,7 @@ function RetainerInvoiceFormUpdate() {
      const {id} = useParams();
   const navigate = useNavigate();
   useEffect (() => {
-    axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-retainerinvoice/${id}`)
+    axios.get(`https://gg-project-production.up.railway.app/endpoint/get-retainerinvoice/${id}`)
     .then(res => {
       // get the response data here
        setCustomerID(res.data.data.customerID);
@@ -70,7 +70,7 @@ function RetainerInvoiceFormUpdate() {
       balanceDue,
       totalW,  
       };
-     axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-retainerinvoice/${id}`,data)
+     axios.put(`https://gg-project-production.up.railway.app/endpoint/update-retainerinvoice/${id}`,data)
       .then((res) => {
         console.log('POST request successful!');
         console.log(res.data);

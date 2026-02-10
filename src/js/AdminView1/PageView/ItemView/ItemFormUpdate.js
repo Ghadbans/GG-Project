@@ -121,7 +121,7 @@ function ItemFormUpdate() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -172,12 +172,12 @@ function ItemFormUpdate() {
       const handleFetch = async () => {
         if (navigator.onLine) {
           try {
-            const resItemUnit = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/itemUnit')
+            const resItemUnit = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemUnit')
             setUnitInfo(resItemUnit.data.data);
             await Promise.all(resItemUnit.data.data.map( async (item)=>{
               await db.itemUnitSchema.put({...item, synced: true,updateS:true})
              }))
-            const resCode = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/itemCode')
+            const resCode = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemCode')
             setItemCode(resCode.data.data);
             await Promise.all(resCode.data.data.map( async (item)=>{
               await db.itemCodeSchema.put({...item, synced: true,updateS:true})
@@ -198,7 +198,7 @@ function ItemFormUpdate() {
       const fetchAll = async() => {
        if (navigator.onLine) {
          try {
-           const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${id}`)
+           const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${id}`)
            setTypeItem(res.data.data.typeItem);
            setItemName(res.data.data.itemName);
            setItemStore(res.data.data.itemStore);
@@ -291,7 +291,7 @@ useEffect(()=>{
 if (newCode !== newCode1) {
   if (navigator.onLine) {
     try {
-      const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-item/${newCode}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-last-saved-item/${newCode}`)
       setItemNumber(res.data.itemUpc.itemNumber + 1)
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -354,7 +354,7 @@ setItemNumber(latest.itemUpc.itemNumber + 1)
         itemUnit
       }
       try{
-        const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-itemUnit',data); 
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-itemUnit',data); 
         if (res) {
           handleOpenModal();
           setUnitInfo([...unitInfo, res.data.data ])
@@ -390,7 +390,7 @@ setItemNumber(latest.itemUpc.itemNumber + 1)
           dateNotification: new Date()
       };
     try {
-      const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification/',data)
+      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
       if (res) {
         setReason("");
       }
@@ -413,7 +413,7 @@ setItemNumber(latest.itemUpc.itemNumber + 1)
       };
      if (navigator.onLine) {
        try {
-         const res = await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-item/${id}`,data)
+         const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${id}`,data)
          if (res) {
            const ReferenceInfoCode = res.data.data.itemUpc.newCode
            const ReferenceInfoNumber = res.data.data.itemUpc.itemNumber

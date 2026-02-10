@@ -136,7 +136,7 @@ function PurchasesViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -161,7 +161,7 @@ function PurchasesViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -191,7 +191,7 @@ function PurchasesViewAdmin() {
   const [newPurchase, setNewPurchase] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [reason, setReason] = useState("");
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/purchase';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/purchase';
 
   const [page, setPage] = useState(0);
   const limit = 100;
@@ -208,7 +208,7 @@ function PurchasesViewAdmin() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/purchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/purchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -268,7 +268,7 @@ function PurchasesViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -279,7 +279,7 @@ function PurchasesViewAdmin() {
       const PurchaseToSynced = syncedPurchase.filter((row) => row.synced === false)
       for (const PurchaseInfo of PurchaseToSynced) {
         try {
-          const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-purchase', PurchaseInfo)
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchase', PurchaseInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoNumber = res.data.data.purchaseNumber
@@ -294,7 +294,7 @@ function PurchasesViewAdmin() {
       const projectsToSyncedUpdate = syncedPurchase.filter((row) => row.updateS === false)
       for (const PurchaseInfoUpdate of projectsToSyncedUpdate) {
         try {
-          await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-purchase/${PurchaseInfoUpdate._id}`, PurchaseInfoUpdate)
+          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${PurchaseInfoUpdate._id}`, PurchaseInfoUpdate)
           await db.purchaseSchema.update(PurchaseInfoUpdate.purchaseNumber, { synced: true, updateS: true })
           handleOpenOffline();
         } catch (error) {
@@ -365,7 +365,7 @@ function PurchasesViewAdmin() {
   };
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-purchase/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-purchase/${DeleteId}`);
       if (res) {
         handleOpenModal()
       }
@@ -377,7 +377,7 @@ function PurchasesViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-purchase/${idToDelete}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -398,7 +398,7 @@ function PurchasesViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -406,7 +406,7 @@ function PurchasesViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-purchase/${idToDelete}`)
+      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-purchase/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);

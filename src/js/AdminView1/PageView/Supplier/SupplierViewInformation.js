@@ -173,7 +173,7 @@ function SupplierViewInformation() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -198,7 +198,7 @@ function SupplierViewInformation() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -216,7 +216,7 @@ function SupplierViewInformation() {
   const [loadingData, setLoadingData] = useState(true);
   const [item, SetItems] = useState([]);
   const [StoreName, SetStore] = useState("");
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/Supplier';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/Supplier';
   useEffect(() => {
     const fetchItem = async () => {
       if (navigator.onLine) {
@@ -244,7 +244,7 @@ function SupplierViewInformation() {
       try {
         console.log('🔍 [FILTERED API] Fetching supplier summary for:', id);
         // Use professional filtered endpoint (Zoho CRM approach)
-        const resItemPurchase = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/itemPurchase/supplier/${id}`)
+        const resItemPurchase = await axios.get(`https://gg-project-production.up.railway.app/endpoint/itemPurchase/supplier/${id}`)
 
         // Data is already filtered by backend for this specific supplier
         setItemPurchase(resItemPurchase.data.data.reverse())
@@ -283,10 +283,10 @@ function SupplierViewInformation() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -358,7 +358,7 @@ function SupplierViewInformation() {
       dateComment
     };
     try {
-      const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
       if (res) {
         setReason("");
         handleOpen();
@@ -433,7 +433,7 @@ function SupplierViewInformation() {
       if (idView !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-itemPurchase/${idView}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${idView}`)
             setItemPurchaseView(res.data.data)
           } catch (error) {
             console.log(error)

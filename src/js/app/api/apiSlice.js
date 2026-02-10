@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 
 
-const apiUrl = 'https://globalgate-backend-production.up.railway.app';
+const apiUrl = 'https://gg-project-production.up.railway.app';
 
 export const authApi = createApi({
     reducerPath: 'authApi',

@@ -86,7 +86,7 @@ function ConvertToEstimate() {
     useEffect(()=> {
       const storesUserId = localStorage.getItem('user');
       if (storesUserId) {
-        axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+        axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
         .then(res => {
           // Handle the response data here
           const Name = res.data.data.employeeName;
@@ -108,7 +108,7 @@ function ConvertToEstimate() {
         dispatch(logOut());
         navigate('/')
       }
-      const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/create-estimation';
+      const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-estimation';
       const [purchaseName,setPurchaseName] = useState("");
       const estimateDate =dayjs(Date.now());
       const [estimateSubject,setEstimateSubject] = useState("");
@@ -138,7 +138,7 @@ function ConvertToEstimate() {
        const estimateName = "EST-00"+estimateNumber
     useEffect(()=>{
       let newNumber = 0;
-      axios.get('https://globalgate-backend-production.up.railway.app/endpoint/estimation')
+      axios.get('https://gg-project-production.up.railway.app/endpoint/estimation')
       .then(res => {
               // Handle the response data here
          res.data.data.map((row)=>{
@@ -153,7 +153,7 @@ function ConvertToEstimate() {
   });
     },[])
     useEffect(()=>{
-      axios.get('https://globalgate-backend-production.up.railway.app/endpoint/item')
+      axios.get('https://gg-project-production.up.railway.app/endpoint/item')
       .then(res => {
               // Handle the response data here
               setItemInformation(res.data.data.reverse())      
@@ -179,7 +179,7 @@ const handleChange = (e,i) => {
     const [customerName,setCustomerName]= useState({});
     
     useEffect(()=>{
-        axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-purchase/${id}`)
+        axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
         .then(res => {
             // Handle the response data here
            setCustomerName1(res.data.data.customerName);
@@ -193,7 +193,7 @@ const handleChange = (e,i) => {
           });
     },[])
  useEffect(()=> {
-    axios.get('https://globalgate-backend-production.up.railway.app/endpoint/customer')
+    axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
     .then(res => {
             // Handle the response data here
       res.data.data.filter((row)=> row._id === customerName1._id)
@@ -370,7 +370,7 @@ const handleShowAutocomplete = (idRow) => {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
           itemDescription:res.data.data.itemDescription,
           costRate: res.data.data.itemCostPrice,
@@ -442,7 +442,7 @@ const handleCreateItem = (newItem)=> {
     })
       // Get Value
       const getRequestId = Object.values(initialStateId).map(({ids})=>{
-        return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${ids}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`)
       })
     try {
       const res = await Promise.all(getRequestId);
@@ -451,7 +451,7 @@ const handleCreateItem = (newItem)=> {
     }
       // Update Value 
       const updateRequest = Object.values(QtyUpdate).map(({ids, data})=>{
-      return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-item/${ids}`,data)
+      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`,data)
      }) 
      try {
        await Promise.all(updateRequest);
@@ -465,7 +465,7 @@ const handleCreateItem = (newItem)=> {
        status: statusPurchase,
        ReferenceName:ReferenceInfo
       }; 
-      axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-purchase/${id}`,data)
+      axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${id}`,data)
    }
        const handleSubmit = async (e) => {
         e.preventDefault();

@@ -22,7 +22,7 @@ import Image from '../../../img/images.png'
 function RetainerViewAdminAll() {
   let {id} = useParams();
   const [retainer,SetRetainer] = useState([])
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/retainerinvoice';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/retainerinvoice';
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {

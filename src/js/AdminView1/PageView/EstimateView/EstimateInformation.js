@@ -28,7 +28,7 @@ function EstimateInformation({onId}) {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -50,7 +50,7 @@ function EstimateInformation({onId}) {
 const [estimate,setEstimate] = useState([])
 const [estimate2, SetEstimate2] = useState({})
 const [hidden, setHidden] = useState([]);
-const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/estimation';
+const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/estimation';
 useEffect(()=> {
   const fetchEstimate = async () => {
    if (navigator.onLine) {
@@ -71,7 +71,7 @@ useEffect(()=> {
   const fetchData = async () => {
    if (navigator.onLine) {
      try {
-       const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/hidden')
+       const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
         setHidden(res.data.data)
         localStorage.removeItem('Hidden')
         await Promise.all(res.data.data.map( async (item)=>{

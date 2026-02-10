@@ -136,7 +136,7 @@ function TewmViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -160,7 +160,7 @@ function TewmViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -203,7 +203,7 @@ function TewmViewAdmin() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/employee-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/employee-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -263,7 +263,7 @@ function TewmViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -274,7 +274,7 @@ function TewmViewAdmin() {
       const EmployeeToSynced = syncedEmployee.filter((row) => row.synced === false)
       for (const EmployeeInfo of EmployeeToSynced) {
         try {
-          const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-employee', EmployeeInfo)
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-employee', EmployeeInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoName = res.data.data.employeeName
@@ -288,7 +288,7 @@ function TewmViewAdmin() {
       const EmployeeToSyncedUpdate = syncedEmployee.filter((row) => row.updateS === false)
       for (const EmployeeInfoUpdate of EmployeeToSyncedUpdate) {
         try {
-          await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-employee/${EmployeeInfoUpdate._id}`, EmployeeInfoUpdate)
+          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-employee/${EmployeeInfoUpdate._id}`, EmployeeInfoUpdate)
           await db.employeeSchema.update(EmployeeInfoUpdate.employeeId, { synced: true, updateS: true })
           handleOpenOffline();
         } catch (error) {
@@ -356,7 +356,7 @@ function TewmViewAdmin() {
   };
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-employee/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employee/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -368,7 +368,7 @@ function TewmViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employee/${idToDelete}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employee/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -389,7 +389,7 @@ function TewmViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -397,7 +397,7 @@ function TewmViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-employee/${idToDelete}`)
+      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employee/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);

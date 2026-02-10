@@ -54,7 +54,7 @@ function SupplierForm2({onCreateOption, onClose}) {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -73,7 +73,7 @@ function SupplierForm2({onCreateOption, onClose}) {
       }
       fetchUser()
     },[dispatch]);
-      const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/create-Supplier';
+      const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-Supplier';
       const [supplierName,setSupplierName]=useState("");
       const [storeName,setStoreName]=useState("");
       const [customerPhone1,setCustomerPhone1]=useState("");
@@ -113,7 +113,7 @@ function SupplierForm2({onCreateOption, onClose}) {
         dateNotification: new Date()
       }
       try {
-        await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }

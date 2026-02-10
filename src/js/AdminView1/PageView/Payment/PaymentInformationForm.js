@@ -114,7 +114,7 @@ function PaymentInformationForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -149,7 +149,7 @@ function PaymentInformationForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -182,9 +182,9 @@ function PaymentInformationForm() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-payment')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-payment')
           setPaymentNumber(parseInt(res.data.paymentNumber) + 1)
-          const resRate = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/rate')
+          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
           resRate.data.data.map((row) => setRate(row.rate))
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -226,10 +226,10 @@ function PaymentInformationForm() {
     const fetchData = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/invoice')
-          const resProject = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/projects')
-          const resPurchase = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/purchase')
-          const resPayment = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/payment')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+          const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
           if (customerId !== null) {
             if (reason === "Invoice") {
               const filterData = res.data.data.filter((row) => row.customerName._id === customerId);
@@ -386,7 +386,7 @@ function PaymentInformationForm() {
       if (customerId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-customer/${customerId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customerId}`)
             setOldCredit(res.data.data.credit)
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -435,7 +435,7 @@ function PaymentInformationForm() {
       if (navigator.onLine) {
         const updateRequest = invoiceUpdate !== null ?
           invoiceUpdate.filter((row) => row.data.total !== 0).map(({ id, data }) => {
-            return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-invoice/${id}`, data)
+            return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`, data)
           }) : null
         if (updateRequest !== null) {
           try {
@@ -460,7 +460,7 @@ function PaymentInformationForm() {
     }
     if (navigator.onLine) {
       try {
-        await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-customer/${customerId}`, data)
+        await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${customerId}`, data)
         await db.customerSchema.update(customerId, { ...data, updateS: true })
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -523,7 +523,7 @@ function PaymentInformationForm() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -548,7 +548,7 @@ function PaymentInformationForm() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-payment', data);
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payment', data);
         if (res) {
           const ReferenceInfo = res.data.data._id
           const ReferenceInfoNumber = res.data.data.paymentNumber

@@ -146,7 +146,7 @@ function EstimateInvoiceForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -166,7 +166,7 @@ function EstimateInvoiceForm() {
     fetchUser()
   }, [dispatch]);
 
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/create-estimation';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-estimation';
   const [terms, setTerms] = useState("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
   const [estimateDate, setEstimateDate] = useState(() => {
     const date = new Date()
@@ -202,7 +202,7 @@ function EstimateInvoiceForm() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-estimation')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-estimation')
           setEstimateNumber(parseInt(res.data.estimateNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -219,7 +219,7 @@ function EstimateInvoiceForm() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/item')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
           setItemInformation(res.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -237,10 +237,10 @@ function EstimateInvoiceForm() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -509,7 +509,7 @@ function EstimateInvoiceForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/customer')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -592,7 +592,7 @@ function EstimateInvoiceForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -684,7 +684,7 @@ function EstimateInvoiceForm() {
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }

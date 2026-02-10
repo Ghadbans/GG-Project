@@ -152,7 +152,7 @@ function ItemPurchaseUpdateForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -205,9 +205,9 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resSupplier = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/Supplier')
+        const resSupplier = await axios.get('https://gg-project-production.up.railway.app/endpoint/Supplier')
         setSupplier(resSupplier.data.data.reverse())
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-itemPurchase/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${id}`)
         // get the response data here
         setItemPurchaseDate(res.data.data.itemPurchaseDate);
         setItemPurchaseNumber(res.data.data.itemPurchaseNumber);
@@ -228,7 +228,7 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const fetchDataId = async () => {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-itemPurchase/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${id}`)
         setOldItems(res.data.data.items);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -241,16 +241,16 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/item')
+        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
         setItemInformation(resItem.data.data.reverse())
         if (projectName) {
-          const resPurchase = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/purchase')
+          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
           setPurchase(resPurchase.data.data.filter((row) => row.projectName._id === projectName._id));
-          const resMaintenance = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/maintenance')
+          const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
           setMaintenance(resMaintenance.data.data.filter((row) => row._id === projectName._id));
-          const resInvoice = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/invoice')
+          const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
           setInvoice(resInvoice.data.data.filter((row) => row._id === projectName._id));
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/rate')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
           res.data.data.map((row) => setRate(row.rate))
         }
       } catch (error) {
@@ -581,7 +581,7 @@ function ItemPurchaseUpdateForm() {
 
     if (purchase.length > 0 && maintenance.length === 0 && invoice.length === 0) {
       const updateRequestInvoice = purchase.map((row) => {
-        return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-purchase/${row._id}`, {
+        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${row._id}`, {
           items: finalItemsPayload, // Use the complete list from state
           purchaseAmount2: finalPurchaseAmount2
         })
@@ -596,7 +596,7 @@ function ItemPurchaseUpdateForm() {
       }
     } else if (purchase.length === 0 && maintenance.length > 0 && invoice.length === 0) {
       const updateRequestMaintenance = maintenance.map((row) => {
-        return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-maintenance/${row._id}`, {
+        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${row._id}`, {
           items: finalItemsPayload,
         })
       })
@@ -610,7 +610,7 @@ function ItemPurchaseUpdateForm() {
       }
     } else if (purchase.length === 0 && maintenance.length === 0 && invoice.length > 0) {
       const updateRequestInvoice = invoice.map((row) => {
-        return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-invoice/${row._id}`, {
+        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${row._id}`, {
           items: finalItemsPayload,
         })
       })
@@ -639,7 +639,7 @@ function ItemPurchaseUpdateForm() {
       if (Object.keys(initialStateId).length > 0) {
         // Get Value
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -659,7 +659,7 @@ function ItemPurchaseUpdateForm() {
         };
         // Update Value 
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -679,7 +679,7 @@ function ItemPurchaseUpdateForm() {
 
       if (Object.keys(initialStateId).length > 0) {
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -698,7 +698,7 @@ function ItemPurchaseUpdateForm() {
           console.log('An error as occur in sumToAdd update');
         };
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -717,7 +717,7 @@ function ItemPurchaseUpdateForm() {
 
       if (Object.keys(initialStateId).length > 0) {
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -736,7 +736,7 @@ function ItemPurchaseUpdateForm() {
           console.log('An error as occur in newArrayAdd update');
         };
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -755,7 +755,7 @@ function ItemPurchaseUpdateForm() {
 
       if (Object.keys(initialStateId).length > 0) {
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -774,7 +774,7 @@ function ItemPurchaseUpdateForm() {
           console.log('An error as occur in deletedArray update');
         };
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -850,7 +850,7 @@ function ItemPurchaseUpdateForm() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
 
     } catch (error) {
       console.log(error)
@@ -858,7 +858,7 @@ function ItemPurchaseUpdateForm() {
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
     } catch (error) {
       console.log(error)
     }
@@ -873,7 +873,7 @@ function ItemPurchaseUpdateForm() {
       description, total, totalUSD, totalFC, items, reason, projectName
     };
     try {
-      const res = await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-itemPurchase/${id}`, data)
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-itemPurchase/${id}`, data)
       if (res) {
         // Open Loading View
         //Update Item Qty

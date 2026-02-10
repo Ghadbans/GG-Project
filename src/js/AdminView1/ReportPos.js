@@ -143,7 +143,7 @@ function ReportPos() {
           if (storesUserId) {
          if (navigator.onLine) {
            try {
-             const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+             const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
              const Name = res.data.data.employeeName;
              const Role = res.data.data.role;
              dispatch(setUser({userName: Name, role: Role, id:res.data.data._id}));
@@ -172,7 +172,7 @@ function ReportPos() {
        const fetchNumber = async () => {
          if (navigator.onLine) {
              try {
-               const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+               const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
                res.data.data.filter((row)=> row.userID === user.data.id )
                             .map((row)=>setGrantAccess(row.modules))
              } catch (error) {
@@ -218,7 +218,7 @@ function ReportPos() {
            useEffect(()=>{
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/pos')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/pos')
         const formatDate = res.data.data.map((item)=>({
                  ...item,
                  id: item._id,
@@ -232,7 +232,7 @@ function ReportPos() {
                 infoCostFC: (item.items.reduce((sum,ITem)=> sum + (ITem.itemQty * ITem.itemCost),0 )) ,
                  infoCost: Math.round(((item.items.reduce((sum,ITem)=> sum + (ITem.itemQty * ITem.itemCost),0 )) / item.rate)*100)/100             })) 
                setInvoice(formatDate.reverse());
-               const cashResponse = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/cash') 
+               const cashResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash') 
                        setCash(cashResponse.data.data); 
         setLoadingData(false)
       } catch (error) {

@@ -43,7 +43,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 
 function RetainerAllViewTable() {
   const [retainer,SetRetainer] = useState([])
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/retainerinvoice';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/retainerinvoice';
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {
@@ -57,7 +57,7 @@ function RetainerAllViewTable() {
 },[])
 const handleDelete = async (id) => {
   try {
-    const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-retainerinvoice/${id}`);
+    const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-retainerinvoice/${id}`);
     alert(res.data.msg); // This will be the deleted document
   } catch (error) {
     console.error(error);

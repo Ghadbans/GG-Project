@@ -87,7 +87,7 @@ function EmployeePlaningView({user}) {
    const fetchNumber = async () => {
      if (navigator.onLine) {
          try {
-           const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+           const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
            res.data.data.filter((row)=> row.userID === user.data.id )
                         .map((row)=>setGrantAccess(row.modules))
          } catch (error) {
@@ -166,7 +166,7 @@ function EmployeePlaningView({user}) {
   const fetchData = async () => {
 if (navigator.onLine) {
       try {
-        const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/planing')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/planing')
         setPlaning(res.data.data.reverse()); 
         await db.planingSchema.clear();
         await Promise.all(res.data.data.map( async (item,i)=>{
@@ -191,7 +191,7 @@ if (navigator.onLine) {
     dateNotification: new Date()
   }
   try {
-    await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+    await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
   } catch (error) {
     console.log(error)
   }
@@ -202,7 +202,7 @@ if (navigator.onLine) {
       const ItemToSynChro = unsyncedItem.filter((row)=>row.synced === false)
      for(const Items of ItemToSynChro){
       try {
-         const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-planing',Items)
+         const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-planing',Items)
         if (res) {
           const ReferenceInfo = res.data.data._id
           const ReferenceInfoName = res.data.data.setPlaning
@@ -217,7 +217,7 @@ if (navigator.onLine) {
       const ItemToSynChroUpdate = unsyncedItem.filter((row)=>row.updateS === false)
       for(const ItemsUpdate of ItemToSynChroUpdate){
         try {
-           await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-planing/${ItemsUpdate._id}`,ItemsUpdate)
+           await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-planing/${ItemsUpdate._id}`,ItemsUpdate)
            handleOpenOffline();
         } catch (error) {
           console.log(error)
@@ -277,7 +277,7 @@ useEffect(()=>{
   const fetchId = async () => {
     if (DeleteId !== null) {
       try {
-        const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-planing/${DeleteId}`)
+        const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-planing/${DeleteId}`)
         setReference(res.data.data.employeeName);
         setRelatedNumber(dayjs(res.data.data.planingDate).format('DD/MM/YYYY'));
       } catch (error) {
@@ -295,7 +295,7 @@ const handleCreateNotification = async () => {
     dateNotification:new Date()
   }
   try {
-    await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+    await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
   } catch (error) {
     console.log(error)
   }
@@ -303,7 +303,7 @@ const handleCreateNotification = async () => {
 const handleDeleteUpdate = async (e) => {
   e.preventDefault()
   try {
-    const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-planing/${DeleteId}`);
+    const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-planing/${DeleteId}`);
     if (res) {
            handleDeleteOpenLoading();
            handleCreateNotification();

@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 function RetainerInformation() {
     const [retainer,SetRetainer] = useState([])
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/retainerinvoice';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/retainerinvoice';
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {

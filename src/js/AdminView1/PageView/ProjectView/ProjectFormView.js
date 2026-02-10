@@ -151,7 +151,7 @@ function ProjectFormView() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -195,7 +195,7 @@ function ProjectFormView() {
       const fetchlastNumber = async () => {
        if (navigator.onLine) {
          try {
-           const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-project')
+           const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-project')
            setProjectNumber(parseInt(res.data.projectNumber) + 1)
          } catch (error) {
            console.error('Error fetching data:', error);
@@ -212,7 +212,7 @@ function ProjectFormView() {
                     const fetchCustomer = async () => {
                       if (navigator.onLine) {
                         try {
-                          const res = await   axios.get('https://globalgate-backend-production.up.railway.app/endpoint/customer')
+                          const res = await   axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
                           setCustomer(res.data.data.reverse());
                         } catch (error) {
                           console.error('Error fetching data:', error);
@@ -307,7 +307,7 @@ const handleOpen = () => {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
     } catch (error) {
       console.log(error)
     }
@@ -329,7 +329,7 @@ const handleSubmit =async (e)=>{
     }
     if (navigator.onLine) {
       try{
-        const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-projects', data);
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-projects', data);
         if (res) {
           // Open Loading View
           const ReferenceInfo = res.data.data._id

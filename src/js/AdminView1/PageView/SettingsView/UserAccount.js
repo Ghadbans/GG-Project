@@ -135,7 +135,7 @@ function UserAccount() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -166,7 +166,7 @@ function UserAccount() {
     const fetchData = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/employeeuser')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeuser')
           const formatDate = res.data.data.map((item) => ({
             ...item,
             id: item._id,
@@ -250,7 +250,7 @@ function UserAccount() {
 
       if (DeleteId !== null) {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${DeleteId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${DeleteId}`)
           setNameDelete(res.data.data.employeeName)
         } catch (error) {
           console.log(error)
@@ -267,7 +267,7 @@ function UserAccount() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -275,7 +275,7 @@ function UserAccount() {
   const handleDelete = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-employeeuser/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employeeuser/${DeleteId}`);
       if (res) {
         handleCreateNotification()
         handleOpenModal();
@@ -318,7 +318,7 @@ function UserAccount() {
     const fetchRelated = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${updateId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${updateId}`)
           setUserAccountName(res.data.data.employeeName);
           setUserAccountRole(res.data.data.role);
           setUserAccountMail(res.data.data.employeeEmail);

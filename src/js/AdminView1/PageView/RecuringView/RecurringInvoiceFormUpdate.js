@@ -17,7 +17,7 @@ function RecurringInvoiceFormUpdate() {
   const {id} = useParams();
   const navigate = useNavigate();
   useEffect (() => {
-    axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-recurringinvoice/${id}`)
+    axios.get(`https://gg-project-production.up.railway.app/endpoint/get-recurringinvoice/${id}`)
     .then(res => {
       // get the response data here
         setCustomerID(res.data.data.customerID);
@@ -63,7 +63,7 @@ function RecurringInvoiceFormUpdate() {
         balanceDue,
         totalW,
       };
-     axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-recurringinvoice/${id}`,data)
+     axios.put(`https://gg-project-production.up.railway.app/endpoint/update-recurringinvoice/${id}`,data)
       .then((res) => {
         console.log('POST request successful!');
         console.log(res.data);

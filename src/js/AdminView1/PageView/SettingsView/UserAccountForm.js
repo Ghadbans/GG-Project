@@ -107,7 +107,7 @@ function UserAccountForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -138,7 +138,7 @@ function UserAccountForm() {
   useEffect(() => {
     const fetchE = async () => {
       try {
-        const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/employee')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
         setEmployee(res.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -210,7 +210,7 @@ function UserAccountForm() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }

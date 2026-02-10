@@ -19,7 +19,7 @@ function SupplierName({onId}) {
 
     const [item, SetItems] = useState([])
 
-    const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/Supplier';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/Supplier';
   
     useEffect(()=> {
       const fetchItem = async () => {

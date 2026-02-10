@@ -134,7 +134,7 @@ function SellShopInvoiceView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -163,7 +163,7 @@ function SellShopInvoiceView() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -204,7 +204,7 @@ function SellShopInvoiceView() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/pos-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/pos-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -294,7 +294,7 @@ function SellShopInvoiceView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -305,7 +305,7 @@ function SellShopInvoiceView() {
       const invoiceToSynced = syncedInvoice.filter((row) => row.synced === false)
       for (const invoiceInfo of invoiceToSynced) {
         try {
-          const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-pos', invoiceInfo)
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-pos', invoiceInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoNumber = res.data.data.factureNumber
@@ -320,7 +320,7 @@ function SellShopInvoiceView() {
       const invoiceToSyncedUpdate = syncedInvoice.filter((row) => row.updateS === false)
       for (const invoiceInfoUpdate of invoiceToSyncedUpdate) {
         try {
-          await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-pos/${invoiceInfoUpdate._id}`, invoiceInfoUpdate)
+          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-pos/${invoiceInfoUpdate._id}`, invoiceInfoUpdate)
           await db.posSchema.update(invoiceInfoUpdate.factureNumber, { synced: true, updateS: true })
           handleOpenOffline();
         } catch (error) {
@@ -344,7 +344,7 @@ function SellShopInvoiceView() {
     const fetchDataHidden = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/hidden')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
           setHiddenRow(res.data.data.map((row) => row.idRow))
           setHidden(res.data.data)
           localStorage.removeItem('Hidden')
@@ -445,7 +445,7 @@ function SellShopInvoiceView() {
   {/** Delete Function */ }
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-pos/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-pos/${DeleteId}`);
       if (res) {
         handleDeleteOpenLoading();
       }
@@ -457,7 +457,7 @@ function SellShopInvoiceView() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-pos/${idToDelete}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -487,7 +487,7 @@ function SellShopInvoiceView() {
       if (idView !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-pos/${idView}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${idView}`)
             setPosInvoice(res.data.data)
           } catch (error) {
             console.log(error)
@@ -511,7 +511,7 @@ function SellShopInvoiceView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -519,7 +519,7 @@ function SellShopInvoiceView() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-pos/${idToDelete}`)
+      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-pos/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -538,7 +538,7 @@ function SellShopInvoiceView() {
     const fetchId = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-pos/${updateId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${updateId}`)
           setStatus(res.data.data.status);
           setInvoiceN(res.data.data.factureNumber);
         } catch (error) {
@@ -556,7 +556,7 @@ function SellShopInvoiceView() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
     } catch (error) {
       console.log(error)
     }
@@ -567,7 +567,7 @@ function SellShopInvoiceView() {
       status
     };
     try {
-      const res = await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-invoice/${updateId}`, data)
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${updateId}`, data)
       if (res) {
         handleCreateComment();
         handleOpenLoading();
@@ -591,10 +591,10 @@ function SellShopInvoiceView() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-hidden', {
+          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
             idRow: id, hiddenByCEO: true
           })
         }

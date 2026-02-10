@@ -151,7 +151,7 @@ function EstimateViewConvertToInvoice() {
       const fetchUser = async () => {
         if (storesUserId) {
         try {
-          const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({userName: Name, role: Role}));
@@ -193,7 +193,7 @@ function EstimateViewConvertToInvoice() {
     useEffect(()=>{
       const fetchlastNumber = async () => {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/get-last-saved-invoice')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
           setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -204,7 +204,7 @@ function EstimateViewConvertToInvoice() {
     useEffect (() => {
       const fetchData = async () => {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-estimation/${id}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${id}`)
           setCustomerName(res.data.data.customerName);
           setEstimateDefect(res.data.data.estimateDefect);
           setCustomerName1(res.data.data.customerName.customerName);
@@ -232,7 +232,7 @@ function EstimateViewConvertToInvoice() {
                     const fetchItem = async()=> {
                     if (navigator.onLine) {
                         try {
-                          const res = await  axios.get('https://globalgate-backend-production.up.railway.app/endpoint/item')
+                          const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
                           setItemInformation(res.data.data.reverse()) 
                         } catch (error) {
                           console.error('Error fetching data:', error);
@@ -394,7 +394,7 @@ useEffect(()=> {
   const fetchCustomer = async ()=>{
    if (customerName) {
      try {
-      const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-customer/${customerName._id}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customerName._id}`)
      if (res.data.data.paymentTerms === "Net 3") {
       const currentDate = new Date();
       currentDate.setDate(currentDate.getDate() + 3);
@@ -435,7 +435,7 @@ const handleCloseItemUpdate = async() => {
   setOpenItemUpdate(false);
   if (idItem) {
     try {
-      const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-item/${idItem}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
       SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
         itemName:{
           _id:res.data.data._id,
@@ -465,7 +465,7 @@ const handleCloseItemUpdate = async() => {
           ReferenceName:ReferenceInfo2
         };
         try {
-          await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-estimation/${id}`,data)
+          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${id}`,data)
         } catch (error) {
           console.error('Error fetching data:', error); 
         }
@@ -529,7 +529,7 @@ const handleCloseItemUpdate = async() => {
                 dateNotification:dateComment
               }
               try {
-                await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+                await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
               } catch (error) {
                 console.log(error)
               }
@@ -549,7 +549,7 @@ const handleCloseItemUpdate = async() => {
                 status='Pending'
               }
               try {
-                const res = await  axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-invoice', {
+                const res = await  axios.post('https://gg-project-production.up.railway.app/endpoint/create-invoice', {
                   customerName,
                   invoiceNumber,
                   invoiceDate,

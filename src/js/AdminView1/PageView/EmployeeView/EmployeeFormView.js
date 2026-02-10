@@ -127,7 +127,7 @@ function EmployeeFormView() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -152,7 +152,7 @@ function EmployeeFormView() {
       dispatch(logOut());
       navigate('/')
     }
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/create-employee';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-employee';
   const [joinDate,setJoinDate] = useState(()=>{
     const date = new Date()
     return date
@@ -196,7 +196,7 @@ function EmployeeFormView() {
     const handleFetch = async () => {
    if (navigator.onLine) {
        try {
-         const resItemUnit = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/department')
+         const resItemUnit = await axios.get('https://gg-project-production.up.railway.app/endpoint/department')
          setUnitInfo(resItemUnit.data.data);
          await Promise.all(resItemUnit.data.data.map( async (item,i)=>{
            await db.departmentSchema.put({...item, id:i+1,synced: true,updateS:true})
@@ -311,7 +311,7 @@ function EmployeeFormView() {
         department:departmentInfo
       }
       try{
-        const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-department',data); 
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-department',data); 
         if (res) {
           handleOpenModal();
           setUnitInfo([...unitInfo, res.data.data ])
@@ -328,7 +328,7 @@ function EmployeeFormView() {
       formData.append('image', imagesUrl);
       formData.append('employeeName', employeeName);
       try {
-        const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/upload-image', formData,{
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/upload-image', formData,{
           headers: {
             'Content-Type': 'multipart/form-data'
           }
@@ -346,7 +346,7 @@ function EmployeeFormView() {
         dateNotification:dateComment
       }
       try {
-        await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }

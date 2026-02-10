@@ -121,7 +121,7 @@ function App() {
   useEffect(() => {
     let socket;
     if (navigator.onLine && !isHibernating) {
-      socket = io('https://globalgate-backend-production.up.railway.app', { transports: ['websocket', 'polling'] })
+      socket = io('https://gg-project-production.up.railway.app', { transports: ['websocket', 'polling'] })
       socket.on('newNotification', (newNotification) => {
         toast.success(`${dayjs(newNotification.dateNotification).format('DD/MM/YYYY-HH:mm') + ' ' + newNotification.person + ': ' + newNotification.reason}`)
       });

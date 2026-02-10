@@ -111,7 +111,7 @@ function CustomerForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -131,7 +131,7 @@ function CustomerForm() {
     fetchUser()
   }, [dispatch]);
 
-  const apiUrl = 'https://globalgate-backend-production.up.railway.app/endpoint/create-customer';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-customer';
   const [customerType, setCustomerType] = useState("");
   const [designation, setDesignation] = useState("");
   const [customerFirstName, setCustomerFirstName] = useState("");
@@ -207,7 +207,7 @@ function CustomerForm() {
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }

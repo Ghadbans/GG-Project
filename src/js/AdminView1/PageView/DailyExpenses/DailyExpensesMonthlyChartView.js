@@ -21,8 +21,8 @@ useEffect(()=> {
          if (navigator.onLine) {
            try {
              const [expenseResponse,categoryResponse] = await Promise.all([
-               axios.get('https://globalgate-backend-production.up.railway.app/endpoint/expense'),
-               axios.get('https://globalgate-backend-production.up.railway.app/endpoint/expensesCategory')
+               axios.get('https://gg-project-production.up.railway.app/endpoint/expense'),
+               axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
              ])
              setMonthExpensesTotal(expenseResponse.data.data.filter(row=>dayjs(row.expenseDate).format('YYYY') === dayjs(yearExpensesTotal).format('YYYY')));
              setCategories(categoryResponse.data.data);

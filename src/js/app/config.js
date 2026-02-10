@@ -1,1 +1,1 @@
-export const API_URL = 'https://globalgate-backend-production.up.railway.app';
+export const API_URL = 'https://gg-project-production.up.railway.app';

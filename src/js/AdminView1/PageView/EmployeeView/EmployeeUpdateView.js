@@ -138,7 +138,7 @@ function EmployeeUpdateView() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -194,7 +194,7 @@ function EmployeeUpdateView() {
    const handleFetch = async () => {
   if (navigator.onLine) {
       try {
-        const resItemUnit = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/department')
+        const resItemUnit = await axios.get('https://gg-project-production.up.railway.app/endpoint/department')
         setUnitInfo(resItemUnit.data.data);
         await Promise.all(resItemUnit.data.data.map( async (item,i)=>{
           await db.departmentSchema.put({...item, id:i+1,synced: true,updateS:true})
@@ -214,7 +214,7 @@ function EmployeeUpdateView() {
     const fetchData = async () => {
      if (navigator.onLine) {
        try {
-         const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employee/${id}`)
+         const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employee/${id}`)
          setJoinDate(res.data.data.joinDate);
          setEmployeeName(res.data.data.employeeName);
          setEmployeeId(res.data.data.employeeId);
@@ -356,7 +356,7 @@ function EmployeeUpdateView() {
     department:departmentInfo
   }
   try{
-    const res = await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-department',data); 
+    const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-department',data); 
     if (res) {
       handleOpenModal();
       setUnitInfo([...unitInfo, res.data.data ])
@@ -376,7 +376,7 @@ function EmployeeUpdateView() {
    dateNotification:dateComment
   };
   try {
-   await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification/',data)
+   await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
   } catch (error) {
    console.log(error)
   }
@@ -406,7 +406,7 @@ function EmployeeUpdateView() {
       }; 
      if (navigator.onLine) {
        try {
-         const res = await axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-employee/${id}`,data)
+         const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-employee/${id}`,data)
          if (res) {
            handleOpen();
            await db.employeeSchema.update(data.employeeId,{...data, updateS: true})

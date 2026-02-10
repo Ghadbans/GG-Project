@@ -142,7 +142,7 @@ function ItemReturnAdminView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -167,7 +167,7 @@ function ItemReturnAdminView() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://globalgate-backend-production.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -208,7 +208,7 @@ function ItemReturnAdminView() {
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/itemReturn-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/itemReturn-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -298,7 +298,7 @@ function ItemReturnAdminView() {
       if (idView !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-itemReturn/${idView}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemReturn/${idView}`)
             setItemPurchaseView(res.data.data)
           } catch (error) {
             console.log(error)
@@ -370,7 +370,7 @@ function ItemReturnAdminView() {
     const fetchId = async () => {
       if (DeleteId !== null) {
         try {
-          const res = await axios.get(`https://globalgate-backend-production.up.railway.app/endpoint/get-itemReturn/${DeleteId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemReturn/${DeleteId}`)
           SetItemsQtyArray(res.data.data.itemsQtyArray);
           setReference(res.data.data.reference);
           setRelatedNumber(res.data.data.outNumber);
@@ -390,9 +390,9 @@ function ItemReturnAdminView() {
     const fetchData = async () => {
       try {
         const [purChaseResponse, maintenanceResponse, invoiceResponse] = await Promise.all([
-          axios.get('https://globalgate-backend-production.up.railway.app/endpoint/purchase'),
-          axios.get('https://globalgate-backend-production.up.railway.app/endpoint/maintenance'),
-          axios.get('https://globalgate-backend-production.up.railway.app/endpoint/invoice')
+          axios.get('https://gg-project-production.up.railway.app/endpoint/purchase'),
+          axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance'),
+          axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
         ])
         setProject(purChaseResponse.data.data);
         setMaintenance(maintenanceResponse.data.data);
@@ -439,7 +439,7 @@ function ItemReturnAdminView() {
     const data = {
       items: result
     };
-    return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
+    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
   }
   const handleUpdateInvoice = () => {
     const result = filteredInvoice.map((row) => {
@@ -457,7 +457,7 @@ function ItemReturnAdminView() {
     const data = {
       items: result
     };
-    return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
+    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
   }
   const handleUpdateMaintenance = () => {
     const result = filteredMaintenance.map((row) => {
@@ -475,7 +475,7 @@ function ItemReturnAdminView() {
     const data = {
       items: result
     };
-    return axios.put(`https://globalgate-backend-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
+    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
   }
   {/** Update Info end */ }
   {/** Delete Start */ }
@@ -487,14 +487,14 @@ function ItemReturnAdminView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://globalgate-backend-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
     } catch (error) {
       console.log(error)
     }
@@ -502,7 +502,7 @@ function ItemReturnAdminView() {
   const handleDeleteUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://globalgate-backend-production.up.railway.app/endpoint/delete-itemReturn/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-itemReturn/${DeleteId}`);
       if (res) {
         handleCreateNotification();
         handleQty();
