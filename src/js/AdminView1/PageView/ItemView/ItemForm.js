@@ -109,7 +109,7 @@ function ItemForm() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -154,12 +154,12 @@ function ItemForm() {
       const handleFetch = async () => {
      if (navigator.onLine) {
          try {
-           const resItemUnit = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemUnit')
+           const resItemUnit = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemUnit')
            setUnitInfo(resItemUnit.data.data);
            await Promise.all(resItemUnit.data.data.map( async (item,i)=>{
              await db.itemUnitSchema.put({...item, id:i+1,synced: true,updateS:true})
             }))
-           const resCode = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemCode')
+           const resCode = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemCode')
            setItemCode(resCode.data.data);
            await Promise.all(resCode.data.data.map( async (item,i)=>{
              await db.itemCodeSchema.put({...item, id:i+1, synced: true,updateS:true})
@@ -186,7 +186,7 @@ function ItemForm() {
                   if (newCode) {
                       if (navigator.onLine) {
                           try {
-                            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-item/${newCode}`)
+                            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-last-saved-item/${newCode}`)
                             setItemNumber(res.data.itemUpc.itemNumber + 1)
                           } catch (error) {
                             console.error('Error fetching data:', error);
@@ -270,7 +270,7 @@ function ItemForm() {
         itemUnit
       }
       try{
-        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-itemUnit',data); 
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-itemUnit',data); 
         if (res) {
           handleOpenModal();
           setUnitInfo([...unitInfo, res.data.data ])
@@ -289,7 +289,7 @@ function ItemForm() {
         dateNotification: new Date()
       }
       try {
-        await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }
@@ -312,7 +312,7 @@ function ItemForm() {
       }
       if (navigator.onLine) {
         try{
-          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-item',data); 
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-item',data); 
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoCode = res.data.data.itemUpc.newCode

@@ -87,7 +87,7 @@ const ProjectFormView2 = ({onCreateOption, onClose,onId,onEstimate}) => {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -120,7 +120,7 @@ const ProjectFormView2 = ({onCreateOption, onClose,onId,onEstimate}) => {
       const fetchlastNumber = async () => {
        if (navigator.onLine) {
          try {
-           const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-project')
+           const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-project')
            setProjectNumber(parseInt(res.data.projectNumber) + 1)
          } catch (error) {
            console.error('Error fetching data:', error);
@@ -143,7 +143,7 @@ const ProjectFormView2 = ({onCreateOption, onClose,onId,onEstimate}) => {
        if (onId) {
       if (navigator.onLine) {
            try {
-             const resInvoice = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${onId}`)
+             const resInvoice = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${onId}`)
              setCustomerNameInfo(resInvoice.data.data.customerName.customerName);
              setCustomerName(resInvoice.data.data.customerName);
              setInvoiceDate(dayjs(resInvoice.data.data.invoiceDate));
@@ -159,7 +159,7 @@ const ProjectFormView2 = ({onCreateOption, onClose,onId,onEstimate}) => {
        } else if (onEstimate) {
        if (navigator.onLine) {
          try {
-           const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-estimation/${onEstimate}`)
+           const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${onEstimate}`)
            setCustomerNameInfo(res.data.data.customerName.customerName);
            setCustomerName(res.data.data.customerName);
            setInvoiceDate(dayjs(res.data.data.estimateDate));
@@ -239,7 +239,7 @@ const handleSubmit =async (e)=>{
     }; 
     if (navigator.onLine) {
       try{
-        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-projects',data);
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-projects',data);
         if (res) {
           // Open Loading View
           handleOpen();

@@ -158,7 +158,7 @@ function EmployeeViewAdminAll() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -189,14 +189,14 @@ function EmployeeViewAdminAll() {
   const [planing, setPlaning] = useState([])
   const [rate, setRate] = useState(0);
   const [loadingData, setLoadingData] = useState(true);
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/employee';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/employee';
 
   useEffect(() => {
     const fetchE = async () => {
       if (navigator.onLine) {
         try {
           const res = await axios.get(apiUrl)
-          const resPRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/paymentRate')
+          const resPRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
           resPRate.data.data.map((row) => setRate(row.paymentRate));
           if (res) {
             setEmployee(res.data.data.reverse());
@@ -233,11 +233,11 @@ function EmployeeViewAdminAll() {
       if (navigator.onLine) {
         try {
           const [res, resPayRoll, resPlaning, resDE, resItemOut] = await Promise.all([
-            axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employee/${id}`),
-            axios.get('https://gg-project-productionn.up.railway.app/endpoint/payRoll'),
-            axios.get('https://gg-project-productionn.up.railway.app/endpoint/planing'),
-            axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense'),
-            axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemOut')
+            axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employee/${id}`),
+            axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll'),
+            axios.get('https://gg-project-production.up.railway.app/endpoint/planing'),
+            axios.get('https://gg-project-production.up.railway.app/endpoint/expense'),
+            axios.get('https://gg-project-production.up.railway.app/endpoint/itemOut')
           ]);
 
           setEmployeeName(res.data.data.employeeName)
@@ -314,7 +314,7 @@ function EmployeeViewAdminAll() {
     const fetchImages = async () => {
       if (employeeName !== null) {
         try {
-          const resp = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-image/${employeeName}`);
+          const resp = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-image/${employeeName}`);
           setImages(resp.data.data)
           if (resp && resp.data.data.data) {
             const buffer = new Uint8Array(resp.data.data.data.data)
@@ -403,10 +403,10 @@ function EmployeeViewAdminAll() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -490,7 +490,7 @@ function EmployeeViewAdminAll() {
     formData.append('image', uploadedImageURL);
     formData.append('employeeName', employeeName);
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/upload-image', formData, {
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/upload-image', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -504,7 +504,7 @@ function EmployeeViewAdminAll() {
     e.preventDefault()
     if (images !== null) {
       try {
-        const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-image/${images._id}`)
+        const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-image/${images._id}`)
         if (res) {
           handleOpenDelete()
         }
@@ -522,7 +522,7 @@ function EmployeeViewAdminAll() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
       if (res) {
         setReason("");
         handleOpen();

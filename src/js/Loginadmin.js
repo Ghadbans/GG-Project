@@ -20,11 +20,11 @@ function Loginadmin() {
 	useEffect(() => {
 		const fetchData = async () => {
 			if (navigator.onLine) {
-				const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employeeuser')
+				const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeuser')
 				await Promise.all(res.data.data.map(async (item) => {
 					await db.employeeUserSchema.put({ ...item, synced: true, updateS: true })
 				}))
-				const resG = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess')
+				const resG = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess')
 				await Promise.all(resG.data.data.map(async (item) => {
 					await db.grantAccessSchema.put({ ...item, synced: true, updateS: true })
 				}))

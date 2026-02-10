@@ -8,7 +8,7 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
     const [payRoll,setPayRoll] = useState([]);
     const [employee,setEmployee] = useState([]);
     useEffect(()=> {
-        axios.get('https://gg-project-productionn.up.railway.app/endpoint/payRoll')
+        axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll')
         .then(res => {
           // Handle the response data here
           setPayRoll(res.data.data.reverse());
@@ -19,7 +19,7 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
         });
       },[])
       useEffect(()=> {
-        axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
+        axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
                 .then(res => {
                         // Handle the response data here
                         const formatDate = res.data.data

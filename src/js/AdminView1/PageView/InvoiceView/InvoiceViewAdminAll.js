@@ -166,7 +166,7 @@ function InvoiceViewAdminAll() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -196,7 +196,7 @@ function InvoiceViewAdminAll() {
    const fetchNumber = async () => {
      if (navigator.onLine) {
          try {
-           const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+           const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
            res.data.data.filter((row)=> row.userID === user.data.id )
                         .map((row)=>setGrantAccess(row.modules))
          } catch (error) {
@@ -231,12 +231,12 @@ const [item, SetItems] = useState([])
 const [items, setItems] = useState([])
 const [itemOut, setItemOut] = useState([]);
 const [itemReturn, setItemReturn] = useState([]);
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/invoice';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/invoice';
   useEffect(()=>{
     const fetchRate = async () => {
       if (navigator.onLine) {
         try {
-          const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
+          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
           resRate.data.data.map((row)=> setRate(row.rate))
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -254,13 +254,13 @@ const [itemReturn, setItemReturn] = useState([]);
          const res = await axios.get(apiUrl)
          setInvoice(res.data.data);
          setLoadingData(false)
-      const resItem = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')   
+      const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')   
       SetItems(resItem.data.data)
-      const resItemOut = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemOut')
+      const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemOut')
       setItemOut(resItemOut.data.data.filter((row)=> row.reference._id === id ).map((row)=>({...row, outNumber: "O-0" + row.outNumber,type:'Item Out' })))
-      const resIReturn = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/itemReturn')
+      const resIReturn = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemReturn')
       setItemReturn(resIReturn.data.data.filter((row)=> row.reference._id === id ).map((row)=>({...row, outNumber: "R-0" + row.outNumber, type:'Item return' })))
-      const resCategory = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expensesCategory')
+      const resCategory = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
          const filterData = res.data.data.filter((row)=>  row._id === id);
          setOldInvoice(filterData);
          setInvoiceInfo(
@@ -366,7 +366,7 @@ const [synchro, setSynchro] = useState('false')
 const handleSynced = async(e)=> {
   e.preventDefault()
   const updatePurchase = relatedPurchase.map((row)=>{
-    return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${row._id}`,{
+    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${row._id}`,{
       items:row.items
     })  
    }) 
@@ -384,7 +384,7 @@ useEffect(()=> {
   const fetchInvoice = async () => {
     if (navigator.onLine) {
       try {
-      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${id}`)  
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${id}`)  
       setReferenceName(res.data.data.invoiceName);
       setCustomerName(res.data.data.customerName);
       setCustomerName1(res.data.data.customerName.customerName.replace(/\s+/g,'_').replace(/\./g,''));
@@ -445,7 +445,7 @@ useEffect(()=>{
     if (customerID !== null){
        if (navigator.onLine) {
         try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-customer/${customerID}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customerID}`)
           setOldCredit(res.data.data.credit)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -468,9 +468,9 @@ useEffect(()=> {
     if (navigator.onLine) {
       try {
         const [estimateResponse,purchaseResponse,maintenanceResponse] = await Promise.all([
-          axios.get('https://gg-project-productionn.up.railway.app/endpoint/estimation'),
-          axios.get('https://gg-project-productionn.up.railway.app/endpoint/purchase'),   
-          axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance')   
+          axios.get('https://gg-project-production.up.railway.app/endpoint/estimation'),
+          axios.get('https://gg-project-production.up.railway.app/endpoint/purchase'),   
+          axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')   
         ])
         const filteredEstimate1 = estimateResponse.data.data.filter((row)=> row.ReferenceName === id)
       setEstimate(filteredEstimate1);
@@ -525,7 +525,7 @@ const fetchInvoice2 = async () => {
   if (purchase.length > 0) {
 if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/estimation')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/estimation')
         const filteredInvoice = res.data.data.filter((row)=> purchase?purchase.find((Item)=> row._id === Item.ReferenceName):'')
         setEstimate2(filteredInvoice);
       } catch (error) {
@@ -598,10 +598,10 @@ useEffect(()=> {
   const fetchComment = async () => {
 if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row)=> row.CommentInfo.idInfo === id)
                      setComments(resp.reverse())
-        const resPayment = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/payment')
+        const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
         const formatDate = resPayment.data.data.map(row => ({
           ...row,
           TotalAmount : row.TotalAmount?.filter((Item)=> Item.id === id)
@@ -610,7 +610,7 @@ if (navigator.onLine) {
         setTotalAmountPaidInvoice(formatDate.map((row)=>({
           totalAP:row.TotalAmount?.filter((Item)=> Item.id === id).reduce((sum,item)=> sum + parseFloat(item.total),0)
         })))
-        const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row)=> row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -638,7 +638,7 @@ if (navigator.onLine) {
     e.preventDefault();
    for (const InvoiceToUpdates of InvoiceToUpdate) {
     try{
-      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${InvoiceToUpdates._id}`,{
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${InvoiceToUpdates._id}`,{
         balanceDue: InvoiceToUpdates.balanceDue,
         total: InvoiceToUpdates.total
       })
@@ -667,7 +667,7 @@ useEffect(()=>{
   const fetchlastNumber = async () => {
    if (navigator.onLine) {
      try {
-       const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-payment')
+       const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-payment')
        setPaymentNumber(parseInt(res.data.paymentNumber) + 1)
      } catch (error) {
        console.error('Error fetching data:', error);
@@ -777,7 +777,7 @@ const handleClosePayment = () => {
     }
     if (navigator.onLine) {
       try {
-       await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-customer/${customerID}`,data) 
+       await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${customerID}`,data) 
        await db.customerSchema.update(customerID,{...data,updateS:true})
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -811,7 +811,7 @@ const handleClosePayment = () => {
     if (navigator.onLine) {
       const updateRequest = invoiceUpdate!== null ? 
       invoiceUpdate.filter((row)=> row.data.total !== 0).map(({id, data})=>{
-        return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${id}`,data)
+        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`,data)
        }):null
      if (updateRequest !== null) {
         try {
@@ -836,7 +836,7 @@ const handleClosePayment = () => {
       status:'Sent'
     };
     try {
-      const res = await  axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${id}`,data)
+      const res = await  axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`,data)
       if (res) {
         setUpdate('true')
         handleOpenPaymentModal();
@@ -865,7 +865,7 @@ const handleClosePayment = () => {
     }; 
    if (navigator.onLine) {
      try{
-       const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-payment',data); 
+       const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payment',data); 
        if (res) {
          await db.paymentSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
          handleUpdateInvoice();
@@ -895,7 +895,7 @@ const handleClosePayment = () => {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/',data)
+      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/',data)
       if (res) {
         setReason("");
         handleOpen();

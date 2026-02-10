@@ -134,7 +134,7 @@ function PaymentView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -158,7 +158,7 @@ function PaymentView() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -212,7 +212,7 @@ function PaymentView() {
   const fetchPayment = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/payment-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/payment-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -276,7 +276,7 @@ function PaymentView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -287,7 +287,7 @@ function PaymentView() {
       const paymentToSynced = syncedPayment.filter((row) => row.synced === false)
       for (const paymentInfo of paymentToSynced) {
         try {
-          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-payment', paymentInfo)
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payment', paymentInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoNumber = res.data.data.paymentNumber
@@ -318,13 +318,13 @@ function PaymentView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
         const CustomerInfo = res.data.data.map((item) => ({
           ...item,
           id: item._id,
         }))
         setCustomer(CustomerInfo.filter((row) => row.credit !== undefined && row.credit > 0))
-        const resOverdue = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice-Overdue')
+        const resOverdue = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice-Overdue')
         setInvoice(resOverdue.data)
         localStorage.setItem('InvoiceOverdue', JSON.stringify(resOverdue.data))
         setLoadingData(false)
@@ -345,7 +345,7 @@ function PaymentView() {
     const fetchDataHidden = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/hidden')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
           setHidden(res.data.data)
           localStorage.removeItem('Hidden')
           await Promise.all(res.data.data.map(async (item) => {
@@ -472,7 +472,7 @@ function PaymentView() {
       if (DeleteId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-payment/${DeleteId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payment/${DeleteId}`)
             setRelatedInvoice(res.data.data.TotalAmount);
             setRelatedCredit(res.data.data.remaining);
             setModes(res.data.data.modes);
@@ -501,7 +501,7 @@ function PaymentView() {
       if (relatedInvoice.length > 0) {
         if (navigator.onLine) {
           const getInvoice = relatedInvoice.map((row) => {
-            return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${row.id}`)
+            return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${row.id}`)
           })
           try {
             const res = await Promise.all(getInvoice);
@@ -526,7 +526,7 @@ function PaymentView() {
       if (relatedCustomerID) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-customer/${relatedCustomerID}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${relatedCustomerID}`)
             setOldCredit(res.data.data.credit !== null || res.data.data.credit !== undefined ? res.data.data.credit : 0)
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -569,7 +569,7 @@ function PaymentView() {
     // Update Value 
     if (navigator.onLine) {
       const updateRequest = updateInvoiceAmount !== null ? updateInvoiceAmount.map(({ id, data }) => {
-        return axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${id}`, data)
+        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`, data)
       }) : null
       if (updateRequest !== null) {
         try {
@@ -589,7 +589,7 @@ function PaymentView() {
     }
     if (navigator.onLine) {
       try {
-        await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-customer/${relatedCustomerID}`, data)
+        await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${relatedCustomerID}`, data)
         await db.customerSchema.update(relatedCustomerID, { ...data, updateS: true })
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -620,7 +620,7 @@ function PaymentView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -629,7 +629,7 @@ function PaymentView() {
     e.preventDefault()
     if (navigator.onLine) {
       try {
-        const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-payment/${DeleteId}`);
+        const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-payment/${DeleteId}`);
         if (res) {
           handleUpdateInvoice();
           handleUpdateCredit();

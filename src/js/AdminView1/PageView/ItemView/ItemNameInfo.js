@@ -19,7 +19,7 @@ function ItemNameInfo({ onId }) {
 
   const [item, SetItems] = useState([])
 
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/item';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/item';
 
   useEffect(() => {
     const fetchItem = async () => {

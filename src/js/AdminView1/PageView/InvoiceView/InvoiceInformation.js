@@ -27,7 +27,7 @@ function InvoiceInformation({onId}) {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -49,7 +49,7 @@ function InvoiceInformation({onId}) {
     const [invoice,setInvoice] = useState([]);
     const [invoice2, SetInvoice2] = useState({})
     const [hidden, setHidden] = useState([]);
-    const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/invoice';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/invoice';
     useEffect(()=> {
       const fetchEstimate = async () => {
      if (navigator.onLine) {
@@ -70,7 +70,7 @@ function InvoiceInformation({onId}) {
       const fetchData = async () => {
        if (navigator.onLine) {
          try {
-           const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/hidden')
+           const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
             setHidden(res.data.data)
             localStorage.removeItem('Hidden')
             await Promise.all(res.data.data.map( async (item)=>{

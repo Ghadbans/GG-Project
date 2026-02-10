@@ -145,7 +145,7 @@ function EstimateFormClone() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -165,7 +165,7 @@ function EstimateFormClone() {
       fetchUser()
     },[dispatch]);
   
-    const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-estimation';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-estimation';
     const [terms, setTerms] = useState("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
     const [estimateDate,setEstimateDate] = useState(()=>{
       const date = new Date()
@@ -196,7 +196,7 @@ function EstimateFormClone() {
       const fetchlastNumber = async () => {
         if (navigator.onLine) {
           try {
-            const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-estimation')
+            const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-estimation')
             setEstimateNumber(parseInt(res.data.estimateNumber) + 1)
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -213,7 +213,7 @@ function EstimateFormClone() {
                     const fetchData = async () => {
                      if (navigator.onLine) {
                        try {
-                         const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-estimation/${id}`)
+                         const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${id}`)
                          setCustomerName(res.data.data.customerName);
                          setEstimateDate(res.data.data.estimateDate);
                          setEstimateSubject(res.data.data.estimateSubject);
@@ -247,7 +247,7 @@ function EstimateFormClone() {
                       const fetchItem = async()=> {
                       if (navigator.onLine) {
                           try {
-                            const res = await  axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
+                            const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
                             setItemInformation(res.data.data.reverse()) 
                           } catch (error) {
                             console.error('Error fetching data:', error);
@@ -379,7 +379,7 @@ function EstimateFormClone() {
       const fetchCustomer = async () => {
         if (navigator.onLine) {
           try {
-            const res = await   axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
+            const res = await   axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
             setCustomer(res.data.data.reverse());
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -467,7 +467,7 @@ function EstimateFormClone() {
       setOpenItemUpdate(false);
       if (idItem) {
         try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
           SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
             itemName:{
               _id:res.data.data._id,
@@ -557,7 +557,7 @@ function EstimateFormClone() {
       dateNotification:dateComment
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
     } catch (error) {
       console.log(error)
     }

@@ -132,7 +132,7 @@ function InvoiceViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -161,7 +161,7 @@ function InvoiceViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -209,7 +209,7 @@ function InvoiceViewAdmin() {
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/invoice-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/invoice-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
       const formatDate = res.data.itemI.map((row) => ({
         ...row,
         id: row._id,
@@ -302,7 +302,7 @@ function InvoiceViewAdmin() {
     const fetchDataHidden = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/hidden')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
           setHiddenRow(res.data.data.map((row) => row.idRow))
           setHidden(res.data.data)
           localStorage.removeItem('Hidden')
@@ -373,7 +373,7 @@ function InvoiceViewAdmin() {
   {/** Delete Function */ }
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-invoice/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-invoice/${DeleteId}`);
       if (res) {
         handleDeleteOpenLoading();
       }
@@ -385,7 +385,7 @@ function InvoiceViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${idToDelete}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -406,7 +406,7 @@ function InvoiceViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -414,7 +414,7 @@ function InvoiceViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-invoice/${idToDelete}`)
+      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-invoice/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -433,7 +433,7 @@ function InvoiceViewAdmin() {
     const fetchId = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${updateId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${updateId}`)
           setStatus(res.data.data.status);
           setInvoiceN(res.data.data.invoiceNumber);
         } catch (error) {
@@ -451,7 +451,7 @@ function InvoiceViewAdmin() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
     } catch (error) {
       console.log(error)
     }
@@ -462,7 +462,7 @@ function InvoiceViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${updateId}`, data)
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${updateId}`, data)
       if (res) {
         handleCreateComment();
         handleOpenLoading();
@@ -486,10 +486,10 @@ function InvoiceViewAdmin() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-hidden', {
+          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
             idRow: id, hiddenByCEO: true
           })
         }

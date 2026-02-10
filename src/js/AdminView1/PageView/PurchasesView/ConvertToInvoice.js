@@ -149,7 +149,7 @@ function ConvertToInvoice() {
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
         .then(res => {
           // Handle the response data here
           const Name = res.data.data.employeeName;
@@ -173,7 +173,7 @@ function ConvertToInvoice() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-invoice';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
   const invoiceDate = dayjs(Date.now());
   const [invoiceDueDate, setInvoiceDueDate] = useState("");
   const [invoiceSubject, setInvoiceSubject] = useState("");
@@ -210,7 +210,7 @@ function ConvertToInvoice() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-purchase/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
         setCustomer(res.data.data.customerName);
         setProjectID(res.data.data.projectName._id);
         SetItems(res.data.data.items);
@@ -218,7 +218,7 @@ function ConvertToInvoice() {
         setNoteInfo(res.data.data.noteInfo);
         setInvoiceSubject(res.data.data.projectName.projectName);
         setInvoiceDefect(res.data.data.estimateDefect);
-        const resPayment = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/payment');
+        const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment');
         const projectPayments = resPayment.data.data.filter(p => p.TotalAmount && p.TotalAmount.some(t => t.id === res.data.data.projectName._id));
         const totalPrePaid = projectPayments.reduce((sum, p) => sum + parseFloat(p.TotalAmount.find(t => t.id === res.data.data.projectName._id)?.total || 0), 0);
         setTotal(totalPrePaid);
@@ -232,7 +232,7 @@ function ConvertToInvoice() {
     const fetchCustomer = async () => {
       if (customer) {
         try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-customer/${customer._id}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customer._id}`)
           setCustomerName(
             {
               _id: res.data.data._id,
@@ -281,7 +281,7 @@ function ConvertToInvoice() {
   useEffect(() => {
     const fetchlastNumber = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-invoice')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
         setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -292,7 +292,7 @@ function ConvertToInvoice() {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
         setItemInformation(res.data.data.reverse())
         SetItems(items => items.map((row) => {
           const related = res.data.data.find((row2) => row.itemName !== undefined && row2._id === row.itemName._id)
@@ -306,10 +306,10 @@ function ConvertToInvoice() {
           }
           return row
         }))
-        const resCategory = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expensesCategory')
+        const resCategory = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
         setCategories(resCategory.data.data);
-        const resExpenses = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense')
-        const resPlaning = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/planing')
+        const resExpenses = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
+        const resPlaning = await axios.get('https://gg-project-production.up.railway.app/endpoint/planing')
         if (projectId) {
           const result = resExpenses.data.data.filter((row) => row.accountNameInfo !== undefined && row.accountNameInfo._id === projectId)
           setExpensesInfo(result)
@@ -570,7 +570,7 @@ function ConvertToInvoice() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -677,7 +677,7 @@ function ConvertToInvoice() {
       statusInfo: 'Completed'
     };
     try {
-      await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-purchase/${id}`, data)
+      await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${id}`, data)
     } catch (error) {
       console.error(error)
     }
@@ -687,7 +687,7 @@ function ConvertToInvoice() {
       status: 'Completed'
     };
     try {
-      await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-projects/${projectId}`, data)
+      await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-projects/${projectId}`, data)
     } catch (error) {
       console.error(error)
     }
@@ -701,7 +701,7 @@ function ConvertToInvoice() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }

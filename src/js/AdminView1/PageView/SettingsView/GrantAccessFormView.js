@@ -119,7 +119,7 @@ function GrantAccessFormView() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -169,7 +169,7 @@ function GrantAccessFormView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employeeuser')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeuser')
         setAccount(res.data.data.reverse());
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -232,7 +232,7 @@ function GrantAccessFormView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -247,7 +247,7 @@ function GrantAccessFormView() {
       modules
     };
     try {
-      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-grantAccess', data);
+      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-grantAccess', data);
       if (res) {
         // Open Loading View
         const ReferenceInfo = res.data.data._id

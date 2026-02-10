@@ -51,7 +51,7 @@ function ItemCommentForm({onCreateOption,onId}) {
   useEffect(()=> {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
       .then(res => {
         // Handle the response data here
         const Name = res.data.data.employeeName;
@@ -71,7 +71,7 @@ function ItemCommentForm({onCreateOption,onId}) {
     const [Comments1,setComments]= useState([]);
     const [reason,setReason]= useState("");
     useEffect (() => {
-        axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${onId}`)
+        axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${onId}`)
         .then(res => {
           // get the response data here
           setComments(res.data.data.Comments);
@@ -122,7 +122,7 @@ function ItemCommentForm({onCreateOption,onId}) {
      {/** Loading End */}
      const fetchingData = async () => {
         try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${onId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${onId}`)
             onCreateOption(res.data.data.Comments);
         } catch (error) {
             console.log(error)
@@ -134,7 +134,7 @@ function ItemCommentForm({onCreateOption,onId}) {
        const data = {
          Comments
        };
-      axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-item/${onId}`,data)
+      axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${onId}`,data)
        .then((res) => {
          if (res) {
            setReason("");

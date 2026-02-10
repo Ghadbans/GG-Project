@@ -133,7 +133,7 @@ function PayRollViewAdmin() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -157,7 +157,7 @@ function PayRollViewAdmin() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -213,7 +213,7 @@ function PayRollViewAdmin() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/payRoll-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/payRoll-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
           id: item._id,
@@ -266,7 +266,7 @@ function PayRollViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -286,7 +286,7 @@ function PayRollViewAdmin() {
 
       for (const PayRollInfo of PayRollToSynced) {
         try {
-          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-payRoll', PayRollInfo)
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payRoll', PayRollInfo)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoNumber = res.data.data.payNumber
@@ -301,7 +301,7 @@ function PayRollViewAdmin() {
       const PayRollToSyncedUpdate = syncedPayRoll.filter((row) => row.updateS === false)
       for (const PayRollInfoUpdate of PayRollToSyncedUpdate) {
         try {
-          await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-payRoll/${PayRollInfoUpdate._id}`, PayRollInfoUpdate)
+          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-payRoll/${PayRollInfoUpdate._id}`, PayRollInfoUpdate)
           await db.payRollSchema.update(PayRollInfoUpdate.payNumber, { synced: true, updateS: true })
           handleOpenOffline();
         } catch (error) {
@@ -372,7 +372,7 @@ function PayRollViewAdmin() {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-payRoll/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-payRoll/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -384,7 +384,7 @@ function PayRollViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-payRoll/${idToDelete}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payRoll/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -405,7 +405,7 @@ function PayRollViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -413,7 +413,7 @@ function PayRollViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-payRoll/${idToDelete}`)
+      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-payRoll/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -454,7 +454,7 @@ function PayRollViewAdmin() {
     const fetchId = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-payRoll/${updateId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payRoll/${updateId}`)
           setStatus(res.data.data.status);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -469,7 +469,7 @@ function PayRollViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-payRoll/${updateId}`, data)
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-payRoll/${updateId}`, data)
       if (res) {
         handleOpenLoading();
       }

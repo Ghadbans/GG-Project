@@ -122,7 +122,7 @@ function RateViewAdmin() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role, id:res.data.data._id}));
@@ -159,15 +159,15 @@ function RateViewAdmin() {
       useEffect(()=> {
         const fetchData = async () => {
           try {
-            const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
+            const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
             setRate(res.data.data);
-            const resReturn = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rateReturn')
+            const resReturn = await axios.get('https://gg-project-production.up.railway.app/endpoint/rateReturn')
             setRateReturned(resReturn.data.data);
             localStorage.setItem('Rate', JSON.stringify(res.data.data))
-            const resRatePayment = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/paymentRate')
+            const resRatePayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
             setPayRate(resRatePayment.data.data);
             localStorage.setItem('PaymentRate', JSON.stringify(resRatePayment.data.data))
-            const resCategory = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expensesCategory')
+            const resCategory = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
             const formatDate = resCategory.data.data.map((item,i)=>({
               ...item,
               id: item._id,
@@ -175,7 +175,7 @@ function RateViewAdmin() {
             })) 
             localStorage.setItem('Category', JSON.stringify(resCategory.data.data))
             setCategory(formatDate);
-            const resCash = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/cash')
+            const resCash = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash')
             const formatDate1 = resCash.data.data.map((item)=>({
               ...item,
               id: item._id,
@@ -301,7 +301,7 @@ useEffect(()=>{
   const fetchRateId = async ()=> {
     if (updateId !== null) {
     try {
-      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-rate/${updateId}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-rate/${updateId}`)
       setUpdateRate(res.data.data.rate);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -314,7 +314,7 @@ useEffect(()=>{
   const fetchRateId = async ()=> {
     if (updateId1 !== null) {
     try {
-      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-rateReturn/${updateId1}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-rateReturn/${updateId1}`)
       setUpdateRateReturn(res.data.data.rateR);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -327,7 +327,7 @@ useEffect (() => {
   const fetchPayId = async ()=> {
     if (updateIdRate !== null) {
     try {
-      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-paymentRate/${updateIdRate}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-paymentRate/${updateIdRate}`)
       setUpdatePaymentRate(res.data.data.paymentRate);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -344,7 +344,7 @@ const handleSubmitUpdateStatus = async (e) => {
     rate : updateRate
   };
   try {
-    const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-rate/${updateId}`,data)
+    const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-rate/${updateId}`,data)
     if (res) {
       handleOpenLoading();
     }
@@ -358,7 +358,7 @@ const handleSubmitUpdateStatusReturn = async (e) => {
     rateR : updateRateReturn
   };
   try {
-    const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-rateReturn/${updateId1}`,data)
+    const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-rateReturn/${updateId1}`,data)
     if (res) {
       handleOpenLoading();
     }
@@ -372,7 +372,7 @@ const handleSubmitUpdateStatusRate = async (e) => {
     paymentRate : updatePaymentRate
   };
   try {
-    const res = await  axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-paymentRate/${updateIdRate}`,data)
+    const res = await  axios.put(`https://gg-project-production.up.railway.app/endpoint/update-paymentRate/${updateIdRate}`,data)
     if (res) {
       handleOpenLoading();
     }

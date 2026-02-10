@@ -60,7 +60,7 @@ function ExpensesViewAdminAll() {
   useEffect(()=> {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
       .then(res => {
         // Handle the response data here
         const Name = res.data.data.employeeName;
@@ -87,7 +87,7 @@ function ExpensesViewAdminAll() {
   const [invoice,setInvoice] = useState([]);
   const [expenses2, SetExpenses2] = useState({})
   const [loadingData, setLoadingData] = useState(true);
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/dailyexpense';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/dailyexpense';
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {
@@ -102,7 +102,7 @@ function ExpensesViewAdminAll() {
   });
 },[])
 useEffect(()=> {
-axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
+axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
 .then(res => {
   // Handle the response data here
   const result = res.data.data.filter((row)=> row.Ref && (
@@ -181,7 +181,7 @@ const [reason,setReason]= useState("");
 const [Comments1,setComments]= useState([]);
 
 useEffect(()=> {
-  axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
+  axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
            .then(res => {
                    // Handle the response data here
                    const resp = res.data.data.filter((row)=> row.CommentInfo.idInfo === id)
@@ -238,7 +238,7 @@ const CommentInfo =
       CommentInfo,
       dateComment
     };
-   axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/',data)
+   axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/',data)
     .then((res) => {
       if (res) {
         setReason("");

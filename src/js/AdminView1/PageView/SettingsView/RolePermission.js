@@ -137,7 +137,7 @@ function RolePermission() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -171,7 +171,7 @@ function RolePermission() {
     const fetchCategory = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess')
           setGrantAccess(res.data.data);
           await Promise.all(res.data.data.map( async (item)=>{
             await db.grantAccessSchema.put({...item, synced:true,updateS:true})
@@ -222,7 +222,7 @@ function RolePermission() {
       
       if (DeleteId !== null) {
       try {
-          const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-grantAccess/${DeleteId}`)
+          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-grantAccess/${DeleteId}`)
           setNameDelete(res.data.data.employeeName)
       } catch (error) {
         console.log(error)
@@ -238,7 +238,7 @@ function RolePermission() {
       dateNotification:new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
     } catch (error) {
       console.log(error)
     }
@@ -246,7 +246,7 @@ function RolePermission() {
   const handleDelete = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-grantAccess/${DeleteId}`);
+      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-grantAccess/${DeleteId}`);
       if (res) {
         handleCreateNotification()
         handleOpenModal();

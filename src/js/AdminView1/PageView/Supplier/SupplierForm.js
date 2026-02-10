@@ -151,7 +151,7 @@ function SupplierForm() {
       const fetchUser = async () => {
         if (storesUserId) {
         try {
-          const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({userName: Name, role: Role}));
@@ -184,7 +184,7 @@ function SupplierForm() {
     const toggleDrawer = () => {
      setSideBar(!sideBar);
     };
-    const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-Supplier';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-Supplier';
     const [supplierName,setSupplierName]=useState("");
     const [storeName,setStoreName]=useState("");
     const [customerPhone1,setCustomerPhone1]=useState("");
@@ -235,7 +235,7 @@ function SupplierForm() {
         dateNotification:dateComment
       }
       try {
-        await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }

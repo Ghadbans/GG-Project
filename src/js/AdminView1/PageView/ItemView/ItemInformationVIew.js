@@ -175,7 +175,7 @@ function ItemInformationVIew() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -200,7 +200,7 @@ function ItemInformationVIew() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -290,22 +290,22 @@ function ItemInformationVIew() {
 
       await Promise.all([
         fetchFiltered(
-          `https://gg-project-productionn.up.railway.app/endpoint/itemOut/item/${id}`,
+          `https://gg-project-production.up.railway.app/endpoint/itemOut/item/${id}`,
           setItemOut,
           (row) => ({ ...row, itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName && Item.itemName._id === id && parseFloat(Item.newItemOut) > 0) })
         ),
         fetchFiltered(
-          `https://gg-project-productionn.up.railway.app/endpoint/itemPurchase/item/${id}`,
+          `https://gg-project-production.up.railway.app/endpoint/itemPurchase/item/${id}`,
           setItemPurchase,
           (row) => ({ ...row, items: row.items.filter((Item) => Item.itemName && Item.itemName._id === id) })
         ),
         fetchFiltered(
-          `https://gg-project-productionn.up.railway.app/endpoint/pos/item/${id}`,
+          `https://gg-project-production.up.railway.app/endpoint/pos/item/${id}`,
           setPosOut,
           (row) => ({ ...row, items: row.items.filter((Item) => Item.itemName && Item.itemName._id === id && parseFloat(Item.itemQty) > 0) })
         ),
         fetchFiltered(
-          `https://gg-project-productionn.up.railway.app/endpoint/itemReturn/item/${id}`,
+          `https://gg-project-production.up.railway.app/endpoint/itemReturn/item/${id}`,
           setItemReturn,
           (row) => ({ ...row, itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName && Item.itemName._id === id && parseFloat(Item.newItemOut) > 0) })
         )
@@ -352,7 +352,7 @@ function ItemInformationVIew() {
 
   const fetchStock = async () => {
     try {
-      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-item/${id}`, {
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${id}`, {
         itemQuantity: stock
       })
     } catch (error) {
@@ -388,10 +388,10 @@ function ItemInformationVIew() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
+        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
         setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -463,7 +463,7 @@ function ItemInformationVIew() {
       if (navigator.onLine && !isHibernating) {
         try {
           if (id) {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${id}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${id}`)
             setItemData(res.data.data)
             setLoadingData(false)
             setItemName(res.data.data.itemName)
@@ -528,7 +528,7 @@ function ItemInformationVIew() {
     formData.append('image', uploadedImageURL);
     formData.append('employeeName', id);
     try {
-      await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/upload-image-item/${id}`, formData, {
+      await axios.put(`https://gg-project-production.up.railway.app/endpoint/upload-image-item/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -549,7 +549,7 @@ function ItemInformationVIew() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
       if (res) {
         setReason("");
         handleOpen();
@@ -739,7 +739,7 @@ function ItemInformationVIew() {
       if (idView !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-itemPurchase/${idView}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${idView}`)
             setItemPurchaseView(res.data.data)
           } catch (error) {
             console.log(error)
@@ -770,7 +770,7 @@ function ItemInformationVIew() {
       if (idView2 !== null) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-itemOut/${idView2}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemOut/${idView2}`)
             setItemPurchaseView2(res.data.data)
           } catch (error) {
             console.log(error)

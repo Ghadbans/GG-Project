@@ -144,7 +144,7 @@ function PayRollFormView() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -226,7 +226,7 @@ useEffect(()=>{
   const fetchlastNumber = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-payRoll')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-payRoll')
         setPayNumber(parseInt(res.data.payNumber) + 1);
         setPayDate(res.data.payDate);
         setMonth(res.data.month);
@@ -248,9 +248,9 @@ useEffect(()=>{
   const handleFetch = async () => {
   if (navigator.onLine) {
       try {
-        const resEmployee = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
+        const resEmployee = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
         setEmployee(resEmployee.data.data.filter((row)=> row.status === 'Employed'|| row.status === 'Resign'));
-        const resPRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/paymentRate')
+        const resPRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
         resPRate.data.data.map((row)=> setRate(row.paymentRate));
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -269,7 +269,7 @@ useEffect(()=> {
     if (navigator.onLine) {
       try {
         //get Expenses
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
         const resultTransport = res.data.data.filter((row)=> dayjs(row.expenseDate).format('MM/YYYY') === dayjs(month).format('MM/YYYY') && row.accountName === 'Employee' && row.expenseCategory.expensesCategory === 'Transport')
         .map((row)=>({
           employeeName: row.employeeName.filter((Item)=> Item.idRow === employeeName.id)
@@ -307,7 +307,7 @@ useEffect(()=> {
   const totalB = resultBonus.length > 0 ?resultBonus.reduce((acc,row)=>{ return (acc +  row.employeeName.reduce((sum,Item)=> sum + parseFloat(Item.amount),0))},0):0
   setBonus(totalB)
       //get Attendance
-    const dayW = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employeeattendance')
+    const dayW = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeattendance')
     const dayWArray = dayW.data.data.filter((row)=> dayjs(row.timeIn).format('MM/YYYY') === dayjs(month).format('MM/YYYY') && row.id === employeeName.id)
     const nbreOfDay = dayWArray.filter(item=>item.observation === 'P' || item.observation === 'H' ).reduce((sum,item)=> sum + item.daysWN,0 );
     setDaysW(nbreOfDay)
@@ -502,7 +502,7 @@ useEffect(()=> {
         dateNotification:new Date()
       }
       try {
-        await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }
@@ -528,7 +528,7 @@ useEffect(()=> {
       }
        if (navigator.onLine) {
          try{
-         const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-payRoll',{
+         const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payRoll',{
           payNumber,payDate, month, daysW, status, daysOpen,Lops,basicSalary,earningSalary,advancedSalary,basicTransport,transportEarning,transportDeduction,foodBasic,
           foodEarning,itemLost,foodDeduction,bounceAllowances,bounceAllowancesEarning,other,otherEarning,loan,
           bonus,totalActualSalary,totalActualEarning,totalActualDeduction,totalNet,totalPaid,rate,totalPaidDollars,words,

@@ -152,7 +152,7 @@ function CategoryViewDailyExpenses() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -191,8 +191,8 @@ function CategoryViewDailyExpenses() {
        if (navigator.onLine) {
            try {
             const [expenseResponse,categoryResponse] = await Promise.all([
-              axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense'),
-              axios.get('https://gg-project-productionn.up.railway.app/endpoint/expensesCategory')
+              axios.get('https://gg-project-production.up.railway.app/endpoint/expense'),
+              axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
             ])
              setExpenses(expenseResponse.data.data.reverse());
              setCategories(categoryResponse.data.data);

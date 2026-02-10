@@ -152,7 +152,7 @@ function MakePurchaseConvertToProject() {
       const fetchUser = async () => {
         if (storesUserId) {
         try {
-          const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({userName: Name, role: Role}));
@@ -204,7 +204,7 @@ function MakePurchaseConvertToProject() {
     useEffect(()=> {
       const fetchProject = async () => {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects') 
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects') 
           setProject(res.data.data);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -224,7 +224,7 @@ function MakePurchaseConvertToProject() {
     useEffect(()=>{
       const fetchlastNumber = async () => {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-purchase')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchase')
           setPurchaseNumber(parseInt(res.data.purchaseNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -235,7 +235,7 @@ function MakePurchaseConvertToProject() {
                   useEffect(()=>{
                     const fetchItem = async()=> {
                       try {
-                        const res = await  axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
+                        const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
                         setItemInformation(res.data.data.reverse()) 
                       } catch (error) {
                         console.error('Error fetching data:', error);
@@ -248,7 +248,7 @@ function MakePurchaseConvertToProject() {
   useEffect (() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-estimation/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${id}`)
         setCustomerNameInfo(res.data.data.customerName.customerName);
         SetItems(res.data.data.items);
         setInvoiceName(res.data.data.estimateName);
@@ -421,7 +421,7 @@ const handleCloseItemUpdate = async() => {
   setOpenItemUpdate(false);
   if (idItem) {
     try {
-      const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
+      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
       SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
         itemName:{
           _id:res.data.data._id,
@@ -511,7 +511,7 @@ const handleCreateItem = (newItem)=> {
         ReferenceName: ReferenceInfo
       }; 
       try {
-       await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-estimation/${id}`,data)
+       await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${id}`,data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -526,7 +526,7 @@ const handleCreateItem = (newItem)=> {
       dateNotification:dateComment
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
     } catch (error) {
       console.log(error)
     }
@@ -550,7 +550,7 @@ const handleCreateItem = (newItem)=> {
         status
       }; 
       try{
-        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-purchase',data);
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchase',data);
         if (res) {
            // Open Loading View
            const ReferenceInfo = res.data.data._id

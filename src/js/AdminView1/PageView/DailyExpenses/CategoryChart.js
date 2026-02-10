@@ -17,7 +17,7 @@ function CategoryChart({onChangeId}) {
         const fetchData = async () => {
          if (navigator.onLine) {
            try {
-             const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/expense')
+             const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
              setExpenses(res.data.data);
            } catch (error) {
              console.error('Error fetching data:', error); 

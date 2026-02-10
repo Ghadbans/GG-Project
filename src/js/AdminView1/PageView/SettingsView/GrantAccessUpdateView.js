@@ -120,7 +120,7 @@ function GrantAccessUpdateView() {
     const fetchUser = async () => {
       if (storesUserId) {
       try {
-        const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+        const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
         const Name = res.data.data.employeeName;
         const Role = res.data.data.role;
         dispatch(setUser({userName: Name, role: Role}));
@@ -149,7 +149,7 @@ function GrantAccessUpdateView() {
   useEffect(()=> {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-grantAccess/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-grantAccess/${id}`)
         setUserName(res.data.data.employeeName);
         setModules(res.data.data.modules);
       } catch (error) {
@@ -208,7 +208,7 @@ const handleCreateComment = async () => {
     dateNotification: new Date()
   };
   try {
-     await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/',data)
+     await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
   
   } catch (error) {
     console.log(error)
@@ -220,7 +220,7 @@ const handleCreateComment = async () => {
       modules
     }; 
     try{
-      const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-grantAccess/${id}`,data)
+      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-grantAccess/${id}`,data)
       if (res) {
          // Open Loading View
          handleCreateComment()

@@ -128,7 +128,7 @@ function EmployeePlaningForm() {
           if (storesUserId) {
          if (navigator.onLine) {
            try {
-             const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+             const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
              const Name = res.data.data.employeeName;
              const Role = res.data.data.role;
              dispatch(setUser({userName: Name, role: Role}));
@@ -184,15 +184,15 @@ function EmployeePlaningForm() {
         const fetchEmployee = async ()=> {
             if (navigator.onLine) {
               try {
-                const resProject = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects')
-                const resPlaning = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/planing')
+                const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+                const resPlaning = await axios.get('https://gg-project-production.up.railway.app/endpoint/planing')
                 setProject(resProject.data.data.filter((row)=> row.status === 'On-Going').reverse());
-                const resMaintenance = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/maintenance')
+                const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
                 setMaintenance(resMaintenance.data.data.filter((row)=>row.status === "Open" ));
                 setPlaning(resPlaning.data.data.filter((row)=>dayjs(row.planingDate).format('DD/MM/YYYY') === dayjs(planingDate).format('DD/MM/YYYY')))
-                const resPRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/paymentRate')
+                const resPRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
                 resPRate.data.data.map((row)=> setRate(row.paymentRate));
-                  const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/employeeattendance')  
+                  const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeattendance')  
                   setEmployeeAttendance(res.data.data.filter((row)=> (row.observation === 'P' || row.observation === 'H') && dayjs(row.timeIn).format('DD/MM/YYYY') === dayjs(planingDate).format('DD/MM/YYYY') ).map((row2)=>({
                    ID: row2.id,
                    Name:row2.name,
@@ -243,7 +243,7 @@ function EmployeePlaningForm() {
         const fetchData = async () => {
           if (navigator.onLine) {
             try {
-              const employeeResponse = await  axios.get('https://gg-project-productionn.up.railway.app/endpoint/employee')
+              const employeeResponse = await  axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
               setEmployee(employeeResponse.data.data.filter((row)=> employeeAttendance?.find((row2)=> row2.ID === row._id)));
             } catch (error) {
               console.log(error)
@@ -341,7 +341,7 @@ function EmployeePlaningForm() {
                   dateNotification: new Date()
                 }
                 try {
-                  await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+                  await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
                 } catch (error) {
                   console.log(error)
                 }
@@ -352,7 +352,7 @@ function EmployeePlaningForm() {
                 setSaving('true')
                if (navigator.onLine) {
                  const saveAttendance = arrayNew.map((row)=>{
-                   return axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-planing',row)
+                   return axios.post('https://gg-project-production.up.railway.app/endpoint/create-planing',row)
                  })
                  try {
                    const res = await Promise.all(saveAttendance);

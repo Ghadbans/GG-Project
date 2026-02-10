@@ -156,7 +156,7 @@ function PurchasesFormView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -182,7 +182,7 @@ function PurchasesFormView() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-purchase';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-purchase';
   const [items, SetItems] = useState([]);
   const [purchaseAmount1, setPurchaseAmount1] = useState(0);
   const [purchaseAmount2, setPurchaseAmount2] = useState(0);
@@ -199,7 +199,7 @@ function PurchasesFormView() {
     const fetchProject = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/projects')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
           setProject(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -235,7 +235,7 @@ function PurchasesFormView() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/get-last-saved-purchase')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchase')
           setPurchaseNumber(parseInt(res.data.purchaseNumber) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -252,7 +252,7 @@ function PurchasesFormView() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
           setItemInformation(res.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -270,10 +270,10 @@ function PurchasesFormView() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -577,7 +577,7 @@ function PurchasesFormView() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
           ...row,
           itemName: {
@@ -655,7 +655,7 @@ function PurchasesFormView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }

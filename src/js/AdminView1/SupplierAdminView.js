@@ -134,7 +134,7 @@ function SupplierAdminView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
@@ -158,7 +158,7 @@ function SupplierAdminView() {
     const fetchNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row) => row.userID === user.data.id)
             .map((row) => setGrantAccess(row.modules))
         } catch (error) {
@@ -197,7 +197,7 @@ function SupplierAdminView() {
   const fetchData = async (page, searchTerm) => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/supplier-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/supplier-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
         SetTotalPage(res.data.totalPages);
         const formatDate = res.data.itemI.map((item) => ({
           ...item,
@@ -255,7 +255,7 @@ function SupplierAdminView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -266,7 +266,7 @@ function SupplierAdminView() {
       const customertoSynChro = unsyncedCustomer.filter((row) => row.synced === false).map(({ supplierName, storeName, customerPhone1, customerPhone2, address, description }) => ({ supplierName, storeName, customerPhone1, customerPhone2, address, description }))
       for (const customers of customertoSynChro) {
         try {
-          const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-Supplier', customers)
+          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-Supplier', customers)
           if (res) {
             const ReferenceInfo = res.data.data._id
             const ReferenceInfoCustomer = res.data.data.storeName
@@ -280,7 +280,7 @@ function SupplierAdminView() {
       const customertoSynChroUpdate = unsyncedCustomer.filter((row) => row.updateS === false)
       for (const customersUpdate of customertoSynChroUpdate) {
         try {
-          await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-Supplier/${customersUpdate._id}`, customersUpdate)
+          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-Supplier/${customersUpdate._id}`, customersUpdate)
           handleOpenOffline();
         } catch (error) {
           console.log(error)
@@ -353,7 +353,7 @@ function SupplierAdminView() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-Supplier/${idToDelete}`)
+        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-Supplier/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -374,7 +374,7 @@ function SupplierAdminView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
     } catch (error) {
       console.log(error)
     }
@@ -383,7 +383,7 @@ function SupplierAdminView() {
     e.preventDefault()
     if (navigator.onLine) {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.delete(`https://gg-project-productionn.up.railway.app/endpoint/delete-Supplier/${idToDelete}`)
+        return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-Supplier/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);

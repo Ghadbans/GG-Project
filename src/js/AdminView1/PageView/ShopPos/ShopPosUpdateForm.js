@@ -146,7 +146,7 @@ function ShopPosUpdateForm() {
         if (storesUserId) {
        if (navigator.onLine) {
          try {
-           const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
            const Name = res.data.data.employeeName;
            const Role = res.data.data.role;
            dispatch(setUser({userName: Name, role: Role}));
@@ -172,7 +172,7 @@ function ShopPosUpdateForm() {
       navigate('/')
     }
   
-    const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/create-invoice';
+    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
     const [invoiceDate,setInvoiceDate] =useState(()=>{
       const date = new Date()
       return date
@@ -206,7 +206,7 @@ function ShopPosUpdateForm() {
         const fetchData = async () => {
       if (navigator.onLine) {
             try {
-              const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-pos/${id}`)
+              const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${id}`)
               setCustomerName(res.data.data.customerName);
               setFactureNumber(res.data.data.factureNumber);
               setTotal(res.data.data.totalFC);
@@ -251,7 +251,7 @@ function ShopPosUpdateForm() {
                       const fetchItem = async()=> {
                       if (navigator.onLine) {
                           try {
-                            const res = await  axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
+                            const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
                             setItemInformation(res.data.data.filter((row)=> row.typeItem === "Goods").map((row)=> ({
                               ...row,
                               ItemNumber:row.itemUpc.newCode+'-0'+row.itemUpc.itemNumber
@@ -392,7 +392,7 @@ function ShopPosUpdateForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
           itemName:{
             _id:res.data.data._id,
@@ -419,7 +419,7 @@ function ShopPosUpdateForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await   axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
+          const res = await   axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -577,7 +577,7 @@ function ShopPosUpdateForm() {
         dateNotification:dateComment
       }
       try {
-        await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification',data)
+        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
       } catch (error) {
         console.log(error)
       }
@@ -594,7 +594,7 @@ function ShopPosUpdateForm() {
     const [saving,setSaving] = useState('')
     const handleQty = async () => {
         try {
-          await axios.post('https://gg-project-productionn.up.railway.app/endpoint/CalculateTotal')
+          await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
         } catch (error) {
           console.log(error)
         }
@@ -619,7 +619,7 @@ function ShopPosUpdateForm() {
       }
    if (navigator.onLine) {
      try{
-         const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-pos/${id}`,data);
+         const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-pos/${id}`,data);
          if (res) {
             // Open Loading View
             handleQty()

@@ -146,7 +146,7 @@ function PurchasesViewAdminAll() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role}));
@@ -175,7 +175,7 @@ function PurchasesViewAdminAll() {
   const fetchNumber = async () => {
     if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/grantAccess');
+          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
           res.data.data.filter((row)=> row.userID === user.data.id )
                        .map((row)=>setGrantAccess(row.modules))
         } catch (error) {
@@ -195,14 +195,14 @@ const PurchaseInfoU = grantAccess.filter((row)=> row.moduleName === "Purchase" &
   const [purchase2, setPurchase2] = useState({})
   const [loadingData, setLoadingData] = useState(true);
   const [item, SetItems] = useState([])
-  const apiUrl = 'https://gg-project-productionn.up.railway.app/endpoint/purchase';
+  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/purchase';
   useEffect(()=> {
     const fetchData = async () => {
      if (navigator.onLine) {
        try {
       const res = await axios.get(apiUrl)
       setPurchase(res.data.data.reverse());
-      const resItem = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')   
+      const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')   
       SetItems(resItem.data.data)
       setLoadingData(false)
        } catch (error) {
@@ -228,13 +228,13 @@ useEffect(()=> {
   const fetchDataRelated = async () => {
 if (navigator.onLine) {
       try {
-        const resEstimate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/estimation')
+        const resEstimate = await axios.get('https://gg-project-production.up.railway.app/endpoint/estimation')
         const filteredEstimate = resEstimate.data.data.filter((row)=> row.ReferenceName === id)
         setEstimate(filteredEstimate);
-        const resInvoice = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/invoice')
+        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
         const filteredInvoice = resInvoice.data.data.filter((row)=> row.ReferenceName2 === id)
         setInvoice(filteredInvoice);
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-purchase/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
         setCustomerName(res.data.data.customerName.customerName.replace(/\s+/g,'_').replace(/\./g,''));
         setPurchaseNumber(res.data.data.purchaseNumber);
         setItems(res.data.data.items);
@@ -315,10 +315,10 @@ const handleShow = (e) =>{
   useEffect(()=> {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/comment')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
         const resp = res.data.data.filter((row)=> row.CommentInfo.idInfo === id)
                      setComments(resp.reverse())
-                     const resNotification = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/notification')
+                     const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
                      setNotification(resNotification.data.data.filter((row)=> row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -372,7 +372,7 @@ const handleShow = (e) =>{
         dateComment
       };
       try {
-        const res = await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-comment/',data)
+        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/',data)
         if (res) {
           setReason("");
           handleOpen();
@@ -430,7 +430,7 @@ const handleShow = (e) =>{
         const fecthItemPurchase = async () =>{
           if (navigator.onLine) {
             try {
-              const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-purchase/${id}`)
+              const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
               setFilteredPurchase(res.data.data.items);
             } catch (error) {
               console.error('Error fetching data:', error);

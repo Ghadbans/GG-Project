@@ -157,7 +157,7 @@ function InvoiceFormUpdate() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -218,7 +218,7 @@ function InvoiceFormUpdate() {
   const fetchData = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-invoice/${id}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${id}`)
         setCustomerName(res.data.data.customerName);
         setInvoiceDate(res.data.data.invoiceDate);
         setInvoiceDueDate(res.data.data.invoiceDueDate);
@@ -268,9 +268,9 @@ function InvoiceFormUpdate() {
   const fetchItem = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/item')
+        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
         setItemInformation(res.data.data.reverse())
-        const resC = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/customer')
+        const resC = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
         setCustomer(resC.data.data.reverse());
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -292,10 +292,10 @@ function InvoiceFormUpdate() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-productionn.up.railway.app/endpoint/rate')
+        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -667,7 +667,7 @@ function InvoiceFormUpdate() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-productionn.up.railway.app/endpoint/get-item/${idItem}`)
+        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
         SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ?
           {
             ...row,
@@ -774,7 +774,7 @@ function InvoiceFormUpdate() {
       dateNotification: dateComment
     };
     try {
-      await axios.post('https://gg-project-productionn.up.railway.app/endpoint/create-notification/', data)
+      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
     } catch (error) {
       console.log(error)
     }
@@ -797,7 +797,7 @@ function InvoiceFormUpdate() {
     };
     if (navigator.onLine) {
       try {
-        const res = await axios.put(`https://gg-project-productionn.up.railway.app/endpoint/update-invoice/${id}`, data);
+        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`, data);
         if (res) {
           handleCreateComment()
           await db.invoiceSchema.update(data.invoiceNumber, {
