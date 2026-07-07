@@ -1,0 +1,325 @@
+const PROJECT_NAME = 'PUR-00147';
+// We are trying 127.0.0.1 instead of localhost
+const BASE_URL = 'http://127.0.0.1:8080/endpoint';
+
+const recoveredItems = [
+  {
+    "idRow": "4ccb352d-7ebd-4e4a-8c02-a8dfa3396550",
+    "itemName": { "_id": "69ca6293818a0a2f9bab3399", "itemName": "COVER PLATE 2M WHITE OV" },
+    "itemDescription": "MS20000\nCOLOR WHITE  \n2 GANG COVER ( SMALL )",
+    "itemQty": "0",
+    "itemRate": 4,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "4d37a20c-aefd-446e-9bad-e6ebb1e26c2a",
+    "itemName": { "_id": "681c71341b64372d54e09e11", "itemName": "DISTRIBUTION BOX INTERIOR RECESSED C6" },
+    "itemDescription": "C-74898\nLGD-6 WAYS",
+    "itemQty": "1",
+    "itemRate": 9,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "21617689-f504-423b-846f-5fc8d157804f",
+    "itemName": { "_id": "66645247354966c40b58c5cd", "itemName": "JUNCTION BOX MAGIC PM3" },
+    "itemDescription": "PM3 400V\n-25/+60 DEGREE \nCROSS SELECTIONNAL AREA 18-14\nNUMBER OF TERMINALS 5-3",
+    "itemQty": "25",
+    "itemRate": 3.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "bd3ebcc0-8f8e-44f5-977f-de10d52d2959",
+    "itemName": { "_id": "65f421771705bd4093a13b29", "itemName": "CABLE CLIP 20MM 100PCS" },
+    "itemDescription": "CABLE CLIP 20MM",
+    "itemQty": "1",
+    "itemRate": 4.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "9f2f07f1-2636-4ceb-b047-18afaf0c96da",
+    "itemName": { "_id": "682d96a4aa9a031b332e0fb0", "itemName": "PVC TRUNKING RECESSED TUBE ORANGE 16MM" },
+    "itemDescription": "ROLL 43MTR\n75997",
+    "itemQty": "1",
+    "itemRate": 16.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "f7d73120-6349-4894-b2c3-91e7e676e43c",
+    "itemName": { "_id": "673b0f0ad80a08b17b81b2cd", "itemName": "SCOTCH BLACK TX 1500" },
+    "itemDescription": "ELECTRICAL INSULATING TAPE\n18.288MTRS",
+    "itemQty": "1",
+    "itemRate": 2.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "a6429969-005d-478a-9deb-39c7678ee621",
+    "itemName": { "_id": "65de0c219cba85ac7af6e6cb", "itemName": "CABLE 1X2.5MM  R-F" },
+    "itemDescription": "RED FLEXIBLE PER MTR",
+    "itemQty": "150",
+    "itemRate": 0.488,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "4bf5aaa5-f1a5-423b-8fc5-d34e64ec2f9d",
+    "itemName": { "_id": "65de0f7e9cba85ac7af6e77e", "itemName": "CABLE 1X2.5MM B-F" },
+    "itemDescription": "BLACK FLEXIBLE PER MTR",
+    "itemQty": "50",
+    "itemRate": 0.488,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "fcdc7863-defd-490c-bcd5-35c70ec8d12f",
+    "itemName": { "_id": "65e8410153339efb1f47e87a", "itemName": "CABLE 1X1.5MM G/Y-F" },
+    "itemDescription": "GREEN / YELLOW PER MTR",
+    "itemQty": "50",
+    "itemRate": 0.4,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "a41bebe8-73dd-49ae-bf4b-eae5663a5df9",
+    "itemName": { "_id": "65de04cf9cba85ac7af6e5e8", "itemName": "CABLE 1X1.5MM  R-F" },
+    "itemDescription": "RED FLEXIBLE PER MTR",
+    "itemQty": "50",
+    "itemRate": 0.4,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "936fcb9d-bed6-4a1d-8821-87fc6d2c4d4b",
+    "itemName": { "_id": "65de108e9cba85ac7af6e78c", "itemName": "CABLE 1X2.5MM G/Y/-F" },
+    "itemDescription": "GREEN / YELLOW PER MTR",
+    "itemQty": "0",
+    "itemRate": 0.488,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "b56f7d11-3816-4cc3-beef-add224907c6f",
+    "itemName": { "_id": "65de021e9cba85ac7af6e53c", "itemName": "CABLE 1X1.5MM  B-F" },
+    "itemDescription": "BLACK FLEXIBLE PER MTR",
+    "itemQty": "100",
+    "itemRate": 0.4,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "137fe2b1-040a-4e2e-8d60-641f3bbf0250",
+    "itemName": { "_id": "66a0d21e8e482db2efb8e953", "itemName": "JUNCTION BOX 70X40 ROUND YK" },
+    "itemDescription": "2070\nCOLOR GREY",
+    "itemQty": "8",
+    "itemRate": 2.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "7e231ad1-90e7-4e27-91d7-d1e4efa4b673",
+    "itemName": { "_id": "65fc1234de19306b451d5823", "itemName": "CABLE CLIP 12MM 100 PCS" },
+    "itemDescription": "CABLE CLIP 12MM 100PCS",
+    "itemQty": "0.1",
+    "itemRate": 1.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "c531b408-e047-4af1-923a-45778e1d075a",
+    "itemName": { "_id": "67890df789c7055f5a9d8887", "itemName": "SELF DRILLING SCREW ZINC 4.2X16" },
+    "itemDescription": "4.2X16\n1000PCS",
+    "itemQty": "1",
+    "itemRate": 11.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "e459afcb-ab33-438b-98c8-a355013865a6",
+    "itemName": { "_id": "65fc0675de19306b451d5823", "itemName": "PVC TRUNKING WHITE 16X16 2MTR W 3" },
+    "itemDescription": "OC00000675",
+    "itemQty": "1",
+    "itemRate": 6.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "f3634a32-d075-4e29-aee5-6fb40b8eda1d",
+    "itemName": { "_id": "65fc1125de19306b451d5823", "itemName": "DRY DIAMOND DISC BETON 5 INCH 125MM" },
+    "itemDescription": "DMD 011251 WET AND DRY CUTTING",
+    "itemQty": "1",
+    "itemRate": 4.576,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "3129dc9e-67d7-4b8b-b1ef-3d883fe52a87",
+    "itemName": { "_id": "67890df789c7055f5a9d8887", "itemName": "SELF DRILLING SCREW 6.3X50MM" },
+    "itemDescription": "6.3X50MM \n1KG",
+    "itemQty": "1",
+    "itemRate": 10,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "928b22a4-df28-4df2-bdda-34090a9d86fe",
+    "itemName": { "_id": "65f2c54606608a605326e66c", "itemName": "PVC TRUNKING 16MM BLACK" },
+    "itemDescription": "BLACK 6MTR",
+    "itemQty": "57",
+    "itemRate": 0.708,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "96d4115b-4e8e-4ac8-a4c1-6b0dd4ec1e6d",
+    "itemName": { "_id": "6615592fb1d7d261b60a6d98", "itemName": "CORNER METAL 40X40" },
+    "itemDescription": "2.6MM 6MTR",
+    "itemQty": "15",
+    "itemRate": 15,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "3f9d2ae1-d8d3-479c-8f18-ed2b22534d51",
+    "itemName": { "_id": "6615592fb1d7d261b60a6d98", "itemName": "METAL TUBE 40X40" },
+    "itemDescription": "SQURE TUBE 40X40 1.2MM 6M",
+    "itemQty": "15",
+    "itemRate": 13.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "42f91f40-631b-4404-88bd-3f534ec87c54",
+    "itemName": { "_id": "65df16030824d29e594e58a3", "itemName": "ROOFING METAL SHEET BG28 6MTRX0.3MM" },
+    "itemDescription": "6MTRX0.3MM",
+    "itemQty": "10",
+    "itemRate": 74,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "e6f449d4-5bed-441c-b0d6-ad5d79a146df",
+    "itemName": { "_id": "65df16030824d29e594e58a3", "itemName": "ROOFING METAL SHEET BG28 BRICK RED 3MTRX0.3MM" },
+    "itemDescription": "3 MTR X0.3MM",
+    "itemQty": "3",
+    "itemRate": 15,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "25c1ae93-0518-4272-a714-2f2f26dfc6ff",
+    "itemName": { "_id": "65d74299d109b5868efe8a39", "itemName": "WELDING ROD STICKS 2.5MM BOX" },
+    "itemDescription": "BUGETH GB NO 2.5\n138 PCS",
+    "itemQty": "2",
+    "itemRate": 7,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "a109141e-fe55-4a33-b884-de08c08522df",
+    "itemName": { "_id": "67470702409ad5b4f5a93350", "itemName": "DRY CUTTING DISC STEEL  7'' 180X1.6X22.23MM" },
+    "itemDescription": "METAL / STAINLESS CUTTING\nR3045\n6940425164687",
+    "itemQty": "2",
+    "itemRate": 5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "c319b264-66b1-41e7-bd35-10dfbcba78a4",
+    "itemName": { "_id": "668d0df72b6e11e907f87fff", "itemName": "CUTTING DISC STEEL 230X3.2X22.23MM 9''" },
+    "itemDescription": "230X3.2X22.23MM\n9''X1//8X1/8''\nEHT 230-3.2 SG STEELBOX\nEM12413",
+    "itemQty": "1",
+    "itemRate": 6,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "3ba0a677-6ed7-4127-8b52-59e02c0d26e5",
+    "itemName": { "_id": "65df0bae0824d29e594e5824", "itemName": "CEMENT SACK 50KG" },
+    "itemDescription": "50KG",
+    "itemQty": "3.5",
+    "itemRate": 16.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "1d5feee7-2ffe-4215-b95f-952cb0d0e6c3",
+    "itemName": { "_id": "66c4a03caed28851b39e4439", "itemName": "SAND SABLE LAVE M³" },
+    "itemDescription": "PER CUBIC METER",
+    "itemQty": "0.5",
+    "itemRate": 42.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "81d5f572-5b92-4777-8834-ddea39ce9f94",
+    "itemName": { "_id": "65df16030824d29e594e58a3", "itemName": "GYPROC OMEGA" },
+    "itemDescription": "GYPROC STEEL PROFILE 2.70MTR",
+    "itemQty": "19",
+    "itemRate": 4.45,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "c3ac193e-f568-4fea-9da6-7eeab7f67b7f",
+    "itemName": { "_id": "65df16030824d29e594e58a3", "itemName": "GYPROC C CHANNEL" },
+    "itemDescription": "GYPROC STEEL PROFILE 2.70MTR",
+    "itemQty": "25",
+    "itemRate": 4,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "0054d441-1797-4959-84a5-1fb33a349e57",
+    "itemName": { "_id": "65df16030824d29e594e58a3", "itemName": "GYPROC CORNER W/H" },
+    "itemDescription": "GYPROC STEEL PROFILE 2.70MTR",
+    "itemQty": "10",
+    "itemRate": 7,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "3a1c524a-5b25-4335-852a-9e19c09898a6",
+    "itemName": { "_id": "67890df789c7055f5a9d8887", "itemName": "YELLOW FIBERBOARD SCREW M5X40" },
+    "itemDescription": "YELLOW ZINC SCREW \nCHIPBOARD SCREW 500PCS",
+    "itemQty": "1",
+    "itemRate": 9.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "fd04dc9e-6d87-4c99-a4ec-d129a89674f6",
+    "itemName": { "_id": "67890df789c7055f5a9d8887", "itemName": "DRYWALL SCREWS BLACK 6X1 KT" },
+    "itemDescription": "FINE THREAD BLACK PHOS \n1000PCS \n6X1",
+    "itemQty": "1",
+    "itemRate": 9.5,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "ad8b51d4-5c37-4c52-8c44-2c07862b8cd6",
+    "itemName": { "_id": "65df16030824d29e594e58a3", "itemName": "DIESEL FUEL" },
+    "itemDescription": "PER LITRE",
+    "itemQty": "20",
+    "itemRate": 2.7,
+    "newItemOut": 0
+  },
+  {
+    "idRow": "28a39ca5-6f61-4d7b-9651-bc40c00d3224",
+    "itemName": { "_id": "663c9cd9390ac323bb781b1a", "itemName": "CONCRETE BLOCK 10X20X40 L" },
+    "itemDescription": "LEB W/O TRANSPORT",
+    "itemQty": "20",
+    "itemRate": 1.15,
+    "newItemOut": 0
+  }
+];
+
+async function run() {
+  try {
+    console.log(`Connecting to ${BASE_URL}...`);
+    const response = await fetch(`${BASE_URL}/purchase`);
+    const data = await response.json();
+    const projects = data.data;
+    const project = projects.find(p => p.purchaseName === PROJECT_NAME);
+
+    if (!project) {
+      console.log(`Project ${PROJECT_NAME} not found!`);
+      return;
+    }
+
+    console.log(`Found Project ${PROJECT_NAME}. Current items: ${project.items.length}`);
+    const existingIds = new Set(project.items.map(it => it.idRow));
+    const toAdd = recoveredItems.filter(it => !existingIds.has(it.idRow));
+
+    console.log(`Adding ${toAdd.length} missing items...`);
+    const updatedItems = [...project.items, ...toAdd];
+
+    const putResponse = await fetch(`${BASE_URL}/update-purchase/${project._id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...project, items: updatedItems })
+    });
+
+    if (putResponse.ok) {
+      console.log('✅ Restoration complete! You can refresh the app now.');
+    } else {
+      console.log('❌ Failed to update project:', putResponse.statusText);
+    }
+  } catch (err) {
+    console.error('❌ Error:', err.message);
+    console.log('TIP: Make sure your Backend server is running (e.g. node index.js) before running this script.');
+  }
+}
+
+run();

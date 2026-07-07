@@ -1,0 +1,978 @@
+{
+  "indexes": [
+    {
+      "file": "BlockInventoryCount.js",
+      "legacy": [
+        "blockType"
+      ],
+      "compound": []
+    },
+    {
+      "file": "dailyExpensesCategorySchema.js",
+      "legacy": [
+        "expensesCategory"
+      ],
+      "compound": []
+    },
+    {
+      "file": "departmentSchema.js",
+      "legacy": [
+        "department"
+      ],
+      "compound": []
+    },
+    {
+      "file": "employeeSchema.js",
+      "legacy": [
+        "employeeName",
+        "employeeId"
+      ],
+      "compound": []
+    },
+    {
+      "file": "employeeUserSchema.js",
+      "legacy": [
+        "employeeName",
+        "employeeEmail"
+      ],
+      "compound": []
+    },
+    {
+      "file": "estimationSchema.js",
+      "legacy": [
+        "estimateName"
+      ],
+      "compound": [
+        "estimateNumber"
+      ]
+    },
+    {
+      "file": "ExpenseSchema.js",
+      "legacy": [
+        "expenseNumber"
+      ],
+      "compound": []
+    },
+    {
+      "file": "grantAccessSchema.js",
+      "legacy": [
+        "employeeName",
+        "userID"
+      ],
+      "compound": []
+    },
+    {
+      "file": "hiddenSchema.js",
+      "legacy": [
+        "idRow"
+      ],
+      "compound": []
+    },
+    {
+      "file": "invoiceSchema.js",
+      "legacy": [
+        "invoiceName"
+      ],
+      "compound": [
+        "invoiceNumber"
+      ]
+    },
+    {
+      "file": "itemCodeSchema.js",
+      "legacy": [
+        "itemCode",
+        "itemCategory"
+      ],
+      "compound": []
+    },
+    {
+      "file": "itemOutSchema.js",
+      "legacy": [],
+      "compound": [
+        "outNumber"
+      ]
+    },
+    {
+      "file": "itemPurchaseSchema.js",
+      "legacy": [],
+      "compound": [
+        "itemPurchaseNumber"
+      ]
+    },
+    {
+      "file": "itemReturnSchema.js",
+      "legacy": [],
+      "compound": [
+        "outNumber"
+      ]
+    },
+    {
+      "file": "itemSchema.js",
+      "legacy": [
+        "itemName"
+      ],
+      "compound": []
+    },
+    {
+      "file": "itemUnitSchema.js",
+      "legacy": [
+        "itemUnit"
+      ],
+      "compound": []
+    },
+    {
+      "file": "maintenanceSchema.js",
+      "legacy": [
+        "serviceName"
+      ],
+      "compound": []
+    },
+    {
+      "file": "Model.js",
+      "legacy": [
+        "Customer"
+      ],
+      "compound": []
+    },
+    {
+      "file": "paymentSchema.js",
+      "legacy": [
+        "paymentNumber"
+      ],
+      "compound": []
+    },
+    {
+      "file": "posSchema.js",
+      "legacy": [],
+      "compound": [
+        "factureNumber"
+      ]
+    },
+    {
+      "file": "projectSchema.js",
+      "legacy": [
+        "budget"
+      ],
+      "compound": [
+        "projectNumber",
+        "projectName"
+      ]
+    },
+    {
+      "file": "purchaseSchema.js",
+      "legacy": [
+        "projectName"
+      ],
+      "compound": [
+        "purchaseNumber",
+        "purchaseName"
+      ]
+    },
+    {
+      "file": "quotationSchema.js",
+      "legacy": [
+        "quotationNumber",
+        "quotationName"
+      ],
+      "compound": []
+    },
+    {
+      "file": "retainerInvoiceSchema.js",
+      "legacy": [
+        "invoiceNumber"
+      ],
+      "compound": []
+    },
+    {
+      "file": "suppliersSchema.js",
+      "legacy": [
+        "storeName"
+      ],
+      "compound": []
+    }
+  ],
+  "getRoutes": [
+    {
+      "path": "/get-message/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 14
+    },
+    {
+      "path": "/get-customer/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-dailyexpense/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-Supplier/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-dailyreport/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-employeeattendance/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-planing/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-payRoll",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-payRoll/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-employee/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-employeeuser/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/invoice-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 33
+    },
+    {
+      "path": "/get-last-saved-invoice",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 21
+    },
+    {
+      "path": "/get-invoice/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/item-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 38
+    },
+    {
+      "path": "/item-shop",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 38
+    },
+    {
+      "path": "/get-last-saved-item/:category",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 12
+    },
+    {
+      "path": "/get-item/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/low-margin-item",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 19
+    },
+    {
+      "path": "/get-last-saved-payment",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-payment/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-purchase",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-purchase/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-recurringinvoice/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-retainerinvoice/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-companyProfile/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-estimation",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-estimation/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-pos",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-pos/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-expensesMonthlyTotal/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-project",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-projects/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/expense-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 31
+    },
+    {
+      "path": "/get-last-saved-expense",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-expense/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/maintenance-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 36
+    },
+    {
+      "path": "/get-last-saved-maintenance",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-maintenance/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-expensesCategory/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-department/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-rate/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/get-rateReturn/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/get-paymentRate/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 7
+    },
+    {
+      "path": "/get-itemCode/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/itemOut-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 32
+    },
+    {
+      "path": "/get-last-saved-itemOut",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-itemOut/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/purchaseOrder-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 31
+    },
+    {
+      "path": "/get-last-saved-purchaseOrder",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-purchaseOrder/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-grantAccess",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-grantAccess/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/itemReturn-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 32
+    },
+    {
+      "path": "/get-last-saved-itemReturn",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-itemReturn/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-comment/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-last-saved-cash",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-cash/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/itemPurchase-Information",
+      "hasBranchId": true,
+      "hasQueryBranchId": false,
+      "length": 35
+    },
+    {
+      "path": "/get-last-saved-itemPurchase",
+      "hasBranchId": true,
+      "hasQueryBranchId": true,
+      "length": 14
+    },
+    {
+      "path": "/get-itemPurchase/:id",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 15
+    },
+    {
+      "path": "/get-image/:name",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 10
+    },
+    {
+      "path": "/block-config",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 7
+    },
+    {
+      "path": "/block-config2",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 7
+    },
+    {
+      "path": "/block-production",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-production2",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-damage",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-damage2",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-sales",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-sales2",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-mixer",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/block-mixer2",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 6
+    },
+    {
+      "path": "/get-image/:name",
+      "hasBranchId": false,
+      "hasQueryBranchId": false,
+      "length": 18
+    }
+  ],
+  "postRoutes": [
+    {
+      "path": "/CalculateTotal",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 8
+    },
+    {
+      "path": "/create-message",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 11
+    },
+    {
+      "path": "/create-notification",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 13
+    },
+    {
+      "path": "/create-customer",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-dailyexpense",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-Supplier",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-dailyreport",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-employeeattendance",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-planing",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-payRoll",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 26
+    },
+    {
+      "path": "/create-employee",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-employeeuser",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 17
+    },
+    {
+      "path": "/create-invoice",
+      "hasBranchIdAssign": true,
+      "hasFallback": true,
+      "length": 109
+    },
+    {
+      "path": "/create-item",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 78
+    },
+    {
+      "path": "/create-payment",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 78
+    },
+    {
+      "path": "/create-purchase",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 48
+    },
+    {
+      "path": "/create-recurringinvoice",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-retainerinvoice",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-companyProfile",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-estimation",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 88
+    },
+    {
+      "path": "/create-pos",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 82
+    },
+    {
+      "path": "/create-expensesMonthlyTotal",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-projects",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 64
+    },
+    {
+      "path": "/create-expense",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 51
+    },
+    {
+      "path": "/create-maintenance",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 52
+    },
+    {
+      "path": "/create-itemUnit",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-expensesCategory",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-department",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-rate",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 5
+    },
+    {
+      "path": "/create-rateReturn",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 5
+    },
+    {
+      "path": "/create-paymentRate",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 5
+    },
+    {
+      "path": "/create-itemCode",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-itemOut",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 10
+    },
+    {
+      "path": "/create-purchaseOrder",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-grantAccess",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 16
+    },
+    {
+      "path": "/create-itemReturn",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 10
+    },
+    {
+      "path": "/create-comment",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-cash",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/create-itemPurchase",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 52
+    },
+    {
+      "path": "/delete-itemPurchase/:id",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 1
+    },
+    {
+      "path": "/delete-itemPurchase",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 2
+    },
+    {
+      "path": "/create-hidden",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 15
+    },
+    {
+      "path": "/upsert-block-config",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 12
+    },
+    {
+      "path": "/create-block-config",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 13
+    },
+    {
+      "path": "/create-block-production",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 8
+    },
+    {
+      "path": "/update-block-production",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 9
+    },
+    {
+      "path": "/delete-block-production",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 10
+    },
+    {
+      "path": "/create-block-damage",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 8
+    },
+    {
+      "path": "/update-block-damage",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 9
+    },
+    {
+      "path": "/delete-block-damage",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 10
+    },
+    {
+      "path": "/create-block-sales",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 8
+    },
+    {
+      "path": "/update-block-sales",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 9
+    },
+    {
+      "path": "/delete-block-sales",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 10
+    },
+    {
+      "path": "/create-block-mixer",
+      "hasBranchIdAssign": true,
+      "hasFallback": false,
+      "length": 8
+    },
+    {
+      "path": "/update-block-mixer",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 9
+    },
+    {
+      "path": "/delete-block-mixer",
+      "hasBranchIdAssign": false,
+      "hasFallback": false,
+      "length": 10
+    }
+  ]
+}

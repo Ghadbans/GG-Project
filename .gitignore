@@ -7,3 +7,4 @@ GG Backup 08Feb26/
 *.bson
 *.asar
 .vercel
+backup_extracts/
