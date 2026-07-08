@@ -1121,7 +1121,7 @@ Route.route("/remove-employeeuser").delete(async (req, res) => {
 Route.route("/invoice", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         invoiceNumber: 1, customerName: 1, status: 1,
         subTotal: 1, total: 1, balanceDue: 1, tax: 1, rate: 1,
@@ -1936,7 +1936,7 @@ Route.route("/remove-payment").delete(async (req, res) => {
 Route.route("/purchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         purchaseNumber: 1, supplierName: 1, status: 1,
         subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
@@ -2387,7 +2387,7 @@ Route.route("/remove-companyProfile").delete(async (req, res) => {
 Route.route("/estimation", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         estimateNumber: 1, customerName: 1, status: 1,
         subTotal: 1, totalAmount: 1, discount: 1, tax: 1,
@@ -2605,7 +2605,7 @@ Route.route("/remove-estimation").delete(async (req, res) => {
 Route.route("/pos", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         posNumber: 1, customerName: 1, status: 1,
         subTotal: 1, total: 1, posDate: 1, createdAt: 1,
@@ -3049,7 +3049,7 @@ Route.route("/remove-projects").delete(async (req, res) => {
 Route.route("/expense", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         expenseNumber: 1, expenseDate: 1, amount: 1, total: 1,
         expenseCategory: 1, accountName: 1, description: 1, branchId: 1
@@ -3224,7 +3224,7 @@ Route.route("/remove-expense").delete(async (req, res) => {
 Route.route("/maintenance", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         maintenanceNumber: 1, customerName: 1, status: 1,
         subTotal: 1, total: 1, maintenanceDate: 1, createdAt: 1,
@@ -4574,7 +4574,7 @@ Route.route("/remove-cash").delete(async (req, res) => {
 Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
+      const summary = req.query.summary === 'true';
       const projection = summary ? {
         purchaseNumber: 1, supplierName: 1, status: 1, isPaid: 1, payments: 1,
         subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
@@ -4899,14 +4899,14 @@ function branchFilter(req) {
 Route.route("/block-config").get(async (req, res, next) => {
   try {
     const filter = branchFilter(req);
-    const data = await BlockConfig.find(filter).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ lastUpdated: -1 });
+    const data = await BlockConfig.find(filter).sort({ lastUpdated: -1 });
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-config2").get(async (req, res, next) => {
   try {
     const filter = branchFilter(req);
-    const data = await BlockConfig.find(filter).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ lastUpdated: -1 });
+    const data = await BlockConfig.find(filter).sort({ lastUpdated: -1 });
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4939,13 +4939,13 @@ Route.route("/create-block-config").post(async (req, res, next) => {
 // ---------- block-production ----------
 Route.route("/block-production").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-production2").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4987,13 +4987,13 @@ Route.route("/delete-block-production").post(async (req, res, next) => {
 // ---------- block-damage ----------
 Route.route("/block-damage").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-damage2").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -5035,13 +5035,13 @@ Route.route("/delete-block-damage").post(async (req, res, next) => {
 // ---------- block-sales ----------
 Route.route("/block-sales").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-sales2").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -5083,13 +5083,13 @@ Route.route("/delete-block-sales").post(async (req, res, next) => {
 // ---------- block-mixer ----------
 Route.route("/block-mixer").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-mixer2").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
