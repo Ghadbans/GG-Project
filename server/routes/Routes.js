@@ -3964,18 +3964,22 @@ Route.route("/get-last-saved-itemOut").get(async (req, res, next) => {
 })
 // Create itemOut
 Route.route("/create-itemOut").post(async (req, res, next) => {
-  await itemOutSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const result = await itemOutSchema.create(req.body);
+    res.json({
+      data: result,
+      message: "Data successfully added.",
+      status: 200,
     });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({ 
+        message: "Duplicate key error: The out number already exists.", 
+        status: 409 
+      });
+    }
+    return next(err);
+  }
 });
 
 // Get single itemOut
@@ -5186,5 +5190,106 @@ Route.route("/itemReturn/item/:id").get(async (req, res, next) => {
     .catch((err) => next(err));
 });
 
-module.exports = Route;
+// Block Factory Models
+const blockConfigSchema = require("../model/blockConfigSchema");
+const blockProductionSchema = require("../model/blockProductionSchema");
+const blockSalesSchema = require("../model/blockSalesSchema");
+const blockDamageSchema = require("../model/blockDamageSchema");
 
+// BlockConfig Endpoints
+Route.route("/block-config").get(async (req, res, next) => {
+  try {
+    const data = await blockConfigSchema.find();
+    res.json({ data, status: 200 });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/create-block-config").post(async (req, res, next) => {
+  try {
+    const data = await blockConfigSchema.create(req.body);
+    res.json({ data, status: 200, message: "Data successfully added." });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// BlockProduction Endpoints
+Route.route("/block-production").get(async (req, res, next) => {
+  try {
+    const data = await blockProductionSchema.find();
+    res.json({ data, status: 200 });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/create-block-production").post(async (req, res, next) => {
+  try {
+    const data = await blockProductionSchema.create(req.body);
+    res.json({ data, status: 200, message: "Data successfully added." });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/delete-block-production/:id").delete(async (req, res, next) => {
+  try {
+    await blockProductionSchema.findByIdAndDelete(req.params.id);
+    res.json({ status: 200, message: "Data successfully deleted." });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// BlockSales Endpoints
+Route.route("/block-sales").get(async (req, res, next) => {
+  try {
+    const data = await blockSalesSchema.find();
+    res.json({ data, status: 200 });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/create-block-sales").post(async (req, res, next) => {
+  try {
+    const data = await blockSalesSchema.create(req.body);
+    res.json({ data, status: 200, message: "Data successfully added." });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/delete-block-sales/:id").delete(async (req, res, next) => {
+  try {
+    await blockSalesSchema.findByIdAndDelete(req.params.id);
+    res.json({ status: 200, message: "Data successfully deleted." });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// BlockDamage Endpoints
+Route.route("/block-damage").get(async (req, res, next) => {
+  try {
+    const data = await blockDamageSchema.find();
+    res.json({ data, status: 200 });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/create-block-damage").post(async (req, res, next) => {
+  try {
+    const data = await blockDamageSchema.create(req.body);
+    res.json({ data, status: 200, message: "Data successfully added." });
+  } catch (err) {
+    next(err);
+  }
+});
+Route.route("/delete-block-damage/:id").delete(async (req, res, next) => {
+  try {
+    await blockDamageSchema.findByIdAndDelete(req.params.id);
+    res.json({ status: 200, message: "Data successfully deleted." });
+  } catch (err) {
+    next(err);
+  }
+});
+
+module.exports = Route;
