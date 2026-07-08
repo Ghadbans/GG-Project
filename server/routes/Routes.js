@@ -1508,7 +1508,7 @@ Route.get('/item-usage', async (req, res) => {
 });
 Route.route("/item-Information").get(async (req, res) => {
   try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+    const { page = 1, limit = 100, search = '', filterField, filterValue, summary } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
@@ -1530,8 +1530,13 @@ Route.route("/item-Information").get(async (req, res) => {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
+    let queryObj = itemSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    if (summary === 'true') {
+      queryObj = queryObj.select('_id itemName unit price itemUpc typeItem quantity itemDescription');
+    }
+
     const [itemI, totalItem] = await Promise.all([
-      itemSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)),
+      queryObj,
       itemSchema.countDocuments(query),
     ]);
 

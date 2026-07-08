@@ -59,6 +59,8 @@ const itemPurchaseSchema = new Schema(
         type: Number,
         trim: true,
       },
+      payments: { type: Array, default: [] },
+      isPaid: { type: Boolean, default: false },
       projectName: {
       },
       Create: {
