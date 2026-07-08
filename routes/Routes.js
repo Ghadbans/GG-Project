@@ -1120,18 +1120,20 @@ Route.route("/remove-employeeuser").delete(async (req, res) => {
 // get all invoice
 Route.route("/invoice", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await invoiceSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        invoiceNumber: 1, customerName: 1, status: 1,
+        subTotal: 1, total: 1, balanceDue: 1, tax: 1, rate: 1,
+        invoiceDate: 1, invoiceDueDate: 1, createdAt: 1,
+        ReferenceName: 1, ReferenceName2: 1, noteInfo: 1,
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await invoiceSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/invoice-Information").get(async (req, res) => {
@@ -1933,18 +1935,18 @@ Route.route("/remove-payment").delete(async (req, res) => {
 
 Route.route("/purchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await purchaseSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        purchaseNumber: 1, supplierName: 1, status: 1,
+        subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await purchaseSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/get-last-saved-purchase").get(async(req,res, next)=>{
@@ -2384,18 +2386,19 @@ Route.route("/remove-companyProfile").delete(async (req, res) => {
 
 Route.route("/estimation", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await estimationSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        estimateNumber: 1, customerName: 1, status: 1,
+        subTotal: 1, totalAmount: 1, discount: 1, tax: 1,
+        rate: 1, estimateDate: 1, createdAt: 1, ReferenceName: 1,
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await estimationSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/get-last-saved-estimation").get(async(req,res, next)=>{
@@ -2601,18 +2604,18 @@ Route.route("/remove-estimation").delete(async (req, res) => {
 
 Route.route("/pos", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await posSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        posNumber: 1, customerName: 1, status: 1,
+        subTotal: 1, total: 1, posDate: 1, createdAt: 1,
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await posSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/get-last-saved-pos").get(async(req,res, next)=>{
@@ -3047,18 +3050,18 @@ Route.route("/remove-projects").delete(async (req, res) => {
 
 Route.route("/expense", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await expenseSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        expenseNumber: 1, expenseDate: 1, amount: 1, total: 1,
+        expenseCategory: 1, accountName: 1, description: 1, branchId: 1
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await expenseSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/expense-Information").get(async (req, res) => {
@@ -3224,18 +3227,18 @@ Route.route("/remove-expense").delete(async (req, res) => {
 // -------------get all maintenance-------------------
 Route.route("/maintenance", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await maintenanceSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        maintenanceNumber: 1, customerName: 1, status: 1,
+        subTotal: 1, total: 1, maintenanceDate: 1, createdAt: 1,
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await maintenanceSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/maintenance-Information").get(async (req, res) => {
@@ -4580,18 +4583,18 @@ Route.route("/remove-cash").delete(async (req, res) => {
 // -------------get all itemPurchase-------------------
 Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await itemPurchaseSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const summary = req.query.summary === 'true';
+      const projection = summary ? {
+        purchaseNumber: 1, supplierName: 1, status: 1, isPaid: 1, payments: 1,
+        subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
+      } : {};
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ createdAt: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/itemPurchase-Information").get(async (req, res) => {
