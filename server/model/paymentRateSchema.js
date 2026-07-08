@@ -6,7 +6,8 @@ const paymentRateSchema = new Schema({
         type: Number,
         trim: true,
       },
-  }
+    branchId: { type: String, default: 'HQ' },
+}
   ,
   {
     collection:"paymentRate"

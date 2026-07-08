@@ -6,9 +6,7 @@ const itemReturnSchema = new Schema(
     {   
       outNumber:{
         type:Number,
-        trim: true,
-        unique:true
-      },
+        trim: true },
   
       itemOutDate: {
           type: Date,
@@ -27,13 +25,18 @@ const itemReturnSchema = new Schema(
       ],
       description: {
           type: String,
-          trim: true,
-        },
+          trim: true },
         Create: {
-        }
-    },
+        },
+        branchId: { type: String, default: 'HQ' } },
     {
-      collection: "itemReturn",
-    }
+      collection: "itemReturn" }
   );
-  module.exports = mongoose.model("itemReturnSchema",  itemReturnSchema);
+
+
+  
+itemReturnSchema.index({ branchId: 1, outNumber: 1 }, { unique: true });
+
+// Attach stock sync hooks
+require('./stockUtils').attachStockHooks(itemReturnSchema);
+module.exports = mongoose.model("itemReturnSchema",  itemReturnSchema);

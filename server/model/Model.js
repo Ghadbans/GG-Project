@@ -85,8 +85,9 @@ let customerSchema = new Schema(
       default: Date.now,
     },
     Create: {
-    }
-  },
+    },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "customer",
   }

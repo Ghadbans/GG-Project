@@ -13,7 +13,8 @@ const dailyExpensesCategorySchema = new Schema({
         type: Number,
         trim: true,
       },
-  }
+    branchId: { type: String, default: 'HQ' },
+}
   ,
   {
     collection:"expensesCategory"

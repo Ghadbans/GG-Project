@@ -89,7 +89,8 @@ const itemSchema = new Schema(
     contentType:String,
     Creates: {
     },
-  },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "item",
   }

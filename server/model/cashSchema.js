@@ -76,8 +76,9 @@ totalPayRollDailyFC:{
 },
     Create:{
 
-    }
-  },
+    },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "cash",
   }

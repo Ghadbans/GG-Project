@@ -17,8 +17,9 @@ const notificationSchema = new Schema(
     dateNotification:{
     type: Date,
     trim: true,
-    }
-  },
+    },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "notification",
   }

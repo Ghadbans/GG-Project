@@ -14,8 +14,10 @@ const grantAccessSchema = new Schema({
       },
       modules:[
         
-      ]
-  }
+      ],
+      branches: [{ type: String }],
+    branchId: { type: String, default: 'HQ' },
+}
   ,
   {
     collection:"Grant-Access"

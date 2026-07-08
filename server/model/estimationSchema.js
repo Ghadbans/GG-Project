@@ -8,9 +8,7 @@ const estimationSchema = new Schema(
     estimateNumber: {
       type: Number,
       required: true,
-      trim: true,
-      unique:true
-    },
+      trim: true },
     estimateName: {
       type: String,
       required: true,
@@ -20,8 +18,7 @@ const estimationSchema = new Schema(
     estimateStatus: {
       type: String,
       required: true,
-      trim: true,
-    },
+      trim: true },
     estimateDate: {
       type: Date,
       trim: true,
@@ -29,12 +26,10 @@ const estimationSchema = new Schema(
     },
     estimateSubject: {
       type: String,
-      trim: true,
-    }, 
+      trim: true }, 
     estimateStatus: {
       type: String,
-      trim: true,
-    },
+      trim: true },
     status: {
       type: String,
       trim: true,
@@ -50,70 +45,71 @@ const estimationSchema = new Schema(
    
     total: {
       type: Number,
-      trim: true,
-    },
+      trim: true },
     shipping: {
       type: Number,
-      trim: true,
-    },
+      trim: true },
     adjustmentNumber: {
       type: Number,
-      trim: true,
-    },
+      trim: true },
     totalInvoice: {
       type: Number,
-      trim: true,
-    },
+      trim: true },
     balanceDue: {
       type: Number,
-      trim: true,
-    },
+      trim: true },
     totalW: {
       type: String,
-      trim: true,
-    },
+      trim: true },
     adjustment: {
       type: String,
-      trim: true,
-    },  terms: {
+      trim: true },  terms: {
       type: String,
-      trim: true,
-    },
+      trim: true },
     estimateDefect: {
       type: String,
-      trim: true,
-    },
+      trim: true },
     totalW: {
       type: String,
-      trim: true,
-    },
+      trim: true },
     Ref: {
      _id : {
         type: String,
-        trim: true,
-      },
+        trim: true },
    projectName: {
         type: String,
-        trim: true,
-      }
+        trim: true }
     }
     ,
     note: {
       type: String,
-      trim: true,
-    },
+      trim: true },
     noteInfo: {
       type: String,
-      trim: true,
+      trim: true },
+    CheckTvA: {
+      type: Boolean,
+      default: false
+    },
+    tax: {
+      type: Number,
+      default: 0
     },
     Create: {
     },ReferenceName: {
       type: String,
-      trim: true,
-     }
-  },
+      trim: true },
+    attachedLetter: {
+      type: String,
+      trim: true },
+    includeLetter: {
+      type: Boolean,
+      default: false
+    },
+    branchId: { type: String, default: 'HQ' } },
   {
-    collection: "estimation",
-  }
+    collection: "estimation" }
 );
+
+estimationSchema.index({ branchId: 1, estimateNumber: 1 }, { unique: true });
 module.exports = mongoose.model("estimationSchema",  estimationSchema);

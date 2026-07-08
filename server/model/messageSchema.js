@@ -17,8 +17,9 @@ const messageSchema = new Schema(
     message:{
       type: String,
       trim: true,
-    }
-  },
+    },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "Message",
   }

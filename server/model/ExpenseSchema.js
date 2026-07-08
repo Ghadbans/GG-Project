@@ -13,7 +13,6 @@ const expenseSchema = new Schema({
       type: Number,
       required: true,
       trim: true,
-      unique:true
       },
       description: {
         type: String,
@@ -50,9 +49,20 @@ const expenseSchema = new Schema({
         trim: true,
       },Create: {
       },
-    },
+      CheckTvA: {
+        type: Boolean,
+        default: false
+      },
+      tax: {
+        type: Number,
+        default: 0
+      },
+        branchId: { type: String, default: 'HQ' },
+},
     {
       collection:"expenseSchema"
     }
     );
-    module.exports = mongoose.model("expenseSchema", expenseSchema);
+    
+expenseSchema.index({ branchId: 1, expenseNumber: 1 }, { unique: true });
+module.exports = mongoose.model("expenseSchema", expenseSchema);

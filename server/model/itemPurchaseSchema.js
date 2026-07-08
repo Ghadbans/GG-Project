@@ -1,73 +1,56 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-
 const itemPurchaseSchema = new Schema(
   {   
-    itemPurchaseDate: {
-        type: Date,
-        trim: true,
-        required: true
+    itemPurchaseDate: { type: Date, required: true },
+    itemPurchaseNumber: { type: Number },
+    manufacturer: { type: String },
+    manufacturerNumber: { type: String },
+    manufacturerID: { type: String },
+    items: [],
+    description: { type: String },
+    status: { type: String, default: 'UNPAID' },
+    reason: { type: String },
+    note: { type: String },
+    POID: { type: String },
+    totalUSD: { type: Number },
+    total: { type: Number },
+    totalFC: { type: Number },
+    projectName: {},
+    CheckTvA: { type: Boolean, default: false },
+    tax: { type: Number, default: 0 },
+    Create: {
+      userName: { type: String },
+      date: { type: Date },
+      person: { type: String },
+      dateComment: { type: String }
     },
-    itemPurchaseNumber: {
-        type: Number,
-        trim: true,
-        unique:true
-    },
-    manufacturer: {
-        type: String,
-        trim: true,
-    },
-    manufacturerNumber: {
-        type: String,
-        trim: true,
-    },
-    manufacturerID: {
-        type: String,
-        trim: true,
-    },
-    items:[],
-    description: {
-        type: String,
-        trim: true,
-      },
-      status: {
-        type: String,
-        trim: true,
-      },
-      reason: {
-        type: String,
-        trim: true,
-      },
-      note: {
-        type: String,
-        trim: true,
-      },
-      POID: {
-        type: String,
-        trim: true,
-      },
-      totalUSD: {
-        type: Number,
-        trim: true,
-      },
-    total: {
-        type: Number,
-        trim: true,
-      },
-      totalFC: {
-        type: Number,
-        trim: true,
-      },
-      payments: { type: Array, default: [] },
-      isPaid: { type: Boolean, default: false },
-      projectName: {
-      },
-      Create: {
+    // THIS IS THE MISSING KEY PART:
+    payments: [
+      {
+        amount: { type: Number },
+        amountFC: { type: Number },
+        rate: { type: Number },
+        totalUSD: { type: Number },
+        date: { type: Date },
+        mode: { type: String },
+        reference: { type: String },
+        note: { type: String },
+        id: { type: String }
       }
-  },
+    ],
+    totalAmountFC: { type: String },
+    branchId: { type: String, default: 'HQ' } },
   {
-    collection: "itemPurchase",
+    collection: "itemPurchase"
   }
 );
-module.exports = mongoose.model("itemPurchaseSchema",  itemPurchaseSchema);
+
+
+
+itemPurchaseSchema.index({ branchId: 1, itemPurchaseNumber: 1 }, { unique: true });
+
+// Attach stock sync hooks
+require('./stockUtils').attachStockHooks(itemPurchaseSchema);
+module.exports = mongoose.model("itemPurchaseSchema", itemPurchaseSchema);

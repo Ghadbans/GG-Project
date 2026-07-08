@@ -34,7 +34,8 @@ const employeeUserSchema = new Schema(
     },
 
 
-  },
+    branchId: { type: String, default: 'HQ' },
+},
   { timestamps: true },
   
 );

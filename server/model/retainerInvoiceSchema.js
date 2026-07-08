@@ -10,7 +10,7 @@ const retainerInvoiceSchema= new Schema(
       invoiceNumber: {
         type: String,
         required: true,
-        unique: true,
+        
         trim: true,
       },
       referenceNumber: {
@@ -62,10 +62,13 @@ const retainerInvoiceSchema= new Schema(
         trim: true,
       },
 
-    },
+        branchId: { type: String, default: 'HQ' },
+},
     {
       collection:"retainerInvoice"
     }
   );
 
-  module.exports = mongoose.model("retainerInvoiceSchema", retainerInvoiceSchema);
+  
+retainerInvoiceSchema.index({ branchId: 1, invoiceNumber: 1 }, { unique: true });
+module.exports = mongoose.model("retainerInvoiceSchema", retainerInvoiceSchema);

@@ -20,8 +20,9 @@ const commentSchema = new Schema(
 dateComment:{
   type: Date,
   trim: true,
-}
-  },
+},
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "Comment",
   }

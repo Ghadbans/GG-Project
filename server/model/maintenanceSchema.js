@@ -13,8 +13,7 @@ const maintenanceSchema= new Schema(
         type: String,
         required: true,
         trim: true,
-        unique:true
-      },
+        },
       serviceDate: {
       type: Date,
       trim: true,
@@ -122,11 +121,15 @@ const maintenanceSchema= new Schema(
       },ReferenceName: {
         type: String,
         trim: true,
-       }
-    },
+       },
+        branchId: { type: String, default: 'HQ' },
+},
     {
       collection:"maintenance"
     }
   );
   
-  module.exports = mongoose.model("maintenanceSchema", maintenanceSchema);
+
+  
+maintenanceSchema.index({ branchId: 1, serviceName: 1 }, { unique: true });
+module.exports = mongoose.model("maintenanceSchema", maintenanceSchema);

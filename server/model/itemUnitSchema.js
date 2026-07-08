@@ -9,7 +9,8 @@ const itemUnitSchema = new Schema(
         unique: true,
         trim: true,
       },
-  },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "itemUnit",
   }

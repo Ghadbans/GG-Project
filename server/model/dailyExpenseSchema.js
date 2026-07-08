@@ -74,8 +74,16 @@ const dailyExpenseSchema = new Schema({
       type: String,
       trim: true,
     },
-   
-  },
+    CheckTvA: {
+      type: Boolean,
+      default: false
+    },
+    tax: {
+      type: Number,
+      default: 0
+    },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection:"dailyExpense"
   }

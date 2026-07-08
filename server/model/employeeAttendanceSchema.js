@@ -31,7 +31,8 @@ const employeeAttendanceSchema = new Schema({
       type: Number,
       trim: true,
     },
-  },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection:"employeeAttendance"
   }

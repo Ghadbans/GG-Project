@@ -6,7 +6,8 @@ const imageSchema= new Schema(
       data: Buffer, 
       contentType:String,
       employeeName: String,
-    },
+        branchId: { type: String, default: 'HQ' },
+},
     {
       collection:"image"
     }

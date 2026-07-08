@@ -75,7 +75,8 @@ const recurringInvoiceSchema = new Schema(
         trim: true,
         required: true
       },
-    },
+        branchId: { type: String, default: 'HQ' },
+},
     {
       collection:"recurringInvoice"
     }

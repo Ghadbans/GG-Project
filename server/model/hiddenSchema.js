@@ -11,8 +11,9 @@ const hiddenSchema = new Schema(
     hiddenByCEO:{
       type: Boolean,
       trim: true,
-        }
-  },
+        },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "hidden",
   }

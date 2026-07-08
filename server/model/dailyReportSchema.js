@@ -19,8 +19,9 @@ const dailyReportSchema = new Schema({
     },
     comments: {
       type: String
-    }
-  }
+    },
+    branchId: { type: String, default: 'HQ' },
+}
   ,
   {
     collection:"dailyReport"

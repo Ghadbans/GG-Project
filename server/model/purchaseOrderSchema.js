@@ -32,9 +32,10 @@ const purchaseOrderSchema = new Schema(
     },
     reference: {
       },  
-      itemsQtyArray:[
-
-    ],  
+      itemsQtyArray: {
+        type: Array,
+        default: [],
+      },
    manufacturer: {
       type: String,
       trim: true,
@@ -57,8 +58,9 @@ const purchaseOrderSchema = new Schema(
       IpRelated: {
       },
       Create: {
-      }
-  },
+      },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection: "PurchaseOrder",
   }

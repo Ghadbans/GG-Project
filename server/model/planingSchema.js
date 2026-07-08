@@ -43,7 +43,8 @@ const planingSchema = new Schema({
         type: String,
         trim: true,
       },
-  }
+    branchId: { type: String, default: 'HQ' },
+}
   ,
   {
     collection:"Planing"

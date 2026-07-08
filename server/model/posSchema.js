@@ -6,9 +6,7 @@ const posSchema= new Schema(
       factureNumber: {
       type: Number,
       required: true,
-      trim: true,
-      unique:true
-      },
+      trim: true },
       invoiceDate: {
       type: Date,
       trim: true,
@@ -17,8 +15,7 @@ const posSchema= new Schema(
       time: {
         type: Date,
         trim: true,
-        required: true,
-      },
+        required: true },
       status: {
         type: String,
         trim: true,
@@ -33,60 +30,57 @@ const posSchema= new Schema(
       },
       totalFC: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       tax: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       totalUSD: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       rate: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       totalInvoice: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       balanceDue: {
         type: Number,
-        trim: true,
+        trim: true },
+      CheckTvA: {
+        type: Boolean,
+        default: false
       },
       TotalAmountPaid: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       remaining: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       credit: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       creditUsd: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       creditFC: {
         type: Number,
-        trim: true,
-      },
+        trim: true },
       note: {
         type: String,
-        trim: true,
-      },
+        trim: true },
       Create: {
         type: String,
-        trim: true,
-      }
-    },
+        trim: true },
+        branchId: { type: String, default: 'HQ' } },
     {
       collection:"pos"
     }
   );
   
-  module.exports = mongoose.model("posSchema", posSchema);
+
+  
+posSchema.index({ branchId: 1, factureNumber: 1 }, { unique: true });
+
+// Attach stock sync hooks
+require('./stockUtils').attachStockHooks(posSchema);
+module.exports = mongoose.model("posSchema", posSchema);

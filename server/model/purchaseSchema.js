@@ -6,20 +6,16 @@ const purchaseSchema = new Schema(
     },
    purchaseNumber: {
       type: Number,
-      unique: true,
-      trim: true,
-    },
+      
+      trim: true },
     purchaseName: {
       type: String,
       required: true,
-      trim: true,
-      unique:true
-    },
+      trim: true },
       projectName: {
       _id:{
         type: String,
-        trim: true,
-      },
+        trim: true },
       projectName:{
        type: String,
        trim: true,
@@ -33,52 +29,45 @@ const purchaseSchema = new Schema(
       },
       statusInfo: {
         type: String,
-        trim: true,
-      },
+        trim: true },
       items:[  ],
       status: {
         type: String,
-        trim: true,
-      },
+        trim: true },
       description: {
         type: String,
-        trim: true,
-       },
+        trim: true },
       purchaseAmount1: {
         type: Number,
         trim: true,
-        minimum: 0,
-      },
+        minimum: 0 },
       purchaseAmount2: {
         type: Number,
         trim: true,
-        minimum: 0,
-      },
+        minimum: 0 },
       Create: {
       },ReferenceName: {
         type: String,
-        trim: true,
-       },ReferenceName2: {
+        trim: true },ReferenceName2: {
         type: String,
-        trim: true,
-       }, noteInfo: {
+        trim: true }, noteInfo: {
         type: String,
-        trim: true,
-      },estimateDefect: {
+        trim: true },estimateDefect: {
         type: String,
-        trim: true,
-      },estimateSubject: {
+        trim: true },estimateSubject: {
         type: String,
-        trim: true,
-      }, Position: {
+        trim: true }, Position: {
         type: String,
-        trim: true,
-       }
+        trim: true },
    
-  },
+    branchId: { type: String, default: 'HQ' } },
   {
-    collection: "purchase",
-  }
+    collection: "purchase" }
 );
 
+
+
+purchaseSchema.index({ branchId: 1, purchaseNumber: 1 }, { unique: true });
+
+purchaseSchema.index({ branchId: 1, purchaseName: 1 }, { unique: true });
 module.exports = mongoose.model("purchaseSchema", purchaseSchema);

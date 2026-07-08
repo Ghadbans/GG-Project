@@ -1,17 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-let blockProductionSchema = new Schema({
-    branchId: { type: String },
-    date: { type: String },
-    machine: { type: String },
-    operator: { type: String },
-    blockType: { type: String },
-    sacks: { type: Number },
-    totalBlocks: { type: Number },
-    helpers: { type: Array }
-}, {
-    collection: 'blockproductionschemas'
-})
+const blockProductionSchema = new Schema({
+    date: { type: String, required: true },
+    machineNo: String,
+    operatorName: String,
+    blockType: String,
+    sacksUsed: Number,
+    sackDetails: [Number],
+    totalBlocks: Number,
+    laborPot: Number,
+    overheadSnapshot: Number,
+    totalCost: Number,
+    branchId: { type: String, default: 'HQ' },
+}, { strict: false, collection: "blockProduction" });
 
-module.exports = mongoose.model('BlockProductionSchema', blockProductionSchema)
+if (mongoose.models && mongoose.models.blockProductionSchema) {
+  delete mongoose.models.blockProductionSchema;
+}
+module.exports = mongoose.model('blockProductionSchema', blockProductionSchema);

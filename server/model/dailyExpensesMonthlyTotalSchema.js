@@ -15,6 +15,7 @@ dailyExpensesMonthlyTotalSchema = new Schema({
         type: Number,
         required: true
       },
+      branchId: { type: String, default: 'HQ' },
 }  ,
 {
   collection:"DailyExpensesMonthlyTotal"

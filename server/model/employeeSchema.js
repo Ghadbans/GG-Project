@@ -108,7 +108,8 @@ const employeeSchema = new Schema({
     }
     ,Create: {
     },
-  },
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection:"employee"
   }

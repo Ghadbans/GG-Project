@@ -79,8 +79,22 @@ const companyProfileSchema = new Schema({
       trim: true,
       required: true
     },
-   
-  },
+    branches: [{
+      branchId: String,
+      branchName: String,
+      companyName: String,
+      logo: String,
+      address: String,
+      province: String,
+      country: String,
+      phone: String,
+      email: String,
+      website: String,
+      rccm: String,
+      natId: String
+    }],
+    branchId: { type: String, default: 'HQ' },
+},
   {
     collection:"companyProfile"
   });

@@ -146,11 +146,32 @@ const payRollSchema = new Schema(
           type:String,
           trim: true,
         },
+        employeeDepartment: {
+          type: String,
+          trim: true
+        },
+        weekFrom: {
+          type: String,
+          trim: true
+        },
+        weekTo: {
+          type: String,
+          trim: true
+        },
+        factoryEarned: {
+          type: Number,
+          default: 0
+        },
+        factoryDamage: {
+          type: Number,
+          default: 0
+        },
         employeeName: {
         },
         Create: {
-        }
-    },
+        },
+        branchId: { type: String, default: 'HQ' },
+},
     {
       collection: "payRoll",
     }

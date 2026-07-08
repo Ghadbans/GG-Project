@@ -15,6 +15,11 @@ const paymentSchema = new Schema({
       type: Number,
       required: true
     },
+    // VAT tax amount paid with this payment (frontend now sends proportional tax)
+    tax: {
+      type: Number,
+      default: 0
+    },
     bankCharge: {
       type: String,
       trim: true,
@@ -32,10 +37,14 @@ const paymentSchema = new Schema({
       type: Number,
       trim: true,
       required: true,
-      unique:true
-    },
+      },
     referenceNumber:[],
-    TotalAmount:[],
+    TotalAmount:[new Schema({
+      prefix: {
+        type: String,
+        trim: true
+      }
+    }, { _id: false, strict: false })],
     reason: {
       type: String,
       trim: true
@@ -49,11 +58,14 @@ const paymentSchema = new Schema({
       trim: true
     },Create: {
     },
-  }
+    branchId: { type: String, default: 'HQ' },
+}
   ,
   {
     collection:"payment"
   }
   );
   
-  module.exports = mongoose.model("paymentSchema", paymentSchema);
+  
+paymentSchema.index({ branchId: 1, paymentNumber: 1 }, { unique: true });
+module.exports = mongoose.model("paymentSchema", paymentSchema);
