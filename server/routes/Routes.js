@@ -1122,12 +1122,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        invoiceNumber: 1, customerName: 1, status: 1,
-        subTotal: 1, total: 1, balanceDue: 1, tax: 1, rate: 1,
-        invoiceDate: 1, invoiceDueDate: 1, createdAt: 1,
-        ReferenceName: 1, ReferenceName2: 1, noteInfo: 1,
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await invoiceSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
@@ -1937,10 +1932,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        purchaseNumber: 1, supplierName: 1, status: 1,
-        subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await purchaseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
@@ -2388,11 +2380,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        estimateNumber: 1, customerName: 1, status: 1,
-        subTotal: 1, totalAmount: 1, discount: 1, tax: 1,
-        rate: 1, estimateDate: 1, createdAt: 1, ReferenceName: 1,
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await estimationSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
@@ -2606,10 +2594,7 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        posNumber: 1, customerName: 1, status: 1,
-        subTotal: 1, total: 1, posDate: 1, createdAt: 1,
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await posSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
@@ -3050,10 +3035,7 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        expenseNumber: 1, expenseDate: 1, amount: 1, total: 1,
-        expenseCategory: 1, accountName: 1, description: 1, branchId: 1
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await expenseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
@@ -3225,10 +3207,7 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        maintenanceNumber: 1, customerName: 1, status: 1,
-        subTotal: 1, total: 1, maintenanceDate: 1, createdAt: 1,
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await maintenanceSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
@@ -4575,10 +4554,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = summary ? {
-        purchaseNumber: 1, supplierName: 1, status: 1, isPaid: 1, payments: 1,
-        subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
-      } : {};
+      const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       const result = await itemPurchaseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
