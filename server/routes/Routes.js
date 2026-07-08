@@ -1124,7 +1124,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await invoiceSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -1934,7 +1934,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await purchaseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2382,7 +2382,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2596,7 +2596,7 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await posSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3037,7 +3037,7 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await expenseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3209,7 +3209,7 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await maintenanceSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await maintenanceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -4556,7 +4556,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
