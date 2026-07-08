@@ -1512,8 +1512,11 @@ Route.route("/item-Information").get(async (req, res) => {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
+    const isSummary = req.query.summary === 'true';
+    const projection = isSummary ? { itemName: 1, itemCategory: 1, unit: 1, itemSellingPrice: 1, itemCostPrice: 1, itemUpc: 1, _id: 1, itemDescription: 1, itemBrand: 1, itemManufacturer: 1, typeItem: 1 } : {};
+
     const [itemI, totalItem] = await Promise.all([
-      itemSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)),
+      itemSchema.find(query, projection).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)),
       itemSchema.countDocuments(query),
     ]);
 

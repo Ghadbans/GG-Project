@@ -11,6 +11,7 @@ const itemPurchaseSchema = new Schema(
     items: [],
     description: { type: String },
     status: { type: String, default: 'UNPAID' },
+    isPaid: { type: Boolean, default: false },
     reason: { type: String },
     note: { type: String },
     POID: { type: String },
