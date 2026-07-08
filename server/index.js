@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const compression = require("compression");
 const http = require('http')
 const bodyParser = require("body-parser");
 const createError = require("http-errors");
@@ -44,6 +45,7 @@ app.use(function (req, res, next) {
   return next();
 });
 // CORS
+app.use(compression());
 app.use(cors());
 const bcrypt = require('bcrypt');
 const User = require("./model/employeeUserSchema");
