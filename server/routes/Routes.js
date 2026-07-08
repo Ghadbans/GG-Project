@@ -947,7 +947,7 @@ Route.route("/create-employee").post(async (req, res, next) => {
 
 Route.route("/get-last-saved-employee").get(async (req, res, next) => {
   try {
-    const last = await employeeSchema.findOne().sort({ _id: -1 }).exec();
+    const last = await employeeSchema.findOne().sort({ _id: -1 }).allowDiskUse(true).exec();
     res.json(last);
   } catch (error) {
     next(error);
@@ -1121,7 +1121,7 @@ Route.route("/remove-employeeuser").delete(async (req, res) => {
 Route.route("/invoice", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         invoiceNumber: 1, customerName: 1, status: 1,
         subTotal: 1, total: 1, balanceDue: 1, tax: 1, rate: 1,
@@ -1129,7 +1129,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         ReferenceName: 1, ReferenceName2: 1, noteInfo: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await invoiceSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await invoiceSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -1166,7 +1166,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await invoiceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -1518,7 +1518,7 @@ Route.route("/item-Information").get(async (req, res) => {
     }
 
     const [itemI, totalItem] = await Promise.all([
-      itemSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)),
+      itemSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)),
       itemSchema.countDocuments(query),
     ]);
 
@@ -1936,13 +1936,13 @@ Route.route("/remove-payment").delete(async (req, res) => {
 Route.route("/purchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         purchaseNumber: 1, supplierName: 1, status: 1,
         subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await purchaseSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await purchaseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2387,14 +2387,14 @@ Route.route("/remove-companyProfile").delete(async (req, res) => {
 Route.route("/estimation", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         estimateNumber: 1, customerName: 1, status: 1,
         subTotal: 1, totalAmount: 1, discount: 1, tax: 1,
         rate: 1, estimateDate: 1, createdAt: 1, ReferenceName: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await estimationSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2605,13 +2605,13 @@ Route.route("/remove-estimation").delete(async (req, res) => {
 Route.route("/pos", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         posNumber: 1, customerName: 1, status: 1,
         subTotal: 1, total: 1, posDate: 1, createdAt: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await posSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await posSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2907,9 +2907,7 @@ Route.route("/get-last-saved-project").get(async(req,res, next)=>{
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await projectSchema.findOne(query).sort({
-      _id: -1
-    }).exec();
+    const last = await projectSchema.findOne(query).sort({ _id: -1 }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -3051,13 +3049,13 @@ Route.route("/remove-projects").delete(async (req, res) => {
 Route.route("/expense", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         expenseNumber: 1, expenseDate: 1, amount: 1, total: 1,
         expenseCategory: 1, accountName: 1, description: 1, branchId: 1
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await expenseSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await expenseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3092,7 +3090,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await expenseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3106,9 +3104,7 @@ Route.route("/get-last-saved-expense").get(async(req,res, next)=>{
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await expenseSchema.findOne(query).sort({
-      _id: -1
-    }).exec();
+    const last = await expenseSchema.findOne(query).sort({ _id: -1 }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -3228,13 +3224,13 @@ Route.route("/remove-expense").delete(async (req, res) => {
 Route.route("/maintenance", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         maintenanceNumber: 1, customerName: 1, status: 1,
         subTotal: 1, total: 1, maintenanceDate: 1, createdAt: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await maintenanceSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await maintenanceSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3274,7 +3270,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await maintenanceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3288,9 +3284,7 @@ Route.route("/get-last-saved-maintenance").get(async(req,res, next)=>{
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await maintenanceSchema.findOne(query).sort({
-      _id: -1
-    }).exec();
+    const last = await maintenanceSchema.findOne(query).sort({ _id: -1 }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -3940,7 +3934,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await itemOutSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4059,7 +4053,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4177,9 +4171,7 @@ Route.route("/get-last-saved-grantAccess").get(async(req,res, next)=>{
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await grantAccessSchema.findOne(query).sort({
-      _id: -1
-    }).exec();
+    const last = await grantAccessSchema.findOne(query).sort({ _id: -1 }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -4305,7 +4297,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await itemReturnSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4498,9 +4490,7 @@ Route.route("/get-last-saved-cash").get(async(req,res, next)=>{
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await cashSchema.findOne(query).sort({
-      _id: -1
-    }).exec();
+    const last = await cashSchema.findOne(query).sort({ _id: -1 }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -4584,13 +4574,13 @@ Route.route("/remove-cash").delete(async (req, res) => {
 Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
+      const summary = req.query.summary !== 'false'; // DEFAULT TO TRUE
       const projection = summary ? {
         purchaseNumber: 1, supplierName: 1, status: 1, isPaid: 1, payments: 1,
         subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ createdAt: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -4623,7 +4613,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await itemPurchaseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4909,14 +4899,14 @@ function branchFilter(req) {
 Route.route("/block-config").get(async (req, res, next) => {
   try {
     const filter = branchFilter(req);
-    const data = await BlockConfig.find(filter).sort({ lastUpdated: -1 });
+    const data = await BlockConfig.find(filter).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ lastUpdated: -1 });
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-config2").get(async (req, res, next) => {
   try {
     const filter = branchFilter(req);
-    const data = await BlockConfig.find(filter).sort({ lastUpdated: -1 });
+    const data = await BlockConfig.find(filter).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ lastUpdated: -1 });
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4949,13 +4939,13 @@ Route.route("/create-block-config").post(async (req, res, next) => {
 // ---------- block-production ----------
 Route.route("/block-production").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockProduction.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-production2").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockProduction.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4997,13 +4987,13 @@ Route.route("/delete-block-production").post(async (req, res, next) => {
 // ---------- block-damage ----------
 Route.route("/block-damage").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockDamage.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-damage2").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockDamage.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -5045,13 +5035,13 @@ Route.route("/delete-block-damage").post(async (req, res, next) => {
 // ---------- block-sales ----------
 Route.route("/block-sales").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockSales.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-sales2").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockSales.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -5093,13 +5083,13 @@ Route.route("/delete-block-sales").post(async (req, res, next) => {
 // ---------- block-mixer ----------
 Route.route("/block-mixer").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockMixer.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-mixer2").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 });
+    const data = await BlockMixer.find(branchFilter(req)).select("-items -image -qrCode -attachments -signature -products -logo -thumbnail -documents -history -payments -expenseInformation -maintenanceInformation -itemInformation -itemOuts -itemReturns -invoices -planings -comments -notifications -receipt -customerImage").sort({ date: -1 }).allowDiskUse(true);
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
