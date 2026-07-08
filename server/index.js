@@ -37,12 +37,8 @@ const io = new Server(server, {
   }
 });
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  }),
-  bodyParser.json()
-);
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(function (req, res, next) {
   req.io = io;
   return next();
