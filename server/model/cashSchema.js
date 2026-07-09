@@ -84,4 +84,5 @@ totalPayRollDailyFC:{
   }
 );
 
+cashSchema.index({ cashDate: -1 });
 module.exports = mongoose.model("cashSchema", cashSchema);

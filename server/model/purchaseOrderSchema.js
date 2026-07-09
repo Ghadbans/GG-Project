@@ -65,4 +65,6 @@ const purchaseOrderSchema = new Schema(
     collection: "PurchaseOrder",
   }
 );
+purchaseOrderSchema.index({ purchaseOrderDate: -1 });
+purchaseOrderSchema.index({ outNumber: -1 });
 module.exports = mongoose.model("purchaseOrderSchema",  purchaseOrderSchema);

@@ -176,4 +176,6 @@ const payRollSchema = new Schema(
       collection: "payRoll",
     }
   );
-  module.exports = mongoose.model("payRollSchema",  payRollSchema);
+  payRollSchema.index({ payDate: -1 });
+payRollSchema.index({ payNumber: -1 });
+module.exports = mongoose.model("payRollSchema",  payRollSchema);

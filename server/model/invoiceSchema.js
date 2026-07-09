@@ -123,4 +123,6 @@ const invoiceSchema= new Schema(
 
   
 invoiceSchema.index({ branchId: 1, invoiceNumber: 1 }, { unique: true });
+invoiceSchema.index({ invoiceDate: -1 });
+invoiceSchema.index({ invoiceNumber: -1 });
 module.exports = mongoose.model("invoiceSchema", invoiceSchema);

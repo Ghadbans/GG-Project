@@ -39,4 +39,6 @@ itemOutSchema.index({ branchId: 1, outNumber: 1 }, { unique: true });
 
 // Attach stock sync hooks
 require('./stockUtils').attachStockHooks(itemOutSchema);
+itemOutSchema.index({ itemOutDate: -1 });
+itemOutSchema.index({ outNumber: -1 });
 module.exports = mongoose.model("itemOutSchema",  itemOutSchema);

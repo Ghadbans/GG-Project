@@ -112,4 +112,6 @@ const estimationSchema = new Schema(
 );
 
 estimationSchema.index({ branchId: 1, estimateNumber: 1 }, { unique: true });
+estimationSchema.index({ estimateDate: -1 });
+estimationSchema.index({ estimateNumber: -1 });
 module.exports = mongoose.model("estimationSchema",  estimationSchema);

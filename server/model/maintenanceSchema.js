@@ -132,4 +132,6 @@ const maintenanceSchema= new Schema(
 
   
 maintenanceSchema.index({ branchId: 1, serviceName: 1 }, { unique: true });
+maintenanceSchema.index({ serviceDate: -1 });
+maintenanceSchema.index({ serviceNumber: -1 });
 module.exports = mongoose.model("maintenanceSchema", maintenanceSchema);

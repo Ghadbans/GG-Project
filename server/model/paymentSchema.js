@@ -68,4 +68,6 @@ const paymentSchema = new Schema({
   
   
 paymentSchema.index({ branchId: 1, paymentNumber: 1 }, { unique: true });
+paymentSchema.index({ paymentDate: -1 });
+paymentSchema.index({ paymentNumber: -1 });
 module.exports = mongoose.model("paymentSchema", paymentSchema);

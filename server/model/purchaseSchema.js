@@ -70,4 +70,6 @@ const purchaseSchema = new Schema(
 purchaseSchema.index({ branchId: 1, purchaseNumber: 1 }, { unique: true });
 
 purchaseSchema.index({ branchId: 1, purchaseName: 1 }, { unique: true });
+purchaseSchema.index({ purchaseDate: -1 });
+purchaseSchema.index({ purchaseNumber: -1 });
 module.exports = mongoose.model("purchaseSchema", purchaseSchema);

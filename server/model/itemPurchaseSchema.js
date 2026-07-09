@@ -54,4 +54,6 @@ itemPurchaseSchema.index({ branchId: 1, itemPurchaseNumber: 1 }, { unique: true 
 
 // Attach stock sync hooks
 require('./stockUtils').attachStockHooks(itemPurchaseSchema);
+itemPurchaseSchema.index({ itemPurchaseDate: -1 });
+itemPurchaseSchema.index({ itemPurchaseNumber: -1 });
 module.exports = mongoose.model("itemPurchaseSchema", itemPurchaseSchema);

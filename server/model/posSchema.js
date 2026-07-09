@@ -83,4 +83,6 @@ posSchema.index({ branchId: 1, factureNumber: 1 }, { unique: true });
 
 // Attach stock sync hooks
 require('./stockUtils').attachStockHooks(posSchema);
+posSchema.index({ invoiceDate: -1 });
+posSchema.index({ factureNumber: -1 });
 module.exports = mongoose.model("posSchema", posSchema);

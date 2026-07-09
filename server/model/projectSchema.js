@@ -42,4 +42,5 @@ const projectSchema = new Schema(
 projectSchema.index({ branchId: 1, projectNumber: 1 }, { unique: true });
 
 projectSchema.index({ branchId: 1, projectName: 1 }, { unique: true });
+projectSchema.index({ projectNumber: -1 });
 module.exports = mongoose.model("projectSchema", projectSchema);
