@@ -818,8 +818,8 @@ Route.route("/get-last-saved-payRoll").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await payRollSchema.findOne(query).sort({
-      payNumber: -1
-    }).exec();
+    payNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -1208,8 +1208,8 @@ Route.route("/get-last-saved-invoice").get(async(req,res, next)=>{
       }
     }
     const last = await invoiceSchema.findOne(query).sort({
-      invoiceNumber: -1
-    }).exec();
+    invoiceNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -1260,8 +1260,8 @@ Route.route("/create-invoice").post(async (req, res, next) => {
    try {
     const branchId = req.body.branchId || req.query.branchId;
     const invoiceNumberOld = await invoiceSchema.findOne(branchId ? { branchId } : {}).sort({
-      invoiceNumber: -1
-    }).exec();
+    invoiceNumber: -1
+  }).allowDiskUse(true).exec();
     if (invoiceNumberOld && invoiceNumberOld.invoiceNumber === invoiceNumber) {
       const sum = invoiceNumber + 1
       await invoiceSchema.create({
@@ -1766,8 +1766,8 @@ Route.route("/get-last-saved-payment").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await paymentSchema.findOne(query).sort({
-      paymentNumber: -1
-    }).exec();
+    paymentNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -1812,8 +1812,8 @@ Route.route("/create-payment").post(async (req, res, next) => {
    try {
     const branchId = req.body.branchId || req.query.branchId;
     const paymentInfo = await paymentSchema.findOne(branchId ? { branchId } : {}).sort({
-      paymentNumber: -1
-    }).exec();
+    paymentNumber: -1
+  }).allowDiskUse(true).exec();
     if (paymentInfo && paymentInfo.paymentNumber === paymentNumber) {
       await paymentSchema.create({
         customerName,
@@ -1950,8 +1950,8 @@ Route.route("/get-last-saved-purchase").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await purchaseSchema.findOne(query).sort({
-      purchaseNumber: -1
-    }).exec();
+    purchaseNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -1986,7 +1986,7 @@ Route.route("/create-purchase").post(async (req, res, next) => {
   const branchId = req.body.branchId || req.query.branchId;
   const purchaseNumberInfo = await purchaseSchema.findOne(branchId ? { branchId } : {}).sort({
     purchaseNumber: -1
-  }).exec();
+  }).allowDiskUse(true).exec();
   if ( purchaseNumberInfo && purchaseNumberInfo.purchaseNumber === purchaseNumber) {
     const sum = purchaseNumber + 1
     await purchaseSchema.create({ customerName,
@@ -2398,8 +2398,8 @@ Route.route("/get-last-saved-estimation").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await estimationSchema.findOne(query).sort({
-      estimateNumber: -1
-    }).exec();
+    estimateNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -2448,7 +2448,7 @@ Route.route("/create-estimation").post(async (req, res, next) => {
   const branchId = req.body.branchId || req.query.branchId;
   const estimateNumberOld = await estimationSchema.findOne(branchId ? { branchId } : {}).sort({
     estimateNumber: -1
-  }).exec();
+  }).allowDiskUse(true).exec();
   if (estimateNumberOld && estimateNumberOld.estimateNumber === estimateNumber) {
     const sum = estimateNumber + 1
     await estimationSchema.create({
@@ -2612,8 +2612,8 @@ Route.route("/get-last-saved-pos").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await posSchema.findOne(query).sort({
-      factureNumber: -1
-    }).exec();
+    factureNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -2660,7 +2660,7 @@ Route.route("/create-pos").post(async (req, res, next) => {
   const branchId = req.body.branchId || req.query.branchId;
   const posOld = await posSchema.findOne(branchId ? { branchId } : {}).sort({
     factureNumber: -1
-  }).exec();
+  }).allowDiskUse(true).exec();
   if (posOld && posOld.factureNumber === factureNumber) {
     const sum = Number(factureNumber) + 1
     await posSchema.create({
@@ -2918,7 +2918,7 @@ Route.route("/create-projects").post(async (req, res, next) => {
   const branchId = req.body.branchId || req.query.branchId;
   const projectNumberInfo = await projectSchema.findOne(branchId ? { branchId } : {}).sort({
     projectNumber: -1
-  }).exec();
+  }).allowDiskUse(true).exec();
   if (projectNumberInfo && projectNumberInfo.projectNumber === projectNumber) {
     await projectSchema.create({
       customerName,
@@ -3107,8 +3107,8 @@ Route.route("/create-expense").post(async (req, res, next) => {
    try {
     const branchId = req.body.branchId || req.query.branchId;
     const expenseNumberOld = await expenseSchema.findOne(branchId ? { branchId } : {}).sort({
-      expenseNumber: -1
-    }).exec();
+    expenseNumber: -1
+  }).allowDiskUse(true).exec();
     if ( expenseNumberOld && expenseNumberOld.expenseNumber === expenseNumber) {
       await expenseSchema.create({
         expenseCategory,accountName,
@@ -3285,7 +3285,7 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
   const branchId = req.body.branchId || req.query.branchId;
   const serviceNumberInfo = await maintenanceSchema.findOne(branchId ? { branchId } : {}).sort({
     serviceNumber: -1
-  }).exec();0
+  }).allowDiskUse(true).exec();0
   if (serviceNumberInfo && serviceNumberInfo.serviceNumber === serviceNumber) {
     const sum = serviceNumber + 1
     await maintenanceSchema.create({ customerName,serviceNumber: sum,
@@ -3931,8 +3931,8 @@ Route.route("/get-last-saved-itemOut").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await itemOutSchema.findOne(query).sort({
-      outNumber: -1
-    }).exec();
+    outNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -4050,8 +4050,8 @@ Route.route("/get-last-saved-purchaseOrder").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await purchaseOrderSchema.findOne(query).sort({
-      outNumber: -1
-    }).exec();
+    outNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -4294,8 +4294,8 @@ Route.route("/get-last-saved-itemReturn").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await itemReturnSchema.findOne(query).sort({
-      outNumber: -1
-    }).exec();
+    outNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -4607,8 +4607,8 @@ Route.route("/get-last-saved-itemPurchase").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await itemPurchaseSchema.findOne(query).sort({
-      itemPurchaseNumber: -1
-    }).exec();
+    itemPurchaseNumber: -1
+  }).allowDiskUse(true).exec();
     res.json(last)
   } catch (error) {
     next(error);
