@@ -29,10 +29,13 @@ mongoDbConnection().then(async () => {
           const coll = db.collection(collName);
           const indexes = await coll.indexes();
           for (const idx of indexes) {
-            // Keep _id and intentional unique indexes (like branchId_1_purchaseNumber_1)
-            if (idx.unique && idx.name !== "_id_" && !idx.name.includes("purchaseNumber")) {
-              await coll.dropIndex(idx.name);
-              console.log(`Dropped unexpected unique index ${idx.name} from ${collName}`);
+            // Keep _id and intentional composite unique indexes (like branchId_1_purchaseNumber_1)
+            // But drop legacy global unique indexes like purchaseNumber_1
+            if (idx.unique && idx.name !== "_id_") {
+              if (idx.name === "purchaseNumber_1" || idx.name === "itemPurchaseNumber_1" || !idx.name.includes("purchaseNumber")) {
+                await coll.dropIndex(idx.name);
+                console.log(`Dropped unexpected unique index ${idx.name} from ${collName}`);
+              }
             }
           }
         } catch (err) {
