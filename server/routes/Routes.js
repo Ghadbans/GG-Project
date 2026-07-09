@@ -2385,7 +2385,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ estimateDate: -1 }).allowDiskUse(true);
+      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3089,7 +3089,7 @@ Route.route("/get-last-saved-expense").get(async(req,res, next)=>{
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await expenseSchema.findOne(query).sort({ expenseDate: -1 }).exec();
+    const last = await expenseSchema.findOne(query).sort({ expenseNumber: -1 }).exec();
     res.json(last)
   } catch (error) {
     next(error);
@@ -3296,11 +3296,10 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
       ? serviceNumber
       : maxServiceNumber + 1;
 
-    // Build the serviceName from the final number (keep existing if frontend sent a non-conflicting name)
+    // ALWAYS generate serviceName from finalServiceNumber to avoid E11000 duplicate key errors.
+    // Never trust the frontend-sent serviceName (it may already exist in the DB).
     const digits = String(finalServiceNumber).padStart(6, '0');
-    const finalServiceName = serviceName && !serviceName.endsWith(String(serviceNumber))
-      ? serviceName
-      : 'M-' + digits;
+    const finalServiceName = 'M-' + digits;
 
     const result = await maintenanceSchema.create({
       customerName, serviceNumber: finalServiceNumber,

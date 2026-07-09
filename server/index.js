@@ -19,8 +19,22 @@ async function mongoDbConnection() {
     6000
   );
 }
-mongoDbConnection().then(() => {
+mongoDbConnection().then(async () => {
   console.log("globalgate successfully connected.");
+  try {
+    const db = mongoose.connection.db;
+    await db.collection("purchases").dropIndex("projectName.projectName_1");
+    console.log("Dropped index projectName.projectName_1 from purchases collection");
+  } catch (err) {
+    console.log("Could not drop index from purchases:", err.message);
+  }
+  try {
+    const db = mongoose.connection.db;
+    await db.collection("itemouts").dropIndex("outNumber_1");
+    console.log("Dropped index outNumber_1 from itemouts collection");
+  } catch (err) {
+    console.log("Could not drop index from itemouts:", err.message);
+  }
 }),
   (error) => {
     console.log("Could not connect to database : " + err);
