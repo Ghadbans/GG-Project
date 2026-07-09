@@ -21,20 +21,33 @@ async function mongoDbConnection() {
 }
 mongoDbConnection().then(async () => {
   console.log("globalgate successfully connected.");
-  try {
-    const db = mongoose.connection.db;
-    await db.collection("purchases").dropIndex("projectName.projectName_1");
-    console.log("Dropped index projectName.projectName_1 from purchases collection");
-  } catch (err) {
-    console.log("Could not drop index from purchases:", err.message);
-  }
-  try {
-    const db = mongoose.connection.db;
-    await db.collection("itemouts").dropIndex("outNumber_1");
-    console.log("Dropped index outNumber_1 from itemouts collection");
-  } catch (err) {
-    console.log("Could not drop index from itemouts:", err.message);
-  }
+    const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
+    const indexesToDrop = ["projectName.projectName_1", "purchaseName_1", "itemPurchaseName_1", "name_1", "description_1"];
+
+    try {
+      const db = mongoose.connection.db;
+      for (const collName of collectionsToClean) {
+        for (const idxName of indexesToDrop) {
+          try {
+            await db.collection(collName).dropIndex(idxName);
+            console.log(`Dropped index ${idxName} from ${collName} collection`);
+          } catch (err) {
+            // Ignore ns not found or index not found
+          }
+        }
+      }
+    } catch (err) {
+      console.log("Error in DB cleanup:", err.message);
+    }
+
+    try {
+      const db = mongoose.connection.db;
+      await db.collection("itemOut").dropIndex("outNumber_1");
+      await db.collection("itemouts").dropIndex("outNumber_1");
+      console.log("Dropped index outNumber_1 from itemOut collection");
+    } catch (err) {
+      console.log("Could not drop index from itemOut:", err.message);
+    }
 }),
   (error) => {
     console.log("Could not connect to database : " + err);
