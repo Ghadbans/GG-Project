@@ -28,18 +28,29 @@ mongoDbConnection().then(async () => {
         try {
           const coll = db.collection(collName);
           const indexes = await coll.indexes();
+          console.log(`Checking indexes for ${collName}...`);
           for (const idx of indexes) {
-            // Keep _id and intentional composite unique indexes (like branchId_1_purchaseNumber_1)
-            // But drop legacy global unique indexes like purchaseNumber_1
+            console.log(`Found index on ${collName}: ${idx.name} (unique: ${idx.unique})`);
             if (idx.unique && idx.name !== "_id_") {
-              if (idx.name === "purchaseNumber_1" || idx.name === "itemPurchaseNumber_1" || !idx.name.includes("purchaseNumber")) {
-                await coll.dropIndex(idx.name);
-                console.log(`Dropped unexpected unique index ${idx.name} from ${collName}`);
+              if (idx.name === "purchaseNumber_1" || idx.name === "itemPurchaseNumber_1" || idx.name === "projectName.projectName_1" || !idx.name.includes("purchaseNumber")) {
+                try {
+                  await coll.dropIndex(idx.name);
+                  console.log(`Dropped unexpected unique index ${idx.name} from ${collName}`);
+                } catch (e) {
+                  console.log(`Failed to drop index ${idx.name} from ${collName}: ${e.message}`);
+                }
               }
             }
           }
+          
+          // Force drop it just in case coll.indexes() misses it for some weird reason
+          try {
+            await coll.dropIndex("projectName.projectName_1");
+            console.log(`Explicitly dropped projectName.projectName_1 from ${collName}`);
+          } catch(e) { }
+          
         } catch (err) {
-          // Ignore collections that don't exist
+          console.log(`Error processing collection ${collName}: ${err.message}`);
         }
       }
     } catch (err) {
