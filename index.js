@@ -18,9 +18,15 @@ mongoose.connect(mongoUri, {
   try {
     await mongoose.connection.db.collection('department').dropIndex('department_1');
     console.log('Dropped old department_1 index');
-  } catch (e) {
-    // Ignore if index doesn't exist
-  }
+  } catch (e) {}
+  try {
+    await mongoose.connection.db.collection('purchases').dropIndex('projectName.projectName_1');
+    console.log('Dropped old projectName.projectName_1 index from purchases');
+  } catch (e) {}
+  try {
+    await mongoose.connection.db.collection('itemouts').dropIndex('outNumber_1');
+    console.log('Dropped old outNumber_1 index from itemouts');
+  } catch (e) {}
 }).catch((error) => {
   console.log("Could not connect to database: " + error);
 });

@@ -18,8 +18,7 @@ const purchaseSchema = new Schema(
         trim: true },
       projectName:{
        type: String,
-       trim: true,
-       unique:true
+       trim: true
       }
     },
     purchaseDate: {
