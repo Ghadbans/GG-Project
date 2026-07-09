@@ -20,12 +20,20 @@ mongoose.connect(mongoUri, {
     console.log('Dropped old department_1 index');
   } catch (e) {}
   try {
-    await mongoose.connection.db.collection('purchases').dropIndex('projectName.projectName_1');
-    console.log('Dropped old projectName.projectName_1 index from purchases');
+    await mongoose.connection.db.collection('purchase').dropIndex('projectName.projectName_1');
+    console.log('Dropped old projectName.projectName_1 index from purchase');
   } catch (e) {}
   try {
-    await mongoose.connection.db.collection('itemouts').dropIndex('outNumber_1');
-    console.log('Dropped old outNumber_1 index from itemouts');
+    await mongoose.connection.db.collection('itemOut').dropIndex('outNumber_1');
+    console.log('Dropped old outNumber_1 index from itemOut');
+  } catch (e) {}
+  try {
+    await mongoose.connection.db.collection('itemoutschemas').dropIndex('branchId_1_outNumber_1');
+    console.log('Dropped old branchId_1_outNumber_1 index from itemoutschemas');
+  } catch (e) {}
+  try {
+    await mongoose.connection.db.collection('itempurchaseschemas').dropIndex('branchId_1_itemPurchaseNumber_1');
+    console.log('Dropped old branchId_1_itemPurchaseNumber_1 index from itempurchaseschemas');
   } catch (e) {}
 }).catch((error) => {
   console.log("Could not connect to database: " + error);

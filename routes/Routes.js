@@ -2394,7 +2394,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
         rate: 1, estimateDate: 1, createdAt: 1, ReferenceName: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await estimationSchema.find(filter, projection).sort({ estimateDate: -1 });
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3940,7 +3940,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemOutSchema.find(query).sort({ itemOutDate: -1 }).skip(skip).limit(Number(limit));
     const totalItem = await itemOutSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4305,7 +4305,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemReturnSchema.find(query).sort({ itemReturnDate: -1 }).skip(skip).limit(Number(limit));
     const totalItem = await itemReturnSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4590,7 +4590,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
         subTotal: 1, total: 1, tax: 1, purchaseDate: 1, createdAt: 1,
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ createdAt: -1 });
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ itemPurchaseDate: -1 });
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -4623,7 +4623,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemPurchaseSchema.find(query).sort({ itemPurchaseDate: -1 }).skip(skip).limit(Number(limit));
     const totalItem = await itemPurchaseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });

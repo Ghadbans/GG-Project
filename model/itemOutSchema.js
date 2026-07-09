@@ -35,7 +35,7 @@ const itemOutSchema = new Schema(
 
 
 
-itemOutSchema.index({ branchId: 1, outNumber: 1 }, { unique: true });
+itemOutSchema.index({ branchId: 1, outNumber: 1 });
 
 // Attach stock sync hooks
 require('./stockUtils').attachStockHooks(itemOutSchema);

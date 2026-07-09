@@ -49,7 +49,7 @@ const itemPurchaseSchema = new Schema(
 
 
 
-itemPurchaseSchema.index({ branchId: 1, itemPurchaseNumber: 1 }, { unique: true });
+itemPurchaseSchema.index({ branchId: 1, itemPurchaseNumber: 1 });
 
 // Attach stock sync hooks
 require('./stockUtils').attachStockHooks(itemPurchaseSchema);

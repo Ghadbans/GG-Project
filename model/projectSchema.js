@@ -26,8 +26,7 @@ const projectSchema = new Schema(
       trim: true },
     budget: {
       type: Number,
-      trim: true,
-      unique:true
+      trim: true
   },
     visitDate: {
       type: Date,
@@ -41,5 +40,4 @@ const projectSchema = new Schema(
 
 projectSchema.index({ branchId: 1, projectNumber: 1 }, { unique: true });
 
-projectSchema.index({ branchId: 1, projectName: 1 }, { unique: true });
 module.exports = mongoose.model("projectSchema", projectSchema);
