@@ -22,18 +22,21 @@ async function mongoDbConnection() {
 mongoDbConnection().then(async () => {
   console.log("globalgate successfully connected.");
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
-    const indexesToDrop = ["projectName.projectName_1", "purchaseName_1", "itemPurchaseName_1", "name_1", "description_1"];
-
     try {
       const db = mongoose.connection.db;
       for (const collName of collectionsToClean) {
-        for (const idxName of indexesToDrop) {
-          try {
-            await db.collection(collName).dropIndex(idxName);
-            console.log(`Dropped index ${idxName} from ${collName} collection`);
-          } catch (err) {
-            // Ignore ns not found or index not found
+        try {
+          const coll = db.collection(collName);
+          const indexes = await coll.indexes();
+          for (const idx of indexes) {
+            // Keep _id and intentional unique indexes (like branchId_1_purchaseNumber_1)
+            if (idx.unique && idx.name !== "_id_" && !idx.name.includes("purchaseNumber")) {
+              await coll.dropIndex(idx.name);
+              console.log(`Dropped unexpected unique index ${idx.name} from ${collName}`);
+            }
           }
+        } catch (err) {
+          // Ignore collections that don't exist
         }
       }
     } catch (err) {
