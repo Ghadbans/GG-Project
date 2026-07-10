@@ -4078,12 +4078,11 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
       if (filterField && filterValue) {
         query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
       }
-      const itemI = await purchaseOrderSchema.find(query).sort({ \'outNumber\': -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await purchaseOrderSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+      const itemI = await purchaseOrderSchema.find(query).sort({ outNumber: -1 }).skip(skip).limit(Number(limit));
+      const totalItem = await purchaseOrderSchema.countDocuments(query);
+      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    console.error("Error fetching purchaseOrder-Information:", error);
     res.status(500).json({ message: error.message });
   }
 });
