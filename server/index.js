@@ -107,6 +107,7 @@ const User = require("./model/employeeUserSchema");
 app.use('/auth', authRoutes);
 app.use("/endpoint", userRoute);
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED!'));
+app.get('/status', (req, res) => res.json({ status: 'ok', uptime: process.uptime() })); // health check
 
 // DEBUG & INIT ROUTES
 app.get('/debug-db', async (req, res) => {
