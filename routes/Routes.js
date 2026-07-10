@@ -2433,6 +2433,17 @@ Route.route("/get-last-saved-estimation").get(async(req,res, next)=>{
 })
 // Create estimation
 Route.route("/create-estimation").post(async (req, res, next) => {
+  // One-time fix: drop broken estimateName_1 unique index
+  try {
+    const db = require('mongoose').connection.db;
+    const indexes = await db.collection('estimation').indexes();
+    const hasOldIndex = indexes.some(i => i.name === 'estimateName_1');
+    if (hasOldIndex) {
+      await db.collection('estimation').dropIndex('estimateName_1');
+      console.log('SUCCESS: Dropped estimateName_1 index from estimation');
+    }
+  } catch (e) { console.log('estimateName_1 drop attempt:', e.message); }
+
   if (!req.body.customerName || !req.body.customerName.customerName || req.body.customerName.customerName.includes("Unknown Customer")) {
     if (req.body.ReferenceName2) {
       try {
