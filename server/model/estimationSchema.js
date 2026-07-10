@@ -12,8 +12,7 @@ const estimationSchema = new Schema(
     estimateName: {
       type: String,
       required: true,
-      trim: true,
-      unique:true
+      trim: true
     },
     estimateStatus: {
       type: String,
@@ -112,6 +111,5 @@ const estimationSchema = new Schema(
 );
 
 estimationSchema.index({ branchId: 1, estimateNumber: 1 }, { unique: true });
-estimationSchema.index({ estimateDate: -1 });
-estimationSchema.index({ estimateNumber: -1 });
+estimationSchema.index({ branchId: 1, estimateName: 1 }, { unique: true });
 module.exports = mongoose.model("estimationSchema",  estimationSchema);

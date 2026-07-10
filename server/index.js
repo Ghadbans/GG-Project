@@ -65,6 +65,15 @@ mongoDbConnection().then(async () => {
     } catch (err) {
       console.log("Could not drop index from itemOut:", err.message);
     }
+
+    // Drop the broken estimateName_1 unique index from estimation
+    try {
+      const db = mongoose.connection.db;
+      await db.collection("estimation").dropIndex("estimateName_1");
+      console.log("SUCCESS: Dropped estimateName_1 index from estimation");
+    } catch (err) {
+      console.log("estimateName_1 drop result:", err.message);
+    }
 }),
   (error) => {
     console.log("Could not connect to database : " + err);
