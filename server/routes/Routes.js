@@ -5162,7 +5162,7 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
 
 
 // ─── SECURE BACKUP EXPORT ENDPOINT ─────────────────────────────────────────
-// Called by the daily laptop backup script. Returns all DB collections as JSON.
+// Fetches all collections in parallel for speed. Called by the app on logout.
 const BACKUP_SECRET = 'GG_BACKUP_2026_SECURE';
 const mongoose_backup = require('mongoose');
 Route.get('/backup-export', async (req, res) => {
@@ -5171,25 +5171,39 @@ Route.get('/backup-export', async (req, res) => {
     if (secret !== BACKUP_SECRET) {
       return res.status(403).json({ error: 'Forbidden' });
     }
+
     const db = mongoose_backup.connection.db;
-    const collections = await db.listCollections().toArray();
-    const backup = {};
-    for (const col of collections) {
-      const name = col.name;
-      try {
-        backup[name] = await db.collection(name).find({}).toArray();
-      } catch(e) {
-        backup[name] = { error: e.message };
-      }
+    if (!db) {
+      return res.status(500).json({ error: 'Database not connected yet' });
     }
-    res.status(200).json({
+
+    // List all collections
+    const colList = await db.listCollections().toArray();
+    const colNames = colList.map(c => c.name);
+
+    // Fetch ALL collections in PARALLEL for speed
+    const results = await Promise.all(
+      colNames.map(name =>
+        db.collection(name).find({}).toArray()
+          .then(docs => ({ name, docs }))
+          .catch(e => ({ name, docs: [], error: e.message }))
+      )
+    );
+
+    // Build data object
+    const data = {};
+    results.forEach(({ name, docs }) => { data[name] = docs; });
+
+    // Send response
+    return res.status(200).json({
       exportedAt: new Date().toISOString(),
       database: 'globalgatedb',
-      totalCollections: collections.length,
-      data: backup
+      totalCollections: colNames.length,
+      data
     });
+
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    return res.status(500).json({ error: err.message });
   }
 });
 // ────────────────────────────────────────────────────────────────────────────
