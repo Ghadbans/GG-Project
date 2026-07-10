@@ -4054,6 +4054,8 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
         { 'itemsQtyArray.itemBrand': regex },
         { 'itemsQtyArray.itemDescription': regex },
         { 'reference.referenceName': regex },
+        { $expr: { $regexMatch: { input: { $dateToString: { format: "%d/%m/%Y", date: { $ifNull: ["$itemOutDate", new Date()] } } }, regex: search, options: "i" } } },
+        { $expr: { $regexMatch: { input: { $dateToString: { format: "%Y-%m-%d", date: { $ifNull: ["$itemOutDate", new Date()] } } }, regex: search, options: "i" } } }
       ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
@@ -5194,5 +5196,6 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
 });
 
 module.exports = Route;
+
 
 
