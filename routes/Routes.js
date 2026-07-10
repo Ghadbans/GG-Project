@@ -4046,12 +4046,6 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     const query = {};
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
       if (search) {
-        let dateSearchStr = search;
-        const dateParts = search.split('/');
-        if (dateParts.length === 3) {
-            dateSearchStr = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-        }
-        const dateRegex = new RegExp(dateSearchStr, 'i');
         const regex = new RegExp(search.split(' ').join('|'), 'i');
         query.$or = [
           { outNumber: isNaN(Number(search)) ? null : Number(search) },
@@ -4060,14 +4054,14 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
           { 'itemsQtyArray.itemBrand': regex },
           { 'itemsQtyArray.itemDescription': regex },
           { 'reference.referenceName': regex },
-          { itemOutDate: dateRegex },
-          { itemOutDate: isNaN(new Date(dateSearchStr).getTime()) ? null : new Date(dateSearchStr) }
+          { $expr: { $regexMatch: { input: { $dateToString: { format: "%d/%m/%Y", date: { $ifNull: ["$itemOutDate", new Date()] } } }, regex: search, options: "i" } } },
+          { $expr: { $regexMatch: { input: { $dateToString: { format: "%Y-%m-%d", date: { $ifNull: ["$itemOutDate", new Date()] } } }, regex: search, options: "i" } } }
         ].filter(condition => condition !== null);
       }
       if (filterField && filterValue) {
         query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
       }
-      const itemI = await purchaseOrderSchema.find(query).sort({ itemOutDate: -1 }).skip(skip).limit(Number(limit));
+      const itemI = await purchaseOrderSchema.find(query).sort({ \'outNumber\': -1 }).skip(skip).limit(Number(limit));
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
