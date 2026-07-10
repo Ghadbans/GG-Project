@@ -191,10 +191,10 @@ server.listen(port, "0.0.0.0", () => {
 app.use((req, res, next) => {
   next(createError(404));
 });
-// error handler
+// error handler — logs method + URL so we can identify missing routes
 app.use(function (err, req, res, next) {
-  console.error(err.message);
-  if (!err.statusCode) err.statusCode = 500;
-  res.status(err.statusCode).send(err.message);
+  const status = err.statusCode || err.status || 500;
+  console.error(`[${status}] ${req.method} ${req.originalUrl} — ${err.message}`);
+  res.status(status).send(err.message);
 });
 
