@@ -71,6 +71,23 @@ var corsOptionsDelegate = function (req, callback) {
 
 
 
+// --- ONE-TIME FIX: Drop bad estimateName_1 index ---
+Route.get('/fix-estimation-index', async (req, res) => {
+  try {
+    const db = mongoose.connection.db;
+    const indexes = await db.collection('estimation').indexes();
+    const names = indexes.map(i => i.name);
+    if (names.includes('estimateName_1')) {
+      await db.collection('estimation').dropIndex('estimateName_1');
+      return res.json({ success: true, message: 'estimateName_1 index dropped successfully!' });
+    } else {
+      return res.json({ success: true, message: 'Index estimateName_1 does not exist (already gone). Current indexes: ' + names.join(', ') });
+    }
+  } catch (e) {
+    return res.status(500).json({ success: false, error: e.message });
+  }
+});
+
 // --- DELETE BRANCH ---
 Route.route('/delete-branch').post(async (req, res, next) => {
   try {
