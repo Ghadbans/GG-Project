@@ -35,7 +35,10 @@ mongoose.connect(mongoUri, {
     await mongoose.connection.db.collection('itempurchaseschemas').dropIndex('branchId_1_itemPurchaseNumber_1');
     console.log('Dropped old branchId_1_itemPurchaseNumber_1 index from itempurchaseschemas');
   } catch (e) {}
-    try {\n      await mongoose.connection.db.collection(\'estimation\').dropIndex(\'estimateName_1\');\n      console.log(\'Dropped old estimateName_1 index from estimation\');\n    } catch (e) {}
+  try {
+    await mongoose.connection.db.collection('estimation').dropIndex('estimateName_1');
+    console.log('Dropped old estimateName_1 index from estimation');
+  } catch (e) { console.log('estimateName_1 drop result:', e.message); }
 }).catch((error) => {
   console.log("Could not connect to database: " + error);
 });
