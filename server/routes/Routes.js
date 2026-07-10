@@ -4013,20 +4013,27 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     const query = {};
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
-      query.$or = [
-        { outNumber: isNaN(Number(search)) ? null : Number(search) },
+      const regex = new RegExp(search, 'i');
+      const conditions = [
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
         { 'itemsQtyArray.itemDescription': regex },
         { 'reference.referenceName': regex },
-      ].filter(condition => condition !== null);
+      ];
+      if (!isNaN(Number(search))) {
+        conditions.push({ outNumber: Number(search) });
+      }
+      // Date search: match year, or dd/mm/yyyy style
+      conditions.push({ $expr: { $regexMatch: { input: { $dateToString: { format: "%Y", date: { $ifNull: ["$itemOutDate", new Date(0)] } } }, regex: search, options: "i" } } });
+      conditions.push({ $expr: { $regexMatch: { input: { $dateToString: { format: "%d/%m/%Y", date: { $ifNull: ["$itemOutDate", new Date(0)] } } }, regex: search, options: "i" } } });
+      conditions.push({ $expr: { $regexMatch: { input: { $dateToString: { format: "%Y-%m-%d", date: { $ifNull: ["$itemOutDate", new Date(0)] } } }, regex: search, options: "i" } } });
+      query.$or = conditions;
     }
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ purchaseOrderDate: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await purchaseOrderSchema.find(query).sort({ outNumber: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
