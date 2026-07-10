@@ -5164,14 +5164,14 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
 // ─── SECURE BACKUP EXPORT ENDPOINT ─────────────────────────────────────────
 // Called by the daily laptop backup script. Returns all DB collections as JSON.
 const BACKUP_SECRET = 'GG_BACKUP_2026_SECURE';
+const mongoose_backup = require('mongoose');
 Route.get('/backup-export', async (req, res) => {
   try {
     const { secret } = req.query;
     if (secret !== BACKUP_SECRET) {
       return res.status(403).json({ error: 'Forbidden' });
     }
-    const mongoose = require('mongoose');
-    const db = mongoose.connection.db;
+    const db = mongoose_backup.connection.db;
     const collections = await db.listCollections().toArray();
     const backup = {};
     for (const col of collections) {
