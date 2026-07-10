@@ -5162,12 +5162,16 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
 
 
 // ─── SECURE BACKUP EXPORT ENDPOINT ─────────────────────────────────────────
-// Fetches all collections in parallel for speed. Called by the app on logout.
+// Supports two modes:
+//   GET /backup-export?secret=...              → returns list of collection names
+//   GET /backup-export?secret=...&col=NAME     → returns docs for one collection
+// Frontend fetches each collection separately to avoid string size limits.
 const BACKUP_SECRET = 'GG_BACKUP_2026_SECURE';
 const mongoose_backup = require('mongoose');
+
 Route.get('/backup-export', async (req, res) => {
   try {
-    const { secret } = req.query;
+    const { secret, col } = req.query;
     if (secret !== BACKUP_SECRET) {
       return res.status(403).json({ error: 'Forbidden' });
     }
@@ -5177,31 +5181,19 @@ Route.get('/backup-export', async (req, res) => {
       return res.status(500).json({ error: 'Database not connected yet' });
     }
 
-    // List all collections
-    const colList = await db.listCollections().toArray();
-    const colNames = colList.map(c => c.name);
-
-    // Fetch ALL collections in PARALLEL for speed
-    const results = await Promise.all(
-      colNames.map(name =>
-        db.collection(name).find({}).toArray()
-          .then(docs => ({ name, docs }))
-          .catch(e => ({ name, docs: [], error: e.message }))
-      )
-    );
-
-    // Build data object
-    const data = {};
-    results.forEach(({ name, docs }) => { data[name] = docs; });
-
-    // Send response
-    return res.status(200).json({
-      exportedAt: new Date().toISOString(),
-      database: 'globalgatedb',
-      totalCollections: colNames.length,
-      data
-    });
-
+    if (col) {
+      // ── SINGLE COLLECTION MODE ──
+      const docs = await db.collection(col).find({}).toArray();
+      return res.status(200).json({ collection: col, count: docs.length, data: docs });
+    } else {
+      // ── LIST MODE: return collection names only (no data) ──
+      const colList = await db.listCollections().toArray();
+      return res.status(200).json({
+        exportedAt: new Date().toISOString(),
+        database: 'globalgatedb',
+        collections: colList.map(c => c.name)
+      });
+    }
   } catch (err) {
     return res.status(500).json({ error: err.message });
   }
