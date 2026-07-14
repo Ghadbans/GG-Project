@@ -21,6 +21,12 @@ async function mongoDbConnection() {
 }
 mongoDbConnection().then(async () => {
   console.log("globalgate successfully connected.");
+  try {
+    await mongoose.connection.db.collection('department').dropIndex('department_1');
+    console.log('Dropped old department_1 index');
+  } catch (e) {
+    // Ignore if index doesn't exist
+  }
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;

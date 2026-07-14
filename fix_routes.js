@@ -1,81 +1,42 @@
 const fs = require('fs');
-const path = require('path');
+let content = fs.readFileSync('routes/Routes.js', 'utf8');
 
-const modelsDir = path.join(__dirname, 'model');
-const routesFile = path.join(__dirname, 'routes', 'Routes.js');
+// The broken section: after filterField block, it jumps straight into get-last-saved-purchaseOrder
+// We need to insert the find/count/res block
+const broken = "query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');\n      }\n    const query = branchId && branchId !== 'ALL' ? { branchId } : {};\r\n    const last = await purchaseOrderSchema.findOne(query).sort({\r\n      outNumber: -1\r\n    }).exec();\r\n    res.json(last)\r\n  } catch (error) {\r\n    next(error);\r\n  }\r\n})\r\n// Create purchaseOrder";
 
-let stockUtilsContent = fs.readFileSync(path.join(modelsDir, 'stockUtils.js'), 'utf8');
-stockUtilsContent = stockUtilsContent.replace(
-  /const originalQty = \(parseFloat\(entry\.itemQty\) \|\| 0\) \+ \(parseFloat\(entry\.itemOut\) \|\| 0\);\s*itemQuantities\[itemId\]\.purchase \+= originalQty;/,
-  'itemQuantities[itemId].purchase += parseFloat(entry.itemQty) || 0;'
-);
-fs.writeFileSync(path.join(modelsDir, 'stockUtils.js'), stockUtilsContent, 'utf8');
-console.log('Fixed math in stockUtils.js');
-
-let routesContent = fs.readFileSync(routesFile, 'utf8');
-
-// Strip all calculateQuantity().catch(...) calls precisely
-routesContent = routesContent.replace(/\s*calculateQuantity\(\)\.catch\([^\)]+\);/g, '');
-
-const deleteBranchEndpoint = 
-"\n// --- DELETE BRANCH ---\n" +
-"Route.route('/delete-branch').post(async (req, res, next) => {\n" +
-"  try {\n" +
-"    const { branchIdToDelete, transferBranchId } = req.body;\n" +
-"    \n" +
-"    if (!branchIdToDelete) {\n" +
-"      return res.status(400).json({ msg: 'branchIdToDelete is required' });\n" +
-"    }\n" +
-"\n" +
-"    if (transferBranchId && transferBranchId !== branchIdToDelete) {\n" +
-"      const modelsToUpdate = [\n" +
-"        require('../model/quotationSchema'),\n" +
-"        require('../model/purchaseSchema'),\n" +
-"        require('../model/projectSchema'),\n" +
-"        require('../model/invoiceSchema'),\n" +
-"        require('../model/posSchema'),\n" +
-"        require('../model/employeeSchema'),\n" +
-"        require('../model/itemSchema'),\n" +
-"        require('../model/itemPurchaseSchema'),\n" +
-"        require('../model/itemOutSchema'),\n" +
-"        require('../model/itemReturnSchema'),\n" +
-"        require('../model/dailyExpenseSchema')\n" +
-"      ];\n" +
-"\n" +
-"      for (const Model of modelsToUpdate) {\n" +
-"        if (Model && Model.updateMany) {\n" +
-"          await Model.updateMany(\n" +
-"            { branchId: branchIdToDelete }, \n" +
-"            { $set: { branchId: transferBranchId } }\n" +
-"          );\n" +
-"        }\n" +
-"      }\n" +
-"    }\n" +
-"\n" +
-"    const companyProfileSchema = require('../model/companyProfileSchema');\n" +
-"    const company = await companyProfileSchema.findOne({});\n" +
-"    if (company && company.branches) {\n" +
-"      company.branches = company.branches.filter(b => b.branchId !== branchIdToDelete);\n" +
-"      await companyProfileSchema.updateOne({ _id: company._id }, { $set: { branches: company.branches } });\n" +
-"    }\n" +
-"\n" +
-"    res.status(200).json({ msg: 'Branch successfully deleted and data transferred.' });\n" +
-"  } catch (err) {\n" +
-"    console.error('Error deleting branch:', err);\n" +
-"    res.status(500).json({ msg: 'Server error during branch deletion' });\n" +
-"  }\n" +
-"});\n";
-
-if (!routesContent.includes('/delete-branch')) {
-  const anchor = 'Route.route("/CalculateTotal").post(async (req, res, next) => {';
-  const parts = routesContent.split(anchor);
-  if (parts.length > 1) {
-     routesContent = parts[0] + deleteBranchEndpoint + "\n" + anchor + parts[1];
-     fs.writeFileSync(routesFile, routesContent, 'utf8');
-     console.log('Injected /delete-branch into Routes.js');
-  } else {
-     console.log('Anchor for /delete-branch not found!');
+const fixed = `query[\`itemsQtyArray.\${filterField}\`] = new RegExp(filterValue, 'i');
+      }
+      const itemI = await purchaseOrderSchema.find(query).sort({ outNumber: -1 }).skip(skip).limit(Number(limit));
+      const totalItem = await purchaseOrderSchema.countDocuments(query);
+      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) {
+    console.error("Error fetching purchaseOrder-Information:", error);
+    res.status(500).json({ message: error.message });
   }
+});
+Route.route("/get-last-saved-purchaseOrder").get(async(req,res, next)=>{
+  try {
+    const rawBranchId = req.query.branchId;
+    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
+    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
+    const last = await purchaseOrderSchema.findOne(query).sort({
+      outNumber: -1
+    }).exec();
+    res.json(last)
+  } catch (error) {
+    next(error);
+  }
+})
+// Create purchaseOrder`;
+
+if (content.includes(broken)) {
+  content = content.replace(broken, fixed);
+  fs.writeFileSync('routes/Routes.js', content);
+  console.log('Fixed successfully!');
 } else {
-  fs.writeFileSync(routesFile, routesContent, 'utf8');
+  console.log('Broken pattern not found - checking what is there...');
+  const idx = content.indexOf("query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');\n      }");
+  console.log('idx:', idx);
+  console.log('around:', JSON.stringify(content.substring(idx, idx + 400)));
 }
