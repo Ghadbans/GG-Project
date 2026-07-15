@@ -5491,32 +5491,28 @@ const BACKUP_SECRET = 'GG_BACKUP_2026_SECURE';
 const mongoose_backup = require('mongoose');
 Route.get('/backup-export', async (req, res) => {
   try {
-    const { secret } = req.query;
+    const { secret, col } = req.query;
     if (secret !== BACKUP_SECRET) {
       return res.status(403).json({ error: 'Forbidden' });
     }
     const db = mongoose_backup.connection.db;
-    const collections = await db.listCollections().toArray();
-    const backup = {};
-    for (const col of collections) {
-      const name = col.name;
-      try {
-        backup[name] = await db.collection(name).find({}).toArray();
-      } catch(e) {
-        backup[name] = { error: e.message };
-      }
+    
+    if (col) {
+      const data = await db.collection(col).find({}).toArray();
+      return res.status(200).json({ data });
     }
+    
+    const collectionsRaw = await db.listCollections().toArray();
+    const collections = collectionsRaw.map(c => c.name);
+    
     res.status(200).json({
       exportedAt: new Date().toISOString(),
-      database: 'globalgatedb',
-      totalCollections: collections.length,
-      data: backup
+      collections
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
-// ────────────────────────────────────────────────────────────────────────────
 
 module.exports = Route;
 
