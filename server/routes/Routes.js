@@ -220,6 +220,8 @@ Route.route("/notification", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await notificationSchema
       .find()
+      .sort({ _id: -1 })
+      .limit(100)
       .then((result) => {
         res.json({
           data: result,
