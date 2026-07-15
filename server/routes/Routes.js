@@ -1124,7 +1124,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await invoiceSchema.find(filter, projection).sort({ invoiceDate: -1 }).allowDiskUse(true);
+      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -1161,7 +1161,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await invoiceSchema.find(query).sort({ invoiceDate: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await invoiceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -1937,7 +1937,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await purchaseSchema.find(filter, projection).sort({ purchaseDate: -1 }).allowDiskUse(true);
+      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2385,7 +2385,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ estimateDate: -1 }).allowDiskUse(true);
+      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2599,7 +2599,7 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await posSchema.find(filter, projection).sort({ invoiceDate: -1 }).allowDiskUse(true);
+      const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3040,7 +3040,7 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await expenseSchema.find(filter, projection).sort({ expenseDate: -1 }).allowDiskUse(true);
+      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3075,7 +3075,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await expenseSchema.find(query).sort({ expenseDate: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await expenseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3212,7 +3212,7 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await maintenanceSchema.find(filter, projection).sort({ serviceDate: -1 }).allowDiskUse(true);
+      const result = await maintenanceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3252,7 +3252,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await maintenanceSchema.find(query).sort({ serviceDate: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await maintenanceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3284,7 +3284,7 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
     const branchId = req.body.branchId || req.query.branchId;
     const matchStage = branchId ? { branchId } : {};
 
-    // Use $max aggregation — works on any collection size without RAM or sort limits
+    // Use $max aggregation â€” works on any collection size without RAM or sort limits
     const aggResult = await maintenanceSchema.aggregate([
       { $match: matchStage },
       { $group: { _id: null, maxNum: { $max: '$serviceNumber' } } }
@@ -3871,7 +3871,6 @@ Route.route("/itemOut", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await itemOutSchema
       .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .sort({ _id: -1 })
       .then((result) => {
         res.json({
           data: result,
@@ -3907,7 +3906,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemOutSchema.find(query).sort({ itemOutDate: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await itemOutSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4013,27 +4012,20 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     const query = {};
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const regex = new RegExp(search, 'i');
-      const conditions = [
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { outNumber: isNaN(Number(search)) ? null : Number(search) },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
         { 'itemsQtyArray.itemDescription': regex },
         { 'reference.referenceName': regex },
-      ];
-      if (!isNaN(Number(search))) {
-        conditions.push({ outNumber: Number(search) });
-      }
-      // Date search: match year, or dd/mm/yyyy style
-      conditions.push({ $expr: { $regexMatch: { input: { $dateToString: { format: "%Y", date: { $ifNull: ["$itemOutDate", new Date(0)] } } }, regex: search, options: "i" } } });
-      conditions.push({ $expr: { $regexMatch: { input: { $dateToString: { format: "%d/%m/%Y", date: { $ifNull: ["$itemOutDate", new Date(0)] } } }, regex: search, options: "i" } } });
-      conditions.push({ $expr: { $regexMatch: { input: { $dateToString: { format: "%Y-%m-%d", date: { $ifNull: ["$itemOutDate", new Date(0)] } } }, regex: search, options: "i" } } });
-      query.$or = conditions;
+      ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ outNumber: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4277,7 +4269,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemReturnSchema.find(query).sort({ outNumber: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await itemReturnSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4557,7 +4549,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ itemPurchaseDate: -1 }).allowDiskUse(true);
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -4590,7 +4582,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemPurchaseSchema.find(query).sort({ itemPurchaseDate: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
     const totalItem = await itemPurchaseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4941,7 +4933,7 @@ Route.route("/update-block-production/:id").put(async (req, res, next) => {
     res.json({ data: doc, status: 200 });
   } catch (err) { next(err); }
 });
-// POST alias — frontend may POST with id in body
+// POST alias â€” frontend may POST with id in body
 Route.route("/update-block-production").post(async (req, res, next) => {
   try {
     const { id, _id, ...rest } = req.body;
@@ -5106,7 +5098,7 @@ Route.route("/delete-block-mixer").post(async (req, res, next) => {
 });
 
 // =====================================================================
-// IMAGE ENDPOINT — supports lookup by employeeName OR MongoDB _id
+// IMAGE ENDPOINT â€” supports lookup by employeeName OR MongoDB _id
 // Fixes HTTP 400 errors when worker thumbnails are loaded by _id
 // =====================================================================
 Route.route("/get-image/:name").get(async (req, res, next) => {
@@ -5161,114 +5153,47 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
 });
 
 
-// ─── SECURE BACKUP EXPORT ENDPOINT ─────────────────────────────────────────
-// Supports two modes:
-//   GET /backup-export?secret=...              → returns list of collection names
-//   GET /backup-export?secret=...&col=NAME     → returns docs for one collection
-// Frontend fetches each collection separately to avoid string size limits.
-const BACKUP_SECRET = 'GG_BACKUP_2026_SECURE';
-const mongoose_backup = require('mongoose');
 
-Route.get('/backup-export', async (req, res) => {
+Route.route("/customer-Information").get(async (req, res) => {
   try {
-    const { secret, col } = req.query;
-    if (secret !== BACKUP_SECRET) {
-      return res.status(403).json({ error: 'Forbidden' });
+    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Build the query object dynamically based on the filters
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { Customer: regex },
+        { customerFirstName: regex },
+        { customerLastName: regex },
+        { customerFullName: regex },
+        { companyName: regex },
+        { customerEmail: regex },
+        { customerPhone: regex },
+        { customerCompanyPhone: regex },
+        { billingAddress: regex },
+        { billingCity: regex }
+      ];
+    }
+    if (filterField && filterValue) {
+      query[filterField] = new RegExp(filterValue, 'i');
     }
 
-    const db = mongoose_backup.connection.db;
-    if (!db) {
-      return res.status(500).json({ error: 'Database not connected yet' });
-    }
+    const itemI = await customerSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await customerSchema.countDocuments(query);
 
-    if (col) {
-      // ── SINGLE COLLECTION MODE ──
-      const docs = await db.collection(col).find({}).toArray();
-      return res.status(200).json({ collection: col, count: docs.length, data: docs });
-    } else {
-      // ── LIST MODE: return collection names only (no data) ──
-      const colList = await db.listCollections().toArray();
-      return res.status(200).json({
-        exportedAt: new Date().toISOString(),
-        database: 'globalgatedb',
-        collections: colList.map(c => c.name)
-      });
-    }
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+    res.status(200).json({
+      itemI,
+      totalItem,
+      totalPages: Math.ceil(totalItem / Number(limit))
+    });
+  } catch (error) {
+    console.error("Error fetching customer-Information:", error);
+    res.status(500).json({ message: error.message });
   }
 });
-// ────────────────────────────────────────────────────────────────────────────
 
-
-// Professional Paginated Purchase (Project Internal Purchases)
-Route.route("/purchase-Information").get(async (req, res) => {
-    try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
-      const query = {};
-      if (search) {
-        const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
-      }
-      if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
-      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-      const totalItem = await purchaseSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-    } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-Route.route("/expense-Information").get(async (req, res) => {
-    try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
-  
-      // Build the query object dynamically based on the filters
-      const query = {};
-      if (search) {
-        const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [
-          { expenseNumber: isNaN(Number(search)) ? null : Number(search) },
-          { description: regex },
-          { accountName: regex },
-          { 'employeeName.employee': regex },
-          { 'expenseCategory.expensesCategory': regex },
-          { 'accountNameInfo.name': regex },
-        ].filter(condition => condition !== null);
-      }
-      if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
-
-      const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-      const totalItem = await expenseSchema.countDocuments(query);
-  
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-    } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-// Professional Paginated PayRoll
-Route.route("/payRoll-Information").get(async (req, res) => {
-    try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
-      const query = {};
-      if (search) {
-        const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [{ 'employeeName.name': regex }, { status: regex }, { description: regex }];
-      }
-      if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
-      const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-      const totalItem = await payRollSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-    } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-// Professional Paginated Supplier
 Route.route("/Supplier-Information").get(async (req, res) => {
     try {
       const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
@@ -5287,8 +5212,279 @@ Route.route("/Supplier-Information").get(async (req, res) => {
     } catch (error) { res.status(500).json({ message: error.message }); }
 });
 
-module.exports = Route;
+Route.route("/estimation-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '', filterField, filterValue, summary } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
 
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { 'customerName.customerName': regex },
+        { estimateSubject: regex },
+        { status: regex },
+      ];
+    }
+    if (filterField && filterValue) {
+      query[filterField] = new RegExp(filterValue, 'i');
+    }
+
+    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await estimationSchema.countDocuments(query);
+
+    res.status(200).json({
+      itemI,
+      totalItem,
+      totalPages: Math.ceil(totalItem / Number(limit))
+    });
+  } catch (error) {
+    console.error("Error fetching estimation-Information:", error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+Route.route("/itemOut-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Build the query object dynamically based on the filters
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { outNumber: isNaN(Number(search)) ? null : Number(search) },
+        { description: regex },
+        { reason: regex },
+        { 'itemsQtyArray.itemName': regex },
+        { 'itemsQtyArray.itemBrand': regex },
+        { 'itemsQtyArray.itemDescription': regex },
+        { 'reference.referenceName': regex },
+      ].filter(condition => condition !== null);
+    }
+    if (filterField && filterValue) {
+      query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
+    }
+    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await itemOutSchema.countDocuments(query);
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) {
+    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    res.status(500).json({ message: error.message });
+  }
+});
+
+Route.route("/supplier-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ supplierName: regex }, { storeName: regex }, { description: regex }];
+    }
+    const itemI = await supplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await supplierSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/employee-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ employeeName: regex }, { employeeLastName: regex }, { email: regex }, { phone: regex }];
+    }
+    const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await employeeSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/payRoll-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ 'employeeName.employeeName': regex }, { month: regex }];
+    }
+    const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await payRollSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/dailyExpense-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ expenseName: regex }, { description: regex }];
+    }
+    const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await dailyExpenseSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/maintenance-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Build the query object dynamically based on the filters
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { serviceNumber: isNaN(Number(search)) ? null : Number(search) },
+        { technicianAssign: regex },
+        { itemDescriptionInfo: regex },
+        { status: regex },
+        { brand: regex },
+        { model: regex },
+        { defectDescription: regex },
+        { 'items.itemName': regex },
+        { 'items.itemBrand': regex },
+        { 'items.itemDescription': regex },
+        { 'customerName.customerName': regex },
+      ].filter(condition => condition !== null);
+    }
+    if (filterField && filterValue) {
+      query[`items.${filterField}`] = new RegExp(filterValue, 'i');
+    }
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await maintenanceSchema.countDocuments(query);
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) {
+    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    res.status(500).json({ message: error.message });
+  }
+});
+
+Route.route("/purchase-Information").get(async (req, res) => {
+    try {
+      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+      const skip = (Number(page) - 1) * Number(limit);
+      const query = {};
+      if (search) {
+        const regex = new RegExp(search.split(' ').join('|'), 'i');
+        query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
+      }
+      if (filterField && filterValue) {
+        query[filterField] = new RegExp(filterValue, 'i');
+      }
+      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const totalItem = await purchaseSchema.countDocuments(query);
+      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+    } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/estimate-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ 'customerName.customerName': regex }, { estimateSubject: regex }];
+    }
+    const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await estimateSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/project-Information").get(async (req, res) => {
+    try {
+      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+      const skip = (Number(page) - 1) * Number(limit);
+      const query = {};
+      if (search) {
+        const regex = new RegExp(search.split(' ').join('|'), 'i');
+        query.$or = [{ 'projectName': regex }, { 'customerName.customerName': regex }, { 'status': regex }];
+      }
+      if (filterField && filterValue) {
+        query[filterField] = new RegExp(filterValue, 'i');
+      }
+      const itemI = await projectSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const totalItem = await projectSchema.countDocuments(query);
+      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+    } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/pos-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 10, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ factureNumber: regex }, { status: regex }];
+    }
+    const itemI = await posSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).populate('customerName');
+    const totalItem = await posSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/payment-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '' } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [{ description: regex }, { paymentNumber: regex }];
+    }
+    const itemI = await paymentSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).populate('customerName');
+    const totalItem = await paymentSchema.countDocuments(query);
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) { res.status(500).json({ message: error.message }); }
+});
+
+Route.route("/expense-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Build the query object dynamically based on the filters
+    const query = {};
+    if (search) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { expenseNumber: isNaN(Number(search)) ? null : Number(search) },
+        { description: regex },
+        { accountName: regex },
+        { 'employeeName.employee': regex },
+        { 'expenseCategory.expensesCategory': regex },
+        { 'accountNameInfo.name': regex },
+      ].filter(condition => condition !== null);
+    }
+    if (filterField && filterValue) {
+      query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
+    }
+    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const totalItem = await expenseSchema.countDocuments(query);
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) {
+    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    res.status(500).json({ message: error.message });
+  }
+});
+
+module.exports = Route;
 
 
 // Trigger Railway restart after MongoDB upgrade
