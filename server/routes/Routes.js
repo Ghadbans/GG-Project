@@ -1137,7 +1137,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') {
       if (branchId === 'HQ') {
         query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
@@ -1493,7 +1493,7 @@ Route.route("/item-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search.trim()) {
       const searchTerms = search.split(' ').map(term => new RegExp(term, 'i'));
@@ -3053,7 +3053,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') {
       if (branchId === 'HQ') {
         query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
@@ -3225,7 +3225,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') {
       if (branchId === 'HQ') {
         query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
@@ -3889,7 +3889,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
@@ -4009,7 +4009,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
@@ -4252,7 +4252,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
@@ -4562,7 +4562,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
@@ -5160,7 +5160,7 @@ Route.route("/customer-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
@@ -5198,7 +5198,7 @@ Route.route("/Supplier-Information").get(async (req, res) => {
     try {
       const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
-      const query = {};
+      const query = branchFilter(req);
       if (search) {
         const regex = new RegExp(search.split(' ').join('|'), 'i');
         query.$or = [{ supplierName: regex }, { supplierCompany: regex }, { supplierEmail: regex }];
@@ -5217,7 +5217,7 @@ Route.route("/estimation-Information").get(async (req, res) => {
     const { page = 1, limit = 100, search = '', filterField, filterValue, summary } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
@@ -5250,7 +5250,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
@@ -5280,7 +5280,7 @@ Route.route("/supplier-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ supplierName: regex }, { storeName: regex }, { description: regex }];
@@ -5295,7 +5295,7 @@ Route.route("/employee-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ employeeName: regex }, { employeeLastName: regex }, { email: regex }, { phone: regex }];
@@ -5310,7 +5310,7 @@ Route.route("/payRoll-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ 'employeeName.employeeName': regex }, { month: regex }];
@@ -5325,7 +5325,7 @@ Route.route("/dailyExpense-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ expenseName: regex }, { description: regex }];
@@ -5342,7 +5342,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
@@ -5376,7 +5376,7 @@ Route.route("/purchase-Information").get(async (req, res) => {
     try {
       const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
-      const query = {};
+      const query = branchFilter(req);
       if (search) {
         const regex = new RegExp(search.split(' ').join('|'), 'i');
         query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
@@ -5394,7 +5394,7 @@ Route.route("/estimate-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ 'customerName.customerName': regex }, { estimateSubject: regex }];
@@ -5409,7 +5409,7 @@ Route.route("/project-Information").get(async (req, res) => {
     try {
       const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
-      const query = {};
+      const query = branchFilter(req);
       if (search) {
         const regex = new RegExp(search.split(' ').join('|'), 'i');
         query.$or = [{ 'projectName': regex }, { 'customerName.customerName': regex }, { 'status': regex }];
@@ -5427,7 +5427,7 @@ Route.route("/pos-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 10, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ factureNumber: regex }, { status: regex }];
@@ -5442,7 +5442,7 @@ Route.route("/payment-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [{ description: regex }, { paymentNumber: regex }];
@@ -5459,7 +5459,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
-    const query = {};
+    const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
