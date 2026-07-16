@@ -4549,7 +4549,19 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      
+        if (req.query.targetDate) {
+          const tDate = new Date(req.query.targetDate);
+          const nextDate = new Date(tDate);
+          nextDate.setDate(tDate.getDate() + 1);
+          filter.payments = { 
+            $elemMatch: { 
+              date: { $gte: tDate, $lt: nextDate } 
+            } 
+          };
+        }
+        const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
