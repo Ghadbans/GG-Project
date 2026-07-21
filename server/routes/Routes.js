@@ -5325,7 +5325,7 @@ Route.route("/payRoll-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
-      query.$or = [{ 'employeeName.employeeName': regex }, { month: regex }];
+      query.$or = [{ 'employeeName.name': regex }];
     }
     const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
     const totalItem = await payRollSchema.countDocuments(query);
