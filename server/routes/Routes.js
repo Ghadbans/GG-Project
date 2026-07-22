@@ -1496,17 +1496,22 @@ Route.route("/item-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search.trim()) {
-      const searchTerms = search.split(' ').map(term => new RegExp(term, 'i'));
-      query.$and = searchTerms.map(term => ({
-        $or: [
-          { itemName: term },
-          { itemBrand: term },
-          { itemDescription: term },
-          { itemCategory: term },
-          { 'itemUpc.newCode': term },
-          { 'itemUpc.itemNumber': isNaN(Number(search)) ? null : Number(search)  },
-        ],
-      }));
+      const rawTerms = search.trim().split(/\s+/);
+      query.$and = rawTerms.map(rawTerm => {
+        const term = new RegExp(rawTerm, 'i');
+        const numTerm = isNaN(Number(rawTerm)) ? null : Number(rawTerm);
+        return {
+          $or: [
+            { itemName: term },
+            { itemBrand: term },
+            { itemDescription: term },
+            { itemCategory: term },
+            { itemManufacturer: term },
+            { 'itemUpc.newCode': term },
+            { 'itemUpc.itemNumber': numTerm },
+          ],
+        };
+      });
     }
     if (filterField && filterValue) {
       query[filterField] = new RegExp(filterValue, 'i');
