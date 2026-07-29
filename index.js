@@ -75,7 +75,7 @@ app.use("/endpoint", userRoute);
 app.get('/status', (req, res) => res.send('Backend is operational!'));
 
 // PORT Configuration
-const port = 8080;
+const port = process.env.PORT || 8080;
 server.listen(port, "0.0.0.0", () => {
   console.log("PORT Connected on: " + port);
 });
