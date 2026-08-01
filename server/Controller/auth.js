@@ -10,15 +10,29 @@ const { setgroups } = require('process');
 // Register a new user
 const register = async (req, res, next) => {
     const { employeeName, employeeEmail, password, role} = req.body;
-    const existingUser = await User.findOne({  employeeName});
-    const existingUserEmail=await User.findOne({employeeEmail});
+    
+    if (!employeeName || !password || !role) {
+      return res.status(400).json({ message: 'Name, password, and role are required' });
+    }
+
+    const existingUser = await User.findOne({ employeeName });
+    
+    let existingUserEmail = null;
+    if (employeeEmail && employeeEmail.trim() !== '') {
+      existingUserEmail = await User.findOne({ employeeEmail });
+    }
 
     if (existingUser || existingUserEmail) {
-      return res.status(400).json({ message: 'User already exists' });
+      return res.status(400).json({ message: 'User or Email already exists' });
     }
     try {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const user = new User({ employeeName, employeeEmail, password: hashedPassword, role });
+      // Generate a fallback email if not provided to satisfy the DB schema
+      const userEmailToSave = (employeeEmail && employeeEmail.trim() !== '') 
+          ? employeeEmail 
+          : `${employeeName.replace(/\s+/g, '').toLowerCase()}@globalgate.com`;
+          
+      const user = new User({ employeeName, employeeEmail: userEmailToSave, password: hashedPassword, role });
       await user.save();
       res.json({ message: 'Registration successful' });
     } catch (error) {
