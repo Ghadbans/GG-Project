@@ -16,6 +16,7 @@ const grantAccessSchema = new Schema({
         
       ],
       branches: [{ type: String }],
+      costVisibility: { type: Boolean, default: false },
     branchId: { type: String, default: 'HQ' },
 }
   ,
