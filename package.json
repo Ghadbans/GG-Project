@@ -1,8 +1,8 @@
 {
   "name": "globalgateapi",
-  "version": "3.3.14",
+  "version": "3.3.28",
   "description": "api for Global Gate company",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
