@@ -203,6 +203,8 @@ Route.route("/notification", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await notificationSchema
       .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
+      .sort({ _id: -1 })
+      .limit(200)
       .then((result) => {
         res.json({
           data: result,
@@ -5396,7 +5398,7 @@ Route.route("/purchase-Information").get(async (req, res) => {
       const query = branchFilter(req);
       if (search) {
         const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
+        query.$or = [{ 'projectName.projectName': regex }, { description: regex }, { 'customerName.customerName': regex }];
       }
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
