@@ -8,6 +8,8 @@ import { Table, InputAdornment, IconButton, styled, OutlinedInput, TableBody, Ta
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { toast } from 'react-toastify';
+import { ENDPOINT_URL, API_BASE_URL } from '../../../apiConfig';
 import { Add, MailOutline } from '@mui/icons-material';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
@@ -25,7 +27,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
@@ -36,7 +38,7 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -133,20 +135,13 @@ function UserAccount() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -164,24 +159,15 @@ function UserAccount() {
   const [account, setAccount] = useState([])
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeuser')
-          const formatDate = res.data.data.map((item) => ({
-            ...item,
-            id: item._id,
-          }))
-          setAccount(formatDate.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.employeeUserSchema.toArray();
-        const formatDate = offLineCustomer1.map((item) => ({
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/employeeuser`)
+        const formatDate = res.data.data.map((item) => ({
           ...item,
           id: item._id,
         }))
         setAccount(formatDate.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchData()
@@ -250,7 +236,7 @@ function UserAccount() {
 
       if (DeleteId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${DeleteId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${DeleteId}`)
           setNameDelete(res.data.data.employeeName)
         } catch (error) {
           console.log(error)
@@ -267,7 +253,7 @@ function UserAccount() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -275,7 +261,7 @@ function UserAccount() {
   const handleDelete = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employeeuser/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-employeeuser/${DeleteId}`);
       if (res) {
         handleCreateNotification()
         handleOpenModal();
@@ -318,7 +304,7 @@ function UserAccount() {
     const fetchRelated = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${updateId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${updateId}`)
           setUserAccountName(res.data.data.employeeName);
           setUserAccountRole(res.data.data.role);
           setUserAccountMail(res.data.data.employeeEmail);
@@ -348,13 +334,13 @@ function UserAccount() {
   const handleResetPassword = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`/auth/passwordreset/`,
+      const response = await axios.post(`${API_BASE_URL}/auth/passwordreset/`,
         { employeeEmail, role: userAccountRole, employeeName, oldPassword, newPassword });
       if (response) {
         handleOpenLoading();
       }
     } catch (error) {
-      handleOpenLoadingError();
+      toast.error(error.response?.data?.message || "Invalid old password");
     }
   };
   {/** Update End */ }
@@ -428,7 +414,7 @@ function UserAccount() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',

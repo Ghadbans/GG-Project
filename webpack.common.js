@@ -1,4 +1,5 @@
 const path = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
@@ -25,10 +26,16 @@ module.exports = {
         }
       },
       {
-        test: /\.(jpg|png)$/,
-        use: {
-          loader: 'url-loader',
-        },
+        test: /\.(jpg|png|jpeg|gif|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: Infinity,
+              esModule: false,
+            },
+          },
+        ],
       },
       {
         test: [/\.s[ac]ss$/i, /\.css$/i],
@@ -40,15 +47,25 @@ module.exports = {
           
           'sass-loader',
         ],
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf|mp3|wav)$/i,
+        type: 'asset/inline',
       }
     ]
   },
-  plugins: [],
+  plugins: [
+    new webpack.ProvidePlugin({
+      global: 'globalThis',
+    })
+  ],
   resolve: {
     extensions: ['.js'],
   },
   output: {
     filename: 'app.js',
     path: path.resolve(__dirname, 'build', 'js'),
+    publicPath: 'auto',
+    globalObject: 'this',
   },
 };

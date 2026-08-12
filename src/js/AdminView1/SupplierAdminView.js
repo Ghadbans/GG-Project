@@ -24,18 +24,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, MailOutline, Sync, SyncAltOutlined } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { Close } from '@mui/icons-material';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -132,20 +133,13 @@ function SupplierAdminView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -156,18 +150,12 @@ function SupplierAdminView() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -182,52 +170,58 @@ function SupplierAdminView() {
     setOpen1(!open1);
   };
 
-  const [totalPage, SetTotalPage] = useState(0);
+  const [loadingData, setLoadingData] = useState(true);
+
+  const [customer, setCustomer] = useState([]);
+  const [searchCustomer, setSearchCustomer] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [reason, setReason] = useState("");
+
+  useState(() => {
+    const storedValue = localStorage.getItem('QuickFilterCustomer')
+    if (storedValue) {
+      setSearchCustomer(storedValue)
+    }
+  })
+
   const [page, setPage] = useState(0);
   const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchCustomer);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchCustomer]);
-
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/supplier-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
-        SetTotalPage(res.data.totalPages);
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-        }));
-        setCustomer(formatDate);
-        setLoadingData(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false);
-      }
-    } else {
-      const offLineCustomer1 = await db.supplierSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.supplierName && item.supplierName.toLowerCase().includes(lowerSearch)) ||
-        (item.storeName && item.storeName.toLowerCase().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [filterField, setFilterField] = useState("");
+  const [filterValue, setFilterValue] = useState("");
+  const [totalPage, SetTotalPage] = useState(0);
+    const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/Supplier-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
       }));
-      setCustomer(formatDate.reverse());
+      setCustomer(formatDate);
+      SetTotalPage(res.data.totalPages);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
       setLoadingData(false);
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
+  }, [page, debouncedSearchTerm, filterField, filterValue]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setPage(0);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
@@ -255,50 +249,15 @@ function SupplierAdminView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const syncOff = async () => {
-    if (navigator.onLine) {
-      const unsyncedCustomer = await db.supplierSchema.toArray();
-      const customertoSynChro = unsyncedCustomer.filter((row) => row.synced === false).map(({ supplierName, storeName, customerPhone1, customerPhone2, address, description }) => ({ supplierName, storeName, customerPhone1, customerPhone2, address, description }))
-      for (const customers of customertoSynChro) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-Supplier', customers)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoCustomer = res.data.data.storeName
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoCustomer)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const customertoSynChroUpdate = unsyncedCustomer.filter((row) => row.updateS === false)
-      for (const customersUpdate of customertoSynChroUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-Supplier/${customersUpdate._id}`, customersUpdate)
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-    fetchData(page, debouncedSearchTerm)
+    // Online-only: syncOff logic removed
   }
-  useEffect(() => {
-    fetchData(page, debouncedSearchTerm)
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
-  }, [])
+  
 
   const [open, setOpen] = useState(false);
   const [openDeleteMultiple, setOpenDeleteMultiple] = useState(false);
@@ -347,13 +306,18 @@ function SupplierAdminView() {
     setSelectedRows([])
   };
   const handleCloseModal = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setModalOpenLoading(false);
+    setOpenDeleteAll(false);
+    setOpenDeleteMultiple(false);
+    setOpen(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   };
   const [CustomerDeleted, setCustomerDeleted] = useState([])
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-Supplier/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-Supplier/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -374,26 +338,24 @@ function SupplierAdminView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleDeleteMany = async (e) => {
     e.preventDefault()
-    if (navigator.onLine) {
-      const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-Supplier/${idToDelete}`)
-      })
-      try {
-        const res = await Promise.all(deletePromises);
-        if (res) {
-          handleCreateNotification()
-          handleOpenModal();
-        }
-      } catch (error) {
-        console.log(error)
+    const deletePromises = selectedRows.map(async (idToDelete) => {
+      return axios.delete(`${ENDPOINT_URL}/delete-Supplier/${idToDelete}`)
+    })
+    try {
+      const res = await Promise.all(deletePromises);
+      if (res) {
+        handleCreateNotification()
+        handleOpenModal();
       }
+    } catch (error) {
+      console.log(error)
     }
   }
   const [filterModel, setFilterModel] = React.useState({
@@ -407,9 +369,21 @@ function SupplierAdminView() {
     setColumnVisibilityModel(newHidden)
     localStorage.setItem('HiddenColumnsSupplier', JSON.stringify(newHidden))
   }
-  const handleFilter = (newModel) => {
-    setFilterModel(newModel)
-    localStorage.setItem('QuickFilterSupplierTst', JSON.stringify(newModel))
+    const handleFilter = (newModel) => {
+    setFilterModel(newModel);
+    localStorage.setItem('QuickFilterSupplierTst', JSON.stringify(newModel));
+    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
+      setSearchTerm(newModel.quickFilterValues.join(' '));
+    } else {
+      setSearchTerm('');
+    }
+    if (newModel.items && newModel.items.length > 0) {
+      setFilterField(newModel.items[0].field);
+      setFilterValue(newModel.items[0].value || '');
+    } else {
+      setFilterField('');
+      setFilterValue('');
+    }
   }
   useEffect(() => {
     const storedQuick = JSON.parse(localStorage.getItem('QuickFilterSupplierTst'))
@@ -423,12 +397,12 @@ function SupplierAdminView() {
 
   }, [searchCustomer])
   const columns = [
-    { field: 'supplierName', headerName: 'Supplier Name', width: open1 ? 100 : 100 },
-    { field: 'storeName', headerName: 'Store Name', width: open1 ? 200 : 300 },
-    { field: 'address', headerName: 'Address', width: open1 ? 180 : 200 },
-    { field: 'description', headerName: 'Description', width: open1 ? 260 : 360 },
+    { field: 'supplierName', headerName: 'Supplier Name', minWidth: 150, flex: 1.5 },
+    { field: 'storeName', headerName: 'Store Name', minWidth: 200, flex: 2 },
+    { field: 'address', headerName: 'Address', minWidth: 180, flex: 1.5 },
+    { field: 'description', headerName: 'Description', minWidth: 250, flex: 3 },
     {
-      field: 'view', headerName: 'View', width: open1 ? 80 : 100, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
             <IconButton >
@@ -441,7 +415,7 @@ function SupplierAdminView() {
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: open1 ? 80 : 100, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
             <IconButton >
@@ -451,11 +425,10 @@ function SupplierAdminView() {
             </IconButton>
           </span>
         </EditTooltip>
-
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: open1 ? 80 : 100, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>                                <IconButton onClick={handleOpenAll} >
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
@@ -504,7 +477,7 @@ function SupplierAdminView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -577,12 +550,12 @@ function SupplierAdminView() {
                         )
                           : ''}
                         <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                           rows={customer}
                           columns={columns}
-                          rowCount={totalPage * limit}
-                          paginationMode="server"
-                          onPaginationModelChange={(model) => setPage(model.page)}
-                          paginationModel={{ page, pageSize: limit }}
                           checkboxSelection
                           disableDensitySelector
                           onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
@@ -604,7 +577,7 @@ function SupplierAdminView() {
                         />
                       </Box>
                     ) : <div>
-                      <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                      <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
                     </div>}
                   </div>
                 </div>)

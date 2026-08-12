@@ -40,7 +40,8 @@
   
   .invoiceTest span, .invoiceTest img { display: block; float: left; }
   .invoiceTest span {  margin: 0 1em 1em 0; max-height: 25%; max-width: 90%; position: absolute; }
-  .invoiceTest img { max-height: 280px; max-width: 280px; margin-top: 20px;}
+  .invoiceTest img { max-height: 80px; max-width: var(--header-logo-width, 240px); object-fit: contain; margin-top: 10px;}
+
   
   .invoiceTest:after { clear: both; content: ""; display: table; }
   

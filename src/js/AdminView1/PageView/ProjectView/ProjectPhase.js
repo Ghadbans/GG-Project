@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 
 
 
@@ -17,7 +18,7 @@ function ProjectPhase(){
   const [activeStep, setActiveStep] = React.useState(0);
   const [completed, setCompleted] = React.useState({});
   useEffect(()=> {
-    axios.get(`https://gg-project-production.up.railway.app/endpoint/get-projects/${id}`)
+    axios.get(`${ENDPOINT_URL}/get-projects/${id}`)
     .then(res => {
       // Handle the response data here
       const formatDate = res.data.data.phase

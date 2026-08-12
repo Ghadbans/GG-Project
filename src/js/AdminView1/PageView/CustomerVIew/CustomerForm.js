@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate } from 'react-router-dom';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -25,13 +26,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import dayjs from 'dayjs';
 import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { v4 as uuidv4, v4 } from 'uuid';
-import db from '../../../dexieDb';
+
 
 
 const BlackTooltip = styled(({ className, ...props }) => (
@@ -109,20 +110,13 @@ function CustomerForm() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -131,7 +125,7 @@ function CustomerForm() {
     fetchUser()
   }, [dispatch]);
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-customer';
+  const apiUrl = `${ENDPOINT_URL}/create-customer`;
   const [customerType, setCustomerType] = useState("");
   const [designation, setDesignation] = useState("");
   const [customerFirstName, setCustomerFirstName] = useState("");
@@ -149,7 +143,7 @@ function CustomerForm() {
   const [shippingAddress, setShippingAddress] = useState("");
   const [shippingCity, setShippingCity] = useState("");
   const [customerDescription, setCustomerDescription] = useState("");
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
 
   const dateComment = new Date()
 
@@ -187,6 +181,24 @@ function CustomerForm() {
   const handleClose = () => {
     setLoadingOpenModal(false);
     window.location.reload();
+    // Reset form fields
+    setCustomerType("");
+    setDesignation("");
+    setCustomerFirstName("");
+    setCustomerLastName("");
+    setCompanyName("");
+    setCustomerEmail("");
+    setCustomerCompanyPhone("");
+    setCustomerPhone("");
+    setCurrency("");
+    setPaymentTerms("");
+    setCustomer("");
+    setBillingAddress("");
+    setBillingCity("");
+    setShippingAddress("");
+    setShippingCity("");
+    setCustomerDescription("");
+    setSaving('');
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -207,7 +219,7 @@ function CustomerForm() {
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -227,29 +239,23 @@ function CustomerForm() {
       currency, paymentTerms, billingAddress, billingCity,
       shippingAddress, shippingCity, customerDescription, Customer, credit: 0, synced: false
     };
-    if (navigator.onLine) {
-      try {
-        const res = await axios.post(apiUrl, {
-          customerType, designation, customerFirstName, customerLastName,
-          customerFullName, companyName, customerEmail, customerCompanyPhone, customerPhone,
-          currency, paymentTerms, billingAddress, billingCity,
-          shippingAddress, shippingCity, customerDescription, Customer, credit: 0, synced: false
-        });
-        if (res) {
-          const ReferenceInfo = res.data.data._id
-          handleCreateNotification(ReferenceInfo)
-          await db.customerSchema.add({ ...res.data.data, _id: res.data.data._id, synced: true })
-          handleOpen();
-        }
-      } catch (error) {
-        if (error) {
-          setSaving('')
-          handleError();
-        }
+    try {
+      const res = await axios.post(apiUrl, {
+        customerType, designation, customerFirstName, customerLastName,
+        customerFullName, companyName, customerEmail, customerCompanyPhone, customerPhone,
+        currency, paymentTerms, billingAddress, billingCity,
+        shippingAddress, shippingCity, customerDescription, Customer, credit: 0, synced: false
+      });
+      if (res) {
+        const ReferenceInfo = res.data.data._id
+        handleCreateNotification(ReferenceInfo)
+        handleOpen();
       }
-    } else {
-      await db.customerSchema.add(data)
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError();
+      }
     }
 
   };

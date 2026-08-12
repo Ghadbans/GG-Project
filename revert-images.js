@@ -1,0 +1,36 @@
+const fs = require('fs');
+const path = require('path');
+
+function walk(dir) {
+  let results = [];
+  const list = fs.readdirSync(dir);
+  list.forEach(file => {
+    file = path.resolve(dir, file);
+    const stat = fs.statSync(file);
+    if (stat && stat.isDirectory()) {
+      results = results.concat(walk(file));
+    } else if (file.endsWith('.js')) {
+      results.push(file);
+    }
+  });
+  return results;
+}
+
+const files = walk('D:/GG/GG-Managment2026/ancient-kepler Pro/src/js');
+
+files.forEach(file => {
+  let content = fs.readFileSync(file, 'utf8');
+  let original = content;
+
+  content = content.replace(/src=\{Image\?\.default \|\| Image\}/g, 'src={Image}');
+  content = content.replace(/src=\{Image1\?\.default \|\| Image1\}/g, 'src={Image1}');
+  content = content.replace(/src=\{Image2\?\.default \|\| Image2\}/g, 'src={Image2}');
+  content = content.replace(/src=\{images\?\.default \|\| images\}/g, 'src={images}');
+
+  if (content !== original) {
+    fs.writeFileSync(file, content);
+    console.log('Reverted ' + file);
+  }
+});
+
+console.log('Done!');

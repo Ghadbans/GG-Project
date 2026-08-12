@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Divider } from '@mui/material'
+import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,6 +22,8 @@ import axios from 'axios';
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { ENDPOINT_URL } from '../../../apiConfig';
+import { invalidateCache } from '../../../utils/apiCache';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -35,7 +37,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
@@ -46,6 +48,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import db from '../../../dexieDb';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -146,7 +149,7 @@ function EstimateInvoiceForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -166,8 +169,8 @@ function EstimateInvoiceForm() {
     fetchUser()
   }, [dispatch]);
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-estimation';
-  const [terms, setTerms] = useState("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
+  const apiUrl = `${ENDPOINT_URL}/create-estimation`;
+  const [terms, setTerms] = useState("QUOTE VALID FOR 30 DAYS (SUBJECT TO STOCK/MARKET CHANGES). PAYMENT: 40% DEPOSIT / 50% MID-PROJECT / 10% UPON COMPLETION. ALL MATERIAL SALES ARE FINAL. WE ARE NOT RESPONSIBLE FOR LOSS, THEFT, OR DAMAGE CAUSED BY DEFECTIVE PARTS OR EXTERNAL FACTORS.");
   const [estimateDate, setEstimateDate] = useState(() => {
     const date = new Date()
     return date
@@ -175,7 +178,7 @@ function EstimateInvoiceForm() {
   const [estimateSubject, setEstimateSubject] = useState("");
   const status = "Draft";
   const [estimateDefect, setEstimateDefect] = useState("");
-  const [note, setNote] = useState("THIS OFFER IS VALID FOR A PERIOD OF SEVEN (7) DAYS, SUBJECT TO STOCK AVAILABILITY. PRICES ARE SUBJECT TO CHANGE BASED ON MARKET CONDITIONS. A DEPOSIT OF SIXTY PERCENT (60%) OF THE TOTAL AMOUNT IS REQUIRED IN ADVANCE. WE LOOK FORWARD TO THE OPPORTUNITY TO DO BUSINESS WITH YOU.");
+  const [note, setNote] = useState("WE LOOK FORWARD TO THE OPPORTUNITY TO DO BUSINESS WITH YOU.");
   const [items, SetItems] = useState([]);
   const [subTotal, setSubTotal] = useState(0);
   const [total, setTotal] = useState(0);
@@ -196,14 +199,28 @@ function EstimateInvoiceForm() {
   const [rate, setRate] = useState(0);
   const [shopLoading, setShopLoading] = useState(false);
   const dateComment = new Date()
-  const estimateName = "EST-00" + estimateNumber
+  const estimateName = "QUO-" + String(estimateNumber).padStart(6, '0')
   const [ItemInformation, setItemInformation] = useState([]);
+  const [includeLetter, setIncludeLetter] = useState(false);
+  const PROFESSIONAL_COVER_LETTER = `Dear Valued Customer,
+
+Thank you for giving us the opportunity to provide you with this quotation for your upcoming project.
+
+At GLOBAL GATE SARL, we pride ourselves on delivering high-quality services and materials tailored to meet your specific needs. Our team has carefully reviewed your requirements, and we are confident that the proposed solution offers the best value and technical excellence.
+
+We remain at your disposal for any further information or clarification you may require. We look forward to the possibility of working together.
+
+Best regards,
+
+The GLOBAL GATE Team`;
+  const [attachedLetter, setAttachedLetter] = useState(PROFESSIONAL_COVER_LETTER);
   useEffect(() => {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-estimation')
-          setEstimateNumber(parseInt(res.data.estimateNumber) + 1)
+          const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-estimation`)
+          const num = res.data ? (parseInt(res.data?.data?.estimateNumber || res.data?.estimateNumber || 0)) : 0;
+          setEstimateNumber(num + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -219,7 +236,7 @@ function EstimateInvoiceForm() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const res = await axios.get(`${ENDPOINT_URL}/item`)
           setItemInformation(res.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -237,10 +254,10 @@ function EstimateInvoiceForm() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -324,6 +341,8 @@ function EstimateInvoiceForm() {
         totalGenerale: 0,
         totalCost: shopItem.itemCostPrice,
         stock: shopItem.itemQuantity,
+        data: shopItem.data,
+        contentType: shopItem.contentType,
         itemOut: 0,
         newItemOut: 0,
       };
@@ -332,7 +351,7 @@ function EstimateInvoiceForm() {
   }
 
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -343,6 +362,8 @@ function EstimateInvoiceForm() {
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
       stock: selectedOptions?.itemQuantity,
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
     } : row))
   }
   const handleChange = (e, i) => {
@@ -397,6 +418,8 @@ function EstimateInvoiceForm() {
       stock: 0,
       itemOut: 0,
       newItemOut: 0,
+      data: null,
+      contentType: null,
     }]);
   }
   const addItemWhite = () => {
@@ -423,6 +446,8 @@ function EstimateInvoiceForm() {
       stock: 0,
       itemOut: 0,
       newItemOut: 0,
+      data: null,
+      contentType: null,
     }]);
   }
   const addItemRow = (i) => {
@@ -448,6 +473,8 @@ function EstimateInvoiceForm() {
       stock: 0,
       itemOut: 0,
       newItemOut: 0,
+      data: null,
+      contentType: null,
     }
     const update = [...items];
     update.splice(i + 1, 0, newItem);
@@ -477,6 +504,8 @@ function EstimateInvoiceForm() {
       stock: 0,
       itemOut: 0,
       newItemOut: 0,
+      data: null,
+      contentType: null,
     }
     const update = [...items];
     update.splice(i + 1, 0, newItem);
@@ -494,7 +523,7 @@ function EstimateInvoiceForm() {
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   useEffect(() => {
     if (totalInvoice) {
       const wholePart = Math.floor(totalInvoice)
@@ -509,7 +538,7 @@ function EstimateInvoiceForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get(`${ENDPOINT_URL}/customer`)
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -592,8 +621,8 @@ function EstimateInvoiceForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -603,6 +632,8 @@ function EstimateInvoiceForm() {
           itemCost: res.data.data.itemCostPrice,
           itemRate: res.data.data.itemSellingPrice,
           stock: res.data.data.itemQuantity,
+          data: res.data.data.data,
+          contentType: res.data.data.contentType,
           totalAmount: row.itemQty * res.data.data.itemSellingPrice,
           discount: (row.itemQty * res.data.data.itemSellingPrice) * row.itemDiscount,
           percentage: ((row.itemQty * res.data.data.itemSellingPrice) * row.itemDiscount) / 100,
@@ -680,11 +711,11 @@ function EstimateInvoiceForm() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'EST-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      reason: 'QUO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -693,6 +724,7 @@ function EstimateInvoiceForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true');
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       _id: v4(),
       customerName,
@@ -701,7 +733,7 @@ function EstimateInvoiceForm() {
       estimateDefect,
       estimateSubject,
       status,
-      items,
+      items: itemsWithoutData,
       subTotal,
       total,
       totalW,
@@ -709,18 +741,20 @@ function EstimateInvoiceForm() {
       estimateName, noteInfo,
       terms, shipping,
       adjustment, adjustmentNumber,
-      totalInvoice, balanceDue, synced: false
+      totalInvoice, balanceDue, synced: false,
+      includeLetter, attachedLetter
     }
     if (navigator.onLine) {
       try {
         const res = await axios.post(apiUrl, data);
         if (res) {
+          invalidateCache('/estimation');
           // Open Loading View
           handleOpen();
           const ReferenceInfo = res.data.data._id
           const ReferenceInfoNumber = res.data.data.estimateNumber
           handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
-          await db.estimateSchema.add({ ...res.data.data, synced: true })
+          await db.estimateSchema.put({ ...res.data.data, synced: true })
           //Reset form
         }
       } catch (error) {
@@ -730,7 +764,7 @@ function EstimateInvoiceForm() {
         }
       }
     } else {
-      await db.estimateSchema.add(data)
+      await db.estimateSchema.put(data)
       handleOpen();
     }
   };
@@ -772,7 +806,7 @@ function EstimateInvoiceForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Add new estimation
+              ADD NEW QUOTATION
             </Typography>
             <IconButton onClick={handleOpenUpdate}>
               <ArrowBack style={{ color: 'white' }} />
@@ -852,7 +886,7 @@ function EstimateInvoiceForm() {
                         label='Estimate Number'
                         value={estimateNumber}
                         onChange={(e) => setEstimateNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">EST-00</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">QUO-00</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>
@@ -987,18 +1021,27 @@ function EstimateInvoiceForm() {
                                                         Item.itemName.itemName ? (
                                                           (
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                              <div >
-                                                                <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                                <TextField
-                                                                  name='itemDescription' id='itemDescription'
-                                                                  value={Item.itemDescription}
-                                                                  multiline
-                                                                  rows={3}
-                                                                  onChange={(e) => handleChangeCEO(e, i)}
-                                                                  size="small"
-                                                                  sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                              <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                                <ItemThumbnail
+                                                                  itemId={Item.itemName?._id}
+                                                                  initialData={Item.data}
+                                                                  initialType={Item.contentType}
                                                                 />
-                                                              </div>
+                                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                                  <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                    {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                                  </Typography>
+                                                                  <TextField
+                                                                    name='itemDescription' id='itemDescription'
+                                                                    value={Item.itemDescription}
+                                                                    multiline
+                                                                    rows={3}
+                                                                    onChange={(e) => handleChangeCEO(e, i)}
+                                                                    size="small"
+                                                                    sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
+                                                                  />
+                                                                </Box>
+                                                              </Box>
                                                               <div>
                                                                 <BlackTooltip title="Clear" placement='top'>
                                                                   <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
@@ -1199,7 +1242,12 @@ function EstimateInvoiceForm() {
                                                     {
                                                       Item.itemName.itemName ? (
                                                         (
-                                                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                          <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                                                            <ItemThumbnail
+                                                              itemId={Item.itemName?._id}
+                                                              initialData={Item.data}
+                                                              initialType={Item.contentType}
+                                                            />
                                                             <div >
                                                               <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                               <TextField
@@ -1210,7 +1258,7 @@ function EstimateInvoiceForm() {
                                                                 onChange={(e) => handleChange(e, i)}
                                                                 size="small"
                                                                 disabled
-                                                                sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                                sx={{ width: '400px', backgroundColor: 'white', fontSize: 12 }}
                                                               />
                                                             </div>
                                                             <div>
@@ -1228,7 +1276,6 @@ function EstimateInvoiceForm() {
                                                                   </BlackTooltip>
                                                                 )
                                                               }
-
                                                             </div>
                                                           </div>)
                                                       ) : (
@@ -1368,7 +1415,7 @@ function EstimateInvoiceForm() {
                         multiline
                         rows={4}
                         value={note}
-                        label='Invoice Note'
+                        label='Quote Note'
                         onChange={(e) => setNote(e.target.value)}
                         sx={{ width: '50%', backgroundColor: 'white' }}
                       />
@@ -1445,11 +1492,41 @@ function EstimateInvoiceForm() {
                       multiline
                       rows={4}
                       value={terms}
-                      label='Invoice Terms'
+                      label='Quote Terms'
                       onChange={(e) => setTerms(e.target.value)}
                       sx={{ width: '60%', backgroundColor: 'white' }}
                     />
                   </Grid>
+                  <Grid item xs={12} sx={{ mt: 2, mb: 1 }}>
+                    <Divider orientation="horizontal" flexItem sx={{ fontWeight: 'bold' }}> COVER LETTER (Optional) </Divider>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={includeLetter}
+                          onChange={(e) => setIncludeLetter(e.target.checked)}
+                          sx={{ color: '#30368a', '&.Mui-checked': { color: '#30368a' } }}
+                        />
+                      }
+                      label={<Typography sx={{ fontWeight: 'bold', color: '#30368a' }}>Attach Professional Cover Letter to this Quotation</Typography>}
+                    />
+                  </Grid>
+                  {includeLetter && (
+                    <Grid item xs={12}>
+                      <TextField
+                        id='attachedLetter'
+                        name='attachedLetter'
+                        multiline
+                        rows={8}
+                        value={attachedLetter}
+                        label='Cover Letter Content'
+                        onChange={(e) => setAttachedLetter(e.target.value)}
+                        sx={{ width: '100%', backgroundColor: 'white' }}
+                        placeholder="Write a professional introduction for your quotation..."
+                      />
+                    </Grid>
+                  )}
                   <Grid item xs={12}>
                     {
                       saving !== 'true' ? <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button> : <p className='btnCustomer6' style={{ width: '100%', textAlign: 'center' }}>Saving...</p>
@@ -1475,7 +1552,7 @@ function EstimateInvoiceForm() {
           </BlackTooltip>
           <Grid container sx={{ alignItems: 'center', padding: '15px' }} spacing={2}>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
-              <Typography>Do you want to stop creating Estimation ? </Typography>
+              <Typography>Do you want to stop creating Quotation ? </Typography>
               <p><span className="txt2" style={{ color: 'red' }}>Note :</span> <span className="txt2"> If you stop creating without saving, all your changes will be lost</span></p>
             </Grid>
             <br />

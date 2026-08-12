@@ -18,7 +18,8 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import axios from 'axios';
-import db from '../dexieDb';
+import { ENDPOINT_URL } from '../apiConfig';
+
 
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@mui/material';
 function SideShop({ onView }) {
@@ -27,6 +28,12 @@ function SideShop({ onView }) {
   const isActive = (path) => {
     return location.pathname === path;
   }
+
+  const handleNavClick = () => {
+    localStorage.setItem('activeSidebarMenu', 1);
+    localStorage.setItem('activeSidebarMenuE2', 1);
+  };
+
   const [view2, setView] = useState(0);
   const [show1, setShow1] = useState(1);
   const handleShow = (e) => {
@@ -39,20 +46,13 @@ function SideShop({ onView }) {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -64,18 +64,12 @@ function SideShop({ onView }) {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
-          .map((row) => setGrantAccess(row.modules));
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
+          .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -118,7 +112,6 @@ function SideShop({ onView }) {
             </ListItemIcon>
             <ListItemText primary="Report" />
           </ListItemButton>
-          <Outlet></Outlet>
         </div>
         : null}
       {show1 === 2 ?

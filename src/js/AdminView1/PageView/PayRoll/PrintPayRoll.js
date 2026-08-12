@@ -3,32 +3,34 @@ import '../Chartview.css';
 import dayjs from 'dayjs'
 import axios from 'axios';
 import { CurrencyExchange } from '@mui/icons-material';
+import { toast } from 'react-toastify';
+import { ENDPOINT_URL } from '../../../apiConfig';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const PrintPayRoll = React.forwardRef(({id},ref) => {
     const [payRoll,setPayRoll] = useState([]);
     const [employee,setEmployee] = useState([]);
     useEffect(()=> {
-        axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll')
+        axios.get(`${ENDPOINT_URL}/payRoll`)
         .then(res => {
           // Handle the response data here
           setPayRoll(res.data.data.reverse());
         })
         .catch(error => {
-          // Handle errors
-          console.error('Error fetching data:', error);
+          toast.error('Error fetching payroll data for printing.');
         });
       },[])
       useEffect(()=> {
-        axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+        axios.get(`${ENDPOINT_URL}/employee`)
                 .then(res => {
                         // Handle the response data here
                         const formatDate = res.data.data
                         setEmployee(formatDate);
                 })
                 .catch(error => {
-                        // Handle errors
-                        console.error('Error fetching data:', error);
-        });
+                        toast.error('Error fetching employee data for printing.');
+                });
       },[])
   return (
     <div>
@@ -42,7 +44,12 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
                <th colSpan={5}  style={{padding:'5px',border:'1px solid #DDD',backgroundColor:'#316FF6', color:'white'}}>Global Gate</th>
              </tr>
              <tr>
-               <th  style={{padding:'5px',border:'1px solid #DDD',backgroundColor:'#e8f7fe', color:'black'}} colSpan={5}>ٍSalary Slip for the month Of: {dayjs(row.month).format('MMMM-YYYY')}</th>
+               <th  style={{padding:'5px',border:'1px solid #DDD',backgroundColor:'#e8f7fe', color:'black'}} colSpan={5}>
+                 {row.weekFrom && row.weekTo 
+                   ? `Salary Slip for Period: ${dayjs(row.weekFrom).format('DD/MM/YYYY')} to ${dayjs(row.weekTo).format('DD/MM/YYYY')}`
+                   : `Salary Slip for the month Of: ${dayjs(row.month).format('MMMM-YYYY')}`
+                 }
+               </th>
              </tr>
            </thead>
            <tbody>
@@ -143,7 +150,7 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
                <td style={{width:'200px',border:'1px solid #DDD', color:'black'}}>Other</td>
                <td style={{width:'200px',border:'1px solid #DDD', color:'black'}}>{row.other}</td>
                <td style={{width:'200px',border:'1px solid #DDD', color:'black'}}> {row.otherEarning}</td>
-               <td style={{width:'200px',border:'1px solid #DDD', color:'black'}}>Item lost recovery</td>
+               <td style={{width:'200px',border:'1px solid #DDD', color:'black'}}>Item lost recovery / Deduction</td>
                <td style={{width:'200px',border:'1px solid #DDD', color:'black'}}>{row.itemLost}</td>
              </tr>
              </tbody>

@@ -2,32 +2,35 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const userSlice = createSlice({
     name: 'user',
-    initialState: {
+    initialState: { 
         data: {
             userName: '',
-            role: ''
+            role: '',
+            selectedBranch: null
         },
-        loading: true,
-        isHibernating: false
-    },
+        loading: true
+ },
     reducers: {
         setUser: (state, action) => {
             state.data = action.payload;
-            state.loading = false;
+            state.loading= false; 
+        },
+        setBranch: (state, action) => {
+            if (state.data) {
+                state.data.selectedBranch = action.payload;
+            }
         },
         logOut: (state, action) => {
             state.data = {
                 userName: '',
-                role: ''
+                role: '',
+                selectedBranch: null
             }
-            state.loading = true;
-        },
-        setHibernating: (state, action) => {
-            state.isHibernating = action.payload;
+            state.loading= true;
         }
     },
 })
 
-export const { setUser, logOut, setHibernating } = userSlice.actions
+export const { setUser, setBranch, logOut } = userSlice.actions
 export const selectCurrentUser = (state) => state.user;
 export default userSlice.reducer;

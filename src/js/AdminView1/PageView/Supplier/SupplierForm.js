@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SideMaintenance2 from '../../../component/SideMaintenance2';
 import '../../view.css';
 import '../Chartview.css';
@@ -6,8 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {MenuItem,Grid, IconButton,Paper,TextField, FormControl, InputLabel, Select, Typography,styled, Box, Autocomplete,Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment,Divider} from '@mui/material'
-import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider } from '@mui/material'
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,9 +19,10 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
-import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline} from '@mui/icons-material';
+import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { v4 } from 'uuid';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -33,7 +34,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
@@ -63,15 +64,15 @@ const BlackTooltip = styled(({ className, ...props }) => (
   },
 }));
 const ViewTooltip = styled(({ className, ...props }) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.tooltip}`]: {
-      backgroundColor: '#202a5a',
-      color: 'white',
-      boxShadow: theme.shadows[1],
-      fontSize: 11,
-    },
-  }));
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: '#202a5a',
+    color: 'white',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}));
 
 const style = {
   position: 'absolute',
@@ -140,141 +141,144 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
       }),
     },
   }),
-  );
+);
 function SupplierForm() {
-    const navigate = useNavigate();
-    const dispatch= useDispatch();
-    const user = useSelector(selectCurrentUser);
-  
-    useEffect(()=> {
-      const storesUserId = localStorage.getItem('user');
-      const fetchUser = async () => {
-        if (storesUserId) {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
+
+  useEffect(() => {
+    const storesUserId = localStorage.getItem('user');
+    const fetchUser = async () => {
+      if (storesUserId) {
         try {
-          const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
-          dispatch(setUser({userName: Name, role: Role}));
+          dispatch(setUser({ userName: Name, role: Role }));
         } catch (error) {
           console.error('Error fetching data:', error);
           dispatch(logOut())
         }
-      }else {
+      } else {
         navigate('/');
       }
-      }
-      fetchUser()
-    },[dispatch])
-  
-    const handleLogout = () => {
-      localStorage.removeItem('user');
-      dispatch(logOut());
-      navigate('/')
     }
-    const [openBack, setOpenBack] = useState(false);
+    fetchUser()
+  }, [dispatch])
 
-    const handleOpenBack = (e) => {
-      e.preventDefault()
-      setOpenBack(true);
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch(logOut());
+    navigate('/')
+  }
+  const [openBack, setOpenBack] = useState(false);
+
+  const handleOpenBack = (e) => {
+    e.preventDefault()
+    setOpenBack(true);
+  };
+  const handleCloseBack = () => {
+    setOpenBack(false);
+  };
+  const [sideBar, setSideBar] = React.useState(true);
+  const toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
+  const apiUrl = `${ENDPOINT_URL}/create-Supplier`;
+  const [supplierName, setSupplierName] = useState("");
+  const [storeName, setStoreName] = useState("");
+  const [customerPhone1, setCustomerPhone1] = useState("");
+  const [customerPhone2, setCustomerPhone2] = useState("");
+  const [address, setAddress] = useState("");
+  const [description, setDescription] = useState("");
+  const dateComment = new Date()
+
+
+  const [loading, setLoading] = useState(false);
+  const [loadingOpenModal, setLoadingOpenModal] = useState(false);
+  const [ErrorOpenModal, setErrorOpenModal] = useState(false);
+
+  const handleOpen = () => {
+    setLoadingOpenModal(true);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500)
+  }
+  const handleError = () => {
+    setErrorOpenModal(true);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500)
+  }
+  const handleClose = () => {
+    setLoadingOpenModal(false);
+    window.location.reload();
+    // Reset form
+    setSupplierName("");
+    setStoreName("");
+    setCustomerPhone1("");
+    setCustomerPhone2("");
+    setAddress("");
+    setDescription("");
+    setSaving('');
+  }
+  const handleCloseError = () => {
+    setErrorOpenModal(false);
+  }
+  const handleDecision = (navigate) => {
+    //Navigate Based on th Decision
+    if (navigate === 'previous') {
+      window.history.back();
+    } else if (navigate === 'stay') {
+      handleClose();
+    }
+  }
+  const handleCreateNotification = async (ReferenceInfo) => {
+    const data = {
+      idInfo: ReferenceInfo,
+      person: user.data.userName + ' Created ',
+      reason: storeName,
+      dateNotification: dateComment
+    }
+    try {
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const [saving, setSaving] = useState('')
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving('true')
+    const data = {
+      _id: v4(),
+      supplierName, storeName, customerPhone1, customerPhone2, address, description, synced: false
     };
-    const handleCloseBack = () => {
-      setOpenBack(false);
-    };
-    const [sideBar, setSideBar] = React.useState(true);
-    const toggleDrawer = () => {
-     setSideBar(!sideBar);
-    };
-    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-Supplier';
-    const [supplierName,setSupplierName]=useState("");
-    const [storeName,setStoreName]=useState("");
-    const [customerPhone1,setCustomerPhone1]=useState("");
-    const [customerPhone2,setCustomerPhone2]=useState("");
-    const [address,setAddress]=useState("");
-    const [description,setDescription]=useState("");
-    const dateComment = new Date()
+    try {
+      const res = await axios.post(apiUrl, { supplierName, storeName, customerPhone1, customerPhone2, address, description, synced: false });
+      if (res) {
+        const ReferenceInfo = res.data.data._id
+        handleCreateNotification(ReferenceInfo)
 
-
-    const [loading,setLoading]= useState(false);
-    const [loadingOpenModal,setLoadingOpenModal] = useState(false);
-    const [ErrorOpenModal,setErrorOpenModal] = useState(false);
-
-    const handleOpen = () => {
-      setLoadingOpenModal(true);
-      setLoading(true);
-      setTimeout(()=> {
-        setLoading(false);
-      }, 500)
-    }
-    const handleError = () => {
-      setErrorOpenModal(true);
-      setLoading(true);
-      setTimeout(()=> {
-        setLoading(false);
-     }, 500)
-    }
-    const handleClose = () => {
-      setLoadingOpenModal(false);
-      window.location.reload();
-    }
-    const handleCloseError = () => {
-      setErrorOpenModal(false);
-    }
-    const handleDecision = (navigate) => {
-      //Navigate Based on th Decision
-      if (navigate === 'previous') {
-        window.history.back();
-      } else if (navigate === 'stay') {
-        handleClose();
-      } 
-    }
-    const handleCreateNotification = async (ReferenceInfo) => {
-      const data = {
-        idInfo: ReferenceInfo,
-        person:user.data.userName + ' Created ',
-        reason:storeName,
-        dateNotification:dateComment
-      }
-      try {
-        await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    const [saving,setSaving] = useState('')
-    const handleSubmit = async(e) => {
-      e.preventDefault();
-      setSaving('true')
-      const data = {
-        _id:v4(),
-        supplierName,storeName,customerPhone1,customerPhone2,address,description,synced: false    
-      }; 
-      if (navigator.onLine) {
-        try{
-       const res = await axios.post(apiUrl,{supplierName,storeName,customerPhone1,customerPhone2,address,description,synced: false    });
-       if (res) {
-       const ReferenceInfo = res.data.data._id
-       handleCreateNotification(ReferenceInfo)
-
-       handleOpen();
-       }
-      }catch(error){
-        if (error) {
-          setSaving('')
-          handleError();
-        }
-      }
-      }else{
-        await db.supplierSchema.add(data)
         handleOpen();
       }
-      
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError();
+      }
+    }
+
   };
   return (
-  <div className='Homeemployee'>
+    <div className='Homeemployee'>
 
-<Box sx={{ display: 'flex' }}>
-                 <CssBaseline />
-         <AppBar position="absolute" open={sideBar} sx={{backgroundColor:'#30368a'}}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -299,20 +303,20 @@ function SupplierForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Create new Supplier    
-                     </Typography>
-          <IconButton onClick={handleOpenBack}>
-          <ArrowBack style={{color:'white'}} />
-          </IconButton>
-         <NotificationVIewInfo/>
-            <MessageAdminView name={user.data.userName} role={user.data.role}/>
-            <Typography sx={{marginLeft:'10px',marginRight:'10px'}}>{user.data.userName}</Typography>
+              Create new Supplier
+            </Typography>
+            <IconButton onClick={handleOpenBack}>
+              <ArrowBack style={{ color: 'white' }} />
+            </IconButton>
+            <NotificationVIewInfo />
+            <MessageAdminView name={user.data.userName} role={user.data.role} />
+            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
             <IconButton color="inherit" onClick={handleLogout}>
-            <Logout style={{color:'white'}} /> 
+              <Logout style={{ color: 'white' }} />
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -326,8 +330,8 @@ function SupplierForm() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List sx={{height:'700px'}}>
-          <SideMaintenance2/>
+          <List sx={{ height: '700px' }}>
+            <SideMaintenance2 />
           </List>
         </Drawer>
         <Box
@@ -338,168 +342,168 @@ function SupplierForm() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            width:'100%',
+            width: '100%',
             height: '100vh',
             overflow: 'auto',
           }}
         >
-          <Toolbar/>
-   <Container maxWidth="none" sx={{ mt: 4}} >
- <div>
-    <form onSubmit={handleSubmit}>
-        <Grid container style={{alignItems:'center',padding:'20px'}} spacing={2} component={Paper}>
-            <Grid item xs={6}>
-                <TextField
-                 name='supplierName' 
-                 value={supplierName}
-                 label='Supplier Name'
-                 onChange={(e)=>setSupplierName(e.target.value)}
-                 sx={{ width: '100%', backgroundColor:'white' }}   
-                />
-            </Grid>
-            <Grid item xs={6}>
-            <TextField
-            required
-                 name='storeName' 
-                 value={storeName}
-                 label='Store Name'
-                 onChange={(e)=>setStoreName(e.target.value)}
-                 sx={{ width: '100%', backgroundColor:'white' }}   
-                />
-            </Grid>
-            <Grid item xs={4}>
-                <TextField
-                 name='address' 
-                 value={address}
-                 label='Address'
-                 onChange={(e)=>setAddress(e.target.value)}
-                 sx={{ width: '100%', backgroundColor:'white' }}   
-                />
-            </Grid>
-            <Grid item xs={4}>
-                <TextField
-                 name='customerPhone1' 
-                 value={customerPhone1}
-                 label='Phone 1'
-                 onChange={(e)=>setCustomerPhone1(e.target.value)}
-                 sx={{ width: '100%', backgroundColor:'white' }}   
-                />
-            </Grid>
-            <Grid item xs={4}>
-            <TextField
-                 name='customerPhone2' 
-                 value={customerPhone2}
-                 label='Phone 2'
-                 onChange={(e)=>setCustomerPhone2(e.target.value)}
-                 sx={{ width: '100%', backgroundColor:'white' }}   
-                />
-            </Grid>
-            <Grid item xs={12}>
-    <TextField 
-                  id='description'
-                  name='description' 
-                  value={description}
-                  label='Description'
-                  multiline
-                  rows={4}
-                  onChange={(e)=>setDescription(e.target.value)}
-                  sx={{ width: '100%', backgroundColor:'white' }}       
-              />
-    </Grid>
-    <Grid item xs={12}>
-      {
-        saving !== 'true' ? <button type='submit' className='btnCustomer6' style={{width:'100%'}}>Save</button> : <p className='btnCustomer6' style={{width:'100%', textAlign:'center'}}>Saving...</p>
-      }
-   
-    </Grid>
-        </Grid>
-    </form>
- </div>
- </Container>
-  </Box>
-  </Box>
-  <Modal  
+          <Toolbar />
+          <Container maxWidth="none" sx={{ mt: 4 }} >
+            <div>
+              <form onSubmit={handleSubmit}>
+                <Grid container style={{ alignItems: 'center', padding: '20px' }} spacing={2} component={Paper}>
+                  <Grid item xs={6}>
+                    <TextField
+                      name='supplierName'
+                      value={supplierName}
+                      label='Supplier Name'
+                      onChange={(e) => setSupplierName(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      required
+                      name='storeName'
+                      value={storeName}
+                      label='Store Name'
+                      onChange={(e) => setStoreName(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      name='address'
+                      value={address}
+                      label='Address'
+                      onChange={(e) => setAddress(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      name='customerPhone1'
+                      value={customerPhone1}
+                      label='Phone 1'
+                      onChange={(e) => setCustomerPhone1(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={4}>
+                    <TextField
+                      name='customerPhone2'
+                      value={customerPhone2}
+                      label='Phone 2'
+                      onChange={(e) => setCustomerPhone2(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id='description'
+                      name='description'
+                      value={description}
+                      label='Description'
+                      multiline
+                      rows={4}
+                      onChange={(e) => setDescription(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    {
+                      saving !== 'true' ? <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button> : <p className='btnCustomer6' style={{ width: '100%', textAlign: 'center' }}>Saving...</p>
+                    }
+
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Container>
+        </Box>
+      </Box>
+      <Modal
         open={openBack}
         onClose={handleCloseBack}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
- <Box sx={{ ...style, width: 500 }}>
-        <BlackTooltip title="Close" placement='left'>
-        <IconButton onClick={handleCloseBack} style={{ position:'relative', float:'right'}}> 
-                      <Close style={{color:'#202a5a'}}/>
-        </IconButton>
-        </BlackTooltip>  
-        <Grid container sx={{alignItems:'center',padding:'15px'}} spacing={2}>
-          <Grid item xs={12} sx={{textAlign:'center'}}>
-           <Typography>Do you want to stop creating customer ? </Typography>
-           <p><span className="txt2" style={{color:'red'}}>Note :</span> <span className="txt2"> If you stop creating without saving, all your changes will be lost</span></p>
-          </Grid> 
-          <br/>
-          <Grid item xs={6}>
-          <button type='submit' onClick={() => navigate('/SupplierAdminView')} className='btnCustomer' style={{width: '100%'}}>Yes</button>
+        <Box sx={{ ...style, width: 500 }}>
+          <BlackTooltip title="Close" placement='left'>
+            <IconButton onClick={handleCloseBack} style={{ position: 'relative', float: 'right' }}>
+              <Close style={{ color: '#202a5a' }} />
+            </IconButton>
+          </BlackTooltip>
+          <Grid container sx={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+            <Grid item xs={12} sx={{ textAlign: 'center' }}>
+              <Typography>Do you want to stop creating customer ? </Typography>
+              <p><span className="txt2" style={{ color: 'red' }}>Note :</span> <span className="txt2"> If you stop creating without saving, all your changes will be lost</span></p>
+            </Grid>
+            <br />
+            <Grid item xs={6}>
+              <button type='submit' onClick={() => navigate('/SupplierAdminView')} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
+            </Grid>
+            <Grid item xs={6}>
+              <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{ width: '100%' }}>No</button>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-          <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{width: '100%'}}>No</button>
-          </Grid>
-        </Grid> 
         </Box>
       </Modal>
-        <Modal 
-           open={loadingOpenModal}
-           onClose={handleClose}
-           closeAfterTransition
-           BackdropComponent={Backdrop}
-           BackdropProps={{
-            timeout: 500,
-           }}
-           aria-labelledby="modal-modal-title"
-           aria-describedby="modal-modal-description"
+      <Modal
+        open={loadingOpenModal}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, width: 500 }}
         >
-          <Box sx={{ ...style, width: 500 }}
-          >
-              {loading?(<Loader/>
-                ):(
-              <div style={{justifyContent:'center',textAlign:'center'}}>
-                  <p><CheckCircleIcon style={{color:'green',height:'40px', width:'40px'}}/></p>
-                  <h2> Data Saved successfully</h2>
-                  <div style={{display:'flex', gap:'60px',justifyContent:'center'}}>
-              <button onClick={()=> handleDecision('stay')} className='btnCustomer'>
-                Add New
-              </button>
-              <button onClick={()=> handleDecision('previous')} className='btnCustomer'>
-                Go Back
+          {loading ? (<Loader />
+          ) : (
+            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+              <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
+              <h2> Data Saved successfully</h2>
+              <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                <button onClick={() => handleDecision('stay')} className='btnCustomer'>
+                  Add New
+                </button>
+                <button onClick={() => handleDecision('previous')} className='btnCustomer'>
+                  Go Back
+                </button>
+              </div>
+            </div>
+          )}
+        </Box>
+      </Modal>
+      <Modal
+        open={ErrorOpenModal}
+        onClose={handleCloseError}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, width: 500 }}
+        >
+          {loading ? (<Loader />
+          ) : (
+            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+              <p><CancelIcon style={{ color: 'red', height: '40px', width: '40px' }} /></p>
+              <h2> Data Failed to Saved</h2>
+              <button className='btnCustomer' onClick={handleCloseError}>
+                Try Again
               </button>
             </div>
-                </div>
-                )}
-          </Box>
-          </Modal>
-        <Modal 
-           open={ErrorOpenModal}
-           onClose={handleCloseError}
-           closeAfterTransition
-           BackdropComponent={Backdrop}
-           BackdropProps={{
-            timeout: 500,
-           }}
-           aria-labelledby="modal-modal-title"
-           aria-describedby="modal-modal-description"
-        >
-          <Box sx={{ ...style, width: 500 }}
-          >
-              {loading?(<Loader/>
-                ):(
-                  <div style={{justifyContent:'center',textAlign:'center'}}>
-                  <p><CancelIcon style={{color:'red',height:'40px', width:'40px'}}/></p>
-                  <h2> Data Failed to Saved</h2>
-                  <button className='btnCustomer' onClick={handleCloseError}>
-                    Try Again
-                  </button>
-                </div>
-                )}
-          </Box>
-          </Modal>
+          )}
+        </Box>
+      </Modal>
     </div>
   )
 }

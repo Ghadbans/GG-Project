@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect,useState } from 'react';
 import SideMaintenance2 from '../../../component/SideMaintenance2';
 import '../../view.css';
 import '../Chartview.css';
@@ -6,8 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardMedia, CardContent, Pagination } from '@mui/material'
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import {MenuItem,Grid, IconButton,Paper,TextField, FormControl, InputLabel, Select, Typography,styled, Box, Autocomplete,Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment,Divider, Card, CardMedia, CardContent, Pagination, Avatar, Checkbox, FormControlLabel} from '@mui/material'
+import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,10 +19,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
-import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Refresh, RemoveCircleOutline } from '@mui/icons-material';
+import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Refresh, RemoveCircleOutline} from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
+import { invalidateCache } from '../../../utils/apiCache';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Drawer as SideDrawer, Button } from '@mui/material';
 import { v4 } from 'uuid';
-import { useNavigate } from 'react-router-dom';
+import {  useNavigate } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -34,13 +37,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import SupplierForm2 from '../Supplier/SupplierForm2';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -65,15 +69,15 @@ const BlackTooltip = styled(({ className, ...props }) => (
   },
 }));
 const ViewTooltip = styled(({ className, ...props }) => (
-  <Tooltip {...props} classes={{ popper: className }} />
-))(({ theme }) => ({
-  [`& .${tooltipClasses.tooltip}`]: {
-    backgroundColor: '#202a5a',
-    color: 'white',
-    boxShadow: theme.shadows[1],
-    fontSize: 11,
-  },
-}));
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: '#202a5a',
+      color: 'white',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
+  }));
 
 const style = {
   position: 'absolute',
@@ -143,638 +147,789 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-function ItemPurchaseViewForm() {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const user = useSelector(selectCurrentUser);
 
-  useEffect(() => {
-    const storesUserId = localStorage.getItem('user');
-    const fetchUser = async () => {
-      if (storesUserId) {
+function ItemPurchaseViewForm() {
+    const navigate = useNavigate();
+    const dispatch= useDispatch();
+    const user = useSelector(selectCurrentUser);
+  
+    useEffect(()=> {
+      const storesUserId = localStorage.getItem('user');
+      const fetchUser = async () => {
+        if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await  axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
-          dispatch(setUser({ userName: Name, role: Role }));
+          dispatch(setUser({userName: Name, role: Role}));
         } catch (error) {
           console.error('Error fetching data:', error);
           dispatch(logOut())
         }
-      } else {
+      }else {
         navigate('/');
       }
-    }
-    fetchUser()
-  }, [dispatch])
-
-  const handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch(logOut());
-    navigate('/')
-  }
-  const [openBack, setOpenBack] = useState(false);
-
-  const handleOpenBack = (e) => {
-    e.preventDefault()
-    setOpenBack(true);
-  };
-  const handleCloseBack = () => {
-    setOpenBack(false);
-  };
-  const [itemPurchaseDate, setItemPurchaseDate] = useState(() => {
-    const date = new Date()
-    return dayjs(date)
-  });
-  const [itemPurchaseNumber, setItemPurchaseNumber] = useState(0);
-  const [manufacturer, setManufacturer] = useState("");
-  const [manufacturerID, setManufacturerID] = useState("");
-  const [reason, setReason] = useState("");
-  const [projects, setProject] = useState([]);
-  const [maintenance, setMaintenance] = useState([]);
-  const [note, setNote] = useState("");
-  const [inputValue2, setInputValue2] = React.useState('');
-  const [inputValue3, setInputValue3] = React.useState('');
-  const [inputValue4, setInputValue4] = React.useState('');
-  const [manufacturerNumber, setManufacturerNumber] = useState(0);
-  const [description, setDescription] = useState("");
-  const [totalUSD, setTotalUSD] = useState(0);
-  const [total, setTotal] = useState(0);
-  const [totalFC, setTotalFC] = useState(0);
-  const [items, setItems] = useState([]);
-  const [supplier, setSupplier] = useState([]);
-  const dateComment = dayjs(Date.now()).format('DD/MM/YYYY-HH-mm');
-  const Create = {
-    person: user.data.userName + ' CREATED ',
-    dateComment
-  }
-  const [projectName, setProjectName] = useState({});
-  const [purchase, setPurchase] = useState([]);
-  const [maintenanceInfo, setMaintenanceInfo] = useState([]);
-  const [invoiceInfo, setInvoiceInfo] = useState([]);
-  const [itemArray, setItemArray] = useState([])
-  const [inputValue, setInputValue] = React.useState('');
-  {/** Item Info Start */ }
-  const [ItemInformation, setItemInformation] = useState([]);
-  const [rate, setRate] = useState(0);
-  const [invoice, setInvoice] = useState([]);
-  useEffect(() => {
-    const handleFetch = async () => {
-      try {
-        const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-itemPurchase')
-        setItemPurchaseNumber(parseInt(resItemOut.data.itemPurchaseNumber) + 1)
-        const resSupplier = await axios.get('https://gg-project-production.up.railway.app/endpoint/Supplier')
-        setSupplier(resSupplier.data.data.reverse())
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-        setItemInformation(resItem.data.data.reverse())
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-        setProject(resProject.data.data.reverse());
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-        setMaintenance(resMaintenance.data.data.reverse());
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-        res.data.data.forEach((row) => setRate(row.rate))
-        const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
-        setInvoice(newData)
-      } catch (error) {
-        console.error('Error fetching data:', error);
       }
+      fetchUser()
+    },[dispatch])
+  
+    const handleLogout = () => {
+      localStorage.removeItem('user');
+      dispatch(logOut());
+      navigate('/')
     }
-    handleFetch()
-  }, [])
+    const [openBack, setOpenBack] = useState(false);
 
-  // Shop States
-  const [shopOpen, setShopOpen] = useState(false);
-  const [shopItems, setShopItems] = useState([]);
-  const [shopSearch, setShopSearch] = useState('');
-  const [shopPage, setShopPage] = useState(1);
-  const [shopTotalPages, setShopTotalPages] = useState(1);
-  const [shopLoading, setShopLoading] = useState(false);
-
-  // Fetch Shop Items
-  const fetchShop = async () => {
-    setShopLoading(true);
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setShopLoading(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setShopLoading(false)
-      }
-    } else {
-      setShopLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    if (shopOpen) {
-      fetchShop()
-    }
-  }, [shopPage, shopSearch, shopOpen])
-
-  const handleRefreshShop = () => {
-    setShopSearch('');
-    setShopPage(1);
-    fetchShop();
-  }
-
-  const handleShopPageChange = (e, newPage) => {
-    setShopPage(newPage);
-  }
-  const handleShopSearchChange = (e) => {
-    setShopSearch(e.target.value);
-    setShopPage(1)
-  }
-
-  const toggleShop = () => {
-    setShopOpen(!shopOpen);
-  }
-
-  const handleAddToItemPurchase = (shopItem) => {
-    // Check if item already exists in items array
-    const existingItemIndex = items.findIndex(item => item.itemName._id === shopItem._id);
-
-    if (existingItemIndex !== -1) {
-      // Item exists, update quantity
-      const updatedItems = [...items];
-      const currentItem = updatedItems[existingItemIndex];
-      const newQty = parseInt(currentItem.itemQty) + 1;
-
-      updatedItems[existingItemIndex] = {
-        ...currentItem,
-        itemQty: newQty,
-        totalAmountUSD: Math.round((newQty * currentItem.itemRate) * 100) / 100,
-        fcConvertToUsdTotal: Math.round(((parseFloat(currentItem.totalAmountFC) / currentItem.Taux) + (newQty * currentItem.itemRate)) * 100) / 100,
-      };
-      setItems(updatedItems);
-    } else {
-      // Item does not exist, add new
-      const newItem = {
-        idRow: v4(),
-        itemName: {
-          _id: shopItem._id,
-          itemName: shopItem.itemName,
-        },
-        itemDescription: shopItem.itemDescription,
-        itemQty: 1,
-        itemRate: shopItem.itemCostPrice, // Use cost price for Item Purchase
-        Taux: rate,
-        cost: shopItem.itemCostPrice,
-        amountFc: 0,
-        totalAmountUSD: shopItem.itemCostPrice,
-        fcConvertToUsd: 0,
-        fcConvertToUsdTotal: shopItem.itemCostPrice,
-        totalAmount: 0,
-        totalAmountFC: 0
-      };
-      setItems([...items, newItem]);
-    }
-  }
-
-  const handleReason = (e) => {
-    setReason(e.target.value)
-    setProjectName({})
-    setDescription("")
-    setItems([])
-  }
-  const handleChangeProject = (newValue) => {
-    const selectedOptions = projects.find((option) => option === newValue)
-    setProjectName({
-      _id: selectedOptions?._id,
-      name: selectedOptions?.projectName
+    const handleOpenBack = (e) => {
+      e.preventDefault()
+      setOpenBack(true);
+    };
+    const handleCloseBack = () => {
+      setOpenBack(false);
+    };
+    const [itemPurchaseDate,setItemPurchaseDate]=useState(()=>{
+      const date = new Date()
+      return dayjs(date)
     });
-    setItems([])
-  }
-  const handleChangeSupplier = (newValue) => {
-    const selectedOptions = supplier.find((option) => option === newValue)
-    setManufacturer(selectedOptions?.storeName);
-    setManufacturerID(selectedOptions?._id)
-  }
-  const handleChangeService = (newValue) => {
-    const selectedOptions = maintenance.find((option) => option === newValue)
-    setProjectName({
-      _id: selectedOptions?._id,
-      name: 'M-00' + selectedOptions?.serviceNumber + ' / ' + selectedOptions?.customerName.customerName
-    });
-    setItemArray(selectedOptions.items.filter((row) => row.itemName.itemName !== '' && row.newDescription === undefined))
-    setItems([])
-  }
-  const handleChangeInvoice = (newValue) => {
-    const selectedOptions = invoice.find((option) => option === newValue)
-    setProjectName({
-      _id: selectedOptions?._id,
-      name: 'INV-00' + selectedOptions?.invoiceNumber + ' / ' + selectedOptions?.customerName.customerName
-    });
-    setItemArray(selectedOptions.items.filter((row) => row.itemName.itemName !== '' && row.newDescription === undefined))
-    setItems([])
-  }
-  useEffect(() => {
-    const fetchPur = async () => {
-      if (reason === 'Project') {
-        try {
-          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          setPurchase(resPurchase.data.data.filter((row) => row.projectName._id === projectName._id));
-          resPurchase.data.data.filter((row) => row.projectName._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => row.itemName.itemName !== '' && row.newDescription === undefined)));
-        } catch (error) {
-          console.log(error)
+    const [itemPurchaseNumber,setItemPurchaseNumber]=useState(0);
+    const [manufacturer,setManufacturer]=useState("");
+    const [manufacturerID,setManufacturerID]=useState("");
+    const [reason,setReason] = useState("");
+    const [projects,setProject] = useState([]);
+    const [maintenance,setMaintenance] = useState([]);
+    const [note,setNote] = useState("");
+    const [inputValue2, setInputValue2] = React.useState('');
+    const [inputValue3, setInputValue3] = React.useState('');
+    const [inputValue4, setInputValue4] = React.useState('');
+    const [manufacturerNumber,setManufacturerNumber]=useState(0);
+    const [description,setDescription]=useState("");
+    const [totalUSD,setTotalUSD]=useState(0);
+    const [total,setTotal]=useState(0);
+    const [totalFC,setTotalFC]=useState(0);
+    const [items,setItems]=useState([]);
+    const [supplier,setSupplier]=useState([]);
+    const [CheckTvA, setCheckTvA] = useState(false);
+    const dateComment = dayjs(Date.now()).format('DD/MM/YYYY-HH-mm');
+    const Create = {person: user.data.userName+ ' CREATED ',
+                   dateComment
+                 }
+    const [projectName,setProjectName] = useState({});
+    const [purchase,setPurchase] = useState([]);
+    const [maintenanceInfo,setMaintenanceInfo] = useState([]);
+    const [invoiceInfo,setInvoiceInfo] = useState([]);
+    const [itemArray,setItemArray] = useState([])
+    const [autocompleteOptions, setAutocompleteOptions] = useState([]);
+    const [autocompleteLoading, setAutocompleteLoading] = useState(false);
+    const [autocompleteSearch, setAutocompleteSearch] = useState('');
+      {/** Item Info Start */}
+      const [ItemInformation,setItemInformation]= useState([]);
+      const [rate,setRate]= useState(0);
+      const [invoice,setInvoice] = useState([]);
+      useEffect(()=>{
+        const handleFetch = async () => {
+          try {
+            const resItemOut = await axios.get(`${ENDPOINT_URL}/get-last-saved-itemPurchase`)
+            const num = resItemOut.data && resItemOut.data.itemPurchaseNumber ? (parseInt(resItemOut.data?.data?.itemPurchaseNumber || resItemOut.data?.itemPurchaseNumber || 0)) : 0;
+            setItemPurchaseNumber(num + 1)
+
+            const resSupplier = await axios.get(`${ENDPOINT_URL}/Supplier`)
+            const supplierData = Array.isArray(resSupplier?.data?.data) ? [...resSupplier.data.data].reverse() : [];
+            setSupplier(supplierData)
+
+            const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`)
+            const itemInfo = Array.isArray(resItem?.data?.itemI) ? [...resItem.data.itemI].reverse() : [];
+            setItemInformation(itemInfo)
+
+            const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
+            const projectData = Array.isArray(resProject?.data?.data) ? [...resProject.data.data].reverse() : [];
+            setProject(projectData);
+
+            const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+            const maintenanceDataAll = Array.isArray(resMaintenance?.data?.data) ? [...resMaintenance.data.data].reverse() : [];
+            setMaintenance(maintenanceDataAll);
+
+            const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+            if (Array.isArray(resRate?.data?.data)) {
+              resRate.data.data.forEach((row) => setRate(row.rate))
+            }
+
+            const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+            const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+
+            const purchaseData = Array.isArray(resPurchase?.data?.data) ? resPurchase.data.data : [];
+            const invoiceData = Array.isArray(resInvoice?.data?.data) ? resInvoice.data.data : [];
+            const maintenanceData = Array.isArray(resMaintenance?.data?.data) ? resMaintenance.data.data : [];
+
+            const newData = invoiceData.filter((row) =>
+              !purchaseData.some((Item) => Item._id === row.ReferenceName2) &&
+              !maintenanceData.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName)
+            )
+            setInvoice(newData)
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
         }
-      } else if (reason === 'Maintenance') {
-        const resM = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-        setMaintenanceInfo(resM.data.data.filter((row) => row._id === projectName._id));
-        resM.data.data.filter((row) => row._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => row.itemName.itemName !== '' && row.newDescription === undefined)));
-      } else if (reason === 'Invoice') {
-        const resM = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        setInvoiceInfo(resM.data.data.filter((row) => row._id === projectName._id));
-        resM.data.data.filter((row) => row._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => row.itemName.itemName !== '' && row.newDescription === undefined)));
+        handleFetch()
+      }, [])
+
+      // Shop States
+      const [shopOpen, setShopOpen] = useState(false);
+      const [shopItems, setShopItems] = useState([]);
+      const [shopSearch, setShopSearch] = useState('');
+      const [shopPage, setShopPage] = useState(1);
+      const [shopTotalPages, setShopTotalPages] = useState(1);
+      const [shopLoading, setShopLoading] = useState(false);
+
+      // Fetch Shop Items
+      const fetchShop = async () => {
+        setShopLoading(true);
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+          setShopTotalPages(res.data.totalPages)
+          setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+          setShopLoading(false)
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          setShopLoading(false)
+        }
       }
-    }
 
-    fetchPur()
-  }, [reason, projectName])
+      useEffect(() => {
+        if (shopOpen) {
+          fetchShop()
+        }
+      }, [shopPage, shopSearch, shopOpen])
 
-  const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
-    setItems(items => items.map((row) => row.idRow === idRow ? {
-      ...row,
-      itemName: {
-        _id: selectedOptions?._id,
-        itemName: selectedOptions?.itemName,
-      },
-      itemDescription: selectedOptions?.itemDescription
-    } : row))
-  }
-  const handleChange = (e, idRow) => {
-    const { name, value } = e.target;
-    const list = [...items];
-    const i = items.findIndex(Item => Item.idRow === idRow)
-    list[i][name] = value
-    list[i]['totalAmountUSD'] = Math.round((list[i]['itemQty'] * list[i]['itemRate']) * 100) / 100;
-    list[i]['fcConvertToUsd'] = Math.round((list[i]['totalAmountFC'] / list[i]['Taux']) * 100) / 100;
-    list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd']) + parseFloat(list[i]['totalAmount'])) * 100) / 100;
+      const handleRefreshShop = () => {
+        setShopSearch('');
+        setShopPage(1);
+        fetchShop();
+      }
 
-    setItems(list);
-  }
-  const addItem = () => {
-    setItems([...items, {
-      idRow: v4(),
-      itemName: {},
-      itemDescription: "",
-      itemQty: 0,
-      itemRate: 0,
-      Taux: rate,
-      cost: 0,
-      amountFc: 0,
-      totalAmountUSD: 0,
-      fcConvertToUsd: 0,
-      fcConvertToUsdTotal: 0,
-      totalAmount: 0,
-      totalAmountFC: 0
-    }]);
-  }
-  const addItemRow = (i) => {
-    const newItem = {
-      idRow: v4(),
-      itemName: {},
-      itemDescription: "",
-      Taux: rate,
-      itemQty: 0,
-      itemRate: 0,
-      cost: 0,
-      amountFc: 0,
-      totalAmountUSD: 0,
-      fcConvertToUsd: 0,
-      fcConvertToUsdTotal: 0,
-      totalAmount: 0,
-      totalAmountFC: 0
-    }
-    const update = [...items];
-    update.splice(i + 1, 0, newItem);
-    setItems(update)
-  }
+      const handleShopPageChange = (e, newPage) => {
+        setShopPage(newPage);
+      }
+      const handleShopSearchChange = (e) => {
+        setShopSearch(e.target.value);
+        setShopPage(1)
+      }
 
-  const handleShowAutocomplete = (idRow) => {
-    setItems(items => items.map((row) => row.idRow === idRow ? {
-      ...row,
-      itemName: {
-        _id: null,
-        itemName: null
-      },
-      itemDescription: "",
-      itemQty: 0,
-      itemRate: 0,
-      Taux: rate,
-      cost: 0,
-      amountFc: 0,
-      totalAmountUSD: 0,
-      fcConvertToUsd: 0,
-      fcConvertToUsdTotal: 0,
-      totalAmount: 0,
-      totalAmountFC: 0
-    } : row))
-  }
-  const deleteItem = idRow => {
-    setItems(items => items.filter((Item) => Item.idRow !== idRow));
-  };
-  const [openAutocomplete1, setOpenAutocomplete1] = useState(false);
+      const toggleShop = () => {
+        setShopOpen(!shopOpen);
+      }
 
-  const handleOpenOpenAutocomplete1 = (e) => {
-    e.stopPropagation()
-    setOpenAutocomplete1(true);
-  };
-  const handleCloseOpenAutocomplete1 = () => {
-    setOpenAutocomplete1(false);
-  };
-  const handleCreateCustomer = (newCustomer) => {
-    setSupplier([newCustomer, ...supplier])
-  }
+      // Handle Autocomplete Search
+      useEffect(() => {
+        const fetchAutocompleteItems = async () => {
+          if (autocompleteSearch.length < 2) {
+            setAutocompleteOptions(ItemInformation.slice(0, 50));
+            return;
+          }
+          setAutocompleteLoading(true);
+          try {
+            const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=1&limit=50&search=${encodeURIComponent(autocompleteSearch)}`);
+            // Filter out items already in the purchase list
+            const searchResults = res.data.items.filter(row => row.typeItem === "Goods");
+            setAutocompleteOptions(searchResults);
+            setAutocompleteLoading(false);
+          } catch (error) {
+            console.error('Error searching items:', error);
+            setAutocompleteLoading(false);
+          }
+        };
 
-  const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
-  const handleOpenOpenAutocomplete2 = (e) => {
-    e.stopPropagation()
-    setOpenAutocomplete2(true);
-  };
-  const handleCloseOpenAutocomplete2 = () => {
-    setOpenAutocomplete2(false);
-  };
-  const handleCreateItem = (newItem) => {
-    setItemInformation([newItem, ...ItemInformation])
-  }
-  useEffect(() => {
-    const result0 = items.reduce((sum, row) => sum + parseFloat(row.fcConvertToUsdTotal), 0)
-    setTotalUSD(result0.toFixed(2))
-    const result1 = items.reduce((sum, row) => sum + parseFloat(row.totalAmount), 0)
-    setTotal(result1.toFixed(2))
-    const result2 = items.reduce((sum, row) => sum + parseFloat(row.totalAmountFC), 0)
-    setTotalFC(result2.toFixed(2))
+        const timeoutId = setTimeout(fetchAutocompleteItems, 300);
+        return () => clearTimeout(timeoutId);
+      }, [autocompleteSearch, ItemInformation]);
 
-  })
-  {/** Item Info End */ }
+      const handleAddToItemPurchase = (shopItem) => {
+        // Check if item already exists in items array
+        const existingItemIndex = items.findIndex(item => item.itemName?._id === shopItem._id);
 
-  useEffect(() => {
-    if (itemArray.length > 0) {
-      const result = itemArray.map((row) => {
-        return {
-          idRow: row.idRow,
-          itemName: row.itemName,
-          itemDescription: row.itemDescription,
+        if (existingItemIndex !== -1) {
+          // Item exists, update quantity
+          const updatedItems = [...items];
+          const currentItem = updatedItems[existingItemIndex];
+          const newQty = parseInt(currentItem.itemQty) + 1;
+
+          updatedItems[existingItemIndex] = {
+            ...currentItem,
+            itemQty: newQty,
+            totalAmountUSD: Math.round((newQty * currentItem.itemRate) * 100) / 100,
+            fcConvertToUsdTotal: Math.round(((parseFloat(currentItem.totalAmountFC) / currentItem.Taux) + (newQty * currentItem.itemRate)) * 100) / 100,
+          };
+          setItems(updatedItems);
+        } else {
+          // Item does not exist, add new
+          const newItem = {
+            idRow: v4(),
+            itemName: {
+              _id: shopItem._id,
+              itemName: shopItem.itemName,
+            },
+            data: shopItem.data,
+            contentType: shopItem.contentType,
+            itemDescription: shopItem.itemDescription,
+            itemQty: 1,
+            itemRate: shopItem.itemCostPrice, // Use cost price for Item Purchase
+            Taux: rate,
+            cost: shopItem.itemCostPrice,
+            amountFc: 0,
+            totalAmountUSD: shopItem.itemCostPrice,
+            fcConvertToUsd: 0,
+            fcConvertToUsdTotal: shopItem.itemCostPrice,
+            totalAmount: 0,
+            totalAmountFC: 0
+          };
+          setItems([...items, newItem]);
+        }
+      }
+      const handleReason = (e) => {
+        setReason(e.target.value)
+        setProjectName({})
+        setDescription("")
+        setItems([])
+       }
+       const handleChangeProject = (newValue) => {
+        const selectedOptions = projects.find((option)=> option === newValue)
+        setProjectName({
+          _id: selectedOptions?._id,
+          name: selectedOptions?.projectName
+        });
+        setItems([])
+      }
+       const handleChangeSupplier = (newValue) => {
+        const selectedOptions = supplier.find((option)=> option === newValue)
+        setManufacturer( selectedOptions?.storeName);
+        setManufacturerID(selectedOptions?._id)
+      }
+      const handleChangeService = (newValue) => {
+        const selectedOptions = maintenance.find((option) => option === newValue)
+        setProjectName({
+          _id: selectedOptions?._id,
+          name: 'M-' + String(selectedOptions?.serviceNumber).padStart(6, '0') + ' / ' + selectedOptions?.customerName.customerName
+        });
+        setItemArray(selectedOptions.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== '')))
+        setItems([])
+      }
+      const handleChangeInvoice = (newValue) => {
+        const selectedOptions = invoice.find((option) => option === newValue)
+        setProjectName({
+          _id: selectedOptions?._id,
+          name: 'INV-' + String(selectedOptions?.invoiceNumber).padStart(6, '0') + ' / ' + selectedOptions?.customerName.customerName
+        });
+        setItemArray(selectedOptions.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== '')))
+        setItems([])
+      }
+      useEffect(()=>{
+          const fetchPur = async () => {
+            if (reason === 'Project') {
+              try {
+                const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+                setPurchase(resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id));
+                resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== ''))));
+              } catch (error) {
+                console.log(error)
+              }
+            } else if (reason === 'Maintenance') {
+              const resM = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+              setMaintenanceInfo(resM.data?.data?.filter((row) => row._id === projectName._id));
+              resM.data?.data?.filter((row) => row._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== ''))));
+            } else if (reason === 'Invoice') {
+              const resM = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+              setInvoiceInfo(resM.data?.data?.filter((row) => row._id === projectName._id));
+              resM.data?.data?.filter((row) => row._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== ''))));
+            }
+          }
+      
+        fetchPur()
+      },[reason,projectName])
+      
+      const handleChangeItem = (idRow, newValue) => {
+        const selectedOptions = newValue
+        setItems(items => items.map((row) => row.idRow === idRow ? {
+          ...row,
+          itemName: {
+            _id: selectedOptions?._id,
+            itemName: selectedOptions?.itemName,
+          },
+          data: selectedOptions?.data,
+          contentType: selectedOptions?.contentType,
+          itemDescription: selectedOptions?.itemDescription,
+          itemRate: selectedOptions?.itemCostPrice,
+          cost: selectedOptions?.itemCostPrice,
+          fcConvertToUsdTotal: (parseInt(row.itemQty || 0) * (selectedOptions?.itemCostPrice || 0)),
+          data: selectedOptions?.data,
+          contentType: selectedOptions?.contentType,
+        } : row))
+      }
+      const handleChange = (e,idRow) => {
+        const {name, value} = e.target;
+        const list = [...items];
+        const i = items.findIndex(Item=> Item.idRow === idRow)
+        list[i][name] = value
+        list[i]['totalAmountUSD'] = Math.round(( list[i]['itemQty']*list[i]['itemRate'])*100)/100;
+        list[i]['fcConvertToUsd'] = Math.round(( list[i]['totalAmountFC']/list[i]['Taux'])*100)/100;
+        list[i]['fcConvertToUsdTotal'] = Math.round(( parseFloat(list[i]['fcConvertToUsd'])+parseFloat(list[i]['totalAmount']))*100)/100;
+    
+        setItems(list);
+      }
+      const addItem = () => {
+        setItems([...items, {
+              idRow:v4(),
+              itemName:{},
+              itemDescription: "",
+              itemQty:0,
+              itemRate:0,
+              Taux:rate,
+              cost:0,
+              amountFc:0,
+              totalAmountUSD:0,
+              fcConvertToUsd:0,
+              fcConvertToUsdTotal:0,
+              totalAmount:0,
+              totalAmountFC:0,
+              data: null,
+              contentType: null,
+            }]);
+      }
+      const addItemRow = (i) => {
+        const newItem = {
+          idRow:v4(),
+          itemName:{},
+          itemDescription: "",
+          Taux:rate,
+          itemQty:0,
+          itemRate:0,
+          cost:0,
+          amountFc:0,
+          totalAmountUSD:0,
+          fcConvertToUsd:0,
+          fcConvertToUsdTotal:0,
+          totalAmount:0,
+          totalAmountFC:0,
+          data: null,
+          contentType: null,
+        }
+        const update =[...items];
+        update.splice(i + 1, 0, newItem);
+        setItems(update)
+      }
+      
+      const handleShowAutocomplete = (idRow) => {
+        setItems(items => items.map((row) => row.idRow === idRow ? {
+          ...row,
+          itemName: {
+            _id: null,
+            itemName: null
+          },
+          newDescription: undefined,
+          itemDescription: "",
           itemQty: 0,
           itemRate: 0,
           Taux: rate,
+          cost: 0,
           amountFc: 0,
-          cost: row.itemCost,
+          totalAmountUSD: 0,
           fcConvertToUsd: 0,
           fcConvertToUsdTotal: 0,
-          newDescription: row.newDescription,
-          totalAmountUSD: 0,
           totalAmount: 0,
           totalAmountFC: 0
-        }
-      })
-      setItems(result)
+        } : row))
+      }
+      const deleteItem = idRow =>{
+        setItems(items => items.filter((Item)=> Item.idRow !==idRow));
+      };
+      const [openAutocomplete1, setOpenAutocomplete1] = useState(false);
+
+const handleOpenOpenAutocomplete1 = (e) => {
+  e.stopPropagation()
+ setOpenAutocomplete1(true);
+};
+const handleCloseOpenAutocomplete1 = () => {
+  setOpenAutocomplete1(false);
+};
+const handleCreateCustomer = (newCustomer)=> {
+  setSupplier([newCustomer,...supplier])
+}
+
+    const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
+    const handleOpenOpenAutocomplete2 = (e) => {
+    e.stopPropagation()
+    setOpenAutocomplete2(true);
+    };
+    const handleCloseOpenAutocomplete2 = () => {
+    setOpenAutocomplete2(false);
+    };
+    const handleCreateItem = (newItem)=> {
+    setItemInformation([newItem,...ItemInformation])
     }
-  }, [itemArray, rate])
-
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
-  {/** purchase start**/ }
-  const [updateProjectPurchase, setUpdateProjectPurchase] = useState(null);
-  const [updateMaintenance, setUpdateMaintenance] = useState(null);
-  const [updateInvoice, setUpdateInvoice] = useState(null);
-
-  const arrayItemRelated = items.filter((row) => row.itemQty !== 0)
-  useEffect(() => {
-    if (purchase.length > 0 && maintenanceInfo.length === 0 && invoiceInfo.length === 0) {
-      const updatePurchaseArray = purchase.map((row) => {
-        const updateItem = row.items.map((Item) => {
-          const RelatedItem = arrayItemRelated.find((Item2) => Item2.idRow === Item.idRow)
-          if (RelatedItem) {
-            const itemBuy = parseFloat(Item.itemBuy) + parseFloat(RelatedItem.itemQty ? RelatedItem.itemQty : 0)
-            const totalGenerale = Item.itemCost * (parseFloat(Item.itemBuy) + parseFloat(RelatedItem.itemQty ? RelatedItem.itemQty : 0))
-            const itemQty = Item.itemQty
-            const itemCost = RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost
-
-            return {
-              ...Item, itemCost, itemBuy, itemQty, totalGenerale
-            }
-          } else {
-            return Item
-          }
+    useEffect (() => {
+        const result0 = items.reduce((sum, row)=>  sum + parseFloat(row.fcConvertToUsdTotal),0)
+        setTotalUSD(result0.toFixed(2))
+        const result1 = items.reduce((sum, row)=>  sum + parseFloat(row.totalAmount),0)
+        setTotal(result1.toFixed(2))
+        const result2 = items.reduce((sum, row)=>  sum + parseFloat(row.totalAmountFC),0)
+        setTotalFC(result2.toFixed(2))
+        
         })
-        const purchaseAmount2 = updateItem !== undefined ? updateItem.reduce((sum, row) => sum + row.totalGenerale, 0) : 0
-        return {
-          id: row._id,
-          items: updateItem,
+ {/** Item Info End */}
+
+useEffect(()=>{
+if (itemArray.length > 0) {
+    const result =  itemArray.map((row)=>{
+       return{
+         idRow: row.idRow,
+         itemName: row.itemName,
+         itemDescription: row.itemDescription,
+         itemQty:0,
+         itemRate: 0,
+         Taux:rate,
+         amountFc: 0,
+         cost:row.itemCost,
+         fcConvertToUsd:0,
+         fcConvertToUsdTotal:0,
+         newDescription: row.newDescription,
+         totalAmountUSD:0,
+         totalAmount:0,
+         totalAmountFC:0
+       }
+     })
+     setItems(result)
+}
+ },[itemArray,rate])
+
+ const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
+{/** purchase start**/}
+// Safe Update Logic: handleUpdatePurchase will now fetch and merge records on-the-fly during submission
+const arrayItemRelated = items.filter((row)=>row.itemQty !== 0 && row.itemQty !== '')
+
+const handleUpdatePurchase = async () => {
+  if (arrayItemRelated.length === 0) return;
+
+  try {
+    if (reason === 'Project' && projectName?._id) {
+      // Fetch latest purchase data for this project to avoid overwriting concurrent changes
+      const resPur = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`);
+      const relevantPurchases = resPur.data?.data?.filter((row) => row.projectName?._id === projectName._id);
+
+      for (const purchaseRow of relevantPurchases) {
+        // Fetch the ABSOLUTE latest record for this specific purchase
+        const currentRes = await axios.get(`${ENDPOINT_URL}/get-purchase/${purchaseRow._id}`);
+        const currentData = currentRes.data.data;
+
+        const updatedItems = currentData.items.map((Item) => {
+          const RelatedItem = arrayItemRelated.find((Item2) => Item2.idRow === Item.idRow);
+          if (RelatedItem) {
+            const itemBuy = parseFloat(Item.itemBuy || 0) + parseFloat(RelatedItem.itemQty || 0);
+            const itemCost = parseFloat(RelatedItem.itemRate || 0) !== 0 ? parseFloat(RelatedItem.itemRate) : parseFloat(Item.itemCost || 0);
+            const totalGenerale = itemCost * itemBuy;
+            return { ...Item, itemBuy, itemCost, totalGenerale };
+          }
+          return Item;
+        });
+
+        // Append manually added items that were not originally in the purchase order
+        const newItems = arrayItemRelated.filter((Item2) => !currentData.items.some((Item) => Item.idRow === Item2.idRow));
+        newItems.forEach((RelatedItem) => {
+          const itemBuy = parseFloat(RelatedItem.itemQty || 0);
+          const itemCost = parseFloat(RelatedItem.itemRate || 0) !== 0 ? parseFloat(RelatedItem.itemRate) : parseFloat(RelatedItem.cost || 0);
+          const totalGenerale = itemCost * itemBuy;
+          updatedItems.push({
+            idRow: RelatedItem.idRow,
+            itemName: {
+              _id: RelatedItem.itemName?._id || "",
+              itemName: RelatedItem.itemName?.itemName || ""
+            },
+            newDescription: RelatedItem.newDescription,
+            itemDescription: RelatedItem.itemDescription || "",
+            itemDiscount: 0,
+            itemQty: 0, // Originally requested 0
+            itemRate: RelatedItem.itemRate || 0,
+            itemCost: itemCost,
+            totalAmount: 0,
+            discount: 0,
+            percentage: 0,
+            itemAmount: 0,
+            totalCost: 0,
+            totalGenerale: totalGenerale,
+            itemBuy: itemBuy,
+            itemWeight: "",
+            stock: RelatedItem.stock || 0,
+            itemOut: 0,
+            newItemOut: 0
+          });
+        });
+
+        const purchaseAmount2 = updatedItems.reduce((sum, row) => sum + (parseFloat(row.totalGenerale) || 0), 0);
+        await axios.put(`${ENDPOINT_URL}/update-purchase/${purchaseRow._id}`, {
+          items: updatedItems,
           purchaseAmount2: purchaseAmount2
-        }
-      })
-      setUpdateProjectPurchase(updatePurchaseArray)
-    } else if (purchase.length === 0 && invoiceInfo.length === 0 && maintenanceInfo.length > 0) {
-      const updateMaintenanceArray = maintenanceInfo.map((row) => {
-        const updateItem = row.items.map((Item) => {
-          const RelatedItem = arrayItemRelated.find((Item2) => Item2.idRow === Item.idRow)
+        });
+      }
+    } else if (reason === 'Maintenance' && projectName?._id) {
+      const resM = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`);
+      const relevantMaintenance = resM.data?.data?.filter((row) => row._id === projectName._id);
+
+      for (const maintenanceRow of relevantMaintenance) {
+        const currentRes = await axios.get(`${ENDPOINT_URL}/get-maintenance/${maintenanceRow._id}`);
+        const currentData = currentRes.data.data;
+
+        const updatedItems = currentData.items.map((Item) => {
+          const RelatedItem = arrayItemRelated.find((Item2) => Item2.idRow === Item.idRow);
           if (RelatedItem) {
-            const itemBuy = parseFloat(Item.itemBuy) + parseFloat(RelatedItem.itemQty ? RelatedItem.itemQty : 0)
-            const totalGenerale = RelatedItem.itemRate * (parseFloat(Item.itemBuy) + parseFloat(RelatedItem.itemQty ? RelatedItem.itemQty : 0))
-            const itemQty = Item.itemQty
-
-            return {
-              ...Item, itemBuy, itemQty, totalGenerale
-            }
-          } else {
-            return Item
+            const itemBuy = parseFloat(Item.itemBuy || 0) + parseFloat(RelatedItem.itemQty || 0);
+            const totalGenerale = parseFloat(RelatedItem.itemRate || 0) * itemBuy;
+            return { ...Item, itemBuy, totalGenerale };
           }
-        })
-        return {
-          id: row._id,
-          items: updateItem,
-        }
-      })
-      setUpdateMaintenance(updateMaintenanceArray)
-    } else if (purchase.length === 0 && maintenanceInfo.length === 0 && invoiceInfo.length > 0) {
-      const updateMaintenanceArray = invoiceInfo.map((row) => {
-        const updateItem = row.items.map((Item) => {
-          const RelatedItem = arrayItemRelated.find((Item2) => Item2.idRow === Item.idRow)
+          return Item;
+        });
+
+        // Append manually added items that were not originally in the maintenance request
+        const newItems = arrayItemRelated.filter((Item2) => !currentData.items.some((Item) => Item.idRow === Item2.idRow));
+        newItems.forEach((RelatedItem) => {
+          const itemBuy = parseFloat(RelatedItem.itemQty || 0);
+          const totalGenerale = parseFloat(RelatedItem.itemRate || 0) * itemBuy;
+          updatedItems.push({
+            idRow: RelatedItem.idRow,
+            itemName: {
+              _id: RelatedItem.itemName?._id || "",
+              itemName: RelatedItem.itemName?.itemName || ""
+            },
+            newDescription: RelatedItem.newDescription,
+            itemDescription: RelatedItem.itemDescription || "",
+            itemDiscount: 0,
+            itemQty: 0,
+            itemRate: RelatedItem.itemRate || 0,
+            itemCost: RelatedItem.itemRate || 0,
+            totalAmount: 0,
+            discount: 0,
+            percentage: 0,
+            itemAmount: 0,
+            totalCost: 0,
+            totalGenerale: totalGenerale,
+            itemBuy: itemBuy,
+            itemWeight: "",
+            stock: RelatedItem.stock || 0,
+            itemOut: 0,
+            newItemOut: 0
+          });
+        });
+
+        await axios.put(`${ENDPOINT_URL}/update-maintenance/${maintenanceRow._id}`, {
+          items: updatedItems
+        });
+      }
+    } else if (reason === 'Invoice' && projectName?._id) {
+      const resI = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`);
+      const relevantInvoices = resI.data?.data?.filter((row) => row._id === projectName._id);
+
+      for (const invoiceRow of relevantInvoices) {
+        const currentRes = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceRow._id}`);
+        const currentData = currentRes.data.data;
+
+        const updatedItems = currentData.items.map((Item) => {
+          const RelatedItem = arrayItemRelated.find((Item2) => Item2.idRow === Item.idRow);
           if (RelatedItem) {
-            const itemBuy = parseFloat(Item.itemBuy) + parseFloat(RelatedItem.itemQty ? RelatedItem.itemQty : 0)
-            const totalGenerale = RelatedItem.itemRate * (parseFloat(Item.itemBuy) + parseFloat(RelatedItem.itemQty ? RelatedItem.itemQty : 0))
-            const itemQty = Item.itemQty
-
-            return {
-              ...Item, itemBuy, itemQty, totalGenerale
-            }
-          } else {
-            return Item
+            const itemBuy = parseFloat(Item.itemBuy || 0) + parseFloat(RelatedItem.itemQty || 0);
+            const totalGenerale = parseFloat(RelatedItem.itemRate || 0) * itemBuy;
+            return { ...Item, itemBuy, totalGenerale };
           }
-        })
-        return {
-          id: row._id,
-          items: updateItem,
-        }
-      })
-      setUpdateInvoice(updateMaintenanceArray)
-    }
-  }, [purchase, items, maintenanceInfo, invoiceInfo])
+          return Item;
+        });
 
-  const handleUpdatePurchase = async () => {
-    if (updateProjectPurchase !== null && updateMaintenance === null && updateInvoice === null) {
-      const updateRequestInvoice = updateProjectPurchase.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${row.id}`, {
-          items: row.items,
-          purchaseAmount2: row.purchaseAmount2
-        })
-      })
-      try {
-        await Promise.all(updateRequestInvoice);
-      } catch (error) {
-        console.log('An error as occur');
-      }
-    } else if (updateProjectPurchase === null && updateMaintenance !== null && updateInvoice === null) {
-      const updateRequestMaintenance = updateMaintenance.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${row.id}`, {
-          items: row.items,
-        })
-      })
-      try {
-        await Promise.all(updateRequestMaintenance);
-      } catch (error) {
-        console.log('An error as occur');
-      }
-    } else if (updateProjectPurchase === null && updateMaintenance === null && updateInvoice !== null) {
-      const updateRequestInvoice = updateInvoice.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${row.id}`, {
-          items: row.items,
-        })
-      })
-      try {
-        await Promise.all(updateRequestInvoice);
-      } catch (error) {
-        console.log('An error as occur');
+        // Append manually added items that were not originally in the invoice request
+        const newItems = arrayItemRelated.filter((Item2) => !currentData.items.some((Item) => Item.idRow === Item2.idRow));
+        newItems.forEach((RelatedItem) => {
+          const itemBuy = parseFloat(RelatedItem.itemQty || 0);
+          const totalGenerale = parseFloat(RelatedItem.itemRate || 0) * itemBuy;
+          updatedItems.push({
+            idRow: RelatedItem.idRow,
+            itemName: {
+              _id: RelatedItem.itemName?._id || "",
+              itemName: RelatedItem.itemName?.itemName || ""
+            },
+            newDescription: RelatedItem.newDescription,
+            itemDescription: RelatedItem.itemDescription || "",
+            itemDiscount: 0,
+            itemQty: 0,
+            itemRate: RelatedItem.itemRate || 0,
+            itemCost: RelatedItem.itemRate || 0,
+            totalAmount: 0,
+            discount: 0,
+            percentage: 0,
+            itemAmount: 0,
+            totalCost: 0,
+            totalGenerale: totalGenerale,
+            itemBuy: itemBuy,
+            itemWeight: "",
+            stock: RelatedItem.stock || 0,
+            itemOut: 0,
+            newItemOut: 0
+          });
+        });
+
+        await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceRow._id}`, {
+          items: updatedItems
+        });
       }
     }
+  } catch (error) {
+    console.error('Error in handleUpdatePurchase (Safe Merge):', error);
+    alert('An error occurred while updating linked records. Please check the data integrity.');
   }
-  {/** purchase end */ }
-  {/** update Item Qty Start */ }
-  const handleUpdateQty = async () => {
+}
+{/** purchase end */}
+   {/** update Item Qty Start */}
+   const handleUpdateQty = async () => {
     const initialState = {}
     const QtyUpdate = {}
     //Get Qty Arrays
-    const QtyNew = arrayItemRelated.filter((Item) => Item.itemName._id !== undefined).map((Item) => Item.itemQty)
+    const QtyNew = arrayItemRelated.filter((Item) => Item.itemName?._id !== undefined).map((Item) => Item.itemQty)
     //Get ItemName Id
-    arrayItemRelated.filter((Item) => Item.itemName._id !== undefined).forEach((Item, index) => {
-      initialState[`id${index + 1}`] = { ids: Item.itemName._id }
+    arrayItemRelated.filter((Item) => Item.itemName?._id !== undefined).forEach((Item, index) => {
+      initialState[`id${index + 1}`] = { ids: Item.itemName?._id }
     })
-    // Get Value
-    const getRequestId = Object.values(initialState).map(({ ids }) => {
-      return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`)
+      // Get Value
+     const getRequestId = Object.values(initialState).map(({ids})=>{
+      return axios.get(`${ENDPOINT_URL}/get-item/${ids}`)
     })
     try {
       const res = await Promise.all(getRequestId);
-      res.forEach((resp, index) => { QtyUpdate[`id${index + 1}`] = { ids: resp.data.data._id, data: { itemQuantity: Number(resp.data.data.itemQuantity) + Number(QtyNew[index]) } } })
-    } catch (error) {
+      res.forEach((resp, index)=> { QtyUpdate[`id${index+1}`] = {ids: resp.data.data._id ,data : { itemQuantity: (Number(resp.data?.data?.itemQuantity || resp.data?.itemQuantity || 0)) + Number(QtyNew[index])}}})
+     }catch (error) {
       alert('An error as occur');
     }// Update Value 
-    const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
-    })
-    try {
-      await Promise.all(updateRequest);
-    } catch (error) {
+    const updateRequest = Object.values(QtyUpdate).map(({ids, data})=>{
+      return axios.put(`${ENDPOINT_URL}/update-item/${ids}`,data)
+     }) 
+     try {
+       await Promise.all(updateRequest);
+     }catch (error) {
       alert('An error as occur');
     }
-  }
-  {/** update Item Qty End */ }
-  {/** loading Start */ }
-  const [loading, setLoading] = useState(false);
-  const [loadingOpenModal, setLoadingOpenModal] = useState(false);
-  const [loadingOpenModalUpdate, setLoadingOpenModalUpdate] = useState(false);
-  const [ErrorOpenModal, setErrorOpenModal] = useState(false);
+  } 
+  {/** update Item Qty End */}
+  {/** loading Start */}
+const [loading,setLoading]= useState(false);
+const [loadingOpenModal,setLoadingOpenModal] = useState(false);
+const [loadingOpenModalUpdate,setLoadingOpenModalUpdate] = useState(false);
+const [ErrorOpenModal,setErrorOpenModal] = useState(false);
 
-  const handleOpen = () => {
-    setLoadingOpenModal(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500)
-  }
-  const handleOpenUpdate = () => {
-    setLoadingOpenModalUpdate(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500)
-  }
-  const handleError = () => {
-    setErrorOpenModal(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500)
-  }
+const handleOpen = () => {
+  setLoadingOpenModal(true);
+  setLoading(true);
+  setTimeout(()=> {
+    setLoading(false);
+  }, 500)
+}
+const handleOpenUpdate = () => {
+  setLoadingOpenModalUpdate(true);
+  setLoading(true);
+  setTimeout(()=> {
+    setLoading(false);
+  }, 500)
+}
+const handleError = () => {
+  setErrorOpenModal(true);
+  setLoading(true);
+  setTimeout(()=> {
+    setLoading(false);
+ }, 500)
+}
 
-  const handleClose = () => {
-    setLoadingOpenModal(false);
-    window.location.reload();
+const handleClose = () => {
+  setLoadingOpenModal(false);
+  window.location.reload();
+}
+const handleCloseUpdate = () => {
+  setLoadingOpenModalUpdate(false);
+}
+const handleCloseError = () => {
+  setErrorOpenModal(false);
+}
+const handleDecision = (navigate) => {
+  //Navigate Based on th Decision
+  if (navigate === 'previous') {
+    window.history.back();
+  } else if (navigate === 'stay') {
+   handleClose();
+  } 
+}
+const reasonInfo = projectName.name !==undefined  ? projectName.name:description
+const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber) => {
+  const data = {
+    idInfo: ReferenceInfo,
+    person:user.data.userName + ' Created ITEM PURCHASE ',
+    reason:  'IP-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + reasonInfo,
+    dateNotification: new Date()
   }
-  const handleCloseUpdate = () => {
-    setLoadingOpenModalUpdate(false);
+  try {
+    await axios.post(`${ENDPOINT_URL}/create-notification`, data)
+  } catch (error) {
+    console.log(error)
   }
-  const handleCloseError = () => {
-    setErrorOpenModal(false);
+}
+const handleQty = async () => {
+  try {
+    await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
+  } catch (error) {
+    console.log(error)
   }
-  const handleDecision = (navigate) => {
-    //Navigate Based on th Decision
-    if (navigate === 'previous') {
-      window.history.back();
-    } else if (navigate === 'stay') {
-      handleClose();
-    }
-  }
-  const reasonInfo = projectName.name !== undefined ? projectName.name : description
-  const handleCreateNotification = async (ReferenceInfo, ReferenceInfoNumber) => {
-    const data = {
-      idInfo: ReferenceInfo,
-      person: user.data.userName + ' Created ',
-      reason: 'IP-' + ReferenceInfoNumber + ' For ' + reasonInfo,
-      dateNotification: new Date()
-    }
-    try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  const handleQty = async () => {
-    try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  {/** loading End */ }
-  const [saving, setSaving] = useState('')
-  const handleSubmit = async (e) => {
+}
+  {/** loading End */}
+  const [saving,setSaving] = useState('')
+  const handleSubmit = async (e)=>{
     e.preventDefault();
+    if (saving === 'true') return;
     setSaving('true')
+    const itemsWithoutData = arrayItemRelated.map(({ data, contentType, ...rest }) => rest);
+    let currentItemPurchaseNumber = itemPurchaseNumber;
+
+    try {
+      const resItemOut = await axios.get(`${ENDPOINT_URL}/get-last-saved-itemPurchase`);
+      const lastRecord = resItemOut.data?.data;
+      const lastNum = lastRecord ? parseInt(lastRecord.itemPurchaseNumber || 0) : 0;
+      
+      if (lastNum >= currentItemPurchaseNumber) {
+        if (lastNum === currentItemPurchaseNumber && 
+            lastRecord.description === description && 
+            lastRecord.total === total) {
+          invalidateCache('/itemPurchase');
+          const ReferenceInfo = lastRecord._id;
+          const ReferenceInfoNumber = lastRecord.itemPurchaseNumber;
+          await handleCreateNotification(ReferenceInfo, ReferenceInfoNumber);
+          await handleUpdatePurchase();
+          handleOpen();
+          handleQty();
+          return;
+        } else {
+          currentItemPurchaseNumber = lastNum + 1;
+          setItemPurchaseNumber(currentItemPurchaseNumber);
+        }
+      }
+    } catch (error) {
+      console.error("Error verifying last record", error);
+    }
+
     const data = {
       itemPurchaseDate,
-      itemPurchaseNumber,
-      manufacturer, status: "UnPaid",
-      manufacturerNumber, manufacturerID,
-      description, Create, totalUSD, total, totalFC, items: arrayItemRelated, reason, projectName, note
+      itemPurchaseNumber: currentItemPurchaseNumber,
+      manufacturer,status:"UnPaid",
+      manufacturerNumber,manufacturerID,
+      description,Create,totalUSD,total,totalFC,items:itemsWithoutData,reason,projectName,note
     }
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-itemPurchase', data);
+      const res = await axios.post(`${ENDPOINT_URL}/create-itemPurchase`, data);
       if (res) {
+        invalidateCache('/itemPurchase');
         // Open Loading View
         const ReferenceInfo = res.data.data._id
         const ReferenceInfoNumber = res.data.data.itemPurchaseNumber
-        handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
-        handleQty()
-        handleUpdatePurchase()
+        await handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
+        await handleUpdatePurchase()
         handleOpen();
+        handleQty();
         //Update Item Qty
         //handleUpdateQty();
       } else {
@@ -789,315 +944,319 @@ function ItemPurchaseViewForm() {
   }
   const [sideBar, setSideBar] = React.useState(true);
   const toggleDrawer = () => {
-    setSideBar(!sideBar);
+   setSideBar(!sideBar);
   };
-  const [search2, setSearch2] = useState('');
-  const handleSearch2 = (e) => {
-    const value = e.target.value
-    setSearch2(value)
-  }
+  const [search2,setSearch2] =useState('');
+const handleSearch2 = (e) => {
+  const value = e.target.value
+  setSearch2(value)
+}
   const newArray2 = search2 !== '' ? items.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
+    (Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase())) ||
+    (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
+    (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()))
   ) : items
 
-  const tableRows = reason !== 'Other' ? newArray2.map((Item, i) => {
-    const related = itemArray.find((row) => row.idRow === Item.idRow)
-    return (
-      <tr key={Item.idRow}>
-        <td ><DragIndicatorRounded /></td>
-        <td  >
-          {
-            Item.itemName.itemName ? (
-              (
-                <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                  <div >
-                    <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
-                    <TextField
-                      name='itemDescription' id='itemDescription'
-                      value={Item.itemDescription}
-                      multiline
-                      placeholder='Description'
-                      rows={3}
-                      onChange={(e) => handleChange(e, Item.idRow)}
-                      size="small"
-                      disabled={user.data.role === 'User'}
-                      sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
+    const tableRows = reason !== 'Other' ? newArray2.map((Item, i) => {
+      const related = itemArray.find((row) => row.idRow === Item.idRow)
+      return (
+        <tr key={Item.idRow}>
+          <td ><DragIndicatorRounded /></td>
+          <td  >
+            {
+              (Item.itemName?.itemName || Item.newDescription) ? (
+                (
+                  <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                    <ItemThumbnail
+                      itemId={Item.itemName?._id}
+                      initialData={Item.data}
+                      initialType={Item.contentType}
                     />
-                  </div>
-                  <div>
-                    <BlackTooltip title="Clear" placement='top'>
-                      <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
-                        <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                      </IconButton>
-                    </BlackTooltip>
-                  </div>
-                </div>)
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Autocomplete
-                  disableClearable
-                  options={filterItemInformation}
-                  getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
-                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + '/' + option.itemBrand}</Box>)}
-                  renderInput={(params) =>
-                    <TextField multiline
-                      rows={4} {...params} required
-                    />}
-                  inputValue={inputValue}
-                  onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
-                  size="small"
-                  onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                  }}
-                  filterOptions={(options, { inputValue }) => {
-                    return options.filter(
-                      (option) =>
-                        option.itemName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemDescription.toLowerCase().includes(inputValue.toLowerCase())
-                    )
-                  }}
-                  PaperComponent={({ children, ...other }) => (
-
-                    <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
-                      {children}
-                      <div>
-                        <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
-                          ADD NEW Item
-                        </button>
-                      </div>
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}</Typography>
+                      <TextField
+                        name='itemDescription' id='itemDescription'
+                        value={Item.itemDescription}
+                        multiline
+                        placeholder='Description'
+                        rows={3}
+                        onChange={(e) => handleChange(e, Item.idRow)}
+                        size="small"
+                        disabled={user.data.role === 'User'}
+                        sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
+                      />
                     </Box>
-                  )}
-                  sx={{ width: '300px', backgroundColor: 'white' }}
-                />
-              </div>
-            )
-          }
-        </td>
-        <td>
-          <TextField
-            disabled
-            name='need'
-            value={related.itemQty !== undefined ? related.itemQty : 0}
-            size="small"
-            sx={{ width: '100px', backgroundColor: 'white' }}
-          />
-
-        </td>
-        <td>
-          <TextField
-            name='itemQty' id='itemQty'
-            label='Qty'
-            helperText={related.itemQty - related.itemBuy}
-            onChange={(e) => handleChange(e, Item.idRow)}
-            size="small"
-            sx={{ width: '100px', backgroundColor: 'white' }}
-          />
-
-        </td>
-        <td >
-          <TextField
-            required
-            name='itemRate' id='itemRate'
-            label='Price$'
-            value={Item.itemRate}
-            helperText={'Purchase Cost: $' + Item.cost}
-            onChange={(e) => handleChange(e, Item.idRow)}
-            size="small"
-            sx={{ width: '100px', backgroundColor: 'white' }}
-          />
-        </td>
-        <td style={{ textAlign: 'center' }}>
-          <span style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-
-            <TextField
-              required
-              name='totalAmountFC' id='totalAmountFC'
-              value={Item.totalAmountFC}
-              label='FC'
-              onChange={(e) => handleChange(e, Item.idRow)}
-              size="small"
-              sx={{ width: '100px', backgroundColor: 'white' }}
-            />
-            <TextField
-              required
-              name='Taux' id='Taux'
-              value={Item.Taux}
-              onChange={(e) => handleChange(e, Item.idRow)}
-              size="small"
-              sx={{ width: '100px', backgroundColor: 'white' }}
-            />
-            <TextField
-              required
-              name='totalAmount' id='totalAmount'
-              value={Item.totalAmount}
-              label='$'
-              size="small"
-              onChange={(e) => handleChange(e, Item.idRow)}
-              sx={{ width: '100px', backgroundColor: 'white' }}
-            />
-          </span>
-          <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-        </td>
-        <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-      </tr>
-    )
-  }) : null
-  const tableRows2 = newArray2.map((Item, i) => {
-    return (
-      <tr key={Item.idRow}>
-        <td ><DragIndicatorRounded /></td>
-        <td  >
-          {
-            Item.itemName.itemName ? (
-              (
-                <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                  <div >
-                    <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
-                    <TextField
-                      name='itemDescription' id='itemDescription'
-                      value={Item.itemDescription}
-                      multiline
-                      placeholder='Description'
-                      rows={3}
-                      onChange={(e) => handleChange(e, Item.idRow)}
-                      size="small"
-                      disabled={user.data.role === 'User'}
-                      sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
-                    />
-                  </div>
-                  <div>
-                    <BlackTooltip title="Clear" placement='top'>
-                      <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
-                        <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                      </IconButton>
-                    </BlackTooltip>
-                  </div>
-                </div>)
-            ) : (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Autocomplete
-                  disableClearable
-                  options={filterItemInformation}
-                  getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
-                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + '/' + option.itemBrand}</Box>)}
-                  renderInput={(params) =>
-                    <TextField multiline
-                      rows={4} {...params} required
-                    />}
-                  inputValue={inputValue}
-                  onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
-                  size="small"
-                  onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
-                  }}
-                  filterOptions={(options, { inputValue }) => {
-                    return options.filter(
-                      (option) =>
-                        option.itemName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemDescription.toLowerCase().includes(inputValue.toLowerCase())
-                    )
-                  }}
-                  PaperComponent={({ children, ...other }) => (
-
-                    <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
-                      {children}
-                      <div>
-                        <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
-                          ADD NEW Item
-                        </button>
-                      </div>
+                    <Box>
+                      <BlackTooltip title="Clear" placement='top'>
+                        <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                          <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                        </IconButton>
+                      </BlackTooltip>
                     </Box>
-                  )}
-                  sx={{ width: '300px', backgroundColor: 'white' }}
-                />
-              </div>
-            )
-          }
-        </td>
-        <td>
-          <TextField
-            name='itemQty' id='itemQty'
-            label='Qty'
-            onChange={(e) => handleChange(e, Item.idRow)}
-            size="small"
-            sx={{ width: '100px', backgroundColor: 'white' }}
-          />
+                  </Box>)
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Autocomplete
+                    disableClearable
+                    options={autocompleteOptions.filter(option => !items.find((row) => option._id === row.itemName?._id))}
+                    getOptionLabel={(option) => (option.itemName || "") + (option.itemBrand ? '/' + option.itemBrand : "")}
+                    renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + (option.itemBrand ? '/' + option.itemBrand : "")}</Box>)}
+                    renderInput={(params) =>
+                      <TextField multiline
+                        rows={4} {...params} required
+                        placeholder="Search Item..."
+                      />}
+                    loading={autocompleteLoading}
+                    onChange={(e, newValue) => {
+                      handleChangeItem(Item.idRow, newValue);
+                      setAutocompleteSearch('');
+                    }}
+                    size="small"
+                    onInputChange={(event, newInputValue) => {
+                      setAutocompleteSearch(newInputValue);
+                    }}
+                    filterOptions={(x) => x} // Disable built-in filtering since we do it on server
+                    PaperComponent={({ children, ...other }) => (
 
-        </td>
-        <td >
-          <TextField
-            required
-            name='itemRate' id='itemRate'
-            label='Price$'
-            value={Item.itemRate}
-            helperText={'Purchase Cost: $' + Item.cost}
-            onChange={(e) => handleChange(e, Item.idRow)}
-            size="small"
-            sx={{ width: '100px', backgroundColor: 'white' }}
-          />
-        </td>
-        <td style={{ textAlign: 'center' }}>
-          <span style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                      <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
+                        {children}
+                        <div>
+                          <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                            ADD NEW Item
+                          </button>
+                        </div>
+                      </Box>
+                    )}
+                    sx={{ width: '300px', backgroundColor: 'white' }}
+                  />
+                </div>
+              )
+            }
+          </td>
+          <td>
+            <TextField
+              disabled
+              name='need'
+              value={related?.itemQty !== undefined ? related.itemQty : 0}
+              size="small"
+              sx={{ width: '100px', backgroundColor: 'white' }}
+            />
 
+          </td>
+          <td>
             <TextField
-              required
-              name='totalAmountFC' id='totalAmountFC'
-              value={Item.totalAmountFC}
-              label='FC'
+              name='itemQty' id='itemQty'
+              label='Qty'
+              helperText={related ? (related.itemQty - related.itemBuy) : 0}
               onChange={(e) => handleChange(e, Item.idRow)}
               size="small"
               sx={{ width: '100px', backgroundColor: 'white' }}
             />
+
+          </td>
+          <td >
             <TextField
               required
-              name='Taux' id='Taux'
-              value={Item.Taux}
+              name='itemRate' id='itemRate'
+              label='Price$'
+              value={Item.itemRate}
+              helperText={'Purchase Cost: $' + Item.cost}
               onChange={(e) => handleChange(e, Item.idRow)}
               size="small"
               sx={{ width: '100px', backgroundColor: 'white' }}
             />
-            <TextField
-              required
-              name='totalAmount' id='totalAmount'
-              value={Item.totalAmount}
-              label='$'
-              size="small"
-              onChange={(e) => handleChange(e, Item.idRow)}
-              sx={{ width: '100px', backgroundColor: 'white' }}
-            />
-          </span>
-          <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-        </td>
-        <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-        <td align="center" >
-          <LightTooltip title="Delete" sx={{}}>
-            <IconButton onClick={() => deleteItem(Item.idRow)} >
-              <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
-            </IconButton>
-          </LightTooltip>
-          <BlackTooltip title="New-Row" placement="bottom">
-            <span>
-              <IconButton onClick={() => addItemRow(i)} disabled={reason === 'Project'}>
-                <Add style={{ color: '#202a5a' }} />
-              </IconButton>
+          </td>
+          <td style={{ textAlign: 'center' }}>
+            <span style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+
+              <TextField
+                required
+                name='totalAmountFC' id='totalAmountFC'
+                value={Item.totalAmountFC}
+                label='FC'
+                onChange={(e) => handleChange(e, Item.idRow)}
+                size="small"
+                sx={{ width: '100px', backgroundColor: 'white' }}
+              />
+              <TextField
+                required
+                name='Taux' id='Taux'
+                value={Item.Taux}
+                onChange={(e) => handleChange(e, Item.idRow)}
+                size="small"
+                sx={{ width: '100px', backgroundColor: 'white' }}
+              />
+              <TextField
+                required
+                name='totalAmount' id='totalAmount'
+                value={Item.totalAmount}
+                label='$'
+                size="small"
+                onChange={(e) => handleChange(e, Item.idRow)}
+                sx={{ width: '100px', backgroundColor: 'white' }}
+              />
             </span>
-          </BlackTooltip>
-        </td>
-      </tr>
-    )
-  });
+            <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+          </td>
+          <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+        </tr>
+      )
+    }) : null
+    const tableRows2 = newArray2.map((Item, i) => {
+      return (
+        <tr key={Item.idRow}>
+          <td ><DragIndicatorRounded /></td>
+          <td  >
+            {
+              (Item.itemName?.itemName || Item.newDescription) ? (
+                (
+                  <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                    <ItemThumbnail
+                      itemId={Item.itemName?._id}
+                      initialData={Item.data}
+                      initialType={Item.contentType}
+                    />
+                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}</Typography>
+                      <TextField
+                        name='itemDescription' id='itemDescription'
+                        value={Item.itemDescription}
+                        multiline
+                        placeholder='Description'
+                        rows={3}
+                        onChange={(e) => handleChange(e, Item.idRow)}
+                        size="small"
+                        disabled={user.data.role === 'User'}
+                        sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
+                      />
+                    </Box>
+                    <Box>
+                      <BlackTooltip title="Clear" placement='top'>
+                        <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                          <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                        </IconButton>
+                      </BlackTooltip>
+                    </Box>
+                  </Box>)
+              ) : (
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <Autocomplete
+                    disableClearable
+                    options={autocompleteOptions.filter(option => !items.find((row) => option._id === row.itemName?._id))}
+                    getOptionLabel={(option) => (option.itemName || "") + (option.itemBrand ? '/' + option.itemBrand : "")}
+                    renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + (option.itemBrand ? '/' + option.itemBrand : "")}</Box>)}
+                    renderInput={(params) =>
+                      <TextField multiline
+                        rows={4} {...params} required
+                        placeholder="Search Item..."
+                      />}
+                    loading={autocompleteLoading}
+                    onChange={(e, newValue) => {
+                      handleChangeItem(Item.idRow, newValue);
+                      setAutocompleteSearch('');
+                    }}
+                    size="small"
+                    onInputChange={(event, newInputValue) => {
+                      setAutocompleteSearch(newInputValue);
+                    }}
+                    filterOptions={(x) => x} // Disable built-in filtering since we do it on server
+                    PaperComponent={({ children, ...other }) => (
 
+                      <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
+                        {children}
+                        <div>
+                          <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                            ADD NEW Item
+                          </button>
+                        </div>
+                      </Box>
+                    )}
+                    sx={{ width: '300px', backgroundColor: 'white' }}
+                  />
+                </div>
+              )
+            }
+          </td>
+          <td>
+            <TextField
+              name='itemQty' id='itemQty'
+              label='Qty'
+              onChange={(e) => handleChange(e, Item.idRow)}
+              size="small"
+              sx={{ width: '100px', backgroundColor: 'white' }}
+            />
 
+          </td>
+          <td >
+            <TextField
+              required
+              name='itemRate' id='itemRate'
+              label='Price$'
+              value={Item.itemRate}
+              helperText={'Purchase Cost: $' + Item.cost}
+              onChange={(e) => handleChange(e, Item.idRow)}
+              size="small"
+              sx={{ width: '100px', backgroundColor: 'white' }}
+            />
+          </td>
+          <td style={{ textAlign: 'center' }}>
+            <span style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+
+              <TextField
+                required
+                name='totalAmountFC' id='totalAmountFC'
+                value={Item.totalAmountFC}
+                label='FC'
+                onChange={(e) => handleChange(e, Item.idRow)}
+                size="small"
+                sx={{ width: '100px', backgroundColor: 'white' }}
+              />
+              <TextField
+                required
+                name='Taux' id='Taux'
+                value={Item.Taux}
+                onChange={(e) => handleChange(e, Item.idRow)}
+                size="small"
+                sx={{ width: '100px', backgroundColor: 'white' }}
+              />
+              <TextField
+                required
+                name='totalAmount' id='totalAmount'
+                value={Item.totalAmount}
+                label='$'
+                size="small"
+                onChange={(e) => handleChange(e, Item.idRow)}
+                sx={{ width: '100px', backgroundColor: 'white' }}
+              />
+            </span>
+            <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+          </td>
+          <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+          <td align="center" >
+            <LightTooltip title="Delete" sx={{}}>
+              <IconButton onClick={() => deleteItem(Item.idRow)} >
+                <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
+              </IconButton>
+            </LightTooltip>
+            <BlackTooltip title="New-Row" placement="bottom">
+              <span>
+                <IconButton onClick={() => addItemRow(i)} disabled={reason === 'Project' || reason === 'Maintenance'}>
+                  <Add style={{ color: '#202a5a' }} />
+                </IconButton>
+              </span>
+            </BlackTooltip>
+          </td>
+        </tr>
+      )
+    });
+
+     
   return (
     <div className='Homeemployee'>
 
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
+<Box sx={{ display: 'flex' }}>
+                 <CssBaseline />
+         <AppBar position="absolute" open={sideBar} sx={{backgroundColor:'#30368a'}}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -1122,16 +1281,16 @@ function ItemPurchaseViewForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Make new Item Purchase
-            </Typography>
-            <IconButton onClick={handleOpenBack}>
-              <ArrowBack style={{ color: 'white' }} />
-            </IconButton>
-            <NotificationVIewInfo />
-            <MessageAdminView name={user.data.userName} role={user.data.role} />
-            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
+              Make new Item Purchase    
+                     </Typography>
+          <IconButton onClick={handleOpenBack}>
+          <ArrowBack style={{color:'white'}} />
+          </IconButton>
+         <NotificationVIewInfo/>
+            <MessageAdminView name={user.data.userName} role={user.data.role}/>
+            <Typography sx={{marginLeft:'10px',marginRight:'10px'}}>{user.data.userName}</Typography>
             <IconButton color="inherit" onClick={handleLogout}>
-              <Logout style={{ color: 'white' }} />
+            <Logout style={{color:'white'}} /> 
             </IconButton>
           </Toolbar>
         </AppBar>
@@ -1149,8 +1308,8 @@ function ItemPurchaseViewForm() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List sx={{ height: '700px' }}>
-            <SideMaintenance2 />
+          <List sx={{height:'700px'}}>
+          <SideMaintenance2/>
           </List>
         </Drawer>
         <Box
@@ -1161,637 +1320,642 @@ function ItemPurchaseViewForm() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            width: '100%',
+            width:'100%',
             height: '100vh',
             overflow: 'auto',
           }}
         >
-          <Toolbar />
-          <Container maxWidth="none" sx={{ mt: 4 }} >
-            <div>
-              <form onSubmit={handleSubmit}>
-                <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2} component={Paper}>
-                  <Grid item xs={6}>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <DemoContainer components={['DatePicker']}>
-                        <DatePicker
-                          required
-                          name='itemPurchaseDate'
-                          label='Date'
-                          value={dayjs(itemPurchaseDate)}
-                          onChange={(date) => setItemPurchaseDate(date)}
-                          sx={{ width: '100%', backgroundColor: 'white' }}
-                          format='DD/MM/YYYY'
-                        />
-                      </DemoContainer>
-                    </LocalizationProvider>
-                  </Grid>
-                  <Grid item xs={6}>
-                    <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
-                      <InputLabel htmlFor="itemPurchaseNumber">Item Purchase Number</InputLabel>
-                      <OutlinedInput
-                        disabled
-                        type='number'
-                        id='itemPurchaseNumber'
-                        name='itemPurchaseNumber'
-                        label='Item Purchase Number'
-                        value={'00' + itemPurchaseNumber}
-                        startAdornment={<InputAdornment position="start">IP</InputAdornment>}
-                      />
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={4}>
-                    <Autocomplete
-                      disableClearable
-                      options={supplier}
-                      getOptionLabel={(option) => option.supplierName + ' | ' + option.storeName}
-                      renderOption={(props, option) => (<Box {...props}> {option.supplierName} | {option.storeName} </Box>)}
-                      onChange={(e, newValue) => { handleChangeSupplier(newValue) }}
-                      inputValue={inputValue3}
-                      onInputChange={(event, newInputValue) => {
-                        setInputValue3(newInputValue);
-                      }}
-                      filterOptions={(options, { inputValue }) => {
-                        return options.filter(
-                          (option) =>
-                            option.supplierName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                            option.storeName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                            option.description.toLowerCase().includes(inputValue.toLowerCase())
-                        )
-                      }}
-                      PaperComponent={({ children, ...other }) => (
-                        <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
-                          {children}
-                          <div>
-                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
-                              ADD NEW SUPPLIER
-                            </button>
-                          </div>
-                        </Box>
-                      )}
-                      renderInput={(params) => <TextField {...params} label="Manufacturer" required />}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <TextField
-                      id='manufacturerNumber'
-                      name='manufacturerNumber'
-                      label='Reference '
-                      onChange={(e) => setManufacturerNumber(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
-                  </Grid>
-                  <Grid item xs={4}>
-                    <FormControl sx={{ width: '100%' }}>
-                      <InputLabel id="reason">Reason</InputLabel>
-                      <Select
-                        required
-                        id="reason"
-                        value={reason !== undefined ? reason : ''}
-                        onChange={(e) => handleReason(e)}
-                        name="reason"
-                        label="Reason"
-                      >
+          <Toolbar/>
+   <Container maxWidth="none" sx={{ mt: 4}} >
+ <div>
+    <form onSubmit={handleSubmit}>
+    <Grid container style={{alignItems:'center',padding:'15px'}} spacing={2} component={Paper}>
+        <Grid item xs={6}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker']}>
+                    <DatePicker
+                     required
+                    name='itemPurchaseDate' 
+                    label='Date'
+                    value={dayjs(itemPurchaseDate)}
+                    onChange={(date)=> setItemPurchaseDate(date)}
+                    sx={{ width: '100%', backgroundColor:'white' }}
+                    format='DD/MM/YYYY'       
+               />
+                  </DemoContainer>
+                  </LocalizationProvider>
+        </Grid>
+        <Grid item xs={6}>
+        <FormControl sx={{ width: '100%', backgroundColor:'white' }}>
+                <InputLabel htmlFor="itemPurchaseNumber">Item Purchase Number</InputLabel>
+                <OutlinedInput
+                disabled
+                type='number'
+                id='itemPurchaseNumber'
+                name='itemPurchaseNumber' 
+                label='Item Purchase Number'
+                value={'00'+itemPurchaseNumber}
+                startAdornment={<InputAdornment position="start">IP</InputAdornment>}
+                />
+               </FormControl>
+        </Grid>
+        <Grid item xs={4}> 
+        <Autocomplete
+                  disableClearable
+                       options={supplier}
+                       getOptionLabel={(option)=>option.supplierName +' | ' + option.storeName}
+                       renderOption={(props,option)=> (<Box {...props}> {option.supplierName} | {option.storeName} </Box>)}
+                       onChange={(e,newValue)=> {handleChangeSupplier(newValue)}}
+                       inputValue={inputValue3}
+                       onInputChange={(event, newInputValue) => {
+                         setInputValue3(newInputValue);
+                       }}
+                       filterOptions={(options,{inputValue})=>{
+                         return options.filter(
+                           (option)=>
+                           option.supplierName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                           option.storeName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                           option.description.toLowerCase().includes(inputValue.toLowerCase()) 
+                         )
+                        }}
+                        PaperComponent={({children, ...other})=>(
+                          <Box {...other} sx={{backgroundColor:'white', left:'0',marginTop:'10px'}}>
+                              {children}
+                              <div>
+                                  <button onClick={(e)=>handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
+                                ADD NEW SUPPLIER
+                              </button>
+                              </div>
+                            </Box>
+                           )}
+                       renderInput={(params) => <TextField {...params} label="Manufacturer" required/>}
+                />
+               </Grid>
+        <Grid item xs={4}> 
+               <TextField 
+                  id='manufacturerNumber'
+                  name='manufacturerNumber' 
+                  label='Reference '
+                  onChange={(e)=>setManufacturerNumber(e.target.value)}
+                  sx={{ width: '100%', backgroundColor:'white' }}       
+              />
+               </Grid>
+        <Grid item xs={4}> 
+        <FormControl sx={{ width: '100%' }}>
+                  <InputLabel id="reason">Reason</InputLabel>
+                  <Select
+                      required
+                     id="reason"
+                     value={reason !== undefined ?reason:''} 
+                     onChange={(e)=>handleReason(e)}
+                     name="reason"
+                     label="Reason"
+                  >
                         <MenuItem value="Project">Project</MenuItem>
                         <MenuItem value="Maintenance">Maintenance</MenuItem>
                         <MenuItem value="Invoice">Invoice</MenuItem>
                         <MenuItem value="Other">Other</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Grid>
-                  <Grid item xs={12}>
-                    {
-                      reason === 'Project' && (
-                        <Autocomplete
-                          disableClearable
-                          options={projects}
-                          getOptionLabel={(option) => option.projectName}
-                          renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-                          onChange={(e, newValue) => { handleChangeProject(newValue) }}
-                          inputValue={inputValue2}
-                          onInputChange={(event, newInputValue) => {
-                            setInputValue2(newInputValue);
-                          }}
-                          filterOptions={(options, { inputValue }) => {
-                            return options.filter(
-                              (option) =>
-                                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.description.toLowerCase().includes(inputValue.toLowerCase())
-                            )
-                          }}
-                          renderInput={(params) => <TextField {...params} label="Project Name" required />}
-                        />
-                      )
-                    }
-                    {
-                      reason === 'Maintenance' && (
-                        <Autocomplete
-                          options={maintenance}
-                          getOptionLabel={(option) => option.serviceName}
-                          renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.serviceName}</Box>)}
-                          renderInput={(params) => <TextField {...params} label="Maintenance Number" />}
-                          onChange={(e, newValue) => handleChangeService(newValue ? newValue : '')}
-                          inputValue={inputValue4}
-                          onInputChange={(event, newInputValue) => {
-                            setInputValue4(newInputValue);
-                          }}
-                          filterOptions={(options, { inputValue }) => {
-                            return options.filter(
-                              (option) =>
-                                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                option.serviceName.toLowerCase().includes(inputValue.toLowerCase())
-                            )
-                          }}
-                          sx={{ width: '100%', backgroundColor: 'white' }}
-                        />
-                      )
-                    }
-                    {
-                      reason === 'Invoice' && (
-                        <Autocomplete
-                          options={invoice}
-                          getOptionLabel={(option) => 'INV' + String(option.invoiceNumber)}
-                          renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-00{String(option.invoiceNumber)}
-                          </Box>)}
-                          renderInput={(params) => <TextField {...params} label="Invoice" />}
-                          onChange={(e, newValue) => handleChangeInvoice(newValue ? newValue : '')}
-                          sx={{ width: '100%', backgroundColor: 'white' }}
-                        />
-                      )
-                    }
-                    {
-                      reason === 'Other' && (<TextField
-                        id='description'
-                        name='description'
-                        label='Description'
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value.toUpperCase())}
-                        sx={{ width: '100%', backgroundColor: 'white' }}
-                      />)
-                    }
-                  </Grid>
-                  <Grid item xs={12}>
-                    <div>
-                      <div style={{ position: 'fixed', zIndex: 1, float: 'right', right: '-6px', top: '400px' }}>
-                        <BlackTooltip title="Add" placement="bottom">
-                          <span>
-                            <IconButton onClick={addItem} disabled={reason === 'Project' || reason === 'Maintenance'}>
-                              <Add className='btn1' style={{ fontSize: '40px' }} />
-                            </IconButton>
-                          </span>
-                        </BlackTooltip>
-                        {
-                          reason === 'Other' && (
-                            <section>
-                              <BlackTooltip title="ITEM LIST" placement="left">
-                                <IconButton onClick={toggleShop}>
-                                  <SearchIcon className='btn1' style={{ backgroundColor: '#202a5a', fontSize: '40px' }} />
-                                </IconButton>
-                              </BlackTooltip>
-                            </section>
-                          )
-                        }
-                      </div>
-                      <TableContainer sx={{ marginLeft: '-15px' }}>
-                        {
-                          reason === 'Project' && (
-                            <>
-                              <section style={{ position: 'relative', float: 'right', padding: '10px' }}>
-                                <TextField
-                                  label='Search'
-                                  id='search2'
-                                  value={search2}
-                                  variant="standard"
-                                  onChange={handleSearch2}
-                                />
-                              </section>
-                              <table className='tableInfo10'>
-                                <thead>
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Item</th>
-                                    <th>Qty Need</th>
-                                    <th>Quantity</th>
-                                    <th>Price$</th>
-                                    <th>Amount Paid</th>
-                                    <th>Total Paid</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {tableRows}
-                                  <tr>
-                                    <td colSpan={3}>Total</td>
-                                    <td colSpan={2}>
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='totalFC'
-                                          size="small"
-                                          label='Amount Fc'
-                                          value={totalFC}
-                                          sx={{ width: '150px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">FC</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                    <td colSpan={1}>
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='total'
-                                          size="small"
-                                          label='Amount $'
-                                          value={total}
-                                          sx={{ width: '120px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                    <td >
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='totalUSD'
-                                          size="small"
-                                          label='Total USD'
-                                          value={totalUSD}
-                                          sx={{ width: '120px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </>
-                          )}
-                        {
-                          reason === 'Maintenance' && (
-                            <>
-                              <section style={{ position: 'relative', float: 'right', padding: '10px' }}>
-                                <TextField
-                                  label='Search'
-                                  id='search2'
-                                  value={search2}
-                                  variant="standard"
-                                  onChange={handleSearch2}
-                                />
-                              </section>
-                              <table className='tableInfo10'>
-                                <thead>
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Item</th>
-                                    <th>Qty Need</th>
-                                    <th>Quantity</th>
-                                    <th>Price$</th>
-                                    <th>Amount Paid</th>
-                                    <th>Total Paid</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {tableRows}
-                                  <tr>
-                                    <td colSpan={3}>Total</td>
-                                    <td colSpan={2}>
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='totalFC'
-                                          size="small"
-                                          label='Amount Fc'
-                                          value={totalFC}
-                                          sx={{ width: '150px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">FC</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                    <td colSpan={1}>
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='total'
-                                          size="small"
-                                          label='Amount $'
-                                          value={total}
-                                          sx={{ width: '120px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                    <td >
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='totalUSD'
-                                          size="small"
-                                          label='Total USD'
-                                          value={totalUSD}
-                                          sx={{ width: '120px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </>
-                          )}
-                        {
-                          reason === 'Invoice' && (
-                            <>
-                              <section style={{ position: 'relative', float: 'right', padding: '10px' }}>
-                                <TextField
-                                  label='Search'
-                                  id='search2'
-                                  value={search2}
-                                  variant="standard"
-                                  onChange={handleSearch2}
-                                />
-                              </section>
-                              <table className='tableInfo10'>
-                                <thead>
-                                  <tr>
-                                    <th>#</th>
-                                    <th>Item</th>
-                                    <th>Qty Need</th>
-                                    <th>Quantity</th>
-                                    <th>Price$</th>
-                                    <th>Amount Paid</th>
-                                    <th>Total Paid</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  {tableRows}
-                                  <tr>
-                                    <td colSpan={3}>Total</td>
-                                    <td colSpan={2}>
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='totalFC'
-                                          size="small"
-                                          label='Amount Fc'
-                                          value={totalFC}
-                                          sx={{ width: '150px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">FC</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                    <td colSpan={1}>
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='total'
-                                          size="small"
-                                          label='Amount $'
-                                          value={total}
-                                          sx={{ width: '120px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                    <td >
-                                      <FormControl >
-                                        <OutlinedInput
-                                          id='totalUSD'
-                                          size="small"
-                                          label='Total USD'
-                                          value={totalUSD}
-                                          sx={{ width: '120px', backgroundColor: 'white' }}
-                                          startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                        />
-                                      </FormControl>
-                                    </td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </>
-                          )}
-                        {
-                          reason === 'Other' && (
-                            <table className='tableInfo10'>
-                              <thead>
-                                <tr>
-                                  <th>#</th>
-                                  <th>Item</th>
-                                  <th>Quantity</th>
-                                  <th>Price$</th>
-                                  <th>Amount Paid</th>
-                                  <th>Total Paid</th>
-                                  <th>Action</th>
-                                </tr>
-                              </thead>
-                              <tbody>
-                                {tableRows2}
-                                <tr>
-                                  <td colSpan={2}>Total</td>
-                                  <td colSpan={2}>
-                                    <FormControl >
-                                      <OutlinedInput
-                                        id='totalFC'
-                                        size="small"
-                                        label='Amount Fc'
-                                        value={totalFC}
-                                        sx={{ width: '150px', backgroundColor: 'white' }}
-                                        startAdornment={<InputAdornment position="start">FC</InputAdornment>}
-                                      />
-                                    </FormControl>
-                                  </td>
-                                  <td colSpan={1}>
-                                    <FormControl >
-                                      <OutlinedInput
-                                        id='total'
-                                        size="small"
-                                        label='Amount $'
-                                        value={total}
-                                        sx={{ width: '120px', backgroundColor: 'white' }}
-                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                      />
-                                    </FormControl>
-                                  </td>
-                                  <td >
-                                    <FormControl >
-                                      <OutlinedInput
-                                        id='totalUSD'
-                                        size="small"
-                                        label='Total USD'
-                                        value={totalUSD}
-                                        sx={{ width: '120px', backgroundColor: 'white' }}
-                                        startAdornment={<InputAdornment position="start">$</InputAdornment>}
-                                      />
-                                    </FormControl>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          )
-                        }
-                      </TableContainer>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      id='note'
-                      name='note'
-                      multiline
-                      rows={4}
-                      value={note}
-                      label='Note'
-                      onChange={(e) => setNote(e.target.value)}
-                      sx={{ width: '60%', backgroundColor: 'white' }}
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    {
-                      saving !== 'true' ? <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button> : <p className='btnCustomer6' style={{ width: '100%', textAlign: 'center' }}>Saving...</p>
-                    }
-                  </Grid>
-                </Grid>
-              </form>
-            </div>
-          </Container>
-        </Box>
-      </Box>
-      <Modal
+                  </Select>
+                 </FormControl> 
+               </Grid>
+               <Grid item xs={12}> 
+               {
+                reason === 'Project' && (
+                  <Autocomplete
+                  disableClearable
+                       options={projects}
+                       getOptionLabel={(option)=> option.projectName}
+                       renderOption={(props,option)=> (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                       onChange={(e,newValue)=> {handleChangeProject(newValue)}}
+                       inputValue={inputValue2}
+                       onInputChange={(event, newInputValue) => {
+                         setInputValue2(newInputValue);
+                       }}
+                       filterOptions={(options,{inputValue})=>{
+                         return options.filter(
+                           (option)=>
+                           option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                           option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                           option.description.toLowerCase().includes(inputValue.toLowerCase()) 
+                         )
+                        }}
+                       renderInput={(params) => <TextField {...params} label="Project Name" required/>}
+                />
+                )
+               }
+               {
+                reason === 'Maintenance' && (
+                  <Autocomplete       
+                                 options={maintenance}
+                                 getOptionLabel={(option) => option.serviceName}
+                                 renderOption={(props,option)=> (<Box {...props}> {option.customerName.customerName} | {option.serviceName}</Box>)}
+                                 renderInput={(params) => <TextField {...params} label="Maintenance Number"/>}
+                                 onChange={(e,newValue)=> handleChangeService(newValue? newValue :'')}
+                                 inputValue={inputValue4}
+                                 onInputChange={(event, newInputValue) => {
+                                   setInputValue4(newInputValue);
+                                 }}
+                                 filterOptions={(options,{inputValue})=>{
+                                   return options.filter(
+                                     (option)=>
+                                     option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                     option.serviceName.toLowerCase().includes(inputValue.toLowerCase()) 
+                                   )
+                                  }}
+                                 sx={{  width: '100%', backgroundColor:'white' }} 
+                               />
+                )
+               }
+               {
+                reason === 'Invoice' && (
+                  <Autocomplete       
+                  options={invoice}
+                  getOptionLabel={(option) => 'INV-' + String(option.invoiceNumber).padStart(6, '0')}
+                  renderOption={(props,option)=> (<Box {...props}>{option.customerName.customerName}/INV-{String(option.invoiceNumber).padStart(6, '0')}
+                    </Box>)}
+                  renderInput={(params) => <TextField {...params} label="Invoice"/>}
+                   onChange={(e,newValue)=> handleChangeInvoice(newValue? newValue :'')}
+                   sx={{  width: '100%', backgroundColor:'white' }} 
+                               />
+                )
+               }
+               {
+                reason === 'Other' && ( <TextField 
+                 id='description'
+                 name='description' 
+                 label='Description'
+                 value={description}
+                 onChange={(e)=>setDescription(e.target.value.toUpperCase())}
+                 sx={{ width: '100%', backgroundColor:'white' }}       
+             />)
+               }
+               </Grid>
+               <Grid item xs={12}>
+                 <div style={{ display: 'flex', justifyContent: 'flex-end', paddingRight: '20px' }}>
+                   <FormControlLabel control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />} label="TVA (16%)" />
+                 </div>
+               </Grid>
+               <Grid item xs={12}>
+                <div>
+                <div style={{position:'fixed',zIndex:1,float:'right',right:'-6px'}}>
+             <BlackTooltip title="Add" placement="bottom">
+              <span>
+            <IconButton onClick={addItem} disabled={reason === 'Project' || reason === 'Maintenance'}>
+              <Add className='btn1' style={{ fontSize: '40px' }} />
+            </IconButton>
+            {
+              reason === 'Other' && (
+                <section>
+                  <BlackTooltip title="ITEM LIST" placement="left">
+                    <IconButton onClick={toggleShop}>
+                      <SearchIcon className='btn1' style={{ backgroundColor: '#202a5a', fontSize: '40px' }} />
+                    </IconButton>
+                  </BlackTooltip>
+                </section>
+              )
+            }
+            </span>
+          </BlackTooltip>
+          </div>
+          <TableContainer sx={{marginLeft:'-15px'}}>
+          {
+                reason === 'Project' &&(
+                  <>
+                  <section style={{position:'relative', float:'right', padding:'10px'}}>
+                  <TextField
+                  label='Search'
+                  id='search2'
+                  value={search2}
+                  variant="standard"
+                  onChange={handleSearch2}
+                  />
+                </section> 
+                 <table className='tableInfo10'>
+                   <thead>
+                       <tr>
+                       <th>#</th>
+                       <th>Item</th>
+                          <th>Qty Need</th>
+                          <th>Quantity</th>
+                          <th>Price$</th>
+                          <th>Amount Paid</th>
+                          <th>Total Paid</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                   {tableRows}
+                   <tr>
+                   <td colSpan={3}>Total</td>
+                <td colSpan={2}>
+                <FormControl >
+            <OutlinedInput
+            id='totalFC'
+            size="small"
+            label='Amount Fc' 
+            value={totalFC}
+            sx={{ width: '150px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">FC</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td colSpan={1}>
+                <FormControl >
+            <OutlinedInput
+            id='total'
+            size="small"
+            label='Amount $' 
+            value={total}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td >
+                <FormControl >
+            <OutlinedInput
+            id='totalUSD'
+            size="small"
+            label='Total USD' 
+            value={totalUSD}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                   </tr>
+                   </tbody>
+                </table>
+                    </>
+                )}
+          {
+                reason === 'Maintenance' &&(
+                  <>
+                  <section style={{position:'relative', float:'right', padding:'10px'}}>
+                  <TextField
+                  label='Search'
+                  id='search2'
+                  value={search2}
+                  variant="standard"
+                  onChange={handleSearch2}
+                  />
+                </section> 
+                 <table className='tableInfo10'>
+                   <thead>
+                       <tr>
+                       <th>#</th>
+                       <th>Item</th>
+                          <th>Qty Need</th>
+                          <th>Quantity</th>
+                          <th>Price$</th>
+                          <th>Amount Paid</th>
+                          <th>Total Paid</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                   {tableRows}
+                   <tr>
+                   <td colSpan={3}>Total</td>
+                <td colSpan={2}>
+                <FormControl >
+            <OutlinedInput
+            id='totalFC'
+            size="small"
+            label='Amount Fc' 
+            value={totalFC}
+            sx={{ width: '150px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">FC</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td colSpan={1}>
+                <FormControl >
+            <OutlinedInput
+            id='total'
+            size="small"
+            label='Amount $' 
+            value={total}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td >
+                <FormControl >
+            <OutlinedInput
+            id='totalUSD'
+            size="small"
+            label='Total USD' 
+            value={totalUSD}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                   </tr>
+                   </tbody>
+                </table>
+                    </>
+                )}
+          {
+                reason === 'Invoice' &&(
+                  <>
+                  <section style={{position:'relative', float:'right', padding:'10px'}}>
+                  <TextField
+                  label='Search'
+                  id='search2'
+                  value={search2}
+                  variant="standard"
+                  onChange={handleSearch2}
+                  />
+                </section> 
+                 <table className='tableInfo10'>
+                   <thead>
+                       <tr>
+                       <th>#</th>
+                       <th>Item</th>
+                          <th>Qty Need</th>
+                          <th>Quantity</th>
+                          <th>Price$</th>
+                          <th>Amount Paid</th>
+                          <th>Total Paid</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                   {tableRows}
+                   <tr>
+                   <td colSpan={3}>Total</td>
+                <td colSpan={2}>
+                <FormControl >
+            <OutlinedInput
+            id='totalFC'
+            size="small"
+            label='Amount Fc' 
+            value={totalFC}
+            sx={{ width: '150px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">FC</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td colSpan={1}>
+                <FormControl >
+            <OutlinedInput
+            id='total'
+            size="small"
+            label='Amount $' 
+            value={total}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td >
+                <FormControl >
+            <OutlinedInput
+            id='totalUSD'
+            size="small"
+            label='Total USD' 
+            value={totalUSD}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                   </tr>
+                   </tbody>
+                </table>
+                    </>
+                )}
+          {
+            reason === 'Other' &&(
+              <table className='tableInfo10'>
+             <thead>
+                 <tr>
+                 <th>#</th>
+                 <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Price$</th>
+                          <th>Amount Paid</th>
+                          <th>Total Paid</th>
+                          <th>Action</th>
+                 </tr>
+             </thead>
+             <tbody>
+             {tableRows2}
+             <tr>
+                   <td colSpan={2}>Total</td>
+                <td colSpan={2}>
+                <FormControl >
+            <OutlinedInput
+            id='totalFC'
+            size="small"
+            label='Amount Fc' 
+            value={totalFC}
+            sx={{ width: '150px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">FC</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td colSpan={1}>
+                <FormControl >
+            <OutlinedInput
+            id='total'
+            size="small"
+            label='Amount $' 
+            value={total}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                <td >
+                <FormControl >
+            <OutlinedInput
+            id='totalUSD'
+            size="small"
+            label='Total USD' 
+            value={totalUSD}
+            sx={{ width: '120px', backgroundColor:'white' }}
+            startAdornment={<InputAdornment position="start">$</InputAdornment>}
+            />
+           </FormControl>
+                </td>
+                   </tr>
+             </tbody>
+          </table>
+            )
+          }
+              </TableContainer>
+              </div>
+              </Grid>
+              <Grid item xs={12}>
+    <TextField 
+                  id='note'
+                  name='note' 
+                  multiline
+                  rows={4}
+                  value={note}
+                  label='Note'
+                  onChange={(e)=>setNote(e.target.value)}
+                  sx={{ width: '60%', backgroundColor:'white' }}       
+              />
+    </Grid>
+              <Grid item xs={12}>
+              {
+        saving !== 'true' ? <button type='submit' className='btnCustomer6' style={{width:'100%'}}>Save</button> : <p className='btnCustomer6' style={{width:'100%', textAlign:'center'}}>Saving...</p>
+      }
+    </Grid>
+    </Grid> 
+    </form>
+ </div>
+ </Container>
+  </Box>
+  </Box>
+ <Modal  
         open={openBack}
         onClose={handleCloseBack}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{ ...style, width: 500 }}>
-          <BlackTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseBack} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
-            </IconButton>
-          </BlackTooltip>
-          <Grid container sx={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-            <Grid item xs={12} sx={{ textAlign: 'center' }}>
-              <Typography>Do you want to stop creating customer ? </Typography>
-              <p><span className="txt2" style={{ color: 'red' }}>Note :</span> <span className="txt2"> If you stop creating without saving, all your changes will be lost</span></p>
-            </Grid>
-            <br />
-            <Grid item xs={6}>
-              <button type='submit' onClick={() => navigate('/ItemPurchaseViewAdmin')} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
-            </Grid>
-            <Grid item xs={6}>
-              <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{ width: '100%' }}>No</button>
-            </Grid>
+ <Box sx={{ ...style, width: 500 }}>
+        <BlackTooltip title="Close" placement='left'>
+        <IconButton onClick={handleCloseBack} style={{ position:'relative', float:'right'}}> 
+                      <Close style={{color:'#202a5a'}}/>
+        </IconButton>
+        </BlackTooltip>  
+        <Grid container sx={{alignItems:'center',padding:'15px'}} spacing={2}>
+          <Grid item xs={12} sx={{textAlign:'center'}}>
+           <Typography>Do you want to stop creating customer ? </Typography>
+           <p><span className="txt2" style={{color:'red'}}>Note :</span> <span className="txt2"> If you stop creating without saving, all your changes will be lost</span></p>
+          </Grid> 
+          <br/>
+          <Grid item xs={6}>
+          <button type='submit' onClick={() => navigate('/ItemPurchaseViewAdmin')} className='btnCustomer' style={{width: '100%'}}>Yes</button>
           </Grid>
+          <Grid item xs={6}>
+          <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{width: '100%'}}>No</button>
+          </Grid>
+        </Grid> 
         </Box>
       </Modal>
       <Modal
-        open={openAutocomplete1}
-        onClose={handleCloseOpenAutocomplete1}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style2, width: 800 }}>
-          <BlackTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseOpenAutocomplete1} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
-            </IconButton>
-          </BlackTooltip>
-          <br />
-          <div style={{ height: '600px', padding: '20px', overflow: 'hidden', overflowY: 'scroll' }}>
-            <SupplierForm2 onCreateOption={handleCreateCustomer} onClose={handleCloseOpenAutocomplete1} />
-          </div>
-        </Box>
-      </Modal>
+      open={openAutocomplete1}
+      onClose={handleCloseOpenAutocomplete1}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={{ ...style2, width: 800 }}>
+      <BlackTooltip title="Close" placement='left'>
+        <IconButton onClick={handleCloseOpenAutocomplete1} style={{ position:'relative', float:'right'}}> 
+                      <Close style={{color:'#202a5a'}}/>
+        </IconButton>
+        </BlackTooltip>
+        <br/>
+        <div style={{height:'600px', padding:'20px',overflow:'hidden',overflowY:'scroll'}}>
+            <SupplierForm2 onCreateOption={handleCreateCustomer} onClose={handleCloseOpenAutocomplete1}/>  
+        </div>
+      </Box>
+    </Modal>
       <Modal
-        open={openAutocomplete2}
-        onClose={handleCloseOpenAutocomplete2}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style2, width: 800 }}>
-          <BlackTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseOpenAutocomplete2} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
-            </IconButton>
-          </BlackTooltip>
-          <br />
-          <div style={{ height: '600px', padding: '20px', overflow: 'hidden', overflowY: 'scroll' }}>
-            <ItemFormView2 onCreateOption={handleCreateItem} onClose={handleCloseOpenAutocomplete2} />
-          </div>
-        </Box>
-      </Modal>
-
-      <Modal
-        open={loadingOpenModal}
-        onClose={handleClose}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}
+      open={openAutocomplete2}
+      onClose={handleCloseOpenAutocomplete2}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={{ ...style2, width: 800 }}>
+      <BlackTooltip title="Close" placement='left'>
+        <IconButton onClick={handleCloseOpenAutocomplete2} style={{ position:'relative', float:'right'}}> 
+                      <Close style={{color:'#202a5a'}}/>
+        </IconButton>
+        </BlackTooltip>
+        <br/>
+        <div style={{height:'600px', padding:'20px',overflow:'hidden',overflowY:'scroll'}}>
+            <ItemFormView2 onCreateOption={handleCreateItem} onClose={handleCloseOpenAutocomplete2}/>  
+        </div>
+      </Box>
+    </Modal>
+    
+ <Modal 
+           open={loadingOpenModal}
+           onClose={handleClose}
+           closeAfterTransition
+           BackdropComponent={Backdrop}
+           BackdropProps={{
+            timeout: 500,
+           }}
+           aria-labelledby="modal-modal-title"
+           aria-describedby="modal-modal-description"
         >
-          {loading ? (<Loader />
-          ) : (
-            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-              <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
-              <h2> Data Saved successfully</h2>
-              <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={() => handleDecision('stay')} className='btnCustomer'>
-                  Add New
-                </button>
-                <button onClick={() => handleDecision('previous')} className='btnCustomer'>
-                  Go Back
-                </button>
-              </div>
-            </div>
-          )}
-        </Box>
-      </Modal>
-      <Modal
-        open={ErrorOpenModal}
-        onClose={handleCloseError}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}
-        >
-          {loading ? (<Loader />
-          ) : (
-            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-              <p><CancelIcon style={{ color: 'red', height: '40px', width: '40px' }} /></p>
-              <h2 style={{ color: 'red' }}>Saving Failed</h2>
-              <button className='btnCustomer' onClick={handleCloseError}>
-                Try Again
+          <Box sx={{ ...style, width: 500 }}
+          >
+              {loading?(<Loader/>
+                ):(
+              <div style={{justifyContent:'center',textAlign:'center'}}>
+                  <p><CheckCircleIcon style={{color:'green',height:'40px', width:'40px'}}/></p>
+                  <h2> Data Saved successfully</h2>
+                  <div style={{display:'flex', gap:'60px',justifyContent:'center'}}>
+              <button onClick={()=> handleDecision('stay')} className='btnCustomer'>
+                Add New
+              </button>
+              <button onClick={()=> handleDecision('previous')} className='btnCustomer'>
+                Go Back
               </button>
             </div>
-          )}
-        </Box>
-      </Modal>
-      <Modal
-        open={loadingOpenModalUpdate}
-        onClose={handleCloseUpdate}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}
+                </div>
+                )}
+          </Box>
+          </Modal>
+        <Modal 
+           open={ErrorOpenModal}
+           onClose={handleCloseError}
+           closeAfterTransition
+           BackdropComponent={Backdrop}
+           BackdropProps={{
+            timeout: 500,
+           }}
+           aria-labelledby="modal-modal-title"
+           aria-describedby="modal-modal-description"
         >
-          {loading ? (<Loader />
-          ) : (
-            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-              <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
-              <h2> Data Saved successfully</h2>
-              <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={handleCloseUpdate} className='btnCustomer'>
-                  Close
-                </button>
-              </div>
+          <Box sx={{ ...style, width: 500 }}
+          >
+              {loading?(<Loader/>
+                ):(
+                  <div style={{justifyContent:'center',textAlign:'center'}}>
+                  <p><CancelIcon style={{color:'red',height:'40px', width:'40px'}}/></p>
+                  <h2 style={{color:'red'}}>Saving Failed</h2>
+                  <button className='btnCustomer' onClick={handleCloseError}>
+                    Try Again
+                  </button>
+                </div>
+                )}
+          </Box>
+          </Modal>
+          <Modal 
+           open={loadingOpenModalUpdate}
+           onClose={handleCloseUpdate}
+           closeAfterTransition
+           BackdropComponent={Backdrop}
+           BackdropProps={{
+            timeout: 500,
+           }}
+           aria-labelledby="modal-modal-title"
+           aria-describedby="modal-modal-description"
+        >
+          <Box sx={{ ...style, width: 500 }}
+          >
+              {loading?(<Loader/>
+                ):(
+              <div style={{justifyContent:'center',textAlign:'center'}}>
+                  <p><CheckCircleIcon style={{color:'green',height:'40px', width:'40px'}}/></p>
+                  <h2> Data Saved successfully</h2>
+                  <div style={{display:'flex', gap:'60px',justifyContent:'center'}}>
+              <button onClick={handleCloseUpdate} className='btnCustomer'>
+                Close
+              </button>
             </div>
-          )}
-        </Box>
-      </Modal>
+                </div>
+                )}
+          </Box>
+          </Modal>
       {/** Side Shop Drawer */}
       <SideDrawer
         anchor="right"

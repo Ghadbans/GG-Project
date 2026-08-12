@@ -22,7 +22,7 @@ function createWindow() {
     protocol: 'file:',
     slashes: true
   }))
-  //win.webContents.openDevTools();
+  
   win.on('closed', function () {
     win = null;
   })
@@ -108,7 +108,7 @@ function createNewWindow() {
     protocol: 'file:',
     slashes: true
   }))
-  //newWin.webContents.openDevTools();
+  //new
   newWin.on('closed', function () {
     const index = windows.indexOf(newWin);
     if (index > -1) {

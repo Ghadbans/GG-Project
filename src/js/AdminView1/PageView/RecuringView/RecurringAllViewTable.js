@@ -7,6 +7,7 @@ import {Table, IconButton, styled,TableBody,TableCell,TableHead,TableRow,Checkbo
 import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add } from '@mui/icons-material';
 import dayjs from 'dayjs';
 
@@ -46,7 +47,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 function RecurringAllViewTable() {
   const [recurring,setRecurring] = useState([])
   
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/recurringinvoice';
+  const apiUrl = `${ENDPOINT_URL}/recurringinvoice`;
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {
@@ -60,7 +61,7 @@ function RecurringAllViewTable() {
 },[])
 const handleDelete = async (id) => {
   try {
-    const res = await axios.delete(`http://192.168.0.101:8080/endpoint/delete-recurringinvoice/${id}`);
+    const res = await axios.delete(`${ENDPOINT_URL}/delete-recurringinvoice/${id}`);
     console.log(res.data.msg); // This will be the deleted document
     alert(res.data.msg); // This will be the deleted document
   } catch (error) {

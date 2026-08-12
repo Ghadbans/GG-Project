@@ -4,31 +4,23 @@ import './css/Login.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import LockIcon from '@mui/icons-material/Lock';
 import Image from './img/Image1.png'
-import LogoutIcon from '@mui/icons-material/Logout';
+import LogoutIcon from './component/NetworkLogoutIcon';
 import { Person, VisibilityOff } from '@mui/icons-material';
 import LoadingView from './component/LoadingView';
 import { jwtDecode } from 'jwt-decode';
 import { useLoginMutation } from './app/api/apiSlice';
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser, setUser } from './features/auth/authSlice';
-import { Checkbox } from '@mui/material';
+import { Checkbox, Modal, Box, Typography, Button, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import axios from 'axios';
-import db from './dexieDb';
+import { ENDPOINT_URL } from './apiConfig';
+
 
 function Loginadmin() {
 	useEffect(() => {
 		const fetchData = async () => {
-			if (navigator.onLine) {
-				const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeuser')
-				await Promise.all(res.data.data.map(async (item) => {
-					await db.employeeUserSchema.put({ ...item, synced: true, updateS: true })
-				}))
-				const resG = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess')
-				await Promise.all(resG.data.data.map(async (item) => {
-					await db.grantAccessSchema.put({ ...item, synced: true, updateS: true })
-				}))
-			}
+			// Online-only: No need to pre-cache data into Dexie
 		}
 		fetchData()
 	}, [])
@@ -49,6 +41,12 @@ function Loginadmin() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isErrorLoading, setIsErrorLoading] = useState(false);
 	const [errorMsg, setErrorMsg] = useState(null);
+
+	const [showBranchModal, setShowBranchModal] = useState(false);
+	const [availableBranches, setAvailableBranches] = useState([{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
+	const [selectedBranch, setSelectedBranch] = useState('HQ');
+	const [tempUserData, setTempUserData] = useState(null);
+
 	useEffect(() => {
 		localStorage.setItem('Check', checkUser ? 'true' : 'false')
 	}, [checkUser])
@@ -84,44 +82,82 @@ function Loginadmin() {
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 
-		if (navigator.onLine) {
+		try {
+			setIsLoading(true);
+			const userData = await login({ employeeName, password }).unwrap()
+			await new Promise((resolve) => setTimeout(resolve, 500));
+			const user = jwtDecode(userData.token);
+			setTempUserData({ user, userData });
+
+			// Fetch Branches logic
 			try {
-				setIsLoading(true);
-				const userData = await login({ employeeName, password }).unwrap()
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				const user = jwtDecode(userData.token);
-				if (userData) {
-					await db.userAccount.put({ idInfo: 'Credentials', employeeName, password, synced: true, updateS: true })
+				const profileRes = await axios.get(`${ENDPOINT_URL}/companyProfile`);
+				let allBranches = [{ branchId: 'HQ', branchName: 'HeadQuarters' }];
+				if (profileRes.data && profileRes.data.data && profileRes.data.data.length > 0) {
+					const profile = profileRes.data?.data?.[0];
+					if (profile.branches && profile.branches.length > 0) {
+						allBranches = profile.branches;
+					}
 				}
-				localStorage.setItem('user', user.userId);
-				setEmployeeName('');
-				setPassword('');
-				navigate('/AdminHome');
-			} catch (error) {
-				console.log(error)
-				setIsErrorLoading(true);
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				setErrorMsg('An Error As Occurred, Try Again');
-			} finally {
-				setIsLoading(false)
-				setIsErrorLoading(false)
+
+				// If CEO, give all. Else fetch GrantAccess.
+				let role = user?.role || user?.data?.role;
+				if (!role) {
+					try {
+						const empRes = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${user.userId}`);
+						role = empRes.data?.data?.role;
+					} catch (e) {
+						console.error("Error fetching role", e);
+					}
+				}
+
+				if (employeeName && employeeName.trim().toUpperCase() === 'GG') {
+					setAvailableBranches([...allBranches]);
+					setSelectedBranch(allBranches[0] ? allBranches[0].branchId : 'HQ');
+				} else {
+					// Fetch Grant Access for this user
+					const accessRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+					const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === user.userId);
+					if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
+						const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));
+						setAvailableBranches(myBranches.length > 0 ? myBranches : [{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
+						if (myBranches.length > 0) setSelectedBranch(myBranches[0].branchId);
+					} else {
+						setAvailableBranches([{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
+						setSelectedBranch('HQ');
+					}
+				}
+
+			} catch (err) {
+				console.error('Error fetching branches/access', err);
 			}
-		} else {
-			const resLocal = await db.userAccount.get({ idInfo: 'Credentials' })
-			if (resLocal && resLocal.employeeName === employeeName && resLocal.password === password) {
-				setIsLoading(true);
-				const resLocalInfo = await db.employeeUserSchema.get({ employeeName: resLocal.employeeName })
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				localStorage.setItem('user', resLocalInfo._id);
-				setEmployeeName('');
-				setPassword('');
-				navigate('/AdminHome');
-			} else {
-				setIsErrorLoading(true);
-				await new Promise((resolve) => setTimeout(resolve, 500));
-				setErrorMsg('An Error As Occurred, Try Again');
-				setIsErrorLoading(false)
-			}
+
+			setShowBranchModal(true);
+
+		} catch (error) {
+			console.log(error)
+			setIsErrorLoading(true);
+			await new Promise((resolve) => setTimeout(resolve, 500));
+			setErrorMsg('An Error As Occurred, Try Again');
+		} finally {
+			setIsLoading(false)
+			setIsErrorLoading(false)
+		}
+	}
+
+	const handleBranchSelectSubmit = () => {
+		if (tempUserData) {
+			const { user, userData } = tempUserData;
+			localStorage.setItem('user', user.userId);
+			localStorage.setItem('token', userData.token);
+			localStorage.setItem('activeSidebarMenu', '1');
+			localStorage.setItem('activeSidebarMenuE2', '1');
+			localStorage.setItem('selectedBranch', selectedBranch);
+			
+			setEmployeeName('');
+			setPassword('');
+			setShowBranchModal(false);
+			navigate('/AdminHome');
 		}
 	}
 
@@ -136,7 +172,7 @@ function Loginadmin() {
 				<div className="container-login100">
 					<div className="wrap-login100">
 						<div className="login100-pic js-tilt" >
-							<img src={Image} />
+							<img  src={Image} />
 						</div>
 						<button onClick={handleClick} className='btnBack'>
 							<LogoutIcon className='btnBackIcon' />
@@ -180,6 +216,47 @@ function Loginadmin() {
 					</div>
 				</div>
 			</div>
+
+			<Modal
+				open={showBranchModal}
+				onClose={() => {}}
+				aria-labelledby="branch-modal-title"
+			>
+				<Box sx={{
+					position: 'absolute',
+					top: '50%',
+					left: '50%',
+					transform: 'translate(-50%, -50%)',
+					width: 400,
+					bgcolor: 'background.paper',
+					boxShadow: 24,
+					p: 4,
+					borderRadius: 2
+				}}>
+					<Typography id="branch-modal-title" variant="h6" component="h2" mb={2}>
+						Select Branch
+					</Typography>
+					<FormControl fullWidth size="small">
+						<InputLabel>Branch</InputLabel>
+						<Select
+							value={selectedBranch}
+							label="Branch"
+							onChange={(e) => setSelectedBranch(e.target.value)}
+						>
+								{availableBranches.map(branch => (
+									<MenuItem key={branch.branchId} value={branch.branchId}>
+										{branch.branchId} - {branch.branchName}
+									</MenuItem>
+								))}
+						</Select>
+					</FormControl>
+					<Box mt={3} display="flex" justifyContent="flex-end">
+						<Button variant="contained" color="primary" onClick={handleBranchSelectSubmit}>
+							Continue
+						</Button>
+					</Box>
+				</Box>
+			</Modal>
 		</div>
 	)
 }

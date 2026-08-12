@@ -5,7 +5,7 @@ import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardContent, CardMedia, Pagination, Button, SwipeableDrawer, Drawer as SideDrawer } from '@mui/material';
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardContent, CardMedia, Pagination, Button, SwipeableDrawer, Drawer as SideDrawer, Avatar } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,7 +18,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { v4 } from 'uuid';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -31,7 +33,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import dayjs from 'dayjs';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
@@ -41,7 +43,9 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+import ItemThumbnail from '../../../component/ItemThumbnail';
+
+
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -153,20 +157,13 @@ function MaintenanceFormView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -180,7 +177,7 @@ function MaintenanceFormView() {
     dispatch(logOut());
     navigate('/')
   }
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-maintenance';
+  const apiUrl = `${ENDPOINT_URL}/create-maintenance`;
   const [serviceDate, setServiceDate] = useState(() => {
     const date = new Date()
     return date
@@ -215,7 +212,7 @@ function MaintenanceFormView() {
   const [customerName, setCustomerName] = useState({});
   const [ItemInformation, setItemInformation] = useState([]);
   const [technicianAssign, setTechnicianAssign] = useState('');
-  const serviceName = "M-00" + serviceNumber;
+  const serviceName = `M-${String(serviceNumber).padStart(6, '0')}`;
   const [inputValue, setInputValue] = React.useState('');
 
   // Side Shop State
@@ -227,45 +224,51 @@ function MaintenanceFormView() {
   const [shopLoading, setShopLoading] = useState(false);
   const [rate, setRate] = useState(0);
   useEffect(() => {
-    const fetchlastNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-maintenance')
-          setServiceNumber(parseInt(res.data.serviceNumber) + 1)
-        } catch (error) {
-          console.error('Error fetching data:', error);
+    const fetchData = async () => {
+      try {
+        const [resLast, resRate, resCustomer, resEmployee, resItem] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/get-last-saved-maintenance`),
+          axios.get(`${ENDPOINT_URL}/rate`),
+          axios.get(`${ENDPOINT_URL}/customer`),
+          axios.get(`${ENDPOINT_URL}/employee`),
+          axios.get(`${ENDPOINT_URL}/item`)
+        ]);
+
+        if (resLast.data && resLast.data.serviceNumber) {
+          setServiceNumber((parseInt(resLast.data?.data?.serviceNumber || resLast.data?.serviceNumber || 0)) + 1);
+        } else {
+          setServiceNumber(1);
         }
-      } else {
-        const offLineCustomer1 = await db.maintenanceSchema.toArray();
-        const latest = offLineCustomer1.reduce((max, row) => row.serviceNumber > max.serviceNumber ? row : max, offLineCustomer1[0])
-        setServiceNumber(parseInt(latest.serviceNumber) + 1)
+
+        if (resRate.data.data && resRate.data.data.length > 0) {
+          setRate(resRate.data?.data?.[0]?.rate || 1);
+        }
+
+        setCustomer((resCustomer.data.data || []).reverse());
+        setEmployee(resEmployee.data.data || []);
+        setItemInformation((resItem.data.data || []).reverse());
+
+      } catch (error) {
+        console.error('Error fetching initial data:', error);
       }
-    }
-    fetchlastNumber()
-  }, [])
+    };
+    fetchData();
+  }, []);
 
   // Fetch Shop Items & Rate
   const fetchShop = async () => {
     setShopLoading(true);
-    if (navigator.onLine) {
-      try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-        resRate.data.data.map((row) => setRate(row.rate))
+    try {
+      const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+      resRate.data.data.map((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setShopLoading(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setShopLoading(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.itemSchema.toArray();
-      setShopItems(offLineCustomer1.filter((row) => row.typeItem === "Goods").reverse())
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+      setShopTotalPages(res.data.totalPages)
+      setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
       setShopLoading(false)
-      const offLineRate = await db.rateSchema.toArray();
-      offLineRate.map((row) => setRate(row.rate))
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setShopLoading(false)
     }
   }
 
@@ -353,24 +356,9 @@ function MaintenanceFormView() {
       phone: selectedOptions?.customerCompanyPhone
     });
   }
-  const Create = dayjs(Date.now()).format('DD/MM/YYYY') + " " + user.data.userName + ' Created ' + "M-00"
+  const Create = `${dayjs(Date.now()).format('DD/MM/YYYY')} ${user.data.userName} Created M-${String(serviceNumber).padStart(6, '0')}`;
 
-  useEffect(() => {
-    const fetchCustomer = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          setCustomer(res.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.customerSchema.toArray();
-        setCustomer(offLineCustomer1.reverse());
-      }
-    }
-    fetchCustomer()
-  }, [])
+  // Data already fetched in the combined useEffect above.
   const [openAutocomplete1, setOpenAutocomplete1] = useState(false);
 
   const handleOpenOpenAutocomplete1 = (e) => {
@@ -385,22 +373,7 @@ function MaintenanceFormView() {
   }
   {/** Customer info end */ }
   const [employee, setEmployee] = useState([])
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
-          setEmployee(res.data.data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.employeeSchema.toArray();
-        setEmployee(offLineCustomer1.reverse());
-      }
-    }
-    fetchEmployee()
-  }, [])
+  // Data already fetched in the combined useEffect above.
 
   const filterEmployee = employee.filter((row) => row.department === 'TECHNICIAN' && row.status !== 'Fired' || row.status !== 'Resign' || row.status !== 'Suspended')
 
@@ -409,30 +382,17 @@ function MaintenanceFormView() {
     setTechnicianAssign(selectedOptions?.employeeName)
   }
   {/** Item start */ }
-  useEffect(() => {
-    const fetchItem = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          setItemInformation(res.data.data.reverse())
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.itemSchema.toArray();
-        setItemInformation(offLineCustomer1.reverse())
-      }
-    }
-    fetchItem()
-  }, [])
+  // Data already fetched in the combined useEffect above.
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemCost: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
@@ -573,7 +533,7 @@ function MaintenanceFormView() {
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Item InFO */ }
   const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
 
@@ -605,11 +565,11 @@ function MaintenanceFormView() {
     } : row))
   }
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
+    const result1 = (items || []).reduce((sum, row) => sum + parseFloat(row?.itemAmount || 0), 0)
     setSubTotal(result1.toFixed(2))
-    let newTotal = Number(subTotal) + Number(totalLaborFeesGenerale)
+    let newTotal = Number(result1) + Number(totalLaborFeesGenerale || 0)
     setTotalInvoice(newTotal)
-  })
+  }, [items, totalLaborFeesGenerale])
 
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
   const [idItem, setIdItem] = useState(null)
@@ -625,8 +585,8 @@ function MaintenanceFormView() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -704,11 +664,11 @@ function MaintenanceFormView() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'M-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      reason: `M-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName.customerName}`,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -723,34 +683,30 @@ function MaintenanceFormView() {
     } else if (adjustmentNumber === 0) {
       status = 'Open'
     }
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       _id: v4(),
       customerName, serviceNumber, serviceDate, actionTaken, visitDate, itemDescriptionInfo,
       warranty, defectDescription, technicianAssign, brand, model, serviceName, action,
-      serialNo, status, items, adjustmentNumber, adjustment, totalInvoice, subTotal,
+      serialNo, status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, synced: false
     };
-    if (navigator.onLine) {
-      try {
-        const res = await axios.post(apiUrl, data);
-        if (res) {
-          // Open Loading View
-          const ReferenceInfo = res.data.data._id
-          const ReferenceInfoNumber = res.data.data.serviceNumber
-          handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
-          //await db.maintenanceSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
-          handleOpen();
-          setIdRes(res.data.data._id)
-        }
-      } catch (error) {
-        if (error) {
-          setSaving('')
-          handleError();
-        }
+    try {
+      const res = await axios.post(apiUrl, data);
+      if (res) {
+        // Open Loading View
+        const ReferenceInfo = res.data.data._id
+        const ReferenceInfoNumber = res.data.data.serviceNumber
+        handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
+        //await db.maintenanceSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
+        handleOpen();
+        setIdRes(res.data.data._id)
       }
-    } else {
-      await db.maintenanceSchema.add(data)
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError();
+      }
     }
   }
   const [sideBar, setSideBar] = React.useState(true);
@@ -799,7 +755,7 @@ function MaintenanceFormView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -894,7 +850,7 @@ function MaintenanceFormView() {
                         label='Service Order Number'
                         value={serviceNumber}
                         onChange={(e) => setServiceNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">M</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">M-</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>
@@ -1111,18 +1067,25 @@ function MaintenanceFormView() {
                                                   Item.itemName.itemName ? (
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <div >
-                                                          <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
-                                                          <TextField
-                                                            name='itemDescription' id='itemDescription'
-                                                            value={Item.itemDescription}
-                                                            multiline
-                                                            rows={3}
-                                                            onChange={(e) => handleChange(e, i)}
-                                                            size="small"
-                                                            sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                          <ItemThumbnail
+                                                            itemId={Item.itemName?._id}
+                                                            initialData={Item.data}
+                                                            initialType={Item.contentType}
                                                           />
-                                                        </div>
+                                                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                                                            <TextField
+                                                              name='itemDescription' id='itemDescription'
+                                                              value={Item.itemDescription}
+                                                              multiline
+                                                              rows={3}
+                                                              onChange={(e) => handleChange(e, i)}
+                                                              size="small"
+                                                              sx={{ width: '350px', backgroundColor: 'white', fontSize: 12 }}
+                                                            />
+                                                          </Box>
+                                                        </Box>
                                                         <div>
                                                           <BlackTooltip title="Clear" placement='top'>
                                                             <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>

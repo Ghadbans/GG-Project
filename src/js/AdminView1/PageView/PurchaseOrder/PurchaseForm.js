@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel, Card, CardMedia, CardContent, Pagination } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel, Card, CardMedia, CardContent, Pagination, Avatar } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Refresh, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Drawer as SideDrawer, Button } from '@mui/material';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
@@ -34,13 +35,15 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -73,6 +76,9 @@ const ViewTooltip = styled(({ className, ...props }) => (
     fontSize: 11,
   },
 }));
+
+
+// ... existing styles ...
 
 const style = {
   position: 'absolute',
@@ -141,6 +147,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+
+
 function PurchaseForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -151,7 +159,7 @@ function PurchaseForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -194,6 +202,8 @@ function PurchaseForm() {
   const [inputValue, setInputValue] = React.useState('');
   const [manufacturer, setManufacturer] = useState("");
   const [rate, setRate] = useState(0);
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
   const [manufacturerNumber, setManufacturerNumber] = useState(0);
   const Create = {
     person: user.data.userName,
@@ -201,14 +211,11 @@ function PurchaseForm() {
   }
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchaseOrder')
-          setOutNumber(parseInt(resItemOut.data.outNumber) + 1)
-        } catch (error) {
-          setOutNumber(1)
-        }
-      } else {
+      try {
+        const resItemOut = await axios.get(`${ENDPOINT_URL}/get-last-saved-purchaseOrder`)
+        setOutNumber((parseInt(resItemOut.data?.data?.outNumber || resItemOut.data?.outNumber || 0)) + 1)
+      } catch (error) {
+        setOutNumber(1)
       }
     }
     fetchNumber()
@@ -217,17 +224,17 @@ function PurchaseForm() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(resItem.data.data.reverse())
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const res = await axios.get(`${ENDPOINT_URL}/rate`)
         res.data.data.map((row) => setRate(row.rate))
-        const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-        setProject(resProject.data.data.filter((row) => resPurchase.data.data.find((Item) => Item.projectName._id === row._id)).reverse());
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-        setMaintenance(resMaintenance.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
+        const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
+        setProject(resProject.data?.data?.filter((row) => resPurchase.data?.data?.find((Item) => Item.projectName._id === row._id)).reverse());
+        const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+        setMaintenance(resMaintenance.data?.data?.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
+        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const newData = resInvoice.data?.data?.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
         setInvoice(newData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -247,18 +254,13 @@ function PurchaseForm() {
   // Fetch Shop Items
   const fetchShop = async () => {
     setShopLoading(true);
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setShopLoading(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setShopLoading(false)
-      }
-    } else {
-      // For offline support if needed, but the primary target is the online shop
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+      setShopTotalPages(res.data.totalPages)
+      setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+      setShopLoading(false)
+    } catch (error) {
+      console.error('Error fetching data:', error);
       setShopLoading(false)
     }
   }
@@ -378,8 +380,8 @@ function PurchaseForm() {
     const fetchId = async () => {
       if (projectName !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
+          const res = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+          res.data?.data?.filter((row) => projectName ? row.projectName._id === projectName._id : '')
             .map((row) =>
               SetItems(
                 row.items
@@ -395,8 +397,8 @@ function PurchaseForm() {
       }
       else if (serviceNumber !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
+          const res = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+          res.data?.data?.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
             .map((row) =>
               SetItems(row.items
                 .map((row1) => ({
@@ -410,8 +412,8 @@ function PurchaseForm() {
       }
       else if (invoiceName !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
+          const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+          res.data?.data?.filter((row) => invoiceName ? row._id === invoiceName._id : '')
             .map((row) =>
               SetItems(row.items
                 .map((row1) => ({
@@ -430,7 +432,7 @@ function PurchaseForm() {
 
   useEffect(() => {
     const result = items.map((row) => {
-      const relatedItem = ItemInformation.find((Item) => Item._id === row.itemName._id)
+      const relatedItem = ItemInformation.find((Item) => Item._id === row.itemName?._id)
       if (relatedItem) {
         return {
           idRow: row.idRow,
@@ -574,14 +576,16 @@ function PurchaseForm() {
     }]);
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
-      rate: selectedOptions?.itemCostPrice,
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
+      itemRate: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       stock: selectedOptions?.itemQuantity,
     } : row))
@@ -615,11 +619,15 @@ function PurchaseForm() {
     SetItemsQtyArray(updatedItem)
     SetSelectedItem([])
   }
-  const filterItemInformation = ItemInformation.filter(option => !itemsQtyArray.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !itemsQtyArray.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
 
   const totalUSD = itemsQtyArray.length > 0 ? itemsQtyArray.reduce((sum, row) => sum + parseFloat(row.fcConvertToUsdTotal), 0) : 0
   const total = itemsQtyArray.length > 0 ? itemsQtyArray.reduce((sum, row) => sum + parseFloat(row.totalAmount), 0) : 0
   const totalFC = itemsQtyArray.length > 0 ? itemsQtyArray.reduce((sum, row) => sum + parseFloat(row.totalAmountFC), 0) : 0
+
+  useEffect(() => {
+    setTax(CheckTvA ? totalUSD * 0.16 : 0);
+  }, [totalUSD, CheckTvA])
 
   const [openBack, setOpenBack] = useState(false);
 
@@ -660,6 +668,21 @@ function PurchaseForm() {
   const handleClose = () => {
     setLoadingOpenModal(false);
     window.location.reload();
+    // Reset Form
+    setItemOutDate(dayjs(new Date()));
+    setReason("");
+    setDescription("");
+    SetItems([]);
+    SetItemsQtyArray([]);
+    SetSelectedItem([]);
+    setReference(null);
+    setOutNumber(prev => prev + 1);
+    setManufacturer("");
+    setManufacturerNumber(0);
+    setCheckTvA(false);
+    setTax(0);
+    setSaving('');
+
   }
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
@@ -680,11 +703,11 @@ function PurchaseForm() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'PO-' + ReferenceInfoNumber + ' For ' + reasonInfo,
+      reason: `PO-${String(ReferenceInfoNumber).padStart(6, '0')} For ${reasonInfo}`,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -693,6 +716,7 @@ function PurchaseForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
+    const itemsWithoutData = itemsQtyArray.map(({ data, contentType, ...rest }) => rest);
     const data = {
       outNumber,
       status: 'Open',
@@ -702,11 +726,11 @@ function PurchaseForm() {
       Converted: false,
       reason,
       description,
-      itemsQtyArray,
+      itemsQtyArray: itemsWithoutData, CheckTvA, tax,
       reference, Create, totalUSD, total, totalFC
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchaseOrder', data);
+      const res = await axios.post(`${ENDPOINT_URL}/create-purchaseOrder`, data);
       if (res) {
         // Open Loading View
         const ReferenceInfo = res.data.data._id
@@ -780,7 +804,7 @@ function PurchaseForm() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -830,6 +854,38 @@ function PurchaseForm() {
                         />
                       </DemoContainer>
                     </LocalizationProvider>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id='manufacturer'
+                      name='manufacturer'
+                      label='Manufacturer'
+                      value={manufacturer !== undefined ? manufacturer : ''}
+                      onChange={(e) => setManufacturer(e.target.value.toUpperCase())}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      id='manufacturerNumber'
+                      name='manufacturerNumber'
+                      label='Reference '
+                      value={manufacturerNumber !== undefined ? manufacturerNumber : ''}
+                      onChange={(e) => setManufacturerNumber(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      id='description'
+                      name='description'
+                      value={description}
+                      label='Description'
+                      multiline
+                      rows={2}
+                      onChange={(e) => setDescription(e.target.value)}
+                      sx={{ width: '100%', backgroundColor: 'white' }}
+                    />
                   </Grid>
                   <Grid item xs={12}>
                     <FormControl sx={{ width: '100%' }}>
@@ -969,8 +1025,8 @@ function PurchaseForm() {
                             (
                               <Autocomplete
                                 options={invoice}
-                                getOptionLabel={(option) => 'INV' + String(option.invoiceNumber)}
-                                renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-00{String(option.invoiceNumber)}
+                                getOptionLabel={(option) => `INV-${String(option.invoiceNumber).padStart(6, '0')}`}
+                                renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-{String(option.invoiceNumber).padStart(6, '0')}
                                 </Box>)}
                                 renderInput={(params) => <TextField {...params} label="Invoice" />}
                                 onChange={(e, newValue) => handleChangeInvoice(newValue ? newValue : '')}
@@ -1103,17 +1159,24 @@ function PurchaseForm() {
                                                   Item.itemName.itemName ? (
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <div >
-                                                          <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                          <TextField
-                                                            name='itemDescription' id='itemDescription'
-                                                            value={Item.itemDescription}
-                                                            multiline
-                                                            rows={3}
-                                                            onChange={(e) => handleChange(e, i)}
-                                                            size="small"
-                                                            sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                        <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                          <ItemThumbnail
+                                                            itemId={Item.itemName?._id}
+                                                            initialData={Item.data}
+                                                            initialType={Item.contentType}
                                                           />
+                                                          <div >
+                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                            <TextField
+                                                              name='itemDescription' id='itemDescription'
+                                                              value={Item.itemDescription}
+                                                              multiline
+                                                              rows={3}
+                                                              onChange={(e) => handleChange(e, i)}
+                                                              size="small"
+                                                              sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                            />
+                                                          </div>
                                                         </div>
                                                         <div>
                                                           <BlackTooltip title="Clear" placement='top'>
@@ -1293,6 +1356,9 @@ function PurchaseForm() {
                           </tbody>
                         </table>
                       </DragDropContext>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+                        <FormControlLabel control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />} label="TVA (16%)" />
+                      </div>
                     </div>
                   </Grid>
                   <Grid item xs={12}>

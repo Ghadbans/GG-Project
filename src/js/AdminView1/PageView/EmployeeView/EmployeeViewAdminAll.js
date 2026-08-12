@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react'
+import PrintHeader from '../../../component/PrintHeader';
+import PrintFooter from '../../../component/PrintFooter';
+﻿import React, { useEffect, useState } from 'react'
 import SidebarDashE2 from '../../../component/SidebarDashE2';
 import '../../view.css'
 import '../Chartview.css'
@@ -26,12 +28,13 @@ import CloseIcon from '@mui/icons-material/Close';
 import EmployeeFormView from './EmployeeFormView';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Loader from '../../../component/Loader';
 import Close from '@mui/icons-material/Close';
 import { RemoveCircleOutline } from '@mui/icons-material';
@@ -41,7 +44,7 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -156,20 +159,13 @@ function EmployeeViewAdminAll() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -189,28 +185,20 @@ function EmployeeViewAdminAll() {
   const [planing, setPlaning] = useState([])
   const [rate, setRate] = useState(0);
   const [loadingData, setLoadingData] = useState(true);
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/employee';
+  const apiUrl = `${ENDPOINT_URL}/employee`;
 
   useEffect(() => {
     const fetchE = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(apiUrl)
-          const resPRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/paymentRate')
-          resPRate.data.data.map((row) => setRate(row.paymentRate));
-          if (res) {
-            setEmployee(res.data.data.reverse());
-            setLoadingData(false)
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
+      try {
+        const res = await axios.get(apiUrl)
+        const resPRate = await axios.get(`${ENDPOINT_URL}/paymentRate`);
+        (resPRate.data?.data || []).map((row) => setRate(row.paymentRate));
+        if (res) {
+          setEmployee((res.data?.data || []).reverse());
           setLoadingData(false)
         }
-      } else {
-        const offLinePayRate = await db.paymentRateSchema.toArray();
-        offLinePayRate.map((row) => setRate(row.paymentRate));
-        const offLineCustomer1 = await db.employeeSchema.toArray();
-        setEmployee(offLineCustomer1.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
         setLoadingData(false)
       }
     }
@@ -230,82 +218,54 @@ function EmployeeViewAdminAll() {
 
   useEffect(() => {
     const fetchEId = async () => {
-      if (navigator.onLine) {
-        try {
-          const [res, resPayRoll, resPlaning, resDE, resItemOut] = await Promise.all([
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employee/${id}`),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll'),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/planing'),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/expense'),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/itemOut')
-          ]);
-
-          setEmployeeName(res.data.data.employeeName)
-
-          setPayRoll(resPayRoll.data.data.filter((row) => row.employeeName.id === id))
-
-          setPlaning(resPlaning.data.data.filter((row) => row.employeeID === id).map((row) => ({
-            ...row,
-            totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
-          })));
-
-          setExpenses(resDE.data.data.filter((row) => row.accountName === 'Employee' && row.employeeName.find((Item) => Item.idRow === id))
-            .map((row) => ({
-              ...row,
-              amountFC: row.employeeName.filter((Item) => Item.idRow === id).reduce((sum, acc) => sum + parseFloat(acc.amount), 0),
-              amountUSD: row.employeeName.filter((Item) => Item.idRow === id).reduce((sum, acc) => sum + parseFloat(acc.total), 0),
-            })))
-
-          const formatDate1 = resItemOut.data.data.filter((row) => row.reference._id === id)
-          setItemOut(formatDate1.reverse());
-
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setLoadingData(false)
-        }
-      } else {
-        // Parallelize offline fetching as well
-        const [resLocal, offLinePlaning, offLinePayRoll, offLineExpense] = await Promise.all([
-          db.employeeSchema.get({ _id: id }),
-          db.planingSchema.toArray(),
-          db.payRollSchema.toArray(),
-          db.dailyExpenseSchema.toArray()
-        ]);
-
-        setEmployeeName(resLocal.employeeName)
-
-        setPlaning(offLinePlaning.filter((row) => row.employeeId === id).map((row) => ({
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-employee/${id}`)
+        setEmployeeName(res.data?.data?.employeeName || null)
+        const resPayRoll = await axios.get(`${ENDPOINT_URL}/payRoll`)
+        const payRollData = Array.isArray(resPayRoll.data?.data) ? resPayRoll.data.data : [];
+        setPayRoll(payRollData.filter((row) => row.employeeName?.id === id))
+        const resPlaning = await axios.get(`${ENDPOINT_URL}/planing`)
+        const planningData = Array.isArray(resPlaning.data?.data) ? resPlaning.data.data : [];
+        setPlaning(planningData.filter((row) => row.employeeID === id).map((row) => ({
           ...row,
-          totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
-        })))
-
-        setPayRoll(offLinePayRoll.filter((row) => row.employeeName.id === id))
-
-        setExpenses(offLineExpense.filter((row) => row.accountName === 'Employee' && row.employeeName.find((Item) => Item.idRow === id))
+          totalWorkDay: parseFloat((row.dayPayUSd || 0) * (row.workNumber || 0)).toFixed(2)
+        })));
+        const resDE = await axios.get(`${ENDPOINT_URL}/expense?summary=true`)
+        const expenseData = Array.isArray(resDE.data?.data) ? resDE.data.data : [];
+        setExpenses(expenseData.filter((row) => row.accountName === 'Employee' && Array.isArray(row.employeeName) && row.employeeName.find((Item) => Item.idRow === id))
           .map((row) => ({
             ...row,
-            amountFC: row.employeeName.filter((Item) => Item.idRow === id).reduce((sum, acc) => sum + parseFloat(acc.amount), 0),
-            amountUSD: row.employeeName.filter((Item) => Item.idRow === id).reduce((sum, acc) => sum + parseFloat(acc.total), 0),
+            amountFC: row.employeeName?.filter((Item) => Item.idRow === id).reduce((sum, acc) => sum + parseFloat(acc.amount || 0), 0),
+            amountUSD: row.employeeName?.filter((Item) => Item.idRow === id).reduce((sum, acc) => sum + parseFloat(acc.total || 0), 0),
           })))
+        const resItemOut = await axios.get(`${ENDPOINT_URL}/itemOut`)
+        const itemOutData = Array.isArray(resItemOut.data?.data) ? resItemOut.data.data : [];
+        const formatDate1 = itemOutData.filter((row) => row.reference?._id === id)
+        setItemOut(formatDate1.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoadingData(false)
       }
     }
     fetchEId()
   }, [id])
 
 
-  const planingObject = useMemo(() => planing?.reduce((acc, item) => {
-    const id = item.projectName?._id;
+  const planingObject = Array.isArray(planing) ? planing?.reduce((acc, item) => {
+    const projId = item.projectName?._id;
     const name = item.projectName?.name;
     const dayPay = item.dayPayUSd;
-    if (!acc[id]) {
-      acc[id] = { id, name, dayPay, workD: 0, total: 0 }
+    if (projId) {
+      if (!acc[projId]) {
+        acc[projId] = { id: projId, name, dayPay, workD: 0, total: 0 }
+      }
+      acc[projId].total += parseFloat(item.totalWorkDay || 0)
+      acc[projId].workD += parseFloat(item.workNumber || 0)
     }
-    acc[id].total += parseFloat(item.totalWorkDay)
-    acc[id].workD += parseFloat(item.workNumber)
     return acc
-  }, {}), [planing]);
+  }, {}) : {};
 
-  const planingArray = useMemo(() => Object.keys(planingObject).map((row) => planingObject[row]), [planingObject]);
+  const planingArray = planingObject ? Object.keys(planingObject).map((row) => planingObject[row]) : [];
 
 
   const [images, setImages] = useState(null);
@@ -314,17 +274,18 @@ function EmployeeViewAdminAll() {
     const fetchImages = async () => {
       if (employeeName !== null) {
         try {
-          const resp = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-image/${employeeName}`);
-          setImages(resp.data.data)
-          if (resp && resp.data.data.data) {
-            const buffer = new Uint8Array(resp.data.data.data.data)
-            const bold = new Blob([buffer], { type: `${resp.data.data.contentType}` })
-            const reader = new FileReader();
-            reader.readAsDataURL(bold)
-            reader.onloadend = () => {
-              setImagesURL(reader.result)
-            };
-
+          const resp = await axios.get(`${ENDPOINT_URL}/get-image/${employeeName}`);
+          if (resp && resp.data) {
+            setImages(resp.data?.data);
+            if (resp.data?.data && resp.data?.data?.data) {
+              const buffer = new Uint8Array(resp.data?.data?.data?.data)
+              const bold = new Blob([buffer], { type: `${resp.data?.data?.contentType}` })
+              const reader = new FileReader();
+              reader.readAsDataURL(bold)
+              reader.onloadend = () => {
+                setImagesURL(reader.result)
+              };
+            }
           }
         } catch (error) {
           console.log(error)
@@ -403,11 +364,11 @@ function EmployeeViewAdminAll() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
-        const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
+        const res = await axios.get(`${ENDPOINT_URL}/comment`)
+        const resp = res.data?.data?.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
-        setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
+        const resNotification = await axios.get(`${ENDPOINT_URL}/notification`)
+        setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -490,7 +451,7 @@ function EmployeeViewAdminAll() {
     formData.append('image', uploadedImageURL);
     formData.append('employeeName', employeeName);
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/upload-image', formData, {
+      await axios.post(`${ENDPOINT_URL}/upload-image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -504,7 +465,7 @@ function EmployeeViewAdminAll() {
     e.preventDefault()
     if (images !== null) {
       try {
-        const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-image/${images._id}`)
+        const res = await axios.delete(`${ENDPOINT_URL}/delete-image/${images._id}`)
         if (res) {
           handleOpenDelete()
         }
@@ -522,7 +483,7 @@ function EmployeeViewAdminAll() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-comment/`, data)
       if (res) {
         setReason("");
         handleOpen();
@@ -535,33 +496,30 @@ function EmployeeViewAdminAll() {
       }
     }
   }
-  const allTransaction = useMemo(() => {
-    const arr = [];
-    payRoll.forEach(row => {
-      arr.push({
-        type: 'PaySlip',
-        month: row.month,
-        date: row.payDate,
-        number: row.payNumber,
-        description: 'Net Payable',
-        amountFC: row.totalNet,
-        amountUSD: row.totalPaidDollars,
-      })
-    })
-    expenses.forEach(row => {
-      arr.push({
-        type: 'Expenses',
-        month: row.expenseDate,
-        date: row.expenseDate,
-        number: row.expenseNumber,
-        description: row.expenseCategory.expensesCategory + ' / ' + row.description,
-        amountFC: row.amountFC,
-        amountUSD: row.amountUSD,
-      })
-    })
-    return arr;
-  }, [payRoll, expenses]);
+  const allTransaction = [];
 
+  payRoll.forEach(row => {
+    allTransaction.push({
+      type: 'PaySlip',
+      month: row.month,
+      date: row.payDate,
+      number: row.payNumber,
+      description: 'Net Payable',
+      amountFC: row.totalNet,
+      amountUSD: row.totalPaidDollars,
+    })
+  })
+  expenses.forEach(row => {
+    allTransaction.push({
+      type: 'Expenses',
+      month: row.expenseDate,
+      date: row.expenseDate,
+      number: row.expenseNumber,
+      description: (row.expenseCategory?.expensesCategory || 'N/A') + ' / ' + (row.description || ''),
+      amountFC: row.amountFC || 0,
+      amountUSD: row.amountUSD || 0,
+    })
+  })
   const [selectOptions, setSelectOptions] = useState('');
   const [startDate, setStartDate] = useState(() => {
     const date = new Date()
@@ -570,12 +528,10 @@ function EmployeeViewAdminAll() {
 
   let totalFC = 0
   let totalUSD = 0
-  const filterTransanction = useMemo(() => allTransaction?.filter((row) => dayjs(row.month).format('MMMM/YYYY') === dayjs(startDate).format('MMMM/YYYY')), [allTransaction, startDate]);
-
-  const totalGFC = useMemo(() => filterTransanction.length > 0 ? filterTransanction.reduce((sum, row) => sum + parseFloat(row.amountFC), 0) : 0, [filterTransanction]);
-  const totalGUSD = useMemo(() => filterTransanction.length > 0 ? filterTransanction.reduce((sum, row) => sum + parseFloat(row.amountUSD), 0) : 0, [filterTransanction]);
-
-  const monthRow = useMemo(() => allTransaction.filter((row) => dayjs(row.month).format('MMMM/YYYY') === dayjs(startDate).format('MMMM/YYYY')).sort((a, b) => new Date(a.date) - new Date(b.date)).map((row, i) => {
+  const filterTransanction = allTransaction?.filter((row) => dayjs(row.month).format('MMMM/YYYY') === dayjs(startDate).format('MMMM/YYYY'))
+  const totalGFC = filterTransanction.length > 0 ? filterTransanction.reduce((sum, row) => sum + parseFloat(row.amountFC), 0) : 0
+  const totalGUSD = filterTransanction.length > 0 ? filterTransanction.reduce((sum, row) => sum + parseFloat(row.amountUSD), 0) : 0
+  const monthRow = allTransaction.filter((row) => dayjs(row.month).format('MMMM/YYYY') === dayjs(startDate).format('MMMM/YYYY')).sort((a, b) => new Date(a.date) - new Date(b.date)).map((row, i) => {
     if (row.type === 'PaySlip') {
       totalFC += parseFloat(row.amountFC)
       totalUSD += parseFloat(row.amountUSD)
@@ -591,28 +547,26 @@ function EmployeeViewAdminAll() {
           <span>{row.type === 'PaySlip' && (row.description + ' REf PAY-0' + row.number)}</span>
           <span>{row.type === 'Expenses' && ('Ref D-0' + row.number + ' / ' + row.description)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'PaySlip' ? `FC ${row.amountFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${row.amountUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Expenses' ? `FC ${row.amountFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${row.amountUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`FC ${totalFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${totalUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})`}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'PaySlip' ? `FC ${parseFloat(row.amountFC || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${parseFloat(row.amountUSD || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Expenses' ? `FC ${parseFloat(row.amountFC || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${parseFloat(row.amountUSD || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`FC ${parseFloat(totalFC || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${parseFloat(totalUSD || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})`}</td>
       </tr>
     )
-  }), [allTransaction, startDate]);
-
+  })
   const [search3, setSearch3] = useState('');
 
   const handleSearch3 = (e) => {
     const value = e.target.value
     setSearch3(value)
   }
-  const newArray3 = useMemo(() => search3 !== '' ? itemOut.filter((row) =>
+  const newArray3 = search3 !== '' ? itemOut.filter((row) =>
     row.reason.toLowerCase().includes(search3.toLowerCase()) ||
     row.reference.referenceName.toLowerCase().includes(search3.toLowerCase()) ||
     row.itemsQtyArray.some((Item) => Item.itemName.itemName.toLowerCase().includes(search3.toLowerCase())) ||
     row.itemsQtyArray.some((Item) => Item.itemDescription.toLowerCase().includes(search3.toLowerCase())) ||
     dayjs(row.itemOutDate).format('DD/MM/YYYY').includes(search3)
-  ) : itemOut, [itemOut, search3]);
-
-  const totalReturnTotal = useMemo(() => newArray3.length > 0 ? newArray3.reduce((acc, row) => { return acc + row.itemsQtyArray.reduce((sum, item) => sum + parseFloat(item.newItemOut), 0) }, 0) : 0, [newArray3]);
+  ) : itemOut
+  const totalReturnTotal = newArray3.length > 0 ? newArray3.reduce((acc, row) => { return acc + row.itemsQtyArray.reduce((sum, item) => sum + parseFloat(item.newItemOut), 0) }, 0) : 0
 
   {/** Comments end */ }
   const [sideBar, setSideBar] = React.useState(true);
@@ -640,7 +594,7 @@ function EmployeeViewAdminAll() {
             Salary Slip for the month Of: {dayjs(row.month).format('MMMM-YYYY')}
           </TableCell>
           <TableCell align="right">{row.daysW} Days</TableCell>
-          <TableCell align="right">FC {row.totalPaid?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalPaid / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></TableCell>
+          <TableCell align="right">FC {parseFloat(row.totalPaid || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{parseFloat((row.totalPaid || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -662,67 +616,67 @@ function EmployeeViewAdminAll() {
                     <tr>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Basic wage</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.basicSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.basicSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.basicSalary || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.basicSalary || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.earningSalary !== undefined ? row.earningSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.earningSalary !== undefined ? row.earningSalary / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.earningSalary || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.earningSalary || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>In advanced allowances </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.advancedSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.advancedSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.advancedSalary || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.advancedSalary || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                     </tr>
                     <tr>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Transport allowances</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.basicTransport?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.basicTransport / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.basicTransport || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.basicTransport || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.transportEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.transportEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.transportEarning || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.transportEarning || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Transport</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.transportDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.transportDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.transportDeduction || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.transportDeduction || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                     </tr>
                     <tr>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Food allowances</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.foodBasic !== undefined ? row.foodBasic?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.foodBasic !== undefined ? row.foodBasic / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.foodBasic || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.foodBasic || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.foodEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.foodEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.foodEarning || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.foodEarning || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Food</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.foodDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.foodDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.foodDeduction || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.foodDeduction || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                     </tr>
                     <tr>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Bounce allowances 3%</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.bounceAllowances?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.bounceAllowances / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.bounceAllowances || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.bounceAllowances || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.bounceAllowancesEarning !== undefined ? row.bounceAllowancesEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.bounceAllowancesEarning !== undefined ? row.bounceAllowancesEarning / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.bounceAllowancesEarning || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.bounceAllowancesEarning || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Loan recovery</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
 
-                        <span>{row.loan?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.loan / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.loan || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.loan || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                     </tr>
                     <tr>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Other</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.other !== undefined ? row.other?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.other !== undefined ? row.other / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.other || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.other || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.otherEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.otherEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.otherEarning || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.otherEarning || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Item lost recovery</td>
                       <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
-                        <span>{row.itemLost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.itemLost / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                        <span>{parseFloat(row.itemLost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{parseFloat((row.itemLost || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                       </td>
                     </tr>
                   </tbody>
@@ -733,28 +687,28 @@ function EmployeeViewAdminAll() {
                       <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Basic, Earning & Deduction)</td>
                     </tr>
                     <tr>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Basic:</span> <span> FC {row.totalActualSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Earning:</span> <span> FC {row.totalActualEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Deduction:</span> <span> FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Basic:</span> <span> FC {parseFloat(row.totalActualSalary || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.totalActualSalary || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Earning:</span> <span> FC {parseFloat(row.totalActualEarning || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.totalActualEarning || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Deduction:</span> <span> FC {parseFloat(row.totalActualDeduction || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{parseFloat((row.totalActualDeduction || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                     </tr>
                     <tr>
                       <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Paid)</td>
                     </tr>
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Net payable</td>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{row.totalPaidDollars?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {parseFloat(row.totalNet || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{parseFloat(row.totalPaidDollars || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                     </tr>
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Deduction</td>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {parseFloat(row.totalActualDeduction || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{parseFloat((row.totalActualDeduction || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                     </tr>
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Overtime & Bonus</td>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.bonus?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.bonus / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {parseFloat(row.bonus || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{parseFloat((row.bonus || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                     </tr>
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Generale</td>
-                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalPaid?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalPaid / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                      <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {parseFloat(row.totalPaid || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{parseFloat((row.totalPaid || 0) / (row.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                     </tr>
                   </tbody>
                 </table>
@@ -786,7 +740,7 @@ function EmployeeViewAdminAll() {
           <TableCell align="center">{row.name}</TableCell>
           <TableCell align="center">{row.workD}</TableCell>
           <TableCell align="center">${row.dayPay}</TableCell>
-          <TableCell align="right">${row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+          <TableCell align="right">${parseFloat(row.total || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -1015,7 +969,7 @@ function EmployeeViewAdminAll() {
                           <div key={row._id}>
                             <div className='itemInfoContainer2Head'>
                               <div>
-                                <Typography style={{ fontWeight: 'bold', fontSize: '20px' }}>{row.employeeName.toUpperCase()} {row.employeeId !== undefined ? "/" + row.employeeId : ''}</Typography>
+                                <Typography style={{ fontWeight: 'bold', fontSize: '20px' }}>{(row.employeeName || "").toUpperCase()} {row.employeeId !== undefined ? "/" + row.employeeId : ''}</Typography>
                               </div>
                               <Typography
                                 color={
@@ -1193,7 +1147,7 @@ function EmployeeViewAdminAll() {
                                         <tbody>
                                           <tr>
                                             <td>Name</td>
-                                            <td>{row.employeeName.toUpperCase()}</td>
+                                            <td>{(row.employeeName || "").toUpperCase()}</td>
                                           </tr>
                                           <tr>
                                             <td>Join Date</td>
@@ -1256,27 +1210,27 @@ function EmployeeViewAdminAll() {
                                               </tr>
                                               <tr>
                                                 <td>Basic wage</td>
-                                                <td>FC {row.salary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                <td>FC {parseFloat(row.salary || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               </tr>
                                               <tr>
                                                 <td>Transport allowances</td>
-                                                <td>FC {row.basicTransport !== undefined ? row.basicTransport?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</td>
+                                                <td>FC {parseFloat(row.basicTransport || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               </tr>
                                               <tr>
                                                 <td>Food allowances</td>
-                                                <td>FC {row.foodBasic !== undefined ? row.foodBasic?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</td>
+                                                <td>FC {parseFloat(row.foodBasic || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               </tr>
                                               <tr>
                                                 <td>Bounce allowances 3%</td>
-                                                <td>FC {row.bounceAllowances !== undefined ? row.bounceAllowances?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</td>
+                                                <td>FC {parseFloat(row.bounceAllowances || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               </tr>
                                               <tr>
                                                 <td>other</td>
-                                                <td>FC {row.other !== undefined ? row.other?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</td>
+                                                <td>FC {parseFloat(row.other || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               </tr>
                                               <tr>
                                                 <td>Total Salary</td>
-                                                <td>FC {parseFloat(Number(row.salary) + Number(row.basicTransport) + Number(row.foodBasic) + Number(row.bounceAllowances) + Number(row.other))?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ($ {parseFloat((Number(row.salary) + Number(row.basicTransport) + Number(row.foodBasic) + Number(row.bounceAllowances) + Number(row.other)) / rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
+                                                <td>FC {parseFloat(Number(row.salary || 0) + Number(row.basicTransport || 0) + Number(row.foodBasic || 0) + Number(row.bounceAllowances || 0) + Number(row.other || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ($ {parseFloat((Number(row.salary || 0) + Number(row.basicTransport || 0) + Number(row.foodBasic || 0) + Number(row.bounceAllowances || 0) + Number(row.other || 0)) / (rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
                                               </tr>
                                             </tbody> : <tbody></tbody>
                                         }
@@ -1355,7 +1309,7 @@ function EmployeeViewAdminAll() {
                                                     </DeleteTooltip>
                                                   </section>
                                                   <section>
-                                                    <img style={{ marginLeft: '11%', width: '600px', height: '300px' }} src={imagesURL} alt={images.fileName} />
+                                                    <img  src={imagesURL} alt={images.fileName} />
                                                   </section>
                                                 </div>
                                               ) : (
@@ -1446,19 +1400,7 @@ function EmployeeViewAdminAll() {
                                   </div>
                                   <Box sx={{ padding: '20px' }}>
                                     <div style={{ padding: '20px' }}>
-                                      <header className='invoiceTest'>
-                                        <div>
-                                          <img src={Image} style={{ width: '500px', height: '100px' }} />
-                                        </div>
-                                        <address style={{ textAlign: 'right' }}>
-                                          <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                          <p>RCM CD/KWZ/RCCM/22-B-00317 </p>
-                                          <p> ID NAT 14-H5300N11179P </p>
-                                          <p> AVENUE SALONGO Q/INDUSTRIEL C/MANIKA </p>
-                                          <p>  KOLWEZI LUALABA </p>
-                                          <p>   DR CONGO </p>
-                                        </address>
-                                      </header>
+                                      <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
                                       <hr /><p className='invoicehr'></p>
                                       <article>
                                         <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
@@ -1466,7 +1408,7 @@ function EmployeeViewAdminAll() {
                                             <p style={{}}>
                                               <br />
                                               <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                {row.employeeName.toUpperCase()}
+                                                {(row.employeeName || "").toUpperCase()}
                                               </span>
                                               <br />
                                             </p>
@@ -1492,7 +1434,7 @@ function EmployeeViewAdminAll() {
                                               </tr>
                                               <tr>
                                                 <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Cost</span></td>
-                                                <td style={{ textAlign: 'left', width: '200px' }}>{`FC ${totalGFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${totalGUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})`}</td>
+                                                <td style={{ textAlign: 'left', width: '200px' }}>{`FC ${parseFloat(totalGFC || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` + ` ($${parseFloat(totalGUSD || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})`}</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -1565,13 +1507,13 @@ function EmployeeViewAdminAll() {
                                                 <td style={{ textAlign: 'left', width: '60px' }}>{row.outNumber}</td>
                                                 <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.itemOutDate).format('DD/MM/YYYY')}</td>
                                                 <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.reason}</td>
-                                                <td style={{ textAlign: 'left', width: '200px', borderLeft: '1px solid #DDD' }}> {row.itemsQtyArray.map((Item, i) => (
+                                                <td style={{ textAlign: 'left', width: '200px', borderLeft: '1px solid #DDD' }}> {row.itemsQtyArray?.map((Item, i) => (
                                                   <p key={i}>
                                                     <span>{Item.itemName.itemName}</span>
                                                   </p>
                                                 ))} </td>
                                                 <td style={{ textAlign: 'left', width: '40px', borderLeft: '1px solid #DDD' }}>
-                                                  {row.itemsQtyArray.map((Item, i) => (
+                                                  {row.itemsQtyArray?.map((Item, i) => (
                                                     <p key={i}>
                                                       <span>{Item.newItemOut}</span>
                                                     </p>

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Tabs, Tab } from '@mui/material';
 import axios from 'axios';
 import { Add, Close } from '@mui/icons-material';
 import { Outlet, NavLink, Link } from 'react-router-dom'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
-import db from '../../../dexieDb';
+
 const ViewTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -15,68 +15,42 @@ const ViewTooltip = styled(({ className, ...props }) => (
     fontSize: 11,
   },
 }));
-function ItemNameInfo({ onId }) {
+function ItemNameInfo({ onId, item, search, debouncedSearch, handleSearch }) {
 
-  const [item, SetItems] = useState([])
-
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/item';
-
-  useEffect(() => {
-    const fetchItem = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(apiUrl)
-          SetItems(res.data.data.reverse())
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.itemSchema.toArray();
-        SetItems(offLineCustomer1.reverse())
-      }
-    }
-    fetchItem()
-  }, [])
   const [show, setShow] = useState(2);
   const handleShow = (e) => {
     setShow(e);
   }
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
+
+  const newArray = useMemo(() => {
+    return debouncedSearch !== '' ? item.filter((row) =>
+      row.typeItem.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      (row.itemDescription && row.itemDescription.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
+      row.itemName.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      (row.itemBrand && row.itemBrand.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
+      (row.itemManufacturer && row.itemManufacturer.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
+      (row.itemStore && row.itemStore.toLowerCase().includes(debouncedSearch.toLowerCase()))
+    ) : item;
+  }, [item, debouncedSearch]);
+
   useEffect(() => {
     const selectedIndex = item.findIndex(row => row._id === onId);
     if (selectedIndex !== -1) {
       setValue(selectedIndex)
     }
-  }, [item, onId])
+    const selectedIndex2 = newArray.findIndex(row => row._id === onId);
+    if (selectedIndex2 !== -1) {
+      setValue2(selectedIndex2)
+    }
+  }, [item, onId]);
   const handleChange = (e, newValue) => {
     setValue(newValue)
   }
   const handleChange2 = (e, newValue) => {
     setValue2(newValue)
   }
-  const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [search]);
-
-  const handleSearch = (e) => {
-    const value = e.target.value
-    setSearch(value)
-  }
-  const newArray = debouncedSearch !== '' ? item.filter((row) =>
-    row.typeItem.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    (row.itemDescription && row.itemDescription.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-    row.itemName.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    (row.itemBrand && row.itemBrand.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-    (row.itemManufacturer && row.itemManufacturer.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-    (row.itemStore && row.itemStore.toLowerCase().includes(debouncedSearch.toLowerCase()))
-  ) : item
   return (
     <div>
       {show === 1 ?
@@ -107,7 +81,7 @@ function ItemNameInfo({ onId }) {
                   key={index}
                   label={row.itemName.toUpperCase()}
                   component={Link}
-                  to={`/ItemInformationVIew/${row._id}`}
+                  to={`/ItemInfo/${row._id}`}
                   sx={{
                     '&.Mui-selected': {
                       color: 'white',
@@ -143,7 +117,7 @@ function ItemNameInfo({ onId }) {
             </Grid>
           </Grid>
 
-          <div style={{ height: '558px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+          <div style={{ height: 'calc(100vh - 125px)', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
             <Tabs
               value={value2}
               onChange={handleChange2}
@@ -159,7 +133,7 @@ function ItemNameInfo({ onId }) {
                   key={index}
                   label={row.itemName.toUpperCase()}
                   component={Link}
-                  to={`/ItemInformationVIew/${row._id}`}
+                  to={`/ItemInfo/${row._id}`}
                   sx={{
                     '&.Mui-selected': {
                       color: '#30368a'

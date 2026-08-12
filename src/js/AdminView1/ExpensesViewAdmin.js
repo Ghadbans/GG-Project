@@ -9,10 +9,11 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {Table,Modal, IconButton,styled, TableBody,TableCell,TableHead,TableRow,Checkbox, TableContainer, Paper, Typography, Box, Autocomplete,TextField,Backdrop }  from '@mui/material';
 import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import Loader from '../component/Loader';
@@ -61,7 +62,7 @@ function ExpensesViewAdmin() {
       if (storesUserId) {
      if (navigator.onLine) {
        try {
-         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+         const res = await  axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
          const Name = res.data.data.employeeName;
          const Role = res.data.data.role;
          dispatch(setUser({userName: Name, role: Role, id:res.data.data._id}));
@@ -106,10 +107,10 @@ function ExpensesViewAdmin() {
   });
 },[])
 useEffect(()=> {
-  axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+  axios.get(`${ENDPOINT_URL}/invoice`)
   .then(res => {
     // Handle the response data here
-    const result = res.data.data.filter((row)=> row.Ref && (
+    const result = res.data?.data?.filter((row)=> row.Ref && (
       row
     ))
     setInvoice(result)
@@ -121,7 +122,7 @@ useEffect(()=> {
   });
   },[])
   useEffect(()=> {
-    axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
+    axios.get(`${ENDPOINT_URL}/hidden`)
     .then(res => {
       // Handle the response data here
       setHidden(res.data.data)
@@ -179,7 +180,7 @@ const [filterModel, setFilterModel] = React.useState({
 
 const columns = [
   {field: 'dateField', headerName: 'Date', width:200},
-  {field: 'referenceNumber', headerName: 'Reference#', width:150, renderCell: (params)=>( <div> <span>INV-00</span><span>{params.row.referenceNumber}</span> </div> )},
+  {field: 'referenceNumber', headerName: 'Reference#', width:150, renderCell: (params)=>( <div> <span>INV-{String(params.row.referenceNumber).padStart(6, '0')}</span> </div> )},
   {field: 'customer', headerName: 'Customer Name', width:250, valueGetter:(params)=> params.row.customerName!== undefined?params.row.customerName.customerName.toUpperCase():''},
   {field: 'expenseType', headerName: 'Category', width:250},
   {field: 'view', headerName: 'View', width:80, renderCell:(params)=> (
@@ -274,7 +275,7 @@ const columns = [
                     }
                     </Box>
          ) : <div>
-         <img src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'40%',top:'40px', width:'55%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
+         <img  src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'40%',top:'40px', width:'55%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
          </div>}
        </div>)
      }

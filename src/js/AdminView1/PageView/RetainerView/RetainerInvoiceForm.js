@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {MenuItem,Grid, IconButton, Tooltip, Table, TableBody,  TableHead, TableRow,Paper,TableContainer, TextField, FormControl, InputLabel, Select, Typography } from '@mui/material'
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { v4 } from 'uuid';
 import {  useNavigate } from 'react-router-dom';
 import Close from '@mui/icons-material/Close';
@@ -20,7 +21,7 @@ import dayjs from 'dayjs';
 
 function RetainerInvoiceForm() {
   const navigate = useNavigate();
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-retainerinvoice';
+  const apiUrl = `${ENDPOINT_URL}/create-retainerinvoice`;
   const [customerID,setCustomerID] = useState("");
   const invoiceDate =dayjs('2023-10-02');
   const [referenceNumber,setReferenceNumber] = useState("");
@@ -174,23 +175,17 @@ const tableRows = items.map((Item, i)=>
       </Tooltip>
   </td>
 </tr>)});
-useEffect (() => {
-let row = document.querySelectorAll('#amountTotalInvoice')
-let sum = 0
-for (let i = 0; i < row.length; i++) {
-if (row[i].id === 'amountTotalInvoice') {
-  sum += isNaN(row[i].innerHTML) ? 0 : parseInt(row[i].innerHTML);
+useEffect(() => {
+  let sum = 0;
+  for (let i = 0; i < items.length; i++) {
+    sum += items[i].itemAmount || 0;
+  }
   setSubTotal(sum);
-}
-}
-const calculateBalance = (balanceDue) => {
-  balanceDue = subTotal-total
-  setBalanceDue(balanceDue);
-}
-calculateBalance(balanceDue);
+  const balanceDueLocal = sum - (total || 0);
+  setBalanceDue(balanceDueLocal);
 localStorage.setItem('invoiceCounterRetainer', invoiceCounterRetainer.toString());
-});
-  return (
+}, [items, total, invoiceCounterRetainer]);
+return (
     <>
        <div className='sidemnuandcontent'>
 <SidebarDash/>

@@ -17,13 +17,15 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
+import { ENDPOINT_URL } from '../apiConfig';
 import Loader from '../component/Loader';
 import { useNavigate, NavLink } from 'react-router-dom';
-import Logout from '@mui/icons-material/Logout';
-import { AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Sell, ShoppingBagOutlined, ShoppingCart, Square } from '@mui/icons-material';
+import Logout from '../component/NetworkLogoutIcon';
+import { AccountBalance, AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Sell, ShoppingBagOutlined, ShoppingCart, Square } from '@mui/icons-material';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -52,6 +54,7 @@ import ProjectReportInfo from './PageView/DashboardInfo/ProjectReportInfo';
 import InvoiceReportInfo from './PageView/DashboardInfo/InvoiceReportInfo';
 import ItemReportInfo from './PageView/DashboardInfo/ItemReportInfo';
 import PosReportInvoice from './PageView/DashboardInfo/PosReportInvoice';
+import VatAccountView from './PageView/DashboardInfo/VatAccountView';
 
 const ViewTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -62,7 +65,9 @@ const ViewTooltip = styled(({ className, ...props }) => (
     boxShadow: theme.shadows[1],
     fontSize: 11,
   },
-}));
+})); 
+import './Dashboard.css';
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -149,20 +154,13 @@ function AdminHome() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -171,11 +169,133 @@ function AdminHome() {
     fetchUser()
   }, [dispatch]);
 
-  const handleLogout = () => {
+  // ── BACKUP BEFORE LOGOUT ────────────────────────────────────────
+  const [backupDialogOpen, setBackupDialogOpen] = useState(false);
+  const [backupLoading, setBackupLoading] = useState(false);
+  const [backupDone, setBackupDone] = useState(false);
+  const [hasBackupAccess, setHasBackupAccess] = useState(false);
+  const [backupProgress, setBackupProgress] = useState({ done: 0, total: 0, phase: '' });
+
+  // Check backup access: GG = god mode, everyone else needs Grant Access
+  useEffect(() => {
+    const checkBackupAccess = async () => {
+      try {
+        // localStorage 'user' stores a plain userId string (not JSON)
+        const userId = localStorage.getItem('user');
+        if (!userId) return;
+
+        // Get userName from Redux store (not localStorage)
+        const userName = user?.data?.userName || '';
+
+        // GG account always has backup access (God mode)
+        if (userName === 'GG') {
+          setHasBackupAccess(true);
+          return;
+        }
+
+        // For all others: check Grant Access module
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const myAccess = res.data.data.slice().reverse().find(
+          a => a.userID === userId
+        );
+
+        if (myAccess && Array.isArray(myAccess.modules)) {
+          // Module field is 'moduleName' in the Grant Access schema
+          const allowed = myAccess.modules.some(m => {
+            const name = typeof m === 'string'
+              ? m
+              : (m?.moduleName || m?.name || m?.module || '');
+            return name.toLowerCase().includes('backup');
+          });
+          setHasBackupAccess(allowed);
+        }
+      } catch (e) {
+        console.log('Backup access check error:', e.message);
+      }
+    };
+    if (user?.data?.userName) {
+      checkBackupAccess();
+    }
+  }, [user?.data?.userName]);
+
+  const doLogout = () => {
     localStorage.removeItem('user');
     dispatch(logOut());
-    navigate('/')
-  }
+    navigate('/');
+  };
+
+  const handleLogout = () => {
+    if (hasBackupAccess) {
+      setBackupDone(false);
+      setBackupDialogOpen(true);
+    } else {
+      doLogout();
+    }
+  };
+
+  const handleDownloadBackup = async () => {
+    setBackupLoading(true);
+    setBackupProgress({ done: 0, total: 0, phase: 'Connecting...' });
+    const encoder = new TextEncoder();
+    try {
+      const BASE = `${ENDPOINT_URL}/backup-export?secret=GG_BACKUP_2026_SECURE`;
+
+      // Step 1: Get collection list (fast — no data)
+      const listRes = await axios.get(BASE, { timeout: 30000 });
+      const { collections, exportedAt } = listRes.data;
+      setBackupProgress({ done: 0, total: collections.length, phase: 'Downloading...' });
+
+      // Step 2: Fetch ALL collections in PARALLEL for speed
+      let doneCount = 0;
+      const results = await Promise.all(
+        collections.map(colName =>
+          axios.get(`${BASE}&col=${encodeURIComponent(colName)}`, { timeout: 180000 })
+            .then(r => {
+              doneCount++;
+              setBackupProgress(p => ({ ...p, done: doneCount }));
+              return { colName, docs: r.data.data || [] };
+            })
+        )
+      );
+
+      // Step 3: Build JSON as Blob byte-chunks (avoids V8 string length limit)
+      setBackupProgress({ done: collections.length, total: collections.length, phase: 'Building file...' });
+      const chunks = [];
+      chunks.push(encoder.encode(
+        `{"exportedAt":"${exportedAt}","database":"globalgatedb","totalCollections":${collections.length},"data":{`
+      ));
+      let firstCol = true;
+      for (const { colName, docs } of results) {
+        if (!firstCol) chunks.push(encoder.encode(','));
+        firstCol = false;
+        chunks.push(encoder.encode(`"${colName}":`));
+        chunks.push(encoder.encode(JSON.stringify(docs)));
+      }
+      chunks.push(encoder.encode('}}'));
+
+      // Step 4: Create Blob and trigger download
+      const blob = new Blob(chunks, { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const now  = new Date();
+      const dateStr = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+      const a = document.createElement('a');
+      a.href     = url;
+      a.download = `GlobalGate_Backup_${dateStr}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      setBackupDone(true);
+      setBackupLoading(false);
+      setTimeout(() => { doLogout(); }, 2000);
+
+    } catch (err) {
+      setBackupLoading(false);
+      setBackupProgress({ done: 0, total: 0, phase: '' });
+      const serverMsg = err?.response?.data?.error || err.message;
+      alert('Backup failed: ' + serverMsg);
+    }
+  };
+  // ────────────────────────────────────────────────────────────────
   const [payment1, setPayment] = useState([]);
   const [payRoll, setPayRoll] = useState([]);
   const [itemPurchaseInfo, setItemPurchase] = useState([]);
@@ -183,6 +303,7 @@ function AdminHome() {
   const [item, setItem] = useState([]);
   const [category, setCategory] = useState([]);
   const [invoice, setInvoice] = useState([]);
+  const [allInvoices, setAllInvoices] = useState([]);
   const [posInvoice, setPosInvoice] = useState([]);
   const [maintenance, setMaintenance] = useState([]);
   const [relatedMaintenance, setRelatedMaintenance] = useState([]);
@@ -195,224 +316,167 @@ function AdminHome() {
   const [customer1, setCustomer1] = useState([]);
   const [itemsValue, setItemValue] = useState([]);
   const [purchaseOrder, setPurchaseOrder] = useState([]);
+  const [systemRate, setSystemRate] = useState(1);
   const [date, setDate] = useState(() => {
     const date1 = new Date()
     return date1
   });
-  // const targetTime = dayjs().hour(7).minute(30)
+
   useEffect(() => {
     const fetchAll = async () => {
-      if (navigator.onLine && !user.isHibernating) {
+      // Use cachedGet so repeated dashboard visits reuse cached data instead of re-downloading
+      const safeGet = (url) => cachedGet(url).catch(err => {
+        console.error(`Error fetching ${url}:`, err);
+        return { data: { data: [] } };
+      });
+
+      if (!user.data.role) return;
+
+      if (user.data.role !== 'CEO') {
         try {
-          const currentYear = dayjs(date).format('YYYY');
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          const CustomerInfo = res.data.data.map((item) => ({
+          const [resEmployee, resAttendance] = await Promise.all([
+            axios.get(`${ENDPOINT_URL}/employee`),
+            axios.get(`${ENDPOINT_URL}/employeeattendance`)
+          ]);
+          setEmployee(resEmployee.data.data.reverse());
+          setAttendance(resAttendance.data?.data?.filter((row) => dayjs(row.timeIn).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY') && (row.observation === 'P' || row.observation === 'S' || row.observation === 'A' || row.observation === 'H')));
+          return;
+        } catch (error) {
+          console.error('Error fetching non-CEO data:', error);
+          return;
+        }
+      }
+
+      try {
+        safeGet(`${ENDPOINT_URL}/customer`).then(resCustomer => {
+          const mappedCustomers = resCustomer.data.data.map(item => ({
             ...item,
             id: item._id,
-          }))
-          setCustomer(CustomerInfo.filter((row) => row.credit !== undefined && row.credit > 0))
-          setCustomer1(res.data.data);
-          const resExpenses = await axios.get(`https://gg-project-production.up.railway.app/endpoint/dailyExpense-Information?page=1&limit=1000&filterField=expenseDate&filterValue=${currentYear}`);
-          setExpenses(resExpenses.data.itemI);
-          const resItemPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemPurchase')
-          setItemPurchase(resItemPurchase.data.data.filter(row => dayjs(row.itemPurchaseDate).format('YYYY') === currentYear && (row.status === undefined || row.status === "Paid")))
-          const resPayRoll = await axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll')
-          setPayRoll(resPayRoll.data.data.filter(row => dayjs(row.month).format('YYYY') === currentYear))
-          const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
-          setPayment(resPayment.data.data.filter(row => dayjs(row.paymentDate).format('YYYY') === currentYear).map((row) => ({
+            Customer: item.Customer || item.customerName || item.customerFullName || item.companyName || 'No Customer Name'
+          }));
+          setCustomer(mappedCustomers.filter(row => parseFloat(row.credit || 0) > 0));
+          setCustomer1(mappedCustomers);
+        });
+
+        safeGet(`${ENDPOINT_URL}/expense?summary=true`).then(resExpenses => {
+          setExpenses(resExpenses.data?.data?.filter(row => dayjs(row.expenseDate).format('YYYY') === dayjs(date).format('YYYY')).map(row => ({
             ...row,
-            amount: row.amount - row.remaining
-          })))
-          const resPosInvoice = await axios.get(`https://gg-project-production.up.railway.app/endpoint/pos-Information?page=1&limit=500&filterField=invoiceDate&filterValue=${currentYear}`)
-          setPosInvoice(resPosInvoice.data.itemI.filter((row) => row.status === 'Paid').map((row) => ({
+            expenseNumber: row.expenseNumber.toString().padStart(6, '0')
+          })));
+        });
+
+        safeGet(`${ENDPOINT_URL}/itemPurchase?summary=true`).then(resItemPurchase => {
+          setItemPurchase(resItemPurchase.data?.data?.filter(row => dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(date).format('YYYY')).map(row => ({
+            ...row,
+            itemPurchaseNumber: row.itemPurchaseNumber.toString().padStart(6, '0')
+          })));
+        });
+
+        safeGet(`${ENDPOINT_URL}/payRoll`).then(resPayRoll => {
+          setPayRoll(resPayRoll.data?.data?.filter(row => dayjs(row.month).format('YYYY') === dayjs(date).format('YYYY')).map(row => ({
+            ...row,
+            payNumber: (row.payNumber || "").toString().padStart(6, '0')
+          })));
+        });
+
+        safeGet(`${ENDPOINT_URL}/payment`).then(resPayment => {
+          setPayment(resPayment.data?.data?.filter(row => dayjs(row.paymentDate).format('YYYY') === dayjs(date).format('YYYY')));
+        });
+
+        safeGet(`${ENDPOINT_URL}/Rate`).then(resRate => {
+          if (resRate.data?.data?.length > 0) {
+            setSystemRate(parseFloat(resRate.data?.data?.[0]?.rate || 1));
+          }
+        });
+
+        safeGet(`${ENDPOINT_URL}/pos?summary=true`).then(resPosInvoice => {
+          setPosInvoice(resPosInvoice.data?.data?.filter(row => row.status === 'Paid').map(row => ({
             ...row,
             id: row._id,
-            factureNumber: 'S-00' + row.factureNumber,
+            factureNumber: 'S-' + (row.factureNumber || "").toString().padStart(6, '0'),
             dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
-            time: dayjs(row.time).format('HH:mm'),
-            items: row.items.map((Item) => ({
-              ...Item,
-              totalRevenueInfo: Item.itemQty * Item.itemRate,
-              totalCostInfo: Item.itemQty * Item.itemCost,
-            })),
-            infoSell: Math.round(((row.TotalAmountPaid - row.tax) / row.rate) * 100) / 100,
-            infoSellFC: row.TotalAmountPaid,
-            TaxUSd: Math.round((row.tax / row.rate) * 100) / 100,
-            infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / row.rate,
-            infoCostFC: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0))
-          })).reverse())
-          const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item-shop?page=1&limit=500')
-          const ItemInfo = resItem.data.items.map((item) => ({
+            infoSell: Math.round(((row.TotalAmountPaid - (row.tax || 0)) / (row.rate || systemRate || 1)) * 100) / 100,
+            infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / (row.rate || systemRate || 1)
+          })).reverse());
+        });
+
+        safeGet(`${ENDPOINT_URL}/item`).then(resItem => {
+          const ItemInfo = resItem.data.data.map(item => ({
             ...item,
             id: item._id,
-            ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber
-          }))
-          setItem(ItemInfo.reverse())
-          const resCode = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemCode')
-          setCategory(resCode.data.data)
-          const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          setInvoice(resInvoice.data.data.filter((row) => row.status === 'Paid' && dayjs(row.invoiceDate).format('YYYY') === currentYear).map((row) => ({
+            ItemNumber: item.itemUpc.newCode + '-' + item.itemUpc.itemNumber.toString().padStart(6, '0')
+          }));
+          setItem(ItemInfo.reverse());
+        });
+
+        safeGet(`${ENDPOINT_URL}/itemCode`).then(resCode => {
+          setCategory(resCode.data.data);
+        });
+
+        Promise.all([
+          safeGet(`${ENDPOINT_URL}/invoice?summary=true`),
+          safeGet(`${ENDPOINT_URL}/purchase?summary=true`)
+        ]).then(([resInvoice, resPurchase]) => {
+          const processedInvoices = resInvoice.data.data.map(row => ({
             ...row,
             id: row._id,
-            invoiceNumber: 'INV-' + row.invoiceNumber,
-            dateField: row.invoiceDate !== null ? dayjs(row.invoiceDate).format('DD/MM/YYYY') : '',
-            items: row.items.map((Item) => ({
-              ...Item,
-              totalRevenueInfo: Item.itemOut * Item.itemRate,
-              totalCostInfo: Item.itemOut * Item.itemCost,
-            })),
+            invoiceNumber: 'INV-' + (row.invoiceNumber || "").toString().padStart(6, '0'),
+            dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
             infoSell: row.totalInvoice,
             infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
-          })).reverse())
+          })).reverse();
+          setAllInvoices(processedInvoices);
+          setInvoice(processedInvoices.filter(row => row.status === 'Paid'));
 
-          const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-          setRelatedMaintenance(resMaintenance.data.data)
-          setMaintenance(resMaintenance.data.data.filter((row) => row.status === 'Close' && dayjs(row.serviceDate).format('YYYY') === currentYear).map((row) =>
-          ({
+          setPurchase(resPurchase.data.data.map(row => ({
+            ...row,
+            infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+            RelatedInvoice: resInvoice.data?.data?.find(inv => inv.ReferenceName2 === row._id)
+          })));
+        });
+
+        safeGet(`${ENDPOINT_URL}/maintenance?summary=true`).then(resMaintenance => {
+          setMaintenance(resMaintenance.data?.data?.filter(row => row.status === 'Close').map(row => ({
             ...row,
             id: row._id,
-            serviceNumber: "M-00" + row.serviceNumber,
+            maintenanceNumber: "M-" + (row.maintenanceNumber || row.serviceNumber || "").toString().padStart(6, '0'),
             dateField: dayjs(row.serviceDate).format('DD/MM/YYYY'),
-            items: row.items.map((Item) => ({
-              ...Item,
-              totalRevenueInfo: Item.itemQty * Item.itemRate,
-              totalCostInfo: Item.itemOut * Item.itemCost,
-            })),
             infoSell: row.subTotal,
             infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
-          })).reverse())
-          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          setPurchase(resPurchase.data.data.map((row) => {
-            const relatedInvoice = resInvoice.data.data.find((Item) => Item.ReferenceName2 === row._id)
-            return ({
-              ...row,
-              RelatedInvoice: relatedInvoice,
-              items: row.items.map((Item1) => ({
-                ...Item1,
-                totalCostInfo: Item1.itemOut * Item1.itemCost
-              })),
-              infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
-            })
-          }))
-          const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-          setProject(resProject.data.data.filter((row) => row.status === 'Completed').map((row) => ({
+          })).reverse());
+          setRelatedMaintenance(resMaintenance.data.data);
+        });
+
+        safeGet(`${ENDPOINT_URL}/projects`).then(resProject => {
+          setProject(resProject.data?.data?.filter(row => row.status === 'Completed').map(row => ({
             ...row,
             id: row._id,
-            projectNumber: "P-00" + row.projectNumber,
-            visitField: dayjs(row.visitDate).format('DD/MM/YYYY'),
-            startField: dayjs(row.startDate).format('DD/MM/YYYY'),
-          })))
-          const resEmployee = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
-          setEmployee(resEmployee.data.data.reverse())
-          const resAttendance = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeattendance')
-          setAttendance(resAttendance.data.data.filter((row) => dayjs(row.timeIn).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY') && (row.observation === 'P' || row.observation === 'S' || row.observation === 'A' || row.observation === 'H')))
-          const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
-          setNotification(resNotification.data.data.filter((row) => dayjs(row.dateNotification).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY')).reverse())
-        } catch (error) {
-          console.error("Error in fetchAll:", error);
-        }
-      } else {
-        const offLineExpenses = await db.dailyExpenseSchema.toArray();
-        setExpenses(offLineExpenses.filter(row => dayjs(row.expenseDate).format('YYYY') === dayjs(date).format('YYYY')));
-        const offLineItemPurchase = await db.itemPurchaseSchema.toArray();
-        setItemPurchase(offLineItemPurchase.filter(row => dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(date).format('YYYY') && (row.status === undefined || row.status === "Paid")));
-        const offLinePayRoll = await db.payRollSchema.toArray();
-        setPayRoll(offLinePayRoll.filter(row => dayjs(row.month).format('YYYY') === dayjs(date).format('YYYY')));
-        const offLinePayment = await db.paymentSchema.toArray();
-        setPayment(offLinePayment.filter(row => dayjs(row.paymentDate).format('YYYY') === dayjs(date).format('YYYY')).map((row) => ({
-          ...row,
-          amount: row.amount - row.remaining
-        })));
-        const offLineItem = await db.itemSchema.toArray();
-        setItem(offLineItem.map((item) => ({
-          ...item,
-          id: item._id,
-          ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber
-        })))
-        const offLineItemCode1 = await db.itemCodeSchema.toArray();
-        setCategory(offLineItemCode1.reverse());
-        const offLineInvoice = await db.invoiceSchema.toArray();
-        setInvoice(offLineInvoice.filter((row) => row.status === 'Paid').map((row) => ({
-          ...row,
-          id: row._id,
-          invoiceNumber: 'INV-' + row.invoiceNumber,
-          dateField: row.invoiceDate !== null ? dayjs(row.invoiceDate).format('DD/MM/YYYY') : '',
-          items: row.items.map((Item) => ({
-            ...Item,
-            totalRevenueInfo: Item.itemOut * Item.itemRate,
-            totalCostInfo: Item.itemOut * Item.itemCost,
-          })),
-          infoSell: row.totalInvoice,
-          infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
-        })).reverse())
-        const offLinePosInvoice = await db.posSchema.toArray();
-        setPosInvoice(offLinePosInvoice.filter((row) => row.status === 'Paid').map((row) => ({
-          ...row,
-          id: row._id,
-          factureNumber: 'S-00' + row.factureNumber,
-          dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
-          time: dayjs(row.time).format('HH:mm'),
-          items: row.items.map((Item) => ({
-            ...Item,
-            totalRevenueInfo: Item.itemQty * Item.itemRate,
-            totalCostInfo: Item.itemQty * Item.itemCost,
-          })),
-          infoSell: Math.round(((row.TotalAmountPaid - row.tax) / row.rate) * 100) / 100,
-          infoSellFC: row.TotalAmountPaid,
-          TaxUSd: Math.round((row.tax / row.rate) * 100) / 100,
-          infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / row.rate,
-          infoCostFC: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0))
-        })).reverse())
+            projectNumber: "P-" + (row.projectNumber || "").toString().padStart(6, '0'),
+          })));
+        });
 
-        const offLineMaintenance = await db.maintenanceSchema.toArray();
-        setRelatedMaintenance(offLineMaintenance)
-        setMaintenance(offLineMaintenance.filter((row) => row.status === 'Close').map((row) =>
-        ({
-          ...row,
-          id: row._id,
-          serviceNumber: "M-00" + row.serviceNumber,
-          dateField: dayjs(row.serviceDate).format('DD/MM/YYYY'),
-          items: row.items.map((Item) => ({
-            ...Item,
-            totalRevenueInfo: Item.itemQty * Item.itemRate,
-            totalCostInfo: Item.itemOut * Item.itemCost,
-          })),
-          infoSell: row.subTotal,
-          infoCost: row.items.reduce((sum, ITem) => sum + ITem.totalCostInfo, 0),
-        })).reverse())
-        const offLinePurchase = await db.purchaseSchema.toArray();
-        setPurchase(offLinePurchase.map((row) => {
-          const relatedInvoice = offLineInvoice.find((Item) => Item.ReferenceName2 === row._id)
-          return ({
-            ...row,
-            RelatedInvoice: relatedInvoice,
-            items: row.items.map((Item1) => ({
-              ...Item1,
-              totalCostInfo: Item1.itemOut * Item1.itemCost
-            })),
-            infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
-          })
-        }))
-        const offLineProject = await db.projectSchema.toArray();
-        setProject(offLineProject.filter((row) => row.status === 'Completed').map((row) => ({
-          ...row,
-          id: row._id,
-          projectNumber: "P-00" + row.projectNumber,
-          visitField: dayjs(row.visitDate).format('DD/MM/YYYY'),
-          startField: dayjs(row.startDate).format('DD/MM/YYYY'),
-        })))
-        const offLineAttendance = await db.employeeAttendanceSchema.toArray();
-        setAttendance(offLineAttendance.filter((row) => dayjs(new Date(row.timeIn)).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY') && (row.observation === 'P' || row.observation === 'S' || row.observation === 'A' || row.observation === 'H')))
-        const offLineEmployee = await db.employeeSchema.toArray();
-        setEmployee(offLineEmployee)
+        safeGet(`${ENDPOINT_URL}/employee`).then(resEmployee => {
+          setEmployee(resEmployee.data.data.reverse());
+        });
+
+        safeGet(`${ENDPOINT_URL}/employeeattendance`).then(resAttendance => {
+          setAttendance(resAttendance.data?.data?.filter(row => dayjs(row.timeIn).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY') && (row.observation === 'P' || row.observation === 'S' || row.observation === 'A' || row.observation === 'H')));
+        });
+
+        safeGet(`${ENDPOINT_URL}/notification`).then(resNotification => {
+          setNotification(resNotification.data?.data?.filter(row => dayjs(row.dateNotification).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY')).reverse());
+        });
+
+      } catch (error) {
+        console.error('Error fetching dashboard data:', error);
       }
-    }
-    fetchAll()
-  }, [date, user.isHibernating])
+    };
+    fetchAll();
+  }, [date, user.data.role, dispatch]);
 
   const fetchValue = async () => {
     try {
-      const resItemOutItemReturn = await axios.get('https://gg-project-production.up.railway.app/endpoint/item-usage')
+      const resItemOutItemReturn = await axios.get(`${ENDPOINT_URL}/item-usage`)
       setItemValue(resItemOutItemReturn.data?.map((item) => ({
         ...item,
         id: item.itemId,
@@ -427,7 +491,7 @@ function AdminHome() {
   payment1.forEach(row => {
     payment.push({
       _id: row._id,
-      paymentNumber: 'PAY-0' + row.paymentNumber,
+      paymentNumber: 'PAY-' + row.paymentNumber.toString().padStart(6, '0'),
       customerName: row.customerName,
       paymentDate: row.paymentDate,
       TotalAmount: row.TotalAmount,
@@ -437,7 +501,11 @@ function AdminHome() {
       remaining: row.remaining,
       amount: row.amount,
       bankCharge: row.bankCharge,
-      modes: row.modes
+      modes: row.modes,
+      tax: row.tax || 0,
+      status: row.status || 'Paid',
+      transactionType: row.transactionType || 'Invoice',
+      paymentMethod: row.paymentMethod || 'Bank Transfer'
     })
   })
   posInvoice.forEach(row => {
@@ -453,7 +521,11 @@ function AdminHome() {
       remaining: 0,
       amount: row.TotalAmountPaid / row.rate,
       bankCharge: 0,
-      modes: ""
+      modes: "",
+      tax: row.TaxUSd || 0,
+      status: row.status || 'Paid',
+      transactionType: 'POS',
+      paymentMethod: row.totalPaymentMethod === "Cash" ? "Cash" : "POS"
     })
   })
 
@@ -462,7 +534,7 @@ function AdminHome() {
   itemPurchaseInfo.forEach(row => {
     itemPurchase.push({
       _id: row._id,
-      itemPurchaseNumber: 'IP-0' + row.itemPurchaseNumber,
+      itemPurchaseNumber: 'IP-' + row.itemPurchaseNumber.toString().padStart(6, '0'),
       itemPurchaseDate: row.itemPurchaseDate,
       projectName: row.projectName,
       manufacturer: row.manufacturer,
@@ -470,7 +542,10 @@ function AdminHome() {
       description: row.description,
       totalFC: row.totalFC,
       total: row.total,
-      amount: row.totalUSD !== undefined ? row.totalUSD : row.total
+      amount: row.totalUSD !== undefined ? row.totalUSD : row.total,
+      payments: row.payments || [],
+      status: row.status || 'Paid',
+      tax: row.tax || 0
     })
   })
 
@@ -483,72 +558,83 @@ function AdminHome() {
       ...row,
       expenses: relatedExpenses,
       relatedPurchase,
-      totalSell: relatedPurchase.filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + parseFloat(item.RelatedInvoice.totalInvoice), 0),
-      totalExpenses: relatedExpenses?.reduce((sum, item) => sum + parseFloat(item.total), 0),
-      totalItemCost: relatedPurchase?.reduce((sum, item) => sum + parseFloat(item.infoCost), 0)
+      totalSell: relatedPurchase.filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice.totalInvoice) || 0), 0),
+      totalExpenses: relatedExpenses?.reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0),
+      totalItemCost: relatedPurchase?.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0)
     })
   })
   const filterInvoice = invoice.filter((row) =>
     !purchase.some((Item) => Item._id === row.ReferenceName2) && !relatedMaintenance.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName)
   )
 
-  const totalSellInvoice = filterInvoice.length > 0 ? filterInvoice.reduce((sum, item) => sum + parseFloat(item.infoSell), 0) : 0
-  const totalCostInvoice = filterInvoice.length > 0 ? filterInvoice.reduce((sum, item) => sum + parseFloat(item.infoCost), 0) : 0
+  const totalSellInvoice = filterInvoice.length > 0 ? filterInvoice.reduce((sum, item) => sum + (parseFloat(item.infoSell) || 0), 0) : 0
+  const totalCostInvoice = filterInvoice.length > 0 ? filterInvoice.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) : 0
   const invoiceRevenue = totalSellInvoice - totalCostInvoice
 
-  const totalPOSSellInvoice = posInvoice.length > 0 ? posInvoice.reduce((sum, item) => sum + parseFloat(item.infoSell), 0) : 0
-  const totalPOSCostInvoice = posInvoice.length > 0 ? posInvoice.reduce((sum, item) => sum + parseFloat(item.infoCost), 0) : 0
+  const totalPOSSellInvoice = posInvoice.length > 0 ? posInvoice.reduce((sum, item) => sum + (parseFloat(item.infoSell) || 0), 0) : 0
+  const totalPOSCostInvoice = posInvoice.length > 0 ? posInvoice.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) : 0
   const invoicePOSRevenue = totalPOSSellInvoice - totalPOSCostInvoice
 
 
 
-  const projectCostInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.relatedPurchase.reduce((sum, item) => sum + parseFloat(item.infoCost), 0) }, 0) : 0
-  const projectExpensesInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.expenses.reduce((sum, item) => sum + parseFloat(item.total), 0) }, 0) : 0
-  const projectSellInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.relatedPurchase.filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + parseFloat(item.RelatedInvoice.totalInvoice), 0) }, 0) : 0
+  const projectCostInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.relatedPurchase.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) }, 0) : 0
+  const projectExpensesInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.expenses.reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0) }, 0) : 0
+  const projectSellInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.relatedPurchase.filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice.totalInvoice) || 0), 0) }, 0) : 0
   const projectRevenue = projectSellInfo - (projectCostInfo + projectExpensesInfo)
 
 
-  const totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + parseFloat(item.itemAmount), 0) }, 0) : 0
-  const totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + parseFloat(item.totalCostInfo), 0) }, 0) : 0
-  const totalMaintenanceLaborFees = maintenance.filter((row) => row.totalLaborFeesGenerale !== undefined).reduce((sum, row) => sum + row.totalLaborFeesGenerale, 0)
+  const totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + (parseFloat(item.itemAmount) || 0), 0) }, 0) : 0
+  const totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + (parseFloat(item.totalCostInfo) || 0), 0) }, 0) : 0
+  const totalMaintenanceLaborFees = maintenance.filter((row) => row.totalLaborFeesGenerale !== undefined).reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0)
 
 
   const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
   //Month Payment Start
-  const TotalMonthPayment = payment ? payment.reduce((acc, item) => {
+  const TotalMonthPayment = payment ? payment.filter(item => {
+    if (item.status === 'Voided') return false;
+    
+    // Business Rule: Advanced Payment (Credit) does not count as Cash In until applied to an invoice
+    const isAdvancedPayment = (item.transactionType !== 'POS') && (item.TotalAmount?.length === 0 || !item.TotalAmount) && (parseFloat(item.remaining || item.credit || 0) > 0);
+    if (isAdvancedPayment) return false;
+
+    return dayjs(item.paymentDate).format('YYYY') === dayjs(date).format('YYYY');
+  }).reduce((acc, item) => {
     const month = dayjs(item.paymentDate).format('MMMM');
-    const year = dayjs(item.paymentDate).format('YYYY');
     if (!acc[month]) {
-      acc[month] = { year, month, amount: 0 }
+      acc[month] = { month, amount: 0 }
     }
-    acc[month].amount += parseFloat(item.amount)
-    return acc
+    
+    // Business Rule: Use sum of applied amounts (TotalAmount) instead of gross amount (item.amount)
+    // to ensure 'Credit' (unapplied balance) is not counted in Cash In.
+    const appliedTotal = (item.TotalAmount?.length > 0) 
+      ? item.TotalAmount.reduce((s, it) => s + parseFloat(it.total || it.amount || 0), 0)
+      : parseFloat(item.amount || 0);
+
+    const val = isFinite(appliedTotal) ? appliedTotal : 0;
+    acc[month].amount += item.transactionType === 'Refund' ? -val : val;
+    return acc;
   }, {}) : ''
   const newMonthArrayPayment = (Object.entries(TotalMonthPayment).map(([month, total]) => ({
-    month: total.month, total: parseFloat(total.amount.toFixed(2)), year: total.year
+    month: total.month, total: parseFloat((total.amount || 0).toFixed(2))
   })))
   const sortArrayByMonthPayment = newMonthArrayPayment.sort((a, b) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return months.indexOf(a.month) - months.indexOf(b.month)
-  }).filter(row => {
-    const rowDate = dayjs(row.year).format('YYYY');
-    return rowDate === dayjs(date).format('YYYY')
   })
-  const totalRevenue = sortArrayByMonthPayment.reduce((sum, row) => sum + row.total, 0)
+
 
   //Month Payment End
   //Daily Expenses Start
-  const TotalMonthDailyExpenses = expenses ? expenses.reduce((acc, item) => {
+  const TotalMonthDailyExpenses = expenses ? expenses.filter(item => dayjs(item.expenseDate).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
     const month = dayjs(item.expenseDate).format('MMMM');
-    const year = dayjs(item.expenseDate).format('YYYY');
     if (!acc[month]) {
-      acc[month] = { year, month, total: 0 }
+      acc[month] = { month, total: 0 }
     }
     acc[month].total += parseFloat(item.total)
     return acc
   }, {}) : ''
   const newMonthArrayDailyExpenses = (Object.entries(TotalMonthDailyExpenses).map(([month, total]) => ({
-    month: total.month, total: parseFloat(total.total.toFixed(2)), year: total.year
+    month: total.month, total: parseFloat((total.total || 0).toFixed(2))
   })))
   const sortArrayByMonthDailyExpenses = newMonthArrayDailyExpenses.sort((a, b) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -559,17 +645,16 @@ function AdminHome() {
 
   //Daily Expenses End
   //PayRoll Start
-  const TotalMonthPayRoll = payRoll ? payRoll.reduce((acc, item) => {
+  const TotalMonthPayRoll = payRoll ? payRoll.filter(item => dayjs(item.month).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
     const month = dayjs(item.month).format('MMMM');
-    const year = dayjs(item.month).format('YYYY');
     if (!acc[month]) {
-      acc[month] = { year, month, totalPaidDollars: 0 }
+      acc[month] = { month, totalPaidDollars: 0 }
     }
     acc[month].totalPaidDollars += parseFloat(item.totalPaidDollars)
     return acc
   }, {}) : ''
   const newMonthArrayPayRoll = (Object.entries(TotalMonthPayRoll).map(([month, total]) => ({
-    month: total.month, total: parseFloat(total.totalPaidDollars.toFixed(2)), year: total.year
+    month: total.month, total: parseFloat(total.totalPaidDollars.toFixed(2))
   })))
   const sortArrayByMonthPayRoll = newMonthArrayPayRoll.sort((a, b) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -578,17 +663,16 @@ function AdminHome() {
   const totalPayRoll = sortArrayByMonthPayRoll.reduce((sum, row) => sum + row.total, 0);
   //PayRoll End
   //Item Purchase Start
-  const TotalMonthItemPurchase = itemPurchase ? itemPurchase.reduce((acc, item) => {
+  const TotalMonthItemPurchase = itemPurchase ? itemPurchase.filter(item => dayjs(item.itemPurchaseDate).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
     const month = dayjs(item.itemPurchaseDate).format('MMMM');
-    const year = dayjs(item.itemPurchaseDate).format('YYYY');
     if (!acc[month]) {
-      acc[month] = { year, month, total: 0 }
+      acc[month] = { month, total: 0 }
     }
-    acc[month].total += parseFloat(item.amount)
+    acc[month].total += parseFloat(item.totalUSD || item.total || item.amount || 0);
     return acc
   }, {}) : ''
   const newMonthArrayItemPurchase = (Object.entries(TotalMonthItemPurchase).map(([month, total]) => ({
-    month: total.month, total: parseFloat(total.total.toFixed(2)), year: total.year
+    month: total.month, total: parseFloat(total.total.toFixed(2))
   })))
   const sortArrayByMonth = newMonthArrayItemPurchase.sort((a, b) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -596,57 +680,231 @@ function AdminHome() {
   })
   const totalItemPurchase = sortArrayByMonth.reduce((sum, row) => sum + row.total, 0);
 
-  const mergeArrays = (sortArrayByMonthDailyExpenses, sortArrayByMonthPayRoll, sortArrayByMonth) => {
+  const TotalMonthPaidItemPurchase = itemPurchase ? itemPurchase.reduce((acc, item) => {
+    const hasPayments = (item.payments || []).length > 0;
+    if (hasPayments) {
+      item.payments.forEach(p => {
+        if (dayjs(p.date).format('YYYY') !== dayjs(date).format('YYYY')) return;
+        const month = dayjs(p.date).format('MMMM');
+        if (!acc[month]) {
+          acc[month] = { month, total: 0 }
+        }
+        const rateToUse = parseFloat(p.rate || systemRate || 1);
+        const pAmount = parseFloat(p.totalUSD || (parseFloat(p.amount || 0) + (parseFloat(p.amountFC || 0) / rateToUse)) || 0);
+        acc[month].total += pAmount;
+      });
+    } else if (item.status === 'PAID' || item.status === 'Paid') {
+      // Legacy Fallback for older records with no payment log
+      if (dayjs(item.itemPurchaseDate).format('YYYY') === dayjs(date).format('YYYY')) {
+        const month = dayjs(item.itemPurchaseDate).format('MMMM');
+        if (!acc[month]) {
+          acc[month] = { month, total: 0 }
+        }
+        acc[month].total += parseFloat(item.amount || 0);
+      }
+    }
+    return acc;
+  }, {}) : {}
+  const newMonthArrayPaidItemPurchase = (Object.entries(TotalMonthPaidItemPurchase).map(([month, total]) => ({
+    month: total.month, total: parseFloat(total.total.toFixed(2))
+  })))
+  const sortArrayByMonthPaidItemPurchase = newMonthArrayPaidItemPurchase.sort((a, b) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return months.indexOf(a.month) - months.indexOf(b.month)
+  })
+
+
+  // VAT Calculations
+  const getVatValue = (item) => {
+    const hasTva = item.CheckTvA || item.checkTvA || item.CheckTva || item.hasTVA || item.tva || item.TVA;
+    const tax = item.tax || item.taxAmount || item.vatAmount || item.TvaAmount || item.taxUSD || 0;
+    if (tax > 0) return tax;
+    if (hasTva) {
+      const totalVal = item.totalUSD !== undefined ? item.totalUSD : item.total !== undefined ? item.total : item.amount;
+      return (Number(totalVal) * 0.16);
+    }
+    return 0;
+  };
+  const vatCollected = (payment || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
+  const vatPaidExpenses = (expenses || []).reduce((sum, e) => sum + getVatValue(e), 0);
+  const vatPaidPurchases = (itemPurchase || []).filter(p => p.status !== 'Voided').reduce((sum, p) => sum + getVatValue(p), 0);
+  const vatPaid = vatPaidExpenses + vatPaidPurchases;
+  const netVat = vatCollected - vatPaid;
+
+  // Credit Accounts Calculations (cumulative changes during the selected year)
+  const monthlyCreditChanges = monthsOfYear.reduce((acc, month) => {
+    acc[month] = 0;
+    return acc;
+  }, {});
+
+  if (payment) {
+    payment.forEach(item => {
+      if (item.status === 'Voided') return;
+      const monthName = dayjs(item.paymentDate).format('MMMM');
+      if (item.modes === 'Credit' || (item.modes === 'Cash' && parseFloat(item.remaining || 0) > 0) || (item.modes === 'Bank Transfer' && parseFloat(item.remaining || 0) > 0)) {
+        monthlyCreditChanges[monthName] += parseFloat(item.remaining || 0);
+      } else if (item.modes === 'Credit-Account') {
+        monthlyCreditChanges[monthName] -= parseFloat(item.amount || 0);
+      }
+    });
+  }
+
+  let runningCredit = 0;
+  const sortArrayByMonthCreditAccounts = monthsOfYear.map(month => {
+    runningCredit += monthlyCreditChanges[month];
+    if (runningCredit < 0) runningCredit = 0;
+    return { month, total: parseFloat(runningCredit.toFixed(2)) };
+  });
+
+  const totalCreditAccounts = customer1.reduce((sum, c) => sum + (parseFloat(c.credit) || 0), 0);
+
+  // --- Synchronized Financial Metrics (Phase 74) ---
+
+  // 1. REVENUE (Accrual Basis - Total Invoice Amount)
+  const TotalMonthAllInvoices = allInvoices ? allInvoices.filter(item => item.status && !['Draft', 'Decline', 'Void', 'Free of Charge'].includes(item.status) && dayjs(item.invoiceDate).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
+    const month = dayjs(item.invoiceDate).format('MMMM');
+    if (!acc[month]) {
+      acc[month] = { month, total: 0 }
+    }
+    acc[month].total += parseFloat(item.totalInvoice || 0)
+    return acc
+  }, {}) : {}
+  const TotalMonthPOS = posInvoice ? posInvoice.filter(item => dayjs(item.invoiceDate).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
+    const month = dayjs(item.invoiceDate).format('MMMM');
+    if (!acc[month]) {
+      acc[month] = { month, total: 0 }
+    }
+    acc[month].total += parseFloat((item.totalInvoice || item.TotalAmountPaid || 0) / (item.rate || systemRate || 1))
+    return acc
+  }, {}) : {}
+
+  const mergedRevenueArrays = (arr1, arr2) => {
     const merged = {};
-    sortArrayByMonthDailyExpenses.forEach(item => {
-      if (!merged[item.month]) {
-        merged[item.month] = { ...item, total: 0 }
-      }
+    Object.values(arr1).forEach(item => {
+      if (!merged[item.month]) { merged[item.month] = { ...item, total: 0 } }
       merged[item.month].total += parseFloat(item.total)
     });
-    sortArrayByMonthPayRoll.forEach(item => {
-      if (!merged[item.month]) {
-        merged[item.month] = { ...item, total: 0 }
-      }
+    Object.values(arr2).forEach(item => {
+      if (!merged[item.month]) { merged[item.month] = { ...item, total: 0 } }
       merged[item.month].total += parseFloat(item.total)
     });
-    sortArrayByMonth.forEach(item => {
-      if (!merged[item.month]) {
-        merged[item.month] = { ...item, total: 0 }
-      }
-      merged[item.month].total += parseFloat(item.total)
-    });
+    return Object.values(merged);
+  }
+
+  const sortArrayByMonthRevenue = mergedRevenueArrays(TotalMonthAllInvoices, TotalMonthPOS)
+    .sort((a, b) => {
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      return months.indexOf(a.month) - months.indexOf(b.month)
+    })
+  const totalRevenue = sortArrayByMonthRevenue.reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0)
+
+  // 2. CASH REVENUE (For Net Income - Total Payments Received)
+  const TotalMonthAllPayments = allInvoices ? allInvoices.filter(item => item.status && !['Draft', 'Decline', 'Void', 'Free of Charge'].includes(item.status) && dayjs(item.invoiceDate).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
+    const month = dayjs(item.invoiceDate).format('MMMM');
+    if (!acc[month]) {
+      acc[month] = { month, total: 0 }
+    }
+    acc[month].total += parseFloat(item.total || 0)
+    return acc
+  }, {}) : {}
+  const TotalMonthPOSCash = posInvoice ? posInvoice.filter(item => dayjs(item.invoiceDate).format('YYYY') === dayjs(date).format('YYYY')).reduce((acc, item) => {
+    const month = dayjs(item.invoiceDate).format('MMMM');
+    if (!acc[month]) {
+      acc[month] = { month, total: 0 }
+    }
+    acc[month].total += parseFloat(item.TotalAmountPaid / (item.rate || systemRate || 1))
+    return acc
+  }, {}) : {}
+
+  const sortArrayByMonthCashRevenueNet = mergedRevenueArrays(TotalMonthAllPayments, TotalMonthPOSCash)
+    .sort((a, b) => {
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+      return months.indexOf(a.month) - months.indexOf(b.month)
+    })
+  const totalCashRevenueForNet = sortArrayByMonthCashRevenueNet.reduce((sum, row) => sum + row.total, 0)
+
+  // 3. EXPENSES (Accrual) and CASH OUT (Cash Basis)
+  const mergeArrays = (arr1, arr2, arr3) => {
+    const merged = {};
+    [arr1, arr2, arr3].forEach(arr => {
+      arr.forEach(item => {
+        if (!merged[item.month]) {
+          merged[item.month] = { ...item, total: 0 }
+        }
+        merged[item.month].total += parseFloat(item.total)
+      })
+    })
     return Object.values(merged)
   }
   const mergedArray = mergeArrays(sortArrayByMonthDailyExpenses, sortArrayByMonthPayRoll, sortArrayByMonth)
-
-
   const sortArrayByMonthTotalExpensesAll = mergedArray.sort((a, b) => {
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
     return months.indexOf(a.month) - months.indexOf(b.month)
   })
-  const totalExpenses = Number(totalDailyExpenses) + Number(totalPayRoll) + Number(totalItemPurchase)
-  const Gain = totalRevenue - totalExpenses
+  const totalExpenses = sortArrayByMonthTotalExpensesAll.reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0);
 
-
-  const normalizeSortArrayByMonthPayment = monthsOfYear.map((moth) => {
-    const related = sortArrayByMonthPayment.find((row) => row.month === moth)
-    return {
-      month: moth,
-      total: related ? related.total : 0
-    }
+  const mergedArrayCashOut = mergeArrays(sortArrayByMonthDailyExpenses, sortArrayByMonthPayRoll, sortArrayByMonthPaidItemPurchase)
+  const sortArrayByMonthTotalCashOutAll = mergedArrayCashOut.sort((a, b) => {
+    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+    return months.indexOf(a.month) - months.indexOf(b.month)
   })
-  const normalizeSortArrayByMonthTotalExpensesAll = monthsOfYear.map((moth) => {
+  const totalCashOut = sortArrayByMonthTotalCashOutAll.reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0);
+
+  // 4. FINAL SUMS
+  const netIncome = totalRevenue - totalExpenses; // Accrual-basis Net Income
+
+  const TotalMonthPaymentStandard = sortArrayByMonthPayment.reduce((acc, item) => {
+    acc[item.month] = item;
+    return acc;
+  }, {});
+  // Cash In = Dashboard Payment Collection (already includes POS Shop Payments)
+  const sortArrayByMonthCashIn = sortArrayByMonthPayment;
+  const totalCashIn = sortArrayByMonthCashIn.reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0);
+  const grossCashFlow = totalCashIn - totalCashOut;
+
+  // --- Normalizing arrays for Line Chart ---
+  const normalizeSortArrayByMonthRevenue = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonthRevenue.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+  const normalizeSortArrayByMonthTotalExpensesAllChart = monthsOfYear.map((moth) => {
     const related = sortArrayByMonthTotalExpensesAll.find((row) => row.month === moth)
-    return {
-      month: moth,
-      total: related ? related.total : 0
-    }
+    return { month: moth, total: related ? related.total : 0 }
   })
+  const normalizeSortArrayByMonthCashRevenueNetChart = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonthCashRevenueNet.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+  const normalizeSortArrayByMonthCashInChart = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonthCashIn.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+  const normalizeSortArrayByMonthCashOutChart = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonthTotalCashOutAll.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+  const normalizeSortArrayByMonthDailyExpensesChart = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonthDailyExpenses.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+  const normalizeSortArrayByMonthItemPurchaseChart = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonth.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+  const normalizeSortArrayByMonthPayRollChart = monthsOfYear.map((moth) => {
+    const related = sortArrayByMonthPayRoll.find((row) => row.month === moth)
+    return { month: moth, total: related ? related.total : 0 }
+  })
+
+  // Data mapping for Pie Chart & Cards
   const data = [
-    { label: 'Income', value: totalRevenue },
-    { label: 'Expenses', value: totalExpenses },
-    { label: 'Revenue', value: Gain },
+    { label: 'Revenue', value: totalRevenue, color: 'green' },
+    { label: 'Expenses', value: totalExpenses, color: 'red' },
+    { label: 'Net Income', value: netIncome, color: 'blue' },
+    { label: 'Cash In', value: totalCashIn, color: 'lightgreen' },
+    { label: 'Cash Out', value: totalCashOut, color: 'lightcoral' },
+    { label: 'Gross Cash Flow', value: grossCashFlow, color: 'orange' },
+    { label: 'Credit Accounts', value: totalCreditAccounts, color: '#0d47a1' },
   ];
   const data2 = [
     { label: 'Total Sell', value: totalMaintenanceRevenue },
@@ -670,15 +928,17 @@ function AdminHome() {
     { label: 'Total Cost', value: totalPOSCostInvoice },
     { label: 'Revenue', value: invoicePOSRevenue },
   ];
-  const palette = ['blue', 'red', 'green'];
+
+  const palette = ['green', 'red', 'blue', 'lightgreen', 'lightcoral', 'orange', '#0d47a1'];
   const palette2 = ['blue', 'red', 'orange', 'green'];
   const palette3 = ['blue', 'red', '#643047', 'green'];
-  const palette1 = ['blue', 'red'];
+  const palette1 = ['green', 'red', 'blue', 'lightgreen', 'lightcoral', 'orange', '#0d47a1'];
+
   //ItemPurchase End
   const totalItem = item.filter((row) => row.typeItem === 'Goods')
   const totalOut = item.filter((row) => row.itemQuantity === 0)
 
-  const Employed = employee.filter((row) => row.status === "Employed" && "Suspended")
+  const Employed = employee.filter((row) => row.status === "Employed" || row.status === "Suspended")
   const EmployedFired = employee.filter((row) => row.status === "Fired")
   const EmployedResign = employee.filter((row) => row.status === "Resign")
 
@@ -718,7 +978,7 @@ function AdminHome() {
     }
   ]
   const columnProject = [
-    { field: 'customer', headerName: 'Customer Name', width: open ? 200 : 240, valueGetter: (params) => params.row.customerName.customerName },
+    { field: 'customer', headerName: 'Customer Name', width: open ? 200 : 240, valueGetter: (params) => params.row.customerName?.customerName || 'No Customer' },
     { field: 'projectName', headerName: 'Project Name', width: open ? 200 : 240 },
     { field: 'description', headerName: 'Description', width: open ? 150 : 240 },
     { field: 'sell', headerName: 'Total Sell', width: 150, renderCell: (params) => params.row.relatedPurchase?.map((item) => item.RelatedInvoice ? 'INV-' + item.RelatedInvoice.invoiceNumber + ' / $' + item.RelatedInvoice.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0) },
@@ -730,7 +990,7 @@ function AdminHome() {
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={user.data.role === 'User'}>
-              <NavLink to={`/ProjectViewInformation/${params.row._id}`} className='LinkName'>
+              <NavLink to={`/ProjectInfo/${params.row._id}`} className='LinkName'>
                 <Visibility style={{ color: '#202a5a' }} />
               </NavLink>
             </IconButton>
@@ -793,10 +1053,16 @@ function AdminHome() {
   const [monthAllRevenueExpenses, setMonthAllRevenueExpenses] = useState('');
   const [showInfo, setShowInfo] = useState(1);
   const [infoName, setInfoName] = useState('')
-  const handleClick = (e, monthI) => {
+  const [metricType, setMetricType] = useState('All');
+  const handleClick = (e, monthI, type = 'All') => {
     setShowInfo(e)
-    setMonthAllRevenueExpenses(monthI.axisValue)
-    setInfoName(monthI)
+    if (monthI && monthI.axisValue) {
+      setMonthAllRevenueExpenses(monthI.axisValue)
+    }
+    if (monthI) {
+      setInfoName(monthI)
+    }
+    setMetricType(type)
   }
   return (
     <div className='Homeemployee'>
@@ -848,12 +1114,117 @@ function AdminHome() {
                 </Typography>
                 <NotificationVIewInfo />
                 <MessageAdminView name={user.data.userName} role={user.data.role} />
-                <IconButton color="inherit" onClick={handleLogout}>
+                <IconButton color="inherit" onClick={handleLogout} title="Logout">
                   <Logout style={{ color: 'white' }} />
                 </IconButton>
+
+                {/* ── BACKUP BEFORE LOGOUT DIALOG ─────────────────── */}
+                {backupDialogOpen && (
+                  <div style={{
+                    position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+                    background: 'rgba(0,0,0,0.65)', backdropFilter: 'blur(6px)',
+                    zIndex: 99999, display: 'flex', alignItems: 'center', justifyContent: 'center'
+                  }}>
+                    <div style={{
+                      background: 'linear-gradient(135deg, #1a1f3a 0%, #252b4a 100%)',
+                      border: '1px solid rgba(255,255,255,0.12)',
+                      borderRadius: '20px', padding: '40px 48px', maxWidth: '440px', width: '90%',
+                      boxShadow: '0 25px 60px rgba(0,0,0,0.5)', textAlign: 'center', color: 'white'
+                    }}>
+                      {/* Icon */}
+                      <div style={{
+                        width: '72px', height: '72px', borderRadius: '50%',
+                        background: 'linear-gradient(135deg, #4f8ef7, #7c4dff)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        margin: '0 auto 24px', fontSize: '32px',
+                        boxShadow: '0 8px 24px rgba(79,142,247,0.4)'
+                      }}>💾</div>
+
+                      {backupDone ? (
+                        <>
+                          <h2 style={{ margin: '0 0 10px', fontSize: '22px', color: '#4ade80' }}>✅ Backup Downloaded!</h2>
+                          <p style={{ margin: '0 0 24px', color: 'rgba(255,255,255,0.7)', fontSize: '14px' }}>
+                            Logging you out now...
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <h2 style={{ margin: '0 0 10px', fontSize: '22px', fontWeight: 700 }}>Backup Before Logout?</h2>
+                          <p style={{ margin: '0 0 28px', color: 'rgba(255,255,255,0.65)', fontSize: '14px', lineHeight: 1.6 }}>
+                            Do you want to download a full database backup before logging out?
+                          </p>
+
+                          {backupLoading ? (
+                            <div style={{ color: '#4f8ef7', fontSize: '15px', padding: '12px 0', textAlign: 'center' }}>
+                              <div style={{
+                                width: '36px', height: '36px', border: '3px solid rgba(79,142,247,0.3)',
+                                borderTop: '3px solid #4f8ef7', borderRadius: '50%',
+                                animation: 'spin 1s linear infinite', margin: '0 auto 10px'
+                              }} />
+                              <div style={{ fontWeight: 600, marginBottom: '6px' }}>
+                                {backupProgress.phase || 'Preparing backup...'}
+                              </div>
+                              {backupProgress.total > 0 && (
+                                <>
+                                  <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)', marginBottom: '8px' }}>
+                                    {backupProgress.done} / {backupProgress.total} collections
+                                  </div>
+                                  <div style={{ width: '200px', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', margin: '0 auto' }}>
+                                    <div style={{
+                                      width: `${Math.round((backupProgress.done / backupProgress.total) * 100)}%`,
+                                      height: '100%', background: 'linear-gradient(90deg,#4f8ef7,#7c4dff)',
+                                      borderRadius: '3px', transition: 'width 0.3s'
+                                    }} />
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          ) : (
+                            <div style={{ display: 'flex', gap: '14px', justifyContent: 'center' }}>
+                              {/* YES - Download Backup */}
+                              <button onClick={handleDownloadBackup} style={{
+                                background: 'linear-gradient(135deg, #4f8ef7, #7c4dff)',
+                                border: 'none', borderRadius: '12px', color: 'white',
+                                padding: '13px 28px', fontSize: '15px', fontWeight: 600,
+                                cursor: 'pointer', boxShadow: '0 4px 16px rgba(79,142,247,0.4)',
+                                transition: 'transform 0.15s',
+                              }}
+                              onMouseEnter={e => e.target.style.transform='scale(1.05)'}
+                              onMouseLeave={e => e.target.style.transform='scale(1)'}>
+                                💾 Yes, Download
+                              </button>
+
+                              {/* NO - Just Logout */}
+                              <button onClick={doLogout} style={{
+                                background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
+                                borderRadius: '12px', color: 'rgba(255,255,255,0.8)',
+                                padding: '13px 28px', fontSize: '15px', fontWeight: 600,
+                                cursor: 'pointer', transition: 'transform 0.15s',
+                              }}
+                              onMouseEnter={e => e.target.style.transform='scale(1.05)'}
+                              onMouseLeave={e => e.target.style.transform='scale(1)'}>
+                                No, Logout
+                              </button>
+
+                              {/* Cancel */}
+                              <button onClick={() => setBackupDialogOpen(false)} style={{
+                                background: 'transparent', border: 'none',
+                                color: 'rgba(255,255,255,0.4)', fontSize: '22px',
+                                cursor: 'pointer', position: 'absolute', top: '16px', right: '16px',
+                                lineHeight: 1
+                              }}>✕</button>
+                            </div>
+                          )}
+                        </>
+                      )}
+                    </div>
+                    <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                  </div>
+                )}
+                {/* ─────────────────────────────────────────────────── */}
               </Toolbar>
             </AppBar>
-            <Drawer variant="permanent" open={open}>
+            <Drawer variant="permanent" open={open} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
               <Toolbar
                 sx={{
                   display: 'flex',
@@ -911,8 +1282,13 @@ function AdminHome() {
                                             width={open ? 600 : 700}
                                             height={300}
                                             series={[
-                                              { data: normalizeSortArrayByMonthPayment.map((row) => row.total), label: 'Income', id: 'uvId' },
-                                              { data: normalizeSortArrayByMonthTotalExpensesAll.map((row) => row.total), label: 'Expenses', id: 'pvId' },
+                                              { data: normalizeSortArrayByMonthRevenue.map((row) => row.total), label: 'Revenue', id: 'revId', color: 'green' },
+                                              { data: normalizeSortArrayByMonthTotalExpensesAllChart.map((row) => row.total), label: 'Expenses', id: 'expId', color: 'red' },
+                                              { data: normalizeSortArrayByMonthRevenue.map((row, i) => row.total - normalizeSortArrayByMonthTotalExpensesAllChart[i].total), label: 'Net Income', id: 'netId', color: 'blue' },
+                                              { data: normalizeSortArrayByMonthCashInChart.map((row) => row.total), label: 'Cash In', id: 'cashInId', color: 'lightgreen' },
+                                              { data: normalizeSortArrayByMonthCashOutChart.map((row) => row.total), label: 'Cash Out', id: 'cashOutId', color: 'lightcoral' },
+                                              { data: normalizeSortArrayByMonthCashInChart.map((row, i) => row.total - normalizeSortArrayByMonthCashOutChart[i].total), label: 'Gross Cash Flow', id: 'grossId', color: 'orange' },
+                                              { data: sortArrayByMonthCreditAccounts.map((row) => row.total), label: 'Credit Accounts', id: 'creditAccId', color: '#0d47a1' },
                                             ]}
                                             xAxis={[{ scaleType: 'point', data: monthsOfYear, stroke: '#fff' }]}
                                             colors={palette1}
@@ -926,7 +1302,7 @@ function AdminHome() {
                               </Card>
                             </Grid>
                             <Grid item xs={4}>
-                              <Card sx={{ width: '100%', backgroundColor: '#202a5a', height: '465px', padding: '5px' }}>
+                              <Card sx={{ width: '100%', backgroundColor: '#202a5a', height: '520px', padding: '5px' }}>
                                 <CardContent>
                                   <Card>
                                     <CardContent>
@@ -961,10 +1337,14 @@ function AdminHome() {
                                       </section>
                                       <Divider />
                                       <section style={{ width: '100%', justifyContent: 'center' }}>
-                                        <ul style={{ listStyleType: 'none' }}>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '')}> <span><Square style={{ color: 'blue' }} /></span> <span style={{ color: 'blue' }}>Income: $ {totalRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '')}> <span><Square style={{ color: 'red' }} /></span> <span style={{ color: 'red' }}>Expenses: $ {totalExpenses?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '')}> <span><Square style={{ color: 'green' }} /></span> <span style={{ color: 'green' }}>Revenue: $ {Gain?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                        <ul style={{ listStyleType: 'none', padding: 0 }}>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Revenue')}> <span><Square style={{ color: 'green' }} /></span> <span style={{ color: 'green' }}>Revenue: $ {totalRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Expenses')}> <span><Square style={{ color: 'red' }} /></span> <span style={{ color: 'red' }}>Expenses: $ {totalExpenses?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Net Income')}> <span><Square style={{ color: 'blue' }} /></span> <span style={{ color: 'blue' }}>Net Income: $ {netIncome?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Cash In')}> <span><Square style={{ color: 'lightgreen' }} /></span> <span style={{ color: 'lightgreen' }}>Cash In: $ {totalCashIn?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Cash Out')}> <span><Square style={{ color: 'lightcoral' }} /></span> <span style={{ color: 'lightcoral' }}>Cash Out: $ {totalCashOut?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Gross Cash Flow')}> <span><Square style={{ color: 'orange' }} /></span> <span style={{ color: 'orange' }}>Gross Cash Flow: $ {grossCashFlow?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
+                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Credit Accounts')}> <span><Square style={{ color: '#0d47a1' }} /></span> <span style={{ color: '#0d47a1' }}>Credit Accounts: $ {totalCreditAccounts?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
                                         </ul>
                                       </section>
                                     </CardContent>
@@ -992,8 +1372,8 @@ function AdminHome() {
                                       <Card sx={{ width: '100%', height: '200px', backgroundColor: '#357a38', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
                                           <LineChart
-                                            dataset={sortArrayByMonthPayment}
-                                            xAxis={[{ scaleType: 'point', data: sortArrayByMonthPayment.map((row) => row.month) }]}
+                                            dataset={normalizeSortArrayByMonthCashInChart}
+                                            xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
                                             series={[{ dataKey: 'total', area: false }]}
                                             onAxisClick={(e, monthsOfYear) => handleClick(3, monthsOfYear)}
                                             sx={{
@@ -1046,8 +1426,8 @@ function AdminHome() {
                                         <CardContent >
 
                                           <LineChart
-                                            dataset={sortArrayByMonthDailyExpenses}
-                                            xAxis={[{ scaleType: 'point', data: sortArrayByMonthDailyExpenses.map((row) => row.month) }]}
+                                            dataset={normalizeSortArrayByMonthDailyExpensesChart}
+                                            xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
                                             onAxisClick={(e, monthsOfYear) => handleClick(4, monthsOfYear)}
                                             series={[{ dataKey: 'total', area: false }]}
                                             sx={{
@@ -1099,8 +1479,8 @@ function AdminHome() {
                                       <p style={{ color: '#643047', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalItemPurchase?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
                                       <Card sx={{ width: '100%', height: '200px', backgroundColor: '#643047', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <LineChart
-                                          dataset={sortArrayByMonth}
-                                          xAxis={[{ scaleType: 'point', data: sortArrayByMonth.map((row) => row.month) }]}
+                                          dataset={normalizeSortArrayByMonthItemPurchaseChart}
+                                          xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
                                           onAxisClick={(e, monthsOfYear) => handleClick(5, monthsOfYear)}
                                           series={[{ dataKey: 'total', area: false }]}
                                           sx={{
@@ -1151,8 +1531,8 @@ function AdminHome() {
                                       <Card sx={{ width: '100%', height: '200px', backgroundColor: '#003049', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
                                           <LineChart
-                                            dataset={sortArrayByMonthPayRoll}
-                                            xAxis={[{ scaleType: 'point', data: sortArrayByMonthPayRoll.map((row) => row.month) }]}
+                                            dataset={normalizeSortArrayByMonthPayRollChart}
+                                            xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
                                             onAxisClick={(e, monthsOfYear) => handleClick(6, monthsOfYear)}
                                             series={[{ dataKey: 'total', area: false }]}
                                             sx={{
@@ -1182,6 +1562,30 @@ function AdminHome() {
                                       </Card>
                                     </section>
                                   </div>
+                                </CardContent>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Typography sx={{ fontSize: '2rem' }}>Accounting & Taxes</Typography>
+                            </Grid>
+                            <Grid item xs={6}>
+                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
+                                onClick={(e) => handleClick(15, 'All')}
+                              >
+                                <CardContent >
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <section className='iconmo7' style={{ backgroundColor: '#202a5a' }}>
+                                      <AccountBalance style={{ fontSize: '30px', position: 'relative', top: '10px', color: 'white' }} />
+                                    </section>
+                                    <section>
+                                      <Typography sx={{ textAlign: 'left', fontSize: '20px', fontWeight: 'bold' }}>VAT Statement Account</Typography>
+                                    </section>
+                                  </div>
+                                  <section>
+                                    <Typography sx={{ float: 'right', fontWeight: 'bold', color: netVat >= 0 ? '#3b82f6' : '#ef4444' }}>
+                                      ${Math.abs(netVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {netVat >= 0 ? '(Due)' : '(Credit)'}
+                                    </Typography>
+                                  </section>
                                 </CardContent>
                               </Card>
                             </Grid>
@@ -1869,6 +2273,11 @@ function AdminHome() {
                               onPayRoll={payRoll}
                               onItemPurChase={itemPurchase}
                               onExpenses={expenses}
+                              allInvoices={allInvoices}
+                              posInvoice={posInvoice}
+                              type={metricType}
+                              selectedYear={date}
+                              customers={customer1}
                             />
                           </div> : ''
                       }
@@ -1989,6 +2398,22 @@ function AdminHome() {
                           </div>
                           : ''
                       }
+                      {
+                        showInfo === 15 ?
+                          <div>
+                            <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
+                              <Close onClick={() => handleClick(1, '')} className='btnCustomer' style={{ fontSize: '40px' }} />
+                            </section>
+                            <VatAccountView
+                              payments={payment}
+                              expenses={expenses}
+                              allInvoices={allInvoices}
+                              itemPurchase={itemPurchase}
+                              onAction={setShowInfo}
+                            />
+                          </div>
+                          : ''
+                      }
                     </div>
                     : (
                       <div>
@@ -2010,8 +2435,9 @@ function AdminHome() {
 
             </Box>
           </Box>
-        </div>)}
-    </div>
+        </div >)
+      }
+    </div >
   )
 }
 

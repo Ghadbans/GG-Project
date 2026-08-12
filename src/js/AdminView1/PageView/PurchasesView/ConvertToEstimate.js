@@ -11,8 +11,10 @@ import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { v4 } from 'uuid';
 import {  useNavigate,NavLink } from 'react-router-dom';
+import { invalidateCache } from '../../../utils/apiCache';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -24,12 +26,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
 import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -86,7 +89,7 @@ function ConvertToEstimate() {
     useEffect(()=> {
       const storesUserId = localStorage.getItem('user');
       if (storesUserId) {
-        axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+        axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
         .then(res => {
           // Handle the response data here
           const Name = res.data.data.employeeName;
@@ -108,7 +111,7 @@ function ConvertToEstimate() {
         dispatch(logOut());
         navigate('/')
       }
-      const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-estimation';
+      const apiUrl = `${ENDPOINT_URL}/create-estimation`;
       const [purchaseName,setPurchaseName] = useState("");
       const estimateDate =dayjs(Date.now());
       const [estimateSubject,setEstimateSubject] = useState("");
@@ -117,7 +120,7 @@ function ConvertToEstimate() {
       const [estimateDefect,setEstimateDefect] = useState("");
       const [ItemInformation,setItemInformation]= useState([]);
       const [note, setNote] = useState("Thanks For your Business.");
-      const [terms, setTerms] = useState("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
+      const [terms, setTerms] = useState("QUOTATIONS ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
       const [projectName,setProjectName] = useState('');
       const [items, SetItems] = useState([]);
       const [inputValue, setInputValue] = React.useState('');
@@ -135,10 +138,10 @@ function ConvertToEstimate() {
        const Create = {person: user.data.userName+ ' CREATED ',
                       dateComment
                     }
-       const estimateName = "EST-00"+estimateNumber
+       const estimateName = "QUO-" + String(estimateNumber).padStart(6, '0')
     useEffect(()=>{
       let newNumber = 0;
-      axios.get('https://gg-project-production.up.railway.app/endpoint/estimation')
+      axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
       .then(res => {
               // Handle the response data here
          res.data.data.map((row)=>{
@@ -153,7 +156,7 @@ function ConvertToEstimate() {
   });
     },[])
     useEffect(()=>{
-      axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+      axios.get(`${ENDPOINT_URL}/item`)
       .then(res => {
               // Handle the response data here
               setItemInformation(res.data.data.reverse())      
@@ -179,7 +182,7 @@ const handleChange = (e,i) => {
     const [customerName,setCustomerName]= useState({});
     
     useEffect(()=>{
-        axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
+        axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
         .then(res => {
             // Handle the response data here
            setCustomerName1(res.data.data.customerName);
@@ -193,10 +196,10 @@ const handleChange = (e,i) => {
           });
     },[])
  useEffect(()=> {
-    axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+    axios.get(`${ENDPOINT_URL}/customer`)
     .then(res => {
             // Handle the response data here
-      res.data.data.filter((row)=> row._id === customerName1._id)
+      res.data?.data?.filter((row)=> row._id === customerName1._id)
                                              .map((row)=>  setCustomerName(
                                                 {
                                                     _id: row._id,
@@ -370,8 +373,8 @@ const handleShowAutocomplete = (idRow) => {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items=> items.map((row)=> row.itemName?._id === res.data.data._id ? {...row, 
           itemDescription:res.data.data.itemDescription,
           costRate: res.data.data.itemCostPrice,
           itemRate: res.data.data.itemSellingPrice,
@@ -442,7 +445,7 @@ const handleCreateItem = (newItem)=> {
     })
       // Get Value
       const getRequestId = Object.values(initialStateId).map(({ids})=>{
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`)
+        return axios.get(`${ENDPOINT_URL}/get-item/${ids}`)
       })
     try {
       const res = await Promise.all(getRequestId);
@@ -451,7 +454,7 @@ const handleCreateItem = (newItem)=> {
     }
       // Update Value 
       const updateRequest = Object.values(QtyUpdate).map(({ids, data})=>{
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`,data)
+      return axios.put(`${ENDPOINT_URL}/update-item/${ids}`,data)
      }) 
      try {
        await Promise.all(updateRequest);
@@ -465,7 +468,7 @@ const handleCreateItem = (newItem)=> {
        status: statusPurchase,
        ReferenceName:ReferenceInfo
       }; 
-      axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${id}`,data)
+      axios.put(`${ENDPOINT_URL}/update-purchase/${id}`,data)
    }
        const handleSubmit = async (e) => {
         e.preventDefault();
@@ -488,6 +491,7 @@ const handleCreateItem = (newItem)=> {
             Ref:projectName,shipping,adjustment,adjustmentNumber,totalInvoice,terms
           });
           if (res) {
+            invalidateCache('/estimation');
             // Open Loading View
             const ReferenceInfo = res.data.data.estimateName
             handleSubmitStatusUpdate(ReferenceInfo);
@@ -511,7 +515,7 @@ const handleCreateItem = (newItem)=> {
 <SidebarDash/>
 <div className='header'>
  <div className='headername'>
-  <Typography variant='h5'>Convert Purchase to Estimate</Typography>
+  <Typography variant='h5'>Convert Purchase to Quotation</Typography>
  </div>
  <div className='rightcontent'>
    <NotificationsNoneIcon className='iconesize'/>
@@ -549,15 +553,15 @@ const handleCreateItem = (newItem)=> {
               </Grid>
               <Grid item xs={4}> 
                <FormControl sx={{ width: '100%', backgroundColor:'white' }}>
-                <InputLabel htmlFor="estimateNumber">Estimate Number</InputLabel>
+                <InputLabel htmlFor="estimateNumber">Quotation Number</InputLabel>
                 <OutlinedInput
                  required
                  disabled
                  type='number'
                  id='estimateNumber'
-                 label='Estimate Number'
+                 label='Quotation Number'
                  value={'00'+estimateNumber}
-                startAdornment={<InputAdornment position="start">EST</InputAdornment>}
+                startAdornment={<InputAdornment position="start">QUO-</InputAdornment>}
                 />
                </FormControl>
                </Grid>
@@ -669,39 +673,44 @@ const handleCreateItem = (newItem)=> {
         {
           Item.itemName.itemName? (
             (  
-              <div style={{display:'flex', justifyContent:'space-between',alignItems:'center'}}>
-              <div >
-              <Typography hidden = { Item.itemName?Item.itemName.itemName === 'empty':''} sx={{fontSize:'23px'}}>{Item.itemName?Item.itemName.itemName.toUpperCase():''}</Typography>
-              <TextField 
-              required
-                name='itemDescription' id='itemDescription' 
-                value={Item.itemDescription}
-                multiline
-                rows={3}
-                onChange={(e) => handleChange(e,i)}
-                size="small"
-                disabled={user.data.role !== 'CEO'}
-                sx={{ width: '440px', backgroundColor:'white', fontSize:12}}       
-      />
-              </div>
-              <div>
-              <BlackTooltip title="Clear" placement='top'>
-        <IconButton onClick={()=>handleShowAutocomplete(Item.idRow)} style={{ position:'relative', float:'right'}}> 
-                      <RemoveCircleOutline style={{color:'#202a5a'}}/>
-        </IconButton>
-        </BlackTooltip>
-        {
-          Item.itemName._id && (
-            <BlackTooltip title="Edit" placement='bottom'>
-        <IconButton onClick={()=>handleOpenItemUpdate(Item.itemName._id)} style={{ position:'relative', float:'right'}}> 
-                      <Edit style={{color:'#202a5a'}}/>
-        </IconButton>
-        </BlackTooltip>
-          )
-        }
-          
-              </div>
-      </div>)
+              <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                <ItemThumbnail
+                  itemId={Item.itemName?._id}
+                  initialData={Item.data}
+                  initialType={Item.contentType}
+                />
+                <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                  <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+                  <TextField
+                    required
+                    name='itemDescription' id='itemDescription'
+                    value={Item.itemDescription}
+                    multiline
+                    rows={3}
+                    onChange={(e) => handleChange(e, i)}
+                    size="small"
+                    disabled={user.data.role !== 'CEO'}
+                    sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                  />
+                </Box>
+                <Box>
+                  <BlackTooltip title="Clear" placement='top'>
+                    <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                      <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                    </IconButton>
+                  </BlackTooltip>
+                  {
+                    Item.itemName?._id && (
+                      <BlackTooltip title="Edit" placement='bottom'>
+                        <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
+                          <Edit style={{ color: '#202a5a' }} />
+                        </IconButton>
+                      </BlackTooltip>
+                    )
+                  }
+
+                </Box>
+              </Box>)
           ):(
             <div style={{display:'flex', alignItems:'center'}}>
    <Autocomplete
@@ -1024,7 +1033,7 @@ const handleCreateItem = (newItem)=> {
         </BlackTooltip>  
         <Grid container sx={{alignItems:'center',padding:'15px'}} spacing={2}>
           <Grid item xs={12} sx={{textAlign:'center'}}>
-           <Typography>Do you want to stop creating Estimation ? </Typography>
+           <Typography>Do you want to stop creating Quotation ? </Typography>
           </Grid>
           <br/>
           <Grid item xs={6}>

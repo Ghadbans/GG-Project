@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef, useMemo } from 'react'
+import useLayoutConfig from '../../../hooks/useLayoutConfig';
 import SidebarDash from '../../../component/SidebarDash';
+import PrintHeader from '../../../component/PrintHeader';
 import '../../view.css';
 import '../InvoiceView/AdminView.css'
 import '../Chartview.css';
@@ -15,6 +17,8 @@ import SendIcon from '@mui/icons-material/Send';
 import EstimateInformation from './EstimateInformation';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import LanguageIcon from '@mui/icons-material/Language';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
@@ -36,7 +40,7 @@ import dayjs from 'dayjs';
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -46,7 +50,7 @@ import KeyboardArrowDown from '@mui/icons-material/KeyboardArrowDown';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { FileCopy } from '@mui/icons-material';
-import db from '../../../dexieDb';
+
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver';
 import { Explicit } from '@mui/icons-material';
@@ -135,7 +139,10 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+
+
 function EstimateViewAdminAll() {
+  const { config } = useLayoutConfig();
   let { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -144,20 +151,13 @@ function EstimateViewAdminAll() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -169,18 +169,12 @@ function EstimateViewAdminAll() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -192,64 +186,59 @@ function EstimateViewAdminAll() {
   const [loadingData, setLoadingData] = useState(true);
 
   const [item, SetItems] = useState([]);
+  // Store all invoices so the third useEffect reuses them without a second API call
+  const allInvoicesRef = useRef([]);
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/estimation';
+  const apiUrl = `${ENDPOINT_URL}/estimation`;
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(apiUrl)
-          setEstimate(res.data.data);
-          const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          SetItems(resItem.data.data)
-          setLoadingData(false)
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setLoadingData(false)
-        }
-      } else {
-        const offLineCustomer1 = await db.estimateSchema.toArray();
-        setEstimate(offLineCustomer1)
-        const offLineItem = await db.itemSchema.toArray();
-        SetItems(offLineItem)
-        setLoadingData(false)
+      try {
+        // Run both fetches IN PARALLEL instead of sequentially
+        const [res, resItem] = await Promise.all([
+          cachedGet(apiUrl),
+          cachedGet(`${ENDPOINT_URL}/item`)
+        ]);
+        setEstimate(res.data.data);
+        SetItems(resItem.data.data);
+        setLoadingData(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoadingData(false);
       }
     }
     fetchData()
   }, [])
   const [invoice, setInvoice] = useState([]);
   const [invoice2, setInvoice2] = useState([]);
-  const [purchase, setPurchase] = useState([])
+  const [purchase, setPurchase] = useState([]);
+  const [maintenance, setMaintenance] = useState([]);
   const [customerName1, setCustomerName1] = useState("");
   const [estimateNumber, setEstimateNumber1] = useState(0);
   const [items, setItems] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const [invoiceResponse, purchaseResponse] = await Promise.all([
-            axios.get('https://gg-project-production.up.railway.app/endpoint/invoice'),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          ])
-          const resEst = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${id}`)
-          setCustomerName1(resEst.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
-          setEstimateNumber1(resEst.data.data.estimateNumber);
-          setItems(resEst.data.data.items);
-          const filteredInvoice = invoiceResponse.data.data.filter((row) => row.ReferenceName === id)
-          setInvoice(filteredInvoice);
-          const filteredEstimate = purchaseResponse.data.data.filter((row) => row.ReferenceName === id)
-          setPurchase(filteredEstimate);
-        } catch (error) {
-          console.log(error)
-        }
-      } else {
-        const offLineInvoice = await db.invoiceSchema.toArray();
-        const filteredInvoice = offLineInvoice.filter((row) => row.ReferenceName === id)
-        setInvoice(filteredInvoice);
-        const offLinePurchase = await db.purchaseSchema.toArray();
-        const filteredEstimate = offLinePurchase.filter((row) => row.ReferenceName === id)
-        setPurchase(filteredEstimate);
+      try {
+        // All 3 requests now run IN PARALLEL (invoice, purchase, and this specific estimation)
+        const [invoiceResponse, purchaseResponse, maintenanceResponse, resEst] = await Promise.all([
+          cachedGet(`${ENDPOINT_URL}/invoice?summary=true`),
+          cachedGet(`${ENDPOINT_URL}/purchase`),
+          cachedGet(`${ENDPOINT_URL}/maintenance`),
+          axios.get(`${ENDPOINT_URL}/get-estimation/${id}`) // always fresh — no cache for specific record
+        ]);
+        // Store all invoices in ref so the next useEffect can reuse them without fetching again
+        allInvoicesRef.current = invoiceResponse.data?.data || [];
+        setCustomerName1(resEst.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
+        setEstimateNumber1(resEst.data.data.estimateNumber);
+        setItems(resEst.data.data.items);
+        const estRef = resEst.data.data.ReferenceName;
+        const validEstRef = estRef && typeof estRef === 'string' && estRef.trim() !== '';
+
+        setInvoice(allInvoicesRef.current.filter((row) => row.ReferenceName === id || (validEstRef && row.ReferenceName === estRef)));
+        setPurchase(purchaseResponse.data?.data?.filter((row) => row.ReferenceName === id || (validEstRef && row.ReferenceName === estRef)));
+        setMaintenance(maintenanceResponse.data?.data?.filter((row) => row.ReferenceName === id || (validEstRef && row._id === estRef)));
+      } catch (error) {
+        console.log(error)
       }
     }
     fetchData()
@@ -258,25 +247,13 @@ function EstimateViewAdminAll() {
     return items.some(item => item.itemDiscount > 0)
   }, [items])
   useEffect(() => {
-    const fetchInvoice2 = async () => {
-      if (purchase.length > 0) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-            const filteredInvoice = res.data.data.filter((row) => purchase ? purchase.find((Item) => row._id === Item.ReferenceName2) : '')
-            setInvoice2(filteredInvoice);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setLoadingData(false)
-          }
-        } else {
-          const offLineInvoice = await db.invoiceSchema.toArray();
-          const filteredInvoice = offLineInvoice.filter((row) => purchase ? purchase.find((Item) => row._id === Item.ReferenceName2) : '')
-          setInvoice2(filteredInvoice);
-        }
-      }
+    // Reuse already-fetched invoice data from allInvoicesRef — NO second API call needed
+    if (purchase.length > 0 && allInvoicesRef.current.length > 0) {
+      const filteredInvoice = allInvoicesRef.current.filter((row) =>
+        purchase.find((Item) => row._id === Item.ReferenceName2)
+      );
+      setInvoice2(filteredInvoice);
     }
-    fetchInvoice2()
   }, [purchase])
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -291,7 +268,7 @@ function EstimateViewAdminAll() {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'EST-00' + estimateNumber + ' For ' + customerName1,
+    documentTitle: 'Q-00' + estimateNumber + ' For ' + customerName1,
     onBeforeGetContent: () => {
       const PAGE_HEIGHT = 1045;
       const printElement = componentRef.current;
@@ -332,11 +309,13 @@ function EstimateViewAdminAll() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
-        const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
-        setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
-        setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
+        // Fetch comment and notification IN PARALLEL instead of sequentially
+        const [resComment, resNotification] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/comment`),
+          axios.get(`${ENDPOINT_URL}/notification`)
+        ]);
+        setComments(resComment.data?.data?.filter((row) => row.CommentInfo.idInfo === id).reverse());
+        setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id));
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -390,7 +369,7 @@ function EstimateViewAdminAll() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-comment/`, data)
       if (res) {
         setReason("");
         handleOpen();
@@ -418,7 +397,7 @@ function EstimateViewAdminAll() {
     setSideBar(!sideBar);
   };
   const data0 = estimate.filter(row => row._id === id).map((row) => ({
-    number: 'EST-00' + row.estimateNumber,
+    number: 'Q-' + String(row.estimateNumber).padStart(6, '0'),
     invoiceDate: dayjs(row.estimateDate).format('DD/MM/YYYY'),
     customerName: row.customerName.customerName,
     Address: row.customerName.billingAddress.toUpperCase() + row.customerName.billingCity.toUpperCase(),
@@ -549,7 +528,7 @@ function EstimateViewAdminAll() {
 
     const buffer = await workbook.xlsx.writeBuffer();
     const bold = new Blob([buffer], { type: 'application/octet-stream' });
-    saveAs(bold, `${'EST-00' + estimateNumber + ' for ' + customerName1}.xlsx`)
+    saveAs(bold, `${'Q-' + String(estimateNumber).padStart(6, '0') + ' for ' + customerName1}.xlsx`)
   }
   return (
     <div className='Homeemployee'>
@@ -580,7 +559,7 @@ function EstimateViewAdminAll() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Estimation Information
+              Quotation Information
             </Typography>
             <IconButton onClick={() => navigate('/EstimateViewAdmin')}>
               <ArrowBack style={{ color: 'white' }} />
@@ -648,7 +627,7 @@ function EstimateViewAdminAll() {
                               <header style={{ display: 'block', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                   <div>
-                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>{row.customerName.customerName.toUpperCase()} | {row.estimateName} </Typography>
+                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>{row.customerName.customerName.toUpperCase()} | {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')} </Typography>
                                   </div>
                                   <div>
                                     <Typography
@@ -731,29 +710,49 @@ function EstimateViewAdminAll() {
                                       <Divider />
                                       <MenuItem>
                                         {
-                                          row.status !== 'Converted' && (
-                                            <NavLink to={`/EstimateViewConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
-                                              <span>Convert To Invoice</span>
-                                            </NavLink>
-                                          )
-                                        }
-                                        {
-                                          row.status === 'Converted' && (
-                                            <span style={{ color: 'gray' }} onClick={handleCloseMenu}> Already Converted</span>
-                                          )
-                                        }
+                                            row.status !== 'Converted' && (
+                                              <NavLink to={`/EstimateViewConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                <span>Convert To Invoice</span>
+                                              </NavLink>
+                                            )
+                                          }
+                                          {
+                                            row.status === 'Converted' && (
+                                              <NavLink to={`/EstimateViewConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                <span>Convert To Invoice (Again)</span>
+                                              </NavLink>
+                                            )
+                                          }
+                                        </MenuItem>
+                                        <MenuItem>
+                                          {
+                                            row.status !== 'Converted' && (
+                                              <NavLink to={`/MakePurchaseConvertToProject/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                <span>Convert to Project</span>
+                                              </NavLink>
+                                            )
+                                          }
+                                          {
+                                            row.status === 'Converted' && (
+                                              <NavLink to={`/MakePurchaseConvertToProject/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                <span>Convert to Project (Again)</span>
+                                              </NavLink>
+                                            )
+                                          }
                                       </MenuItem>
                                       <MenuItem>
                                         {
                                           row.status !== 'Converted' && (
-                                            <NavLink to={`/MakePurchaseConvertToProject/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
-                                              <span>Convert to Project</span>
+                                            <NavLink to={`/EstimateConvertToMaintenance/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                              <span>Convert To Maintenance</span>
                                             </NavLink>
                                           )
                                         }
                                         {
                                           row.status === 'Converted' && (
-                                            <span style={{ color: 'gray' }} onClick={handleCloseMenu}> Already Converted</span>
+                                            <NavLink to={`/EstimateConvertToMaintenance/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                              <span>Convert To Maintenance (Again)</span>
+                                            </NavLink>
                                           )
                                         }
                                       </MenuItem>
@@ -786,6 +785,13 @@ function EstimateViewAdminAll() {
                                             )) : null
                                           }
                                         </p>
+                                        <p>
+                                          {
+                                            maintenance ? maintenance.map((row) => (
+                                              <span key={row._id}> | M-{String(row.serviceNumber).padStart(6, '0')}</span>
+                                            )) : null
+                                          }
+                                        </p>
                                       </div>
                                     </div>
                                   ) : (
@@ -793,84 +799,100 @@ function EstimateViewAdminAll() {
                                       {
                                         showRef === 2 ? (
                                           <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px' }}>
-                                            <tbody>
-                                              {
-                                                invoice ?
-                                                  invoice.map((row) => (
-                                                    <tr key={row._id}>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.invoiceDate).format('DD/MM/YYYY')}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Invoice # {row.invoiceName}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span>$</span> {row.totalInvoice}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Paid  <span>$</span> {row.total}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Balance  <span>$</span> {row.balanceDue}</td>
-                                                      <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
-                                                        <ViewTooltip>
-                                                          <span>
-                                                            <IconButton >
-                                                              <NavLink to={`/InvoiceViewAdminAll/${row._id}`} className='LinkName'>
-                                                                <span style={{ fontSize: '12px' }}>View</span>
-                                                              </NavLink>
-                                                            </IconButton>
-                                                          </span>
-                                                        </ViewTooltip>
-                                                      </td>
-                                                    </tr>
-                                                  ))
-                                                  : null
-                                              }
-                                            </tbody>
-                                            <tbody>
-                                              {
-                                                invoice2 ?
-                                                  invoice2.map((row) => (
-                                                    <tr key={row._id}>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.invoiceDate).format('DD/MM/YYYY')}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Invoice # {row.invoiceName}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span>$</span> {row.totalInvoice}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Paid  <span>$</span> {row.total}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Balance  <span>$</span> {row.balanceDue}</td>
-                                                      <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
-                                                        <ViewTooltip>
-                                                          <span>
-                                                            <IconButton >
-                                                              <NavLink to={`/InvoiceViewAdminAll/${row._id}`} className='LinkName'>
-                                                                <span style={{ fontSize: '12px' }}>View</span>
-                                                              </NavLink>
-                                                            </IconButton>
-                                                          </span>
-                                                        </ViewTooltip>
-                                                      </td>
-                                                    </tr>
-                                                  ))
-                                                  : null
-                                              }
-                                            </tbody>
-                                            <tbody>
-                                              {
-                                                purchase ?
-                                                  purchase.map((row) => (
-                                                    <tr key={row._id}>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.purchaseDate).format('DD/MM/YYYY')}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Purchase # {row.purchaseName}</td>
-                                                      <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Purchase Cost  <span>$</span> {row.purchaseAmount1}</td>
-                                                      <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
-                                                        <ViewTooltip>
-                                                          <span>
-                                                            <IconButton >
-                                                              <NavLink to={`/PurchasesViewAdminAll/${row._id}`} className='LinkName'>
-                                                                <span style={{ fontSize: '12px' }}>View</span>
-                                                              </NavLink>
-                                                            </IconButton>
-                                                          </span>
-                                                        </ViewTooltip>
-                                                      </td>
-                                                    </tr>
-                                                  ))
-                                                  : null
-                                              }
-                                            </tbody>
+                                            {invoice && invoice.length > 0 && (
+                                              <tbody>
+                                                {invoice.map((row) => (
+                                                  <tr key={row._id}>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.invoiceDate).format('DD/MM/YYYY')}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Invoice # {row.invoiceName}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span>$</span> {row.totalInvoice}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Paid  <span>$</span> {row.total}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Balance  <span>$</span> {row.balanceDue}</td>
+                                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
+                                                      <ViewTooltip>
+                                                        <span>
+                                                          <IconButton >
+                                                            <NavLink to={`/InvoiceViewAdminAll/${row._id}`} className='LinkName'>
+                                                              <span style={{ fontSize: '12px' }}>View</span>
+                                                            </NavLink>
+                                                          </IconButton>
+                                                        </span>
+                                                      </ViewTooltip>
+                                                    </td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            )}
+                                            {invoice2 && invoice2.length > 0 && (
+                                              <tbody>
+                                                {invoice2.map((row) => (
+                                                  <tr key={row._id}>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.invoiceDate).format('DD/MM/YYYY')}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Invoice # {row.invoiceName}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span>$</span> {row.totalInvoice}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Paid  <span>$</span> {row.total}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Balance  <span>$</span> {row.balanceDue}</td>
+                                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
+                                                      <ViewTooltip>
+                                                        <span>
+                                                          <IconButton >
+                                                            <NavLink to={`/InvoiceViewAdminAll/${row._id}`} className='LinkName'>
+                                                              <span style={{ fontSize: '12px' }}>View</span>
+                                                            </NavLink>
+                                                          </IconButton>
+                                                        </span>
+                                                      </ViewTooltip>
+                                                    </td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            )}
+                                            {purchase && purchase.length > 0 && (
+                                              <tbody>
+                                                {purchase.map((row) => (
+                                                  <tr key={row._id}>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.purchaseDate).format('DD/MM/YYYY')}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Purchase # {row.purchaseName}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Purchase Cost  <span>$</span> {row.purchaseAmount1}</td>
+                                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
+                                                      <ViewTooltip>
+                                                        <span>
+                                                          <IconButton >
+                                                            <NavLink to={`/PurchasesViewAdminAll/${row._id}`} className='LinkName'>
+                                                              <span style={{ fontSize: '12px' }}>View</span>
+                                                            </NavLink>
+                                                          </IconButton>
+                                                        </span>
+                                                      </ViewTooltip>
+                                                    </td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            )}
+                                            {maintenance && maintenance.length > 0 && (
+                                              <tbody>
+                                                {maintenance.map((row) => (
+                                                  <tr key={row._id}>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.serviceDate).format('DD/MM/YYYY')}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Maintenance # M-{String(row.serviceNumber).padStart(6, '0')}</td>
+                                                    <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span>$</span> {row.totalInvoice}</td>
+                                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
+                                                      <ViewTooltip>
+                                                        <span>
+                                                          <IconButton >
+                                                            <NavLink to={`/MaintenanceViewInformation/${row._id}`} className='LinkName'>
+                                                              <span style={{ fontSize: '12px' }}>View</span>
+                                                            </NavLink>
+                                                          </IconButton>
+                                                        </span>
+                                                      </ViewTooltip>
+                                                    </td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            )}
                                           </table>
-                                        ) : ''
+                                        ) : null
                                       }
                                       <ViewTooltip title="Close" placement='bottom'>
                                         <IconButton onClick={() => handleShowRef(1)} style={{ position: 'relative', float: 'right' }}>
@@ -895,17 +917,7 @@ function EstimateViewAdminAll() {
                                       <tr>
                                         <th style={{ borderBottom: '1px solid black' }}>
                                           <div className='invoiceTest'>
-                                            <span>
-                                              <img src={Image} />
-                                            </span>
-                                            <address style={{ textAlign: 'right', fontSize: '70%', marginTop: '10px' }}>
-                                              <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                              <p style={{ fontWeight: 'normal' }}>RCM CD/KWZ/RCCM/22-B-00317 <br />
-                                                ID NAT 14-H5300N11179P <br />
-                                                AVENUE SALONGO Q/INDUSTRIEL C/MANIKA <br />
-                                                KOLWEZI LUALABA <br />
-                                                DR CONGO </p>
-                                            </address>
+                                            <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
                                           </div>
                                         </th>
                                       </tr>
@@ -914,12 +926,12 @@ function EstimateViewAdminAll() {
                                       <tr>
                                         <td>
                                           <div>
-                                            <p className='invoicehr'>ESTIMATE</p>
+                                            <p className='invoicehr'>QUOTATION</p>
                                             <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
-                                              <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
+                                              <section style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', boxSizing: 'border-box', padding: '0px', marginBottom: '10px' }}>
+                                                <address style={{ marginLeft: config['--client-block-left-offset'] || '0px', position: 'relative', lineHeight: 1.35, width: 'fit-content', minWidth: '200px' }}>
                                                   <p >
-                                                    <span style={{ fontSize: '10px' }}>Bill To</span> <br />
+                                                    <span style={{ fontSize: '10px' }}>Quotation For</span> <br />
                                                     <span style={{ fontWeight: 'bold', fontSize: '15px' }}>{row.customerName.customerName.toUpperCase()}</span>
                                                     <br />
                                                     <span style={{ fontSize: '10px' }}>{row.customerName.billingAddress.toUpperCase()},{row.customerName.billingCity.toUpperCase()}</span>
@@ -927,29 +939,29 @@ function EstimateViewAdminAll() {
 
                                                 </address>
 
-                                                <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px', marginBottom: '5px' }}>
-                                                  <tbody>
-                                                    <tr>
-                                                      <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Estimate #</span></th>
-                                                      <td style={{ backgroundColor: 'white', border: 'none' }}><span >E-00{row.estimateNumber}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
-                                                      <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.estimateDate).format('DD/MM/YYYY')}</span></td>
-                                                    </tr>
-                                                    {row.estimateSubject === '' ? <tr></tr> : (<tr>
-                                                      <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></th>
-                                                      <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.estimateSubject.toUpperCase()}</span></td>
-                                                    </tr>)}
-                                                    {row.estimateDefect === '' ?
-                                                      <tr>
-
-                                                      </tr> : (<tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Defect</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.estimateDefect.toUpperCase()}</span></td>
-                                                      </tr>)}
-                                                  </tbody>
-                                                </table>
+                                                <div style={{ marginLeft: 'auto', marginRight: config['--metadata-block-right-offset'] || '0px', width: 'fit-content', display: 'block', marginBottom: '5px' }}>
+                                                  <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '24px', rowGap: '6px', fontSize: '80%', alignContent: 'start', position: 'relative' }}>
+                                                    <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Quotation #</div>
+                                                    <div style={{ textAlign: 'left' }}>Q-{String(row.estimateNumber).padStart(6, '0')}</div>
+                                                  
+                                                  <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Date</div>
+                                                  <div style={{ textAlign: 'left' }}>{dayjs(row.estimateDate).format('DD/MM/YYYY')}</div>
+                                                  
+                                                  {row.estimateSubject !== '' && (
+                                                    <>
+                                                      <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Subject</div>
+                                                      <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.estimateSubject.toUpperCase()}</div>
+                                                    </>
+                                                  )}
+                                                  
+                                                  {row.estimateDefect !== '' && (
+                                                    <>
+                                                      <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Defect</div>
+                                                      <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.estimateDefect.toUpperCase()}</div>
+                                                    </>
+                                                  )}
+                                                  </div>
+                                                </div>
                                               </section>
                                               <section style={{}}>
                                                 {
@@ -964,7 +976,7 @@ function EstimateViewAdminAll() {
                                                     </table>
                                                     : ''
                                                 }
-                                                <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD' }}>
+                                                <table className="secondTable" style={{ width: '100%', clear: 'both', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                                                   <thead>
                                                     <tr>
                                                       <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
@@ -1018,7 +1030,7 @@ function EstimateViewAdminAll() {
                                                     )}
                                                   </tbody>
                                                 </table>
-                                                <table style={{ fontSize: '80%', pageBreakInside: 'avoid', pageBreakInside: 'avoid' }}>
+                                                <table style={{ width: '100%', clear: 'both', fontSize: '80%', pageBreakInside: 'avoid' }}>
                                                   <thead>
                                                     <tr>
                                                       <th></th>
@@ -1035,8 +1047,7 @@ function EstimateViewAdminAll() {
                                                       <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                                         <span>
                                                           Sub Total
-                                                          <br />
-                                                          <span style={{ color: 'gray' }}>(Tax Inclusive)</span>
+                                                          {row.CheckTvA ? '' : <><br /><span style={{ color: 'gray' }}>(Tax Inclusive)</span></>}
                                                         </span>
                                                       </td>
                                                       <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>
@@ -1059,6 +1070,17 @@ function EstimateViewAdminAll() {
                                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{row.adjustment}</span></td>
                                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                          </tr>
+                                                        )
+                                                        : ''
+                                                    }
+                                                    {
+                                                      row.CheckTvA ?
+                                                        (
+                                                          <tr>
+                                                            <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>TVA @ 16%</span></td>
+                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax ? row.tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}</span></td>
                                                           </tr>
                                                         )
                                                         : ''
@@ -1107,6 +1129,57 @@ function EstimateViewAdminAll() {
                                         </td>
                                       </tr>
                                     </tbody>
+                                    {row.includeLetter && (
+                                      <tbody style={{ pageBreakBefore: 'always' }}>
+                                        <tr>
+                                          <td>
+                                            <div style={{ padding: '5px 40px', display: 'flex', flexDirection: 'column', backgroundColor: 'white' }}>
+                                              {/* Header for Second Page */}
+                                              <div style={{ borderBottom: '2px solid #30368a', paddingBottom: '15px', marginBottom: '10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                              </div>
+
+                                              {/* Date and Location */}
+                                              <div style={{ textAlign: 'right', marginBottom: '5px' }}>
+                                                <p style={{ fontSize: '110%', margin: 0 }}>Kolwezi, le {dayjs(row.estimateDate).format('DD MMMM YYYY')}</p>
+                                              </div>
+
+                                              {/* Recipient Info */}
+                                              <div style={{ marginBottom: '5px' }}>
+                                                <p style={{ fontSize: '110%', fontWeight: 'bold', margin: '0 0 2px' }}>To: {row.customerName.customerName.toUpperCase()}</p>
+                                                <p style={{ fontSize: '110%', margin: 0 }}>{row.customerName.billingAddress.toUpperCase()}</p>
+                                                <p style={{ fontSize: '110%', margin: 0 }}>{row.customerName.billingCity.toUpperCase()}</p>
+                                              </div>
+
+                                              {/* Subject Line */}
+                                              <div style={{ marginBottom: '5px' }}>
+                                                <p style={{ fontSize: '115%', fontWeight: 'bold', textDecoration: 'underline', color: '#30368a', margin: 0 }}>
+                                                  Subject: Quotation Q-{String(row.estimateNumber).padStart(6, '0')} - {row.estimateSubject.toUpperCase()}
+                                                </p>
+                                              </div>
+
+                                              {/* Letter Body */}
+                                              <div style={{ 
+                                                whiteSpace: 'pre-wrap', 
+                                                lineHeight: '1.4', 
+                                                fontSize: '110%', 
+                                                color: '#333',
+                                                textAlign: 'justify',
+                                                fontFamily: 'serif' 
+                                              }}>
+                                                {row.attachedLetter}
+                                              </div>
+
+                                              {/* Signature Area (Optional, but professional) */}
+                                              <div style={{ marginTop: 'auto', paddingTop: '5px', textAlign: 'right' }}>
+                                                <p style={{ fontWeight: 'bold', fontSize: '110%' }}>The Management</p>
+                                                <p style={{ color: '#30368a', fontWeight: 'bold' }}>GLOBAL GATE SARL</p>
+                                              </div>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    )}
                                     <tfoot>
                                       <tr>
                                         <td>
@@ -1137,21 +1210,12 @@ function EstimateViewAdminAll() {
                                 </Box>
                                 <div className='invoicedetails'>
                                   <header className='invoiceTest'>
-                                    <span>
-                                      <img src={Image} />
-                                    </span>
-                                    <address style={{ textAlign: 'right' }}>
-                                      <p style={{ fontWeight: 'bold' }}>RCM CD/KWZ/RCCM/22-B-00317 </p>
-                                      <p> ID NAT 14-H5300N11179P </p>
-                                      <p> AVENUE SALONGO Q/INDUSTRIEL C/MANIKA </p>
-                                      <p>  KOLWEZI LUALABA </p>
-                                      <p>   DR CONGO </p>
-                                    </address>
+                                    <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
                                   </header>
-                                  <hr /><p className='invoicehr'>ESTIMATE</p>
+                                  <hr /><p className='invoicehr'>QUOTATION</p>
                                   <article>
-                                    <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                      <address style={{ lineHeight: 1.35, width: '60%', marginBottom: '5px' }}>
+                                    <section style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', boxSizing: 'border-box', padding: '0px', marginBottom: '10px' }}>
+                                      <address style={{ marginLeft: config['--client-block-left-offset'] || '0px', lineHeight: 1.35, width: 'fit-content', minWidth: '200px', marginBottom: '5px' }}>
                                         <p >Bill To<br />
                                           <span style={{ fontWeight: 'bold' }}>{row.customerName.customerName.toUpperCase()}</span>
                                           <br />
@@ -1159,28 +1223,29 @@ function EstimateViewAdminAll() {
                                         </p>
                                       </address>
 
-                                      <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '5px' }}>
-                                        <tbody>
-                                          <tr>
-                                            <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Estimate #</span></th>
-                                            <td style={{ backgroundColor: 'white', border: 'none' }}><span >E-00{row.estimateNumber}</span></td>
-                                          </tr>
-                                          <tr>
-                                            <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
-                                            <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.estimateDate).format('DD/MM/YYYY')}</span></td>
-                                          </tr>
-                                          {row.estimateSubject === '' ? <tr></tr> : (<tr>
-                                            <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></th>
-                                            <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.estimateSubject.toUpperCase()}</span></td>
-                                          </tr>)}
-                                          {row.estimateDefect === '' ? <tr>
-
-                                          </tr> : (<tr>
-                                            <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Defect</span></th>
-                                            <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.estimateDefect.toUpperCase()}</span></td>
-                                          </tr>)}
-                                        </tbody>
-                                      </table>
+                                      <div style={{ marginLeft: 'auto', marginRight: config['--metadata-block-right-offset'] || '0px', width: 'fit-content', display: 'block', marginBottom: '5px' }}>
+                                        <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '24px', rowGap: '6px', fontSize: '70%', alignContent: 'start', position: 'relative' }}>
+                                          <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Quotation #</div>
+                                          <div style={{ textAlign: 'left' }}>Q-{String(row.estimateNumber).padStart(6, '0')}</div>
+                                        
+                                        <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Date</div>
+                                        <div style={{ textAlign: 'left' }}>{dayjs(row.estimateDate).format('DD/MM/YYYY')}</div>
+                                        
+                                        {row.estimateSubject !== '' && (
+                                          <>
+                                            <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Subject</div>
+                                            <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.estimateSubject.toUpperCase()}</div>
+                                          </>
+                                        )}
+                                        
+                                        {row.estimateDefect !== '' && (
+                                          <>
+                                            <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Defect</div>
+                                            <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.estimateDefect.toUpperCase()}</div>
+                                          </>
+                                        )}
+                                      </div>
+                                    </div>
                                     </section>
                                     <section>
                                       {
@@ -1266,8 +1331,7 @@ function EstimateViewAdminAll() {
                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}>
                                               <span>
                                                 Sub Total
-                                                <br />
-                                                <span style={{ color: 'gray' }}>(Tax Inclusive)</span>
+                                                {row.CheckTvA ? '' : <><br /><span style={{ color: 'gray' }}>(Tax Inclusive)</span></>}
                                               </span>
                                             </td>
                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.subTotal}</span></td>
@@ -1290,6 +1354,17 @@ function EstimateViewAdminAll() {
                                                   <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                   <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{row.adjustment}</span></td>
                                                   <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                </tr>
+                                              )
+                                              : ''
+                                          }
+                                          {
+                                            row.CheckTvA ?
+                                              (
+                                                <tr>
+                                                  <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>TVA @ 16%</span></td>
+                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax ? row.tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}</span></td>
                                                 </tr>
                                               )
                                               : ''
@@ -1379,7 +1454,7 @@ function EstimateViewAdminAll() {
                                   <span className='footerinvoice'>
                                     <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
                                       <span><EmailIcon /></span>
-                                      <span>Global@gmail.com</span>
+                                      <span>contact@globalgate.sarl</span>
                                     </p>
                                     <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
                                       <span><PhoneIcon /></span>
@@ -1390,6 +1465,47 @@ function EstimateViewAdminAll() {
                                       <span>www.GlobalGate.sarl</span>
                                     </p>
                                   </span>
+
+                                  {row.includeLetter && (
+                                    <div style={{ marginTop: '50px', borderTop: '1px dashed #ccc', paddingTop: '50px', backgroundColor: 'white' }}>
+                                      {/* Visible Preview of Second Page */}
+                                      <div style={{ padding: '20px', border: '1px solid #eee', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.05)' }}>
+                                        <div style={{ borderBottom: '2px solid #30368a', paddingBottom: '10px', marginBottom: '30px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                          <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                        </div>
+
+                                        <div style={{ textAlign: 'right', marginBottom: '30px' }}>
+                                          <p>Kolwezi, le {dayjs(row.estimateDate).format('DD MMMM YYYY')}</p>
+                                        </div>
+
+                                        <div style={{ marginBottom: '30px' }}>
+                                          <p style={{ fontWeight: 'bold' }}>To: {row.customerName.customerName.toUpperCase()}</p>
+                                          <p>{row.customerName.billingAddress.toUpperCase()}</p>
+                                          <p>{row.customerName.billingCity.toUpperCase()}</p>
+                                        </div>
+
+                                        <div style={{ marginBottom: '30px' }}>
+                                          <p style={{ fontWeight: 'bold', textDecoration: 'underline', color: '#30368a' }}>
+                                            Subject: Quotation Q-{String(row.estimateNumber).padStart(6, '0')} - {row.estimateSubject.toUpperCase()}
+                                          </p>
+                                        </div>
+
+                                        <div style={{ 
+                                          whiteSpace: 'pre-wrap', 
+                                          lineHeight: '1.6', 
+                                          color: '#333',
+                                          textAlign: 'justify'
+                                        }}>
+                                          {row.attachedLetter}
+                                        </div>
+
+                                        <div style={{ marginTop: '40px', textAlign: 'right' }}>
+                                          <p style={{ fontWeight: 'bold' }}>The Management</p>
+                                          <p style={{ color: '#30368a', fontWeight: 'bold' }}>GLOBAL GATE SARL</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             </div>

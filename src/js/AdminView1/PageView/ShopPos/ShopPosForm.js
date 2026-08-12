@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
-
+import { toast } from 'react-toastify';
 import SideShop from '../../../component/SideShop';
 import '../../view.css';
 import '../Chartview.css';
@@ -21,6 +21,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
+import { invalidateCache } from '../../../utils/apiCache';
 import { v4 } from 'uuid';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -34,7 +36,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
@@ -43,8 +45,10 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import NoImage from '../../../img/no-data.png';
+
 
 const TAX_RATE = 0.16;
 
@@ -149,20 +153,13 @@ function ShopPosForm() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -178,7 +175,7 @@ function ShopPosForm() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
+  const apiUrl = `${ENDPOINT_URL}/create-invoice`;
   const [invoiceDate, setInvoiceDate] = useState(() => {
     const date = new Date()
     return date
@@ -204,15 +201,15 @@ function ShopPosForm() {
   const [totalPages, setTotalPages] = useState(0);
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearch(search);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [search]);
-
+  // const [loadingData, setLoadingData] = useState(true); // Already defined later in file, reusing or creating new unique one? 
+  // checking existing loadingData at line 178 of ItemViewAdmin... wait this is ShopPosForm.
+  // ShopPosForm doesn't seem to have loadingData at top level scope... let's check. 
+  // It has `const [loading, setLoading] = useState(false);` later. 
+  // `loadingData` is used in the JSX later? 
+  // Let's check original file again. Line 369 uses `loadingData?`. 
+  // But where is it defined? 
+  // Ah, I missed where it was defined in my previous reads. It's likely defined.
+  // I will use a specific name to avoid collision: `loadingItems`
   const [loadingItems, setLoadingItems] = useState(true);
   const [allItems, setAllItems] = useState([]); // Store all fetched items
 
@@ -225,41 +222,28 @@ function ShopPosForm() {
     setPage(1);
   };
 
-  const fetchItems = async (page, searchTerm) => {
+  const fetchItems = async () => {
     setLoadingItems(true);
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${page}&limit=48&search=${encodeURIComponent(searchTerm.trim())}&sort=-_id`);
-        setTotalPages(res.data.totalPages);
-        setItemsList(res.data.items ? res.data.items.filter(item => item.typeItem === 'Goods') : []);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    } else {
-      const offLineItems = await db.itemSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const validItems = offLineItems.filter(item =>
-        item.typeItem === 'Goods' && (
-          item.itemName.toLowerCase().includes(lowerSearch) ||
-          (item.itemDescription && item.itemDescription.toLowerCase().includes(lowerSearch))
-        )
-      ).reverse();
-      setTotalPages(Math.ceil(validItems.length / 48));
-      const start = (page - 1) * 48;
-      setItemsList(validItems.slice(start, start + 48));
+    setLoadingItems(true);
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${page}&limit=48&search=${search}&sort=-_id`);
+      setTotalPages(res.data.totalPages);
+      setItemsList(res.data.items ? res.data.items.filter(item => item.typeItem === 'Goods') : []);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
     setLoadingItems(false);
   }
 
   useEffect(() => {
-    fetchItems(page, debouncedSearch);
-  }, [page, debouncedSearch]);
+    fetchItems();
+  }, [page, search]);
 
   // Client-side filtering removed in favor of server-side fetch
 
 
   const handleRefreshSearch = () => {
-    fetchItems(page, debouncedSearch);
+    fetchItems();
     setSearch('');
     setPage(1);
   }
@@ -273,40 +257,27 @@ function ShopPosForm() {
 
   useEffect(() => {
     const fetchlastNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rateReturn')
-          resRate.data.data.map((row) => setRate(row.rateR))
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-pos')
-          setFactureNumber(parseInt(res.data.factureNumber) + 1)
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.posSchema.toArray();
-        const latest = offLineCustomer1.reduce((max, row) => row.factureNumber > max.factureNumber ? row : max, offLineCustomer1[0])
-        setFactureNumber(parseInt(latest.factureNumber) + 1)
-        const offLineRate = await db.rateReturnSchema.toArray();
-        offLineRate.map((row) => setRate(row.rateR))
+      try {
+        const resRate = await axios.get(`${ENDPOINT_URL}/rateReturn`)
+        resRate.data.data.map((row) => setRate(row.rateR))
+        const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-pos`)
+        setFactureNumber((parseInt(res.data?.data?.factureNumber || res.data?.factureNumber || 0)) + 1)
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchlastNumber()
   }, [])
   useEffect(() => {
     const fetchItem = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          setItemInformation(res.data.data.filter((row) => row.typeItem === "Goods").map((row) => ({
-            ...row,
-            ItemNumber: row.itemUpc.newCode + '-0' + row.itemUpc.itemNumber
-          })).reverse())
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.itemSchema.toArray();
-        setItemInformation(offLineCustomer1.filter((row) => row.typeItem === "Goods").reverse())
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/item`)
+        setItemInformation(res.data?.data?.filter((row) => row.typeItem === "Goods").map((row) => ({
+          ...row,
+          ItemNumber: row.itemUpc.newCode + '-' + String(row.itemUpc.itemNumber).padStart(6, '0')
+        })).reverse())
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchItem()
@@ -340,7 +311,7 @@ function ShopPosForm() {
   }, [cart, rate]);
 
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -421,7 +392,7 @@ function ShopPosForm() {
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Item InFO */ }
 
   const handleShowAutocomplete = (idRow) => {
@@ -468,8 +439,8 @@ function ShopPosForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -495,16 +466,11 @@ function ShopPosForm() {
   const [customer, setCustomer] = useState([]);
   useEffect(() => {
     const fetchCustomer = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          setCustomer(res.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.customerSchema.toArray();
-        setCustomer(offLineCustomer1.reverse());
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/customer`)
+        setCustomer(res.data.data.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchCustomer()
@@ -556,7 +522,13 @@ function ShopPosForm() {
         const updatedItems = [...prevItems];
         const item = { ...updatedItems[existingItemIndex] };
 
-        item.itemQty += 1;
+        const newQty = (parseInt(item.itemQty, 10) || 0) + 1;
+        if (newQty > item.stock) {
+          toast.error("Stock Exceeded!", { position: "top-center" });
+          return prevItems;
+        }
+
+        item.itemQty = newQty;
         item.totalAmount = Math.round((item.itemQty * item.itemRate) * 100) / 100;
         item.totalCost = Math.round((item.itemQty * item.itemCost) * 100) / 100;
         item.discount = item.totalAmount * item.itemDiscount;
@@ -688,7 +660,7 @@ function ShopPosForm() {
 
   const handleClose = () => {
     resetForm();
-    // window.location.reload(); // Removed hard reload
+    window.location.reload(); // Removed hard reload
   }
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
@@ -709,11 +681,11 @@ function ShopPosForm() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'F-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      reason: 'S-00' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -726,11 +698,11 @@ function ShopPosForm() {
   } else {
     status = 'Draft'
   }
-  const itemFilter = items.filter((row) => row.itemName.itemName !== '' && row.itemName._id)
+  const itemFilter = items.filter((row) => row.itemName.itemName !== '' && row.itemName?._id)
   const [saving, setSaving] = useState('')
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
@@ -756,28 +728,23 @@ function ShopPosForm() {
       note,
       totalInvoice, synced: false
     }
-    if (navigator.onLine) {
-      try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-pos', data);
-        if (res) {
-          setReferenceInfo(res.data.data.factureNumber)
-          handleQty()
-          // Open Loading View
-          const ReferenceInfo = res.data.data._id
-          const ReferenceInfoNumber = res.data.data.factureNumber
-          handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
-          await db.posSchema.add({ ...res.data.data, _id: res.data.data._id, synced: true })
-          handleOpen();
-        }
-      } catch (error) {
-        if (error) {
-          setSaving('')
-          handleError();
-        }
+    try {
+      const res = await axios.post(`${ENDPOINT_URL}/create-pos`, data);
+      if (res) {
+        setReferenceInfo(res.data.data.factureNumber)
+        handleQty()
+        invalidateCache('/pos');
+        // Open Loading View
+        const ReferenceInfo = res.data.data._id
+        const ReferenceInfoNumber = res.data.data.factureNumber
+        handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
+        handleOpen();
       }
-    } else {
-      await db.posSchema.add(data)
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError();
+      }
     }
   }
   const [sideBar, setSideBar] = React.useState(false);
@@ -898,7 +865,7 @@ function ShopPosForm() {
                               label='Invoice Number'
                               value={factureNumber}
                               onChange={(e) => setFactureNumber(e.target.value)}
-                              startAdornment={<InputAdornment position="start">I-00</InputAdornment>}
+                              startAdornment={<InputAdornment position="start">I-</InputAdornment>}
                               sx={{ fontSize: '15px' }}
                             />
                           </FormControl>
@@ -1030,8 +997,8 @@ function ShopPosForm() {
                                                                 <Autocomplete
                                                                   disableClearable
                                                                   options={filterItemInformation}
-                                                                  getOptionLabel={(option) => option.itemUpc.newCode + '-0' + option.itemUpc.itemNumber + ' / ' + option.itemName + ' / ' + option.itemBrand}
-                                                                  renderOption={(props, option) => (<Box {...props}>{option.itemUpc.newCode + '-0' + option.itemUpc.itemNumber + ' / ' + option.itemName + ' / ' + option.itemBrand}</Box>)}
+                                                                  getOptionLabel={(option) => option.itemUpc.newCode + '-' + String(option.itemUpc.itemNumber).padStart(6, '0') + ' / ' + option.itemName + ' / ' + option.itemBrand}
+                                                                  renderOption={(props, option) => (<Box {...props}>{option.itemUpc.newCode + '-' + String(option.itemUpc.itemNumber).padStart(6, '0') + ' / ' + option.itemName + ' / ' + option.itemBrand}</Box>)}
                                                                   renderInput={(params) =>
                                                                     <TextField {...params}
                                                                     />}
@@ -1202,8 +1169,8 @@ function ShopPosForm() {
                                                                   <Autocomplete
                                                                     disableClearable
                                                                     options={filterItemInformation}
-                                                                    getOptionLabel={(option) => option.itemUpc.newCode + '-0' + option.itemUpc.itemNumber + ' / ' + option.itemName + ' / ' + option.itemBrand}
-                                                                    renderOption={(props, option) => (<Box {...props}>{option.itemUpc.newCode + '-0' + option.itemUpc.itemNumber + ' / ' + option.itemName + ' / ' + option.itemBrand}</Box>)}
+                                                                    getOptionLabel={(option) => option.itemUpc.newCode + '-' + String(option.itemUpc.itemNumber).padStart(6, '0') + ' / ' + option.itemName + ' / ' + option.itemBrand}
+                                                                    renderOption={(props, option) => (<Box {...props}>{option.itemUpc.newCode + '-' + String(option.itemUpc.itemNumber).padStart(6, '0') + ' / ' + option.itemName + ' / ' + option.itemBrand}</Box>)}
                                                                     renderInput={(params) =>
                                                                       <TextField {...params}
                                                                       />}
@@ -1281,7 +1248,7 @@ function ShopPosForm() {
 
                         </Grid>
                         <Grid item xs={12}>
-                          <table className="firstTable" style={{ width: '100%' }}>
+                          <table className="firstTable" style={{ width: '100%', borderCollapse: 'collapse' }}>
                             <tbody>
                               <tr >
                                 <th style={{ textAlign: 'center' }} colSpan={2}>Tax Details</th>
@@ -1460,7 +1427,7 @@ function ShopPosForm() {
                               <CardMedia
                                 component="img"
                                 height="140"
-                                image={`data:${item.contentType};base64,${item.data}`}
+                                image={item.data ? `data:${item.contentType};base64,${item.data}` : NoImage}
                                 alt={item.itemName}
                                 sx={{ objectFit: 'contain', p: 1 }}
                               />

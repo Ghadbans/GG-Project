@@ -20,8 +20,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline, ShoppingCartOutlined } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
+import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination, Avatar } from '@mui/material';
 import { v4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -35,12 +36,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import ItemThumbnail from '../../../component/ItemThumbnail';
+
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -142,6 +145,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+
 function ItemOutViewUpdate() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -152,7 +156,7 @@ function ItemOutViewUpdate() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -199,8 +203,8 @@ function ItemOutViewUpdate() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemOut/${id}`)
-        setOutNumber(res.data.data.outNumber);
+        const res = await axios.get(`${ENDPOINT_URL}/get-itemOut/${id}`)
+        setOutNumber(Number(res.data?.data?.outNumber || res.data?.outNumber || 0));
         setItemOutDate(res.data.data.itemOutDate);
         setReason(res.data.data.reason);
         setDescription(res.data.data.description);
@@ -217,7 +221,7 @@ function ItemOutViewUpdate() {
   useEffect(() => {
     const fetchDataId = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemOut/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-itemOut/${id}`)
         setOldArray(res.data.data.itemsQtyArray);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -231,14 +235,14 @@ function ItemOutViewUpdate() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(resItem.data.data)
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+        const resProject = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
         setProject(resProject.data.data);
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
+        const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
         setMaintenance(resMaintenance.data.data);
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => !row.ReferenceName && !row.ReferenceName2)
+        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const newData = resInvoice.data?.data?.filter((row) => !row.ReferenceName && !row.ReferenceName2)
         setInvoice(newData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -253,21 +257,16 @@ function ItemOutViewUpdate() {
     if (shopOpen) { // Only fetch if side shop is open
       const fetchShop = async () => {
         setShopLoading(true);
-        if (navigator.onLine) {
-          try {
-            const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-            resRate.data.data.forEach((row) => setRate(row.rate))
+        try {
+          const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+          resRate.data.data.forEach((row) => setRate(row.rate))
 
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-            setShopTotalPages(res.data.totalPages)
-            setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-            setShopLoading(false)
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setShopLoading(false)
-          }
-        } else {
-          // Fallback if needed, though mostly online
+          const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+          setShopTotalPages(res.data.totalPages)
+          setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+          setShopLoading(false)
+        } catch (error) {
+          console.error('Error fetching data:', error);
           setShopLoading(false)
         }
       }
@@ -367,138 +366,152 @@ function ItemOutViewUpdate() {
     }]);
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemDescription: selectedOptions?.itemDescription,
     } : row))
   }
   {/** Item Change End */ }
   {/** Update Info start */ }
-  const handleUpdateInfo = () => {
+  const handleUpdateInfo = async () => {
     const difference = [];
     const sumToAdd = [];
     OldArray.map((row) => {
-      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName._id)
+      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName?._id)
       if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
         const diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut)
         difference.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       } else if (newItem && parseFloat(newItem.newItemOut) > parseFloat(row.newItemOut)) {
         const diff = parseFloat(newItem.newItemOut) - parseFloat(row.newItemOut)
         sumToAdd.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       }
     })
-    if (filteredProject.length > 0) {
+    if (projectId) {
       //update Purchase
-      if (sumToAdd && sumToAdd.length > 0) {
-        const result = filteredProject.map((row) => {
-          const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut + relatedArray.qty
-            return {
-              ...row, itemOut
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${projectId}`);
+        const currentPurchase = res.data.data;
+        if (sumToAdd && sumToAdd.length > 0) {
+          const result = currentPurchase.items.map((row) => {
+            const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
+            if (relatedArray) {
+              const itemOut = (parseFloat(row.itemOut) || 0) + relatedArray.qty
+              return {
+                ...row, itemOut
+              }
             }
+            return row
+          })
+          const data = {
+            items: result
           }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
-      } else if (difference && difference.length > 0) {
-        const result = filteredProject.map((row) => {
-          const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut - relatedArray.qty
-            return {
-              ...row, itemOut
+          return await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, data)
+        } else if (difference && difference.length > 0) {
+          const result = currentPurchase.items.map((row) => {
+            const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
+            if (relatedArray) {
+              const itemOut = (parseFloat(row.itemOut) || 0) - relatedArray.qty
+              return {
+                ...row, itemOut
+              }
             }
+            return row
+          })
+          const data = {
+            items: result
           }
-          return row
-        })
-        const data = {
-          items: result
+          return await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, data)
         }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
-      }
-    } else if (filteredInvoice.length > 0) {
+      } catch (error) { console.error(error); }
+    } else if (invoiceId) {
       //Update Invoice
-      if (sumToAdd && sumToAdd.length > 0) {
-        const result = filteredInvoice.map((row) => {
-          const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut + relatedArray.qty
-            return {
-              ...row, itemOut
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceId}`);
+        const currentInvoice = res.data.data;
+        if (sumToAdd && sumToAdd.length > 0) {
+          const result = currentInvoice.items.map((row) => {
+            const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
+            if (relatedArray) {
+              const itemOut = (parseFloat(row.itemOut) || 0) + relatedArray.qty
+              return {
+                ...row, itemOut
+              }
             }
+            return row
+          })
+          const data = {
+            items: result
           }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
-      } else if (difference && difference.length > 0) {
-        const result = filteredInvoice.map((row) => {
-          const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut - relatedArray.qty
-            return {
-              ...row, itemOut
+          return await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceId}`, data)
+        } else if (difference && difference.length > 0) {
+          const result = currentInvoice.items.map((row) => {
+            const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
+            if (relatedArray) {
+              const itemOut = (parseFloat(row.itemOut) || 0) - relatedArray.qty
+              return {
+                ...row, itemOut
+              }
             }
+            return row
+          })
+          const data = {
+            items: result
           }
-          return row
-        })
-        const data = {
-          items: result
+          return await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceId}`, data)
         }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
-      }
-    } else if (filteredMaintenance.length > 0) {
+      } catch (error) { console.error(error); }
+    } else if (serviceId) {
       //Update Maintenance
-      if (sumToAdd && sumToAdd.length > 0) {
-        const result = filteredMaintenance.map((row) => {
-          const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut + relatedArray.qty
-            return {
-              ...row, itemOut
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${serviceId}`);
+        const currentMaintenance = res.data.data;
+        if (sumToAdd && sumToAdd.length > 0) {
+          const result = currentMaintenance.items.map((row) => {
+            const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
+            if (relatedArray) {
+              const itemOut = (parseFloat(row.itemOut) || 0) + relatedArray.qty
+              return {
+                ...row, itemOut
+              }
             }
+            return row
+          })
+          const data = {
+            items: result
           }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
-      } else if (difference && difference.length > 0) {
-        const result = filteredMaintenance.map((row) => {
-          const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut - relatedArray.qty
-            return {
-              ...row, itemOut
+          return await axios.put(`${ENDPOINT_URL}/update-maintenance/${serviceId}`, data)
+        } else if (difference && difference.length > 0) {
+          const result = currentMaintenance.items.map((row) => {
+            const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
+            if (relatedArray) {
+              const itemOut = (parseFloat(row.itemOut) || 0) - relatedArray.qty
+              return {
+                ...row, itemOut
+              }
             }
+            return row
+          })
+          const data = {
+            items: result
           }
-          return row
-        })
-        const data = {
-          items: result
+          return await axios.put(`${ENDPOINT_URL}/update-maintenance/${serviceId}`, data)
         }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
-      }
+      } catch (error) { console.error(error); }
     }
   }
   {/** Update Info end */ }
@@ -507,19 +520,19 @@ function ItemOutViewUpdate() {
     const difference = [];
     const sumToAdd = [];
     OldArray.map((row) => {
-      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName._id)
+      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName?._id)
       if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
         const diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut)
         difference.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       } else if (newItem && parseFloat(newItem.newItemOut) > parseFloat(row.newItemOut)) {
         const diff = parseFloat(newItem.newItemOut) - parseFloat(row.newItemOut)
         sumToAdd.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       }
@@ -533,7 +546,7 @@ function ItemOutViewUpdate() {
       })
       // Get Value
       const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+        return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
       })
       try {
         const res = await Promise.all(getRequestId);
@@ -550,14 +563,14 @@ function ItemOutViewUpdate() {
         console.log('An error as occur');
       };
       // Update Value 
-      const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
-      })
-      try {
-        await Promise.all(updateRequest);
-      } catch (error) {
-        console.log('An error as occur');
-      }
+      // const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
+      //   return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
+      // })
+      // try {
+      //   await Promise.all(updateRequest);
+      // } catch (error) {
+      //   console.log('An error as occur');
+      // }
     }
     if (sumToAdd && sumToAdd.length > 0) {
       const initialStateId = {}
@@ -568,7 +581,7 @@ function ItemOutViewUpdate() {
       })
       // Get Value
       const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+        return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
       })
       try {
         const res = await Promise.all(getRequestId);
@@ -585,14 +598,14 @@ function ItemOutViewUpdate() {
         console.log('An error as occur');
       };
       // Update Value 
-      const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
-      })
-      try {
-        await Promise.all(updateRequest);
-      } catch (error) {
-        console.log('An error as occur');
-      }
+      // const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
+      //   return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
+      // })
+      // try {
+      //   await Promise.all(updateRequest);
+      // } catch (error) {
+      //   console.log('An error as occur');
+      // }
     }
   }
   const [openBack, setOpenBack] = useState(false);
@@ -668,7 +681,7 @@ function ItemOutViewUpdate() {
       dateNotification: new Date()
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
       if (res) {
         handleOpen();
       }
@@ -680,7 +693,7 @@ function ItemOutViewUpdate() {
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
@@ -694,7 +707,7 @@ function ItemOutViewUpdate() {
       itemsQtyArray,
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-itemOut/${id}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-itemOut/${id}`, data)
       if (res) {
         handleUpdateInfo();
         handleQty()
@@ -741,16 +754,27 @@ function ItemOutViewUpdate() {
           </> : <>
             <td ><DragIndicatorRounded /></td>
             <td>
-              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
-              <TextField
-                disabled
-                name='itemDescription' id='itemDescription'
-                value={Item.itemDescription}
-                multiline
-                rows={3}
-                size="small"
-                sx={{ width: '100%', backgroundColor: 'white', fontSize: 12 }}
-              />
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                <ItemThumbnail
+                  itemId={Item.itemName?._id}
+                  initialData={Item.data}
+                  initialType={Item.contentType}
+                />
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', flexGrow: 1 }}>
+                  <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                    {Item.itemName ? Item.itemName.itemName : ''}
+                  </Typography>
+                  <TextField
+                    disabled
+                    name='itemDescription' id='itemDescription'
+                    value={Item.itemDescription}
+                    multiline
+                    rows={2}
+                    size="small"
+                    sx={{ width: '100%', backgroundColor: 'white', fontSize: 11 }}
+                  />
+                </Box>
+              </Box>
             </td>
             <td>
               <TextField
@@ -778,8 +802,14 @@ function ItemOutViewUpdate() {
           Item.itemName.itemName ? (
             (
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <div >
-                  <Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>{Item.itemName.itemName}</Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                  <ItemThumbnail
+                    itemId={Item.itemName?._id}
+                    initialData={Item.data}
+                    initialType={Item.contentType}
+                  />
+                  <div >
+                    <Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>{Item.itemName.itemName}</Typography>
                   <TextField
                     name='itemDescription' id='itemDescription'
                     value={Item.itemDescription}
@@ -790,6 +820,7 @@ function ItemOutViewUpdate() {
                     sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
                   />
                 </div>
+              </Box>
                 <div>
                   <BlackTooltip title="Clear" placement='top'>
                     <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
@@ -811,6 +842,14 @@ function ItemOutViewUpdate() {
                     rows={4} {...params} required
                   />}
                 onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                filterOptions={(options, { inputValue }) => {
+                  return options.filter((option) =>
+                    (option.itemName && option.itemName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                    (option.itemBrand && option.itemBrand.toLowerCase().includes(inputValue.toLowerCase())) ||
+                    (option.itemNumber && option.itemNumber.toLowerCase().includes(inputValue.toLowerCase())) ||
+                    (option.itemDescription && option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()))
+                  );
+                }}
                 size="small"
                 sx={{ width: '470px', backgroundColor: 'white' }}
               />

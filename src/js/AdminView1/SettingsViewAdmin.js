@@ -1,10 +1,10 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './view.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {Table,Modal, IconButton,styled, TableBody,TableCell,TableHead,TableRow,Checkbox, TableContainer, Paper, Typography, Box, Autocomplete,TextField,Backdrop }  from '@mui/material';
-import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
+import { Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop } from '@mui/material';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,15 +19,18 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import { NavLink, useNavigate } from 'react-router-dom';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import SidebarDash from '../component/SidebarDash';
 import SidebarDashE2 from '../component/SidebarDashE2';
 import { MailOutline } from '@mui/icons-material';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+import { Tabs, Tab } from '@mui/material';
+import LayoutTemplateManager from './PageView/SettingsView/LayoutTemplateManager';
+
 
 const ViewTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -87,46 +90,76 @@ function SettingsViewAdmin() {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
 
-  useEffect(()=> {
+  useEffect(() => {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-     if (navigator.onLine) {
-       try {
-         const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-         const Name = res.data.data.employeeName;
-         const Role = res.data.data.role;
-         dispatch(setUser({userName: Name, role: Role}));
-       } catch (error) {
-         console.error('Error fetching data:', error);
-       }
-     } else {
-      const resLocalInfo = await db.employeeUserSchema.get({_id:storesUserId})
-      const Name = resLocalInfo.employeeName;
-      const Role = resLocalInfo.role;
-      dispatch(setUser({userName: Name, role: Role}));
-     }
-    }else {
-      navigate('/');
-    }
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      } else {
+        navigate('/');
+      }
     }
     fetchUser()
-  },[dispatch]);
+  }, [dispatch]);
 
   const handleLogout = () => {
-      localStorage.removeItem('user');
-      dispatch(logOut());
-      navigate('/')
-    }
-    const [sideBar, setSideBar] = React.useState(true);
-    const toggleDrawer = () => {
-     setSideBar(!sideBar);
+    localStorage.removeItem('user');
+    dispatch(logOut());
+    navigate('/')
+  }
+  const [sideBar, setSideBar] = React.useState(true);
+  const toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
+  const [tabIndex, setTabIndex] = React.useState(0);
+  const handleTabChange = (event, newValue) => {
+    setTabIndex(newValue);
+  };
+
+  const [hasLayoutAccess, setHasLayoutAccess] = useState(false);
+  useEffect(() => {
+    const fetchAccess = async () => {
+      try {
+        const userName = user?.data?.userName;
+        const userId = user?.data?._id;
+        if (!userName) return;
+
+        if (userName === 'GG') {
+          setHasLayoutAccess(true);
+          return;
+        }
+
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const myAccess = res.data.data.slice().reverse().find(
+          a => a.userID === userId
+        );
+
+        if (myAccess && Array.isArray(myAccess.modules)) {
+          const allowed = myAccess.modules.some(m => {
+            const name = typeof m === 'string' ? m : (m?.moduleName || m?.name || m?.module || '');
+            return name === 'Layout-Print' && m?.access?.viewM;
+          });
+          setHasLayoutAccess(allowed);
+        }
+      } catch (err) {
+        console.error("Error fetching access", err);
+      }
     };
+    fetchAccess();
+  }, [user]);
+
   return (
     <div className='Homeemployee'>
-  <Box sx={{ display: 'flex' }}>
-                 <CssBaseline />
-         <AppBar position="absolute" open={sideBar} sx={{backgroundColor:'#30368a'}}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -153,14 +186,14 @@ function SettingsViewAdmin() {
             >
               Profile
             </Typography>
-           <NotificationVIewInfo/>
-            <MessageAdminView name={user.data.userName} role={user.data.role}/>
+            <NotificationVIewInfo />
+            <MessageAdminView name={user.data.userName} role={user.data.role} />
             <IconButton color="inherit" onClick={handleLogout}>
-            <Logout style={{color:'white'}} /> 
+              <Logout style={{ color: 'white' }} />
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -174,8 +207,8 @@ function SettingsViewAdmin() {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List sx={{height:'700px'}}>
-         <SidebarDashE2/>
+          <List sx={{ height: '700px' }}>
+            <SidebarDashE2 />
           </List>
         </Drawer>
         <Box
@@ -186,36 +219,49 @@ function SettingsViewAdmin() {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            width:'100%',
+            width: '100%',
             height: '100vh',
             overflow: 'auto',
           }}
         >
-          <Toolbar/>
-   <Container maxWidth="none" sx={{ mt: 1}} >
-  <div className='Customerbuttonadd1'>
-      <div className='settingsView'>
-        <div className='settingsViewtitle'>
-          <div style={{display:'flex', alignItems:'center'}}>
-          <AccountCircleIcon  onClick={() => handleShow(1)} className='settingsViewIcon'/>
-          <div style={{lineHeight:'10px'}}>
-            <h2>{user.data.userName}</h2>
-          </div>
-          </div>
-        </div>
-        <hr/>
-        <div className='settingsViewcontent'>
-          <div>
-            <h4> Profile Info</h4>
-            <p>{user.data.role}</p>
-          </div>
-        </div>
-      </div>
+          <Toolbar />
+          <Container maxWidth="none" sx={{ mt: 1 }} >
+            <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 2 }}>
+              <Tabs value={tabIndex} onChange={handleTabChange}>
+                <Tab label="Profile" />
+                {hasLayoutAccess && <Tab label="Layout & Print" />}
+              </Tabs>
+            </Box>
+
+            {tabIndex === 0 && (
+              <div className='Customerbuttonadd1'>
+                <div className='settingsView'>
+                  <div className='settingsViewtitle'>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <AccountCircleIcon className='settingsViewIcon' />
+                      <div style={{ lineHeight: '10px' }}>
+                        <h2>{user?.data?.userName}</h2>
+                      </div>
+                    </div>
+                  </div>
+                  <hr />
+                  <div className='settingsViewcontent'>
+                    <div>
+                      <h4> Profile Info</h4>
+                      <p>{user?.data?.role}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {tabIndex === 1 && hasLayoutAccess && (
+              <LayoutTemplateManager />
+            )}
+          </Container>
+        </Box>
+      </Box>
     </div>
-    </Container>
-     </Box>
-     </Box>
-  </div>
   )
 }
 

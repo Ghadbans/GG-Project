@@ -1,3 +1,5 @@
+import PrintHeader from '../component/PrintHeader';
+import PrintFooter from '../component/PrintFooter';
 import React, { useEffect, useRef, useState } from 'react'
 import './view.css'
 import './PageView/Chartview.css';
@@ -23,18 +25,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Print } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 import { useReactToPrint } from 'react-to-print';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -132,20 +135,13 @@ function SellShopInvoiceView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -161,17 +157,12 @@ function SellShopInvoiceView() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        setGrantAccess(offLineCustomer1);
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
+          .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -189,56 +180,22 @@ function SellShopInvoiceView() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [reason, setReason] = useState("");
-  const [page, setPage] = useState(0);
-  const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [totalPage, SetTotalPage] = useState(0);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchInvoice);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchInvoice]);
-
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/pos-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          dateField: dayjs(item.invoiceDate).format('DD/MM/YYYY'),
-          time: dayjs(item.time).format('HH:mm'),
-        }))
-        setInvoice(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setLoadingData(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.posSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.customerName && item.customerName.customerName.toLowerCase().includes(lowerSearch)) ||
-        (item.factureNumber && item.factureNumber.toString().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/pos?summary=true`)
+      const formatDate = res.data.data.map((item) => ({
         ...item,
         id: item._id,
         dateField: dayjs(item.invoiceDate).format('DD/MM/YYYY'),
         time: dayjs(item.time).format('HH:mm'),
       }))
-      setInvoice(formatDate.reverse())
+      setInvoice(formatDate);
+      setLoadingData(false)
+    } catch (error) {
+      console.error('Error fetching data:', error);
       setLoadingData(false)
     }
   }
-
-  useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
 
   const [loading, setLoading] = useState(false);
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
@@ -294,70 +251,27 @@ function SellShopInvoiceView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const syncOff = async () => {
-    if (navigator.onLine) {
-      const syncedInvoice = await db.posSchema.toArray();
-      const invoiceToSynced = syncedInvoice.filter((row) => row.synced === false)
-      for (const invoiceInfo of invoiceToSynced) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-pos', invoiceInfo)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoNumber = res.data.data.factureNumber
-            const ReferenceInfoCustomer = res.data.data.customerName.customerName
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCustomer)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const invoiceToSyncedUpdate = syncedInvoice.filter((row) => row.updateS === false)
-      for (const invoiceInfoUpdate of invoiceToSyncedUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-pos/${invoiceInfoUpdate._id}`, invoiceInfoUpdate)
-          await db.posSchema.update(invoiceInfoUpdate.factureNumber, { synced: true, updateS: true })
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-    fetchData()
+    // Online-only: syncOff logic removed
   }
   useEffect(() => {
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
+    fetchData()
   }, [])
 
   useEffect(() => {
     const fetchDataHidden = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
-          setHiddenRow(res.data.data.map((row) => row.idRow))
-          setHidden(res.data.data)
-          localStorage.removeItem('Hidden')
-          await Promise.all(res.data.data.map(async (item) => {
-            await db.hiddenSchema.put({ ...item, synced: true, updateS: true })
-          }))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.hiddenSchema.toArray();
-        setHiddenRow(offLineCustomer1.map((row) => row.idRow))
-        setHidden(offLineCustomer1)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/hidden`)
+        setHiddenRow(res.data.data.map((row) => row.idRow))
+        setHidden(res.data.data)
+        localStorage.removeItem('Hidden')
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchDataHidden()
@@ -445,7 +359,7 @@ function SellShopInvoiceView() {
   {/** Delete Function */ }
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-pos/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-pos/${DeleteId}`);
       if (res) {
         handleDeleteOpenLoading();
       }
@@ -457,11 +371,11 @@ function SellShopInvoiceView() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-pos/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
-        setInvoiceDeleted(res.map((row) => 'F-' + row.data.data.factureNumber))
+        setInvoiceDeleted(res.map((row) => 'S-00' + row.data.data.factureNumber))
       } catch (error) {
         console.log(error)
       }
@@ -485,16 +399,11 @@ function SellShopInvoiceView() {
   useEffect(() => {
     const fetchData2 = async () => {
       if (idView !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${idView}`)
-            setPosInvoice(res.data.data)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.posSchema.get({ _id: idView })
-          setPosInvoice(resLocal)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-pos/${idView}`)
+          setPosInvoice(res.data.data)
+        } catch (error) {
+          console.log(error)
         }
       }
     }
@@ -511,7 +420,7 @@ function SellShopInvoiceView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -519,7 +428,7 @@ function SellShopInvoiceView() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-pos/${idToDelete}`)
+      return axios.delete(`${ENDPOINT_URL}/delete-pos/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -538,7 +447,7 @@ function SellShopInvoiceView() {
     const fetchId = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-pos/${updateId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-pos/${updateId}`)
           setStatus(res.data.data.status);
           setInvoiceN(res.data.data.factureNumber);
         } catch (error) {
@@ -556,7 +465,7 @@ function SellShopInvoiceView() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
       console.log(error)
     }
@@ -567,7 +476,7 @@ function SellShopInvoiceView() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${updateId}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-pos/${updateId}`, data)
       if (res) {
         handleCreateComment();
         handleOpenLoading();
@@ -591,10 +500,10 @@ function SellShopInvoiceView() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`${ENDPOINT_URL}/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
+          await axios.post(`${ENDPOINT_URL}/create-hidden`, {
             idRow: id, hiddenByCEO: true
           })
         }
@@ -605,7 +514,7 @@ function SellShopInvoiceView() {
   }
 
   const rowRenderer = (params) => {
-    if (hiddenRow.includes(params.row._id && !user.data.role === 'CEO')) {
+    if (hiddenRow.includes(params.row._id) && user.data.role !== 'CEO') {
       return null
     }
     return <div>{params.row[params.field]}</div>
@@ -614,7 +523,7 @@ function SellShopInvoiceView() {
   useEffect(() => {
     const Inv = invoice.filter(row => !hiddenRow.includes(row._id))
     setFilteredRows(Inv)
-  }, [invoice])
+  }, [invoice, hiddenRow])
   {/** search start */ }
   const [searchInvoice, setSearchInvoice] = useState("");
   useState(() => {
@@ -710,7 +619,7 @@ function SellShopInvoiceView() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -756,7 +665,7 @@ function SellShopInvoiceView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -880,7 +789,7 @@ function SellShopInvoiceView() {
                       }
                     </Box>
                   ) : <div>
-                    <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
                   </div>}
 
                 </div>)

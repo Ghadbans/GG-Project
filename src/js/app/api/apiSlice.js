@@ -1,12 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
-
-
-const apiUrl = 'https://gg-project-production.up.railway.app';
+import { API_BASE_URL } from '../../apiConfig';
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({ baseUrl: apiUrl }),
+    baseQuery: fetchBaseQuery({ baseUrl: API_BASE_URL }),
     endpoints: (builder) => ({
         login: builder.mutation({
             query: credentials => ({

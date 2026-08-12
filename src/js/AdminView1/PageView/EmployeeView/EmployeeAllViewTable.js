@@ -1,4 +1,5 @@
 import React , {useEffect, useState }  from 'react'
+import ConfirmDeleteModal from '../../../component/ConfirmDeleteModal';
 import '../Chartview.css'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,6 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink,useNavigate } from 'react-router-dom';
 import {Table,Paper, IconButton,styled,TableBody,TableCell,TableHead,TableRow, TableContainer,Modal,Backdrop,Box }  from '@mui/material';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import Add from '@mui/icons-material/Add';
 import dayjs from 'dayjs';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -67,7 +69,7 @@ function EmployeeAllViewTable() {
   useEffect(()=> {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
       .then(res => {
         // Handle the response data here
         const Name = res.data.data.employeeName;
@@ -86,7 +88,7 @@ function EmployeeAllViewTable() {
   },[dispatch])
   const [employee,setEmployee]= useState([])
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/employee';
+  const apiUrl = `${ENDPOINT_URL}/employee`;
 
   useEffect(()=> {
   axios.get(apiUrl)
@@ -124,14 +126,15 @@ const handleCloseModal = () => {
 };
 const handleDelete = async () => {
   try {
-       const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employee/${DeleteId}`);
-       if (res) {
-        handleOpenModal();
-      }
-     } catch (error) {
-       alert(error);
-     }
-   };
+    const res = await axios.delete(`${ENDPOINT_URL}/delete-employee/${DeleteId}`);
+    if (res) {
+      setOpen(false);
+      handleOpenModal();
+    }
+  } catch (error) {
+    alert(error);
+  }
+};
   return (
     <div> 
  <div className='allTableContainer'>
@@ -205,29 +208,10 @@ const handleDelete = async () => {
   </Table>
     </TableContainer>
    ) : <div>
-   <img src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'35%',top:'40px', width:'50%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
+   <img  src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'35%',top:'40px', width:'50%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
    </div>}
   </div>
-  <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={{ ...style, width: 500 }}>
-        <div style={{justifyContent:'center',textAlign:'center'}}>
-          <h2>Do you want to Delete ?</h2>
-          <div style={{display:'flex', gap:'60px',justifyContent:'center'}}>
-              <button className='btnCustomer2' onClick={handleDelete}>
-                Delete
-              </button>
-              <button className='btnCustomer' onClick={handleClose}>
-                Cancel
-              </button>
-            </div>
-        </div>
-      </Box>
-    </Modal>
+  <ConfirmDeleteModal open={open} handleClose={handleClose} handleDelete={handleDelete} itemName={employee.find(e => e._id === DeleteId)?.employeeName || "this employee"} />
     <Modal
       open={modalOpenLoading}
       onClose={handleCloseModal}
@@ -261,3 +245,5 @@ const handleDelete = async () => {
 }
 
 export default EmployeeAllViewTable
+
+

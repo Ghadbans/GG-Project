@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {MenuItem,Grid, IconButton, Tooltip, Table, TableBody, TableCell, TableHead, TableRow,Paper,TableContainer, TextField, FormControl, InputLabel, Select, Typography } from '@mui/material'
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, ArrowUpwardOutlined } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
@@ -20,7 +21,7 @@ import dayjs from 'dayjs';
 
 function RecuringInvoiceForm() {
   const navigate = useNavigate();
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-recurringinvoice';
+  const apiUrl = `${ENDPOINT_URL}/create-recurringinvoice`;
   const [customerID,setCustomerID] = useState("");
   const [customerProfile,setCustomerProfile] = useState("");
   const [repeat,setRepeat] = useState("");

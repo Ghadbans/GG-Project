@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import {Table,IconButton, styled, TableBody,TableCell,TableHead,TableRow,Checkbox, TableContainer, Paper, Typography }  from '@mui/material';
 import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add } from '@mui/icons-material';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -43,7 +44,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 
 function RetainerAllViewTable() {
   const [retainer,SetRetainer] = useState([])
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/retainerinvoice';
+  const apiUrl = `${ENDPOINT_URL}/retainerinvoice`;
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {
@@ -57,7 +58,7 @@ function RetainerAllViewTable() {
 },[])
 const handleDelete = async (id) => {
   try {
-    const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-retainerinvoice/${id}`);
+    const res = await axios.delete(`${ENDPOINT_URL}/delete-retainerinvoice/${id}`);
     alert(res.data.msg); // This will be the deleted document
   } catch (error) {
     console.error(error);

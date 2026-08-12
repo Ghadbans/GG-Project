@@ -4,9 +4,11 @@ import '../../view.css'
 import '../Chartview.css'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import { cachedGet, invalidateCache } from '../../../utils/apiCache';
 import { Collapse, Grid, IconButton, styled, Table, TableHead, TableRow, TableCell, TableBody, FormControl, InputLabel, OutlinedInput, InputAdornment, Modal, Backdrop, Box, TextField, Paper, TableContainer, Card, CardContent, Divider, Tab } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate } from 'react-router-dom'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
@@ -25,7 +27,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -44,7 +46,7 @@ import Delete from '@mui/icons-material/Delete';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 
 const ViewTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -150,20 +152,13 @@ function DailyExpenseAdminView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -186,55 +181,95 @@ function DailyExpenseAdminView() {
   const [payRoll, setPayRoll] = useState([]);
   const [payment, setPayment] = useState([]);
   const [posInfo, setPos] = useState([]);
+  // startDate declared HERE (before any useEffect that uses it) and initialized
+  // directly from localStorage so that the very first API fetch targets the correct
+  // date — eliminating the race condition where an early fetch for "today" could
+  // overwrite the later fetch for the stored past date.
+  const [startDate, setStartDate] = useState(() => {
+    try {
+      const stored = localStorage.getItem('dateInfo');
+      if (stored) return new Date(JSON.parse(stored));
+    } catch (e) {}
+    return dayjs().toDate();
+  });
+  const [cashDate, setCashDate] = useState("");
+  const [returnFC, setReturnFC] = useState(0);
+  const [returnUSD, setReturnUSD] = useState(0);
+  const [totalCashInfo, setTotalCashInfo] = useState(0);
+  const [amount, setAmount] = useState([]);
+
+  const fetchCashData = async () => {
+    try {
+      const cashResponse = await cachedGet(`${ENDPOINT_URL}/cash`)
+      setCash(cashResponse.data.data);
+    } catch (error) {
+      console.error('Error fetching cash data:', error);
+    }
+  }
+
+  // Fetch static data once on mount (expenses, payroll, POS, rates, etc.)
   useEffect(() => {
-    const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemPurchase')
-          setItemPurchase(res.data.data.filter((row) => row.status && row.status === "Paid"));
-          const resPO = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchaseOrder')
-          setPurchaseOrder(resPO.data.data.filter((row) => row.status && row.status === 'Purchase'));
-          const expenseResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
-          setExpenses(expenseResponse.data.data);
-          const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
-          setPayment(resPayment.data.data.filter((row) => row.modes !== 'Credit-Account'))
-          const cashResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash')
-          setCash(cashResponse.data.data);
-          const rateResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-          rateResponse.data.data.map((row) => setRate(row.rate))
-          const resPayRoll = await axios.get('https://gg-project-production.up.railway.app/endpoint/payRoll')
-          setPayRoll(resPayRoll.data.data.filter((row) => row.status !== undefined ? row.status === 'Paid' : null))
-          const resPos = await axios.get('https://gg-project-production.up.railway.app/endpoint/pos')
-          setPos(resPos.data.data.map((row) => ({ ...row, amountTotalFc: row.totalFC - row.creditFC, amountTotalUsd: row.totalUSD - row.creditUsd })))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineItemPurChase = await db.itemPurchaseSchema.toArray();
-        setItemPurchase(offLineItemPurChase.filter((row) => row.status === undefined || row.status === "Paid"));
-        const offLineDailyExpenses = await db.dailyExpenseSchema.toArray();
-        setExpenses(offLineDailyExpenses);
-        const offLineCash = await db.cashSchema.toArray();
-        setCash(offLineCash);
-        const offLinePayment = await db.paymentSchema.toArray();
-        setPayment(offLinePayment.filter((row) => row.modes !== 'Credit-Account'))
-        const offLineRate = await db.rateSchema.toArray();
-        offLineRate.map((row) => setRate(row.rate));
-        const offLinePayRoll = await db.payRollSchema.toArray();
-        setPayRoll(offLinePayRoll.filter((row) => row.status !== undefined ? row.status === 'Paid' : null))
-        const offLinePos = await db.posSchema.toArray();
-        setPos(offLinePos.map((row) => ({ ...row, amountTotalFc: row.totalFC - row.creditFC, amountTotalUsd: row.totalUSD - row.creditUsd })))
+    const fetchStaticData = async () => {
+      try {
+        const resPO = await cachedGet(`${ENDPOINT_URL}/purchaseOrder`)
+        setPurchaseOrder(resPO.data?.data?.filter((row) => row.status && row.status === 'Purchase'));
+        const expenseResponse = await cachedGet(`${ENDPOINT_URL}/expense`)
+        setExpenses(expenseResponse.data.data);
+        await fetchCashData();
+        const rateResponse = await cachedGet(`${ENDPOINT_URL}/rate`)
+        rateResponse.data.data.map((row) => setRate(row.rate))
+        const resPayRoll = await cachedGet(`${ENDPOINT_URL}/payRoll`)
+        setPayRoll(resPayRoll.data?.data?.filter((row) => row.status !== undefined ? row.status === 'Paid' : null))
+        const resPos = await cachedGet(`${ENDPOINT_URL}/pos`)
+        setPos(resPos.data.data.map((row) => ({ ...row, amountTotalFc: row.totalFC - row.creditFC, amountTotalUsd: row.totalUSD - row.creditUsd })))
+      } catch (error) {
+        console.error('Error fetching static data:', error);
       }
     }
-    fetchData()
+    fetchStaticData()
   }, [])
+
+  // Fetch payment separately — re-fetch on window focus so that
+  // payments created in another view appear immediately when returning here.
+  const fetchPaymentData = React.useCallback(async () => {
+    try {
+      const resPayment = await cachedGet(`${ENDPOINT_URL}/payment`)
+      setPayment(resPayment.data?.data?.filter((row) => row.modes !== 'Credit-Account'))
+    } catch (error) {
+      console.error('Error fetching payment data:', error);
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchPaymentData()
+    window.addEventListener('focus', fetchPaymentData)
+    return () => window.removeEventListener('focus', fetchPaymentData)
+  }, [fetchPaymentData])
+
+  // Fetch item purchases for selected date — re-fetches whenever the selected date changes.
+  // Uses ?targetDate= so the API returns only the records that had payments on that day.
+  // startDate is always initialized (never null), so this fires on mount with today's date.
+  const fetchItemPurchaseForDate = React.useCallback(async (date) => {
+    try {
+      const targetDateParam = dayjs(date).format('YYYY-MM-DD');
+      const res = await axios.get(`${ENDPOINT_URL}/itemPurchase?targetDate=${targetDateParam}`);
+      setItemPurchase(res.data?.data || []);
+    } catch (error) {
+      console.error('Error fetching item purchase data:', error);
+      setItemPurchase([]);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchItemPurchaseForDate(startDate);
+  }, [startDate, fetchItemPurchaseForDate]); // startDate is always defined (initialized at top)
 
   const itemPurchase = [];
 
   itemPurchaseInfo.forEach(row => {
     itemPurchase.push({
       _id: row._id,
-      itemPurchaseNumber: 'IP-0' + row.itemPurchaseNumber,
+      itemPurchaseNumber: 'IP-' + String(row.itemPurchaseNumber).padStart(5, '0'),
       itemPurchaseDate: row.itemPurchaseDate,
       projectName: row.projectName,
       manufacturer: row.manufacturer,
@@ -242,24 +277,12 @@ function DailyExpenseAdminView() {
       description: row.description,
       totalFC: row.totalFC,
       total: row.total,
-      amount: row.totalUSD !== undefined ? row.totalUSD : row.total
+      amount: row.totalUSD !== undefined ? row.totalUSD : (row.totalUSD || (row.total / (row.rate || 1)) || 0)
     })
   })
 
 
-  const [startDate, setStartDate] = useState(null);
-  const [cashDate, setCashDate] = useState("");
-  const [returnFC, setReturnFC] = useState(0);
-  const [returnUSD, setReturnUSD] = useState(0);
-  const [totalCashInfo, setTotalCashInfo] = useState(0)
-  const [amount, setAmount] = useState([]);
-
-  useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('dateInfo'))
-    if (storedQuick) {
-      setStartDate(new Date(storedQuick))
-    }
-  }, [])
+  // startDate and related state moved to top of component — see declaration above.
 
   const handleChangeDate = (date) => {
     setStartDate(date)
@@ -301,7 +324,8 @@ function DailyExpenseAdminView() {
   }, [startDate, endDate])
 
   const [expensesFiltered, setExpensesFiltered] = useState([])
-  const [itemPurchaseFiltered, setItemPurchaseFiltered] = useState([])
+  // itemPurchaseFiltered computed via useMemo (synchronous) so it always
+  // reflects the current startDate + itemPurchaseInfo without async timing gaps.
   const [payRollFiltered, setPayRollFiltered] = useState([])
   const [posFiltered, setPosFiltered] = useState([])
   // Expenses Filter
@@ -312,14 +336,34 @@ function DailyExpenseAdminView() {
     })
     setExpensesFiltered(totalExpenses)
   }, [startDate, endDate, expenses])
-  // Item Purchase Filter
-  useEffect(() => {
-    const totalExpenses = itemPurchaseInfo.filter((row) => {
-      const ExpensesDate = dayjs(row.itemPurchaseDate).format('DD/MM/YYYY')
-      return ExpensesDate >= dayjs(startDate).format('DD/MM/YYYY') && ExpensesDate <= dayjs(endDate).format('DD/MM/YYYY')
-    })
-    setItemPurchaseFiltered(totalExpenses)
-  }, [startDate, endDate, itemPurchaseInfo])
+  const itemPurchaseFiltered = React.useMemo(() => {
+    if (!startDate || itemPurchaseInfo.length === 0) return [];
+    const tgtStr = dayjs(startDate).format('YYYY-MM-DD');
+    const results = [];
+    itemPurchaseInfo.forEach((item) => {
+      let paymentUSD = 0;
+      let paymentFC = 0;
+      if (item.payments && Array.isArray(item.payments) && item.payments.length > 0) {
+        // Sum only the payments whose date matches the selected date (string comparison, timezone-safe)
+        item.payments.forEach((pmt) => {
+          if (dayjs(pmt.date).format('YYYY-MM-DD') === tgtStr) {
+            paymentUSD += parseFloat(pmt.amount ?? 0);
+            paymentFC  += parseFloat(pmt.amountFC ?? 0);
+          }
+        });
+      } else {
+        // Fallback: item has no payments array — use item totals if created on target date
+        if (dayjs(item.itemPurchaseDate).format('YYYY-MM-DD') === tgtStr) {
+          paymentUSD = parseFloat(item.totalUSD ?? item.total ?? 0);
+          paymentFC  = parseFloat(item.totalFC ?? 0);
+        }
+      }
+      if (paymentUSD > 0 || paymentFC > 0) {
+        results.push({ ...item, paymentId: item._id, paymentUSD, paymentFC, paymentDate: item.itemPurchaseDate });
+      }
+    });
+    return results;
+  }, [startDate, itemPurchaseInfo]);
   // Pay Roll Filter
   useEffect(() => {
     const totalExpenses = payRoll.filter((row) => {
@@ -380,18 +424,12 @@ function DailyExpenseAdminView() {
   useEffect(() => {
     const fetchId = async () => {
       if (viewId !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-cash/${viewId}`)
-            setCashDate(res.data.data.cashDate)
-            setAmount(res.data.data.amount)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.cashSchema.get({ _id: idView })
-          setCashDate(resLocal.cashDate)
-          setAmount(resLocal.amount)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-cash/${viewId}`)
+          setCashDate(res.data.data.cashDate)
+          setAmount(res.data.data.amount)
+        } catch (error) {
+          console.log(error)
         }
       }
     }
@@ -404,40 +442,27 @@ function DailyExpenseAdminView() {
   useEffect(() => {
     const fetchId = async () => {
       if (viewIdStatus !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-cash/${viewIdStatus}`)
-            setCashDate(res.data.data.cashDate)
-            setStatusInfo(res.data.data.status !== undefined ? res.data.data.status : '')
-            setRestInfoFc(res.data.data.returnAmountFC !== undefined ? res.data.data.returnAmountFC : 0)
-            setRestInfoUSD(res.data.data.returnAmountUSD !== undefined ? res.data.data.returnAmountUSD : 0)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.cashSchema.get({ _id: viewIdStatus })
-          setIndexId(resLocal.cashNumber)
-          setCashDate(resLocal.cashDate)
-          setStatusInfo(resLocal.status !== undefined ? resLocal.status : '')
-          setRestInfoFc(resLocal.returnAmountFC !== undefined ? resLocal.returnAmountFC : 0)
-          setRestInfoUSD(resLocal.returnAmountUSD !== undefined ? resLocal.returnAmountUSD : 0)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-cash/${viewIdStatus}`)
+          setCashDate(res.data.data.cashDate)
+          setStatusInfo(res.data.data.status !== undefined ? res.data.data.status : '')
+          setRestInfoFc(res.data.data.returnAmountFC !== undefined ? res.data.data.returnAmountFC : 0)
+          setRestInfoUSD(res.data.data.returnAmountUSD !== undefined ? res.data.data.returnAmountUSD : 0)
+        } catch (error) {
+          console.log(error)
         }
       }
     }
     fetchId()
   }, [viewIdStatus])
   useEffect(() => {
-    let row = document.querySelectorAll('#amountTotalInvoice')
-    let sum = 0
-    for (let i = 0; i < row.length; i++) {
-      if (row[i].id === 'amountTotalInvoice') {
-        sum += isNaN(row[i].innerHTML) ? 0 : parseFloat(row[i].innerHTML);
-        const result = Math.round(sum * 100) / 100
-        setTotalCashInfo(result);
-      }
-    }
-  })
-  //open loading modal when submit is true
+    let sum = 0;
+    amount.forEach(row => {
+        sum += (parseFloat(row.total) || 0);
+    });
+    setTotalCashInfo(Math.round(sum * 100) / 100);
+  }, [amount]);
+//open loading modal when submit is true
   const handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -457,6 +482,11 @@ function DailyExpenseAdminView() {
   const handleClose = () => {
     setLoadingOpenModal(false);
     window.location.reload();
+    setOpen(false);
+    setOpenOption(false);
+    setOpenStatus(false);
+    setOpenNextDay(false);
+    fetchCashData(); // Refresh data explicitly
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -467,21 +497,17 @@ function DailyExpenseAdminView() {
     const data = {
       cashDate, totalCash: totalCashInfo, amount, updateS: false
     }
-    if (navigator.onLine) {
-      try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-cash/${viewId}`, data);
-        if (res) {
-          await db.cashSchema.update(indexId, { ...data, updateS: true })
-          handleOpen();
-        }
-      } catch (error) {
-        if (error) {
-          handleError();
-        }
+    try {
+      const res = await axios.put(`${ENDPOINT_URL}/update-cash/${viewId}`, data);
+      if (res) {
+        invalidateCache('/cash');
+        await fetchCashData();
+        handleOpen();
       }
-    } else {
-      await db.cashSchema.update(indexId, data)
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        handleError();
+      }
     }
   }
   const [filterTotal2, setFilterTotal2] = useState([])
@@ -505,9 +531,9 @@ function DailyExpenseAdminView() {
   const totalDay = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) === 0).reduce((sum, row) => Math.round((sum + parseFloat(row.total)) * 100) / 100, 0) : 0
   const totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0
 
-  const totalPaymentFC1 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + parseFloat(row.PaymentReceivedFC), 0) : 0
+  const totalPaymentFC1 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : parseFloat(row.PaymentReceivedFC || 0)), 0) : 0
   const totalPaymentUSD0 = filterTotalPayment.length > 0 ? filterTotalPayment.filter((row) => (row.modes === 'Cash' && row.remaining > 0) || (row.modes === 'Bank Transfer' && row.remaining > 0)).reduce((acc, row) => acc + parseFloat(row.remaining), 0) : 0
-  const totalPaymentUSD15 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + parseFloat(row.PaymentReceivedUSD), 0) : 0
+  const totalPaymentUSD15 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : parseFloat(row.PaymentReceivedUSD || 0)), 0) : 0
   const totalPaymentUSD1 = totalPaymentUSD0 + totalPaymentUSD15
   const totalPaymentUSDTotal = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + parseFloat(row.amount), 0) : 0
 
@@ -525,8 +551,8 @@ function DailyExpenseAdminView() {
   const totalCashFC = filterTotal2.length > 0 ? filterTotal2.reduce((acc, row) => {
     return acc + row.amount.filter(item => parseFloat(item.amountFC) !== 0).reduce((sum, item) => Math.round((sum + parseFloat(item.amountFC)) * 100) / 100, 0)
   }, 0) : 0
-  const totalItemPurchase = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + row.total, 0) : 0
-  const totalItemPurchaseFC = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.filter((row) => row.totalFC !== undefined).reduce((sum, row) => sum + row.totalFC, 0) : 0
+  const totalItemPurchase = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + (parseFloat(row.paymentUSD) || 0), 0) : 0
+  const totalItemPurchaseFC = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + (parseFloat(row.paymentFC) || 0), 0) : 0
   const totalPayRollDaily = payRollFiltered.length > 0 ? payRollFiltered.reduce((sum, row) => Math.round((sum + parseFloat(row.amountPayUSD)) * 100) / 100, 0) : 0
   const totalPayRollDailyFC = payRollFiltered.length > 0 ? payRollFiltered.reduce((sum, row) => Math.round((sum + parseFloat(row.amountPayFC)) * 100) / 100, 0) : 0
   const totalExpensesFC = Number(totalDayFC) + Number(totalItemPurchaseFC) + Number(totalPayRollDailyFC)
@@ -546,7 +572,7 @@ function DailyExpenseAdminView() {
 
   const [amount1, setAmount1] = useState([]);
   const addItem1 = () => {
-    setAmount1([...amount, {
+    setAmount1([...amount1, {
       idRow: v4(),
       amountFC: 0,
       amountUsd: 0,
@@ -560,7 +586,7 @@ function DailyExpenseAdminView() {
   };
   const handleChangeAmount1 = (e, i) => {
     const { name, value } = e.target;
-    const list = [...amount];
+    const list = [...amount1];
     list[i][name] = value;
     list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC']) / list[i]['rate']) + parseFloat(list[i]['amountUsd'])) * 100) / 100
@@ -591,21 +617,17 @@ function DailyExpenseAdminView() {
       totalItemPurchaseUSD: totalItemPurchase,
       totalPayrollUSD: totalPayRollDaily, updateS: false
     }
-    if (navigator.onLine) {
-      try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-cash/${viewIdStatus}`, data);
-        if (res) {
-          await db.cashSchema.update(indexId, { ...data, updateS: true })
-          handleOpen();
-        }
-      } catch (error) {
-        if (error) {
-          handleError();
-        }
+    try {
+      const res = await axios.put(`${ENDPOINT_URL}/update-cash/${viewIdStatus}`, data);
+      if (res) {
+        invalidateCache('/cash');
+        await fetchCashData();
+        handleOpen();
       }
-    } else {
-      await db.cashSchema.update(indexId, data)
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        handleError();
+      }
     }
   }
   const [sideBar, setSideBar] = React.useState(true);
@@ -701,20 +723,20 @@ function DailyExpenseAdminView() {
                 <table>
                   <thead>
                     <tr>
-                      <th style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}>Amount Fc</th>
-                      <th style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}>Rate</th>
-                      <th style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}>Amount Usd</th>
-                      <th style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}>Note</th>
+                      <th style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}>Amount Fc</th>
+                      <th style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}>Rate</th>
+                      <th style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}>Amount Usd</th>
+                      <th style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}>Note</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
                       row.amount?.map((row1, i) => (
                         <tr key={row1.idRow}>
-                          <td style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}> FC {row1.amountFC}</td>
-                          <td style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}>{row1.rate}</td>
-                          <td style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}>$ {row1.total}</td>
-                          <td style={{ textAlign: 'left', fontSize: '13px', border: '2px solid black' }}> {row1.note}</td>
+                          <td style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}> FC {row1.amountFC}</td>
+                          <td style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}>{row1.rate}</td>
+                          <td style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}>$ {row1.total}</td>
+                          <td style={{ textAlign: 'left', fontSize: '13px', border: '1px solid black' }}> {row1.note}</td>
                         </tr>
                       ))
                     }
@@ -824,8 +846,8 @@ function DailyExpenseAdminView() {
                             {
                               dayjs(item.expenseDate).format('DD/MM') === dayjs(row).format('DD/MM') ? (
                                 <>
-                                  <td style={{ border: '1px solid gray', width: '100px' }}>
-                                    D-0{item.expenseNumber}
+                                  <td style={{ border: '1px solid gray' }}>
+                                    D-{String(item.expenseNumber).padStart(6, '0')}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
                                     {item.expenseCategory.expensesCategory}
@@ -891,29 +913,22 @@ function DailyExpenseAdminView() {
                     <tbody>
                       {
                         itemPurchaseFiltered.map((item) =>
-                          <tr key={item._id}>
-                            {
-                              dayjs(item.itemPurchaseDate).format('DD/MM') === dayjs(row).format('DD/MM') ? (
-                                <>
-                                  <td style={{ border: '1px solid gray', width: '100px' }}>
-                                    {item.itemPurchaseNumber}
-                                  </td>
-                                  <td style={{ border: '1px solid gray' }} colSpan={3}>
-                                    {item.projectName !== undefined ? item.projectName?.name : item.description}
-                                  </td>
-                                  <td style={{ border: '1px solid gray' }}>
-                                    {item.manufacturer + ' / ' + item.manufacturerNumber}
-                                  </td>
-                                  <td style={{ border: '1px solid gray' }}>
-                                    <span>FC </span> {item.totalFC !== undefined ? parseFloat(item.totalFC).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
-                                  </td>
-                                  <td style={{ border: '1px solid gray' }}>
-                                    <span>$ </span>{item.total}
-                                  </td>
-                                </>
-                              )
-                                : null
-                            }
+                          <tr key={item.paymentId}>
+                            <td style={{ border: '1px solid gray' }}>
+                               IP-{String(item.itemPurchaseNumber).padStart(6, '0')}
+                            </td>
+                            <td style={{ border: '1px solid gray' }} colSpan={3}>
+                              {item.projectName !== undefined ? item.projectName?.name : item.description}
+                            </td>
+                            <td style={{ border: '1px solid gray' }}>
+                              {item.manufacturer + ' / ' + item.manufacturerNumber}
+                            </td>
+                            <td style={{ border: '1px solid gray' }}>
+                              <span>FC </span> {item.paymentFC !== undefined ? parseFloat(item.paymentFC).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                            </td>
+                            <td style={{ border: '1px solid gray' }}>
+                              <span>$ </span>{item.paymentUSD !== undefined ? parseFloat(item.paymentUSD).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                            </td>
                           </tr>
                         )
                       }
@@ -944,8 +959,8 @@ function DailyExpenseAdminView() {
                                 {
                                   dayjs(item.payDate).format('DD/MM') === dayjs(row).format('DD/MM') ? (
                                     <>
-                                      <td style={{ border: '1px solid gray', width: '100px' }}>
-                                        P-0{item.payNumber}
+                                      <td style={{ border: '1px solid gray' }}>
+                                        P-{String(item.payNumber).padStart(6, '0')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }} colSpan={3}>
                                         {item.employeeName !== undefined ? item.employeeName.name : ''}
@@ -996,7 +1011,7 @@ function DailyExpenseAdminView() {
                                   dayjs(item.invoiceDate).format('DD/MM') === dayjs(row).format('DD/MM') ? (
                                     <>
                                       <td style={{ border: '1px solid gray' }}>
-                                        S-0{item.factureNumber}
+                                        S-{String(item.factureNumber).padStart(6, '0')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }} colSpan={4}>
                                         {item.customerName !== undefined ? item.customerName.customerName : ''}
@@ -1046,7 +1061,7 @@ function DailyExpenseAdminView() {
                                   dayjs(item.paymentDate).format('DD/MM') === dayjs(row).format('DD/MM') ? (
                                     <>
                                       <td style={{ border: '1px solid gray' }}>
-                                        P-0{item.paymentNumber}
+                                        PAY-{String(item.paymentNumber).padStart(6, '0')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
                                         {item.customerName !== undefined ? item.customerName.customerName : ''}
@@ -1057,15 +1072,15 @@ function DailyExpenseAdminView() {
                                       <td style={{ border: '1px solid gray' }}>
                                         {item.TotalAmount?.map((Item, i) => (
                                           <p key={i}>
-                                            <span>INV-00{Item.Ref}:  ${Item.total !== undefined ? Item.total : 0}</span>
+                                            <span>{Item.prefix || (item.reason === "Project" ? "P-" : "INV-")}{String(Item.Ref).padStart(6, '0')}:  ${Item.total !== undefined ? Item.total : 0}</span>
                                           </p>
                                         ))}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>FC </span>{item.PaymentReceivedFC !== undefined ? item.PaymentReceivedFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                        <span>FC </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedFC !== undefined ? item.PaymentReceivedFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{item.PaymentReceivedUSD !== undefined ? item.PaymentReceivedUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : item.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        <span>$ </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedUSD !== undefined ? item.PaymentReceivedUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : item.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
                                         <span>$ </span>{item.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -1091,42 +1106,42 @@ function DailyExpenseAdminView() {
                       <section style={{ position: 'relative', float: 'right', marginBottom: '5px' }}>
                         <Card sx={{ width: '600px', color: 'gray', marginBottom: '5px' }}>
                           <CardContent sx={{ justifyContent: 'center' }}>
-                            <table style={{ marginBottom: '5px' }}>
+                            <table style={{ marginBottom: '5px', borderCollapse: 'collapse', width: '100%' }}>
                               <thead>
                                 <tr>
                                   <th colSpan={3} style={{ textAlign: 'center', fontSize: '20px' }}>Summary</th>
                                 </tr>
                                 <tr>
                                   <th></th>
-                                  <th style={{ border: '2px solid black' }}>Total (FC)</th>
-                                  <th style={{ border: '2px solid black' }}>Total ($)</th>
+                                  <th style={{ border: '1px solid black' }}>Total (FC)</th>
+                                  <th style={{ border: '1px solid black' }}>Total ($)</th>
                                 </tr>
                               </thead>
                               <tbody>
                                 <tr>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Cash</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span><span>{totalCashFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span><span>{totalCashUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Cash</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span><span>{totalCashFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span><span>{totalCashUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                 </tr>
                                 <tr>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Total Expense</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{totalDayFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{totalDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Total Expense</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{totalDayFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{totalDay.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                 </tr>
                                 <tr>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Total Item Purchase</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{totalItemPurchaseFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{totalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Total Item Purchase</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{totalItemPurchaseFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{totalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                 </tr>
                                 <tr>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Total PayRoll</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{totalPayRollDailyFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{totalPayRollDaily.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Total PayRoll</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{totalPayRollDailyFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{totalPayRollDaily.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                 </tr>
                                 <tr>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Total Payment Received</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{totalEnterFc.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{totalEnter.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Total Payment Received</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{totalEnterFc.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{totalEnter.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                 </tr>
                               </tbody>
                               {
@@ -1135,9 +1150,9 @@ function DailyExpenseAdminView() {
                                     {
                                       row.status !== undefined || row.status === 'Closed' ?
                                         <tr>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Amount Return</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{row.returnAmountFC !== undefined ? row.returnAmountFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{row.returnAmountUSD !== undefined ? row.returnAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Amount Return</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{row.returnAmountFC !== undefined ? row.returnAmountFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{row.returnAmountUSD !== undefined ? row.returnAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                         </tr>
                                         : null
                                     }
@@ -1150,15 +1165,15 @@ function DailyExpenseAdminView() {
                                     {
                                       row.status !== undefined || row.status === 'Closed' ?
                                         <tr>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Remaining</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{row.RemainingAmountFC !== undefined ? row.RemainingAmountFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{row.RemainingAmountUSD !== undefined ? row.RemainingAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Remaining</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{row.RemainingAmountFC !== undefined ? row.RemainingAmountFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{row.RemainingAmountUSD !== undefined ? row.RemainingAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                         </tr>
                                         :
                                         <tr>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}>Remaining</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>FC </span>{RemainingFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '2px solid black' }}><span>$ </span>{RemainingUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Remaining</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{RemainingFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{RemainingUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                         </tr>
                                     }
                                   </tbody>
@@ -1247,7 +1262,7 @@ function DailyExpenseAdminView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',

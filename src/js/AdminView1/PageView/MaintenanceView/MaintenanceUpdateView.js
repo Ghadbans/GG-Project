@@ -5,7 +5,7 @@ import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardContent, CardMedia, Pagination, Button, SwipeableDrawer } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardContent, CardMedia, Pagination, Button, SwipeableDrawer, Avatar } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -19,6 +19,8 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, Check, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { v4 } from 'uuid';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -31,7 +33,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Delete from '@mui/icons-material/Delete';
 import dayjs from 'dayjs';
 import { Close } from '@mui/icons-material';
@@ -40,7 +42,9 @@ import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+import ItemThumbnail from '../../../component/ItemThumbnail';
+
+
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -152,20 +156,13 @@ function MaintenanceUpdateView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -222,81 +219,68 @@ function MaintenanceUpdateView() {
   const [rate, setRate] = useState(1);
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${id}`)
-          setServiceDate(res.data.data.serviceDate);
-          setVisitDate(res.data.data.visitDate);
-          setItemDescriptionInfo(res.data.data.itemDescriptionInfo);
-          setBrand(res.data.data.brand);
-          setModel(res.data.data.model);
-          setWarranty(res.data.data.warranty);
-          setDefectDescription(res.data.data.defectDescription);
-          setActionTaken(res.data.data.actionTaken);
-          setSerialNo(res.data.data.serialNo);
-          setServiceNumber(res.data.data.serviceNumber);
-          setTechnicianAssign(res.data.data.technicianAssign);
-          setCustomerName(res.data.data.customerName);
-          SetItems(res.data.data.items)
-          setConverted(res.data.data.Converted)
-          setAdjustmentNumber(res.data.data.adjustmentNumber)
-          setNote(res.data.data.note)
-          setLaborDiscount(res.data.data.laborDiscount)
-          setStatusInfo(res.data.data.status)
-          setLaborQty(res.data.data.laborQty)
-          setAction(res.data.data.action)
-        } catch (error) {
-          console.error('Error fetching data:', error);
+      try {
+        const [resMaintenance, resItem, resCustomer, resEmployee, resRate] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`),
+          axios.get(`${ENDPOINT_URL}/item`),
+          axios.get(`${ENDPOINT_URL}/customer`),
+          axios.get(`${ENDPOINT_URL}/employee`),
+          axios.get(`${ENDPOINT_URL}/rate`)
+        ]);
+
+        const mData = resMaintenance.data.data;
+        if (mData) {
+          setServiceDate(mData.serviceDate || "");
+          setVisitDate(mData.visitDate || "");
+          setItemDescriptionInfo(mData.itemDescriptionInfo || "");
+          setBrand(mData.brand || "");
+          setModel(mData.model || "");
+          setWarranty(mData.warranty || "");
+          setDefectDescription(mData.defectDescription || "");
+          setActionTaken(mData.actionTaken || "");
+          setSerialNo(mData.serialNo || "");
+          setServiceNumber(mData.serviceNumber || 0);
+          setTechnicianAssign(mData.technicianAssign || '');
+          setCustomerName(mData.customerName || {});
+          SetItems(mData.items || []);
+          setConverted(mData.Converted || "");
+          setAdjustmentNumber(mData.adjustmentNumber || 0);
+          setNote(mData.note || "");
+          setLaborDiscount(mData.laborDiscount || 0);
+          setStatusInfo(mData.status || "");
+          setLaborQty(mData.laborQty || 0);
+          setAction(mData.action || "");
         }
-      } else {
-        const resLocal = await db.maintenanceSchema.get({ _id: id })
-        setServiceDate(resLocal.serviceDate);
-        setVisitDate(resLocal.visitDate);
-        setItemDescriptionInfo(resLocal.itemDescriptionInfo);
-        setBrand(resLocal.brand);
-        setModel(resLocal.model);
-        setWarranty(resLocal.warranty);
-        setDefectDescription(resLocal.defectDescription);
-        setActionTaken(resLocal.actionTaken);
-        setSerialNo(resLocal.serialNo);
-        setServiceNumber(resLocal.serviceNumber);
-        setTechnicianAssign(resLocal.technicianAssign);
-        setCustomerName(resLocal.customerName);
-        SetItems(resLocal.items)
-        setConverted(resLocal.Converted)
-        setAdjustmentNumber(resLocal.adjustmentNumber)
-        setNote(resLocal.note)
-        setLaborDiscount(resLocal.laborDiscount)
-        setStatusInfo(resLocal.status)
-        setLaborQty(resLocal.laborQty)
-        setAction(resLocal.action)
+
+        setItemInformation((resItem.data.data || []).reverse());
+        setCustomer((resCustomer.data.data || []).reverse());
+        setEmployee(resEmployee.data.data || []);
+
+        if (resRate.data.data && resRate.data.data.length > 0) {
+          setRate(resRate.data?.data?.[0]?.rate || 1);
+        }
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, [id]);
 
   // Fetch Shop Items & Rate
   const fetchShop = async () => {
     setShopLoading(true);
-    if (navigator.onLine) {
-      try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-        resRate.data.data.map((row) => setRate(row.rate))
+    try {
+      const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+      resRate.data.data.map((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setShopLoading(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setShopLoading(false)
-      }
-    } else {
-      const offLineItems = await db.itemSchema.toArray();
-      setShopItems(offLineItems.filter((row) => row.typeItem === "Goods").reverse())
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+      setShopTotalPages(res.data.totalPages)
+      setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
       setShopLoading(false)
-      const offLineRate = await db.rateSchema.toArray();
-      offLineRate.map((row) => setRate(row.rate))
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setShopLoading(false)
     }
   }
 
@@ -393,35 +377,18 @@ function MaintenanceUpdateView() {
   };
 
   {/** Item start */ }
-  useEffect(() => {
-    const fetchItem = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          setItemInformation(res.data.data.reverse());
-          const resC = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          setCustomer(resC.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.itemSchema.toArray();
-        setItemInformation(offLineCustomer1.reverse())
-        const offLineCustomer = await db.customerSchema.toArray();
-        setCustomer(offLineCustomer.reverse());
-      }
-    }
-    fetchItem()
-  }, [])
-  const serviceItem = ItemInformation.filter((row) => row.typeItem === 'Services')
+  // Data already fetched in the combined useEffect above.
+  const serviceItem = (ItemInformation || []).filter((row) => row.typeItem === 'Services');
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemCost: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
@@ -577,22 +544,7 @@ function MaintenanceUpdateView() {
     } : row))
   }
   const [employee, setEmployee] = useState([])
-  useEffect(() => {
-    const fetchEmployee = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
-          setEmployee(res.data.data);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.employeeSchema.toArray();
-        setEmployee(offLineCustomer1.reverse());
-      }
-    }
-    fetchEmployee()
-  }, [])
+  // Data already fetched in the combined useEffect above.
   const handleClearTech = () => {
     setTechnicianAssign('')
   }
@@ -614,7 +566,7 @@ function MaintenanceUpdateView() {
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Item InFO */ }
 
   const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
@@ -656,11 +608,11 @@ function MaintenanceUpdateView() {
   }
 
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
+    const result1 = (items || []).reduce((sum, row) => sum + parseFloat(row?.itemAmount || 0), 0)
     setSubTotal(result1.toFixed(2))
-    let newTotal = Number(subTotal) + Number(totalLaborFeesGenerale)
+    let newTotal = Number(result1) + Number(totalLaborFeesGenerale || 0)
     setTotalInvoice(newTotal)
-  })
+  }, [items, totalLaborFeesGenerale])
 
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
   const [idItem, setIdItem] = useState(null)
@@ -676,8 +628,8 @@ function MaintenanceUpdateView() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -766,17 +718,18 @@ function MaintenanceUpdateView() {
       status = statusInfo
     }
   }
-  const serviceName = "M-00" + serviceNumber;
+  const serviceName = `M-${String(serviceNumber).padStart(6, '0')}`;
+
   const [hideBack, setHideBack] = useState('');
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify ' + ' M-' + serviceNumber,
+      person: `${user.data.userName} Modify M-${String(serviceNumber).padStart(6, '0')}`,
       reason,
       dateNotification: dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
       if (res) {
         setReason("");
       }
@@ -785,7 +738,8 @@ function MaintenanceUpdateView() {
     }
   }
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       customerName,
       serviceDate,
@@ -799,26 +753,30 @@ function MaintenanceUpdateView() {
       serviceName,
       serialNo,
       status, action,
-      items, adjustmentNumber, totalInvoice, subTotal,
+      items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false
     };
-    if (navigator.onLine) {
-      try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${id}`, data);
-        if (res) {
-          // Open Loading View
-          await db.maintenanceSchema.update(data.serviceNumber, { ...data, updateS: true })
-          handleCreateComment()
-          handleOpen();
-        }
-      } catch (error) {
-        if (error) {
-          handleError();
-        }
+
+    try {
+      // Fetch fresh state from server
+      const currentRes = await axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`);
+      const currentMaintenance = currentRes.data.data;
+
+      // Merge local changes with server state
+      const updatedData = {
+        ...currentMaintenance,
+        ...data,
+        updateS: false
+      };
+
+      const res = await axios.put(`${ENDPOINT_URL}/update-maintenance/${id}`, updatedData);
+      if (res) {
+        handleCreateComment();
+        handleOpen();
       }
-    } else {
-      await db.maintenanceSchema.update(data.serviceNumber, data)
-      handleOpen();
+    } catch (error) {
+      console.error("Error updating maintenance:", error);
+      handleError();
     }
   }
   const [sideBar, setSideBar] = React.useState(true);
@@ -882,7 +840,7 @@ function MaintenanceUpdateView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -1226,7 +1184,12 @@ function MaintenanceUpdateView() {
                                                   {
                                                     Item.itemName._id || Item.itemName.itemName === 'empty' ? (
                                                       (
-                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                        <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                                                          <ItemThumbnail
+                                                            itemId={Item.itemName?._id}
+                                                            initialData={Item.data}
+                                                            initialType={Item.contentType}
+                                                          />
                                                           <div >
                                                             <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                             <TextField
@@ -1236,7 +1199,7 @@ function MaintenanceUpdateView() {
                                                               rows={3}
                                                               onChange={(e) => handleChange(e, Item.idRow)}
                                                               size="small"
-                                                              sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                              sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
                                                             />
                                                           </div>
                                                           <div>

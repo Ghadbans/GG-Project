@@ -23,18 +23,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Close } from '@mui/icons-material';
 import { Add, MailOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -132,20 +133,13 @@ function CustomerViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -157,18 +151,12 @@ function CustomerViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -178,53 +166,58 @@ function CustomerViewAdmin() {
   const customerInfoU = grantAccess.filter((row) => row.moduleName === "Customer" && row.access.editM === true);
   const customerInfoD = grantAccess.filter((row) => row.moduleName === "Customer" && row.access.deleteM === true);
 
-  const [totalPage, SetTotalPage] = useState(0);
+  const [loadingData, setLoadingData] = useState(true);
+  const [customer, setCustomer] = useState([]);
+  const [searchCustomer, setSearchCustomer] = useState("");
   const [page, setPage] = useState(0);
   const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterField, setFilterField] = useState('');
+  const [filterValue, setFilterValue] = useState('');
+  const [totalPage, SetTotalPage] = useState(0);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchCustomer);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchCustomer]);
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [searchTerm]);
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [reason, setReason] = useState("");
 
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/customer-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
-        SetTotalPage(res.data.totalPages);
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-        }));
-        setCustomer(formatDate);
-        setLoadingData(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false);
-      }
-    } else {
-      const offLineCustomer1 = await db.customerSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.customerFullName && item.customerFullName.toLowerCase().includes(lowerSearch)) ||
-        (item.companyName && item.companyName.toLowerCase().includes(lowerSearch)) ||
-        (item.customerPhone && item.customerPhone.includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  useState(() => {
+    const storedValue = localStorage.getItem('QuickFilterCustomer')
+    if (storedValue) {
+      setSearchCustomer(storedValue)
+    }
+  })
+
+    const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/customer-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
       }));
-      setCustomer(formatDate.reverse());
+      setCustomer(formatDate);
+      SetTotalPage(res.data.totalPages);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
       setLoadingData(false);
     }
-  };
+  }
 
   useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
+  }, [page, debouncedSearchTerm, filterField, filterValue]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
@@ -252,50 +245,12 @@ function CustomerViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
-  const syncOff = async () => {
-    if (navigator.onLine) {
-      const unsyncedCustomer = await db.customerSchema.toArray();
-      const customertoSynChro = unsyncedCustomer.filter((row) => row.synced === false).map(({ Customer, customerType, designation, customerFirstName, customerLastName, customerFullName, companyName, customerEmail, customerCompanyPhone, customerPhone, currency, paymentTerms, billingAddress, billingCity, credit, shippingAddress, shippingCity, customerDescription }) => ({ Customer, customerType, designation, customerFirstName, customerLastName, customerFullName, companyName, customerEmail, customerCompanyPhone, customerPhone, currency, paymentTerms, billingAddress, billingCity, credit, shippingAddress, shippingCity, customerDescription }))
-      for (const customers of customertoSynChro) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-customer', customers)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoCustomer = res.data.data.Customer
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoCustomer)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const customertoSynChroUpdate = unsyncedCustomer.filter((row) => row.updateS === false)
-      for (const customersUpdate of customertoSynChroUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${customersUpdate._id}`, customersUpdate)
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-    fetchData()
-  }
-  useEffect(() => {
-    fetchData()
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
-  }, [])
+  
 
   const [open, setOpen] = useState(false);
   const [openDeleteMultiple, setOpenDeleteMultiple] = useState(false);
@@ -344,13 +299,18 @@ function CustomerViewAdmin() {
     setSelectedRows([])
   };
   const handleCloseModal = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setModalOpenLoading(false);
+    setOpenDeleteAll(false);
+    setOpenDeleteMultiple(false);
+    setOpen(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   };
   const [CustomerDeleted, setCustomerDeleted] = useState([])
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-customer/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -371,26 +331,24 @@ function CustomerViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleDeleteMany = async (e) => {
     e.preventDefault()
-    if (navigator.onLine) {
-      const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.delete(`https://gg-project-production.up.railway.app/endpoint/remove-customer/${idToDelete}`)
-      })
-      try {
-        const res = await Promise.all(deletePromises);
-        if (res) {
-          handleCreateNotification()
-          handleOpenModal();
-        }
-      } catch (error) {
-        console.log(error)
+    const deletePromises = selectedRows.map(async (idToDelete) => {
+      return axios.delete(`${ENDPOINT_URL}/remove-customer/${idToDelete}`)
+    })
+    try {
+      const res = await Promise.all(deletePromises);
+      if (res) {
+        handleCreateNotification()
+        handleOpenModal();
       }
+    } catch (error) {
+      console.log(error)
     }
   }
   const handleLogout = () => {
@@ -409,9 +367,21 @@ function CustomerViewAdmin() {
     setColumnVisibilityModel(newHidden)
     localStorage.setItem('HiddenColumnsCustomer', JSON.stringify(newHidden))
   }
-  const handleFilter = (newModel) => {
-    setFilterModel(newModel)
-    localStorage.setItem('QuickFilterCustomerTst', JSON.stringify(newModel))
+    const handleFilter = (newModel) => {
+    setFilterModel(newModel);
+    localStorage.setItem('QuickFilterCustomerTst', JSON.stringify(newModel));
+    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
+      setSearchTerm(newModel.quickFilterValues.join(' '));
+    } else {
+      setSearchTerm('');
+    }
+    if (newModel.items && newModel.items.length > 0) {
+      setFilterField(newModel.items[0].field);
+      setFilterValue(newModel.items[0].value || '');
+    } else {
+      setFilterField('');
+      setFilterValue('');
+    }
   }
   useEffect(() => {
     const storedQuick = JSON.parse(localStorage.getItem('QuickFilterCustomerTst'))
@@ -429,16 +399,16 @@ function CustomerViewAdmin() {
     setOpen1(!open1);
   };
   const columns = [
-    { field: 'customerType', headerName: 'Type', width: open1 ? 100 : 100 },
-    { field: 'customerFullName', headerName: 'Customer Name', width: 150 },
-    { field: 'companyName', headerName: 'Company Name', width: 150 },
-    { field: 'customer', headerName: 'Invoice Name', width: 150, valueGetter: (params) => params.row.Customer?.toUpperCase() },
-    { field: 'customerEmail', headerName: 'Email', width: 100 },
-    { field: 'customerCompanyPhone', headerName: 'Phone N', width: 100 },
-    { field: 'customerPhone', headerName: 'Phone N 2', width: 100 },
-    { field: 'billingAddress', headerName: 'Address', width: open1 ? 150 : 310, valueGetter: (params) => params.row.billingAddress.toUpperCase() },
+    { field: 'customerType', headerName: 'Type', minWidth: 80, flex: 0.8 },
+    { field: 'customerFullName', headerName: 'Customer Name', minWidth: 150, flex: 1.5 },
+    { field: 'companyName', headerName: 'Company Name', minWidth: 150, flex: 1.5 },
+    { field: 'customer', headerName: 'Invoice Name', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.Customer?.toUpperCase() },
+    { field: 'customerEmail', headerName: 'Email', minWidth: 100, flex: 1 },
+    { field: 'customerCompanyPhone', headerName: 'Phone N', minWidth: 100, flex: 1 },
+    { field: 'customerPhone', headerName: 'Phone N 2', minWidth: 100, flex: 1 },
+    { field: 'billingAddress', headerName: 'Address', minWidth: 200, flex: 2, valueGetter: (params) => params.row.billingAddress.toUpperCase() },
     {
-      field: 'view', headerName: 'View', width: open1 ? 80 : 100, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={customerInfoV.length === 0 && user.data.role !== 'CEO'}>
@@ -451,7 +421,7 @@ function CustomerViewAdmin() {
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: open1 ? 80 : 100, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
             <IconButton disabled={customerInfoU.length === 0 && user.data.role !== 'CEO'}>
@@ -461,13 +431,12 @@ function CustomerViewAdmin() {
             </IconButton>
           </span>
         </EditTooltip>
-
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: open1 ? 80 : 100, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={customerInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={customerInfoD.length === 0 && user.data.role !== 'CEO'}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -514,7 +483,7 @@ function CustomerViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -591,19 +560,15 @@ function CustomerViewAdmin() {
                           columns={columns}
                           checkboxSelection
                           disableDensitySelector
-                          rowCount={totalPage * limit}
                           paginationMode="server"
-                          onPaginationModelChange={(model) => setPage(model.page)}
-                          paginationModel={{ page, pageSize: limit }}
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                           onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
                           slots={{ toolbar: GridToolbar }}
                           slotProps={{
                             toolbar: {
                               showQuickFilter: true,
-                              quickFilterProps: {
-                                value: searchCustomer,
-                                onChange: (e) => setSearchCustomer(e.target.value)
-                              },
                               printOptions: {
                                 disableToolbarButton: true
                               }
@@ -618,7 +583,7 @@ function CustomerViewAdmin() {
                         />
                       </Box>
                     ) : <div>
-                      <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                      <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
                     </div>}
                   </div>
                 </div>)

@@ -8,9 +8,10 @@ import Loader from '../component/Loader';
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { io } from 'socket.io-client';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
+import { API_BASE_URL, ENDPOINT_URL } from '../apiConfig';
 import 'react-toastify/ReactToastify.css';
 
 const style = {
@@ -26,22 +27,8 @@ const style = {
   pb: 3,
 };
 
+
 function MessageAdminView({ name, role }) {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
-  useEffect(() => {
-    window.addEventListener('online', handleOnline)
-    window.addEventListener('offline', handleOffline)
-    return () => {
-      window.removeEventListener('online', handleOnline)
-      window.removeEventListener('offline', handleOffline)
-    }
-  }, [])
-  const handleOnline = () => {
-    setIsOnline(true)
-  }
-  const handleOffline = () => {
-    setIsOnline(false)
-  }
   const [messageInfo, setMessageInfo] = useState([])
   const userName = name
   const date = new Date();
@@ -72,7 +59,7 @@ function MessageAdminView({ name, role }) {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/message')
+        const res = await axios.get(`${ENDPOINT_URL}/message`)
         setMessageInfo(res.data.data.reverse())
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -81,21 +68,17 @@ function MessageAdminView({ name, role }) {
     fetchComment()
   }, [])
   useEffect(() => {
-    if (navigator.onLine) {
-      const socket = io('https://gg-project-production.up.railway.app')
-      socket.on('newMessage', (newMessage) => {
-        setMessageInfo([newMessage, ...messageInfo])
-        setBadgeNumber(badgeNumber + 1)
-        toast.success(`new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`)
-        const message = `new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`
-        if (window.electron && window.electron.sendNotification) {
-          window.electron.sendNotification(message)
-        }
-        localStorage.setItem('badgeMessage', badgeNumber + 1)
-      });
-      return () => {
-        socket.off('newMessage')
-      }
+    const socket = io(`${API_BASE_URL}`)
+    socket.on('newMessage', (newMessage) => {
+      setMessageInfo([newMessage, ...messageInfo])
+      setBadgeNumber(badgeNumber + 1)
+      toast.success(`new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`)
+      const message = `new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`
+      window.electron.sendNotification(message)
+      localStorage.setItem('badgeMessage', badgeNumber + 1)
+    });
+    return () => {
+      socket.off('newMessage')
     }
   }, [badgeNumber, messageInfo])
 
@@ -118,7 +101,7 @@ function MessageAdminView({ name, role }) {
     const fetchData = async () => {
       if (idEdit !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-message/${idEdit}`);
+          const res = await axios.get(`${ENDPOINT_URL}/get-message/${idEdit}`);
           setUpdatedMessage(res.data.data.message)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -163,7 +146,7 @@ function MessageAdminView({ name, role }) {
   const handleDeleteUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-message/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-message/${DeleteId}`);
       if (res) {
         setUpdateD('Delete')
         handleOpen();
@@ -179,7 +162,7 @@ function MessageAdminView({ name, role }) {
       message: updatedMessage
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-message/${idEdit}`, data);
+      const res = await axios.put(`${ENDPOINT_URL}/update-message/${idEdit}`, data);
       if (res) {
         setUpdateD('true')
         handleOpen();
@@ -199,7 +182,7 @@ function MessageAdminView({ name, role }) {
       message
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-message/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-message/`, data)
       if (res) {
         setUpdateD('saved')
         setMessage("");
@@ -293,7 +276,6 @@ function MessageAdminView({ name, role }) {
               <button type='submit' style={{ width: '100%' }} className='btnCustomer6'>Save</button>
             </form>
           </section>
-          <ToastContainer />
         </Box>
       </Popover>
       <Modal

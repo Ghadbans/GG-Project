@@ -1,0 +1,73 @@
+
+/* heading */
+
+.invoiceTest {
+    margin: 0 0 3em;
+    height: 75px;
+  }
+  
+   h1 {
+    font: bold 100% sans-serif;
+    letter-spacing: 0.5em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  
+  .invoiceTest address {
+    float: right;
+    font-size: 75%;
+    font-style: normal;
+    line-height: 1.25;
+    margin: 0 0 1em 1em;
+  }
+  address {
+    float: right;
+    font-size: 75%;
+    font-style: normal;
+    margin: 0 0 1em 1em;
+  }
+  .invoiceTest h1 {
+      background-color: black;
+      border-color: #999; border-bottom-style: solid; border-bottom-width: 10%; font: bold 100% sans-serif;
+      letter-spacing: 0.5em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+  
+  .invoiceTest address p {
+    margin: 0 0 0.25em;
+  }
+  
+  .invoiceTest span, .invoiceTest img { display: block; float: left; }
+  .invoiceTest span {  margin: 0 1em 1em 0; max-height: 25%; max-width: 90%; position: absolute; }
+  .invoiceTest img { max-height: 280px; max-width: 280px; margin-top: 20px;}
+  
+  .invoiceTest:after { clear: both; content: ""; display: table; }
+  
+  /* article */
+  article, article address, table { margin: 0 0 3em; }
+  article h1 { clip: rect(0 0 0 0); position: absolute; }
+  article address { float: left; font-size: 90%; float: left; line-height: 10px; }
+  
+  article:after { clear: both; content: ""; display: table; }
+  
+  /* table */
+  
+  table { table-layout: auto; width: 100%; }
+  table { border-collapse: collapse;}
+  /* table firstTable */
+  
+  table.firstTable { float: right; width: 50%; height: 50%;}
+  table.firstTable:after { clear: both; content: ""; display: table; }
+  
+  /* table firstTable */
+  
+  table.firstTable th { width: 40%; }
+  table.firstTable td { width: 60%; }
+
+  aside h1#notes { border: none; border-width: 0 0 1px; margin: 0 0 1em; }
+  aside h1#notes { border-color: #999; border-bottom-style: solid; border-bottom-width: 10%; font: bold 100% sans-serif;
+    letter-spacing: 0.5em;
+    text-align: center;
+    text-transform: uppercase;
+  }

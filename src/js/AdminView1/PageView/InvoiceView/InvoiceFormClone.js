@@ -33,7 +33,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
@@ -196,17 +196,18 @@ function InvoiceFormClone() {
       const [totalW,setTotalW] =useState("");
       const [ItemInformation,setItemInformation]= useState([]);
       const [note, setNote] = useState("Thanks For your Business.");
-      const [noteInfo, setNoteInfo] = useState("");
+       const [noteInfo, setNoteInfo] = useState("");
+      const [actionTaken, setActionTaken] = useState("");
       const [terms, setTerms] = useState("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
       const dateComment = new Date()
-      const invoiceName =  "INV-00"+invoiceNumber
+      const invoiceName =  `INV-${String(invoiceNumber).padStart(6, '0')}`
   
       useEffect(()=>{
         const fetchlastNumber = async () => {
          if (navigator.onLine) {
            try {
              const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
-             setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
+             setInvoiceNumber((parseInt(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0)) + 1)
            } catch (error) {
              console.error('Error fetching data:', error);
            }
@@ -231,7 +232,7 @@ function InvoiceFormClone() {
                              setNote(res.data.data.note);
                              setShipping(res.data.data.shipping);
                              setAdjustment(res.data.data.adjustment);
-                             setAdjustmentNumber(res.data.data.adjustmentNumber);
+                             setAdjustmentNumber(Number(res.data?.data?.adjustmentNumber || res.data?.adjustmentNumber || 0));
                              setTerms(res.data.data.terms);
                              setNoteInfo(res.data.data.noteInfo);
                              setActionTaken(res.data.data.actionTaken);
@@ -261,7 +262,7 @@ function InvoiceFormClone() {
                            if (navigator.onLine) {
                              try {
                                const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
-                               setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
+                               setInvoiceNumber((parseInt(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0)) + 1)
                              } catch (error) {
                                console.error('Error fetching data:', error);
                              }
@@ -451,7 +452,7 @@ function InvoiceFormClone() {
   const deleteItem = idRow =>{
     SetItems (items => items.filter((Item)=> Item.idRow !==idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option=> !items.find((row)=> option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option=> !items.find((row)=> option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Item InFO */}
   
   const handleShowAutocomplete = (idRow) => {
@@ -497,7 +498,7 @@ function InvoiceFormClone() {
     if (idItem) {
       try {
         const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
+        SetItems(items=> items.map((row)=> row.itemName?._id === res.data.data._id ? {...row, 
           itemName:{
             _id:res.data.data._id,
             itemName:res.data.data.itemName
@@ -657,7 +658,7 @@ function InvoiceFormClone() {
       const data = {
         idInfo: ReferenceInfo,
         person:user.data.userName + ' Created ',
-        reason:  'INV-'+ReferenceInfoNumber + ' For ' + customerName.customerName,
+        reason:  `INV-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName.customerName}`,
         dateNotification:dateComment
       }
       try {
@@ -679,7 +680,7 @@ function InvoiceFormClone() {
       e.preventDefault();
     setSaving('true');
       const data = {customerName,invoiceNumber,invoiceDate,invoiceDueDate,invoiceSubject,invoicePurchase,invoiceDefect,
-        status,items, subTotal, noteInfo, total, balanceDue, totalW,
+        status,items, subTotal, noteInfo, actionTaken, total, balanceDue, totalW,
         invoiceName,note,shipping,adjustment,adjustmentNumber,totalInvoice,terms,synced: false
       }
     if (navigator.onLine) {
@@ -699,7 +700,7 @@ function InvoiceFormClone() {
           }
         }
     } else {
-      await db.invoiceSchema.add(data)
+      await db.invoiceSchema.put(data)
   handleOpen();
     }
     }
@@ -837,7 +838,7 @@ function InvoiceFormClone() {
                   label='Invoice Number'
                   value={invoiceNumber}
                   onChange={(e)=>setInvoiceNumber(e.target.value)}
-                  startAdornment={<InputAdornment position="start">I-00</InputAdornment>}
+                  startAdornment={<InputAdornment position="start">INV-</InputAdornment>}
                   />
                  </FormControl>
                  </Grid>

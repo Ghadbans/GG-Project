@@ -3,6 +3,7 @@ import '../Chartview.css'
 import {MenuItem,Grid, IconButton,Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment,Modal, Backdrop, Fade, Box } from '@mui/material'
 import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { v4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
@@ -51,7 +52,7 @@ function ItemCommentForm({onCreateOption,onId}) {
   useEffect(()=> {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
       .then(res => {
         // Handle the response data here
         const Name = res.data.data.employeeName;
@@ -71,7 +72,7 @@ function ItemCommentForm({onCreateOption,onId}) {
     const [Comments1,setComments]= useState([]);
     const [reason,setReason]= useState("");
     useEffect (() => {
-        axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${onId}`)
+        axios.get(`${ENDPOINT_URL}/get-item/${onId}`)
         .then(res => {
           // get the response data here
           setComments(res.data.data.Comments);
@@ -122,7 +123,7 @@ function ItemCommentForm({onCreateOption,onId}) {
      {/** Loading End */}
      const fetchingData = async () => {
         try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${onId}`)
+            const res = await axios.get(`${ENDPOINT_URL}/get-item/${onId}`)
             onCreateOption(res.data.data.Comments);
         } catch (error) {
             console.log(error)
@@ -134,7 +135,7 @@ function ItemCommentForm({onCreateOption,onId}) {
        const data = {
          Comments
        };
-      axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${onId}`,data)
+      axios.put(`${ENDPOINT_URL}/update-item/${onId}`,data)
        .then((res) => {
          if (res) {
            setReason("");

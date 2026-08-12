@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 import './view.css'
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
@@ -24,17 +25,18 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import { Add, Close, MailOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../apiConfig';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 import { io } from 'socket.io-client';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -134,20 +136,14 @@ function PurchasesViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          toast.error('Failed to fetch user data.');
         }
       } else {
         navigate('/');
@@ -159,18 +155,13 @@ function PurchasesViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Failed to fetch permissions.');
       }
     }
     fetchNumber()
@@ -191,56 +182,47 @@ function PurchasesViewAdmin() {
   const [newPurchase, setNewPurchase] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [reason, setReason] = useState("");
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/purchase';
-
+  const apiUrl = `${ENDPOINT_URL}/purchase`;
   const [page, setPage] = useState(0);
   const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [filterField, setFilterField] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   const [totalPage, SetTotalPage] = useState(0);
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchPurchase);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchPurchase]);
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setPage(0); // Reset page on new search
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
 
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/purchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          dataField: dayjs(item.purchaseDate).format('DD/MM/YYYY'),
-        }))
-        setPurchase(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setLoadingData(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.purchaseSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.projectName && item.projectName.projectName.toLowerCase().includes(lowerSearch)) ||
-        (item.purchaseNumber && item.purchaseNumber.toString().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/purchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
-        dataField: dayjs(new Date(item.purchaseDate)).format('DD/MM/YYYY'),
-      }))
-      setPurchase(formatDate.reverse())
-      setLoadingData(false)
+        Date: new Date(item.createdAt).toLocaleDateString(),
+      }));
+      setPurchase(formatDate);
+      SetTotalPage(res.data.totalPages);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData(false);
     }
   }
 
   useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
+  }, [page, debouncedSearchTerm, filterField, filterValue]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
 
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
@@ -268,50 +250,16 @@ function PurchasesViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
-      console.log(error)
+      console.error('Notification error:', error);
     }
   }
   const syncOff = async () => {
-    if (navigator.onLine) {
-      const syncedPurchase = await db.purchaseSchema.toArray();
-      const PurchaseToSynced = syncedPurchase.filter((row) => row.synced === false)
-      for (const PurchaseInfo of PurchaseToSynced) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchase', PurchaseInfo)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoNumber = res.data.data.purchaseNumber
-            const ReferenceInfoName = res.data.data.customerName.customerName
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoName)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const projectsToSyncedUpdate = syncedPurchase.filter((row) => row.updateS === false)
-      for (const PurchaseInfoUpdate of projectsToSyncedUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${PurchaseInfoUpdate._id}`, PurchaseInfoUpdate)
-          await db.purchaseSchema.update(PurchaseInfoUpdate.purchaseNumber, { synced: true, updateS: true })
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-    fetchData()
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   useEffect(() => {
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
+    fetchItems(page, searchTerm, filterField, filterValue);
   }, [])
 
   const [open, setOpen] = useState(false);
@@ -359,35 +307,33 @@ function PurchasesViewAdmin() {
     setOpen(false);
   };
   const handleCloseModal = () => {
-
-    window.location.reload();
-
+    setModalOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   };
   const handleDelete = async () => {
+    setLoading(true);
+    setModalOpenLoading(true);
+    handleClose();
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-purchase/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-purchase/${DeleteId}`);
       if (res) {
-        handleOpenModal()
+        handleOpenModal();
       }
     } catch (error) {
-      alert('an error as occur ', error);
+      console.error('Delete error:', error);
+      setLoading(false);
+      setModalOpenLoading(false);
+      toast.error('Failed to delete purchase request.');
+      handleError();
     }
   };
   const [PurchaseDeleted, setPurchaseDeleted] = useState([])
   useEffect(() => {
-    const fetchFunction = async () => {
-      const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${idToDelete}`)
-      })
-      try {
-        const res = await Promise.all(deletePromises);
-        setPurchaseDeleted(res.map((row) => 'PUR-' + row.data.data.purchaseNumber))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    fetchFunction()
-  }, [selectedRows])
+    const selectedData = purchase.filter(row => selectedRows.includes(row.id));
+    setPurchaseDeleted(selectedData.map(row => 'PUR-' + row.purchaseNumber));
+  }, [selectedRows, purchase]);
+
   const related = PurchaseDeleted.map(row => row)
   const info = related.toString()
   const handleCreateNotification = async () => {
@@ -398,24 +344,33 @@ function PurchasesViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
-      console.log(error)
+      console.error('Notification error:', error);
     }
   }
   const handleDeleteMany = async (e) => {
     e.preventDefault()
+    setLoading(true);
+    setModalOpenLoading(true);
+    handleCloseMultiple();
+    handleCloseAll();
+    handleCloseReasonDelete();
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-purchase/${idToDelete}`)
+      return axios.delete(`${ENDPOINT_URL}/delete-purchase/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
       if (res) {
         handleCreateNotification()
-        handleOpenModal();
+        handleOpenModal()
+        setSelectedRows([]);
       }
     } catch (error) {
-      console.log(error)
+      console.error('Delete multiple error:', error);
+      setLoading(false);
+      toast.error('Failed to delete multiple purchases.');
+      handleError();
     }
   }
 
@@ -437,10 +392,21 @@ function PurchasesViewAdmin() {
     setColumnVisibilityModel(newHidden)
     localStorage.setItem('HiddenColumnsPurchase', JSON.stringify(newHidden))
   }
-  const handleFilter = (newModel) => {
-    setFilterModel(newModel)
-
-    localStorage.setItem('QuickFilterPurchaseTst', JSON.stringify(newModel))
+    const handleFilter = (newModel) => {
+    setFilterModel(newModel);
+    localStorage.setItem('QuickFilterPurchaseTst', JSON.stringify(newModel));
+    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
+      setSearchTerm(newModel.quickFilterValues.join(' '));
+    } else {
+      setSearchTerm('');
+    }
+    if (newModel.items && newModel.items.length > 0) {
+      setFilterField(newModel.items[0].field);
+      setFilterValue(newModel.items[0].value || '');
+    } else {
+      setFilterField('');
+      setFilterValue('');
+    }
   }
   useEffect(() => {
     const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPurchaseTst'))
@@ -460,12 +426,12 @@ function PurchasesViewAdmin() {
   };
 
   const columns = [
-    { field: 'purchaseNumber', headerName: 'P-Number', width: 100, renderCell: (params) => (<div><span>PUR-00{params.row.purchaseNumber}</span> </div>) },
-    { field: 'projectName', headerName: 'Project Name', width: sideBar ? 280 : 400, valueGetter: (params) => params.row.projectName.projectName },
-    { field: 'customerName', headerName: 'Customer Name', width: 150, valueGetter: (params) => params.row.customerName.customerName },
-    { field: 'description', headerName: 'Description', width: sideBar ? 150 : 200, valueGetter: (params) => params.row.description !== undefined ? params.row.description : '' },
+    { field: 'purchaseNumber', headerName: 'P-Number', minWidth: 100, flex: 1, renderCell: (params) => (<div><span>PUR-00{params.row.purchaseNumber}</span> </div>) },
+    { field: 'projectName', headerName: 'Project Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.projectName.projectName },
+    { field: 'customerName', headerName: 'Customer Name', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.customerName.customerName },
+    { field: 'description', headerName: 'Description', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.description !== undefined ? params.row.description : '' },
     {
-      field: 'statusInfo', headerName: 'Status', width: 100, renderCell: (params) => (
+      field: 'statusInfo', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => (
         <Typography
           color={
             params.row.statusInfo !== undefined && params.row.statusInfo === "Pending"
@@ -484,9 +450,9 @@ function PurchasesViewAdmin() {
         </Typography>
       )
     },
-    { field: 'purchaseAmount1', headerName: 'Amount 1', width: 100, renderCell: (params) => `$ ${parseFloat(params.row.purchaseAmount1).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'purchaseAmount1', headerName: 'Amount 1', minWidth: 100, flex: 1, renderCell: (params) => `$ ${parseFloat(params.row.purchaseAmount1).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {
-      field: 'view', headerName: 'View', width: 90, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={PurchaseInfoV.length === 0 && user.data.role !== 'CEO'}>
@@ -496,11 +462,10 @@ function PurchasesViewAdmin() {
             </IconButton>
           </span>
         </ViewTooltip>
-
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: 90, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
             <IconButton disabled={PurchaseInfoU.length === 0 && user.data.role !== 'CEO'} >
@@ -513,9 +478,9 @@ function PurchasesViewAdmin() {
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: 90, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={PurchaseInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={PurchaseInfoD.length === 0 && user.data.role !== 'CEO'}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -562,7 +527,7 @@ function PurchasesViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -634,21 +599,17 @@ function PurchasesViewAdmin() {
                   {purchase.length > 0 ? (
                     <Box sx={{ height: 600, width: '100%' }}>
                       <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                         rows={purchase}
                         columns={columns}
-                        rowCount={totalPage * limit}
-                        paginationMode="server"
-                        onPaginationModelChange={(model) => setPage(model.page)}
-                        paginationModel={{ page, pageSize: limit }}
                         slots={{ toolbar: GridToolbar }}
                         onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
                         slotProps={{
                           toolbar: {
                             showQuickFilter: true,
-                            quickFilterProps: {
-                              value: searchPurchase,
-                              onChange: (e) => setSearchPurchase(e.target.value)
-                            },
                             printOptions: {
                               disableToolbarButton: true
                             },
@@ -668,7 +629,7 @@ function PurchasesViewAdmin() {
                       />
                     </Box>
                   ) : <div>
-                    <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
                   </div>}
                 </div>)
             }

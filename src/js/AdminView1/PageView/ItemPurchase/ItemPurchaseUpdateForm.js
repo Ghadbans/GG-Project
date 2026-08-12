@@ -23,6 +23,7 @@ import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline } f
 import { Drawer as SideDrawer, Button } from '@mui/material';
 import { v4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -34,13 +35,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import SupplierForm2 from '../Supplier/SupplierForm2';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -152,7 +154,7 @@ function ItemPurchaseUpdateForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -201,18 +203,21 @@ function ItemPurchaseUpdateForm() {
   const [invoice, setInvoice] = useState([]);
   const [projectName, setProjectName] = useState({});
   const [supplier, setSupplier] = useState([]);
-  const [inputValueValue, setInputValueValue] = React.useState('');
+  const [autocompleteOptions, setAutocompleteOptions] = useState([]);
+  const [autocompleteLoading, setAutocompleteLoading] = useState(false);
+  const [autocompleteSearch, setAutocompleteSearch] = useState('');
+  const [inputValue3, setInputValue3] = useState('');
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resSupplier = await axios.get('https://gg-project-production.up.railway.app/endpoint/Supplier')
+        const resSupplier = await axios.get(`${ENDPOINT_URL}/Supplier`)
         setSupplier(resSupplier.data.data.reverse())
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`)
         // get the response data here
         setItemPurchaseDate(res.data.data.itemPurchaseDate);
-        setItemPurchaseNumber(res.data.data.itemPurchaseNumber);
+        setItemPurchaseNumber(Number(res.data?.data?.itemPurchaseNumber || res.data?.itemPurchaseNumber || 0));
         setManufacturer(res.data.data.manufacturer);
-        setManufacturerNumber(res.data.data.manufacturerNumber);
+        setManufacturerNumber(res.data?.data?.manufacturerNumber || res.data?.manufacturerNumber || "");
         setDescription(res.data.data.description);
         setItems(res.data.data.items);
         setManufacturerID(res.data.data.manufacturerID)
@@ -228,7 +233,7 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const fetchDataId = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`)
         setOldItems(res.data.data.items);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -241,16 +246,16 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-        setItemInformation(resItem.data.data.reverse())
+        const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`)
+        setItemInformation(Array.isArray(resItem?.data?.itemI) ? [...resItem.data.itemI].reverse() : [])
         if (projectName) {
-          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          setPurchase(resPurchase.data.data.filter((row) => row.projectName._id === projectName._id));
-          const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-          setMaintenance(resMaintenance.data.data.filter((row) => row._id === projectName._id));
-          const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          setInvoice(resInvoice.data.data.filter((row) => row._id === projectName._id));
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+          const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+          setPurchase(resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id));
+          const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+          setMaintenance(resMaintenance.data?.data?.filter((row) => row._id === projectName._id));
+          const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+          setInvoice(resInvoice.data?.data?.filter((row) => row._id === projectName._id));
+          const res = await axios.get(`${ENDPOINT_URL}/rate`)
           res.data.data.map((row) => setRate(row.rate))
         }
       } catch (error) {
@@ -260,19 +265,45 @@ function ItemPurchaseUpdateForm() {
     handleFetch()
   }, [projectName])
 
+  // Handle Autocomplete Search
+  useEffect(() => {
+    const fetchAutocompleteItems = async () => {
+      if (autocompleteSearch.length < 2) {
+        setAutocompleteOptions(ItemInformation.slice(0, 50));
+        return;
+      }
+      setAutocompleteLoading(true);
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=1&limit=50&search=${encodeURIComponent(autocompleteSearch)}`);
+        // Filter out items already in the purchase list
+        const searchResults = res.data.items.filter(row => row.typeItem === "Goods");
+        setAutocompleteOptions(searchResults);
+        setAutocompleteLoading(false);
+      } catch (error) {
+        console.error('Error searching items:', error);
+        setAutocompleteLoading(false);
+      }
+    };
+
+    const timeoutId = setTimeout(fetchAutocompleteItems, 300);
+    return () => clearTimeout(timeoutId);
+  }, [autocompleteSearch, ItemInformation]);
+
   const handleReason = (e) => {
     setReason(e.target.value)
     setProjectName({})
     setDescription("")
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     setItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemDescription: selectedOptions?.itemDescription
     } : row))
   }
@@ -296,8 +327,8 @@ function ItemPurchaseUpdateForm() {
     const i = items.findIndex(Item => Item.idRow === idRow)
     list[i][name] = value
     list[i]['totalAmountUSD'] = Math.round((list[i]['itemQty'] * list[i]['itemRate']) * 100) / 100;
-    list[i]['fcConvertToUsd'] = Math.round((list[i]['totalAmountFC'] / list[i]['Taux']) * 100) / 100;
-    list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd']) + parseFloat(list[i]['totalAmount'])) * 100) / 100;
+    list[i]['fcConvertToUsd'] = list[i]['Taux'] && list[i]['Taux'] !== 0 ? Math.round((list[i]['totalAmountFC'] / list[i]['Taux']) * 100) / 100 : 0;
+    list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd'] || 0) + parseFloat(list[i]['totalAmount'] || 0)) * 100) / 100;
     setItems(list);
   }
   const addItem = () => {
@@ -314,7 +345,9 @@ function ItemPurchaseUpdateForm() {
       fcConvertToUsd: 0,
       fcConvertToUsdTotal: 0,
       totalAmount: 0,
-      totalAmountFC: 0
+      totalAmountFC: 0,
+      data: null,
+      contentType: null,
     }]);
   }
   const addItemRow = (i) => {
@@ -331,7 +364,9 @@ function ItemPurchaseUpdateForm() {
       fcConvertToUsd: 0,
       fcConvertToUsdTotal: 0,
       totalAmount: 0,
-      totalAmountFC: 0
+      totalAmountFC: 0,
+      data: null,
+      contentType: null,
     }
     const update = [...items];
     update.splice(i + 1, 0, newItem);
@@ -344,6 +379,7 @@ function ItemPurchaseUpdateForm() {
         _id: null,
         itemName: null
       },
+      newDescription: undefined,
       itemDescription: "",
       itemQty: 0,
       itemRate: 0,
@@ -360,7 +396,7 @@ function ItemPurchaseUpdateForm() {
   const deleteItem = idRow => {
     setItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   const [openAutocomplete1, setOpenAutocomplete1] = useState(false);
 
   const handleOpenOpenAutocomplete1 = (e) => {
@@ -405,14 +441,14 @@ function ItemPurchaseUpdateForm() {
       const diff = parseFloat(row.itemQty) - parseFloat(newItem.itemQty)
       difference.push({
         id: row.idRow,
-        idItems: row.itemName._id,
+        idItems: row.itemName?._id,
         qty: diff
       })
     } else if (newItem && parseFloat(newItem.itemQty) > parseFloat(row.itemQty)) {
       const diff = parseFloat(newItem.itemQty) - parseFloat(row.itemQty)
       sumToAdd.push({
         id: row.idRow,
-        idItems: row.itemName._id,
+        idItems: row.itemName?._id,
         qty: diff
       })
     }
@@ -421,7 +457,7 @@ function ItemPurchaseUpdateForm() {
     if (!oldItems.find(row1 => row1.idRow === row.idRow)) {
       newArrayAdd.push({
         id: row.idRow,
-        idItems: row.itemName._id,
+        idItems: row.itemName?._id,
         qty: row.itemQty
       })
     }
@@ -430,13 +466,14 @@ function ItemPurchaseUpdateForm() {
     if (!items.find(row1 => row1.idRow === row.idRow)) {
       deletedArray.push({
         id: row.idRow,
-        idItems: row.itemName._id,
+        idItems: row.itemName?._id,
         qty: row.itemQty
       })
     }
   })
   const updatePurchaseArray = purchase.map((row) => {
-    const updateItem = row.items.map((Item) => {
+    // 1. Update existing items
+    const updatedExistingItems = row.items.map((Item) => {
       const additionItem = sumToAdd.find((add) => Item.idRow === add.id)
       const differenceItem = difference.find((diff) => Item.idRow === diff.id)
       const addNewItem = newArrayAdd.find((Item2) => Item.idRow === Item2.id)
@@ -444,184 +481,275 @@ function ItemPurchaseUpdateForm() {
       const RelatedItem = items.find((Item2) => Item2.idRow === Item.idRow)
       const itemCost = RelatedItem && RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost
       let itemToUpdate = { ...Item, itemCost }
+      
       if (additionItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty)
       }
       if (differenceItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty)
       }
       if (addNewItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty)
       }
       if (diffDeleteItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty)
       }
+      itemToUpdate.totalGenerale = itemToUpdate.itemCost * itemToUpdate.itemBuy;
       return itemToUpdate
     })
-    const purchaseAmount2 = updateItem.reduce((sum, row) => sum + row.totalGenerale, 0)
+
+    // 2. Add truly new items (those in newArrayAdd but NOT in row.items)
+    const trulyNewItems = items.filter(ipItem => 
+        !oldItems.find(old => old.idRow === ipItem.idRow) && // It's new to this IP
+        !row.items.find(pItem => pItem.idRow === ipItem.idRow) // AND it's new to the linked purchase
+    ).map(newItem => ({
+        idRow: newItem.idRow,
+        itemName: newItem.itemName,
+        itemDescription: newItem.itemDescription,
+        itemQty: newItem.itemQty, // Set requirement to bought qty for new items
+        itemBuy: newItem.itemQty,
+        itemCost: newItem.itemRate,
+        totalGenerale: newItem.itemRate * newItem.itemQty
+    }));
+
+    const finalItems = [...updatedExistingItems, ...trulyNewItems];
+    const purchaseAmount2 = finalItems.reduce((sum, row) => sum + (row.totalGenerale || 0), 0)
+    
     return {
       id: row._id,
-      items: updateItem,
+      items: finalItems,
       purchaseAmount2: purchaseAmount2
     }
   })
   const updateMaintenanceArray = maintenance.map((row) => {
-    const updateItem = row.items.map((Item) => {
+    // 1. Update existing items
+    const updatedExistingItems = row.items.map((Item) => {
       const additionItem = sumToAdd.find((add) => Item.idRow === add.id)
       const differenceItem = difference.find((diff) => Item.idRow === diff.id)
       const addNewItem = newArrayAdd.find((Item2) => Item.idRow === Item2.id)
       const diffDeleteItem = deletedArray.find((diff) => Item.idRow === diff.id)
-      let itemToUpdate = { ...Item }
+      const RelatedItem = items.find((Item2) => Item2.idRow === Item.idRow)
+      const itemCost = RelatedItem && RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost
+      let itemToUpdate = { ...Item, itemCost }
+
       if (additionItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty)
       }
       if (differenceItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty)
       }
       if (addNewItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty)
       }
       if (diffDeleteItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty)
       }
+      itemToUpdate.totalGenerale = itemToUpdate.itemCost * itemToUpdate.itemBuy;
       return itemToUpdate
     })
+
+    // 2. Add truly new items
+    const trulyNewItems = items.filter(ipItem => 
+        !oldItems.find(old => old.idRow === ipItem.idRow) &&
+        !row.items.find(pItem => pItem.idRow === ipItem.idRow)
+    ).map(newItem => ({
+        idRow: newItem.idRow,
+        itemName: newItem.itemName,
+        itemDescription: newItem.itemDescription,
+        itemQty: newItem.itemQty,
+        itemBuy: newItem.itemQty,
+        itemCost: newItem.itemRate,
+        totalGenerale: newItem.itemRate * newItem.itemQty
+    }));
+
+    const finalItems = [...updatedExistingItems, ...trulyNewItems];
+    
     return {
       id: row._id,
-      items: updateItem
+      items: finalItems
     }
   })
   const updateInvoiceArray = invoice.map((row) => {
-    const updateItem = row.items.map((Item) => {
+    // 1. Update existing items
+    const updatedExistingItems = row.items.map((Item) => {
       const additionItem = sumToAdd.find((add) => Item.idRow === add.id)
       const differenceItem = difference.find((diff) => Item.idRow === diff.id)
       const addNewItem = newArrayAdd.find((Item2) => Item.idRow === Item2.id)
       const diffDeleteItem = deletedArray.find((diff) => Item.idRow === diff.id)
-      let itemToUpdate = { ...Item }
+      const RelatedItem = items.find((Item2) => Item2.idRow === Item.idRow)
+      const itemCost = RelatedItem && RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost
+      let itemToUpdate = { ...Item, itemCost }
+
       if (additionItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) + parseFloat(additionItem.qty)
       }
       if (differenceItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) - parseFloat(differenceItem.qty)
       }
       if (addNewItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) + parseFloat(addNewItem.qty)
       }
       if (diffDeleteItem) {
-        itemToUpdate = {
-          ...itemToUpdate,
-          itemBuy: parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty),
-          totalGenerale: itemToUpdate.itemCost * (parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty))
-        }
+        itemToUpdate.itemBuy = parseFloat(itemToUpdate.itemBuy) - parseFloat(diffDeleteItem.qty)
       }
+      itemToUpdate.totalGenerale = itemToUpdate.itemCost * itemToUpdate.itemBuy;
       return itemToUpdate
     })
+
+    // 2. Add truly new items
+    const trulyNewItems = items.filter(ipItem => 
+        !oldItems.find(old => old.idRow === ipItem.idRow) &&
+        !row.items.find(pItem => pItem.idRow === ipItem.idRow)
+    ).map(newItem => ({
+        idRow: newItem.idRow,
+        itemName: newItem.itemName,
+        itemDescription: newItem.itemDescription,
+        itemQty: newItem.itemQty,
+        itemBuy: newItem.itemQty,
+        itemCost: newItem.itemRate,
+        totalGenerale: newItem.itemRate * newItem.itemQty
+    }));
+
+    const finalItems = [...updatedExistingItems, ...trulyNewItems];
+
     return {
       id: row._id,
-      items: updateItem
+      items: finalItems
     }
   })
   const handleUpdatePurchase = async () => {
-    // FIX: Use the 'items' state as the source of truth for the update payload.
-    // This ensures that BOTH old items (edited) and NEW items (added) are included.
-    const finalItemsPayload = items.map(item => ({
-      ...item,
-      // Ensure calculations are up to date
-      // If it's a new item, ensure it has necessary fields
-      itemCost: item.itemName?._id && item.itemRate !== 0 ? item.itemRate : item.itemCost,
-      totalGenerale: (item.itemName?._id && item.itemRate !== 0 ? item.itemRate : item.itemCost) * parseFloat(item.itemQty || 0)
-    }));
+    try {
+      if (reason === 'Project' && projectName?._id) {
+        // Fetch fresh project/purchase state
+        const res = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`);
+        const targetPurchase = res.data?.data?.find(row => row.projectName?._id === projectName._id);
+        
+        if (targetPurchase) {
+          // Calculate updated items using the fresh targetPurchase data
+          const updatedItems = targetPurchase.items.map((Item) => {
+            const additionItem = sumToAdd.find((add) => Item.idRow === add.id);
+            const differenceItem = difference.find((diff) => Item.idRow === diff.id);
+            const addNewItem = newArrayAdd.find((Item2) => Item.idRow === Item2.id);
+            const diffDeleteItem = deletedArray.find((diff) => Item.idRow === diff.id);
+            const RelatedItem = items.find((Item2) => Item2.idRow === Item.idRow);
+            const itemCost = RelatedItem && RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost;
+            let itemToUpdate = { ...Item, itemCost };
+            
+            if (additionItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) + parseFloat(additionItem.qty);
+            if (differenceItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) - parseFloat(differenceItem.qty);
+            if (addNewItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) + parseFloat(addNewItem.qty);
+            if (diffDeleteItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) - parseFloat(diffDeleteItem.qty);
+            
+            itemToUpdate.totalGenerale = (itemToUpdate.itemCost || 0) * (itemToUpdate.itemBuy || 0);
+            return itemToUpdate;
+          });
 
-    // Recalculate total purchase amount
-    const finalPurchaseAmount2 = finalItemsPayload.reduce((sum, row) => sum + (row.totalGenerale || 0), 0);
+          const trulyNewItems = items.filter(ipItem => 
+            !oldItems.find(old => old.idRow === ipItem.idRow) && 
+            !targetPurchase.items.find(pItem => pItem.idRow === ipItem.idRow)
+          ).map(newItem => ({
+            idRow: newItem.idRow,
+            itemName: newItem.itemName,
+            itemDescription: newItem.itemDescription,
+            itemQty: newItem.itemQty,
+            itemBuy: newItem.itemQty,
+            itemCost: newItem.itemRate,
+            totalGenerale: (newItem.itemRate || 0) * (newItem.itemQty || 0)
+          }));
 
-    if (purchase.length > 0 && maintenance.length === 0 && invoice.length === 0) {
-      const updateRequestInvoice = purchase.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${row._id}`, {
-          items: finalItemsPayload, // Use the complete list from state
-          purchaseAmount2: finalPurchaseAmount2
-        })
-      })
-      try {
-        await Promise.all(updateRequestInvoice);
-        await handleUpdateQty(); // Run stock updates separately
-        handleOpenUpdate(); // Show success modal
-      } catch (error) {
-        console.log('An error as occur');
-        handleError();
+          const finalItems = [...updatedItems, ...trulyNewItems];
+          const purchaseAmount2 = finalItems.reduce((sum, row) => sum + (row.totalGenerale || 0), 0);
+
+          await axios.put(`${ENDPOINT_URL}/update-purchase/${targetPurchase._id}`, {
+            items: finalItems,
+            purchaseAmount2
+          });
+        }
+      } else if (reason === 'Maintenance' && projectName?._id) {
+        const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${projectName._id}`);
+        const targetMaintenance = res.data.data;
+        
+        if (targetMaintenance) {
+          const updatedItems = targetMaintenance.items.map((Item) => {
+            const additionItem = sumToAdd.find((add) => Item.idRow === add.id);
+            const differenceItem = difference.find((diff) => Item.idRow === diff.id);
+            const addNewItem = newArrayAdd.find((Item2) => Item.idRow === Item2.id);
+            const diffDeleteItem = deletedArray.find((diff) => Item.idRow === diff.id);
+            const RelatedItem = items.find((Item2) => Item2.idRow === Item.idRow);
+            const itemCost = RelatedItem && RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost;
+            let itemToUpdate = { ...Item, itemCost };
+
+            if (additionItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) + parseFloat(additionItem.qty);
+            if (differenceItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) - parseFloat(differenceItem.qty);
+            if (addNewItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) + parseFloat(addNewItem.qty);
+            if (diffDeleteItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) - parseFloat(diffDeleteItem.qty);
+            
+            itemToUpdate.totalGenerale = (itemToUpdate.itemCost || 0) * (itemToUpdate.itemBuy || 0);
+            return itemToUpdate;
+          });
+
+          const trulyNewItems = items.filter(ipItem => 
+            !oldItems.find(old => old.idRow === ipItem.idRow) &&
+            !targetMaintenance.items.find(pItem => pItem.idRow === ipItem.idRow)
+          ).map(newItem => ({
+            idRow: newItem.idRow,
+            itemName: newItem.itemName,
+            itemDescription: newItem.itemDescription,
+            itemQty: newItem.itemQty,
+            itemBuy: newItem.itemQty,
+            itemCost: newItem.itemRate,
+            totalGenerale: (newItem.itemRate || 0) * (newItem.itemQty || 0)
+          }));
+
+          const finalItems = [...updatedItems, ...trulyNewItems];
+          await axios.put(`${ENDPOINT_URL}/update-maintenance/${targetMaintenance._id}`, { items: finalItems });
+        }
+      } else if (reason === 'Invoice' && projectName?._id) {
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${projectName._id}`);
+        const targetInvoice = res.data.data;
+        
+        if (targetInvoice) {
+          const updatedItems = targetInvoice.items.map((Item) => {
+            const additionItem = sumToAdd.find((add) => Item.idRow === add.id);
+            const differenceItem = difference.find((diff) => Item.idRow === diff.id);
+            const addNewItem = newArrayAdd.find((Item2) => Item.idRow === Item2.id);
+            const diffDeleteItem = deletedArray.find((diff) => Item.idRow === diff.id);
+            const RelatedItem = items.find((Item2) => Item2.idRow === Item.idRow);
+            const itemCost = RelatedItem && RelatedItem.itemRate !== 0 ? RelatedItem.itemRate : Item.itemCost;
+            let itemToUpdate = { ...Item, itemCost };
+
+            if (additionItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) + parseFloat(additionItem.qty);
+            if (differenceItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) - parseFloat(differenceItem.qty);
+            if (addNewItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) + parseFloat(addNewItem.qty);
+            if (diffDeleteItem) itemToUpdate.itemBuy = (parseFloat(itemToUpdate.itemBuy) || 0) - parseFloat(diffDeleteItem.qty);
+            
+            itemToUpdate.totalGenerale = (itemToUpdate.itemCost || 0) * (itemToUpdate.itemBuy || 0);
+            return itemToUpdate;
+          });
+
+          const trulyNewItems = items.filter(ipItem => 
+            !oldItems.find(old => old.idRow === ipItem.idRow) &&
+            !targetInvoice.items.find(pItem => pItem.idRow === ipItem.idRow)
+          ).map(newItem => ({
+            idRow: newItem.idRow,
+            itemName: newItem.itemName,
+            itemDescription: newItem.itemDescription,
+            itemQty: newItem.itemQty,
+            itemBuy: newItem.itemQty,
+            itemCost: newItem.itemRate,
+            totalGenerale: (newItem.itemRate || 0) * (newItem.itemQty || 0)
+          }));
+
+          const finalItems = [...updatedItems, ...trulyNewItems];
+          await axios.put(`${ENDPOINT_URL}/update-invoice/${targetInvoice._id}`, { items: finalItems });
+        }
       }
-    } else if (purchase.length === 0 && maintenance.length > 0 && invoice.length === 0) {
-      const updateRequestMaintenance = maintenance.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${row._id}`, {
-          items: finalItemsPayload,
-        })
-      })
-      try {
-        await Promise.all(updateRequestMaintenance);
-        await handleUpdateQty();
-        handleOpenUpdate();
-      } catch (error) {
-        console.log('An error as occur');
-        handleError();
-      }
-    } else if (purchase.length === 0 && maintenance.length === 0 && invoice.length > 0) {
-      const updateRequestInvoice = invoice.map((row) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${row._id}`, {
-          items: finalItemsPayload,
-        })
-      })
-      try {
-        await Promise.all(updateRequestInvoice);
-        await handleUpdateQty();
-        handleOpenUpdate();
-      } catch (error) {
-        console.log('An error as occur');
-        handleError();
-      }
+      
+      await handleUpdateQty();
+      handleOpenUpdate();
+    } catch (error) {
+      console.error('Error in handleUpdatePurchase:', error);
+      handleError();
     }
   }
   {/** Update purchase end */ }
@@ -639,7 +767,7 @@ function ItemPurchaseUpdateForm() {
       if (Object.keys(initialStateId).length > 0) {
         // Get Value
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -659,7 +787,7 @@ function ItemPurchaseUpdateForm() {
         };
         // Update Value 
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -679,7 +807,7 @@ function ItemPurchaseUpdateForm() {
 
       if (Object.keys(initialStateId).length > 0) {
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -698,7 +826,7 @@ function ItemPurchaseUpdateForm() {
           console.log('An error as occur in sumToAdd update');
         };
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -717,7 +845,7 @@ function ItemPurchaseUpdateForm() {
 
       if (Object.keys(initialStateId).length > 0) {
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -736,7 +864,7 @@ function ItemPurchaseUpdateForm() {
           console.log('An error as occur in newArrayAdd update');
         };
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -755,7 +883,7 @@ function ItemPurchaseUpdateForm() {
 
       if (Object.keys(initialStateId).length > 0) {
         const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-          return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+          return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
         })
         try {
           const res = await Promise.all(getRequestId);
@@ -774,7 +902,7 @@ function ItemPurchaseUpdateForm() {
           console.log('An error as occur in deletedArray update');
         };
         const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-          return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
+          return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
         })
         try {
           await Promise.all(updateRequest);
@@ -824,7 +952,7 @@ function ItemPurchaseUpdateForm() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    navigate(-1); // Navigate back instead of hard reload
   }
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
@@ -845,12 +973,12 @@ function ItemPurchaseUpdateForm() {
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify ' + ' IP-' + itemPurchaseNumber,
+      person: user.data.userName + ' Modify ITEM PURCHASE ' + ' IP-' + String(itemPurchaseNumber).padStart(6, '0'),
       reason: reason2,
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
 
     } catch (error) {
       console.log(error)
@@ -858,30 +986,31 @@ function ItemPurchaseUpdateForm() {
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       itemPurchaseDate,
       itemPurchaseNumber,
       manufacturer, note,
       manufacturerNumber, manufacturerID,
-      description, total, totalUSD, totalFC, items, reason, projectName
+      description, total, totalUSD, totalFC, items: itemsWithoutData, reason, projectName
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-itemPurchase/${id}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-itemPurchase/${id}`, data)
       if (res) {
         // Open Loading View
         //Update Item Qty
         //handleUpdateQty();
-        handleQty()
-        handleUpdatePurchase()
+        await handleUpdatePurchase()
         handleCreateComment();
         handleOpen();
+        handleQty()
       } else {
         console.log('An Error as Occur');
       }
@@ -901,9 +1030,9 @@ function ItemPurchaseUpdateForm() {
     setSearch2(value)
   }
   const newArray2 = search2 !== '' ? items.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
+    (Item.itemName && Item.itemName.itemName?.toLowerCase().includes(search2.toLowerCase())) ||
+    (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
+    (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()))
   ) : items
 
   const tableRows = reason === 'Project' || reason === 'Maintenance' || reason === 'Invoice' ? newArray2.map((Item, i) => {
@@ -912,11 +1041,16 @@ function ItemPurchaseUpdateForm() {
         <td ><DragIndicatorRounded /></td>
         <td  >
           {
-            Item.itemName.itemName ? (
+            (Item.itemName?.itemName || Item.newDescription) ? (
               (
-                <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                  <div >
-                    <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                  <ItemThumbnail
+                    itemId={Item.itemName?._id}
+                    initialData={Item.data}
+                    initialType={Item.contentType}
+                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}</Typography>
                     <TextField
                       name='itemDescription' id='itemDescription'
                       value={Item.itemDescription}
@@ -928,40 +1062,37 @@ function ItemPurchaseUpdateForm() {
                       disabled={user.data.role === 'User'}
                       sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
                     />
-                  </div>
-                  <div>
-                    <BlackTooltip title="Clear" placement='top'>
-                      <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
-                        <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                      </IconButton>
-                    </BlackTooltip>
-                  </div>
-                </div>)
+                    </Box>
+                    <Box>
+                      <BlackTooltip title="Clear" placement='top'>
+                        <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                          <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                        </IconButton>
+                      </BlackTooltip>
+                    </Box>
+                  </Box>)
             ) : (
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Autocomplete
                   disableClearable
-                  options={filterItemInformation}
-                  getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
-                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + '/' + option.itemBrand}</Box>)}
+                  options={autocompleteOptions.filter(option => !items.find((row) => option._id === row.itemName?._id))}
+                  getOptionLabel={(option) => (option.itemName || "") + (option.itemBrand ? '/' + option.itemBrand : "")}
+                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + (option.itemBrand ? '/' + option.itemBrand : "")}</Box>)}
                   renderInput={(params) =>
                     <TextField multiline
                       rows={4} {...params} required
+                      placeholder="Search Item..."
                     />}
-                  inputValue={inputValue}
-                  onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                  loading={autocompleteLoading}
+                  onChange={(e, newValue) => {
+                    handleChangeItem(Item.idRow, newValue);
+                    setAutocompleteSearch('');
+                  }}
                   size="small"
                   onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
+                    setAutocompleteSearch(newInputValue);
                   }}
-                  filterOptions={(options, { inputValue }) => {
-                    return options.filter(
-                      (option) =>
-                        option.itemName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemDescription.toLowerCase().includes(inputValue.toLowerCase())
-                    )
-                  }}
+                  filterOptions={(x) => x}
                   PaperComponent={({ children, ...other }) => (
 
                     <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
@@ -1046,11 +1177,18 @@ function ItemPurchaseUpdateForm() {
         <td ><DragIndicatorRounded /></td>
         <td  >
           {
-            Item.itemName.itemName ? (
+            (Item.itemName?.itemName || Item.newDescription) ? (
               (
-                <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                  <div >
-                    <Typography sx={{ fontSize: '16px', fontWeight: 'bold' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                  <ItemThumbnail
+                    itemId={Item.itemName?._id}
+                    initialData={Item.data}
+                    initialType={Item.contentType}
+                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                      {Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}
+                    </Typography>
                     <TextField
                       name='itemDescription' id='itemDescription'
                       value={Item.itemDescription}
@@ -1062,40 +1200,37 @@ function ItemPurchaseUpdateForm() {
                       disabled={user.data.role === 'User'}
                       sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
                     />
-                  </div>
-                  <div>
+                  </Box>
+                  <Box>
                     <BlackTooltip title="Clear" placement='top'>
                       <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
                         <RemoveCircleOutline style={{ color: '#202a5a' }} />
                       </IconButton>
                     </BlackTooltip>
-                  </div>
-                </div>)
+                  </Box>
+                </Box>)
             ) : (
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <Autocomplete
                   disableClearable
-                  options={filterItemInformation}
-                  getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
-                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + '/' + option.itemBrand}</Box>)}
+                  options={autocompleteOptions.filter(option => !items.find((row) => option._id === row.itemName?._id))}
+                  getOptionLabel={(option) => (option.itemName || "") + (option.itemBrand ? '/' + option.itemBrand : "")}
+                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + (option.itemBrand ? '/' + option.itemBrand : "")}</Box>)}
                   renderInput={(params) =>
                     <TextField multiline
                       rows={4} {...params} required
+                      placeholder="Search Item..."
                     />}
-                  inputValue={inputValue}
-                  onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                  loading={autocompleteLoading}
+                  onChange={(e, newValue) => {
+                    handleChangeItem(Item.idRow, newValue);
+                    setAutocompleteSearch('');
+                  }}
                   size="small"
                   onInputChange={(event, newInputValue) => {
-                    setInputValue(newInputValue);
+                    setAutocompleteSearch(newInputValue);
                   }}
-                  filterOptions={(options, { inputValue }) => {
-                    return options.filter(
-                      (option) =>
-                        option.itemName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) ||
-                        option.itemDescription.toLowerCase().includes(inputValue.toLowerCase())
-                    )
-                  }}
+                  filterOptions={(x) => x}
                   PaperComponent={({ children, ...other }) => (
 
                     <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
@@ -1166,9 +1301,9 @@ function ItemPurchaseUpdateForm() {
               sx={{ width: '100px', backgroundColor: 'white' }}
             />
           </span>
-          <span>Total Cost USD: {Item.totalAmountUSD !== undefined ? Item.totalAmountUSD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span>
+          <span>Total Cost USD: {Item.totalAmountUSD != null ? Item.totalAmountUSD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span>
         </td>
-        <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal !== undefined ? Item.fcConvertToUsdTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+        <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal != null ? Item.fcConvertToUsdTotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
         <td align="center" >
           <LightTooltip title="Delete" sx={{}}>
             <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1352,7 +1487,7 @@ function ItemPurchaseUpdateForm() {
                       id='manufacturerNumber'
                       name='manufacturerNumber'
                       label='Reference '
-                      value={manufacturerNumber ? manufacturerNumber : 0}
+                      value={manufacturerNumber !== undefined ? manufacturerNumber : ''}
                       onChange={(e) => setManufacturerNumber(e.target.value)}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />

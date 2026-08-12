@@ -8,6 +8,7 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {MenuItem,Grid, IconButton, Tooltip, Table, TableBody, TableCell, TableHead, TableRow,Paper,TableContainer, TextField, FormControl, InputLabel, Select, Typography } from '@mui/material'
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import Close from '@mui/icons-material/Close';
@@ -17,7 +18,7 @@ function RecurringInvoiceFormUpdate() {
   const {id} = useParams();
   const navigate = useNavigate();
   useEffect (() => {
-    axios.get(`https://gg-project-production.up.railway.app/endpoint/get-recurringinvoice/${id}`)
+    axios.get(`${ENDPOINT_URL}/get-recurringinvoice/${id}`)
     .then(res => {
       // get the response data here
         setCustomerID(res.data.data.customerID);
@@ -25,7 +26,7 @@ function RecurringInvoiceFormUpdate() {
         setRepeat(res.data.data.repeat);
         setInvoiceDate(res.data.data.invoiceDate);
         setInvoiceDueDate(res.data.data.invoiceDueDate);
-        setInvoiceNumber(res.data.data.invoiceNumber);
+        setInvoiceNumber(Number(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0));
         setPayTerms(res.data.data.payTerms);
         setProjectName(res.data.data.projectName);
         setInvoiceSubject(res.data.data.invoiceSubject);
@@ -63,7 +64,7 @@ function RecurringInvoiceFormUpdate() {
         balanceDue,
         totalW,
       };
-     axios.put(`https://gg-project-production.up.railway.app/endpoint/update-recurringinvoice/${id}`,data)
+     axios.put(`${ENDPOINT_URL}/update-recurringinvoice/${id}`,data)
       .then((res) => {
         console.log('POST request successful!');
         console.log(res.data);

@@ -60,7 +60,6 @@ function SidebarDashE3() {
                         </div>
                 </NavLink>
   </li>*/}
-      <Outlet></Outlet>
     </>
   )
 }

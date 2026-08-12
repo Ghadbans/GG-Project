@@ -23,18 +23,19 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField } from '@mui/material';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -130,20 +131,13 @@ function EstimateViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -159,18 +153,12 @@ function EstimateViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -186,58 +174,48 @@ function EstimateViewAdmin() {
   const [loadingData, setLoadingData] = useState(true);
   const [hiddenRow, setHiddenRow] = useState([]);
   const [hidden, setHidden] = useState([]);
-  const [selectedRows, setSelectedRows] = useState([]);
-  const [reason, setReason] = useState("");
   const [page, setPage] = useState(0);
   const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [filterField, setFilterField] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   const [totalPage, SetTotalPage] = useState(0);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchTerm]);
-
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/estimate-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          estimateNumber: "EST-00" + item.estimateNumber,
-          dataField: dayjs(item.estimateDate).format('DD/MM/YYYY'),
-        }))
-        setEstimate(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setLoadingData(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.estimateSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.customerName && item.customerName.customerName.toLowerCase().includes(lowerSearch)) ||
-        (item.estimateNumber && item.estimateNumber.toString().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const [selectedRows, setSelectedRows] = useState([]);
+  const [reason, setReason] = useState("");
+    const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/estimation-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
-        estimateNumber: "EST-00" + item.estimateNumber,
-        dataField: dayjs(new Date(item.estimateDate)).format('DD/MM/YYYY'),
-      }))
-      setEstimate(formatDate.reverse())
-      setLoadingData(false)
+        dateField: item.estimateDate !== null ? dayjs(item.estimateDate).format('DD/MM/YYYY') : '',
+        dueDateField: dayjs(item.estimateDueDate).format('DD/MM/YYYY'),
+      }));
+      setEstimate(formatDate);
+      SetTotalPage(res.data.totalPages);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData(false);
     }
   }
 
   useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
+  }, [page, debouncedSearchTerm, filterField, filterValue]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+      setPage(0);
+    }, 400);
+    return () => clearTimeout(timer);
+  }, [searchTerm]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
   const [loading, setLoading] = useState(false);
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
@@ -252,7 +230,9 @@ function EstimateViewAdmin() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** Loading Update View End */ }
 
@@ -267,7 +247,9 @@ function EstimateViewAdmin() {
     }, 500)
   }
   const handleDeleteCloseLoading = () => {
-    window.location.reload();
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
 
   const handleOpenOffline = () => {
@@ -288,72 +270,27 @@ function EstimateViewAdmin() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'EST-' + ReferenceInfoNumber + ' For ' + ReferenceInfoCustomer,
+      reason: 'QUO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + ReferenceInfoCustomer,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const syncOff = async () => {
-    if (navigator.onLine) {
-      const syncedEstimate = await db.estimateSchema.toArray();
-      const estimateToSynced = syncedEstimate.filter((row) => row.synced === false)
-      for (const estimateInfo of estimateToSynced) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-estimation', estimateInfo)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoNumber = res.data.data.estimateNumber
-            const ReferenceInfoCustomer = res.data.data.customerName.customerName
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCustomer)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const estimateToSyncedUpdate = syncedEstimate.filter((row) => row.updateS === false)
-      for (const estimateInfoUpdate of estimateToSyncedUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${estimateInfoUpdate._id}`, estimateInfoUpdate)
-          await db.estimateSchema.update(estimateInfoUpdate._id, { synced: true, updateS: true })
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
     fetchData()
   }
-  useEffect(() => {
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
-  }, [])
+  
   useEffect(() => {
     const fetchDataHidden = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
-          setHiddenRow(res.data.data.map((row) => row.idRow))
-          setHidden(res.data.data)
-          await Promise.all(res.data.data.map(async (item) => {
-            await db.hiddenSchema.put({ ...item, synced: true, updateS: true })
-          }))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.hiddenSchema.toArray();
-        setHiddenRow(offLineCustomer1.map((row) => row.idRow))
-        setHidden(offLineCustomer1)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/hidden`)
+        setHiddenRow(res.data.data.map((row) => row.idRow))
+        setHidden(res.data.data)
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchDataHidden()
@@ -411,25 +348,26 @@ function EstimateViewAdmin() {
 
   {/** Loading Delete View End */ }
 
-  const handleDelete = async () => {
-    try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-estimation/${DeleteId}`);
-      if (res) {
-        handleDeleteOpenLoading();
+    const handleDelete = async () => {
+      try {
+        const res = await axios.delete(`${ENDPOINT_URL}/delete-estimation/${DeleteId}`);
+        if (res) {
+          setEstimate(prevEstimate => prevEstimate.filter(item => item._id !== DeleteId));
+          handleDeleteOpenLoading();
+        }
+      } catch (error) {
+        alert('An error as Occur');
       }
-    } catch (error) {
-      alert('An error as Occur');
-    }
-  };
+    };
   const [EstimateDeleted, setEstimateDeleted] = useState([])
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-estimation/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
-        setEstimateDeleted(res.map((row) => 'EST-' + row.data.data.estimateNumber))
+        setEstimateDeleted(res.map((row) => 'Q-' + row.data.data.estimateNumber))
       } catch (error) {
         console.log(error)
       }
@@ -446,31 +384,33 @@ function EstimateViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
-  const handleDeleteMany = async (e) => {
-    e.preventDefault()
-    const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-estimation/${idToDelete}`)
-    })
-    try {
-      const res = await Promise.all(deletePromises);
-      if (res) {
-        handleCreateNotification()
-        handleDeleteOpenLoading();
+    const handleDeleteMany = async (e) => {
+      e.preventDefault()
+      const deletePromises = selectedRows.map(async (idToDelete) => {
+        return axios.delete(`${ENDPOINT_URL}/delete-estimation/${idToDelete}`)
+      })
+      try {
+        const res = await Promise.all(deletePromises);
+        if (res) {
+          setEstimate(prevEstimate => prevEstimate.filter(item => !selectedRows.includes(item._id)));
+          handleCreateNotification()
+          setSelectedRows([])
+          handleDeleteOpenLoading()
+        }
+      } catch (error) {
+        console.error('Error deleting items:', error);
       }
-    } catch (error) {
-      console.log(error)
     }
-  }
   {/** DElete End */ }
   const [estimateN, setEstimateN] = useState(0)
   useEffect(() => {
     if (updateId !== null) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${updateId}`)
+      axios.get(`${ENDPOINT_URL}/get-estimation/${updateId}`)
         .then(res => {
           // get the response data here
           setStatus(res.data.data.status);
@@ -486,11 +426,11 @@ function EstimateViewAdmin() {
     const data = {
       idInfo: updateId,
       person: user.data.userName,
-      reason: status + ' EST-' + estimateN,
+      reason: status + ' Q-' + estimateN,
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
       console.log(error)
     }
@@ -501,8 +441,9 @@ function EstimateViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${updateId}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-estimation/${updateId}`, data)
       if (res) {
+        setEstimate(prevEstimate => prevEstimate.map(item => item._id === updateId ? { ...item, status: status } : item));
         handleCreateComment();
         handleOpenLoading();
       }
@@ -521,10 +462,10 @@ function EstimateViewAdmin() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`${ENDPOINT_URL}/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
+          await axios.post(`${ENDPOINT_URL}/create-hidden`, {
             idRow: id, hiddenByCEO: true
           })
         }
@@ -564,13 +505,24 @@ function EstimateViewAdmin() {
     setColumnVisibilityModel(newHidden)
     localStorage.setItem('HiddenColumnsEstimate', JSON.stringify(newHidden))
   }
-  const handleFilter = (newModel) => {
-    setFilterModel(newModel)
-
-    localStorage.setItem('QuickFilterEstimateTst', JSON.stringify(newModel))
+    const handleFilter = (newModel) => {
+    setFilterModel(newModel);
+    localStorage.setItem('QuickFilterEstimationTst', JSON.stringify(newModel));
+    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
+      setSearchTerm(newModel.quickFilterValues.join(' '));
+    } else {
+      setSearchTerm('');
+    }
+    if (newModel.items && newModel.items.length > 0) {
+      setFilterField(newModel.items[0].field);
+      setFilterValue(newModel.items[0].value || '');
+    } else {
+      setFilterField('');
+      setFilterValue('');
+    }
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterEstimateTst'))
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterEstimationTst'))
     if (storedQuick) {
       setFilterModel(storedQuick)
     }
@@ -585,12 +537,12 @@ function EstimateViewAdmin() {
     setSideBar(!sideBar);
   };
   const columns = [
-    { field: 'dataField', headerName: 'Date', width: 100 },
-    { field: 'customer', headerName: 'Customer Name', width: sideBar ? 200 : 300, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
-    { field: 'estimateNumber', headerName: 'Estimate#', width: sideBar ? 100 : 200 },
-    { field: 'estimateSubject', headerName: 'Subject', width: 200 },
+    { field: 'estimateDate', headerName: 'Date', minWidth: 100, flex: 1, type: 'date', valueGetter: (params) => new Date(params.row.estimateDate), renderCell: (params) => dayjs(params.row.estimateDate).format('DD/MM/YYYY') },
+    { field: 'customer', headerName: 'Customer Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
+    { field: 'estimateNumber', headerName: 'Quotation#', minWidth: 100, flex: 1, valueFormatter: (params) => 'QUO-' + String(params?.value || '').padStart(6, '0') },
+    { field: 'estimateSubject', headerName: 'Subject', minWidth: 150, flex: 1.5 },
     {
-      field: 'status', headerName: 'Status', width: 110, renderCell: (params) => (
+      field: 'status', headerName: 'Status', minWidth: 110, flex: 1, renderCell: (params) => (
         <Typography
           color={
             params.row.status === "Draft"
@@ -608,9 +560,9 @@ function EstimateViewAdmin() {
         </Typography>
       )
     },
-    { field: 'subTotal', headerName: 'Amount', width: sideBar ? 90 : 150, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'subTotal', headerName: 'Amount', minWidth: 90, flex: 1, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {
-      field: 'view', headerName: 'View', width: 80, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={estimationInfoV.length === 0 && user.data.role !== 'CEO'}>
@@ -623,7 +575,7 @@ function EstimateViewAdmin() {
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: 80, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
             <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status !== 'Draft' && estimationInfoU.length === 0 && user.data.role !== 'CEO'}>
@@ -631,13 +583,12 @@ function EstimateViewAdmin() {
             </IconButton>
           </span>
         </EditTooltip>
-
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: 80, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={estimationInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={estimationInfoD.length === 0 && user.data.role !== 'CEO'}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -647,7 +598,8 @@ function EstimateViewAdmin() {
       field: 'hide',
       headerName: 'Action',
       sortable: false,
-      width: 80,
+      width: 60,
+      minWidth: 60,
       renderCell: (params) => {
         if (user.data.role === 'CEO') {
           return (
@@ -664,7 +616,7 @@ function EstimateViewAdmin() {
                   : (
                     <ViewTooltip title="Hide">
                       <span>
-                        <IconButton onClick={handleOpenAll} >
+                        <IconButton onClick={() => handleHideRow(params.row._id)} >
                           <Person2Outlined style={{ color: '#202a5a' }} />
                         </IconButton>
                       </span>
@@ -707,7 +659,7 @@ function EstimateViewAdmin() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Estimation
+              Quotation
             </Typography>
             <NotificationVIewInfo />
             <MessageAdminView name={user.data.userName} role={user.data.role} />
@@ -716,7 +668,7 @@ function EstimateViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -791,6 +743,10 @@ function EstimateViewAdmin() {
                       {
                         user.data.role === 'CEO' ? (
                           <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={estimate}
                             columns={columns}
                             slots={{ toolbar: GridToolbar }}
@@ -811,9 +767,13 @@ function EstimateViewAdmin() {
                             onFilterModelChange={(newModel) => handleFilter(newModel)}
                             columnVisibilityModel={columnVisibilityModel}
                             onColumnVisibilityModelChange={handelHiddenColumn}
-                            sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                            sx={{ width: '100%', backgroundColor: 'white', padding: '10px', '& .MuiDataGrid-footerContainer': { justifyContent: 'flex-start' }, '& .MuiTablePagination-root': { flex: 'none' }, '& .MuiTablePagination-spacer': { display: 'none' } }}
                           />) : (
                           <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={filteredRows}
                             columns={columns}
                             slots={{ toolbar: GridToolbar }}
@@ -834,12 +794,12 @@ function EstimateViewAdmin() {
                             onFilterModelChange={(newModel) => handleFilter(newModel)}
                             columnVisibilityModel={columnVisibilityModel}
                             onColumnVisibilityModelChange={handelHiddenColumn}
-                            sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                            sx={{ width: '100%', backgroundColor: 'white', padding: '10px', '& .MuiDataGrid-footerContainer': { justifyContent: 'flex-start' }, '& .MuiTablePagination-root': { flex: 'none' }, '& .MuiTablePagination-spacer': { display: 'none' } }}
                           />
                         )}
                     </Box>
                   ) : <div>
-                    <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
                   </div>}
                 </div>
               )
@@ -882,7 +842,7 @@ function EstimateViewAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Update Estimate Status
+            Update Quotation Status
           </Typography>
           <form onSubmit={handleSubmitUpdateStatus}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>

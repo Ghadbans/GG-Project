@@ -23,13 +23,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import EmployeeTodayAttendance from './PageView/EmployeeView/EmployeeTodayAttendance';
@@ -37,7 +38,7 @@ import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import EmployeeAttendanceSheet from './PageView/EmployeeView/EmployeeAttendanceSheet';
-import db from '../dexieDb';
+
 import EmployeePlaningView from './PageView/EmployeeView/EmployeePlaningView';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -134,20 +135,13 @@ function TewmViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -158,17 +152,12 @@ function TewmViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        setGrantAccess(offLineCustomer1);
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
+          .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -188,54 +177,26 @@ function TewmViewAdmin() {
   const handleShow = (e) => {
     setShow(e);
   }
-  const [page, setPage] = useState(0);
-  const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [totalPage, SetTotalPage] = useState(0);
+  const [employee, setEmployee] = useState([])
+  const [loadingData, setLoadingData] = useState(true);
+  const [reason, setReason] = useState("");
+  const apiUrl = `${ENDPOINT_URL}/employee`;
 
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchEmployee);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchEmployee]);
-
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/employee-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          dataField: dayjs(item.joinDate).format('DD/MM/YYYY'),
-        }))
-        setEmployee(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setLoadingData(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.employeeSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.employeeName && item.employeeName.toLowerCase().includes(lowerSearch)) ||
-        (item.employeeLastName && item.employeeLastName.toLowerCase().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/employee`)
+      const formatDate = res.data.data.map((item) => ({
         ...item,
         id: item._id,
         dataField: dayjs(item.joinDate).format('DD/MM/YYYY'),
       }))
       setEmployee(formatDate.reverse());
       setLoadingData(false)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData(false)
     }
   }
-
-  useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
 
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
@@ -263,50 +224,16 @@ function TewmViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const syncOff = async () => {
-    if (navigator.onLine) {
-      const syncedEmployee = await db.employeeSchema.toArray();
-      const EmployeeToSynced = syncedEmployee.filter((row) => row.synced === false)
-      for (const EmployeeInfo of EmployeeToSynced) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-employee', EmployeeInfo)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoName = res.data.data.employeeName
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoName)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const EmployeeToSyncedUpdate = syncedEmployee.filter((row) => row.updateS === false)
-      for (const EmployeeInfoUpdate of EmployeeToSyncedUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-employee/${EmployeeInfoUpdate._id}`, EmployeeInfoUpdate)
-          await db.employeeSchema.update(EmployeeInfoUpdate.employeeId, { synced: true, updateS: true })
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
-    fetchData()
+    // Online-only: syncOff logic removed
   }
   useEffect(() => {
-    // fetchData is now handled by the debouncedSearchTerm useEffect
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
+    fetchData()
   }, [])
   const [open, setOpen] = useState(false);
   const [DeleteId, setDeleteId] = useState(null);
@@ -352,11 +279,16 @@ function TewmViewAdmin() {
     setOpen(false);
   };
   const handleCloseModal = () => {
-    window.location.reload();
+    setModalOpenLoading(false);
+    setLoading(false);
+    setOpen(false);
+    setOpenDeleteAll(false);
+    setOpenDeleteMultiple(false);
+    fetchData();
   };
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employee/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-employee/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -368,7 +300,7 @@ function TewmViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employee/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-employee/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -389,7 +321,7 @@ function TewmViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -397,7 +329,7 @@ function TewmViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-employee/${idToDelete}`)
+      return axios.delete(`${ENDPOINT_URL}/delete-employee/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -608,7 +540,7 @@ function TewmViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -764,19 +696,11 @@ function TewmViewAdmin() {
                           <DataGrid
                             rows={employee}
                             columns={columns1}
-                            rowCount={totalPage * limit}
-                            paginationMode="server"
-                            onPaginationModelChange={(model) => setPage(model.page)}
-                            paginationModel={{ page, pageSize: limit }}
                             slots={{ toolbar: GridToolbar }}
                             onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
-                                quickFilterProps: {
-                                  value: searchEmployee,
-                                  onChange: (e) => setSearchEmployee(e.target.value)
-                                },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -794,18 +718,10 @@ function TewmViewAdmin() {
                           : <DataGrid
                             rows={employee}
                             columns={columns}
-                            rowCount={totalPage * limit}
-                            paginationMode="server"
-                            onPaginationModelChange={(model) => setPage(model.page)}
-                            paginationModel={{ page, pageSize: limit }}
                             slots={{ toolbar: GridToolbar }}
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
-                                quickFilterProps: {
-                                  value: searchEmployee,
-                                  onChange: (e) => setSearchEmployee(e.target.value)
-                                },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },

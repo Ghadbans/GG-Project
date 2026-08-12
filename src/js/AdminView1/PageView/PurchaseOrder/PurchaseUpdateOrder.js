@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel, Card, CardMedia, CardContent, Pagination, Avatar } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Drawer as SideDrawer, Button } from '@mui/material';
 import { v4 } from 'uuid';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
@@ -34,13 +35,16 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -141,6 +145,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+
 function PurchaseUpdateOrder() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -151,7 +156,7 @@ function PurchaseUpdateOrder() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -200,8 +205,8 @@ function PurchaseUpdateOrder() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchaseOrder/${id}`)
-        setOutNumber(res.data.data.outNumber);
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchaseOrder/${id}`)
+        setOutNumber(Number(res.data?.data?.outNumber || res.data?.outNumber || 0));
         setItemOutDate(res.data.data.itemOutDate);
         setReason(res.data.data.reason);
         setDescription(res.data.data.description);
@@ -209,7 +214,7 @@ function PurchaseUpdateOrder() {
         setDescription(res.data.data.description);
         setReference(res.data.data.reference);
         setManufacturer(res.data.data.manufacturer);
-        setManufacturerNumber(res.data.data.manufacturerNumber);
+        setManufacturerNumber(res.data?.data?.manufacturerNumber || res.data?.manufacturerNumber || "");
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -220,17 +225,17 @@ function PurchaseUpdateOrder() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(resItem.data.data.reverse())
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const res = await axios.get(`${ENDPOINT_URL}/rate`)
         res.data.data.map((row) => setRate(row.rate))
-        const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-        setProject(resProject.data.data.filter((row) => resPurchase.data.data.find((Item) => Item.projectName._id === row._id && Item.items.some((Item1) => Item1.itemQty > Item1.itemOut))).reverse());
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-        setMaintenance(resMaintenance.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
+        const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
+        setProject(resProject.data?.data?.filter((row) => resPurchase.data?.data?.find((Item) => Item.projectName._id === row._id && Item.items.some((Item1) => Item1.itemQty > Item1.itemOut))).reverse());
+        const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+        setMaintenance(resMaintenance.data?.data?.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
+        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const newData = resInvoice.data?.data?.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
         setInvoice(newData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -361,14 +366,16 @@ function PurchaseUpdateOrder() {
     }]);
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
-      rate: selectedOptions?.itemCostPrice,
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
+      itemRate: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       stock: selectedOptions?.itemQuantity,
     } : row))
@@ -387,7 +394,7 @@ function PurchaseUpdateOrder() {
   };
   const filteredArray = itemsQtyArray.filter((row) => row.qtyBuy === 0)
 
-  const filterItemInformation = ItemInformation.filter(option => !itemsQtyArray.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !itemsQtyArray.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
 
   const amount = itemsQtyArray.length > 0 ? itemsQtyArray.reduce((sum, row) => sum + row.total, 0) : 0
 
@@ -443,7 +450,7 @@ function PurchaseUpdateOrder() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    navigate(-1);
   }
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
@@ -463,12 +470,12 @@ function PurchaseUpdateOrder() {
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify ' + ' PO-' + outNumber,
+      person: user.data.userName + ' Modify ' + ' PO-' + String(outNumber).padStart(6, '0'),
       reason: reason2,
       dateNotification: new Date()
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
       if (res) {
         handleOpen();
       }
@@ -481,17 +488,18 @@ function PurchaseUpdateOrder() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const itemsWithoutData = itemsQtyArray.map(({ data, contentType, ...rest }) => rest);
     const data = {
       itemOutDate,
       reason,
       manufacturer,
       manufacturerNumber,
       description,
-      itemsQtyArray,
+      itemsQtyArray: itemsWithoutData,
       reference, totalUSD, total, totalFC
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchaseOrder/${id}`, data);
+      const res = await axios.put(`${ENDPOINT_URL}/update-purchaseOrder/${id}`, data);
       if (res) {
         // Open Loading View
         handleCreateComment()
@@ -508,14 +516,11 @@ function PurchaseUpdateOrder() {
   const [outNumber1, setOutNumber1] = useState(0);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchaseOrder')
-          setOutNumber1(parseInt(resItemOut.data.outNumber) + 1)
-        } catch (error) {
-          setOutNumber(1)
-        }
-      } else {
+      try {
+        const resItemOut = await axios.get(`${ENDPOINT_URL}/get-last-saved-purchaseOrder`)
+        setOutNumber1((parseInt(resItemOut.data?.data?.outNumber || resItemOut.data?.outNumber || 0)) + 1)
+      } catch (error) {
+        setOutNumber(1)
       }
     }
     fetchNumber()
@@ -524,11 +529,11 @@ function PurchaseUpdateOrder() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'PO-' + ReferenceInfoNumber + ' For ' + reference.referenceName,
+      reason: 'PO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + reference.referenceName,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -551,7 +556,7 @@ function PurchaseUpdateOrder() {
       }, totalUSD, total, totalFC
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchaseOrder', data);
+      const res = await axios.post(`${ENDPOINT_URL}/create-purchaseOrder`, data);
       if (res) {
         // Open Loading View
         const ReferenceInfo = res.data.data._id
@@ -624,7 +629,7 @@ function PurchaseUpdateOrder() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -852,25 +857,33 @@ function PurchaseUpdateOrder() {
                                                   Item.itemName.itemName ? (
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <div >
-                                                          <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                          <TextField
-                                                            name='itemDescription' id='itemDescription'
-                                                            value={Item.itemDescription}
-                                                            multiline
-                                                            rows={3}
-                                                            onChange={(e) => handleChange(e, Item.idRow)}
-                                                            size="small"
-                                                            sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                          <ItemThumbnail
+                                                            itemId={Item.itemName?._id}
+                                                            initialData={Item.data}
+                                                            initialType={Item.contentType}
                                                           />
-                                                        </div>
+                                                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                              {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                            </Typography>
+                                                            <TextField
+                                                              name='itemDescription' id='itemDescription'
+                                                              value={Item.itemDescription}
+                                                              multiline
+                                                              rows={3}
+                                                              onChange={(e) => handleChange(e, Item.idRow)}
+                                                              size="small"
+                                                              sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                            />
+                                                          </Box>
+                                                        </Box>
                                                         <div>
                                                           <BlackTooltip title="Clear" placement='top'>
                                                             <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
                                                               <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                             </IconButton>
                                                           </BlackTooltip>
-
                                                         </div>
                                                       </div>)
                                                   ) : (

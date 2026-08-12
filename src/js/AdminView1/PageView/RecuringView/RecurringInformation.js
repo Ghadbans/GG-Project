@@ -1,10 +1,11 @@
 import React , { useEffect,useState } from 'react'
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Checkbox , Typography} from '@mui/material';
 import { NavLink } from 'react-router-dom';
 function RecurringInformation() {
     const [recurring,setRecurring] = useState([])
-    const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/recurringinvoice';
+    const apiUrl = `${ENDPOINT_URL}/recurringinvoice`;
     useEffect(()=> {
     axios.get(apiUrl)
     .then(res => {

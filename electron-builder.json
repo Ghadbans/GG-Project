@@ -1,0 +1,38 @@
+﻿{
+    "productName":  "Global Gate",
+    "appId":  "com.globalgate.app",
+    "files":  [
+                  "build/**/*",
+                  "src/**/*",
+                  "Icon.png",
+                  "index.html",
+                  "main.js",
+                  "preload.js"
+              ],
+    "win":  {
+                "icon":  "Icon.png",
+                "target":  [
+                               "NSIS"
+                           ]
+            },
+    "mac":  {
+                "category":  "public.app-category.business",
+                "icon":  "Icon.png",
+                "hardenedRuntime":  true,
+                "gatekeeperAssess":  false
+            },
+    "dmg":  {
+                "contents":  [
+                                 {
+                                     "x":  130,
+                                     "y":  220
+                                 },
+                                 {
+                                     "x":  430,
+                                     "y":  220,
+                                     "type":  "link",
+                                     "path":  "/Applications"
+                                 }
+                             ]
+            }
+}

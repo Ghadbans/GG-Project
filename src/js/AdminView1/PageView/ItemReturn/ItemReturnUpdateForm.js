@@ -7,7 +7,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Avatar } from '@mui/material'
-import db from '../../../dexieDb'
+
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,6 +21,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline, ShoppingCartOutlined } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import { v4 } from 'uuid';
@@ -36,7 +37,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
@@ -144,57 +145,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const ItemThumbnail = ({ itemId, initialData, initialType }) => {
-  const [src, setSrc] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      if (initialData) {
-        setSrc(`data:${initialType};base64,${initialData}`);
-        return;
-      }
-      if (!itemId) return;
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${itemId}`);
-          if (res.data.data && res.data.data.data) {
-            const buffer = new Uint8Array(res.data.data.data.data);
-            const blob = new Blob([buffer], { type: res.data.data.contentType });
-            const reader = new FileReader();
-            reader.onloadend = () => setSrc(reader.result);
-            reader.readAsDataURL(blob);
-            return;
-          }
-        } catch (err) {
-          console.error("Error fetching online image:", err);
-        }
-      }
-      try {
-        const resLocal = await db.itemSchema.get({ _id: itemId });
-        if (resLocal && resLocal.data) {
-          const buffer = new Uint8Array(resLocal.data.data);
-          const blob = new Blob([buffer], { type: resLocal.contentType });
-          const reader = new FileReader();
-          reader.onloadend = () => setSrc(reader.result);
-          reader.readAsDataURL(blob);
-        }
-      } catch (err) {
-        console.error("Error fetching local image:", err);
-      }
-    };
-    fetchImage();
-  }, [itemId, initialData, initialType]);
-
-  return (
-    <Avatar
-      variant="rounded"
-      src={src}
-      sx={{ width: 80, height: 80, backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}
-    >
-      {!src && <ShoppingCartOutlinedIcon sx={{ fontSize: '40px', color: '#ccc' }} />}
-    </Avatar>
-  );
-};
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 function ItemReturnUpdateForm() {
   const navigate = useNavigate();
@@ -206,10 +157,15 @@ function ItemReturnUpdateForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-          const Name = res.data.data.employeeName;
-          const Role = res.data.data.role;
-          dispatch(setUser({ userName: Name, role: Role }));
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const employeeData = res.data?.data
+          if (employeeData) {
+            const Name = employeeData.employeeName;
+            const Role = employeeData.role;
+            dispatch(setUser({ userName: Name, role: Role }));
+          } else {
+            dispatch(logOut())
+          }
         } catch (error) {
           console.error('Error fetching data:', error);
           dispatch(logOut())
@@ -226,7 +182,7 @@ function ItemReturnUpdateForm() {
     dispatch(logOut());
     navigate('/')
   }
-  const itemOutDate = dayjs(new Date());
+  const [itemOutDate, setItemOutDate] = useState(dayjs());
   const [reason, setReason] = useState("");
   const [description, setDescription] = useState("");
   const [items, SetItems] = useState([]);
@@ -236,10 +192,10 @@ function ItemReturnUpdateForm() {
   const [employee, setEmployee] = useState([]);
   const [maintenance, setMaintenance] = useState([]);
   const [invoice, setInvoice] = useState([]);
-  const [serviceNumber, setServiceNumber] = useState({});
-  const [projectName, setProjectName] = useState({});
-  const [employeeName, setEmployeeName] = useState({});
-  const [invoiceName, setInvoiceName] = useState({});
+  const [serviceNumber, setServiceNumber] = useState(null);
+  const [projectName, setProjectName] = useState(null);
+  const [employeeName, setEmployeeName] = useState(null);
+  const [invoiceName, setInvoiceName] = useState(null);
   const [projectId, setProjectId] = useState(null);
   const [serviceId, setServiceId] = useState(null);
   const [invoiceId, setInvoiceId] = useState(null);
@@ -247,7 +203,7 @@ function ItemReturnUpdateForm() {
   const [inputValueProject, setInputValueProject] = React.useState('');
   const [outNumber, setOutNumber] = useState(0);
   const [ItemInformation, setItemInformation] = useState([]);
-  const [reference, setReference] = useState({})
+  const [reference, setReference] = useState(null)
   const [shopOpen, setShopOpen] = useState(false);
   const [shopItems, setShopItems] = useState([]);
   const [shopSearch, setShopSearch] = useState('');
@@ -257,24 +213,30 @@ function ItemReturnUpdateForm() {
   const [shopLoading, setShopLoading] = useState(false);
 
   const Create = {
-    person: user.data.userName,
+    person: user?.data?.userName,
     dateComment: dayjs(new Date()).format('DD/MM/YYYY-HH:mm')
   }
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-itemReturn')
-        setOutNumber(parseInt(resItemOut.data.outNumber) + 1)
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-        setItemInformation(resItem.data.data)
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-        setProject(resProject.data.data);
-        const resEmployee = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
-        setEmployee(resEmployee.data.data);
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-        setMaintenance(resMaintenance.data.data);
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => !row.ReferenceName && !row.ReferenceName2)
+        const resItemOut = await axios.get(`${ENDPOINT_URL}/get-last-saved-itemReturn`)
+        const lastOut = resItemOut.data?.outNumber || 0
+        setOutNumber(parseInt(lastOut) + 1)
+
+        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
+        setItemInformation(resItem.data?.data || [])
+
+        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
+        setProject(resProject.data?.data || []);
+
+        const resEmployee = await axios.get(`${ENDPOINT_URL}/employee`)
+        setEmployee(resEmployee.data?.data || []);
+
+        const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+        setMaintenance(resMaintenance.data?.data || []);
+        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const invoiceData = resInvoice.data?.data || []
+        const newData = invoiceData.filter((row) => !row?.ReferenceName && !row?.ReferenceName2)
         setInvoice(newData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -288,20 +250,16 @@ function ItemReturnUpdateForm() {
     if (shopOpen) { // Only fetch if side shop is open
       const fetchShop = async () => {
         setShopLoading(true);
-        if (navigator.onLine) {
-          try {
-            const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-            resRate.data.data.forEach((row) => setRate(row.rate))
+        try {
+          const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+          resRate.data.data.forEach((row) => setRate(row.rate))
 
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-            setShopTotalPages(res.data.totalPages)
-            setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-            setShopLoading(false)
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setShopLoading(false)
-          }
-        } else {
+          const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+          setShopTotalPages(res.data.totalPages)
+          setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+          setShopLoading(false)
+        } catch (error) {
+          console.error('Error fetching data:', error);
           setShopLoading(false)
         }
       }
@@ -394,7 +352,7 @@ function ItemReturnUpdateForm() {
     });
     setReference({
       _id: selectedOptions?._id,
-      referenceName: selectedOptions?.projectName
+      referenceName: selectedOptions ? `P-${String(selectedOptions.projectNumber).padStart(6, '0')} / ${selectedOptions.projectName}` : ''
     });
   }
   const handleChangeInvoice = (newValue) => {
@@ -412,61 +370,46 @@ function ItemReturnUpdateForm() {
   {/**Purchase Filter start */ }
   useEffect(() => {
     const fetchId = async () => {
-      if (projectName !== null) {
+      if (projectName && projectName._id) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
-            .map((row) =>
-              SetItems(row.items)
-            )
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
-            .map((row) =>
-              SetItems1(row.items)
-            )
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
-            .map((row) =>
+          const res = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+          const purchaseData = res.data?.data || []
+          purchaseData.filter((row) => row.projectName?._id === projectName._id)
+            .forEach((row) => {
+              SetItems(row.items || [])
+              SetItems1(row.items || [])
               setProjectId(row._id)
-            )
+            })
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       }
-      else if (serviceNumber !== null) {
+      else if (serviceNumber && serviceNumber._id) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
-            .map((row) =>
-              SetItems(row.items)
-            )
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
-            .map((row) =>
-              SetItems1(row.items)
-            )
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
-            .map((row) =>
+          const res = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+          const maintenanceData = res.data?.data || []
+          maintenanceData.filter((row) => row._id === serviceNumber._id)
+            .forEach((row) => {
+              SetItems(row.items || [])
+              SetItems1(row.items || [])
               setServiceId(row._id)
-            )
+            })
         } catch (error) {
-
+          console.error('Error fetching data:', error);
         }
       }
-      else if (invoiceName !== null) {
+      else if (invoiceName && invoiceName._id) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
-            .map((row) =>
-              SetItems(row.items)
-            )
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
-            .map((row) =>
-              SetItems1(row.items)
-            )
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
-            .map((row) =>
+          const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+          const invoiceData = res.data?.data || []
+          invoiceData.filter((row) => row._id === invoiceName._id)
+            .forEach((row) => {
+              SetItems(row.items || [])
+              SetItems1(row.items || [])
               setInvoiceId(row._id)
-            )
+            })
         } catch (error) {
-
+          console.error('Error fetching data:', error);
         }
       }
     }
@@ -474,7 +417,7 @@ function ItemReturnUpdateForm() {
   }, [projectName, serviceNumber, invoiceName]);
   {/**Maintenance Filter end */ }
   useEffect(() => {
-    const result = items.map((row) => {
+    const result = (items || []).map((row) => {
       return {
         idRow: row.idRow,
         itemName: row.itemName,
@@ -500,56 +443,54 @@ function ItemReturnUpdateForm() {
 
   {/** Item Change End */ }
   {/** Update Qty of project */ }
-  const handleUpdatePurchase = () => {
-    if (projectId !== null && serviceId === null && invoiceId === null) {
-      const result = items1.map((row) => {
-        const newItem = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
-          .find((Item) => Item.itemName._id === row.itemName._id && Item.itemName.itemName !== '')
-        if (newItem) {
-          const itemOut = parseFloat(row.itemOut) - parseFloat(newItem.newItemOut)
-          return {
-            ...row, itemOut
+  const handleUpdatePurchase = async () => {
+    try {
+      if (projectId) {
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${projectId}`);
+        const currentProject = res.data.data;
+        
+        const result = (currentProject?.items || []).map((row) => {
+          const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow);
+          if (newItem && parseFloat(newItem.newItemOut) !== 0) {
+            const itemOut = (parseFloat(row.itemOut) || 0) - parseFloat(newItem.newItemOut);
+            return { ...row, itemOut };
           }
-        }
-        return row
-      })
-      const data = {
-        items: result
-      };
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
-    } else if (projectId === null && serviceId !== null && invoiceId === null) {
-      const result = items.map((row) => {
-        const newItem = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
-          .find((Item) => Item.idRow === row.idRow)
-        if (newItem) {
-          const itemOut = parseFloat(row.itemOut) - parseFloat(newItem.newItemOut)
-          return {
-            ...row, itemOut
-          }
-        }
-        return row
-      })
-      const data = {
-        items: result
-      };
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
-    } else if (projectId === null && serviceId === null && invoiceId !== null) {
-      const result = items.map((row) => {
-        const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow)
-        if (newItem) {
-          const itemOut = parseFloat(row.itemOut) - parseFloat(newItem.newItemOut)
-          return {
-            ...row, itemOut
-          }
-        }
-        return row
-      })
-      const data = {
-        items: result
-      };
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
-    } else {
+          return row;
+        });
+        
+        await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, { items: result });
+      } else if (serviceId) {
+        const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${serviceId}`);
+        const currentMaintenance = res.data.data;
 
+        const result = (currentMaintenance?.items || []).map((row) => {
+          const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow);
+          if (newItem && parseFloat(newItem.newItemOut) !== 0) {
+            const itemOut = (parseFloat(row.itemOut) || 0) - parseFloat(newItem.newItemOut);
+            return { ...row, itemOut };
+          }
+          return row;
+        });
+
+        await axios.put(`${ENDPOINT_URL}/update-maintenance/${serviceId}`, { items: result });
+      } else if (invoiceId) {
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceId}`);
+        const currentInvoice = res.data.data;
+
+        const result = (currentInvoice?.items || []).map((row) => {
+          const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow);
+          if (newItem && parseFloat(newItem.newItemOut) !== 0) {
+            const itemOut = (parseFloat(row.itemOut) || 0) - parseFloat(newItem.newItemOut);
+            return { ...row, itemOut };
+          }
+          return row;
+        });
+
+        await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceId}`, { items: result });
+      }
+    } catch (error) {
+      // Log silently — the Item Return save already succeeded, no error popup needed
+      console.error('handleUpdatePurchase (non-critical):', error.message);
     }
   }
   {/** Update Qty of project */ }
@@ -557,14 +498,14 @@ function ItemReturnUpdateForm() {
     const initialState = {}
     const QtyUpdate = {}
     //Get Qty Arrays
-    const QtyNew = itemsQtyArray.filter((row) => row.itemName._id !== '' && row.itemName._id !== undefined).map((Item) => Item.newItemOut !== 0 ? Item.newItemOut : 0)
+    const QtyNew = itemsQtyArray.filter((row) => row.itemName?._id !== '' && row.itemName?._id !== undefined).map((Item) => Item.newItemOut !== 0 ? Item.newItemOut : 0)
     //Get ItemName Id
-    itemsQtyArray.filter((row) => row.itemName._id !== '' && row.itemName._id !== undefined).forEach((Item, index) => {
+    itemsQtyArray.filter((row) => row.itemName?._id !== '' && row.itemName?._id !== undefined).forEach((Item, index) => {
       initialState[`id${index + 1}`] = { ids: Item.itemName._id }
     })
     // Get Value
     const getRequestId = Object.values(initialState).map(({ ids }) => {
-      return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`)
+      return axios.get(`${ENDPOINT_URL}/get-item/${ids}`)
     })
     try {
       const res = await Promise.all(getRequestId);
@@ -574,7 +515,7 @@ function ItemReturnUpdateForm() {
     }
     // Update Value 
     const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
+      return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
     })
     try {
       await Promise.all(updateRequest);
@@ -600,7 +541,7 @@ function ItemReturnUpdateForm() {
     }]);
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -668,19 +609,19 @@ function ItemReturnUpdateForm() {
   const handleCreateNotification = async (ReferenceInfo, ReferenceInfoNumber) => {
     const data = {
       idInfo: ReferenceInfo,
-      person: user.data.userName + ' Created ',
-      reason: 'R-' + ReferenceInfoNumber + ' For ' + reasonInfo,
+      person: user?.data?.userName + ' Created ITEM RETURN ',
+      reason: 'R-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + reasonInfo,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
@@ -698,14 +639,14 @@ function ItemReturnUpdateForm() {
       reference, Create
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-itemReturn', data);
+      const res = await axios.post(`${ENDPOINT_URL}/create-itemReturn`, data);
       if (res) {
         // Open Loading View
         const ReferenceInfo = res.data.data._id
         const ReferenceInfoNumber = res.data.data.outNumber
         handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
         handleQty()
-        handleUpdatePurchase();
+        await handleUpdatePurchase();
         handleOpen();
         //Update Item Qty
         //handleUpdateQty();
@@ -729,12 +670,12 @@ function ItemReturnUpdateForm() {
     setSearch2(value)
   }
   const newArray2 = search2 !== '' ? itemsQtyArray.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
+    (Item.itemName?.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase())) ||
+    (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
+    (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()))
   ) : itemsQtyArray
   const tableRows = reason !== 'Dotation' ? newArray2.map((Item, i) => {
-    const related = items.find((row) => row.idRow === Item.idRow)
+    const related = items.find((row) => row.idRow === Item.idRow) || {}
     return (
       <tr key={Item.idRow}>
         {
@@ -791,7 +732,7 @@ function ItemReturnUpdateForm() {
                     disabled
                     size="small"
                     name='itemOut' id='itemOut'
-                    value={related.itemOut1 == undefined ? related.itemOut : 0}
+                    value={related.itemOut1 == undefined ? (related.itemOut || 0) : 0}
                     sx={{ width: '100px', backgroundColor: 'white' }}
                   />
                 </td>
@@ -828,14 +769,14 @@ function ItemReturnUpdateForm() {
                         initialType={Item.contentType}
                       />
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', flexGrow: 1 }}>
-                        <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName.itemName}</Typography>
+                        <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName || ''}</Typography>
                         <TextField
                           name='itemDescription' id='itemDescription'
                           value={Item.itemDescription}
                           multiline
                           rows={2}
                           size="small"
-                          disabled={user.data.role === 'User'}
+                          disabled={user?.data?.role === 'User'}
                           sx={{ width: '100%', maxWidth: '440px', backgroundColor: 'white', fontSize: 11 }}
                         />
                       </Box>
@@ -862,6 +803,14 @@ function ItemReturnUpdateForm() {
                       rows={4} {...params} required
                     />}
                   onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                  filterOptions={(options, { inputValue }) => {
+                    return options.filter((option) =>
+                      (option.itemName && option.itemName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                      (option.itemBrand && option.itemBrand.toLowerCase().includes(inputValue.toLowerCase())) ||
+                      (option.itemNumber && option.itemNumber.toLowerCase().includes(inputValue.toLowerCase())) ||
+                      (option.itemDescription && option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()))
+                    );
+                  }}
                   size="small"
                   sx={{ width: '470px', backgroundColor: 'white' }}
                 />
@@ -912,21 +861,21 @@ function ItemReturnUpdateForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Make new Item Return
+              MAKE NEW ITEM OUT
             </Typography>
             <IconButton onClick={handleOpenBack}>
               <ArrowBack style={{ color: 'white' }} />
             </IconButton>
 
             <NotificationVIewInfo />
-            <MessageAdminView name={user.data.userName} role={user.data.role} />
-            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
+            <MessageAdminView name={user?.data?.userName} role={user?.data?.role} />
+            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user?.data?.userName}</Typography>
             <IconButton color="inherit" onClick={handleLogout}>
               <Logout style={{ color: 'white' }} />
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -969,7 +918,8 @@ function ItemReturnUpdateForm() {
                           required
                           name='itemOutDate'
                           label='Date'
-                          value={dayjs(itemOutDate)}
+                          value={itemOutDate}
+                          onChange={(newValue) => setItemOutDate(newValue)}
                           sx={{ width: '100%', backgroundColor: 'white' }}
                           format='DD/MM/YYYY'
                         />
@@ -1018,11 +968,11 @@ function ItemReturnUpdateForm() {
                             :
                             (
                               <Autocomplete
-                                options={projects}
-                                getOptionLabel={(option) => option.projectName}
+                                options={projects || []}
+                                getOptionLabel={(option) => option.projectName || ''}
                                 renderInput={(params) => <TextField {...params} label="Project Name" />}
-                                renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-                                onChange={(e, newValue) => handleChangeProject(newValue ? newValue : 0)}
+                                renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || 'N/A'} | {option.projectName} | {option.description}</Box>)}
+                                onChange={(e, newValue) => handleChangeProject(newValue)}
                                 inputValue={inputValueProject}
                                 onInputChange={(event, newInputValue) => {
                                   setInputValueProject(newInputValue);
@@ -1030,9 +980,9 @@ function ItemReturnUpdateForm() {
                                 filterOptions={(options, { inputValue }) => {
                                   return options.filter(
                                     (option) =>
-                                      option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                      (option.customerName?.customerName?.toLowerCase() || '').includes(inputValue.toLowerCase()) ||
+                                      (option.projectName?.toLowerCase() || '').includes(inputValue.toLowerCase()) ||
+                                      (option.description?.toLowerCase() || '').includes(inputValue.toLowerCase())
                                   )
                                 }}
                                 sx={{ width: '100%', backgroundColor: 'white' }}
@@ -1066,11 +1016,11 @@ function ItemReturnUpdateForm() {
                             :
                             (
                               <Autocomplete
-                                options={maintenance}
-                                getOptionLabel={(option) => option.serviceName}
-                                renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.serviceName}</Box>)}
+                                options={maintenance || []}
+                                getOptionLabel={(option) => option.serviceName || ''}
+                                renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || 'N/A'} | {option.serviceName}</Box>)}
                                 renderInput={(params) => <TextField {...params} label="Maintenance Number" />}
-                                onChange={(e, newValue) => handleChangeService(newValue ? newValue : '')}
+                                onChange={(e, newValue) => handleChangeService(newValue)}
                                 inputValue={inputValue2}
                                 onInputChange={(event, newInputValue) => {
                                   setInputValue2(newInputValue);
@@ -1078,8 +1028,8 @@ function ItemReturnUpdateForm() {
                                 filterOptions={(options, { inputValue }) => {
                                   return options.filter(
                                     (option) =>
-                                      option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.serviceName.toLowerCase().includes(inputValue.toLowerCase())
+                                      (option.customerName?.customerName?.toLowerCase() || '').includes(inputValue.toLowerCase()) ||
+                                      (option.serviceName?.toLowerCase() || '').includes(inputValue.toLowerCase())
                                   )
                                 }}
                                 sx={{ width: '100%', backgroundColor: 'white' }}
@@ -1149,12 +1099,12 @@ function ItemReturnUpdateForm() {
                             :
                             (
                               <Autocomplete
-                                options={invoice}
-                                getOptionLabel={(option) => 'INV' + String(option.invoiceNumber)}
-                                renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-00{String(option.invoiceNumber)}
+                                options={invoice || []}
+                                getOptionLabel={(option) => option.invoiceNumber ? 'INV-' + String(option.invoiceNumber).padStart(6, '0') : ''}
+                                renderOption={(props, option) => (<Box {...props}>{option.customerName?.customerName || 'N/A'}/INV-{String(option.invoiceNumber).padStart(6, '0')}
                                 </Box>)}
                                 renderInput={(params) => <TextField {...params} label="Invoice" />}
-                                onChange={(e, newValue) => handleChangeInvoice(newValue ? newValue : '')}
+                                onChange={(e, newValue) => handleChangeInvoice(newValue)}
                                 sx={{ width: '100%', backgroundColor: 'white' }}
                               />
                             )
@@ -1178,7 +1128,7 @@ function ItemReturnUpdateForm() {
                               <tr>
                                 <th align="left">#</th>
                                 <th align="left">Item</th>
-                                <th align="left">QTY Return</th>
+                                <th align="left">QTY OUT</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -1203,7 +1153,7 @@ function ItemReturnUpdateForm() {
                                 <th align="left">#</th>
                                 <th align="left">Item</th>
                                 <th align="left">Quantity</th>
-                                <th align="left">QTY Return</th>
+                                <th align="left">QTY OUT</th>
                                 <th align="left">Return</th>
                               </tr>
                             </thead>
@@ -1398,10 +1348,10 @@ function ItemReturnUpdateForm() {
                           {item.itemName}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          FC {(item.itemSellingPrice * rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          FC {((item.itemSellingPrice || 0) * rate || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </Typography>
                         <Typography variant="body2" color="primary" fontWeight="bold">
-                          $ {item.itemSellingPrice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          $ {(item.itemSellingPrice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </Typography>
                         <Typography variant="caption" display="block" gutterBottom>
                           Stock: {item.itemQuantity}

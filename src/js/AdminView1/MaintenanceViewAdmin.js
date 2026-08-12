@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ConfirmDeleteModal from '../component/ConfirmDeleteModal';
 import './view.css'
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
@@ -23,18 +24,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -130,20 +132,13 @@ function MaintenanceViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -154,18 +149,12 @@ function MaintenanceViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -191,58 +180,37 @@ function MaintenanceViewAdmin() {
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
 
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchTerm]);
-
-  const fetchItems = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          serviceNumber: "M-00" + item.serviceNumber,
-          dateField: dayjs(item.serviceDate).format('DD/MM/YYYY'),
-          visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
-        }));
-        SetTotalPage(res.data.totalPages || Math.ceil(res.data.totalItem / limit));
-        setMaintenance(formatDate);
-        setLoadingData(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false);
-      }
-    } else {
-      const offLineItems = await db.maintenanceViewSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineItems : offLineItems.filter((item) =>
-        (item.customerName && item.customerName.customerName.toLowerCase().includes(lowerSearch)) ||
-        (item.serviceNumber && item.serviceNumber.toString().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
         serviceNumber: "M-00" + item.serviceNumber,
         dateField: dayjs(item.serviceDate).format('DD/MM/YYYY'),
         visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
       }));
-      setMaintenance(formatDate.reverse());
+      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      setMaintenance(formatDate);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
       setLoadingData(false);
     }
   };
+  const handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+
 
   useEffect(() => {
-    fetchItems(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  }, [page, searchTerm, filterField, filterValue]);
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage - 1); // Update page state (convert to 0-based index)
+
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // Update page state (convert to 0-based index)
   };
 
 
@@ -313,7 +281,7 @@ function MaintenanceViewAdmin() {
   {/** Update Invoice Status start */ }
   useEffect(() => {
     if (updateId !== null) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${updateId}`)
+      axios.get(`${ENDPOINT_URL}/get-maintenance/${updateId}`)
         .then(res => {
           // get the response data here
           setStatus(res.data.data.status);
@@ -334,7 +302,7 @@ function MaintenanceViewAdmin() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
       console.log(error)
     }
@@ -345,7 +313,7 @@ function MaintenanceViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${updateId}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-maintenance/${updateId}`, data)
       if (res) {
         handleOpenLoading();
         handleCreateComment();
@@ -392,19 +360,20 @@ function MaintenanceViewAdmin() {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-maintenance/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-maintenance/${DeleteId}`);
       if (res) {
+        setOpen(false);
         handleDeleteOpenLoading();
       }
     } catch (error) {
-      alert('try again');
+      alert("try again");
     }
   };
   const [MaintenanceDeleted, setMaintenanceDeleted] = useState([])
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-maintenance/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -425,7 +394,7 @@ function MaintenanceViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -433,7 +402,7 @@ function MaintenanceViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-maintenance/${idToDelete}`)
+      return axios.delete(`${ENDPOINT_URL}/delete-maintenance/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -490,7 +459,7 @@ function MaintenanceViewAdmin() {
     setSideBar(!sideBar);
   };
   const columns = [
-    { field: 'serviceNumber', headerName: 'Service#', width: 80 },
+    { field: 'serviceNumber', headerName: 'Service#', width: 110 },
     { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 220, valueGetter: (params) => params.row.customerName.customerName },
     { field: 'brand', headerName: 'Item Brand', width: sideBar ? 100 : 140, },
     {
@@ -522,7 +491,7 @@ function MaintenanceViewAdmin() {
     { field: 'defectDescription', headerName: 'Defect', width: sideBar ? 130 : 150 },
     { field: 'itemDescriptionInfo', headerName: 'I-Description', width: sideBar ? 130 : 150 },
     { field: 'technicianAssign', headerName: 'Technician', width: 130 },
-    { field: 'dateField', headerName: 'Service Date', width: 80 },
+    { field: 'dateField', headerName: 'Service Date', width: 120 },
     { field: 'action', headerName: 'Action', width: 70, renderCell: (params) => { params.row.action !== undefined ? params.row.action : '' } },
     {
       field: 'view', headerName: 'View', width: 40, renderCell: (params) => (
@@ -600,7 +569,7 @@ function MaintenanceViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -673,21 +642,17 @@ function MaintenanceViewAdmin() {
 
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={maintenance}
                       columns={columns}
-                      rowCount={totalPage * limit}
-                      paginationMode="server"
-                      onPaginationModelChange={(model) => setPage(model.page)}
-                      paginationModel={{ page, pageSize: limit }}
                       slots={{ toolbar: GridToolbar }}
                       onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
                       slotProps={{
                         toolbar: {
                           showQuickFilter: true,
-                          quickFilterProps: {
-                            value: searchTerm,
-                            onChange: (e) => setSearchTerm(e.target.value)
-                          },
                           printOptions: {
                             disableToolbarButton: true
                           },
@@ -705,6 +670,8 @@ function MaintenanceViewAdmin() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
+                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
+
                   </Box>
 
                 </div>)
@@ -712,26 +679,7 @@ function MaintenanceViewAdmin() {
           </Container>
         </Box>
       </Box>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-            <h2>Do you want to Delete ?</h2>
-            <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-              <button className='btnCustomer2' onClick={handleDelete}>
-                Delete
-              </button>
-              <button className='btnCustomer' onClick={handleClose}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </Box>
-      </Modal>
+      <ConfirmDeleteModal open={open} handleClose={handleClose} handleDelete={handleDelete} itemName={maintenance.find(m => m._id === DeleteId)?.serviceNumber || "this maintenance record"} />
       <Modal
         open={openDeleteMultiple}
         onClose={handleCloseMultiple}
@@ -902,41 +850,56 @@ function MaintenanceViewAdmin() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={{ ...style, width: 500 }}>
-          <ViewTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseReasonDelete} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
+          <ViewTooltip title="Close" placement="left">
+            <IconButton onClick={handleCloseReasonDelete} style={{ position: "relative", float: "right" }}>
+              <Close style={{ color: "#202a5a" }} />
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Why do you want to delete: {info}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
-            <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+            <Grid container style={{ alignItems: "center", padding: "15px" }} spacing={2}>
               <Grid item xs={12}>
                 <TextField
                   required
-                  id='reason'
-                  name='reason'
+                  id="reason"
+                  name="reason"
                   multiline
-                  rows={4}
+                  rows={2}
                   value={reason}
-                  placeholder='Reason'
+                  placeholder="Reason"
                   onChange={(e) => setReason(e.target.value)}
-                  label='Reason'
-                  sx={{ width: '100%', backgroundColor: 'white' }}
+                  label="Reason"
+                  sx={{ width: "100%", backgroundColor: "white" }}
                 />
               </Grid>
-              <br />
               <Grid item xs={12}>
-                {
-                  info && (
-                    <button type='submit' className='btnCustomer' style={{ width: '100%' }}>Save</button>
-                  )
-                }
+                <Typography variant="body2" sx={{ mb: 1, mt: 1 }}>
+                  Type <span style={{ color: "red", fontWeight: "bold" }}>DELETE</span> to confirm bulk action:
+                </Typography>
+                <TextField fullWidth size="small" placeholder="Type DELETE here" id="confirmDeleteBulk" autoFocus />
+              </Grid>
+              <Grid item xs={12}>
+                {info && (
+                  <button
+                    type="submit"
+                    className="btnCustomer"
+                    style={{ width: "100%" }}
+                    onClick={(e) => {
+                      const input = document.getElementById("confirmDeleteBulk");
+                      if (input && input.value !== "DELETE") {
+                        e.preventDefault();
+                        alert("Please type DELETE to confirm");
+                      }
+                    }}
+                  >
+                    Confirm Bulk Delete
+                  </button>
+                )}
               </Grid>
             </Grid>
           </form>
-
         </Box>
       </Modal>
     </div>
@@ -944,3 +907,5 @@ function MaintenanceViewAdmin() {
 }
 
 export default MaintenanceViewAdmin
+
+

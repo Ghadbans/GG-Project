@@ -7,7 +7,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Avatar } from '@mui/material'
-import db from '../../../dexieDb'
+
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -21,6 +21,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline, ShoppingCartOutlined } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import { v4 } from 'uuid';
@@ -36,7 +37,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
@@ -144,57 +145,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const ItemThumbnail = ({ itemId, initialData, initialType }) => {
-  const [src, setSrc] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      if (initialData) {
-        setSrc(`data:${initialType};base64,${initialData}`);
-        return;
-      }
-      if (!itemId) return;
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${itemId}`);
-          if (res.data.data && res.data.data.data) {
-            const buffer = new Uint8Array(res.data.data.data.data);
-            const blob = new Blob([buffer], { type: res.data.data.contentType });
-            const reader = new FileReader();
-            reader.onloadend = () => setSrc(reader.result);
-            reader.readAsDataURL(blob);
-            return;
-          }
-        } catch (err) {
-          console.error("Error fetching online image:", err);
-        }
-      }
-      try {
-        const resLocal = await db.itemSchema.get({ _id: itemId });
-        if (resLocal && resLocal.data) {
-          const buffer = new Uint8Array(resLocal.data.data);
-          const blob = new Blob([buffer], { type: resLocal.contentType });
-          const reader = new FileReader();
-          reader.onloadend = () => setSrc(reader.result);
-          reader.readAsDataURL(blob);
-        }
-      } catch (err) {
-        console.error("Error fetching local image:", err);
-      }
-    };
-    fetchImage();
-  }, [itemId, initialData, initialType]);
-
-  return (
-    <Avatar
-      variant="rounded"
-      src={src}
-      sx={{ width: 80, height: 80, backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}
-    >
-      {!src && <ShoppingCartOutlinedIcon sx={{ fontSize: '40px', color: '#ccc' }} />}
-    </Avatar>
-  );
-};
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 function ItemReturnViewForm() {
   const { id } = useParams();
@@ -206,7 +157,7 @@ function ItemReturnViewForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -253,9 +204,9 @@ function ItemReturnViewForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemReturn/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-itemReturn/${id}`)
         setItemOutDate(res.data.data.itemOutDate);
-        setOutNumber(res.data.data.outNumber);
+        setOutNumber(Number(res.data?.data?.outNumber || res.data?.outNumber || 0));
         setReason(res.data.data.reason);
         setDescription(res.data.data.description);
         SetItemsQtyArray(res.data.data.itemsQtyArray);
@@ -271,7 +222,7 @@ function ItemReturnViewForm() {
   useEffect(() => {
     const fetchDataId = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemReturn/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-itemReturn/${id}`)
         setOldArray(res.data.data.itemsQtyArray);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -284,14 +235,14 @@ function ItemReturnViewForm() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(resItem.data.data)
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
+        const resProject = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
         setProject(resProject.data.data);
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
+        const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
         setMaintenance(resMaintenance.data.data);
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => !row.ReferenceName && !row.ReferenceName2)
+        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const newData = resInvoice.data?.data?.filter((row) => !row.ReferenceName && !row.ReferenceName2)
         setInvoice(newData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -306,20 +257,16 @@ function ItemReturnViewForm() {
     if (shopOpen) { // Only fetch if side shop is open
       const fetchShop = async () => {
         setShopLoading(true);
-        if (navigator.onLine) {
-          try {
-            const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-            resRate.data.data.forEach((row) => setRate(row.rate))
+        try {
+          const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+          resRate.data.data.forEach((row) => setRate(row.rate))
 
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-            setShopTotalPages(res.data.totalPages)
-            setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-            setShopLoading(false)
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setShopLoading(false)
-          }
-        } else {
+          const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+          setShopTotalPages(res.data.totalPages)
+          setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+          setShopLoading(false)
+        } catch (error) {
+          console.error('Error fetching data:', error);
           setShopLoading(false)
         }
       }
@@ -415,7 +362,7 @@ function ItemReturnViewForm() {
     }]);
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -427,147 +374,95 @@ function ItemReturnViewForm() {
   }
   {/** Item Change End */ }
   {/** Update Info start */ }
-  const handleUpdateInfo = () => {
+  const handleUpdateInfo = async () => {
     const difference = [];
     const sumToAdd = [];
     OldArray.map((row) => {
-      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName._id)
+      const newItem = itemsQtyArray.find((row1) => row1.itemName?._id === row.itemName?._id)
       if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
         const diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut)
         difference.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       } else if (newItem && parseFloat(newItem.newItemOut) > parseFloat(row.newItemOut)) {
         const diff = parseFloat(newItem.newItemOut) - parseFloat(row.newItemOut)
         sumToAdd.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       }
     })
-    if (filteredProject.length > 0) {
-      //update Purchase
-      if (sumToAdd && sumToAdd.length > 0) {
-        const result = filteredProject.map((row) => {
-          const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut - relatedArray.qty
-            return {
-              ...row, itemOut
-            }
-          }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
-      } else if (difference && difference.length > 0) {
-        const result = filteredProject.map((row) => {
-          const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut + relatedArray.qty
-            return {
-              ...row, itemOut
-            }
-          }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
+
+    if (projectId) {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${projectId}`);
+        const currentProject = res.data.data;
+        const updatedItems = currentProject.items.map(row => {
+          const add = sumToAdd.find(item => item.idRow === row.idRow);
+          const diff = difference.find(item => item.idRow === row.idRow);
+          if (add) return { ...row, itemOut: (parseFloat(row.itemOut) || 0) - add.qty };
+          if (diff) return { ...row, itemOut: (parseFloat(row.itemOut) || 0) + diff.qty };
+          return row;
+        });
+        await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, { items: updatedItems });
+      } catch (e) {
+        console.error("Error updating project", e);
       }
-    } else if (filteredInvoice.length > 0) {
-      //Update Invoice
-      if (sumToAdd && sumToAdd.length > 0) {
-        const result = filteredInvoice.map((row) => {
-          const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut - relatedArray.qty
-            return {
-              ...row, itemOut
-            }
-          }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
-      } else if (difference && difference.length > 0) {
-        const result = filteredInvoice.map((row) => {
-          const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut + relatedArray.qty
-            return {
-              ...row, itemOut
-            }
-          }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
+    } else if (invoiceId) {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceId}`);
+        const currentInvoice = res.data.data;
+        const updatedItems = currentInvoice.items.map(row => {
+          const add = sumToAdd.find(item => item.idRow === row.idRow);
+          const diff = difference.find(item => item.idRow === row.idRow);
+          if (add) return { ...row, itemOut: (parseFloat(row.itemOut) || 0) - add.qty };
+          if (diff) return { ...row, itemOut: (parseFloat(row.itemOut) || 0) + diff.qty };
+          return row;
+        });
+        await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceId}`, { items: updatedItems });
+      } catch (e) {
+        console.error("Error updating invoice", e);
       }
-    } else if (filteredMaintenance.length > 0) {
-      //Update Maintenance
-      if (sumToAdd && sumToAdd.length > 0) {
-        const result = filteredMaintenance.map((row) => {
-          const relatedArray = sumToAdd.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut - relatedArray.qty
-            return {
-              ...row, itemOut
-            }
-          }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
-      } else if (difference && difference.length > 0) {
-        const result = filteredMaintenance.map((row) => {
-          const relatedArray = difference.find((Item) => Item.idRow === row.idRow)
-          if (relatedArray) {
-            const itemOut = row.itemOut + relatedArray.qty
-            return {
-              ...row, itemOut
-            }
-          }
-          return row
-        })
-        const data = {
-          items: result
-        }
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
+    } else if (serviceId) {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${serviceId}`);
+        const currentMaintenance = res.data.data;
+        const updatedItems = currentMaintenance.items.map(row => {
+          const add = sumToAdd.find(item => item.idRow === row.idRow);
+          const diff = difference.find(item => item.idRow === row.idRow);
+          if (add) return { ...row, itemOut: (parseFloat(row.itemOut) || 0) - add.qty };
+          if (diff) return { ...row, itemOut: (parseFloat(row.itemOut) || 0) + diff.qty };
+          return row;
+        });
+        await axios.put(`${ENDPOINT_URL}/update-maintenance/${serviceId}`, { items: updatedItems });
+      } catch (e) {
+        console.error("Error updating maintenance", e);
       }
     }
   }
+
   {/** Update Info end */ }
   {/** Update Qty of project */ }
   const handleUpdateQty = async () => {
     const difference = [];
     const sumToAdd = [];
     OldArray.map((row) => {
-      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName._id)
+      const newItem = itemsQtyArray.find((row1) => row1.itemName._id === row.itemName?._id)
       if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
         const diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut)
         difference.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       } else if (newItem && parseFloat(newItem.newItemOut) > parseFloat(row.newItemOut)) {
         const diff = parseFloat(newItem.newItemOut) - parseFloat(row.newItemOut)
         sumToAdd.push({
           idRow: row.idRow,
-          id: row.itemName._id,
+          id: row.itemName?._id,
           qty: diff
         })
       }
@@ -581,7 +476,7 @@ function ItemReturnViewForm() {
       })
       // Get Value
       const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+        return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
       })
       try {
         const res = await Promise.all(getRequestId);
@@ -598,14 +493,14 @@ function ItemReturnViewForm() {
         console.log('An error as occur');
       };
       // Update Value 
-      const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
-      })
-      try {
-        await Promise.all(updateRequest);
-      } catch (error) {
-        console.log('An error as occur');
-      }
+      // const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
+      //   return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
+      // })
+      // try {
+      //   await Promise.all(updateRequest);
+      // } catch (error) {
+      //   console.log('An error as occur');
+      // }
     }
     if (sumToAdd && sumToAdd.length > 0) {
       const initialStateId = {}
@@ -616,7 +511,7 @@ function ItemReturnViewForm() {
       })
       // Get Value
       const getRequestId = Object.values(initialStateId).map(({ ids }) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`);
+        return axios.get(`${ENDPOINT_URL}/get-item/${ids}`);
       })
       try {
         const res = await Promise.all(getRequestId);
@@ -633,14 +528,14 @@ function ItemReturnViewForm() {
         console.log('An error as occur');
       };
       // Update Value 
-      const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-        return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
-      })
-      try {
-        await Promise.all(updateRequest);
-      } catch (error) {
-        console.log('An error as occur');
-      }
+      // const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
+      //   return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
+      // })
+      // try {
+      //   await Promise.all(updateRequest);
+      // } catch (error) {
+      //   console.log('An error as occur');
+      // }
     }
   }
   const [openBack, setOpenBack] = useState(false);
@@ -710,19 +605,19 @@ function ItemReturnViewForm() {
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify ' + ' O-' + outNumber,
+      person: `${user.data.userName} Modify R-${String(outNumber).padStart(6, '0')}`,
       reason: reason2,
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
@@ -736,19 +631,27 @@ function ItemReturnViewForm() {
       itemsQtyArray,
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-itemReturn/${id}`, data)
+      // Fetch fresh state from server
+      const currentRes = await axios.get(`${ENDPOINT_URL}/get-itemReturn/${id}`);
+      const currentReturn = currentRes.data.data;
+
+      // Merge local changes with server state
+      const updatedData = {
+        ...currentReturn,
+        ...data
+      };
+
+      const res = await axios.put(`${ENDPOINT_URL}/update-itemReturn/${id}`, updatedData);
       if (res) {
         // Open Loading View
-        //handleUpdateQty();
-        handleUpdateInfo();
+        await handleUpdateInfo();
         handleCreateComment();
-        handleQty()
-        handleOpen()
+        handleQty();
+        handleOpen();
       }
     } catch (error) {
-      if (error) {
-        handleError();
-      }
+      console.error("Error updating item return:", error);
+      handleError();
     }
   }
 
@@ -872,6 +775,14 @@ function ItemReturnViewForm() {
                     rows={4} {...params} required
                   />}
                 onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                filterOptions={(options, { inputValue }) => {
+                  return options.filter((option) =>
+                    (option.itemName && option.itemName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                    (option.itemBrand && option.itemBrand.toLowerCase().includes(inputValue.toLowerCase())) ||
+                    (option.itemNumber && option.itemNumber.toLowerCase().includes(inputValue.toLowerCase())) ||
+                    (option.itemDescription && option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()))
+                  );
+                }}
                 size="small"
                 sx={{ width: '470px', backgroundColor: 'white' }}
               />
@@ -921,7 +832,7 @@ function ItemReturnViewForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              update Item Out
+              UPDATE ITEM OUT
             </Typography>
             <IconButton onClick={handleOpenBack}>
               <ArrowBack style={{ color: 'white' }} />
@@ -935,7 +846,7 @@ function ItemReturnViewForm() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -1076,7 +987,7 @@ function ItemReturnViewForm() {
                               <tr>
                                 <th align="left">#</th>
                                 <th align="left">Item</th>
-                                <th align="left">QTY Return</th>
+                                <th align="left">QTY OUT</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -1100,7 +1011,7 @@ function ItemReturnViewForm() {
                               <tr>
                                 <th align="left">#</th>
                                 <th align="left">Item</th>
-                                <th align="left">QTY Return</th>
+                                <th align="left">QTY OUT</th>
                               </tr>
                             </thead>
                             <tbody>

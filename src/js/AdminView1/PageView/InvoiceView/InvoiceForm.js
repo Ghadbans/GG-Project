@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -22,10 +23,12 @@ import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { invalidateCache } from '../../../utils/apiCache';
 import dayjs from 'dayjs';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -35,12 +38,12 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import ItemFormView2 from '../ItemView/ItemFormView2';
-import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
+import ItemUpdateView2 from '../ItemView/ItemUpdateView2';import ItemThumbnail from '../../../component/ItemThumbnail';
 import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
@@ -147,7 +150,7 @@ function InvoiceForm() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -173,7 +176,7 @@ function InvoiceForm() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
+  const apiUrl = `${ENDPOINT_URL}/create-invoice`;
   const [invoiceDate, setInvoiceDate] = useState(() => {
     const date = new Date()
     return date
@@ -208,14 +211,14 @@ function InvoiceForm() {
   const [shopLoading, setShopLoading] = useState(false);
   const [terms, setTerms] = useState("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. ");
   const dateComment = new Date()
-  const invoiceName = "INV-00" + invoiceNumber
+  const invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0')
 
   useEffect(() => {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
-          setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
+          const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-invoice`)
+          setInvoiceNumber((parseInt(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0)) + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -231,7 +234,7 @@ function InvoiceForm() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+          const res = await axios.get(`${ENDPOINT_URL}/item`)
           setItemInformation(res.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -249,10 +252,10 @@ function InvoiceForm() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -302,6 +305,11 @@ function InvoiceForm() {
       const updatedItems = [...items];
       const currentItem = updatedItems[existingItemIndex];
       const newQty = parseInt(currentItem.itemQty) + 1;
+      
+      if (newQty > currentItem.stock) {
+        toast.error("Stock Exceeded!", { position: "top-center" });
+        return;
+      }
 
       updatedItems[existingItemIndex] = {
         ...currentItem,
@@ -322,6 +330,8 @@ function InvoiceForm() {
           _id: shopItem._id,
           itemName: shopItem.itemName,
         },
+        data: shopItem.data,
+        contentType: shopItem.contentType,
         itemDescription: shopItem.itemDescription,
         itemDiscount: 0,
         itemQty: 1,
@@ -344,13 +354,15 @@ function InvoiceForm() {
   }
 
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemCost: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
@@ -506,7 +518,7 @@ function InvoiceForm() {
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Item InFO */ }
 
   const handleShowAutocomplete = (idRow) => {
@@ -553,8 +565,8 @@ function InvoiceForm() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -582,7 +594,7 @@ function InvoiceForm() {
     const fetchCustomer = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+          const res = await axios.get(`${ENDPOINT_URL}/customer`)
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -659,11 +671,12 @@ function InvoiceForm() {
     setItemInformation([newItem, ...ItemInformation])
   }
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
-    setSubTotal(result1.toFixed(2))
-    let newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
+    const result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0)
+    const val = isFinite(result1) ? result1 : 0;
+    setSubTotal(val.toFixed(2))
+    let newTotal = Math.round((Number(val) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
     setTotalInvoice(newTotal)
-    let newBalance = Math.round((totalInvoice - total) * 100) / 100
+    let newBalance = Math.round((newTotal - total) * 100) / 100
     setBalanceDue(newBalance)
   })
   useEffect(() => {
@@ -737,11 +750,11 @@ function InvoiceForm() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'INV-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      reason: 'INV-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
       dateNotification: dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -758,6 +771,7 @@ function InvoiceForm() {
     } else {
       status = 'Draft'
     }
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       _id: v4(),
       customerName,
@@ -768,7 +782,7 @@ function InvoiceForm() {
       invoicePurchase,
       invoiceDefect,
       status,
-      items,
+      items: itemsWithoutData,
       subTotal,
       noteInfo,
       total,
@@ -779,8 +793,9 @@ function InvoiceForm() {
     }
     if (navigator.onLine) {
       try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-invoice', data);
+        const res = await axios.post(`${ENDPOINT_URL}/create-invoice`, data);
         if (res) {
+          invalidateCache('/invoice');
           setReferenceInfo(res.data.data.invoiceNumber)
           // Open Loading View
           const ReferenceInfo = res.data.data._id
@@ -796,7 +811,7 @@ function InvoiceForm() {
         }
       }
     } else {
-      await db.invoiceSchema.add(data)
+      await db.invoiceSchema.put(data)
       handleOpen();
     }
   }
@@ -915,7 +930,7 @@ function InvoiceForm() {
                         label='Invoice Number'
                         value={invoiceNumber}
                         onChange={(e) => setInvoiceNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">I-00</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">INV-</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>
@@ -1064,19 +1079,28 @@ function InvoiceForm() {
                                                     {
                                                       Item.itemName.itemName ? (
                                                         (
-                                                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                              <TextField
-                                                                name='itemDescription' id='itemDescription'
-                                                                value={Item.itemDescription}
-                                                                multiline
-                                                                rows={3}
-                                                                onChange={(e) => handleChangeCEO(e, i)}
-                                                                size="small"
-                                                                sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
-                                                              />
-                                                            </div>
+                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                               <ItemThumbnail
+                                                                 itemId={Item.itemName?._id}
+                                                                 initialData={Item.data}
+                                                                 initialType={Item.contentType}
+                                                               />
+                                                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                                 <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                   {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                                 </Typography>
+                                                                 <TextField
+                                                                   name='itemDescription' id='itemDescription'
+                                                                   value={Item.itemDescription}
+                                                                   multiline
+                                                                   rows={3}
+                                                                   onChange={(e) => handleChangeCEO(e, i)}
+                                                                   size="small"
+                                                                   sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                                 />
+                                                               </Box>
+                                                             </Box>
                                                             <div>
                                                               <BlackTooltip title="Clear" placement='top'>
                                                                 <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
@@ -1084,9 +1108,9 @@ function InvoiceForm() {
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
-                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
                                                                     </IconButton>
                                                                   </BlackTooltip>
@@ -1184,7 +1208,7 @@ function InvoiceForm() {
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete" sx={{}}>
                                                       <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1277,19 +1301,28 @@ function InvoiceForm() {
                                                       Item.itemName.itemName ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                              <TextField
-                                                                name='itemDescription' id='itemDescription'
-                                                                value={Item.itemDescription}
-                                                                multiline
-                                                                rows={3}
-                                                                onChange={(e) => handleChange(e, i)}
-                                                                size="small"
-                                                                disabled
-                                                                sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
-                                                              />
-                                                            </div>
+                                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                               <ItemThumbnail
+                                                                 itemId={Item.itemName?._id}
+                                                                 initialData={Item.data}
+                                                                 initialType={Item.contentType}
+                                                               />
+                                                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                                 <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                   {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                                 </Typography>
+                                                                 <TextField
+                                                                   name='itemDescription' id='itemDescription'
+                                                                   value={Item.itemDescription}
+                                                                   multiline
+                                                                   rows={3}
+                                                                   onChange={(e) => handleChange(e, i)}
+                                                                   size="small"
+                                                                   disabled
+                                                                   sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                                 />
+                                                               </Box>
+                                                             </Box>
                                                             <div>
                                                               <BlackTooltip title="Clear" placement='top'>
                                                                 <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
@@ -1297,9 +1330,9 @@ function InvoiceForm() {
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
-                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
                                                                     </IconButton>
                                                                   </BlackTooltip>
@@ -1399,7 +1432,7 @@ function InvoiceForm() {
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete" sx={{}}>
                                                       <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1448,7 +1481,7 @@ function InvoiceForm() {
                         onChange={(e) => setNote(e.target.value)}
                         sx={{ width: '50%', backgroundColor: 'white' }}
                       />
-                      <table className="firstTable">
+                      <table className="firstTable" style={{ borderCollapse: 'collapse', width: '100%' }}>
                         <tbody>
                           <tr style={{ borderBottom: '1px solid black' }}>
                             <th style={{ textAlign: 'left' }}>Sub-Total</th>

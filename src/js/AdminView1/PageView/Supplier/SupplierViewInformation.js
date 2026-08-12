@@ -4,7 +4,7 @@ import SideMaintenance from '../../../component/SideMaintenance';
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Autocomplete, Button, Menu, Divider, Tab, Card, CardContent, Table, TableBody, TableHead, TableCell, TableRow, TableContainer, Collapse } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Autocomplete, Button, Menu, Divider, Tab, Card, CardContent, Table, TableBody, TableHead, TableCell, TableRow, TableContainer, Collapse, Avatar } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,11 +20,12 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import { v4 } from 'uuid';
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -40,12 +41,15 @@ import { useDrawingArea } from '@mui/x-charts/hooks';
 import MessageAdminView from '../../MessageAdminView';
 import { FileCopy } from '@mui/icons-material';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 import DeleteIcon from '@mui/icons-material/Delete';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import SupplierName from './SupplierName';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 const palette = ['blue', 'red', 'orange'];
 const EditTooltip = styled(({ className, ...props }) => (
@@ -171,20 +175,13 @@ function SupplierViewInformation() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -196,18 +193,12 @@ function SupplierViewInformation() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -216,22 +207,16 @@ function SupplierViewInformation() {
   const [loadingData, setLoadingData] = useState(true);
   const [item, SetItems] = useState([]);
   const [StoreName, SetStore] = useState("");
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/Supplier';
+  const apiUrl = `${ENDPOINT_URL}/Supplier`;
   useEffect(() => {
     const fetchItem = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(apiUrl)
-          SetItems(res.data.data.filter(row => row._id === id))
-          res.data.data.filter(row => row._id === id).map((row) => SetStore(row.storeName))
-          setLoadingData(false)
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setLoadingData(false)
-        }
-      } else {
-        const offLineCustomer1 = await db.supplierSchema.toArray();
-        SetItems(offLineCustomer1.reverse())
+      try {
+        const res = await axios.get(apiUrl)
+        SetItems(res.data?.data?.filter(row => row._id === id))
+        res.data?.data?.filter(row => row._id === id).map((row) => SetStore(row.storeName))
+        setLoadingData(false)
+      } catch (error) {
+        console.error('Error fetching data:', error);
         setLoadingData(false)
       }
     }
@@ -242,19 +227,18 @@ function SupplierViewInformation() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        console.log('🔍 [FILTERED API] Fetching supplier summary for:', id);
-        // Use professional filtered endpoint (Zoho CRM approach)
-        const resItemPurchase = await axios.get(`https://gg-project-production.up.railway.app/endpoint/itemPurchase/supplier/${id}`)
-
-        // Data is already filtered by backend for this specific supplier
-        setItemPurchase(resItemPurchase.data.data.reverse())
-        console.log('✅ [FILTERED API] Successfully loaded supplier summary');
+        const resItemPurchase = await axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true`)
+        const formatDate = resItemPurchase.data.data
+        const filteredData = formatDate.filter(data =>
+          item.some(i => data.manufacturerID === i._id || i.storeName === data.manufacturer)
+        );
+        setItemPurchase(filteredData.reverse())
       } catch (error) {
-        console.error('❌ [FILTERED API] Error fetching supplier data:', error);
+        console.error('Error fetching data:', error);
       }
     }
     handleFetch()
-  }, [id])
+  }, [item])
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -283,11 +267,11 @@ function SupplierViewInformation() {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
-        const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
+        const res = await axios.get(`${ENDPOINT_URL}/comment`)
+        const resp = res.data?.data?.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
-        setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
+        const resNotification = await axios.get(`${ENDPOINT_URL}/notification`)
+        setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -358,7 +342,7 @@ function SupplierViewInformation() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-comment/`, data)
       if (res) {
         setReason("");
         handleOpen();
@@ -403,11 +387,12 @@ function SupplierViewInformation() {
   const newArray = search !== '' ? itemPurchase.filter((row) =>
     row.itemPurchaseNumber.toString().includes(search) ||
     row.description.toLowerCase().includes(search.toLowerCase()) ||
-    row.projectName && row.projectName.name.toLowerCase().includes(search.toLowerCase()) ||
+    (row.projectName && row.projectName.name.toLowerCase().includes(search.toLowerCase())) ||
     row.manufacturer.toLowerCase().includes(search.toLowerCase()) ||
     row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) ||
-    row.items.some((Item) => Item.itemName.itemName.toLowerCase().includes(search.toLowerCase())) ||
-    row.items.some((Item) => Item.itemDescription.toLowerCase().includes(search.toLowerCase())) ||
+    row.items.some((Item) => Item.itemName !== undefined && (typeof Item.itemName === 'string' ? Item.itemName : Item.itemName.itemName)?.toLowerCase().includes(search.toLowerCase())) ||
+    row.items.some((Item) => Item.itemDescription !== undefined && Item.itemDescription.toLowerCase().includes(search.toLowerCase())) ||
+    row.items.some((Item) => Item.newDescription !== undefined && Item.newDescription.toLowerCase().includes(search.toLowerCase())) ||
     dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search)
   ) : itemPurchase
 
@@ -431,16 +416,11 @@ function SupplierViewInformation() {
   useEffect(() => {
     const fetchData2 = async () => {
       if (idView !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemPurchase/${idView}`)
-            setItemPurchaseView(res.data.data)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.itemPurchaseSchema.get({ _id: idView })
-          setItemPurchaseView(resLocal)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${idView}`)
+          setItemPurchaseView(res.data.data)
+        } catch (error) {
+          console.log(error)
         }
       }
     }
@@ -449,21 +429,22 @@ function SupplierViewInformation() {
 
   const newArray1 = search !== '' ? itemPurchase.filter((row) =>
     row.itemPurchaseNumber.toString().includes(search) ||
-    row.status && row.status.toLowerCase().includes(search.toLowerCase()) ||
+    (row.status && row.status.toLowerCase().includes(search.toLowerCase())) ||
     row.description.toLowerCase().includes(search.toLowerCase()) ||
-    row.projectName && row.projectName.name.toLowerCase().includes(search.toLowerCase()) ||
+    (row.projectName && row.projectName.name.toLowerCase().includes(search.toLowerCase())) ||
     row.manufacturer.toLowerCase().includes(search.toLowerCase()) ||
     row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) ||
-    row.items.some((Item) => Item.itemName.itemName.toLowerCase().includes(search.toLowerCase())) ||
-    row.items.some((Item) => Item.itemDescription.toLowerCase().includes(search.toLowerCase())) ||
+    row.items.some((Item) => Item.itemName !== undefined && (typeof Item.itemName === 'string' ? Item.itemName : Item.itemName.itemName)?.toLowerCase().includes(search.toLowerCase())) ||
+    row.items.some((Item) => Item.itemDescription !== undefined && Item.itemDescription.toLowerCase().includes(search.toLowerCase())) ||
+    row.items.some((Item) => Item.newDescription !== undefined && Item.newDescription.toLowerCase().includes(search.toLowerCase())) ||
     dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search)
   ) : itemPurchase
 
   //const payFc = newArray1.filter((row1)=>  row1.manufacturerID === id || row1.manufacturer === StoreName).reduce((acc, row) => acc + (row.total || 0), 0)
 
   const relatedItemPurchases = itemPurchase.length > 0 ? itemPurchase.reduce((acc, row) => {
-    row.items.filter((item) => parseFloat(item.itemQty) > 0).forEach((item) => {
-      const ItemName = item.itemName.itemName;
+    row.items.filter((item) => parseFloat(item.itemQty) >= 0).forEach((item) => {
+      const ItemName = typeof item.itemName === 'string' ? item.itemName : item.itemName?.itemName;
       const Id = item.itemName._id;
       const description = item.itemDescription;
       if (!acc[ItemName]) {
@@ -473,19 +454,31 @@ function SupplierViewInformation() {
     return acc
   }, {}) : null
   const relatedItemPurchases2 = []
-  itemPurchase.filter((Item) => Item.manufacturerID === id || item.find((row2) => row2.storeName === Item.manufacturer)).map((Item) => Item.items.filter((item) => parseFloat(item.itemQty) > 0).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
+  itemPurchase.filter((Item) => Item.manufacturerID === id || item.find((row2) => row2.storeName === Item.manufacturer)).map((Item) => Item.items.filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
 
   const newArray2 = search4 !== '' ? relatedItemPurchases2.filter((row) =>
-    row.itemName.itemName && row.itemName.itemName.toString().includes(search4) ||
-    row.itemDescription.toLowerCase().includes(search4.toLowerCase()) ||
+    (row.itemName?.itemName && row.itemName.itemName.toString().includes(search4)) ||
+    (row.itemDescription?.toLowerCase().includes(search4.toLowerCase())) ||
+    (row.newDescription?.toLowerCase().includes(search4.toLowerCase())) ||
     dayjs(row.date).format('DD/MM/YYYY').includes(search4)
   ) : relatedItemPurchases2
 
   function Row(props) {
-    const { row } = props;
-    const { index } = props;
+    const { row, index, filterPaid } = props;
     const [open, setOpen] = React.useState(false);
 
+    const totalVal = row.totalUSD !== undefined ? row.totalUSD : row.total || 0;
+    const paidVal = (row.payments || []).reduce((sum, p) => sum + (p.totalUSD || (parseFloat(p.amount || 0) + (parseFloat(p.amountFC || 0) / parseFloat(p.rate || 1)))), 0);
+    const unpaidVal = Math.max(0, totalVal - paidVal);
+
+    let displayTotal = totalVal;
+    if (row.status?.toLowerCase() === 'partially-paid') {
+      if (filterPaid === 'paid') {
+        displayTotal = paidVal;
+      } else if (filterPaid === 'unpaid') {
+        displayTotal = unpaidVal;
+      }
+    }
 
     return (
       <React.Fragment>
@@ -497,7 +490,7 @@ function SupplierViewInformation() {
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.itemPurchaseNumber}</td>
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.status}</td>
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.projectName !== undefined ? row.projectName.name : row.description}</td>
-          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.totalUSD !== undefined ? row.totalUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : row.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{displayTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>            <ViewTooltip title="View">
             <span>
               <IconButton onClick={() => handleOpenView(row._id)}>
@@ -530,19 +523,26 @@ function SupplierViewInformation() {
                   </thead>
                   <tbody>
                     {
-                      row.items.map((row3, i) => {
-                        const relatedUnit = item.find((Item1) => Item1._id === row3.itemName._id)
+                      row.items.filter(row3 => parseFloat(row3.itemQty) > 0 || row3.newDescription !== undefined).map((row3, i) => {
+                        const relatedUnit = item.find((Item1) => Item1._id === row3.itemName?._id)
                         return (
                           <tr key={row3.idRow}>
                             <td style={{ border: '1px solid #DDD' }}>{i + 1}</td>
-                            <td style={{ border: '1px solid #DDD' }}>{row3.itemName.itemName}</td>
-                            <td style={{ border: '1px solid #DDD' }}>{row3.itemDescription}</td>
-                            <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
-                            <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                            <td style={{ border: '1px solid #DDD' }}>FC{row3.totalAmountFC !== undefined ? parseFloat(row3.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                            <td style={{ border: '1px solid #DDD' }}>{row3.Taux !== undefined ? parseFloat(row3.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                            <td style={{ border: '1px solid #DDD' }}>${parseFloat(row3.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                            <td style={{ border: '1px solid #DDD' }}>{row3.fcConvertToUsdTotal !== undefined ? parseFloat(row3.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                            {
+                              row3.newDescription !== undefined ?
+                                <td colSpan={8} align="center" style={{ border: '1px solid #DDD', fontWeight: 'bold' }}>{row3.newDescription}</td>
+                                :
+                                <>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemName?.itemName}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemDescription}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>FC{row3.totalAmountFC !== undefined ? parseFloat(row3.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.Taux !== undefined ? parseFloat(row3.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>${parseFloat(row3.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.fcConvertToUsdTotal !== undefined ? parseFloat(row3.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                </>
+                            }
                           </tr>
                         )
                       })
@@ -565,12 +565,23 @@ function SupplierViewInformation() {
 
   const filteredArray1 = newArray1.filter((row) => {
     if (filterPaid === 'all') return true;
-    if (filterPaid === 'paid') return row.status === undefined || row.status?.toLowerCase() === 'paid';
-    if (filterPaid === 'unpaid') return row.status?.toLowerCase() === 'unpaid';
+    if (filterPaid === 'paid') return row.status === undefined || row.status?.toLowerCase() === 'paid' || row.status?.toLowerCase() === 'partially-paid';
+    if (filterPaid === 'unpaid') return row.status?.toLowerCase() === 'unpaid' || row.status?.toLowerCase() === 'partially-paid';
     return true;
   });
 
-  const payFc = filteredArray1.filter((row1) => row1.manufacturerID === id || row1.manufacturer === StoreName).reduce((acc, row) => acc + (row.totalUSD !== undefined ? row.totalUSD : row.total || 0), 0)
+  const payFc = filteredArray1.filter((row1) => row1.manufacturerID === id || row1.manufacturer === StoreName).reduce((acc, row) => {
+    const totalVal = row.totalUSD !== undefined ? row.totalUSD : row.total || 0;
+    if (row.status?.toLowerCase() === 'partially-paid') {
+      const paidVal = (row.payments || []).reduce((sum, p) => sum + (p.totalUSD || (parseFloat(p.amount || 0) + (parseFloat(p.amountFC || 0) / parseFloat(p.rate || 1)))), 0);
+      if (filterPaid === 'paid') {
+        return acc + paidVal;
+      } else if (filterPaid === 'unpaid') {
+        return acc + Math.max(0, totalVal - paidVal);
+      }
+    }
+    return acc + totalVal;
+  }, 0)
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>
@@ -613,7 +624,7 @@ function SupplierViewInformation() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -862,7 +873,7 @@ function SupplierViewInformation() {
                                               {
                                                 filteredArray1.filter((row1) => row1.manufacturerID === id || row1.manufacturer === row.storeName).map((row1, i) => (
 
-                                                  <Row key={row1._id} row={row1} index={i} />
+                                                  <Row key={row1._id} row={row1} index={i} filterPaid={filterPaid} />
                                                 ))
                                               }
                                             </tbody>
@@ -903,7 +914,23 @@ function SupplierViewInformation() {
                                                   return (
                                                     <tr key={i}>
                                                       <td style={{ border: '1px solid #DDD' }}>{i + 1}</td>
-                                                      <td style={{ border: '1px solid #DDD' }}>{row3.itemName.itemName} <br />{row3.itemDescription}</td>
+                                                      <td style={{ border: '1px solid #DDD' }}>
+                                                        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                          <ItemThumbnail
+                                                            itemId={row3.itemName?._id}
+                                                            initialData={row3.data}
+                                                            initialType={row3.contentType}
+                                                          />
+                                                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', flexGrow: 1 }}>
+                                                            <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                              {row3.itemName.itemName}
+                                                            </Typography>
+                                                            <Typography sx={{ fontSize: '11px', color: 'gray' }}>
+                                                              {row3.itemDescription}
+                                                            </Typography>
+                                                          </Box>
+                                                        </Box>
+                                                      </td>
                                                       <td style={{ border: '1px solid #DDD' }}>{dayjs(row3.date).format('DD/MM/YYYY')}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
@@ -1141,17 +1168,17 @@ function SupplierViewInformation() {
                             </TableHead>
                             <TableBody>
                               {
-                                itemPurchaseView.items.map((row, i) => (
+                                itemPurchaseView.items.filter(row => parseFloat(row.itemQty) > 0).map((row, i) => (
                                   <TableRow key={row.idRow}>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{i + 1}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemName.itemName}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemDescription}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemQty}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{parseFloat(row.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>FC{row.totalAmountFC !== undefined ? parseFloat(row.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.Taux !== undefined ? parseFloat(row.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>${parseFloat(row.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
-                                    <TableCell sx={id === row.itemName._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.fcConvertToUsdTotal !== undefined ? parseFloat(row.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{i + 1}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemName.itemName}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemDescription}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemQty}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{parseFloat(row.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>FC{row.totalAmountFC !== undefined ? parseFloat(row.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.Taux !== undefined ? parseFloat(row.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>${parseFloat(row.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.fcConvertToUsdTotal !== undefined ? parseFloat(row.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
                                   </TableRow>
                                 ))
                               }

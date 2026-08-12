@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 import './view.css'
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
@@ -23,18 +24,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -129,24 +131,16 @@ function InvoiceViewAdmin() {
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
-      if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+      if (storesUserId && storesUserId !== 'null') {
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          toast.error('Failed to fetch user data.');
         }
-      } else {
-        navigate('/');
       }
     }
     fetchUser()
@@ -159,18 +153,13 @@ function InvoiceViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Failed to fetch permissions.');
       }
     }
     fetchNumber()
@@ -192,24 +181,27 @@ function InvoiceViewAdmin() {
   const [reason, setReason] = useState("");
   const [newPurchase, setNewPurchase] = useState([]);
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
   const limit = 100;
-  const [searchTerm, setSearchTerm] = useState('');
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-  const [filterField, setFilterField] = useState('');
-  const [filterValue, setFilterValue] = useState('');
+  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
+  const [filterField, setFilterField] = useState(''); // Initialize filter field state
+  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 300);
-    return () => clearTimeout(handler);
+    }, 500); // 500ms debounce delay
+
+    return () => {
+      clearTimeout(handler);
+    };
   }, [searchTerm]);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/invoice-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`${ENDPOINT_URL}/invoice-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
       const formatDate = res.data.itemI.map((row) => ({
         ...row,
         id: row._id,
@@ -217,33 +209,53 @@ function InvoiceViewAdmin() {
         dateField: row.invoiceDate !== null ? dayjs(row.invoiceDate).format('DD/MM/YYYY') : '',
         dueDateField: dayjs(row.invoiceDueDate).format('DD/MM/YYYY'),
       }));
+      const invoices = formatDate;
       SetTotalPage(res.data.totalPages); // Ensure totalPage is correctly calculated
-      setInvoice(formatDate);
+      setInvoice(invoices);
       setLoadingData(false);
+
+      // Auto-repair status mismatch for zero-balance invoices
+      const mismatchedInvoices = invoices.filter(inv => 
+        (inv.status === 'Partially-Paid' || inv.status === 'Sent' || inv.status === 'Draft' || inv.status === 'Pending') && 
+        parseFloat(inv.balanceDue) <= 0 && 
+        parseFloat(inv.totalInvoice) > 0
+      );
+
+      if (mismatchedInvoices.length > 0) {
+        console.log(`Repairing status for ${mismatchedInvoices.length} invoices sequentially...`);
+        (async () => {
+          for (const inv of mismatchedInvoices) {
+            try {
+              await axios.put(`${ENDPOINT_URL}/update-invoice/${inv._id}`, { status: 'Paid' });
+              // Small delay to prevent rate limiting
+              await new Promise(resolve => setTimeout(resolve, 100));
+            } catch (err) {
+              console.error(`Failed to repair invoice ${inv.invoiceNumber}:`, err);
+            }
+          }
+        })();
+      }
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle offline case
-      const offLineItems = await db.invoiceViewSchema.toArray();
-      const formatDate = offLineItems.map((item) => ({
-        ...item,
-        id: item._id,
-        invoiceNumber: item.invoiceNumber,
-        dateField: item.invoiceDate !== null ? dayjs(item.invoiceDate).format('DD/MM/YYYY') : '',
-        dueDateField: dayjs(item.invoiceDueDate).format('DD/MM/YYYY'),
-      }));
-      setInvoice(formatDate.reverse());
+      toast.error('Failed to fetch invoices.');
       setLoadingData(false);
     }
   };
   const FilterInvoiceWith = invoice.filter(row =>
     Array.isArray(row.items) && row.items.every(item => parseFloat(item.itemOut) === parseFloat(item.itemQty))
   );
+
+
   useEffect(() => {
     fetchItems(page, debouncedSearchTerm, filterField, filterValue);
   }, [page, debouncedSearchTerm, filterField, filterValue]);
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage - 1); // Update page state (convert to 0-based index)
+  useEffect(() => {
+    // fetchAndSaveData();
+  }, []);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // Update page state (convert to 0-based index)
   };
 
   const handleRefreshSearch = () => {
@@ -264,7 +276,9 @@ function InvoiceViewAdmin() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** Loading Update View End */ }
 
@@ -279,7 +293,9 @@ function InvoiceViewAdmin() {
     }, 500)
   }
   const handleDeleteCloseLoading = () => {
-    window.location.reload();
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
 
   const handleOpenOffline = () => {
@@ -300,22 +316,14 @@ function InvoiceViewAdmin() {
 
   useEffect(() => {
     const fetchDataHidden = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
-          setHiddenRow(res.data.data.map((row) => row.idRow))
-          setHidden(res.data.data)
-          localStorage.removeItem('Hidden')
-          await Promise.all(res.data.data.map(async (item) => {
-            await db.hiddenSchema.put({ ...item, synced: true, updateS: true })
-          }))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.hiddenSchema.toArray();
-        setHiddenRow(offLineCustomer1.map((row) => row.idRow))
-        setHidden(offLineCustomer1)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/hidden`)
+        setHiddenRow(res.data.data.map((row) => row.idRow))
+        setHidden(res.data.data)
+        localStorage.removeItem('Hidden')
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        toast.error('Failed to fetch hidden rows.');
       }
     }
     fetchDataHidden()
@@ -372,26 +380,39 @@ function InvoiceViewAdmin() {
 
   {/** Delete Function */ }
   const handleDelete = async () => {
+    setLoading(true);
+    setModalDeleteOpenLoading(true);
+    handleClose();
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-invoice/${DeleteId}`);
+      const invToDelete = invoice.find(inv => inv._id === DeleteId);
+      if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
+        try {
+          await axios.put(`${ENDPOINT_URL}/update-maintenance/${invToDelete.ReferenceName}`, { Converted: false, ReferenceName: null });
+        } catch (e) { console.error('Failed to update maintenance order', e); }
+      }
+
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-invoice/${DeleteId}`);
       if (res) {
-        handleDeleteOpenLoading();
+        setLoading(false);
       }
     } catch (error) {
       console.error(error);
+      setLoading(false);
+      toast.error('Failed to delete invoice.');
+      handleError();
     }
   };
   const [InvoiceDeleted, setInvoiceDeleted] = useState([])
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-invoice/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
-        setInvoiceDeleted(res.map((row) => 'INV-' + row.data.data.invoiceNumber))
+        setInvoiceDeleted(res.map((row) => 'INV-' + String(row.data.data.invoiceNumber).padStart(6, '0')))
       } catch (error) {
-        console.log(error)
+        console.error('Fetch error:', error);
       }
     }
     fetchFunction()
@@ -406,24 +427,39 @@ function InvoiceViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
-      console.log(error)
+      console.error('Notification error:', error);
     }
   }
   const handleDeleteMany = async (e) => {
     e.preventDefault()
+    setLoading(true);
+    setModalDeleteOpenLoading(true);
+    handleCloseMultiple();
+    handleCloseAll();
+    handleCloseReasonDelete();
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-invoice/${idToDelete}`)
+      const invToDelete = invoice.find(inv => inv._id === idToDelete);
+      if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
+        try {
+          await axios.put(`${ENDPOINT_URL}/update-maintenance/${invToDelete.ReferenceName}`, { Converted: false, ReferenceName: null });
+        } catch (e) { console.error('Failed to update maintenance order', e); }
+      }
+      return axios.delete(`${ENDPOINT_URL}/delete-invoice/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
       if (res) {
         handleCreateNotification()
-        handleDeleteOpenLoading();
+        setLoading(false);
+        setSelectedRows([]);
       }
     } catch (error) {
-      console.log(error)
+      console.error('Delete Many error:', error);
+      setLoading(false);
+      toast.error('Failed to delete multiple invoices.');
+      handleError();
     }
   }
   {/** End Delete Function */ }
@@ -433,11 +469,12 @@ function InvoiceViewAdmin() {
     const fetchId = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${updateId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${updateId}`)
           setStatus(res.data.data.status);
           setInvoiceN(res.data.data.invoiceNumber);
         } catch (error) {
           console.error('Error fetching data:', error);
+          toast.error('Failed to fetch invoice detail.');
         }
       }
     }
@@ -447,13 +484,13 @@ function InvoiceViewAdmin() {
     const data = {
       idInfo: updateId,
       person: user.data.userName,
-      reason: status + ' INV-' + invoiceN,
+      reason: status + ' INV-' + String(invoiceN).padStart(6, '0'),
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
-      console.log(error)
+      console.error('Notification error:', error);
     }
   }
   const handleSubmitUpdateStatus = async (e) => {
@@ -462,13 +499,14 @@ function InvoiceViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${updateId}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-invoice/${updateId}`, data)
       if (res) {
         handleCreateComment();
         handleOpenLoading();
       }
     } catch (error) {
-      console.error('Error making POST request:', error);
+      console.error('Error making PUT request:', error);
+      toast.error('Failed to update invoice status.');
     }
   }
   {/** Update Invoice Status End */ }
@@ -486,21 +524,22 @@ function InvoiceViewAdmin() {
             .map((row) => row._id)
           const hiddenId = result.toString()
 
-          await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-hidden/${hiddenId}`);
+          await axios.delete(`${ENDPOINT_URL}/delete-hidden/${hiddenId}`);
         } else {
           setHiddenRow([...hiddenRow, id]);
-          await axios.post('https://gg-project-production.up.railway.app/endpoint/create-hidden', {
+          await axios.post(`${ENDPOINT_URL}/create-hidden`, {
             idRow: id, hiddenByCEO: true
           })
         }
       } catch (error) {
-        console.log(error)
+        console.error('Hide error:', error);
+        toast.error('Failed to update row visibility.');
       }
     }
   }
 
   const rowRenderer = (params) => {
-    if (hiddenRow.includes(params.row._id && !user.data.role === 'CEO')) {
+    if (hiddenRow.includes(params.row._id) && user.data.role !== 'CEO') {
       return null
     }
     return <div>{params.row[params.field]}</div>
@@ -509,16 +548,15 @@ function InvoiceViewAdmin() {
   useEffect(() => {
     const Inv = invoice.filter(row => !hiddenRow.includes(row._id))
     setFilteredRows(Inv)
-  }, [invoice])
+  }, [invoice, hiddenRow])
   {/** search start */ }
   const [searchInvoice, setSearchInvoice] = useState("");
-  useState(() => {
+  useEffect(() => {
     const storedValue = localStorage.getItem('QuickFilterInvoice')
     if (storedValue) {
       setSearchInvoice(storedValue)
     }
-
-  })
+  }, [])
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
@@ -554,36 +592,36 @@ function InvoiceViewAdmin() {
   };
   {/** search end */ }
   const columns = [
-    { field: 'invoiceNumber', headerName: 'Invoice#', width: 100, renderCell: (params) => (<div> <span>INV-00</span><span>{params.row.invoiceNumber}</span> </div>) },
-    { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 300, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
+    { field: 'invoiceNumber', headerName: 'Invoice#', minWidth: 100, flex: 1, renderCell: (params) => (<div> <span>INV-{String(params.row.invoiceNumber).padStart(6, '0')}</span> </div>) },
+    { field: 'customer', headerName: 'Customer Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
     {
-      field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
-        <Typography
-          color={
-            params.row.status === "Draft"
-              ? "gray" : params.row.status === "Sent"
-                ? "blue" :
-                params.row.status === "Decline"
-                  ? "red" :
-                  params.row.status === "Pending"
-                    ? "#801313" :
-                    params.row.status === "Paid"
-                      ? "#4caf50" :
-                      params.row.status === "Partially-Paid"
-                        ? "#fb8c00" : "black"
-          }
-        >
-          {params.row.status}
-        </Typography>
-      )
+      field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
+        const isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;
+        const displayStatus = isActuallyPaid ? "Paid" : params.row.status;
+        const displayColor = isActuallyPaid ? "#4caf50" : (
+          params.row.status === "Draft" ? "gray" :
+          params.row.status === "Sent" ? "blue" :
+          params.row.status === "Decline" ? "red" :
+          params.row.status === "Pending" ? "#801313" :
+          params.row.status === "Paid" ? "#4caf50" :
+          params.row.status === "Partially-Paid" ? "#fb8c00" :
+          params.row.status === "Free of Charge" ? "#9c27b0" : "black"
+        );
+
+        return (
+          <Typography color={displayColor}>
+            {displayStatus}
+          </Typography>
+        );
+      }
     },
-    { field: 'invoiceSubject', headerName: 'Subject', width: 100 },
-    { field: 'dateField', headerName: 'Date', width: 100 },
-    { field: 'totalInvoice', headerName: 'I-Amount', width: sideBar ? 100 : 130, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'total', headerName: 'A-Paid', width: sideBar ? 100 : 130, renderCell: (params) => `$${params.row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'balanceDue', headerName: 'B-Due', width: sideBar ? 100 : 130, renderCell: (params) => `$${params.row.balanceDue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'invoiceSubject', headerName: 'Subject', minWidth: 150, flex: 1 },
+    { field: 'dateField', headerName: 'Date', minWidth: 100, flex: 1 },
+    { field: 'totalInvoice', headerName: 'I-Amount', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'total', headerName: 'A-Paid', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'balanceDue', headerName: 'B-Due', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.balanceDue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {
-      field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={InvoiceInfoV.length === 0 && user.data.role !== 'CEO'}>
@@ -610,7 +648,7 @@ function InvoiceViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -692,7 +730,7 @@ function InvoiceViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -765,312 +803,300 @@ function InvoiceViewAdmin() {
                       : ''}
                     {
                       user.data.role === 'CEO' ? (
-                        <DataGrid
-                          rows={invoice}
-                          columns={columns}
-                          slots={{ toolbar: GridToolbar }}
-                          slotProps={{
-                            toolbar: {
-                              showQuickFilter: true,
-                              printOptions: {
-                                disableToolbarButton: true
+                        <>
+                          <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
+                            rows={invoice}
+                            columns={columns}
+                            slots={{ toolbar: GridToolbar }}
+                            slotProps={{
+                              toolbar: {
+                                showQuickFilter: true,
+                                printOptions: {
+                                  disableToolbarButton: true
+                                },
                               },
-                            },
-                          }}
-                          getRowClassName={(params) =>
-                            FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : ''
-                          }
-                          onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                          rowRenderer={rowRenderer}
-                          checkboxSelection
-                          disableColumnFilter
-                          disableDensitySelector
-                          rowSelectionModel={selectedRows}
-                          filterModel={filterModel}
-                          onFilterModelChange={(newModel) => handleFilter(newModel)}
-                          columnVisibilityModel={columnVisibilityModel}
-                          onColumnVisibilityModelChange={handelHiddenColumn}
-                          sx={{
-                            width: '100%',
-                            backgroundColor: 'white',
-                            padding: '10px',
-                            '& .highlight-blue': {
-                              backgroundColor: '#d0e7ff',
-                            },
-                          }}
-                        />
+                            }}
+                            getRowClassName={(params) =>
+                              FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : ''
+                            }
+                            onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+                            rowRenderer={rowRenderer}
+                            checkboxSelection
+                            disableColumnFilter
+                            disableDensitySelector
+                            rowSelectionModel={selectedRows}
+                            filterModel={filterModel}
+                            onFilterModelChange={(newModel) => handleFilter(newModel)}
+                            columnVisibilityModel={columnVisibilityModel}
+                            onColumnVisibilityModelChange={handelHiddenColumn}
+                            sx={{
+                              width: '100%',
+                              backgroundColor: 'white',
+                              padding: '10px',
+                              '& .new-Purchase': {
+                                backgroundColor: '#e3f2fd',
+                              },
+                            }}
+                          />
+                          <Pagination 
+                            count={totalPage} 
+                            page={page + 1} 
+                            onChange={handlePageChange} 
+                            color="primary" 
+                            sx={{ position: 'relative', top: '-50px', zIndex: 1000, display: 'flex', justifyContent: 'flex-start' }} 
+                          />
+                        </>
                       ) : (
-                        <DataGrid
-                          rows={filteredRows}
-                          columns={columns}
-                          slots={{ toolbar: GridToolbar }}
-                          slotProps={{
-                            toolbar: {
-                              showQuickFilter: true,
-                              printOptions: {
-                                disableToolbarButton: true
+                        <>
+                          <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
+                            rows={filteredRows}
+                            columns={columns}
+                            slots={{ toolbar: GridToolbar }}
+                            slotProps={{
+                              toolbar: {
+                                showQuickFilter: true,
+                                printOptions: {
+                                  disableToolbarButton: true
+                                },
                               },
-                            },
-                          }}
-                          getRowClassName={(params) =>
-                            FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : ''
-                          }
-                          onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                          rowRenderer={rowRenderer}
-                          checkboxSelection
-                          disableDensitySelector
-                          rowSelectionModel={selectedRows}
-                          filterModel={filterModel}
-                          onFilterModelChange={(newModel) => handleFilter(newModel)}
-                          columnVisibilityModel={columnVisibilityModel}
-                          onColumnVisibilityModelChange={handelHiddenColumn}
-                          sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                        />
+                            }}
+                            getRowClassName={(params) =>
+                              FilterInvoiceWith.some(filteredRow => filteredRow.id === params.row.id) ? 'new-Purchase' : ''
+                            }
+                            onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+                            checkboxSelection
+                            disableColumnFilter
+                            disableDensitySelector
+                            rowSelectionModel={selectedRows}
+                            filterModel={filterModel}
+                            onFilterModelChange={(newModel) => handleFilter(newModel)}
+                            columnVisibilityModel={columnVisibilityModel}
+                            onColumnVisibilityModelChange={handelHiddenColumn}
+                            sx={{
+                              width: '100%',
+                              backgroundColor: 'white',
+                              padding: '10px',
+                              '& .new-Purchase': {
+                                backgroundColor: '#e3f2fd',
+                              },
+                            }}
+                          />
+                          <Pagination 
+                            count={totalPage} 
+                            page={page + 1} 
+                            onChange={handlePageChange} 
+                            color="primary" 
+                            sx={{ position: 'relative', top: '-50px', zIndex: 1000, display: 'flex', justifyContent: 'flex-start' }} 
+                          />
+                        </>
                       )
                     }
-                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
-
                   </Box>
+                  <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 500 }}>
+                      <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        <h2>Do you want to Delete ?</h2>
+                        <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                          <button className='btnCustomer2' onClick={handleDelete}>
+                            Delete
+                          </button>
+                          <button className='btnCustomer' onClick={handleClose}>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </Box>
+                  </Modal>
 
+                  <Modal
+                    open={modalDeleteOpenLoading}
+                    onClose={handleDeleteCloseLoading}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 500 }}>
+                      <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        {loading ? (<Loader />
+                        ) : (
+                          <div>
+                            <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
+                            <h2> Done Successfully</h2>
+                            <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                              <button onClick={handleDeleteCloseLoading} className='btnCustomer'>
+                                Close
+                              </button>
+                            </div>
+                          </div>)}
+                      </div>
+                    </Box>
+                  </Modal>
 
+                  <Modal
+                    open={openDeleteAll}
+                    onClose={handleCloseAll}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 500 }}>
+                      <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        <h2>Do you want to Delete ?</h2>
+                        {
+                          selectedRows.length === 1 && (
+                            <p><span className="txt2" style={{ color: 'red' }}>Note:</span> Selected rows will be deleted</p>
+                          )
+                        }
+                        {
+                          selectedRows.length > 1 && selectedRows.length < invoice.length && (
+                            <p><span className="txt2" style={{ color: 'red' }}>Note:</span> All selected rows will be deleted</p>
+                          )
+                        }
+                        {
+                          selectedRows.length === invoice.length && (
+                            <p><span className="txt2" style={{ color: 'red' }}>Note:</span> All rows will be deleted</p>
+                          )
+                        }
+                        <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                          <button className='btnCustomer2' onClick={handleOpenReasonDelete}>
+                            Delete
+                          </button>
+                          <button className='btnCustomer' onClick={handleCloseAll}>
+                            Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </Box>
+                  </Modal>
+                  <Modal
+                    open={openReasonDelete}
+                    onClose={handleCloseReasonDelete}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 500 }}>
+                      <ViewTooltip title="Close" placement='left'>
+                        <IconButton onClick={handleCloseReasonDelete} style={{ position: 'relative', float: 'right' }}>
+                          <Close style={{ color: '#202a5a' }} />
+                        </IconButton>
+                      </ViewTooltip>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Why do you want to delete: {info}?
+                      </Typography>
+                      <form onSubmit={handleDeleteMany}>
+                        <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+                          <Grid item xs={12}>
+                            <TextField
+                              required
+                              id='reason'
+                              name='reason'
+                              multiline
+                              rows={4}
+                              value={reason}
+                              placeholder='Reason'
+                              onChange={(e) => setReason(e.target.value)}
+                              label='Reason'
+                              sx={{ width: '100%', backgroundColor: 'white' }}
+                            />
+                          </Grid>
+                          <br />
+                          <Grid item xs={12}>
+                            <button type='submit' className='btnCustomer' style={{ width: '100%' }}>Save</button>
+                          </Grid>
+                        </Grid>
+                      </form>
+
+                    </Box>
+                  </Modal>
+
+                  <Modal
+                    open={open1}
+                    onClose={handleCloseUpdate}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={style}>
+                      <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Update Invoice Status
+                      </Typography>
+                      <br />
+                      <form onSubmit={handleSubmitUpdateStatus}>
+                        <FormControl fullWidth>
+                          <InputLabel id="demo-simple-select-label">Status</InputLabel>
+                          <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            value={status}
+                            label="Status"
+                            onChange={(e) => setStatus(e.target.value)}
+                          >
+                            <MenuItem value={'Draft'}>Draft</MenuItem>
+                            <MenuItem value={'Sent'}>Sent</MenuItem>
+                            <MenuItem value={'Pending'}>Pending</MenuItem>
+                            <MenuItem value={'Decline'}>Decline</MenuItem>
+                            <MenuItem value={'Free of Charge'}>Free of Charge</MenuItem>
+                          </Select>
+                        </FormControl>
+                        <br /><br />
+                        <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Update</button>
+                      </form>
+
+                    </Box>
+                  </Modal>
+                  <Modal
+                    open={loadingOpenModal}
+                    onClose={handleCloseLoading}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 500 }}>
+                      <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        {loading ? (<Loader />
+                        ) : (
+                          <div>
+                            <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
+                            <h2> Done Successfully</h2>
+                            <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                              <button onClick={handleCloseLoading} className='btnCustomer'>
+                                Close
+                              </button>
+                            </div>
+                          </div>)}
+                      </div>
+                    </Box>
+                  </Modal>
+                  <Modal
+                    open={ErrorOpenModal}
+                    onClose={() => setErrorOpenModal(false)}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                  >
+                    <Box sx={{ ...style, width: 500 }}>
+                      <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+                        <h2> Error Occured</h2>
+                        <p>Please try again later</p>
+                        <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                          <button onClick={() => setErrorOpenModal(false)} className='btnCustomer'>
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </Box>
+                  </Modal>
                 </div>)
             }
-          </Container>
-        </Box>
-      </Box>
-      {/** Modal for Deciding to Delete Invoice Start */}
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-            <Grid item xs={12} style={{ width: '100%', textAlign: 'center' }}>
-              <Typography id="modal-modal-title" variant="h6" component="h2">
-                Do you Want to delete?
-              </Typography>
-            </Grid>
-            <Grid item xs={6}>
-              <button onClick={handleClose} className='btnCustomer' style={{ width: '100%' }}>Cancel</button>
-            </Grid>
-            <Grid item xs={6}>
-              <button onClick={handleDelete} className='btnCustomer2' style={{ width: '100%' }}>Delete</button>
-            </Grid>
-          </Grid>
-        </Box>
-      </Modal>
-      {/** Modal for Deciding to Delete Invoice End */}
-      {/** Modal for Updating Invoice Status Start */}
-      <Modal
-        open={open1}
-        onClose={handleCloseUpdate}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <ViewTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseUpdate} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
-            </IconButton>
-          </ViewTooltip>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Update Estimate Status
-          </Typography>
-          <form onSubmit={handleSubmitUpdateStatus}>
-            <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-              <Grid item xs={12}>
-                <FormControl sx={{ width: '100%' }}>
-                  <InputLabel id="status">Status</InputLabel>
-                  <Select
-                    required
-                    id="status"
-                    value={status}
-                    onChange={(e) => setStatus(e.target.value)}
-                    name="status"
-                    label="status"
-                    defaultValue="Draft"
-                  >
-                    <MenuItem value="Draft">Draft</MenuItem>
-                    <MenuItem value="Sent">Sent</MenuItem>
-                    <MenuItem value="Decline">Decline</MenuItem>
-                    <MenuItem value="Void">Void</MenuItem>
-                    <MenuItem value="Pending">Pending</MenuItem>
-                    <MenuItem disabled value="Partially-Paid">Partially-Paid</MenuItem>
-                    <MenuItem value="Free of Charge">Free of Charge</MenuItem>
-                    <MenuItem disabled value="Paid">Paid</MenuItem>
-                  </Select>
-                </FormControl>
-              </Grid>
-              <br />
-              <Grid item xs={12}>
-                <button className='btnCustomer' style={{ width: '100%' }}>Update</button>
-              </Grid>
-            </Grid>
-          </form>
-        </Box>
-      </Modal>
-      {/** Modal for Updating Invoice Status End */}
-      {/** Modal for loading Update Status Start */}
-      <Modal
-        open={loadingOpenModal}
-        onClose={handleCloseLoading}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}
-        >
-          {loading ? (<Loader />
-          ) : (
-            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-              <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
-              <h2> Data Saved successfully</h2>
-              <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={handleCloseLoading} className='btnCustomer'>
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
-        </Box>
-      </Modal>
-      {/** Modal for loading Update Status End */}
-      {/** Modal for loading Delete Invoice Start */}
-      <Modal
-        open={openDeleteMultiple}
-        onClose={handleCloseMultiple}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-            <h2>Do you want to Delete ?</h2>
-            <p><span className="txt2" style={{ color: 'red' }}>Note:</span> All selected rows will be deleted</p>
-            <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-              <button className='btnCustomer2' onClick={handleDeleteMany}>
-                Delete
-              </button>
-              <button className='btnCustomer' onClick={handleCloseMultiple}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </Box>
-      </Modal>
-      <Modal
-        open={openDeleteAll}
-        onClose={handleCloseAll}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-            <h2>Do you want to Delete ?</h2>
-            {
-              selectedRows.length === 1 && (
-                <p><span className="txt2" style={{ color: 'red' }}>Note:</span> Selected rows will be deleted</p>
-              )
-            }
-            {
-              selectedRows.length > 1 && selectedRows.length < invoice.length && (
-                <p><span className="txt2" style={{ color: 'red' }}>Note:</span> All selected rows will be deleted</p>
-              )
-            }
-            {
-              selectedRows.length === invoice.length && (
-                <p><span className="txt2" style={{ color: 'red' }}>Note:</span> All rows will be deleted</p>
-              )
-            }
-            <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-              <button className='btnCustomer2' onClick={handleOpenReasonDelete}>
-                Delete
-              </button>
-              <button className='btnCustomer' onClick={handleCloseAll}>
-                Cancel
-              </button>
-            </div>
-          </div>
-        </Box>
-      </Modal>
-      <Modal
-        open={modalDeleteOpenLoading}
-        onClose={handleDeleteCloseLoading}
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <div>
-            {loading ? (<Loader />
-            )
-              : (
-                <div style={{ justifyContent: 'center', textAlign: 'center' }}>
-                  <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
-                  <h2> Data successfully deleted</h2>
-                  <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                    <button onClick={handleDeleteCloseLoading} className='btnCustomer'>
-                      Close
-                    </button>
-                  </div>
-                </div>
-              )}
-          </div>
-        </Box>
-      </Modal>
-      {/** Modal for loading Delete Invoice End */}
-      <Modal
-        open={openReasonDelete}
-        onClose={handleCloseReasonDelete}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={{ ...style, width: 500 }}>
-          <ViewTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseReasonDelete} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
-            </IconButton>
-          </ViewTooltip>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
-          </Typography>
-          <form onSubmit={handleDeleteMany}>
-            <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  id='reason'
-                  name='reason'
-                  multiline
-                  rows={4}
-                  value={reason}
-                  placeholder='Reason'
-                  onChange={(e) => setReason(e.target.value)}
-                  label='Reason'
-                  sx={{ width: '100%', backgroundColor: 'white' }}
-                />
-              </Grid>
-              <br />
-              <Grid item xs={12}>
-                {
-                  info && (
-                    <button type='submit' className='btnCustomer' style={{ width: '100%' }}>Save</button>
-                  )
-                }
-              </Grid>
-            </Grid>
-          </form>
-
-        </Box>
-      </Modal>
+          </Container></Box></Box>
     </div>
   )
 }

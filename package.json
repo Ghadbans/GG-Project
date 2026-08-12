@@ -1,6 +1,6 @@
 {
   "name": "globalgateapi",
-  "version": "3.3.28",
+  "version": "3.3.40",
   "description": "api for Global Gate company",
   "main": "main.js",
   "scripts": {

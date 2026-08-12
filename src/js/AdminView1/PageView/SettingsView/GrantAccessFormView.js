@@ -18,13 +18,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import { v4 } from 'uuid';
@@ -119,7 +120,7 @@ function GrantAccessFormView() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -165,11 +166,16 @@ function GrantAccessFormView() {
     { id: 16, moduleName: 'Grant-Access', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
     { id: 17, moduleName: 'Purchase-Order', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
     { id: 18, moduleName: 'Point-Of-Sell', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+    { id: 19, moduleName: 'Reports', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+    { id: 20, moduleName: 'Block-Factory', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+    { id: 21, moduleName: 'Block-Mixer', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+    { id: 22, moduleName: 'Backup', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+    { id: 23, moduleName: 'Layout-Print', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
   ])
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employeeuser')
+        const res = await axios.get(`${ENDPOINT_URL}/employeeuser`)
         setAccount(res.data.data.reverse());
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -232,7 +238,7 @@ function GrantAccessFormView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -240,14 +246,18 @@ function GrantAccessFormView() {
   const [saving, setSaving] = useState('')
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSaving('true')
+    if (user.data.userName !== 'GG') {
+      alert('Only GG can grant access.');
+      return;
+    }
     const data = {
       employeeName: userName,
       userID,
       modules
     };
+    setSaving('true')
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-grantAccess', data);
+      const res = await axios.post(`${ENDPOINT_URL}/create-grantAccess`, data);
       if (res) {
         // Open Loading View
         const ReferenceInfo = res.data.data._id
@@ -304,7 +314,7 @@ function GrantAccessFormView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',

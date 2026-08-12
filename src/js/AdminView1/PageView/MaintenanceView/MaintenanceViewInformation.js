@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import PrintHeader from '../../../component/PrintHeader';
+import PrintFooter from '../../../component/PrintFooter';
+import React, { useEffect, useState, useRef, useMemo } from 'react';
 import SidebarDash from '../../../component/SidebarDash';
 import '../../view.css';
 import '../Chartview.css';
@@ -24,6 +26,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, ArrowUpwardOutlined, ExitToApp, FileCopy, KeyboardArrowUp } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate, NavLink, useParams, Link } from 'react-router-dom';
@@ -38,7 +41,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CurrencyExchange from '@mui/icons-material/CurrencyExchange';
 import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import { DataGrid } from '@mui/x-data-grid';
@@ -51,7 +54,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver';
 import { Explicit } from '@mui/icons-material';
@@ -163,20 +166,13 @@ function MaintenanceViewInformation() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -192,18 +188,12 @@ function MaintenanceViewInformation() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -212,83 +202,111 @@ function MaintenanceViewInformation() {
   const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.editM === true);
 
   const [maintenance, setMaintenance] = useState([]);
-  const [maintenanceList, setMaintenanceList] = useState([]); // New state for sidebar list
+  const [quotation, setQuotation] = useState([]);
   const [item, SetItems] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [itemOut, setItemOut] = useState([]);
   const [itemReturn, setItemReturn] = useState([]);
   const [planingInfo, setPlaningInfo] = useState([]);
-
-  // Optimized Data Fetching
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
+      try {
+        const [resM, resI, resSingle, resEstimate] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/maintenance?summary=true`),
+          axios.get(`${ENDPOINT_URL}/item`),
+          axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`),
+          axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
+        ]);
+
+        const allMaintenance = resM.data.data;
+        setMaintenance(allMaintenance.sort((a,b) => b.serviceNumber - a.serviceNumber));
+        SetItems(resI.data.data);
+
+        // Process single maintenance record data
+        const maintenanceData = resSingle.data.data;
+        let refName = '';
+        if (maintenanceData) {
+          refName = maintenanceData.ReferenceName || '';
+          setReferenceName(refName);
+          setCustomerName1(maintenanceData.customerName?.customerName?.replace(/\s+/g, '_').replace(/\./g, '') || "");
+          setServiceNumber(maintenanceData.serviceNumber || 0);
+          setItem(maintenanceData.items || []);
+
+          const sellTotal = parseFloat(maintenanceData.subTotal || 0).toFixed(2);
+          setTotalSell(sellTotal);
+          
+          const allEstimations = resEstimate.data?.data || [];
+          setQuotation(allEstimations.filter(row => row._id === refName || row.ReferenceName === maintenanceData._id));
+        }
+
         try {
-          console.log('🔍 [FILTERED API] Fetching maintenance related data for:', id);
-          // Use professional filtered endpoints (Zoho CRM approach)
-          const [resItem, resItemOut, resIReturn, resPlaning] = await Promise.all([
-            axios.get('https://gg-project-production.up.railway.app/endpoint/item'),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemOut/project/${id}`), // Maintenance often shares project ID
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemReturn/project/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/planing/project/${id}`)
+          // Attempt to fetch optimized specific data
+          const resRelated = await axios.get(`${ENDPOINT_URL}/get-maintenance-related-info/${id}`);
+          const relatedData = resRelated.data.data;
+          
+          setItemOut(relatedData.itemOuts.map((row) => ({ ...row, outNumber: `O-${String(row.outNumber).padStart(6, '0')}`, type: 'Item Out' })));
+          setItemReturn(relatedData.itemReturns.map((row) => ({ ...row, outNumber: `R-${String(row.outNumber).padStart(6, '0')}`, type: 'Item return' })));
+          
+          const resultPlaning = relatedData.planings.map((row) => ({
+            ...row,
+            totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber || 0).toFixed(2)
+          }));
+          setPlaningInfo(resultPlaning);
+
+          const filteredInvoice = relatedData.invoices.filter((row) => row.invoiceName === refName);
+          const filteredInvoice2 = relatedData.invoices.filter((row) => row.ReferenceName === id);
+          setInvoice(filteredInvoice);
+          setInvoice2(filteredInvoice2);
+
+          setComments(relatedData.comments.reverse());
+          setNotification(relatedData.notifications);
+        } catch(fallbackError) {
+          // Fallback to old massive data fetch if endpoint not found yet
+          const [resIO, resIR, resP, resInvoice, resComment, resNotification] = await Promise.all([
+            axios.get(`${ENDPOINT_URL}/itemOut`),
+            axios.get(`${ENDPOINT_URL}/itemReturn`),
+            axios.get(`${ENDPOINT_URL}/planing`),
+            axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
+            axios.get(`${ENDPOINT_URL}/comment`),
+            axios.get(`${ENDPOINT_URL}/notification`)
           ]);
 
-          SetItems(resItem.data.data)
-          setItemOut(resItemOut.data.data.map((row) => ({ ...row, outNumber: "O-0" + row.outNumber, type: 'Item Out' })))
-          setItemReturn(resIReturn.data.data.map((row) => ({ ...row, outNumber: "R-0" + row.outNumber, type: 'Item return' })))
+          setItemOut(resIO.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: `O-${String(row.outNumber).padStart(6, '0')}`, type: 'Item Out' })));
+          setItemReturn(resIR.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: `R-${String(row.outNumber).padStart(6, '0')}`, type: 'Item return' })));
 
-          const resultPlaning = resPlaning.data.data.map((row) => ({
-            ...row,
-            totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
-          }))
-          setPlaningInfo(resultPlaning)
-          console.log('✅ [FILTERED API] Successfully loaded maintenance related data');
-        } catch (error) {
-          console.error('❌ [FILTERED API] Error fetching maintenance data:', error);
-        }
-      } else {
-        // Offline logic remains the same
-        const offLineItem = await db.itemSchema.toArray();
-        SetItems(offLineItem)
-        const outItemInfo = await db.itemOutSchema.toArray();
-        setItemOut(outItemInfo.filter((row) => row.reference && row.reference._id === id).map((row) => ({ ...row, outNumber: "O-0" + row.outNumber, type: 'Item Out' })))
-        const returnInfo = await db.itemReturn.toArray();
-        setItemReturn(returnInfo.filter((row) => row.reference && row.reference._id === id).map((row) => ({ ...row, outNumber: "R-0" + row.outNumber, type: 'Item return' })))
-        const offLineCustomer2 = await db.planingSchema.toArray();
-        const resultPlaning = offLineCustomer2.filter((row) => row.projectName !== undefined && row.projectName._id === id)
-          .map((row) => ({
-            ...row,
-            totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
-          }))
-        setPlaningInfo(resultPlaning)
-      }
-    }
-    fetchData()
-  }, [id]) // Add id dependency
+          const resultPlaning = resP.data?.data?.filter((row) => row.projectName !== undefined && row.projectName?._id === id)
+            .map((row) => ({
+              ...row,
+              totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber || 0).toFixed(2)
+            }));
+          setPlaningInfo(resultPlaning);
 
-  // Separate Effect for Sidebar List (Non-blocking)
-  useEffect(() => {
-    const fetchMaintenanceList = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance');
-          setMaintenanceList(res.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching maintenance list:', error);
+          const allInvoices = resInvoice.data.data;
+          const filteredInvoice = allInvoices.filter((row) => row.invoiceName === refName);
+          const filteredInvoice2 = allInvoices.filter((row) => row.ReferenceName === id);
+          setInvoice(filteredInvoice);
+          setInvoice2(filteredInvoice2);
+
+          const filteredComments = resComment.data?.data?.filter((row) => row.CommentInfo.idInfo === id);
+          setComments(filteredComments.reverse());
+          setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id));
         }
+
+        setLoadingData(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoadingData(false);
       }
     };
-    fetchMaintenanceList();
-  }, []); // Run once on mount
-
+    fetchData();
+  }, [id]);
   const [referenceName, setReferenceName] = useState('');
   const [totalCost, setTotalCost] = useState(0);
   const [totalSell, setTotalSell] = useState(0);
   const [customerName1, setCustomerName1] = useState("");
   const [serviceNumber, setServiceNumber] = useState(0);
   const [items, setItem] = useState([]);
-
-  {/** planing start - Memoized */ }
+  {/** planing start */ }
   const planingObject = useMemo(() => {
     return planingInfo?.reduce((acc, item) => {
       const id = item.employeeID;
@@ -303,104 +321,91 @@ function MaintenanceViewInformation() {
     }, {})
   }, [planingInfo]);
 
-  const totalAmount2 = useMemo(() => Object.keys(planingObject || {}).map((row) => planingObject[row]), [planingObject]);
-
+  const totalAmount2 = useMemo(() => Object.keys(planingObject).map((row) => planingObject[row]), [planingObject]);
   const [totalAmountPlaning, setTotalAmountPlaning] = useState(0);
+
   useEffect(() => {
     const totalPayRoll = totalAmount2?.reduce((sum, row) => sum + row.total, 0);
     setTotalAmountPlaning(totalPayRoll)
   }, [totalAmount2])
+
   {/** planing end */ }
 
   useEffect(() => {
-    const getMaintenance = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-maintenance/${id}`)
-          if (res.data && res.data.data) {
-            setReferenceName(res.data.data.ReferenceName);
-            setCustomerName1(res.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
-            setServiceNumber(res.data.data.serviceNumber);
-            setItem(res.data.data.items);
+    if (items.length > 0) {
+      const totalInfo = items.map((row) => ({
+        total: parseFloat(row.itemOut || 0) * parseFloat(row.itemCost || 0)
+      }));
 
-            // Use local variables for calculation to avoid multiple state updates
-            const totalInfo = res.data.data.items.reduce((sum, row) => sum + (row.itemOut * row.itemCost), 0);
-            const totalInfoSell = res.data.data.items.reduce((sum, row) => sum + (row.itemQty * row.itemRate), 0);
-
-            setTotalSell(res.data.data.subTotal.toFixed(2));
-            const totalCostInfo = Number(totalAmountPlaning) + Number(totalInfo)
-            setTotalCost(totalCostInfo.toFixed(2))
-            // Lazy Load: Show specific record immediately
-            setMaintenance([res.data.data])
-            setLoadingData(false)
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          console.error('Error fetching data:', error);
-          setLoadingData(false)
-        }
-      } else {
-        const resLocal = await db.maintenanceSchema.get({ _id: id })
-        if (resLocal) {
-          setReferenceName(resLocal.ReferenceName);
-          const totalInfo = resLocal.items.reduce((sum, row) => sum + (row.itemOut * row.itemCost), 0);
-          const totalInfoSell = resLocal.items.reduce((sum, row) => sum + (row.itemQty * row.itemRate), 0);
-          setTotalSell(totalInfoSell.toFixed(2));
-          const totalCostInfo = Number(totalAmountPlaning) + Number(totalInfo)
-          setTotalCost(totalCostInfo.toFixed(2))
-          setMaintenance([resLocal])
-          setLoadingData(false)
-        }
-      }
+      const costInfo = totalInfo.reduce((sum, row) => sum + row.total, 0);
+      const totalCostInfo = Number(totalAmountPlaning || 0) + Number(costInfo);
+      setTotalCost(totalCostInfo.toFixed(2));
+    } else {
+      setTotalCost(Number(totalAmountPlaning || 0).toFixed(2));
     }
-    if (id) getMaintenance()
-  }, [id, totalAmountPlaning])
+  }, [items, totalAmountPlaning]);
 
-  {/** Item out sync start - Memoized */ }
+  {/** Item out sync start */ }
+  const itemMap = useMemo(() => {
+    const map = {};
+    item.forEach(i => { map[i._id] = i; });
+    return map;
+  }, [item]);
+
   const related = useMemo(() => {
-    return itemOut.length > 0 ? itemOut.reduce((acc, row) => {
-      row.itemsQtyArray.filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
-        const ItemName = item.itemName.itemName;
-        const Id = item.itemName._id;
-        if (!acc[ItemName]) {
-          acc[ItemName] = { ItemName, Id, total: 0 }
+    if (itemOut.length === 0) return null;
+    return itemOut.reduce((acc, row) => {
+      (row.itemsQtyArray || []).filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
+        const rawId = item.itemName?._id || item.itemName;
+        const Id = rawId ? rawId.toString() : '';
+        const ItemName = item.itemName?.itemName || Id;
+        if (Id) {
+          if (!acc[Id]) {
+            acc[Id] = { ItemName, Id, total: 0 }
+          }
+          acc[Id].total += parseFloat(item.newItemOut)
         }
-        acc[ItemName].total += parseFloat(item.newItemOut)
       });
       return acc
-    }, {}) : null
+    }, {});
   }, [itemOut]);
 
   const relatedReturn = useMemo(() => {
-    return itemReturn.length > 0 ? itemReturn.reduce((acc, row) => {
-      row.itemsQtyArray.filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
-        const ItemName1 = item.itemName.itemName;
-        const Id1 = item.itemName._id;
-        if (!acc[ItemName1]) {
-          acc[ItemName1] = { ItemName1, Id1, total1: 0 }
+    if (itemReturn.length === 0) return null;
+    return itemReturn.reduce((acc, row) => {
+      (row.itemsQtyArray || []).filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
+        const rawId = item.itemName?._id || item.itemName;
+        const Id1 = rawId ? rawId.toString() : '';
+        const ItemName1 = item.itemName?.itemName || Id1;
+        if (Id1) {
+          if (!acc[Id1]) {
+            acc[Id1] = { ItemName1, Id1, total1: 0 }
+          }
+          acc[Id1].total1 += parseFloat(item.newItemOut)
         }
-        acc[ItemName1].total1 += parseFloat(item.newItemOut)
       });
       return acc
-    }, {}) : null
+    }, {});
   }, [itemReturn]);
 
   const newAllOutReturn = useMemo(() => {
-    return related !== null ? Object.values(related).map(({ ItemName, Id, total }) => {
-      const related1 = relatedReturn !== null ? Object.values(relatedReturn).find(({ ItemName1, Id1, total1 }) => Id1 === Id) : null
+    if (related === null) return null;
+    return Object.values(related).map(({ ItemName, Id, total }) => {
+      const related1 = relatedReturn !== null ? Object.values(relatedReturn).find(({ Id1 }) => Id1 === Id) : null
       return ({
         ItemName,
         Id,
         total: related1 ? total - related1.total1 : total
       })
-    }) : null
+    });
   }, [related, relatedReturn]);
 
   const relatedPurchase = useMemo(() => {
     return maintenance.filter((row) => row._id === id).map((row) => ({
       ...row,
-      items: row.items.map((Item) => {
-        const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName._id) : null
+      items: (row.items || []).map((Item) => {
+        const targetId = Item.itemName?._id ? Item.itemName._id.toString() : '';
+        const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === targetId) : null
         return ({
           ...Item,
           itemOut: newAllOutReturnInfo ? newAllOutReturnInfo.total : 0
@@ -411,18 +416,26 @@ function MaintenanceViewInformation() {
 
   const [synchro, setSynchro] = useState('false')
   const handleSynced = async (e) => {
-    e.preventDefault()
-    const updatePurchase = relatedPurchase.map((row) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${row._id}`, {
-        items: row.items
-      })
-    })
+    e.preventDefault();
     try {
-      await Promise.all(updatePurchase);
-      setSynchro('true')
+      const updateTasks = relatedPurchase.map(async (row) => {
+        const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${row._id}`);
+        const currentData = res.data.data;
+        const mergedItems = (currentData.items || []).map(currentItem => {
+          const syncItem = row.items.find(item => item.idRow === currentItem.idRow);
+          if (syncItem) {
+            return { ...currentItem, itemOut: syncItem.itemOut };
+          }
+          return currentItem;
+        });
+        return axios.put(`${ENDPOINT_URL}/update-maintenance/${row._id}`, { items: mergedItems });
+      });
+      await Promise.all(updateTasks);
+      setSynchro('true');
       handleOpen();
     } catch (error) {
-      console.log('An error as occur');
+      console.error('An error occurred during sync:', error);
+      handleError();
     }
   }
 
@@ -433,29 +446,6 @@ function MaintenanceViewInformation() {
 
   const [invoice, setInvoice] = useState([]);
   const [invoice2, setInvoice2] = useState([]);
-  useEffect(() => {
-    const fetchINvoice = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          const filteredInvoice = res.data.data.filter((row) => row.invoiceName === referenceName)
-          const filteredInvoice2 = res.data.data.filter((row) => row.ReferenceName === id)
-          setInvoice2(filteredInvoice2);
-          setInvoice(filteredInvoice);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setLoadingData(false)
-        }
-      } else {
-        const offLineCustomer1 = await db.invoiceSchema.toArray();
-        const filteredInvoice = offLineCustomer1.filter((row) => row.invoiceName === referenceName)
-        const filteredInvoice2 = offLineCustomer1.filter((row) => row.ReferenceName === id)
-        setInvoice2(filteredInvoice2);
-        setInvoice(filteredInvoice);
-      }
-    }
-    fetchINvoice()
-  }, [referenceName, id])
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -475,7 +465,7 @@ function MaintenanceViewInformation() {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'M-00' + serviceNumber + ' For ' + customerName1,
+    documentTitle: `M-${String(serviceNumber).padStart(6, '0')} For ${customerName1}`,
   })
 
 
@@ -487,20 +477,6 @@ function MaintenanceViewInformation() {
   const [reason, setReason] = useState("");
   const [Comments1, setComments] = useState([]);
   const [notification, setNotification] = useState([]);
-  useEffect(() => {
-    const fetchComment = async () => {
-      try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
-        const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
-        setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
-        setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
-    fetchComment()
-  }, [id])
 
 
   const CommentInfo =
@@ -546,7 +522,7 @@ function MaintenanceViewInformation() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-comment/`, data)
       if (res) {
         setReason("");
         handleOpen();
@@ -573,11 +549,11 @@ function MaintenanceViewInformation() {
   const [value, setValue] = useState(0);
   const [value2, setValue2] = useState(0);
   useEffect(() => {
-    const selectedIndex = maintenanceList.findIndex(row => row._id === id);
+    const selectedIndex = maintenance.findIndex(row => row._id === id);
     if (selectedIndex !== -1) {
       setValue(selectedIndex)
     }
-  }, [maintenanceList, id])
+  }, [maintenance, id])
   const handleChange = (e, newValue) => {
     setValue(newValue)
   }
@@ -589,13 +565,19 @@ function MaintenanceViewInformation() {
     const value = e.target.value
     setSearch(value)
   }
-  const newArray = search !== '' ? maintenanceList.filter((row) =>
-    row.serviceName.toLowerCase().includes(search.toLowerCase()) ||
-    row.brand && row.brand.toLowerCase().includes(search.toLowerCase()) ||
-    row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) ||
-    row.items && row.items.some((Item) => Item.itemName && Item.itemName.itemName.toLowerCase().includes(search.toLowerCase())) ||
-    row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase()))
-  ) : maintenanceList
+  const newArray = useMemo(() => {
+    if (search === '') return maintenance;
+    const lowerSearch = search.toLowerCase();
+    return maintenance.filter((row) =>
+      (row.serviceName && row.serviceName.toLowerCase().includes(lowerSearch)) ||
+      (row.serviceNumber && String(row.serviceNumber).includes(lowerSearch)) ||
+      (row.brand && row.brand.toLowerCase().includes(lowerSearch)) ||
+      (row.customerName?.customerName?.toLowerCase().includes(lowerSearch)) ||
+      (row.items && row.items.some((Item) => Item.itemName && Item.itemName.itemName?.toLowerCase().includes(lowerSearch))) ||
+      (row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(lowerSearch)))
+    );
+  }, [maintenance, search]);
+
   const [value3, setValue3] = React.useState('1');
 
   useEffect(() => {
@@ -614,15 +596,15 @@ function MaintenanceViewInformation() {
     setSideBar(!sideBar);
   };
   const data1 = maintenance.filter(row => row._id === id).map((row) => ({
-    number: 'M-0' + row.serviceNumber,
+    number: `M-${String(row.serviceNumber).padStart(6, '0')}`,
     visitDate: dayjs(row.visitDate).format('DD/MM/YYYY'),
     serviceDate: dayjs(row.serviceDate).format('DD/MM/YYYY'),
     status: row.status,
   }))
   const data2 = maintenance.filter(row => row._id === id).map((row) => ({
-    Customer: row.customerName.customerName,
-    Phone: row.customerName.phone,
-    Address: row.customerName.address
+    Customer: row.customerName?.customerName,
+    Phone: row.customerName?.phone,
+    Address: row.customerName?.address
   }))
   const data3 = maintenance.filter(row => row._id === id).map((row) => ({
     itemDescriptionInfo: row.itemDescriptionInfo,
@@ -640,7 +622,7 @@ function MaintenanceViewInformation() {
   const data5 = items.map((Item, i) => {
     return ({
       no: i + 1,
-      item: Item.itemName.itemName,
+      item: Item.itemName?.itemName,
       itemDescription: Item.itemDescription,
       itemQty: Item.itemQty,
       itemRate: '$' + Item.itemRate,
@@ -743,55 +725,56 @@ function MaintenanceViewInformation() {
 
     const buffer = await workbook.xlsx.writeBuffer();
     const bold = new Blob([buffer], { type: 'application/octet-stream' });
-    saveAs(bold, `${'M-00' + serviceNumber + ' for ' + customerName1}.xlsx`)
+    saveAs(bold, `M-${String(serviceNumber).padStart(6, '0')} for ${customerName1}.xlsx`)
   }
-  function Row2(props) {
-    const [open, setOpen] = React.useState(false);
-    return (
-      <React.Fragment>
-        <tr style={{ '& > *': { borderBottom: 'unset' } }}>
-          <td style={{ textAlign: 'left', border: '1px solid black', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUp /> : <span>1</span>}
-          </td>
-          <td colSpan={4} align="left" style={{ textAlign: 'left', border: '1px solid black' }}>Employee</td>
-          <td colSpan={4} style={{ border: '1px solid black' }} align="left"><span>$</span><span>{totalAmountPlaning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-        </tr>
-        <tr>
-          <td style={{ textAlign: 'left', border: '1px solid black', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Box sx={{ margin: 1 }}>
-                <Typography gutterBottom component="div">
-                  Employee
-                </Typography>
-                <table style={{ marginBottom: '5px' }}>
-                  <thead>
-                    <tr>
-                      <th style={{ textAlign: 'left', border: '1px solid black' }}>Name</th>
-                      <th style={{ textAlign: 'left', border: '1px solid black' }}>Days Works</th>
-                      <th style={{ textAlign: 'left', border: '1px solid black' }}>Total Pay Day</th>
-                      <th style={{ textAlign: 'left', border: '1px solid black' }}>Total Pay</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      totalAmount2?.map((row, i) => (
-                        <tr key={i}>
-                          <td align="left" style={{ textAlign: 'left', border: '1px solid black' }}>{row.name}</td>
-                          <td style={{ border: '1px solid black' }} align="left"><span></span><span>{row.workD}</span></td>
-                          <td style={{ border: '1px solid black' }} align="left"><span>$</span><span>{row.dayPay?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                          <td style={{ border: '1px solid black' }} align="left"><span>$</span><span>{row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                        </tr>
-                      ))
-                    }
-                  </tbody>
-                </table>
-              </Box>
-            </Collapse>
-          </td>
-        </tr>
-      </React.Fragment>
-    );
-  }
+const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <React.Fragment>
+      <tr style={{ '& > *': { borderBottom: 'unset' } }}>
+        <td style={{ textAlign: 'left', border: '1px solid black', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+          {open ? <KeyboardArrowUp /> : <span>1</span>}
+        </td>
+        <td colSpan={4} align="left" style={{ textAlign: 'left', border: '1px solid black' }}>Employee</td>
+        <td colSpan={4} style={{ border: '1px solid black' }} align="left"><span>$</span><span>{totalAmountPlaning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+      </tr>
+      <tr>
+        <td style={{ textAlign: 'left', border: '1px solid black', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography gutterBottom component="div">
+                Employee
+              </Typography>
+              <table style={{ marginBottom: '5px' }}>
+                <thead>
+                  <tr>
+                    <th style={{ textAlign: 'left', border: '1px solid black' }}>Name</th>
+                    <th style={{ textAlign: 'left', border: '1px solid black' }}>Days Works</th>
+                    <th style={{ textAlign: 'left', border: '1px solid black' }}>Total Pay Day</th>
+                    <th style={{ textAlign: 'left', border: '1px solid black' }}>Total Pay</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    totalAmount2?.map((row, i) => (
+                      <tr key={i}>
+                        <td align="left" style={{ textAlign: 'left', border: '1px solid black' }}>{row.name}</td>
+                        <td style={{ border: '1px solid black' }} align="left"><span></span><span>{row.workD}</span></td>
+                        <td style={{ border: '1px solid black' }} align="left"><span>$</span><span>{row.dayPay?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                        <td style={{ border: '1px solid black' }} align="left"><span>$</span><span>{row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                      </tr>
+                    ))
+                  }
+                </tbody>
+              </table>
+            </Box>
+          </Collapse>
+        </td>
+      </tr>
+    </React.Fragment>
+  );
+};
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>
@@ -834,7 +817,7 @@ function MaintenanceViewInformation() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -889,7 +872,7 @@ function MaintenanceViewInformation() {
                                   <p className='btnCustomer1' onClick={() => handleShow2(2)}>Filter</p>
                                 </div>
                               </div>
-                              <div style={{ height: '513px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                              <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
                                 <Tabs
                                   value={value}
                                   onChange={handleChange}
@@ -901,10 +884,10 @@ function MaintenanceViewInformation() {
                                     }
                                   }}
                                 >
-                                  {maintenanceList?.map((row, index) => (
+                                  {maintenance?.map((row, index) => (
                                     <Tab
                                       key={index}
-                                      label={row.customerName.customerName + ' | ' + row.serviceName}
+                                      label={row.customerName?.customerName + ' | ' + row.serviceName}
                                       component={Link}
                                       to={`/MaintenanceViewInformation/${row._id}`}
                                       sx={{
@@ -942,7 +925,7 @@ function MaintenanceViewInformation() {
                                   </ViewTooltip>
                                 </Grid>
                               </Grid>
-                              <div style={{ height: '558px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                              <div style={{ height: 'calc(100vh - 125px)', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
                                 <Tabs
                                   value={value2}
                                   onChange={handleChange2}
@@ -956,7 +939,7 @@ function MaintenanceViewInformation() {
                                   {newArray?.map((row, index) => (
                                     <Tab
                                       key={index}
-                                      label={row.customerName.customerName + ' | ' + row.serviceName}
+                                      label={row.customerName?.customerName + ' | ' + row.serviceName}
                                       component={Link}
                                       to={`/MaintenanceViewInformation/${row._id}`}
                                       sx={{
@@ -983,7 +966,7 @@ function MaintenanceViewInformation() {
                                 {
                                   showRef === 1 ? (
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                      <Typography variant='h5'>{row.customerName.customerName} | <span>  M-00{row.serviceNumber}</span></Typography>
+                                      <Typography variant='h5'>{row.customerName?.customerName} | <span>  M-{String(row.serviceNumber).padStart(6, '0')}</span></Typography>
 
                                       <Typography
                                         color={row.status === "Open"
@@ -1070,9 +1053,10 @@ function MaintenanceViewInformation() {
                                             }
                                             {
                                               row.Converted === true && (
-                                                <span style={{ color: 'gray' }} onClick={handleCloseMenu}> Already Converted</span>
+                                                <NavLink to={`/MaintenanceConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                  <span>Convert To Invoice (Again)</span>
+                                                </NavLink>
                                               )
-
                                             }
                                           </MenuItem>
                                         </Menu>
@@ -1084,10 +1068,35 @@ function MaintenanceViewInformation() {
                                         showRef === 2 ? (
                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                             <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px' }}>
-                                              <tbody>
-                                                {
-                                                  invoice ?
-                                                    invoice.map((row) => (
+                                              {
+                                                quotation && quotation.length > 0 && (
+                                                  <tbody>
+                                                    {quotation.map((row) => (
+                                                      <tr key={row._id}>
+                                                        <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.estimateDate).format('DD/MM/YYYY')}</td>
+                                                        <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Quotation # {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')}</td>
+                                                        <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span>$</span> {row.totalInvoice}</td>
+                                                        <td colSpan={2} style={{ textAlign: 'left', border: '1px solid #DDD' }}> Status: {row.status}</td>
+                                                        <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
+                                                          <ViewTooltip>
+                                                            <span>
+                                                              <IconButton >
+                                                                <NavLink to={`/EstimateViewAdminAll/${row._id}`} className='LinkName'>
+                                                                  <span style={{ fontSize: '12px' }}>View</span>
+                                                                </NavLink>
+                                                              </IconButton>
+                                                            </span>
+                                                          </ViewTooltip>
+                                                        </td>
+                                                      </tr>
+                                                    ))}
+                                                  </tbody>
+                                                )
+                                              }
+                                              {
+                                                invoice && invoice.length > 0 && (
+                                                  <tbody>
+                                                    {invoice.map((row) => (
                                                       <tr key={row._id}>
                                                         <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.invoiceDate).format('DD/MM/YYYY')}</td>
                                                         <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Invoice # {row.invoiceName}</td>
@@ -1106,12 +1115,14 @@ function MaintenanceViewInformation() {
                                                           </ViewTooltip>
                                                         </td>
                                                       </tr>
-                                                    ))
-                                                    : ''
-                                                }
-                                                {
-                                                  invoice2 ?
-                                                    invoice2.map((row) => (
+                                                    ))}
+                                                  </tbody>
+                                                )
+                                              }
+                                              {
+                                                invoice2 && invoice2.length > 0 && (
+                                                  <tbody>
+                                                    {invoice2.map((row) => (
                                                       <tr key={row._id}>
                                                         <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.invoiceDate).format('DD/MM/YYYY')}</td>
                                                         <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Invoice # {row.invoiceName}</td>
@@ -1130,10 +1141,10 @@ function MaintenanceViewInformation() {
                                                           </ViewTooltip>
                                                         </td>
                                                       </tr>
-                                                    ))
-                                                    : ''
-                                                }
-                                              </tbody>
+                                                    ))}
+                                                  </tbody>
+                                                )
+                                              }
                                             </table>
                                             <ViewTooltip title="Close" placement='bottom'>
                                               <IconButton onClick={() => handleShowRef(1)} style={{ position: 'relative', float: 'right' }}>
@@ -1201,27 +1212,7 @@ function MaintenanceViewInformation() {
                                   <TabPanel value="1" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
                                     <div ref={componentRef}>
                                       <Box style={{ backgroundColor: 'white', width: '100%', padding: '10px', fontSize: '90%', color: 'black' }}>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '100px', marginBottom: '5px' }}>
-                                          <section>
-                                            <img src={Image} style={{ width: '100%', height: '75px' }} />
-                                          </section>
-                                          <table size="small" style={{ fontSize: '10px', width: '300px' }}>
-                                            <tbody>
-                                              <tr>
-                                                <th style={{ fontSize: '10px', height: '10px' }} align='left'>ADDRESS</th>
-                                                <td style={{ fontSize: '10px', height: '10px' }}>KOLWEZI-AV SALONGO-N74</td>
-                                              </tr>
-                                              <tr>
-                                                <th style={{ fontSize: '10px', height: '10px' }} align='left'>EMAIL</th>
-                                                <td style={{ fontSize: '10px', height: '10px' }}>contact@globalgate.sarl</td>
-                                              </tr>
-                                              <tr>
-                                                <th style={{ fontSize: '10px', height: '10px' }} align='left'>PHONE</th>
-                                                <td style={{ fontSize: '10px', height: '10px' }}>00243 827 722 222 - 00243 900 172 222</td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
-                                        </div>
+                                        <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
                                         <br />
                                         <div style={{ width: '100%' }}>
                                           <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '5px' }}>
@@ -1235,7 +1226,7 @@ function MaintenanceViewInformation() {
                                                 <td style={{ border: '1px solid black' }}>Maintenance Order Date</td>
                                                 <td style={{ border: '1px solid black' }}>{dayjs(row.serviceDate).format('DD/MM/YYYY')}</td>
                                                 <td style={{ border: '1px solid black' }}> Maintenance Order No.</td>
-                                                <td style={{ border: '1px solid black' }}>M-00{row.serviceNumber}</td>
+                                                <td style={{ border: '1px solid black' }}>M-{String(row.serviceNumber).padStart(6, '0')}</td>
                                               </tr>
                                               <tr>
                                                 <td style={{ border: '1px solid black' }}>Visit Date</td>
@@ -1255,13 +1246,13 @@ function MaintenanceViewInformation() {
                                             <tbody>
                                               <tr>
                                                 <td style={{ border: '1px solid black', width: '10px' }}>Customer Name</td>
-                                                <td style={{ border: '1px solid black', width: '100px' }}>{row.customerName.customerName}</td>
+                                                <td style={{ border: '1px solid black', width: '100px' }}>{row.customerName?.customerName}</td>
                                                 <td style={{ border: '1px solid black' }}> Phone</td>
-                                                <td style={{ border: '1px solid black', width: '100px' }}>{row.customerName.phone}</td>
+                                                <td style={{ border: '1px solid black', width: '100px' }}>{row.customerName?.phone}</td>
                                               </tr>
                                               <tr>
                                                 <td style={{ border: '1px solid black' }}>Address</td>
-                                                <td colSpan={3} style={{ border: '1px solid black' }}>{row.customerName.address}</td>
+                                                <td colSpan={3} style={{ border: '1px solid black' }}>{row.customerName?.address}</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -1335,8 +1326,8 @@ function MaintenanceViewInformation() {
                                             </thead>
                                             <tbody>
                                               {
-                                                row.items.map((Item, i) => {
-                                                  const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                (row.items || []).map((Item, i) => {
+                                                  const relatedUnit = itemMap[Item.itemName?._id];
                                                   return (
                                                     <tr key={Item.idRow}>
                                                       {
@@ -1349,13 +1340,13 @@ function MaintenanceViewInformation() {
                                                           :
                                                           (
                                                             <>
-                                                              <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                                              <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                               <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
                                                               <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
                                                               <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
                                                               <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
                                                               <td style={{ border: '1px solid black' }}> <span data-prefix>% </span>{Item.itemDiscount}</td>
-                                                              <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Item.itemAmount?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                              <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                             </>
                                                           )
                                                       }
@@ -1373,12 +1364,12 @@ function MaintenanceViewInformation() {
                                               </tr>
                                               {
                                                 user.data.role === 'CEO' ?
-                                                  <Row2 /> :
+                                                  <Row2 totalAmountPlaning={totalAmountPlaning} totalAmount2={totalAmount2} /> :
                                                   <tr></tr>
                                               }
                                               <tr>
                                                 <td style={{ border: '1px solid black', width: '100px' }} colSpan={5}>Grand Total</td>
-                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{parseFloat(row.totalInvoice)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{Number(row.totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               </tr>
                                             </tbody>
                                           </table>
@@ -1448,8 +1439,8 @@ function MaintenanceViewInformation() {
                                           </thead>
                                           <tbody>
                                             {
-                                              row.items.map((Item, i) => {
-                                                const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                              (row.items || []).map((Item, i) => {
+                                                const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                 return (
                                                   <tr key={Item.idRow}>
                                                     {
@@ -1462,12 +1453,12 @@ function MaintenanceViewInformation() {
                                                         :
                                                         (
                                                           <>
-                                                            <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                                            <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                             <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
                                                             <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
                                                             <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
-                                                            <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Item.itemAmount?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                            <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                             <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemOut !== undefined ? parseFloat(Item.itemOut * Item.itemCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
@@ -1484,7 +1475,7 @@ function MaintenanceViewInformation() {
                                                 #
                                               </td>
                                               <td colSpan={4} align="left" style={{ textAlign: 'left', border: '1px solid black' }}>Employee</td>
-                                              <td colSpan={4} style={{ border: '1px solid black' }} align="left"><span>$</span><span>{totalAmountPlaning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              <td colSpan={4} style={{ border: '1px solid black' }} align="left"><span>$</span><span>{Number(totalAmountPlaning || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                             </tr>
                                             <tr>
                                               <td style={{ border: '1px solid black', textAlign: 'center' }} colSpan={9}> Total Sell: (<span data-prefix>$ </span>{totalSell.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}) - Total Cost: (<span data-prefix>$ </span>{totalCost.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}) = Gain: (<span data-prefix>$ </span>{Gain.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}) </td>

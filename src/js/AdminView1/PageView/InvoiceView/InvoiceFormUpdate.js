@@ -21,6 +21,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Add, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import AddShoppingCartOutlinedIcon from '@mui/icons-material/AddShoppingCartOutlined';
 import { v4 } from 'uuid';
@@ -32,7 +33,7 @@ import dayjs from 'dayjs';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -40,7 +41,7 @@ import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
 import numberToWords from 'number-to-words'
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";import ItemThumbnail from '../../../component/ItemThumbnail';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import db from '../../../dexieDb';
@@ -157,7 +158,7 @@ function InvoiceFormUpdate() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -218,11 +219,11 @@ function InvoiceFormUpdate() {
   const fetchData = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${id}`)
         setCustomerName(res.data.data.customerName);
         setInvoiceDate(res.data.data.invoiceDate);
         setInvoiceDueDate(res.data.data.invoiceDueDate);
-        setInvoiceNumber(res.data.data.invoiceNumber);
+        setInvoiceNumber(Number(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0));
         setInvoiceSubject(res.data.data.invoiceSubject);
         setInvoiceDefect(res.data.data.invoiceDefect);
         SetItems(res.data.data.items);
@@ -232,7 +233,7 @@ function InvoiceFormUpdate() {
         setNote(res.data.data.note);
         setShipping(res.data.data.shipping);
         setAdjustment(res.data.data.adjustment);
-        setAdjustmentNumber(res.data.data.adjustmentNumber);
+        setAdjustmentNumber(Number(res.data?.data?.adjustmentNumber || res.data?.adjustmentNumber || 0));
         setTerms(res.data.data.terms);
         setNoteInfo(res.data.data.noteInfo);
         setActionTaken(res.data.data.actionTaken);
@@ -268,9 +269,9 @@ function InvoiceFormUpdate() {
   const fetchItem = async () => {
     if (navigator.onLine) {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const res = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(res.data.data.reverse())
-        const resC = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
+        const resC = await axios.get(`${ENDPOINT_URL}/customer`)
         setCustomer(resC.data.data.reverse());
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -292,10 +293,10 @@ function InvoiceFormUpdate() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
         setShopTotalPages(res.data.totalPages)
         setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
@@ -365,6 +366,8 @@ function InvoiceFormUpdate() {
           _id: shopItem._id,
           itemName: shopItem.itemName,
         },
+        data: shopItem.data,
+        contentType: shopItem.contentType,
         itemDescription: shopItem.itemDescription,
         itemDiscount: 0,
         itemQty: 1,
@@ -387,13 +390,15 @@ function InvoiceFormUpdate() {
   }
 
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemCost: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
@@ -553,7 +558,7 @@ function InvoiceFormUpdate() {
     newItems.splice(result.destination.index, 0, removed);
     SetItems(newItems)
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
   const handleOpenOpenAutocomplete2 = (e) => {
     e.stopPropagation()
@@ -576,47 +581,30 @@ function InvoiceFormUpdate() {
   };
   {/** item start */ }
   let status = ''
-  if (statusInfo === 'Paid') {
-    if (total > 0 && total < totalInvoice) {
-      status = 'Partially-Paid'
-    } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
+  const diffStatus = Math.round((parseFloat(totalInvoice) - parseFloat(total || 0)) * 100) / 100;
+  if (statusInfo === 'Paid' || statusInfo === 'Partially-Paid' || statusInfo === 'Sent') {
+    if (diffStatus <= 0 && parseFloat(totalInvoice) !== 0) {
       status = 'Paid'
-    } else {
-      status = 'Sent'
-    }
-  }
-  else if (statusInfo === 'Partially-Paid') {
-    if (total > 0 && total < totalInvoice) {
+    } else if (parseFloat(total || 0) > 0 && diffStatus > 0) {
       status = 'Partially-Paid'
-    } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
-      status = 'Paid'
-    } else {
-      status = 'Sent'
-    }
-  }
-  else if (statusInfo === 'Sent') {
-    if (total > 0 && total < totalInvoice) {
-      status = 'Partially-Paid'
-    } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
-      status = 'Paid'
     } else {
       status = 'Sent'
     }
   }
   else if (statusInfo === 'Draft') {
-    if (total > 0 && total < totalInvoice) {
-      status = 'Partially-Paid'
-    } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
+    if (diffStatus <= 0 && parseFloat(totalInvoice) !== 0) {
       status = 'Paid'
+    } else if (parseFloat(total || 0) > 0 && diffStatus > 0) {
+      status = 'Partially-Paid'
     } else {
       status = 'Draft'
     }
   }
   else if (statusInfo === 'Pending') {
-    if (total > 0 && total < totalInvoice) {
-      status = 'Partially-Paid'
-    } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
+    if (diffStatus <= 0 && parseFloat(totalInvoice) !== 0) {
       status = 'Paid'
+    } else if (parseFloat(total || 0) > 0 && diffStatus > 0) {
+      status = 'Partially-Paid'
     } else {
       status = 'Pending'
     }
@@ -667,8 +655,8 @@ function InvoiceFormUpdate() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ?
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ?
           {
             ...row,
             itemName: {
@@ -746,13 +734,13 @@ function InvoiceFormUpdate() {
   {/**Update New Row End*/ }
 
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
+    const result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0)
     setSubTotal(result1.toFixed(2))
-    let newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
+    let newTotal = Math.round((parseFloat(result1) + parseFloat(shipping || 0) + parseFloat(adjustmentNumber || 0)) * 100) / 100
     setTotalInvoice(newTotal)
-    let newBalance = Math.round((totalInvoice - total) * 100) / 100
+    let newBalance = Math.round((newTotal - (parseFloat(total) || 0)) * 100) / 100
     setBalanceDue(newBalance)
-  })
+  }, [items, shipping, adjustmentNumber, total])
   useEffect(() => {
     if (totalInvoice) {
       const wholePart = Math.floor(totalInvoice)
@@ -765,16 +753,16 @@ function InvoiceFormUpdate() {
   const [reason, setReason] = useState("");
   const dateComment = new Date();
   const [hideBack, setHideBack] = useState('');
-  const invoiceName = "INV-00" + invoiceNumber
+  const invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0')
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify ' + ' INV-' + invoiceNumber,
-      reason,
+      person: user.data.userName + ' Modify INVOICE ',
+      reason: 'INV-' + String(invoiceNumber).padStart(6, '0') + ' ' + reason,
       dateNotification: dateComment
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
       console.log(error)
     }
@@ -782,12 +770,13 @@ function InvoiceFormUpdate() {
 
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       customerName,
       invoiceNumber,
       invoiceSubject,
       invoiceDefect,
-      items,
+      items: itemsWithoutData,
       subTotal,
       total, status, invoiceDate, invoiceDueDate,
       balanceDue,
@@ -795,29 +784,44 @@ function InvoiceFormUpdate() {
       noteInfo, actionTaken,
       note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, updateS: false
     };
+
     if (navigator.onLine) {
       try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`, data);
+        // Fetch current state from server
+        const currentRes = await axios.get(`${ENDPOINT_URL}/get-invoice/${id}`);
+        const currentInvoice = currentRes.data.data;
+
+        // Merge local changes with server state
+        const updatedData = {
+          ...currentInvoice,
+          ...data,
+          updateS: false
+        };
+
+        const res = await axios.put(`${ENDPOINT_URL}/update-invoice/${id}`, updatedData);
         if (res) {
-          handleCreateComment()
+          handleCreateComment();
           await db.invoiceSchema.update(data.invoiceNumber, {
-            invoiceNumber, invoiceSubject, invoiceDefect, items, subTotal, total, status, balanceDue,
-            totalW, invoiceName, noteInfo, actionTaken, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, updateS: true
-          })
-          handleOpen()
+            ...updatedData,
+            updateS: true
+          });
+          handleOpen();
         }
       } catch (error) {
-        if (error) {
-          handleError();
-        }
+        console.error("Error updating invoice:", error);
+        handleError();
       }
     } else {
-      await db.invoiceSchema.update(data.invoiceNumber, {
-        invoiceNumber, invoiceSubject, invoiceDefect, items, subTotal, total, status, balanceDue, totalW, invoiceName,
-        noteInfo, actionTaken,
-        note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, updateS: false
-      })
-      handleOpen();
+      try {
+        await db.invoiceSchema.update(data.invoiceNumber, {
+          ...data,
+          updateS: false
+        });
+        handleOpen();
+      } catch (error) {
+        console.error("Error updating local invoice:", error);
+        handleError();
+      }
     }
   }
   const [sideBar, setSideBar] = React.useState(true);
@@ -953,7 +957,7 @@ function InvoiceFormUpdate() {
                         label='Invoice Number'
                         value={invoiceNumber}
                         onChange={(e) => setInvoiceNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">I-00</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">INV-</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>
@@ -1127,21 +1131,30 @@ function InvoiceFormUpdate() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName._id || Item.itemName.itemName === 'empty' ? (
+                                                      Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                              <TextField
-                                                                name='itemDescription' id='itemDescription'
-                                                                value={Item.itemDescription}
-                                                                multiline
-                                                                rows={3}
-                                                                onChange={(e) => handleChangeCEO(e, Item.idRow)}
-                                                                size="small"
-                                                                sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                              <ItemThumbnail
+                                                                itemId={Item.itemName?._id}
+                                                                initialData={Item.data}
+                                                                initialType={Item.contentType}
                                                               />
-                                                            </div>
+                                                              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                                <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                  {Item.itemName?.itemName?.toUpperCase() || ''}
+                                                                </Typography>
+                                                                <TextField
+                                                                  name='itemDescription' id='itemDescription'
+                                                                  value={Item.itemDescription}
+                                                                  multiline
+                                                                  rows={3}
+                                                                  onChange={(e) => handleChangeCEO(e, Item.idRow)}
+                                                                  size="small"
+                                                                  sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                                />
+                                                              </Box>
+                                                            </Box>
                                                             <div>
                                                               <BlackTooltip title="Clear" placement='top'>
                                                                 <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
@@ -1151,7 +1164,7 @@ function InvoiceFormUpdate() {
                                                               {
                                                                 Item.itemName._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
-                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
                                                                     </IconButton>
                                                                   </BlackTooltip>
@@ -1249,7 +1262,7 @@ function InvoiceFormUpdate() {
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{(parseFloat(Item.itemAmount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete" sx={{}}>
                                                       <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1339,21 +1352,30 @@ function InvoiceFormUpdate() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName._id || Item.itemName.itemName === 'empty' ? (
+                                                      Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                              <TextField
-                                                                name='itemDescription' id='itemDescription'
-                                                                value={Item.itemDescription}
-                                                                multiline
-                                                                rows={3}
-                                                                onChange={(e) => handleChange(e, Item.idRow)}
-                                                                size="small"
-                                                                sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                              <ItemThumbnail
+                                                                itemId={Item.itemName?._id}
+                                                                initialData={Item.data}
+                                                                initialType={Item.contentType}
                                                               />
-                                                            </div>
+                                                              <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                                <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                  {Item.itemName?.itemName?.toUpperCase() || ''}
+                                                                </Typography>
+                                                                <TextField
+                                                                  name='itemDescription' id='itemDescription'
+                                                                  value={Item.itemDescription}
+                                                                  multiline
+                                                                  rows={3}
+                                                                  onChange={(e) => handleChange(e, Item.idRow)}
+                                                                  size="small"
+                                                                  sx={{ width: '250px', backgroundColor: 'white', fontSize: 12 }}
+                                                                />
+                                                              </Box>
+                                                            </Box>
                                                             <div>
                                                               <BlackTooltip title="Clear" placement='top'>
                                                                 <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
@@ -1363,7 +1385,7 @@ function InvoiceFormUpdate() {
                                                               {
                                                                 Item.itemName._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
-                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
                                                                     </IconButton>
                                                                   </BlackTooltip>
@@ -1461,7 +1483,7 @@ function InvoiceFormUpdate() {
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{(parseFloat(Item.itemAmount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete" sx={{}}>
                                                       <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1509,7 +1531,7 @@ function InvoiceFormUpdate() {
                         onChange={(e) => setNote(e.target.value)}
                         sx={{ width: '50%', backgroundColor: 'white' }}
                       />
-                      <table className="firstTable">
+                      <table className="firstTable" style={{ borderCollapse: 'collapse', width: '100%' }}>
                         <tbody>
                           <tr style={{ borderBottom: '1px solid black' }}>
                             <th style={{ textAlign: 'left' }}>Sub-Total</th>

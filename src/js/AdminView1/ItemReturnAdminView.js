@@ -23,13 +23,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import Image1 from '../img/images.png'
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -39,7 +40,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 import { useReactToPrint } from 'react-to-print';
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 
@@ -140,20 +141,13 @@ function ItemReturnAdminView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -165,18 +159,12 @@ function ItemReturnAdminView() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -196,42 +184,18 @@ function ItemReturnAdminView() {
   const [loadingData, setLoadingData] = useState(true);
   const [selectedRows, setSelectedRows] = useState([]);
   const [item, SetItems] = useState([]);
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchTerm]);
+  const [newPurchase, setNewPurchase] = useState([]);
+  const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
+  const limit = 100;
+  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
+  const [filterField, setFilterField] = useState(''); // Initialize filter field state
+  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
+  const [totalPage, SetTotalPage] = useState(0);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/itemReturn-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
-          referenceInfo: item.reference !== undefined ? item.reference.referenceName : item.description,
-          itemInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
-          itemDescriptionInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
-        }));
-        SetTotalPage(res.data.totalPages);
-        setItemOut(formatDate);
-        setLoadingData(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false);
-      }
-    } else {
-      const offLineItems = await db.itemReturn.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineItems : offLineItems.filter((item) =>
-        (item.description && item.description.toLowerCase().includes(lowerSearch)) ||
-        (item.outNumber && item.outNumber.toString().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/itemReturn-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
         dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
@@ -239,14 +203,26 @@ function ItemReturnAdminView() {
         itemInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
         itemDescriptionInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
-      setItemOut(formatDate.reverse());
+      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      setItemOut(formatDate);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
       setLoadingData(false);
     }
   };
+  const handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+
 
   useEffect(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
-  }, [page, debouncedSearchTerm, filterField, filterValue]);
+    fetchItems(page, searchTerm, filterField, filterValue);
+  }, [page, searchTerm, filterField, filterValue]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // Update page state (convert to 0-based index)
+  };
   {/** search start */ }
   const [filterModel, setFilterModel] = React.useState({
     items: [],
@@ -296,16 +272,11 @@ function ItemReturnAdminView() {
   useEffect(() => {
     const fetchData2 = async () => {
       if (idView !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemReturn/${idView}`)
-            setItemPurchaseView(res.data.data)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.itemReturn.get({ _id: idView })
-          setItemPurchaseView(resLocal)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-itemReturn/${idView}`)
+          setItemPurchaseView(res.data.data)
+        } catch (error) {
+          console.log(error)
         }
       }
     }
@@ -357,6 +328,7 @@ function ItemReturnAdminView() {
 
     setTimeout(() => {
       setLoading(false);
+      window.location.reload();
     }, 500)
   }
   const handleDeleteCloseLoading = () => {
@@ -370,10 +342,10 @@ function ItemReturnAdminView() {
     const fetchId = async () => {
       if (DeleteId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-itemReturn/${DeleteId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-itemReturn/${DeleteId}`)
           SetItemsQtyArray(res.data.data.itemsQtyArray);
           setReference(res.data.data.reference);
-          setRelatedNumber(res.data.data.outNumber);
+          setRelatedNumber(Number(res.data?.data?.outNumber || res.data?.outNumber || 0));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -390,9 +362,9 @@ function ItemReturnAdminView() {
     const fetchData = async () => {
       try {
         const [purChaseResponse, maintenanceResponse, invoiceResponse] = await Promise.all([
-          axios.get('https://gg-project-production.up.railway.app/endpoint/purchase'),
-          axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance'),
-          axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
+          axios.get(`${ENDPOINT_URL}/purchase?summary=true`),
+          axios.get(`${ENDPOINT_URL}/maintenance?summary=true`),
+          axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
         ])
         setProject(purChaseResponse.data.data);
         setMaintenance(maintenanceResponse.data.data);
@@ -412,70 +384,95 @@ function ItemReturnAdminView() {
   const [serviceId, setServiceId] = useState('')
 
   useEffect(() => {
-    invoice.filter((row) => row._id === reference._id).map((row) => setFilteredInvoice(row.items))
-    invoice.filter((row) => row._id === reference._id).map((row) => setInvoiceId(row._id))
-    projects.filter((row) => row.projectName._id === reference._id).map((row) => setFilteredProject(row.items))
-    projects.filter((row) => row.projectName._id === reference._id).map((row) => setProjectId(row._id))
-    maintenance.filter((row) => row._id === reference._id).map((row) => setFilteredMaintenance(row.items))
-    maintenance.filter((row) => row._id === reference._id).map((row) => setServiceId(row._id))
+    setInvoiceId('');
+    setProjectId('');
+    setServiceId('');
+    setFilteredInvoice([]);
+    setFilteredProject([]);
+    setFilteredMaintenance([]);
+    
+    invoice.filter((row) => row._id === reference?._id).map((row) => {
+      setFilteredInvoice(row.items);
+      setInvoiceId(row._id);
+    });
+    projects.filter((row) => row.projectName?._id === reference?._id).map((row) => {
+      setFilteredProject(row.items);
+      setProjectId(row._id);
+    });
+    maintenance.filter((row) => row._id === reference?._id).map((row) => {
+      setFilteredMaintenance(row.items);
+      setServiceId(row._id);
+    });
   }, [invoice, projects, maintenance, reference])
 
   {/** getting all info end */ }
   {/** Update Info start */ }
 
-  const handleUpdatePurchase = () => {
-    const result = filteredProject.map((row) => {
-      const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
-        .find((Item) => Item.idRow === row.idRow)
-      if (relatedArray) {
-        const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
-        const itemOut = row.itemOut + infoOut
-        return {
-          ...row, itemOut
+  const handleUpdatePurchase = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${projectId}`);
+      const currentPurchase = res.data.data;
+      const result = currentPurchase.items.map((row) => {
+        const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
+          .find((Item) => Item.itemName?._id && Item.itemName?._id === row.itemName?._id)
+        if (relatedArray) {
+          const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
+          const itemOut = (parseFloat(row.itemOut) || 0) + infoOut
+          return {
+            ...row, itemOut
+          }
         }
-      }
-      return row
-    })
-    const data = {
-      items: result
-    };
-    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
+        return row
+      })
+      const data = {
+        items: result
+      };
+      return await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, data)
+    } catch (error) { console.error(error); }
   }
-  const handleUpdateInvoice = () => {
-    const result = filteredInvoice.map((row) => {
-      const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
-        .find((Item) => Item.idRow === row.idRow)
-      if (relatedArray) {
-        const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
-        const itemOut = row.itemOut + infoOut
-        return {
-          ...row, itemOut
+  const handleUpdateInvoice = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceId}`);
+      const currentInvoice = res.data.data;
+      const result = currentInvoice.items.map((row) => {
+        const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
+          .find((Item) => Item.itemName?._id && Item.itemName?._id === row.itemName?._id)
+        if (relatedArray) {
+          const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
+          const itemOut = (parseFloat(row.itemOut) || 0) + infoOut
+          return {
+            ...row, itemOut
+          }
         }
-      }
-      return row
-    })
-    const data = {
-      items: result
-    };
-    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
+        return row
+      })
+      const data = {
+        items: result
+      };
+      return await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceId}`, data)
+    } catch (error) { console.error(error); }
   }
-  const handleUpdateMaintenance = () => {
-    const result = filteredMaintenance.map((row) => {
-      const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
-        .find((Item) => Item.idRow === row.idRow)
-      if (relatedArray) {
-        const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
-        const itemOut = row.itemOut + infoOut
-        return {
-          ...row, itemOut
+  const handleUpdateMaintenance = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${serviceId}`);
+      const currentMaintenance = res.data.data;
+      const result = currentMaintenance.items.map((row) => {
+        const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
+          .find((Item) => Item.itemName?._id && Item.itemName?._id === row.itemName?._id)
+        if (relatedArray) {
+          const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
+          const itemOut = (parseFloat(row.itemOut) || 0) + infoOut
+          return {
+            ...row, itemOut
+          }
         }
-      }
-      return row
-    })
-    const data = {
-      items: result
-    };
-    return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
+        return row
+      })
+      const data = {
+        items: result
+      };
+      return await axios.put(`${ENDPOINT_URL}/update-maintenance/${serviceId}`, data)
+    } catch (error) { console.error(error); }
   }
   {/** Update Info end */ }
   {/** Delete Start */ }
@@ -487,14 +484,14 @@ function ItemReturnAdminView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
@@ -502,20 +499,21 @@ function ItemReturnAdminView() {
   const handleDeleteUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-itemReturn/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-itemReturn/${DeleteId}`);
       if (res) {
-        handleCreateNotification();
-        handleQty();
-        if (filteredProject.length > 0 && filteredInvoice.length === 0 && filteredMaintenance.length === 0) {
-          handleUpdatePurchase()
-        } else if (filteredProject.length === 0 && filteredInvoice.length > 0 && filteredMaintenance.length === 0) {
+        await handleCreateNotification();
+        await handleQty();
+        if (projectId) {
+          await handleUpdatePurchase()
+        } else if (invoiceId) {
           //Update Invoice
-          handleUpdateInvoice()
-        } else if (filteredProject.length === 0 && filteredInvoice.length === 0 && filteredMaintenance.length > 0) {
-          handleUpdateMaintenance()
+          await handleUpdateInvoice()
+        } else if (serviceId) {
+          await handleUpdateMaintenance()
         } else {
           console.log('no related');
         }
+        handleCloseReasonDelete();
         handleDeleteOpenLoading();
       }
     }
@@ -530,7 +528,7 @@ function ItemReturnAdminView() {
   };
   const columns = [
     { field: 'outNumber', headerName: '#', width: 90, renderCell: (params) => (<div> <span>R-0</span><span>{params.row.outNumber}</span> </div>) },
-    { field: 'dataField', headerName: 'Date', width: 100 },
+    { field: 'itemOutDate', headerName: 'Date', width: 100, type: 'date', valueGetter: (params) => params.row.itemOutDate ? new Date(params.row.itemOutDate) : null, renderCell: (params) => params.row.itemOutDate ? dayjs(params.row.itemOutDate).format('DD/MM/YYYY') : '—' },
     { field: 'reason', headerName: 'Reason', width: 150 },
     { field: 'referenceInfo', headerName: 'Description', width: open1 ? 480 : 550 },
     { field: 'itemInfo', headerName: 'Item', width: open1 ? 80 : 130 },
@@ -695,6 +693,10 @@ function ItemReturnAdminView() {
 
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={itemOut}
                       columns={columns}
                       slots={{ toolbar: GridToolbar }}
@@ -807,7 +809,7 @@ function ItemReturnAdminView() {
                               <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #DDD' }}>
                                 <p style={{ padding: '5px' }}>Item Return Number: R-0{itemPurchaseView.outNumber}</p>
                               </section>
-                              <img src={Image1} style={{ height: '60px', width: '230px' }} />
+                              <img  src={Image1} style={{ height: '60px', width: '230px' }} />
                             </section>
                           </td>
                         </tr>

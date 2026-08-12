@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, DragIndicatorRounded, Edit, RemoveCircleOutline } from '@mui/icons-material';
 import { useNavigate, useParams, Navigate, NavLink } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -34,7 +35,7 @@ import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authS
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
@@ -42,6 +43,7 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -149,7 +151,7 @@ function ConvertToInvoice() {
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
     if (storesUserId) {
-      axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+      axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
         .then(res => {
           // Handle the response data here
           const Name = res.data.data.employeeName;
@@ -173,7 +175,7 @@ function ConvertToInvoice() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-invoice';
+  const apiUrl = `${ENDPOINT_URL}/create-invoice`;
   const invoiceDate = dayjs(Date.now());
   const [invoiceDueDate, setInvoiceDueDate] = useState("");
   const [invoiceSubject, setInvoiceSubject] = useState("");
@@ -202,26 +204,67 @@ function ConvertToInvoice() {
   const [expensesInfo, setExpensesInfo] = useState([])
   const [categories, setCategories] = useState([]);
   const [noteInfo, setNoteInfo] = useState("");
-  const invoiceName = "INV-00" + invoiceNumber
+  const invoiceName = `INV-${String(invoiceNumber).padStart(6, '0')}`
   const [customer, setCustomer] = useState('');
   const [customerName, setCustomerName] = useState({});
   const [expenses, setExpenses] = useState({});
   const [planingInfo, setPlaningInfo] = useState([]);
+  const [projectAdvancesSum, setProjectAdvancesSum] = useState(0);
+  const [currentCredit, setCurrentCredit] = useState(0);
+
+  useEffect(() => {
+    const fetchPaymentsAndCredit = async () => {
+      if (projectId && customer?._id) {
+        try {
+          const [resPayments, resCustomer] = await Promise.all([
+            axios.get(`${ENDPOINT_URL}/payment`),
+            axios.get(`${ENDPOINT_URL}/get-customer/${customer._id}`)
+          ]);
+
+          const projectPayments = resPayments.data?.data?.filter(pay =>
+            pay.TotalAmount?.some(item => item.id === projectId)
+          );
+          const sum = projectPayments.reduce((acc, pay) => {
+            const projectAmount = pay.TotalAmount.find(item => item.id === projectId)?.amount || 0;
+            return acc + Number(projectAmount);
+          }, 0);
+
+          setProjectAdvancesSum(sum);
+          setCurrentCredit(resCustomer.data.data.credit || 0);
+          setTotal(sum);
+        } catch (error) {
+          console.error("Error fetching project payments/credit:", error);
+        }
+      }
+    };
+    fetchPaymentsAndCredit();
+  }, [projectId, customer?._id]);
+
+  const handleUpdateCredit = async (overage) => {
+    if (overage <= 0) return;
+    const newCredit = parseFloat(currentCredit) + parseFloat(overage);
+    try {
+      await axios.put(`${ENDPOINT_URL}/update-customer/${customer._id}`, { credit: newCredit });
+    } catch (error) {
+      console.error("Error updating customer credit:", error);
+    }
+  };
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
         setCustomer(res.data.data.customerName);
         setProjectID(res.data.data.projectName._id);
-        SetItems(res.data.data.items);
+        const purchaseItems = res.data.data.items || [];
+        SetItems(prev => {
+          // If we already have items (e.g. from expenses loop), merge them carefully.
+          // For now, fetchData is the primary source, so we just set it but preserve any existing non-purchase items if they were added (unlikely this early but safe).
+          return purchaseItems;
+        });
         setPurchaseName(res.data.data._id);
         setNoteInfo(res.data.data.noteInfo);
         setInvoiceSubject(res.data.data.projectName.projectName);
         setInvoiceDefect(res.data.data.estimateDefect);
-        const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment');
-        const projectPayments = resPayment.data.data.filter(p => p.TotalAmount && p.TotalAmount.some(t => t.id === res.data.data.projectName._id));
-        const totalPrePaid = projectPayments.reduce((sum, p) => sum + parseFloat(p.TotalAmount.find(t => t.id === res.data.data.projectName._id)?.total || 0), 0);
-        setTotal(totalPrePaid);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -232,7 +275,7 @@ function ConvertToInvoice() {
     const fetchCustomer = async () => {
       if (customer) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customer._id}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-customer/${customer._id}`)
           setCustomerName(
             {
               _id: res.data.data._id,
@@ -281,8 +324,9 @@ function ConvertToInvoice() {
   useEffect(() => {
     const fetchlastNumber = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-invoice')
-        setInvoiceNumber(parseInt(res.data.invoiceNumber) + 1)
+        const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-invoice`)
+        const num = res.data && res.data.invoiceNumber ? (parseInt(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0)) : 0;
+        setInvoiceNumber(num + 1)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -292,10 +336,10 @@ function ConvertToInvoice() {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const res = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(res.data.data.reverse())
         SetItems(items => items.map((row) => {
-          const related = res.data.data.find((row2) => row.itemName !== undefined && row2._id === row.itemName._id)
+          const related = res.data?.data?.find((row2) => row.itemName !== undefined && row2._id === row.itemName?._id)
           if (related) {
             return {
               ...row, itemRate: related.itemSellingPrice, totalAmount: row.itemQty * related.itemSellingPrice,
@@ -306,14 +350,14 @@ function ConvertToInvoice() {
           }
           return row
         }))
-        const resCategory = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
+        const resCategory = await axios.get(`${ENDPOINT_URL}/expensesCategory`)
         setCategories(resCategory.data.data);
-        const resExpenses = await axios.get('https://gg-project-production.up.railway.app/endpoint/expense')
-        const resPlaning = await axios.get('https://gg-project-production.up.railway.app/endpoint/planing')
+        const resExpenses = await axios.get(`${ENDPOINT_URL}/expense?summary=true`)
+        const resPlaning = await axios.get(`${ENDPOINT_URL}/planing`)
         if (projectId) {
-          const result = resExpenses.data.data.filter((row) => row.accountNameInfo !== undefined && row.accountNameInfo._id === projectId)
+          const result = resExpenses.data?.data?.filter((row) => row.accountNameInfo !== undefined && row.accountNameInfo._id === projectId)
           setExpensesInfo(result)
-          const resultPlaning = resPlaning.data.data.filter((row) => row.projectName !== undefined && row.projectName._id === projectId)
+          const resultPlaning = resPlaning.data?.data?.filter((row) => row.projectName !== undefined && row.projectName._id === projectId)
             .map((row) => ({
               ...row,
               totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
@@ -385,8 +429,16 @@ function ConvertToInvoice() {
       totalCost: 0,
       itemCost: 0,
     })
-    SetItems([...items, ...newRow, ...newRow1])
-  }, [expensesInfo, planingInfo])
+    SetItems(prevItems => {
+      // Filter out existing specialized rows to avoid duplicates or overwriting main items
+      const filtered = prevItems.filter(item => {
+        const isEmployee = item.itemDescription === "EMPLOYEE";
+        const isExpense = categories.some(cat => cat.expensesCategory.toUpperCase() === item.itemDescription);
+        return !isEmployee && !isExpense;
+      });
+      return [...filtered, ...newRow, ...newRow1];
+    });
+  }, [expensesInfo, planingInfo, categories])
   const handleChange = (e, idRow) => {
     const { name, value } = e.target;
     const list = [...items];
@@ -479,7 +531,7 @@ function ConvertToInvoice() {
     newItems.splice(result.destination.index, 0, removed);
     SetItems(newItems)
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Modal Item Show */ }
   const [selectedRowId, setSelectedRowId] = useState('');
   const [showModal, setShowModal] = useState(false);
@@ -491,10 +543,16 @@ function ConvertToInvoice() {
   const handleCloseRowId = () => {
     setShowModal(false);
   }
-  const deleteItem = () => {
-    const newRowId = targetRowId
+  const deleteItem = (idRow) => {
+    // If idRow is passed directly (e.g. from white row delete button), use it.
+    // Otherwise use selectedRowId (from modal Confirm button).
+    const rowToDelete = (typeof idRow === 'string' || typeof idRow === 'number') ? idRow : selectedRowId;
+    
+    if (!rowToDelete) return;
+
+    const newRowId = targetRowId;
     if (newRowId) {
-      const selectRow = items.find(item => item.idRow === selectedRowId);
+      const selectRow = items.find(item => item.idRow === rowToDelete);
       const targetRow = items.find(item => item.idRow === newRowId);
       if (selectRow && targetRow) {
         const newTotal = Math.round((targetRow.totalAmount += selectRow.totalAmount) * 100) / 100
@@ -520,8 +578,10 @@ function ConvertToInvoice() {
         SetItems(updateRate)
       }
     }
-    SetItems(items => items.filter((Item) => Item.idRow !== selectedRowId));
-    setSelectedRowId(''); setShowModal(false); setTargetRowId('');
+    SetItems(items => items.filter((Item) => Item.idRow !== rowToDelete));
+    setSelectedRowId(''); 
+    setShowModal(false); 
+    setTargetRowId('');
   };
   {/** Modal Item Show End */ }
 
@@ -537,7 +597,7 @@ function ConvertToInvoice() {
 
   {/** Item InFO */ }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -570,8 +630,8 @@ function ConvertToInvoice() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -677,7 +737,7 @@ function ConvertToInvoice() {
       statusInfo: 'Completed'
     };
     try {
-      await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${id}`, data)
+      await axios.put(`${ENDPOINT_URL}/update-purchase/${id}`, data)
     } catch (error) {
       console.error(error)
     }
@@ -687,7 +747,7 @@ function ConvertToInvoice() {
       status: 'Completed'
     };
     try {
-      await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-projects/${projectId}`, data)
+      await axios.put(`${ENDPOINT_URL}/update-projects/${projectId}`, data)
     } catch (error) {
       console.error(error)
     }
@@ -697,11 +757,11 @@ function ConvertToInvoice() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'INV-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      reason: `INV-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName.customerName}`,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -719,6 +779,10 @@ function ConvertToInvoice() {
       status = 'Pending'
     }
     try {
+      const overage = Math.max(0, parseFloat(total) - parseFloat(totalInvoice));
+      const finalPaidAmount = Math.min(parseFloat(total), parseFloat(totalInvoice));
+      const finalBalanceDue = Math.max(0, parseFloat(totalInvoice) - finalPaidAmount);
+
       const res = await axios.post(apiUrl, {
         customerName,
         invoiceNumber,
@@ -726,19 +790,22 @@ function ConvertToInvoice() {
         invoiceDueDate,
         invoiceSubject,
         invoiceDefect,
-        status,
+        status: finalBalanceDue === 0 ? 'Paid' : (finalPaidAmount > 0 ? 'Partially-Paid' : 'Sent'),
         items,
         subTotal, noteInfo,
         invoiceName,
         invoicePurchase: 'Purchased',
         Position: 'Last',
         ReferenceName2: id,
-        total,
-        balanceDue,
+        total: finalPaidAmount,
+        balanceDue: finalBalanceDue,
         totalW,
         note, Create, shipping, adjustment, adjustmentNumber, totalInvoice, terms
       });
       if (res) {
+        if (overage > 0) {
+          await handleUpdateCredit(overage);
+        }
         // Open Loading View
         const ReferenceInfo = res.data.data._id
         const ReferenceInfoNumber = res.data.data.invoiceNumber
@@ -812,7 +879,7 @@ function ConvertToInvoice() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -868,7 +935,7 @@ function ConvertToInvoice() {
                         label='Invoice Number'
                         value={invoiceNumber}
                         onChange={(e) => setInvoiceNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">I-00</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">INV-</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>
@@ -1020,9 +1087,14 @@ function ConvertToInvoice() {
                                                     {
                                                       Item.itemName.itemName ? (
                                                         (
-                                                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                            <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                          <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                                                            <ItemThumbnail
+                                                              itemId={Item.itemName?._id}
+                                                              initialData={Item.data}
+                                                              initialType={Item.contentType}
+                                                            />
+                                                            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}
@@ -1033,25 +1105,25 @@ function ConvertToInvoice() {
                                                                 disabled={user.data.role !== 'CEO'}
                                                                 sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
                                                               />
-                                                            </div>
-                                                            <div>
+                                                            </Box>
+                                                            <Box>
                                                               <BlackTooltip title="Clear" placement='top'>
                                                                 <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
                                                                   <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
-                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
                                                                     </IconButton>
                                                                   </BlackTooltip>
                                                                 )
                                                               }
 
-                                                            </div>
-                                                          </div>)
+                                                            </Box>
+                                                          </Box>)
                                                       ) : (
                                                         <div style={{ display: 'flex', alignItems: 'center' }}>
                                                           <Autocomplete
@@ -1131,7 +1203,7 @@ function ConvertToInvoice() {
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete" sx={{}}>
                                                       <IconButton onClick={() => handleDelete(Item.idRow)} >
@@ -1209,11 +1281,11 @@ function ConvertToInvoice() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName.itemName ? (
+                                                      Item.itemName?.itemName ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}
@@ -1232,9 +1304,9 @@ function ConvertToInvoice() {
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
-                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
                                                                     </IconButton>
                                                                   </BlackTooltip>
@@ -1334,7 +1406,7 @@ function ConvertToInvoice() {
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete">
                                                       <IconButton onClick={() => handleDelete(Item.idRow)} >

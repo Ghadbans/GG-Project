@@ -1,3 +1,5 @@
+import PrintHeader from '../component/PrintHeader';
+import PrintFooter from '../component/PrintFooter';
 import React, { useEffect, useState, useRef } from 'react'
 import './view.css'
 import './PageView/Chartview.css';
@@ -23,13 +25,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, LocalPrintshop, MailOutline, Print } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import Image2 from '../img/images.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -40,7 +43,7 @@ import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -147,20 +150,13 @@ function PurchaseOrderViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -176,18 +172,12 @@ function PurchaseOrderViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -221,44 +211,33 @@ function PurchaseOrderViewAdmin() {
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/purchaseOrder-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`${ENDPOINT_URL}/purchaseOrder-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
         dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
-        referenceInfo: item.reference !== undefined && item.reference !== null ? item.reference.referenceName : item.description,
+        referenceInfo: item.description !== undefined && item.description !== '' ? item.description : (item.reference !== undefined && item.reference !== null ? item.reference.referenceName : ''),
         itemInfo: item.itemsQtyArray.map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
         itemDescriptionInfo: item.itemsQtyArray.map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
-      setItemOut(formatDate);
+      setItemOut(formatDate.sort((a,b) => b.outNumber - a.outNumber));
       setLoadingData(false);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Handle offline case
-      const offLineItems = await db.purchaseOrder.toArray();
-      const formatDate = offLineItems.map((item) => ({
-        ...item,
-        id: item._id,
-        dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
-        referenceInfo: item.reference !== undefined && item.reference !== null ? item.reference.referenceName : item.description,
-        itemInfo: item.itemsQtyArray.map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
-        itemDescriptionInfo: item.itemsQtyArray.map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
-      }));
-      setItemOut(formatDate.reverse());
       setLoadingData(false);
     }
   };
 
   const fetchAndSaveData = async () => {
-    try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/purchaseOrder`);
-      await db.purchaseOrder.clear();
-      await db.purchaseOrder.bulkPut(res.data.data);
-      console.log('Data saved to IndexedDB successfully');
-    } catch (error) {
-      console.error('Error fetching and saving data:', error);
-    }
+    // try {
+    //   const res = await axios.get(`${ENDPOINT_URL}/purchaseOrder`);
+    //   // await db.purchaseOrder.clear(); // REMOVED: Destructive sync
+    //   await db.purchaseOrder.bulkPut(res.data.data);
+    //   console.log('Data saved to IndexedDB successfully');
+    // } catch (error) {
+    //   console.error('Error fetching and saving data:', error);
+    // }
   };
 
   useEffect(() => {
@@ -266,8 +245,8 @@ function PurchaseOrderViewAdmin() {
     fetchAndSaveData();
   }, [page, searchTerm, filterField, filterValue]);
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage - 1); // Update page state (convert to 0-based index)
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // Update page state (convert to 0-based index)
   };
   {/** search start */ }
   const [filterModel, setFilterModel] = React.useState({
@@ -314,18 +293,12 @@ function PurchaseOrderViewAdmin() {
   };
   useEffect(() => {
     const fetchData2 = async () => {
-
       if (idView !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchaseOrder/${idView}`)
-            setItemPurchaseView(res.data.data)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.purchaseOrder.get({ _id: idView })
-          setItemPurchaseView(resLocal)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-purchaseOrder/${idView}`)
+          setItemPurchaseView(res.data.data)
+        } catch (error) {
+          console.log(error)
         }
       }
     }
@@ -334,9 +307,12 @@ function PurchaseOrderViewAdmin() {
   {/** view end */ }
   const [open, setOpen] = useState(false);
   const [DeleteId, setDeleteId] = useState(null)
-  const handleOpen = (id) => {
+  const [relatedNumber, setRelatedNumber] = useState(0)
+
+  const handleOpen = (id, number) => {
     setOpen(true);
     setDeleteId(id)
+    setRelatedNumber(number)
   };
   const handleClose = () => {
     setOpen(false);
@@ -364,7 +340,9 @@ function PurchaseOrderViewAdmin() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** Loading Update View End */ }
 
@@ -373,33 +351,20 @@ function PurchaseOrderViewAdmin() {
     setModalDeleteOpenLoading(true);
     setLoading(true);
     handleClose();
+    handleCloseReasonDelete();
 
     setTimeout(() => {
       setLoading(false);
     }, 500)
   }
   const handleDeleteCloseLoading = () => {
-    window.location.reload();
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** getting all info start */ }
   const [itemsQtyArray, SetItemsQtyArray] = useState([]);
   const [reference, setReference] = useState({})
-  const [relatedNumber, setRelatedNumber] = useState(0)
-  useEffect(() => {
-    const fetchId = async () => {
-      if (DeleteId !== null) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchaseOrder/${DeleteId}`)
-          SetItemsQtyArray(res.data.data.itemsQtyArray);
-          setReference(res.data.data.reference);
-          setRelatedNumber(res.data.data.outNumber);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-    }
-    fetchId()
-  }, [DeleteId])
   {/** Delete Start */ }
   const handleCreateNotification = async () => {
     const data = {
@@ -409,7 +374,7 @@ function PurchaseOrderViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -422,7 +387,7 @@ function PurchaseOrderViewAdmin() {
       const data = {
         status: 'Purchase'
       }
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchaseOrder/${idInfo}`, data);
+      const res = await axios.put(`${ENDPOINT_URL}/update-purchaseOrder/${idInfo}`, data);
       if (res) {
         setUpdateS(true);
         handleDeleteOpenLoading();
@@ -435,7 +400,7 @@ function PurchaseOrderViewAdmin() {
   const handleDeleteUpdate = async (e) => {
     e.preventDefault()
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-purchaseOrder/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-purchaseOrder/${DeleteId}`);
       if (res) {
         handleDeleteOpenLoading();
         handleCreateNotification();
@@ -448,14 +413,16 @@ function PurchaseOrderViewAdmin() {
   {/**     {field: 'status', headerName: 'Purchase', width:180, renderCell: (params)=> (<div>{params.row.status === 'Purchase'?<span>{params.row.status}</span>:<button onClick={(e)=>onStatusUpdate(e,params.row._id)} className='btnCustomer'>PURCHASE</button>}  </div>)  }, */ }
 
   const columns = [
-    { field: 'outNumber', headerName: '#', width: 90, renderCell: (params) => (<div> <span>PO-0</span><span>{params.row.outNumber}</span> </div>) },
-    { field: 'dataField', headerName: 'Date', width: 100 },
-    { field: 'reason', headerName: 'Reason', width: 140 },
-    { field: 'referenceInfo', headerName: 'Description', width: open1 ? 340 : 550 },
-    { field: 'itemInfo', headerName: 'Item', width: open1 ? 80 : 130 },
-    { field: 'itemDescriptionInfo', headerName: 'I-Description', width: open1 ? 80 : 130 },
+    { field: 'outNumber', headerName: '#', minWidth: 100, flex: 0.8, renderCell: (params) => (<div> <span>PO-</span><span>{String(params.row.outNumber).padStart(6, '0')}</span> </div>) },
+    { field: 'dataField', headerName: 'Date', minWidth: 100, flex: 1 },
+    { field: 'manufacturer', headerName: 'Manufacturer', minWidth: 150, flex: 1.5 },
+    { field: 'manufacturerNumber', headerName: 'Reference', minWidth: 120, flex: 1 },
+    { field: 'reason', headerName: 'Reason', minWidth: 140, flex: 1.2 },
+    { field: 'referenceInfo', headerName: 'Description', minWidth: 250, flex: 3 },
+    { field: 'itemInfo', headerName: 'Item', minWidth: 100, flex: 1 },
+    { field: 'itemDescriptionInfo', headerName: 'I-Description', minWidth: 120, flex: 1.2 },
     {
-      field: 'Converted', headerName: 'Status', width: 130, renderCell: (params) => (<div> <span>{params.row.Converted === true ? <Typography
+      field: 'Converted', headerName: 'Status', minWidth: 130, flex: 1, renderCell: (params) => (<div> <span>{params.row.Converted === true ? <Typography
         sx={{ color: '#4caf50' }}
       >
         Converted
@@ -466,7 +433,7 @@ function PurchaseOrderViewAdmin() {
       </Typography>}</span> </div>)
     },
     {
-      field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={InvoiceInfoV.length === 0 && user.data.role !== 'CEO'}>
@@ -479,7 +446,7 @@ function PurchaseOrderViewAdmin() {
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
             <IconButton disabled={InvoiceInfoU.length === 0 && user.data.role !== 'CEO'}>
@@ -489,13 +456,12 @@ function PurchaseOrderViewAdmin() {
             </IconButton>
           </span>
         </EditTooltip>
-
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                  <IconButton onClick={() => handleOpen(params.row._id, params.row.outNumber)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -545,7 +511,7 @@ function PurchaseOrderViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -591,21 +557,17 @@ function PurchaseOrderViewAdmin() {
 
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={itemOut}
                       columns={columns}
-                      rowCount={totalPage * limit}
-                      paginationMode="server"
-                      onPaginationModelChange={(model) => setPage(model.page)}
-                      paginationModel={{ page, pageSize: limit }}
                       slots={{ toolbar: GridToolbar }}
                       onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
                       slotProps={{
                         toolbar: {
                           showQuickFilter: true,
-                          quickFilterProps: {
-                            value: searchTerm,
-                            onChange: (e) => setSearchTerm(e.target.value)
-                          },
                           printOptions: {
                             disableToolbarButton: true
                           },
@@ -623,6 +585,7 @@ function PurchaseOrderViewAdmin() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
+                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
                   </Box>
 
                 </div>)
@@ -709,7 +672,7 @@ function PurchaseOrderViewAdmin() {
                         <th style={{ borderBottom: '1px solid black' }}>
                           <div className='invoiceTest'>
                             <span>
-                              <img src={Image2} />
+                              <img  src={Image2} />
                             </span>
                             <address style={{ textAlign: 'right', fontSize: '70%', marginTop: '10px' }}>
                               <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
@@ -775,7 +738,7 @@ function PurchaseOrderViewAdmin() {
                                   </thead>
                                   <tbody>
                                     {
-                                      itemPurchaseView.itemsQtyArray.filter((row) => parseInt(row.newItemOut) !== 0)
+                                      itemPurchaseView.itemsQtyArray.filter((row) => parseInt(row.newItemOut) !== 0 || row.newDescription !== undefined)
                                         .map((row, i) => {
                                           const relatedUnit = item.find((Item1) => Item1._id === row.itemName._id)
                                           return (
@@ -821,20 +784,7 @@ function PurchaseOrderViewAdmin() {
                             <p disabled>...</p>
                             <p disabled>...</p>
                             <br />
-                            <section style={{ position: 'fixed', bottom: 0, left: 0, right: 0, justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                              <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                <span><EmailIcon /></span>
-                                <span>contact@globalgate.sarl</span>
-                              </p>
-                              <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                <span><PhoneIcon /></span>
-                                <span>+243 827 722 222</span>
-                              </p>
-                              <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                <span><WebIcon /></span>
-                                <span>www.GlobalGate.sarl</span>
-                              </p>
-                            </section>
+                            <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
 
                           </div>
                         </td>
@@ -904,7 +854,7 @@ function PurchaseOrderViewAdmin() {
                             </TableHead>
                             <TableBody>
                               {
-                                itemPurchaseView.itemsQtyArray.filter((row) => parseInt(row.newItemOut) !== 0)
+                                itemPurchaseView.itemsQtyArray.filter((row) => parseInt(row.newItemOut) !== 0 || row.newDescription !== undefined)
                                   .map((row, i) => {
                                     const relatedUnit = item.find((Item1) => Item1._id === row.itemName._id)
                                     return (
@@ -985,7 +935,7 @@ function PurchaseOrderViewAdmin() {
               </Grid>
               <br />
               <Grid item xs={12}>
-                <button type='submit' className='btnCustomer' style={{ width: '100%' }}>Save</button>
+                <button type='submit' className='btnCustomer2' style={{ width: '100%' }}>Save</button>
               </Grid>
             </Grid>
           </form>

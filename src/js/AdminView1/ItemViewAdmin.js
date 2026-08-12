@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo, useRef } from 'react';
 import './view.css';
 import SideMaintenance from '../component/SideMaintenance';
 import SearchIcon from '@mui/icons-material/Search';
@@ -16,7 +16,9 @@ import MuiDrawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
-import { Add, Logout } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../apiConfig';
+import { Add } from '@mui/icons-material';
+import Logout from '../component/NetworkLogoutIcon';
 import { useDispatch, useSelector } from "react-redux";
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
@@ -26,7 +28,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { Close } from '@mui/icons-material';
-import db from '../dexieDb';
+
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ExcelJS from 'exceljs';
 
@@ -131,20 +133,13 @@ function ItemViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`);
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId });
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`);
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -157,13 +152,11 @@ function ItemViewAdmin() {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-        res.data.data.filter((row) => row.userID === user.data.id)
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules));
       } catch (error) {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
-          .map((row) => setGrantAccess(row.modules));
+        console.error('Error fetching data:', error);
       }
     };
     fetchNumber();
@@ -214,15 +207,15 @@ function ItemViewAdmin() {
     return () => clearTimeout(handler);
   }, [searchTerm]);
 
-  const { isHibernating } = useSelector(state => state.user);
-  const [isOffline, setIsOffline] = useState(!navigator.onLine);
-  const [itemToLoad, setItemToLoad] = useState([]);
 
-  // Removed blocking background sync to prevent UI lag.
-  // Data load is now handled directly by fetchItems with pagination.
+
+  const fetchRequestId = useRef(0);
+
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    const currentRequestId = ++fetchRequestId.current;
     try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`${ENDPOINT_URL}/item-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      if (currentRequestId !== fetchRequestId.current) return;
       setLoadingData(false);
       SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
       const formatDate = res.data.itemI.map((item) => ({
@@ -232,37 +225,18 @@ function ItemViewAdmin() {
       }));
       SetItems(formatDate);
     } catch (error) {
+      if (currentRequestId !== fetchRequestId.current) return;
       console.error('Error fetching data:', error);
-      // Handle offline case
-      const offLineItems = await db.itemSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineItems : offLineItems.filter((item) =>
-        (item.itemName && item.itemName.toLowerCase().includes(lowerSearch)) ||
-        (item.itemDescription && item.itemDescription.toLowerCase().includes(lowerSearch)) ||
-        (item.itemUpc && (item.itemUpc.newCode.toLowerCase().includes(lowerSearch) || item.itemUpc.itemNumber.toString().includes(lowerSearch))) ||
-        (item.itemCategory && item.itemCategory.toLowerCase().includes(lowerSearch)) ||
-        (item.itemBrand && item.itemBrand.toLowerCase().includes(lowerSearch)) ||
-        (item.itemStore && item.itemStore.toLowerCase().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
-        ...item,
-        id: item._id,
-        ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber,
-      }));
-      SetItems(formatDate);
-      setIsOffline(true);
       setLoadingData(false);
     }
   };
 
   useEffect(() => {
-    if (!isHibernating) {
-      fetchItems(page, debouncedSearchTerm, filterField, filterValue);
-    }
-  }, [page, debouncedSearchTerm, filterField, filterValue, isHibernating]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
+  }, [page, debouncedSearchTerm, filterField, filterValue]);
   //console.log(item)
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage - 1); // Update page state (convert to 0-based index)
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // Update page state (convert to 0-based index)
   };
 
 
@@ -274,7 +248,7 @@ function ItemViewAdmin() {
   const handleLoadMargin = async (e) => {
     e.preventDefault();
     try {
-      const resLow = await axios.get('https://gg-project-production.up.railway.app/endpoint/low-margin-item');
+      const resLow = await axios.get(`${ENDPOINT_URL}/low-margin-item`);
       setLowMargin(resLow.data.data.map((item) => ({
         ...item,
         id: item._id,
@@ -344,12 +318,16 @@ function ItemViewAdmin() {
   };
 
   const handleCloseModal = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setOpenDeleteAll(false);
+    setOpenDeleteMultiple(false);
+    setOpen(false);
+    fetchItems(page, searchTerm, filterField, filterValue); // Refresh data without reload
   };
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-item/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-item/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -362,7 +340,7 @@ function ItemViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idToDelete}`);
+        return axios.get(`${ENDPOINT_URL}/get-item/${idToDelete}`);
       });
       try {
         const res = await Promise.all(deletePromises);
@@ -385,7 +363,7 @@ function ItemViewAdmin() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data);
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data);
     } catch (error) {
       console.log(error);
     }
@@ -394,7 +372,7 @@ function ItemViewAdmin() {
   const handleDeleteMany = async (e) => {
     e.preventDefault();
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-item/${idToDelete}`);
+      return axios.delete(`${ENDPOINT_URL}/delete-item/${idToDelete}`);
     });
     try {
       const res = await Promise.all(deletePromises);
@@ -480,41 +458,37 @@ function ItemViewAdmin() {
   }, [lowMargin, search2]);
 
   const columns = [
-    { field: 'ItemNumber', headerName: 'Item Number', width: 80 },
-    { field: 'itemName', headerName: 'Item Name', width: open1 ? 200 : 350, renderCell: (params) => params.row.itemName.toUpperCase() },
-    { field: 'itemCategory', headerName: 'Category', width: 100 },
-    { field: 'itemBrand', headerName: 'itemBrand', width: 100 },
-    { field: 'itemDescription', headerName: 'Description', width: open1 ? 200 : 300, renderCell: (params) => params.row.itemDescription.toUpperCase() },
-    { field: 'itemSellingPrice', headerName: 'Price', width: 100, renderCell: (params) => `$${params.row.itemSellingPrice}` },
-    { field: 'itemQuantity', headerName: 'Stock', width: 100, renderCell: (params) => `${params.row.itemQuantity + ' ' + params.row.unit?.toUpperCase()}` },
+    { field: 'ItemNumber', headerName: 'Item Number', minWidth: 90, flex: 0.8 },
+    { field: 'itemName', headerName: 'Item Name', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemName.toUpperCase() },
+    { field: 'itemCategory', headerName: 'Category', minWidth: 100, flex: 1 },
+    { field: 'itemBrand', headerName: 'itemBrand', minWidth: 100, flex: 1 },
+    { field: 'itemDescription', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemDescription.toUpperCase() },
+    { field: 'itemSellingPrice', headerName: 'Price', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.itemSellingPrice}` },
+    { field: 'itemQuantity', headerName: 'Stock', minWidth: 100, flex: 1, renderCell: (params) => `${params.row.itemQuantity + ' ' + params.row.unit?.toUpperCase()}` },
     {
-      field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={ItemInfoV.length === 0 && user.data.role !== 'CEO'}>
-              <NavLink to={`/ItemInformationVIew/${params.row._id}`} className='LinkName'>
+            <IconButton component={NavLink} to={`/ItemInfo/${params.row._id}`} className='LinkName' disabled={ItemInfoV.length === 0 && user.data.role !== 'CEO'}>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
-              </NavLink>
             </IconButton>
           </span>
         </ViewTooltip>
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
-              <NavLink to={`/ItemFormUpdate/${params.row._id}`} className='LinkName'>
+            <IconButton component={NavLink} to={`/ItemFormUpdate/${params.row._id}`} className='LinkName' disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
                 <EditIcon style={{ color: 'gray' }} />
-              </NavLink>
             </IconButton>
           </span>
         </EditTooltip>
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
             <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0 && user.data.role !== 'CEO'}>
@@ -527,42 +501,38 @@ function ItemViewAdmin() {
   ];
 
   const columns2 = [
-    { field: 'ItemNumber', headerName: 'Item Number', width: 80 },
-    { field: 'typeItem', headerName: 'Type', width: 50 },
-    { field: 'itemName', headerName: 'Item Name', width: open1 ? 200 : 350, renderCell: (params) => params.row.itemName.toUpperCase() },
-    { field: 'itemCategory', headerName: 'Category', width: 100 },
-    { field: 'itemBrand', headerName: 'itemBrand', width: 100 },
-    { field: 'itemDescription', headerName: 'Description', width: open1 ? 200 : 300, renderCell: (params) => params.row.itemDescription.toUpperCase() },
-    { field: 'itemSellingPrice', headerName: 'Price', width: 100, renderCell: (params) => { parseFloat(params.row.itemSellingPrice)?.toFixed(2) } },
-    { field: 'itemQuantity', headerName: 'Stock', width: 100, renderCell: (params) => `${params.row.itemQuantity + ' ' + params.row.unit?.toUpperCase()}` },
+    { field: 'ItemNumber', headerName: 'Item Number', minWidth: 90, flex: 0.8 },
+    { field: 'typeItem', headerName: 'Type', minWidth: 70, flex: 0.5 },
+    { field: 'itemName', headerName: 'Item Name', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemName.toUpperCase() },
+    { field: 'itemCategory', headerName: 'Category', minWidth: 100, flex: 1 },
+    { field: 'itemBrand', headerName: 'itemBrand', minWidth: 100, flex: 1 },
+    { field: 'itemDescription', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemDescription.toUpperCase() },
+    { field: 'itemSellingPrice', headerName: 'Price', minWidth: 100, flex: 1, renderCell: (params) => { parseFloat(params.row.itemSellingPrice)?.toFixed(2) } },
+    { field: 'itemQuantity', headerName: 'Stock', minWidth: 100, flex: 1, renderCell: (params) => `${params.row.itemQuantity + ' ' + params.row.unit?.toUpperCase()}` },
     {
-      field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
+      field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={ItemInfoV.length === 0 && user.data.role !== 'CEO'}>
-              <NavLink to={`/ItemInformationVIew/${params.row._id}`} className='LinkName'>
+            <IconButton component={NavLink} to={`/ItemInfo/${params.row._id}`} className='LinkName' disabled={ItemInfoV.length === 0 && user.data.role !== 'CEO'}>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
-              </NavLink>
             </IconButton>
           </span>
         </ViewTooltip>
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
+      field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
-              <NavLink to={`/ItemFormUpdate/${params.row._id}`} className='LinkName'>
+            <IconButton component={NavLink} to={`/ItemFormUpdate/${params.row._id}`} className='LinkName' disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
                 <EditIcon style={{ color: 'gray' }} />
-              </NavLink>
             </IconButton>
           </span>
         </EditTooltip>
       )
     },
     {
-      field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
+      field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
             <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0 && user.data.role !== 'CEO'}>
@@ -577,36 +547,132 @@ function ItemViewAdmin() {
   const handleFilterModelChange = (newFilterModel) => {
     const searchTerm = newFilterModel.quickFilterValues?.join(' ') || '';
     setSearchTerm(searchTerm);
+    setPage(0);
     setFilterModel(newFilterModel);
     localStorage.setItem('QuickFilterItemViewDisplay', JSON.stringify(newFilterModel));
   };
 
   const handleExportToExcel = async () => {
-    const workbook = new ExcelJS.Workbook();
-    const worksheet = workbook.addWorksheet('Items');
+    try {
+      setLoading(true);
+      alert("Preparing Full Catalog Export (All Items). Downloading in batches... Please stay on this screen.");
 
-    worksheet.columns = [
-      { header: 'Item Number', key: 'ItemNumber', width: 20 },
-      { header: 'Type', key: 'typeItem', width: 20 },
-      { header: 'Item Name', key: 'itemName', width: 30 },
-      { header: 'Category', key: 'itemCategory', width: 30 },
-      { header: 'Brand', key: 'itemBrand', width: 20 },
-      { header: 'Description', key: 'itemDescription', width: 30 },
-      { header: 'Price', key: 'itemSellingPrice', width: 15 },
-      { header: 'Stock', key: 'itemQuantity', width: 15 },
-    ];
+      // 1. Get the total count of items first
+      const countRes = await axios.get(`${ENDPOINT_URL}/item-Information?page=1&limit=1`);
+      const totalItems = countRes.data.totalItem || 0;
 
-    itemToLoad.forEach(item => {
-      worksheet.addRow(item);
-    });
+      if (totalItems === 0) {
+        alert("No items found to export.");
+        setLoading(false);
+        return;
+      }
 
-    const buffer = await workbook.xlsx.writeBuffer();
-    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'Items.xlsx';
-    link.click();
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Items');
+
+      // Define columns
+      worksheet.columns = [
+        { header: 'Item Number', key: 'ItemNumber', width: 15 },
+        { header: 'Item Picture', key: 'itemPicture', width: 35 }, // Column B
+        { header: 'Type', key: 'typeItem', width: 15 },
+        { header: 'Item Name', key: 'itemName', width: 40 },
+        { header: 'Category', key: 'itemCategory', width: 20 },
+        { header: 'Brand', key: 'itemBrand', width: 15 },
+        { header: 'Description', key: 'itemDescription', width: 50 },
+        { header: 'Cost Price', key: 'itemCostPrice', width: 15 },
+        { header: 'Price', key: 'itemSellingPrice', width: 15 },
+        { header: 'Stock', key: 'itemQuantity', width: 15 },
+      ];
+
+      // Style headers
+      worksheet.getRow(1).font = { bold: true };
+      worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
+      worksheet.getRow(1).height = 30;
+
+      // 2. Fetch all items in batches of 500
+      const batchSize = 500;
+
+      for (let page = 1; page <= Math.ceil(totalItems / batchSize); page++) {
+        const batchRes = await axios.get(`${ENDPOINT_URL}/item-Information?page=${page}&limit=${batchSize}&search=&filterField=&filterValue=`);
+        const batchItems = Array.isArray(batchRes.data.itemI) ? batchRes.data.itemI : [];
+
+        for (const itemData of batchItems) {
+          const formattedItem = {
+            ...itemData,
+            ItemNumber: itemData.itemUpc?.newCode + '-0' + itemData.itemUpc?.itemNumber,
+            itemPicture: ''
+          };
+
+          const row = worksheet.addRow(formattedItem);
+          const rowIndex = row.number;
+          
+          worksheet.getRow(rowIndex).height = 100;
+          worksheet.getRow(rowIndex).alignment = { vertical: 'middle', horizontal: 'left', wrapText: true };
+
+          if (itemData.data && itemData.contentType) {
+            try {
+              let base64Image;
+              if (typeof itemData.data === 'string') {
+                base64Image = itemData.data;
+              } else if (itemData.data.data) {
+                const uint8Array = new Uint8Array(itemData.data.data);
+                let binary = '';
+                const len = uint8Array.byteLength;
+                for (let j = 0; j < len; j++) binary += String.fromCharCode(uint8Array[j]);
+                base64Image = window.btoa(binary);
+              }
+
+              if (base64Image) {
+                const imageId = workbook.addImage({
+                  base64: `data:${itemData.contentType};base64,${base64Image}`,
+                  extension: itemData.contentType.split('/')[1] || 'png',
+                });
+
+                // SQUARE RENDERING & CENTERING (Preserves Aspect Ratio)
+                // Row height 100pt ~= 133px. Col width 35 ~= 245px.
+                // Image 120x120px fits neatly centered.
+                worksheet.addImage(imageId, {
+                  tl: { col: 1, row: rowIndex - 1, offset: { x: 60, y: 8 } },
+                  ext: { width: 120, height: 120 },
+                  editAs: 'oneCell'
+                });
+              }
+            } catch (err) { console.log('Image error'); }
+          }
+        }
+        console.log(`Batched Export: Finished page ${page} of ${Math.ceil(totalItems / batchSize)}`);
+      }
+
+      // Format currency columns
+      worksheet.eachRow((row, rowNumber) => {
+        if (rowNumber > 1) {
+          const costCell = row.getCell('itemCostPrice');
+          const priceCell = row.getCell('itemSellingPrice');
+          if (costCell.value) costCell.numFmt = '"$"#,##0.00';
+          if (priceCell.value) priceCell.numFmt = '"$"#,##0.00';
+        }
+      });
+
+      const buffer = await workbook.xlsx.writeBuffer();
+      const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `Global_Gate_Full_Catalog_${new Date().toLocaleDateString()}.xlsx`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      setLoading(false);
+      alert("Export Successful!");
+    } catch (error) {
+      console.error('Export Error:', error);
+      alert("An error occurred during export. This usually means the system is very busy. Please try again.");
+      setLoading(false);
+    }
   };
+
+
+
 
   return (
     <div className='Homeemployee'>
@@ -645,11 +711,11 @@ function ItemViewAdmin() {
               <Logout style={{ color: 'white' }} />
             </IconButton>
             <Typography variant="body2" color="inherit">
-              {isOffline ? 'Offline' : 'Online'}
+              Online
             </Typography>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -765,13 +831,11 @@ function ItemViewAdmin() {
                             <button onClick={handleExportToExcel} className='btnCustomer'>Export to Excel</button>
                             <ViewTooltip>
                               <span>
-                                <IconButton disabled={ItemInfoC.length === 0 && user.data.role !== 'CEO'}>
-                                  <NavLink to={'/ItemForm'} className='LinkName'>
-                                    <span className='btnCustomerAdding'>
-                                      <Add />
-                                    </span>
-                                  </NavLink>
-                                </IconButton>
+                                  <IconButton component={NavLink} to={'/ItemForm'} className='LinkName' disabled={ItemInfoC.length === 0 && user.data.role !== 'CEO'}>
+                                      <span className='btnCustomerAdding'>
+                                        <Add />
+                                      </span>
+                                  </IconButton>
                               </span>
                             </ViewTooltip>
                             <button onClick={handleRefreshSearch} className='btnCustomer2'>Refresh Search</button>
@@ -779,6 +843,11 @@ function ItemViewAdmin() {
                           <br />
                           <br />
                           <DataGrid
+                          filterMode="server"
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={item}
                             columns={columns}
                             slots={{ toolbar: GridToolbar }}
@@ -821,6 +890,10 @@ function ItemViewAdmin() {
                             <TextField label="Search" id="search2" value={search2} variant="standard" onChange={handleSearch2} />
                           </section>
                           <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={newArray}
                             columns={columns2}
                             pageSize={10}

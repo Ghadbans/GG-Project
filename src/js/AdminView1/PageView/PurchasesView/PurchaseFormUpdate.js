@@ -6,7 +6,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Divider } from '@mui/material'
+import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -20,8 +20,11 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline, ShoppingCartOutlined } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
+import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination, Avatar } from '@mui/material';
+
+import ItemThumbnail from '../../../component/ItemThumbnail';
 import { v4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -35,14 +38,14 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -151,20 +154,13 @@ function PurchaseFormUpdate() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -199,32 +195,24 @@ function PurchaseFormUpdate() {
   const [inputValue, setInputValue] = React.useState('');
   const [inputValue2, setInputValue2] = React.useState('');
   const [description, setDescription] = useState('');
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
 
   const fetchData = async () => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-purchase/${id}`)
-        setCustomerName(res.data.data.customerName);
-        setPurchaseDate(res.data.data.purchaseDate);
-        setProjectName(res.data.data.projectName);
-        setPurchaseNumber(res.data.data.purchaseNumber);
-        setPurchaseAmount2(res.data.data.purchaseAmount2);
-        setPurchaseAmount1(res.data.data.purchaseAmount1);
-        SetItems(res.data.data.items);
-        setDescription(res.data.data.description);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    } else {
-      const resLocal = await db.purchaseSchema.get({ _id: id })
-      setCustomerName(resLocal.customerName);
-      setPurchaseDate(resLocal.purchaseDate);
-      setProjectName(resLocal.projectName);
-      setPurchaseNumber(resLocal.purchaseNumber);
-      setPurchaseAmount2(resLocal.purchaseAmount2);
-      setPurchaseAmount1(resLocal.purchaseAmount1);
-      SetItems(resLocal.items);
-      setDescription(resLocal.description);
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
+      setCustomerName(res.data.data.customerName);
+      setPurchaseDate(res.data.data.purchaseDate);
+      setProjectName(res.data.data.projectName);
+      setPurchaseNumber(Number(res.data?.data?.purchaseNumber || res.data?.purchaseNumber || 0));
+      setPurchaseAmount2(res.data.data.purchaseAmount2);
+      setPurchaseAmount1(res.data.data.purchaseAmount1);
+      SetItems(res.data.data.items);
+      setDescription(res.data.data.description);
+      setCheckTvA(res.data.data.CheckTvA || false);
+      setTax(res.data.data.tax || 0);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   }
 
@@ -234,16 +222,11 @@ function PurchaseFormUpdate() {
   // get itemName 
   const [ItemInformation, setItemInformation] = useState([]);
   const fetchItem = async () => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-        setItemInformation(res.data.data.reverse())
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    } else {
-      const offLineCustomer1 = await db.itemSchema.toArray();
-      setItemInformation(offLineCustomer1.reverse())
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/item`)
+      setItemInformation(res.data.data.reverse())
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   }
   useEffect(() => {
@@ -253,25 +236,17 @@ function PurchaseFormUpdate() {
   // Fetch Shop Items & Rate
   const fetchShop = async () => {
     setShopLoading(true);
-    if (navigator.onLine) {
-      try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-        resRate.data.data.forEach((row) => setRate(row.rate))
+    try {
+      const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+      resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setShopLoading(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setShopLoading(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.itemSchema.toArray();
-      setShopItems(offLineCustomer1.filter((row) => row.typeItem === "Goods").reverse())
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+      setShopTotalPages(res.data.totalPages)
+      setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
       setShopLoading(false)
-      const offLineRate = await db.rateSchema.toArray();
-      offLineRate.forEach((row) => setRate(row.rate))
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setShopLoading(false)
     }
   }
 
@@ -341,7 +316,10 @@ function PurchaseFormUpdate() {
         itemWeight: shopItem.itemWeight || "",
         totalGenerale: 0,
         totalCost: shopItem.itemCostPrice,
-        stock: shopItem.itemQuantity,
+                stock: shopItem.itemQuantity,
+        data: shopItem.data,
+        contentType: shopItem.contentType,
+
         itemOut: 0,
         newItemOut: 0,
       };
@@ -467,7 +445,7 @@ function PurchaseFormUpdate() {
     SetItems(newItems)
   };
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -477,7 +455,10 @@ function PurchaseFormUpdate() {
       itemCost: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
-      stock: selectedOptions?.itemQuantity,
+            stock: selectedOptions?.itemQuantity,
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
+
     } : row))
   }
   const handleChange = (e, idRow) => {
@@ -496,7 +477,7 @@ function PurchaseFormUpdate() {
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
 
   const handleOpenOpenAutocomplete2 = (e) => {
@@ -515,7 +496,7 @@ function PurchaseFormUpdate() {
       ...row,
       itemName: {
         _id: null,
-        itemName: row.itemName.itemName
+        itemName: typeof row.itemName === 'string' ? row.itemName : row.itemName?.itemName || ''
       },
       itemDescription: "",
       itemDiscount: 0,
@@ -546,8 +527,8 @@ function PurchaseFormUpdate() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -573,16 +554,11 @@ function PurchaseFormUpdate() {
   {/** Project Start */ }
   useEffect(() => {
     const fetchProject = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-          setProject(res.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.projectSchema.toArray();
-        setProject(offLineCustomer1.reverse());
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/projects`)
+        setProject(res.data.data.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchProject()
@@ -612,14 +588,19 @@ function PurchaseFormUpdate() {
       },
     } : row))
   }
-  {/** Project End */ }
+{/** Project End */ }
   //Calculate the total
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.totalCost, 0)
-    setPurchaseAmount1(result1.toFixed(2))
-    const result2 = items.reduce((sum, row) => sum + row.totalGenerale, 0)
-    setPurchaseAmount2(result2.toFixed(2))
+    const result1 = items.reduce((sum, row) => sum + Number(row.totalCost || 0), 0)
+    setPurchaseAmount1(Number(result1 || 0).toFixed(2))
+    const result2 = items.reduce((sum, row) => sum + Number(row.totalGenerale || 0), 0)
+    setPurchaseAmount2(Number(result2 || 0).toFixed(2))
   }, [items])
+
+  useEffect(() => {
+    setTax(CheckTvA ? parseFloat(purchaseAmount1) * 0.16 : 0);
+  }, [purchaseAmount1, CheckTvA])
+
   const [open1, setOpen1] = useState(false);
 
   const handleOpenUpdate = (e) => {
@@ -684,7 +665,7 @@ function PurchaseFormUpdate() {
       dateNotification: new Date()
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
     } catch (error) {
       console.log(error)
     }
@@ -697,25 +678,22 @@ function PurchaseFormUpdate() {
       description,
       items,
       purchaseAmount1,
+      CheckTvA,
+      tax,
       purchaseAmount2, updateS: false
     };
-    if (navigator.onLine) {
-      try {
-        const response = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${id}`, data)
-        if (response) {
-          handleCreateComment()
-          const resLocal = await db.purchaseSchema.get({ _id: id })
-          await db.purchaseSchema.update(resLocal.purchaseNumber, { ...data, updateS: true })
-          handleOpen()
-        }
-      } catch (error) {
-        if (error) {
-          handleError();
-        }
+    try {
+      const response = await axios.put(`${ENDPOINT_URL}/update-purchase/${id}`, data)
+      if (response) {
+        handleCreateComment()
+        // const resLocal = await db.purchaseSchema.get({ _id: id })
+        // await db.purchaseSchema.update(resLocal.purchaseNumber, { ...data, updateS: true })
+        handleOpen()
       }
-    } else {
-      const resLocal = await db.purchaseSchema.get({ _id: id })
-      await db.purchaseSchema.update(resLocal.purchaseNumber, ...data)
+    } catch (error) {
+      if (error) {
+        handleError();
+      }
     }
   }
   const [sideBar, setSideBar] = React.useState(true);
@@ -728,7 +706,7 @@ function PurchaseFormUpdate() {
     setSearch2(value)
   }
   const newArray2 = useMemo(() => search2 !== '' ? items.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
+    Item.itemName && (typeof Item.itemName === 'string' ? Item.itemName : Item.itemName.itemName)?.toLowerCase().includes(search2.toLowerCase()) ||
     Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
     Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
   ) : items, [items, search2])
@@ -781,7 +759,7 @@ function PurchaseFormUpdate() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -1011,41 +989,47 @@ function PurchaseFormUpdate() {
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td style={{ height: '100px' }}>
                                                 {
-                                                  Item.itemName._id || Item.itemName.itemName === 'empty' ? (
+                                                  Item.itemName?._id || Item.itemName?.itemName === 'empty' || (typeof Item.itemName === 'string') ? (
                                                     (
-                                                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <div >
-                                                          <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
-                                                          <TextField
-                                                            name='itemDescription' id='itemDescription'
-                                                            value={Item.itemDescription}
-                                                            multiline
-                                                            rows={3}
-                                                            onChange={(e) => handleChange(e, Item.idRow)}
-                                                            size="small"
-                                                            sx={{ width: '400px', backgroundColor: 'white', fontSize: 12 }}
-                                                          />
-                                                        </div>
-                                                        <div>
-                                                          <BlackTooltip title="Clear" placement='top'>
-                                                            <span>
-                                                              <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
-                                                                <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                                                              </IconButton>
-                                                            </span>
-                                                          </BlackTooltip>
-                                                          {
-                                                            Item.itemName._id && (
-                                                              <BlackTooltip title="Edit" placement='bottom'>
-                                                                <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
-                                                                  <Edit style={{ color: '#202a5a' }} />
+                                                      <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                                                        <ItemThumbnail
+                                                          itemId={Item.itemName?._id}
+                                                          initialData={Item.data}
+                                                          initialType={Item.contentType}
+                                                        />
+                                                        <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                          <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                            <Typography hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'} sx={{ fontSize: '20px', fontWeight: 'bold' }}>{typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}</Typography>
+                                                            <TextField
+                                                              name='itemDescription' id='itemDescription'
+                                                              value={Item.itemDescription}
+                                                              multiline
+                                                              rows={3}
+                                                              onChange={(e) => handleChange(e, Item.idRow)}
+                                                              size="small"
+                                                              sx={{ width: '400px', backgroundColor: 'white', fontSize: 12 }}
+                                                            />
+                                                          </Box>
+                                                          <Box>
+                                                            <BlackTooltip title="Clear" placement='top'>
+                                                              <span>
+                                                                <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                                                                  <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                                 </IconButton>
-                                                              </BlackTooltip>
-                                                            )
-                                                          }
-
-                                                        </div>
-                                                      </div>)
+                                                              </span>
+                                                            </BlackTooltip>
+                                                            {
+                                                              Item.itemName?._id && (
+                                                                <BlackTooltip title="Edit" placement='bottom'>
+                                                                  <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                    <Edit style={{ color: '#202a5a' }} />
+                                                                  </IconButton>
+                                                                </BlackTooltip>
+                                                              )
+                                                            }
+                                                          </Box>
+                                                        </Box>
+                                                      </Box>)
                                                   ) : (
                                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                                       <Autocomplete
@@ -1115,7 +1099,7 @@ function PurchaseFormUpdate() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='totalPurchase' style={{ width: '100px' }}>{Item.totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='totalPurchase' style={{ width: '100px' }}>{ Number(Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</td>
                                               <td id='totalBuy'>
                                                 <TextField
                                                   name='itemBuy' id='itemBuy'
@@ -1126,7 +1110,7 @@ function PurchaseFormUpdate() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='totalGeneralPurchase' style={{ width: '100px' }}>{Item.totalGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='totalGeneralPurchase' style={{ width: '100px' }}>{ Number(Item.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</td>
                                               <td id='totalBuy'>
                                                 <TextField
                                                   disabled
@@ -1171,13 +1155,16 @@ function PurchaseFormUpdate() {
                           <tbody>
                             <tr>
                               <td colSpan={4} style={{ textAlign: 'center' }}>Total</td>
-                              <td>{purchaseAmount1.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                              <td>{Number(purchaseAmount1 || 0).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                               <td>-</td>
-                              <td>{purchaseAmount2.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                              <td>{Number(purchaseAmount2 || 0).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                             </tr>
                           </tbody>
                         </table>
                       </DragDropContext>
+                      <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+                        <FormControlLabel control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />} label="TVA (16%)" />
+                      </div>
                     </div>
                   </Grid>
                   <Grid item xs={12}>
@@ -1335,10 +1322,10 @@ function PurchaseFormUpdate() {
                           {item.itemName}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          FC {(item.itemSellingPrice * rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          FC {Number((item.itemSellingPrice * rate) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </Typography>
                         <Typography variant="body2" color="primary" fontWeight="bold">
-                          $ {item.itemSellingPrice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          $ {Number(item.itemSellingPrice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </Typography>
                         <Typography variant="caption" display="block" gutterBottom>
                           Stock: {item.itemQuantity}

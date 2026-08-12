@@ -1,11 +1,12 @@
 import React , { useEffect,useState } from 'react'
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Checkbox, Typography} from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
 function RetainerInformation() {
     const [retainer,SetRetainer] = useState([])
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/retainerinvoice';
+  const apiUrl = `${ENDPOINT_URL}/retainerinvoice`;
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {

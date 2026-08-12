@@ -5,7 +5,7 @@ import '../Chartview.css'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Backdrop, MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, Modal, Box, styled, OutlinedInput, InputAdornment, Divider } from '@mui/material';
+import { Backdrop, MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, Modal, Box, styled, OutlinedInput, InputAdornment, Divider, Avatar, Checkbox, FormControlLabel } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -34,7 +35,7 @@ import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authS
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import ItemFormView2 from '../ItemView/ItemFormView2';
@@ -43,7 +44,8 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+import ItemThumbnail from '../../../component/ItemThumbnail';
+
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -55,6 +57,7 @@ const LightTooltip = styled(({ className, ...props }) => (
     fontSize: 11,
   },
 }));
+
 const BlackTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -65,6 +68,7 @@ const BlackTooltip = styled(({ className, ...props }) => (
     fontSize: 11,
   },
 }));
+
 const DownTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -75,6 +79,7 @@ const DownTooltip = styled(({ className, ...props }) => (
     fontSize: 11,
   },
 }));
+
 const style = {
   position: 'absolute',
   top: '50%',
@@ -151,24 +156,13 @@ function EstimateInvoiceFormUpdate() {
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
-      if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role }));
-        }
-      } else {
-        navigate('/');
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+        const Name = res.data.data.employeeName;
+        const Role = res.data.data.role;
+        dispatch(setUser({ userName: Name, role: Role }));
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchUser()
@@ -181,7 +175,7 @@ function EstimateInvoiceFormUpdate() {
   }
   const [customerName, setCustomerName] = useState({});
   const [customer, setCustomer] = useState([]);
-  const [estimateNumber, setEstimateNumber] = useState(0);
+  const [quotationNumber, setQuotationNumber] = useState(0);
   const [estimateStatus, setEstimateStatus] = useState("");
   const [estimateDate, setEstimateDate] = useState("");
   const [noteInfo, setNoteInfo] = useState("");
@@ -197,8 +191,24 @@ function EstimateInvoiceFormUpdate() {
   const [totalInvoice, setTotalInvoice] = useState(0);
   const [balanceDue, setBalanceDue] = useState(0);
   const [totalW, setTotalW] = useState("");
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
+  const TAX_RATE = 0.16;
   const [note, setNote] = useState('');
   const [terms, setTerms] = useState('');
+  const [includeLetter, setIncludeLetter] = useState(false);
+  const PROFESSIONAL_COVER_LETTER = `Dear Valued Customer,
+
+Thank you for giving us the opportunity to provide you with this quotation for your upcoming project.
+
+At GLOBAL GATE SARL, we pride ourselves on delivering high-quality services and materials tailored to meet your specific needs. Our team has carefully reviewed your requirements, and we are confident that the proposed solution offers the best value and technical excellence.
+
+We remain at your disposal for any further information or clarification you may require. We look forward to the possibility of working together.
+
+Best regards,
+
+The GLOBAL GATE Team`;
+  const [attachedLetter, setAttachedLetter] = useState(PROFESSIONAL_COVER_LETTER);
   const [itemNewQty, setItemNewQty] = useState(0);
   const [ItemInformation, setItemInformation] = useState([]);
   const [shopOpen, setShopOpen] = useState(false);
@@ -211,44 +221,31 @@ function EstimateInvoiceFormUpdate() {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-estimation/${id}`)
-          setCustomerName(res.data.data.customerName);
-          setEstimateNumber(res.data.data.estimateNumber);
-          setEstimateStatus(res.data.data.estimateStatus);
-          setEstimateDate(res.data.data.estimateDate);
-          setEstimateSubject(res.data.data.estimateSubject);
-          SetItems(res.data.data.items);
-          setSubTotal(res.data.data.subTotal);
-          setTotal(res.data.data.total);
-          setNote(res.data.data.note);
-          setEstimateDefect(res.data.data.estimateDefect);
-          setShipping(res.data.data.shipping);
-          setAdjustment(res.data.data.adjustment);
-          setAdjustmentNumber(res.data.data.adjustmentNumber);
-          setTerms(res.data.data.terms);
-          setNoteInfo(res.data.data.noteInfo);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const resLocal = await db.estimateSchema.get({ _id: id })
-        setCustomerName(resLocal.customerName);
-        setEstimateNumber(resLocal.estimateNumber);
-        setEstimateStatus(resLocal.estimateStatus);
-        setEstimateDate(resLocal.estimateDate);
-        setEstimateSubject(resLocal.estimateSubject);
-        SetItems(resLocal.items);
-        setSubTotal(resLocal.subTotal);
-        setTotal(resLocal.total);
-        setNote(resLocal.note);
-        setEstimateDefect(resLocal.estimateDefect);
-        setShipping(resLocal.shipping);
-        setAdjustment(resLocal.adjustment);
-        setAdjustmentNumber(resLocal.adjustmentNumber);
-        setTerms(resLocal.terms);
-        setNoteInfo(resLocal.noteInfo);
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-estimation/${id}`)
+        setCustomerName(res.data.data.customerName);
+        setQuotationNumber(Number(res.data?.data?.estimateNumber || res.data?.estimateNumber || 0));
+        setEstimateStatus(res.data.data.estimateStatus);
+        setEstimateDate(res.data.data.estimateDate);
+        setEstimateSubject(res.data.data.estimateSubject);
+        SetItems(res.data.data.items);
+        setSubTotal(res.data.data.subTotal);
+        setTotal(res.data.data.total);
+        setNote(res.data.data.note);
+        setEstimateDefect(res.data.data.estimateDefect);
+        setShipping(res.data.data.shipping);
+        setAdjustment(res.data.data.adjustment);
+        setAdjustmentNumber(Number(res.data?.data?.adjustmentNumber || res.data?.adjustmentNumber || 0));
+        setTerms(res.data.data.terms);
+        setNoteInfo(res.data.data.noteInfo);
+        setCheckTvA(res.data.data.CheckTvA || false);
+        setTerms(res.data.data.terms);
+        setIncludeLetter(res.data.data.includeLetter || false);
+        setAttachedLetter(res.data.data.attachedLetter || PROFESSIONAL_COVER_LETTER);
+        setNote(res.data.data.note);
+        setTax(res.data.data.tax || 0);
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchData()
@@ -267,20 +264,13 @@ function EstimateInvoiceFormUpdate() {
   }
   useEffect(() => {
     const fetchItem = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          setItemInformation(res.data.data.reverse())
-          const resC = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          setCustomer(resC.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.itemSchema.toArray();
-        setItemInformation(offLineCustomer1.reverse())
-        const offLineCustomer = await db.customerSchema.toArray();
-        setCustomer(offLineCustomer.reverse());
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/item`)
+        setItemInformation(res.data.data.reverse())
+        const resC = await axios.get(`${ENDPOINT_URL}/customer`)
+        setCustomer(resC.data.data.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchItem()
@@ -289,25 +279,17 @@ function EstimateInvoiceFormUpdate() {
   // Fetch Shop Items & Rate
   const fetchShop = async () => {
     setShopLoading(true);
-    if (navigator.onLine) {
-      try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-        resRate.data.data.forEach((row) => setRate(row.rate))
+    try {
+      const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+      resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setShopLoading(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setShopLoading(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.itemSchema.toArray();
-      setShopItems(offLineCustomer1.filter((row) => row.typeItem === "Goods").reverse())
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+      setShopTotalPages(res.data.totalPages)
+      setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
       setShopLoading(false)
-      const offLineRate = await db.rateSchema.toArray();
-      offLineRate.forEach((row) => setRate(row.rate))
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setShopLoading(false)
     }
   }
 
@@ -378,6 +360,8 @@ function EstimateInvoiceFormUpdate() {
         totalGenerale: 0,
         totalCost: shopItem.itemCostPrice,
         stock: shopItem.itemQuantity,
+        data: shopItem.data,
+        contentType: shopItem.contentType,
         itemOut: 0,
         newItemOut: 0,
       };
@@ -493,6 +477,8 @@ function EstimateInvoiceFormUpdate() {
       stock: 0,
       itemOut: 0,
       newItemOut: 0,
+      data: null,
+      contentType: null,
     }]);
   }
   const handleDragEnd = (result) => {
@@ -505,13 +491,15 @@ function EstimateInvoiceFormUpdate() {
     SetItems(newItems)
   };
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemCost: selectedOptions?.itemCostPrice,
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
@@ -571,13 +559,19 @@ function EstimateInvoiceFormUpdate() {
   const [stockOnHand, setStockOnHand] = useState(0);
 
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.itemAmount, 0)
-    setSubTotal(result1.toFixed(2))
-    let newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
+    const result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0)
+    const val = isFinite(result1) ? result1 : 0;
+    setSubTotal(val.toFixed(2))
+
+    const calculatedTax = CheckTvA ? Math.round((Number(val) * TAX_RATE) * 100) / 100 : 0;
+    setTax(calculatedTax);
+
+    let newTotal = Math.round((Number(val) + Number(calculatedTax) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100
     setTotalInvoice(newTotal)
-    let newBalance = Math.round((totalInvoice - total) * 100) / 100
+
+    let newBalance = Math.round((newTotal - total) * 100) / 100
     setBalanceDue(newBalance)
-  });
+  }, [items, CheckTvA, shipping, adjustmentNumber, total]);
 
   const [open2, setOpen2] = useState(false);
 
@@ -684,8 +678,8 @@ function EstimateInvoiceFormUpdate() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -695,6 +689,8 @@ function EstimateInvoiceFormUpdate() {
           itemCost: res.data.data.itemCostPrice,
           itemRate: res.data.data.itemSellingPrice,
           stock: res.data.data.itemQuantity,
+          data: res.data.data.data,
+          contentType: res.data.data.contentType,
           totalAmount: row.itemQty * res.data.data.itemSellingPrice,
           discount: (row.itemQty * res.data.data.itemSellingPrice) * row.itemDiscount,
           percentage: ((row.itemQty * res.data.data.itemSellingPrice) * row.itemDiscount) / 100,
@@ -702,6 +698,7 @@ function EstimateInvoiceFormUpdate() {
           totalCost: row.itemQty * res.data.data.itemCostPrice,
           totalGenerale: res.data.data.itemCostPrice * row.itemBuy
         } : row))
+
       } catch (error) {
 
       }
@@ -713,7 +710,7 @@ function EstimateInvoiceFormUpdate() {
   const deleteItem = async (idRow) => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** Delete Row && Update Item End */ }
   const [reason, setReason] = useState("");
   const dateComment = new Date()
@@ -721,12 +718,12 @@ function EstimateInvoiceFormUpdate() {
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify ' + ' EST-' + estimateNumber,
-      reason,
+      person: user.data.userName + ' Modify QUOTATION ',
+      reason: 'Q-' + String(quotationNumber).padStart(6, '0') + ' ' + reason,
       dateNotification: dateComment
     };
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
 
     } catch (error) {
       console.log(error)
@@ -735,36 +732,24 @@ function EstimateInvoiceFormUpdate() {
 
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       customerName,
-      estimateNumber,
+      estimateNumber: quotationNumber,
       estimateSubject, estimateDefect,
-      items, subTotal, total, totalW, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, noteInfo, balanceDue, updateS: false
+      items: itemsWithoutData, subTotal, total, totalW, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, noteInfo, balanceDue, tax, CheckTvA, updateS: false,
+      includeLetter, attachedLetter
     };
-    if (navigator.onLine) {
-      try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-estimation/${id}`, data)
-        if (res) {
-          handleCreateComment();
-          handleOpen();
-          await db.estimateSchema.update(data.estimateNumber, {
-            estimateNumber,
-            estimateSubject, estimateDefect,
-            items, subTotal, total, totalW, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, noteInfo, balanceDue, updateS: true
-          })
-        }
-      } catch (error) {
-        if (error) {
-          handleError();
-        }
+    try {
+      const res = await axios.put(`${ENDPOINT_URL}/update-estimation/${id}`, data)
+      if (res) {
+        handleCreateComment();
+        handleOpen();
       }
-    } else {
-      await db.estimateSchema.update(data.estimateNumber, {
-        estimateNumber,
-        estimateSubject, estimateDefect,
-        items, subTotal, total, totalW, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, noteInfo, balanceDue, updateS: false
-      })
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        handleError();
+      }
     }
   }
   const [sideBar, setSideBar] = React.useState(true);
@@ -812,7 +797,7 @@ function EstimateInvoiceFormUpdate() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              update estimation
+              UPDATE QUOTATION
             </Typography>
             {hideBack === 'true' ? (
               <IconButton onClick={handleOpenBack}>
@@ -890,15 +875,15 @@ function EstimateInvoiceFormUpdate() {
                     </Grid>
                     <Grid item xs={6}>
                       <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
-                        <InputLabel htmlFor="estimateNumber">Estimate Number</InputLabel>
+                        <InputLabel htmlFor="estimateNumber">Quotation Number</InputLabel>
                         <OutlinedInput
                           disabled={user.data.role !== 'CEO'}
                           type="number"
                           id="estimateNumber"
-                          label="Estimate Number"
-                          value={estimateNumber}
-                          onChange={(e) => setEstimateNumber(e.target.value)}
-                          startAdornment={<InputAdornment position="start">EST-00</InputAdornment>}
+                          label="Quotation Number"
+                          value={quotationNumber}
+                          onChange={(e) => setQuotationNumber(e.target.value)}
+                          startAdornment={<InputAdornment position="start">Q-00</InputAdornment>}
                         />
                       </FormControl>
                     </Grid>
@@ -1045,23 +1030,30 @@ function EstimateInvoiceFormUpdate() {
                                                         alignItems: 'center',
                                                       }}
                                                     >
-                                                      <div>
-                                                        <Typography
-                                                          hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}
-                                                          sx={{ fontSize: '23px' }}
-                                                        >
-                                                          {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
-                                                        </Typography>
-                                                        <TextField
-                                                          name="itemDescription"
-                                                          id="itemDescription"
-                                                          value={Item.itemDescription}
-                                                          multiline
-                                                          rows={3}
-                                                          onChange={(e) => handleChangeCEO(e, Item.idRow)}
-                                                          size="small"
-                                                          sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                      <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+                                                        <ItemThumbnail
+                                                          itemId={Item.itemName?._id}
+                                                          initialData={Item.data}
+                                                          initialType={Item.contentType}
                                                         />
+                                                        <div>
+                                                          <Typography
+                                                            hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}
+                                                            sx={{ fontSize: '23px' }}
+                                                          >
+                                                            {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                          </Typography>
+                                                          <TextField
+                                                            name="itemDescription"
+                                                            id="itemDescription"
+                                                            value={Item.itemDescription}
+                                                            multiline
+                                                            rows={3}
+                                                            onChange={(e) => handleChangeCEO(e, Item.idRow)}
+                                                            size="small"
+                                                            sx={{ width: '350px', backgroundColor: 'white', fontSize: 12 }}
+                                                          />
+                                                        </div>
                                                       </div>
                                                       <div>
                                                         <BlackTooltip title="Clear" placement="top">
@@ -1276,10 +1268,15 @@ function EstimateInvoiceFormUpdate() {
                                                     <div
                                                       style={{
                                                         display: 'flex',
-                                                        justifyContent: 'space-between',
+                                                        gap: '30px',
                                                         alignItems: 'center',
                                                       }}
                                                     >
+                                                      <ItemThumbnail
+                                                        itemId={Item.itemName?._id}
+                                                        initialData={Item.data}
+                                                        initialType={Item.contentType}
+                                                      />
                                                       <div>
                                                         <Typography
                                                           hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}
@@ -1295,7 +1292,7 @@ function EstimateInvoiceFormUpdate() {
                                                           rows={3}
                                                           onChange={(e) => handleChange(e, Item.idRow)}
                                                           size="small"
-                                                          sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                          sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
                                                         />
                                                       </div>
                                                       <div>
@@ -1417,7 +1414,7 @@ function EstimateInvoiceFormUpdate() {
                                                   />
                                                 </td>
                                                 <td id="amountTotalInvoice">
-                                                  {Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                  {(Number(Item.itemAmount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                                 </td>
                                                 <td>
                                                   <LightTooltip title="Delete" sx={{}}>
@@ -1462,7 +1459,7 @@ function EstimateInvoiceFormUpdate() {
                           multiline
                           rows={4}
                           value={note}
-                          label="Invoice Note"
+                          label="Quote Note"
                           onChange={(e) => setNote(e.target.value)}
                           sx={{ width: '50%', backgroundColor: 'white' }}
                         />
@@ -1479,6 +1476,22 @@ function EstimateInvoiceFormUpdate() {
                                     size="small"
                                     name="subTotal"
                                     value={subTotal}
+                                    startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                                  />
+                                </FormControl>
+                              </td>
+                            </tr>
+                            <tr style={{ borderBottom: '1px solid black' }}>
+                              <th style={{ textAlign: 'left' }}>TVA @ 16% <Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} /></th>
+                              <td align="center">
+                                <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                                  <OutlinedInput
+                                    disabled
+                                    type="number"
+                                    id="tax"
+                                    size="small"
+                                    name="tax"
+                                    value={tax}
                                     startAdornment={<InputAdornment position="start">$</InputAdornment>}
                                   />
                                 </FormControl>
@@ -1532,6 +1545,36 @@ function EstimateInvoiceFormUpdate() {
                         </table>
                       </div>
                     </Grid>
+                    <Grid item xs={12} sx={{ mt: 2, mb: 1 }}>
+                      <Divider orientation="horizontal" flexItem sx={{ fontWeight: 'bold' }}> COVER LETTER (Optional) </Divider>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={includeLetter}
+                            onChange={(e) => setIncludeLetter(e.target.checked)}
+                            sx={{ color: '#30368a', '&.Mui-checked': { color: '#30368a' } }}
+                          />
+                        }
+                        label={<Typography sx={{ fontWeight: 'bold', color: '#30368a' }}>Attach Professional Cover Letter to this Quotation</Typography>}
+                      />
+                    </Grid>
+                    {includeLetter && (
+                      <Grid item xs={12}>
+                        <TextField
+                          id='attachedLetter'
+                          name='attachedLetter'
+                          multiline
+                          rows={8}
+                          value={attachedLetter}
+                          label='Cover Letter Content'
+                          onChange={(e) => setAttachedLetter(e.target.value)}
+                          sx={{ width: '100%', backgroundColor: 'white' }}
+                          placeholder="Write a professional introduction for your quotation..."
+                        />
+                      </Grid>
+                    )}
                     <Grid item xs={12}>
                       <TextField
                         id="terms"
@@ -1539,7 +1582,7 @@ function EstimateInvoiceFormUpdate() {
                         multiline
                         rows={4}
                         value={terms}
-                        label="Invoice Terms"
+                        label="Quote Terms"
                         onChange={(e) => setTerms(e.target.value)}
                         sx={{ width: '60%', backgroundColor: 'white' }}
                       />
@@ -1570,7 +1613,7 @@ function EstimateInvoiceFormUpdate() {
           </BlackTooltip>
           <Grid container sx={{ alignItems: 'center', padding: '15px' }} spacing={2}>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
-              <Typography>Do you want to stop Updating estimation ? </Typography>
+              <Typography>Do you want to stop Updating Quotation ? </Typography>
               <p>
                 <span className="txt2" style={{ color: 'red' }}>
                   Note :

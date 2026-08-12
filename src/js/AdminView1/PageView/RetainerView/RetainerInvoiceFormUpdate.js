@@ -9,6 +9,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {MenuItem,Grid, IconButton, styled,Table, TableBody, TableCell, TableHead, TableRow,Paper,TableContainer, TextField, FormControl, InputLabel, Select, Typography } from '@mui/material'
 import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add } from '@mui/icons-material';
 import { useNavigate, useParams } from 'react-router-dom';
 import Close from '@mui/icons-material/Close';
@@ -30,13 +31,13 @@ function RetainerInvoiceFormUpdate() {
      const {id} = useParams();
   const navigate = useNavigate();
   useEffect (() => {
-    axios.get(`https://gg-project-production.up.railway.app/endpoint/get-retainerinvoice/${id}`)
+    axios.get(`${ENDPOINT_URL}/get-retainerinvoice/${id}`)
     .then(res => {
       // get the response data here
        setCustomerID(res.data.data.customerID);
         setInvoiceDate(res.data.data.invoiceDate);
-        setReferenceNumber(res.data.data.referenceNumber);
-        setInvoiceNumber(res.data.data.invoiceNumber);
+        setReferenceNumber(Number(res.data?.data?.referenceNumber || res.data?.referenceNumber || 0));
+        setInvoiceNumber(Number(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0));
         setProjectName(res.data.data.projectName);
         setInvoiceSubject(res.data.data.invoiceSubject);
         setInvoiceStatus(res.data.data.invoiceStatus);
@@ -70,7 +71,7 @@ function RetainerInvoiceFormUpdate() {
       balanceDue,
       totalW,  
       };
-     axios.put(`https://gg-project-production.up.railway.app/endpoint/update-retainerinvoice/${id}`,data)
+     axios.put(`${ENDPOINT_URL}/update-retainerinvoice/${id}`,data)
       .then((res) => {
         console.log('POST request successful!');
         console.log(res.data);

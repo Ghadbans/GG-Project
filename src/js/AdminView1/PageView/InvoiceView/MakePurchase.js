@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, DragIndicatorRounded, Edit, RemoveCircleOutline} from '@mui/icons-material';
 import { useNavigate, useParams,Navigate,NavLink } from 'react-router-dom';
 import { v4 } from 'uuid';
@@ -34,7 +35,7 @@ import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authS
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
@@ -153,7 +154,7 @@ function MakePurchase() {
       const fetchUser = async () => {
         if (storesUserId) {
         try {
-          const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await  axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({userName: Name, role: Role}));
@@ -202,7 +203,7 @@ function MakePurchase() {
        useEffect(()=> {
         const fetchProject = async () => {
           try {
-            const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects') 
+            const res = await axios.get(`${ENDPOINT_URL}/projects`) 
             setProject(res.data.data);
           } catch (error) {
             console.error('Error fetching data:', error);
@@ -221,9 +222,10 @@ function MakePurchase() {
     useEffect(()=>{
       const fetchlastNumber = async () => {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchase')
-          setPurchaseNumber(parseInt(res.data.purchaseNumber) + 1)
-        } catch (error) {
+          const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-purchase`)
+        const num = res.data && res.data.purchaseNumber ? (parseInt(res.data?.data?.purchaseNumber || res.data?.purchaseNumber || 0)) : 0;
+        setPurchaseNumber(num + 1)
+      } catch (error) {
           console.error('Error fetching data:', error);
         }
       }
@@ -232,7 +234,7 @@ function MakePurchase() {
                   useEffect(()=>{
                     const fetchItem = async()=> {
                       try {
-                        const res = await  axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+                        const res = await  axios.get(`${ENDPOINT_URL}/item`)
                         setItemInformation(res.data.data.reverse()) 
                       } catch (error) {
                         console.error('Error fetching data:', error);
@@ -245,7 +247,7 @@ function MakePurchase() {
   useEffect (() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-invoice/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${id}`)
         setCustomerNameInfo(res.data.data.customerName.customerName);
         SetItems(res.data.data.items);
         setInvoiceName(res.data.data.invoiceName);
@@ -366,7 +368,7 @@ const handleShowAutocompleteDescription = (idRow) => {
   const deleteItem = idRow =>{
     SetItems (items => items.filter((Item)=> Item.idRow !==idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option=> !items.find((row)=> option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option=> !items.find((row)=> option._id === row.itemName?._id && option.typeItem === "Goods"))
   const handleDragEnd = (result) => {
     if (!result.destination) {
       return;
@@ -414,8 +416,8 @@ const handleCloseItemUpdate = async() => {
   setOpenItemUpdate(false);
   if (idItem) {
     try {
-      const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-      SetItems(items=> items.map((row)=> row.itemName._id === res.data.data._id ? {...row, 
+      const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+      SetItems(items=> items.map((row)=> row.itemName?._id === res.data.data._id ? {...row, 
         itemName:{
           _id:res.data.data._id,
           itemName:res.data.data.itemName
@@ -504,7 +506,7 @@ const handleCreateItem = (newItem)=> {
         invoicePurchase,
         ReferenceName2:ReferenceInfo
       }; 
-      axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`,data)
+      axios.put(`${ENDPOINT_URL}/update-invoice/${id}`,data)
    }
    const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber) => {
     const data = {
@@ -514,7 +516,7 @@ const handleCreateItem = (newItem)=> {
       dateNotification:dateComment
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification',data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`,data)
     } catch (error) {
       console.log(error)
     }
@@ -539,20 +541,20 @@ const handleCreateItem = (newItem)=> {
         status,
       }; 
       try{
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-purchase',data);
+        const res = await axios.post(`${ENDPOINT_URL}/create-purchase`,data);
         if (res) {
           const ReferenceInfo = res.data.data._id
-           // Open Loading View
-           handleSubmitStatusUpdate(ReferenceInfo);
-           const ReferenceInfoNumber = res.data.data.purchaseNumber
-           handleCreateNotification(ReferenceInfo,ReferenceInfoNumber)
-           handleOpen();
-           //Reset form
-         
-    }else{
-      alert('An Error as Occur');
-    }
-      }catch(error){
+          const ReferenceInfoNumber = res.data.data.purchaseNumber
+          // Open Loading View
+          handleOpen();
+          // Status update is critical — await it so quotation shows 'Converted'
+          try { await handleSubmitStatusUpdate(ReferenceInfo); } catch (e) { console.warn('Status update failed:', e); }
+          // Notification is non-blocking
+          try { handleCreateNotification(ReferenceInfo, ReferenceInfoNumber); } catch (e) { console.warn('Notification failed:', e); }
+        } else {
+          alert('An Error as Occur');
+        }
+      } catch(error){
         if (error) {
           setSaving('')
           handleError();

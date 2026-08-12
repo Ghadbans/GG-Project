@@ -19,11 +19,13 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { ArrowUpwardOutlined, RemoveCircleOutline } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { invalidateCache } from '../../../utils/apiCache';
 import dayjs from 'dayjs';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -31,11 +33,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 import { v4 } from 'uuid';
 
 const BlackTooltip = styled(({ className, ...props }) => (
@@ -112,20 +114,13 @@ function PaymentInformationForm() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -147,16 +142,11 @@ function PaymentInformationForm() {
 
   useEffect(() => {
     const fetchCustomer = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          setCustomer(res.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.customerSchema.toArray();
-        setCustomer(offLineCustomer1.reverse());
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/customer`)
+        setCustomer(res.data.data.reverse());
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchCustomer()
@@ -177,22 +167,20 @@ function PaymentInformationForm() {
   const [description, setDescription] = useState('');
   const [paymentNumber, setPaymentNumber] = useState(0);
   const [rate, setRate] = useState(0);
+  const [transactionType, setTransactionType] = useState('Payment');
+  const [status, setStatus] = useState('Cleared');
+  const [paymentType, setPaymentType] = useState('Payment'); // Detailed type
 
   useEffect(() => {
     const fetchlastNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-payment')
-          setPaymentNumber(parseInt(res.data.paymentNumber) + 1)
-          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-          resRate.data.data.map((row) => setRate(row.rate))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.paymentSchema.toArray();
-        const latest = offLineCustomer1.reduce((max, row) => row.paymentNumber > max.paymentNumber ? row : max, offLineCustomer1[0])
-        setPaymentNumber(parseInt(latest.paymentNumber) + 1)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-payment`)
+        const num = res.data && res.data.paymentNumber ? (parseInt(res.data?.data?.paymentNumber || res.data?.paymentNumber || 0)) : 0;
+        setPaymentNumber(num + 1)
+        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+        resRate.data.data.map((row) => setRate(row.rate))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchlastNumber()
@@ -224,66 +212,13 @@ function PaymentInformationForm() {
   }
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-          const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          const resPayment = await axios.get('https://gg-project-production.up.railway.app/endpoint/payment')
-          if (customerId !== null) {
-            if (reason === "Invoice") {
-              const filterData = res.data.data.filter((row) => row.customerName._id === customerId);
-              setOldInvoice(filterData)
-              setInvoice(
-                filterData.filter((row) => row.status === 'Sent' || row.status === 'Partially-Paid')
-                  .map((row) => ({
-                    id: row._id,
-                    customerName: row.customerName,
-                    total: 0,
-                    amountPaidFC: 0,
-                    amountPaidUSD: 0,
-                    rateChange: rate,
-                    totalConverted: 0,
-                    Ref: row.invoiceNumber,
-                    balanceDue: row.balanceDue,
-                    invoiceAmount: row.totalInvoice,
-                    status: row.status,
-                    invoiceDate: row.invoiceDate
-                  }))
-              )
-            } else if (reason === "Project") {
-              const filterData2 = resProject.data.data.filter((row) => row.customerName._id === customerId && row.status === "On-Going" && resPurchase.data.data.find((Item) => Item.projectName._id === row._id && Item.status !== "Make" && Item.status !== "Invoiced"));
-              setProject(filterData2)
-              setInvoice(filterData2.map((row) => {
-                const relatedPayments = resPayment.data.data.filter((p) => p.TotalAmount && p.TotalAmount.find((t) => t.id === row._id));
-                const totalPaid = relatedPayments.reduce((sum, p) => sum + parseFloat(p.TotalAmount.find((t) => t.id === row._id)?.total || 0), 0);
-                const budget = row.budget !== undefined ? parseFloat(row.budget) : 0;
-                return {
-                  id: row._id,
-                  customerName: row.customerName,
-                  total: 0,
-                  amountPaidFC: 0,
-                  amountPaidUSD: 0,
-                  rateChange: rate,
-                  totalConverted: 0,
-                  Ref: row.projectNumber,
-                  balanceDue: budget - totalPaid,
-                  invoiceAmount: budget,
-                  status: "",
-                  invoiceDate: row.startDate
-                }
-              }))
-            }
-          }
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.invoiceSchema.toArray();
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
+        const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
         if (customerId !== null) {
-          const resPaymentLocal = await db.paymentSchema.toArray();
           if (reason === "Invoice") {
-            const filterData = offLineCustomer1.filter((row) => row.customerName._id === customerId);
+            const filterData = res.data?.data?.filter((row) => row.customerName._id === customerId);
             setOldInvoice(filterData)
             setInvoice(
               filterData.filter((row) => row.status === 'Sent' || row.status === 'Partially-Paid')
@@ -296,6 +231,7 @@ function PaymentInformationForm() {
                   rateChange: rate,
                   totalConverted: 0,
                   Ref: row.invoiceNumber,
+                  prefix: (row.ReferenceName2 || row.invoicePurchase === 'Purchased') ? "P-" : "INV-",
                   balanceDue: row.balanceDue,
                   invoiceAmount: row.totalInvoice,
                   status: row.status,
@@ -303,31 +239,42 @@ function PaymentInformationForm() {
                 }))
             )
           } else if (reason === "Project") {
-            const resProjectLocal = await db.projectSchema.toArray();
-            const resPurchaseLocal = await db.purchaseSchema.toArray();
-            const filterData2 = resProjectLocal.filter((row) => row.customerName._id === customerId && row.status === "On-Going" && resPurchaseLocal.find((Item) => Item.projectName._id === row._id && Item.status !== "Make" && Item.status !== "Invoiced"));
+            const filterData2 = resProject.data?.data?.filter((row) => row.customerName?._id === customerId && row.status === "On-Going");
             setProject(filterData2)
-            setInvoice(filterData2.map((row) => {
-              const relatedPayments = resPaymentLocal.filter((p) => p.TotalAmount && p.TotalAmount.find((t) => t.id === row._id));
-              const totalPaid = relatedPayments.reduce((sum, p) => sum + parseFloat(p.TotalAmount.find((t) => t.id === row._id)?.total || 0), 0);
-              const budget = row.budget !== undefined ? parseFloat(row.budget) : 0;
-              return {
-                id: row._id,
-                customerName: row.customerName,
-                total: 0,
-                amountPaidFC: 0,
-                amountPaidUSD: 0,
-                rateChange: rate,
-                totalConverted: 0,
-                Ref: row.projectNumber,
-                balanceDue: budget - totalPaid,
-                invoiceAmount: budget,
-                status: "",
-                invoiceDate: row.startDate
-              }
-            }))
+            setInvoice(filterData2.map((row) => ({
+              id: row._id,
+              customerName: row.customerName,
+              total: 0,
+              amountPaidFC: 0,
+              amountPaidUSD: 0,
+              rateChange: rate,
+              totalConverted: 0,
+              Ref: row.projectNumber,
+              prefix: "P-",
+              balanceDue: row.budget !== undefined ? row.budget : 0,
+              invoiceAmount: row.budget !== undefined ? row.budget : 0,
+              status: "",
+              invoiceDate: row.startDate
+            })))
+          } else if (reason === "Customer Credit") {
+            setInvoice([{
+              id: customerId,
+              customerName: customerName,
+              total: 0,
+              amountPaidFC: 0,
+              amountPaidUSD: 0,
+              rateChange: rate,
+              totalConverted: 0,
+              Ref: 'Credit',
+              balanceDue: oldCredit || 0,
+              invoiceAmount: oldCredit || 0,
+              status: "",
+              invoiceDate: new Date()
+            }])
           }
         }
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchData()
@@ -377,23 +324,21 @@ function PaymentInformationForm() {
   const totalConvertedFc = Math.round((PaymentReceivedFC / rate) * 100) / 100;
   const totalUSdInfo = Math.round((parseFloat(totalConvertedFc) + parseFloat(PaymentReceivedUSD)) * 100) / 100;
 
-  const remainingInvoice = balanceDueInfo - PaymentInfo
-  const remaining = Math.round((parseFloat(amount) - PaymentInfo) * 100) / 100
+  const remainingInvoice = transactionType === 'Payment' ? balanceDueInfo - PaymentInfo : balanceDueInfo + PaymentInfo
+  const remainingValue = (reason === "Project" || reason === "Customer Credit") ? parseFloat(amount) : (parseFloat(amount) - PaymentInfo);
+  const remaining = transactionType === 'Payment'
+    ? Math.round(remainingValue * 100) / 100
+    : -Math.round(remainingValue * 100) / 100
 
   const [oldCredit, setOldCredit] = useState(null)
   useEffect(() => {
     const fetchCustomer = async () => {
       if (customerId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${customerId}`)
-            setOldCredit(res.data.data.credit)
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocal = await db.customerSchema.get({ _id: customerId })
-          setOldCredit(resLocal.credit)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-customer/${customerId}`)
+          setOldCredit(res.data.data.credit)
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       }
     }
@@ -412,11 +357,17 @@ function PaymentInformationForm() {
     if (reason === "Invoice") {
       const invoiceUpdate = invoice.length > 0 ? invoice.map((row) => {
         const correspondingId = oldInvoice.find((row2) => row2._id === row.id)
-        const total = correspondingId ? parseFloat(correspondingId.total) + parseFloat(row.total) : row.balanceDue;
-        const difference = correspondingId ? correspondingId.totalInvoice - total : row.balanceDue;
-        if (parseFloat(difference) === 0) {
+        if (!correspondingId) return null;
+        let total = 0;
+        if (transactionType === 'Payment') {
+          total = parseFloat(correspondingId.total) + parseFloat(row.total);
+        } else {
+          total = Math.max(0, parseFloat(correspondingId.total) - parseFloat(row.total));
+        }
+        const difference = Math.round((correspondingId.totalInvoice - total) * 100) / 100;
+        if (difference <= 0) {
           row.status = 'Paid'
-        } else if (difference !== row.balanceDue) {
+        } else if (total > 0 && total < correspondingId.totalInvoice) {
           row.status = 'Partially-Paid'
         } else {
           row.status = 'Sent'
@@ -430,27 +381,18 @@ function PaymentInformationForm() {
             status: row.status
           }
         }
-      }) : null
+      }).filter(Boolean) : null
 
-      if (navigator.onLine) {
-        const updateRequest = invoiceUpdate !== null ?
-          invoiceUpdate.filter((row) => row.data.total !== 0).map(({ id, data }) => {
-            return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${id}`, data)
-          }) : null
-        if (updateRequest !== null) {
-          try {
-            await Promise.all(updateRequest);
-            await Promise.all(invoiceUpdate.filter((row) => row.data.total !== 0).map(async ({ number, data }) => {
-              await db.invoiceSchema.update(number, { ...data, updateS: true })
-            }))
-          } catch (error) {
-            console.log('An error as occur');
-          }
+      const updateRequest = invoiceUpdate !== null ?
+        invoiceUpdate.filter((row) => row.data.total !== 0).map(({ id, data }) => {
+          return axios.put(`${ENDPOINT_URL}/update-invoice/${id}`, data)
+        }) : null
+      if (updateRequest !== null) {
+        try {
+          await Promise.all(updateRequest);
+        } catch (error) {
+          console.log('An error as occur');
         }
-      } else {
-        await Promise.all(invoiceUpdate.filter((row) => row.data.total !== 0).map(async ({ number, data }) => {
-          await db.invoiceSchema.update(number, { ...data, updateS: false })
-        }))
       }
     }
   }
@@ -458,15 +400,10 @@ function PaymentInformationForm() {
     const data = {
       credit
     }
-    if (navigator.onLine) {
-      try {
-        await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${customerId}`, data)
-        await db.customerSchema.update(customerId, { ...data, updateS: true })
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    } else {
-      await db.customerSchema.update(customerId, { ...data, updateS: false })
+    try {
+      await axios.put(`${ENDPOINT_URL}/update-customer/${customerId}`, data)
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   }
   const [openBack, setOpenBack] = useState(false);
@@ -518,12 +455,12 @@ function PaymentInformationForm() {
   const handleCreateNotification = async (ReferenceInfo, ReferenceInfoNumber) => {
     const data = {
       idInfo: ReferenceInfo,
-      person: user.data.userName + ' Created ',
-      reason: 'PAY-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      person: user.data.userName + ' Created PAYMENT ',
+      reason: `PAY-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName.customerName}`,
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -532,6 +469,19 @@ function PaymentInformationForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
+    // Calculate tax paid based on the proportion of the invoice being paid
+    let totalTaxPaid = 0;
+    if (reason === "Invoice") {
+      invoice.forEach(row => {
+        const correspondingId = oldInvoice.find(r => r._id === row.id);
+        if (correspondingId && correspondingId.tax && correspondingId.tax > 0 && row.total > 0) {
+          // tax paid = (amount paid / total invoice amount) * total invoice tax
+          const proportion = row.total / correspondingId.totalInvoice;
+          totalTaxPaid += correspondingId.tax * proportion;
+        }
+      });
+    }
+
     const data = {
       _id: v4(),
       customerName,
@@ -542,33 +492,32 @@ function PaymentInformationForm() {
       TotalAmount,
       paymentNumber,
       description,
-      PaymentReceivedFC, reason,
+      PaymentReceivedFC,
+      reason,
       PaymentReceivedUSD,
-      remaining, synced: false
+      remaining,
+      transactionType,
+      status,
+      tax: Math.round(totalTaxPaid * 100) / 100,
+      synced: false
     }
-    if (navigator.onLine) {
-      try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payment', data);
-        if (res) {
-          const ReferenceInfo = res.data.data._id
-          const ReferenceInfoNumber = res.data.data.paymentNumber
-          handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
-          handleOpen();
-          await db.paymentSchema.add({ ...res.data.data, _id: res.data.data._id, synced: true })
-          handleUpdateInvoice();
-          handleUpdateCredit();
-        }
-      } catch (error) {
-        if (error) {
-          setSaving('')
-          handleError();
-        }
+    try {
+      const res = await axios.post(`${ENDPOINT_URL}/create-payment`, data);
+      if (res) {
+        invalidateCache('/payment');
+        const ReferenceInfo = res.data.data._id
+        const ReferenceInfoNumber = res.data.data.paymentNumber
+        handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
+        // handleOpen();
+        handleUpdateInvoice();
+        handleUpdateCredit();
+        handleOpen();
       }
-    } else {
-      await db.paymentSchema.add(data)
-      handleUpdateInvoice();
-      handleUpdateCredit();
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError();
+      }
     }
   };
   const [sideBar, setSideBar] = React.useState(true);
@@ -617,7 +566,7 @@ function PaymentInformationForm() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -692,10 +641,49 @@ function PaymentInformationForm() {
                         name="reason"
                         value={reason}
                         label="Payment Reason"
-                        onChange={(e) => setReason(e.target.value)}
+                        onChange={(e) => {
+                          setReason(e.target.value);
+                          if (e.target.value === "Project" && modes === "Credit") {
+                            setModes("");
+                          }
+                        }}
                       >
                         <MenuItem value="Project">Project</MenuItem>
                         <MenuItem value="Invoice">Invoice</MenuItem>
+                        <MenuItem value="Customer Credit">Customer Credit</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                      <InputLabel id="transactionType">Transaction Type</InputLabel>
+                      <Select
+                        required
+                        id="transactionType"
+                        name="transactionType"
+                        value={transactionType}
+                        label="Transaction Type"
+                        onChange={(e) => setTransactionType(e.target.value)}
+                      >
+                        <MenuItem value="Payment">Payment</MenuItem>
+                        <MenuItem value="Refund">Refund</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={3}>
+                    <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                      <InputLabel id="status">Status</InputLabel>
+                      <Select
+                        required
+                        id="status"
+                        name="status"
+                        value={status}
+                        label="Status"
+                        onChange={(e) => setStatus(e.target.value)}
+                      >
+                        <MenuItem value="Cleared">Cleared</MenuItem>
+                        <MenuItem value="Pending">Pending</MenuItem>
+                        <MenuItem value="Voided">Voided</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
@@ -712,16 +700,23 @@ function PaymentInformationForm() {
                       >
                         <MenuItem value="Cash">Cash</MenuItem>
                         <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-                        <MenuItem value="Credit">Credit</MenuItem>
+                        {reason !== "Project" && <MenuItem value="Credit">Credit</MenuItem>}
                       </Select>
                     </FormControl>
                   </Grid>
+                  {customerId && (
+                    <Grid item xs={6}>
+                      <Typography variant="body2" color="textSecondary">
+                        Customer Available Credit: <strong>${oldCredit?.toFixed(2)}</strong>
+                      </Typography>
+                    </Grid>
+                  )}
                   {
                     modes === "" || reason === "" ? "" :
                       <div>
                         <br />
                         <Grid container spacing={2}>
-                          <Grid item xs={7}>
+                          <Grid item xs={modes === 'Bank Transfer' ? 7 : 12}>
                             <div style={{ display: 'flex', gap: '10px' }}>
                               <FormControl>
                                 <InputLabel htmlFor='amount'>Amount Received</InputLabel>
@@ -735,19 +730,21 @@ function PaymentInformationForm() {
                               </FormControl>
                             </div>
                           </Grid>
-                          <Grid item xs={5}>
-                            <FormControl>
-                              <InputLabel htmlFor='bankCharge'>Bank Charge</InputLabel>
-                              <OutlinedInput
-                                type='number'
-                                id='bankCharge'
-                                onChange={(e) => setBankCharge(e.target.value)}
-                                startAdornment={<InputAdornment position="start">USD</InputAdornment>}
-                                label="Bank Charge"
-                                placeholder='Bank Charge If Any: Optional'
-                              />
-                            </FormControl>
-                          </Grid>
+                          {modes === 'Bank Transfer' && (
+                            <Grid item xs={5}>
+                              <FormControl>
+                                <InputLabel htmlFor='bankCharge'>Bank Charge</InputLabel>
+                                <OutlinedInput
+                                  type='number'
+                                  id='bankCharge'
+                                  onChange={(e) => setBankCharge(e.target.value)}
+                                  startAdornment={<InputAdornment position="start">USD</InputAdornment>}
+                                  label="Bank Charge"
+                                  placeholder='Bank Charge If Any: Optional'
+                                />
+                              </FormControl>
+                            </Grid>
+                          )}
                           <Grid item xs={12}>
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                               <DemoContainer components={['DatePicker']}>
@@ -774,7 +771,7 @@ function PaymentInformationForm() {
                                 label='Payment Number'
                                 value={paymentNumber}
                                 onChange={(e) => setPaymentNumber(e.target.value)}
-                                startAdornment={<InputAdornment position="start">PAY-0</InputAdornment>}
+                                startAdornment={<InputAdornment position="start">PAY-</InputAdornment>}
                               />
                             </FormControl>
                           </Grid>
@@ -862,30 +859,30 @@ function PaymentInformationForm() {
                                                   </td>
                                                   <td>
                                                     {
-                                                      reason === "Invoice" ?
+                                                      (row.prefix === "P-" || row.prefix === "P" || (reason === "Project" && !row.prefix)) ?
+                                                        <FormControl sx={{ width: '150px', backgroundColor: 'white' }}>
+                                                          <InputLabel htmlFor="projectNumber">Project Number</InputLabel>
+                                                          <OutlinedInput
+                                                            disabled
+                                                            type='text'
+                                                            id='Ref'
+                                                            name='Ref'
+                                                            label='Project Number'
+                                                            value={String(row.Ref).padStart(6, '0')}
+                                                            startAdornment={<InputAdornment position="start">{row.prefix || "P-"}</InputAdornment>}
+                                                          />
+                                                        </FormControl>
+                                                        :
                                                         <FormControl sx={{ width: '150px', backgroundColor: 'white' }}>
                                                           <InputLabel htmlFor="invoiceNumber">Invoice Number</InputLabel>
                                                           <OutlinedInput
                                                             disabled
-                                                            type='number'
+                                                            type='text'
                                                             id='Ref'
                                                             name='Ref'
                                                             label='Invoice Number'
-                                                            value={'00' + row.Ref}
-                                                            startAdornment={<InputAdornment position="start">INV</InputAdornment>}
-                                                          />
-                                                        </FormControl>
-                                                        :
-                                                        <FormControl sx={{ width: '100px', backgroundColor: 'white' }}>
-                                                          <InputLabel htmlFor="projectNumber">Project Number</InputLabel>
-                                                          <OutlinedInput
-                                                            disabled
-                                                            type='number'
-                                                            id='Ref'
-                                                            name='Ref'
-                                                            label='Project Number'
-                                                            value={'00' + row.Ref}
-                                                            startAdornment={<InputAdornment position="start">P</InputAdornment>}
+                                                            value={String(row.Ref).padStart(6, '0')}
+                                                            startAdornment={<InputAdornment position="start">{row.prefix || "INV-"}</InputAdornment>}
                                                           />
                                                         </FormControl>
                                                     }

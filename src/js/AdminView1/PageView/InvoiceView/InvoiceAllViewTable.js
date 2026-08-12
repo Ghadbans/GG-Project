@@ -1,4 +1,5 @@
 import React, { useEffect,useState }  from 'react'
+import ConfirmDeleteModal from '../../../component/ConfirmDeleteModal';
 import '../Chartview.css'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
@@ -7,6 +8,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import {Table,IconButton, styled,TableBody,TableCell,TableHead,TableRow,Checkbox, TableContainer, Paper, Typography }  from '@mui/material';
 import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add } from '@mui/icons-material';
 import dayjs from 'dayjs';
 
@@ -45,7 +47,7 @@ const ViewTooltip = styled(({ className, ...props }) => (
 function InvoiceAllViewTable() {
   {/** Get Invoice */}
   const [invoice,setInvoice] = useState([]);
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/invoice';
+  const apiUrl = `${ENDPOINT_URL}/invoice`;
   useEffect(()=> {
   axios.get(apiUrl)
   .then(res => {
@@ -61,7 +63,7 @@ function InvoiceAllViewTable() {
 {/** Get Expenses */}
 const [expenses,setExpenses] = useState([])
 useEffect(()=> {
-axios.get('https://gg-project-production.up.railway.app/endpoint/dailyexpense')
+axios.get(`${ENDPOINT_URL}/dailyexpense`)
 .then(res => {
   // Handle the response data here
   setExpenses(res.data.data);
@@ -75,25 +77,38 @@ axios.get('https://gg-project-production.up.railway.app/endpoint/dailyexpense')
 {/** Convert Date */}
 {/** Convert Date */}
 {/** Delete Function */}
-  const handleDelete = async (id) => {
-    const InvDelete = invoice.filter((row)=> row._id === id)
-    const idRef = expenses?.filter((row)=>
-      InvDelete?.find((name)=>
-    { return name.invoiceNumber === row.referenceNumber}
-    ))          .map((row)=>row._id)
-    const RefId =idRef.toString()
+  const [openConfirm, setOpenConfirm] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const handleDeleteAttempt = (id, invoiceNumber) => {
+    setItemToDelete({ id, invoiceNumber });
+    setOpenConfirm(true);
+  };
+  const handleFinalDelete = async () => {
+    if (!itemToDelete) return;
+    const { id } = itemToDelete;
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-dailyexpense/${RefId}`);
-      alert(res.data.msg); // This will be the deleted document
+      const InvDelete = invoice.filter((row) => row._id === id);
+      const idRef = expenses
+        ?.filter((row) =>
+          InvDelete?.find((name) => {
+            return name.invoiceNumber === row.referenceNumber;
+          })
+        )
+        .map((row) => row._id);
+      const RefId = idRef.toString();
+      if (RefId) {
+        await axios.delete(`${ENDPOINT_URL}/delete-dailyexpense/${RefId}`);
+      }
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-invoice/${id}`);
+      if (res) {
+        alert("Invoice deleted successfully");
+        setInvoice(invoice.filter((inv) => inv._id !== id));
+      }
     } catch (error) {
       console.error(error);
     }
-  try {
-    const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-invoice/${id}`);
-    alert(res.data.msg); // This will be the deleted document
-  } catch (error) {
-    console.error(error);
-  }
+    setOpenConfirm(false);
+    setItemToDelete(null);
   };
 {/** End Delete Function */}
   return (
@@ -161,7 +176,7 @@ axios.get('https://gg-project-production.up.railway.app/endpoint/dailyexpense')
          </EditTooltip>
            </NavLink>
            <DeleteTooltip title="Delete">
-                                <IconButton onClick={() => handleDelete(row._id,row.invoiceNumber)} >
+                                <IconButton onClick={() => handleDeleteAttempt(row._id, row.invoiceNumber)} >
                                 <DeleteIcon  style={{cursor:'pointer',color:'red'}}/> 
                                 </IconButton>
                               </DeleteTooltip> 
@@ -175,8 +190,16 @@ axios.get('https://gg-project-production.up.railway.app/endpoint/dailyexpense')
   </Table>
   </TableContainer>
         </div>
+        <ConfirmDeleteModal 
+            open={openConfirm} 
+            handleClose={() => setOpenConfirm(false)} 
+            handleDelete={handleFinalDelete} 
+            itemName={itemToDelete ? `Invoice #${itemToDelete.invoiceNumber}` : ''} 
+        />
   </div>
   )
 }
 
 export default InvoiceAllViewTable
+
+

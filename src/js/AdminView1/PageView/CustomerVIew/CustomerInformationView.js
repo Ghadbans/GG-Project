@@ -1,3 +1,5 @@
+import PrintHeader from '../../../component/PrintHeader';
+import PrintFooter from '../../../component/PrintFooter';
 import React, { useEffect, useState, useRef } from 'react'
 import SidebarDash from '../../../component/SidebarDash';
 import '../../view.css'
@@ -13,6 +15,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, NavLink, Link } from 'react-router-dom'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
@@ -31,7 +34,7 @@ import ReactToPrint, { useReactToPrint } from 'react-to-print';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -47,7 +50,7 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import Image from '../../../img/images.png'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import db from '../../../dexieDb';
+
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -161,20 +164,13 @@ function CustomerInformationView() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -186,18 +182,12 @@ function CustomerInformationView() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -207,21 +197,15 @@ function CustomerInformationView() {
   const [customer, setCustomer] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [selectOptions, setSelectOptions] = useState('')
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/customer';
+  const apiUrl = `${ENDPOINT_URL}/customer`;
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/customer')
-          setCustomer(res.data.data.reverse());
-          setLoadingData(false);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-          setLoadingData(false);
-        }
-      } else {
-        const offLineCustomer1 = await db.customerSchema.toArray();
-        setCustomer(offLineCustomer1.reverse())
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/customer`)
+        setCustomer(res.data.data.reverse());
+        setLoadingData(false);
+      } catch (error) {
+        console.error('Error fetching data:', error);
         setLoadingData(false);
       }
     }
@@ -276,51 +260,27 @@ function CustomerInformationView() {
   const [CustomerInfo, setCustomerInfo] = useState('')
   useEffect(() => {
     const fetchData = async () => {
-      if (navigator.onLine) {
-        try {
-          console.log('🔍 [FILTERED API] Fetching professional customer summary for:', id);
-
-          // Use professional filtered endpoints (Zoho CRM approach)
-          // Backend now returns ONLY relevant data for this customer
-          const [resCustomer, resEstimate, resInvoice, resPurchase, resMaintenance, resPayment, resPos] = await Promise.all([
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/get-customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/estimation/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/invoice/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/purchase/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/maintenance/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/payment/customer/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/pos/customer/${id}`)
-          ]);
-
-          setCustomerInfo(resCustomer.data.data.Customer);
-
-          // Data is already filtered by backend - just set it!
-          setEstimate(resEstimate.data.data.reverse());
-          setInvoice(resInvoice.data.data.reverse());
-          setInvoice1(resInvoice.data.data.filter((row) => row.status === 'Sent' || row.status === 'Paid' || row.status === 'Partially-Paid'));
-          setPurchase(resPurchase.data.data.reverse());
-          setMaintenance(resMaintenance.data.data.reverse());
-          setPayment(resPayment.data.data);
-          setPosHistory(resPos.data.data.reverse());
-
-          console.log('✅ [FILTERED API] Successfully loaded professional customer summary');
-        } catch (error) {
-          console.error('❌ [FILTERED API] Error fetching customer data:', error);
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-customer/${id}`)
+        setCustomerInfo(res.data.data.Customer)
+        const estimateResponse = await axios.get(`${ENDPOINT_URL}/estimation?summary=true`);
+        setEstimate(estimateResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
+        const invoiceResponse = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`);
+        setInvoice(invoiceResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
+        setInvoice1(invoiceResponse.data?.data?.filter((row) => row.customerName._id === id && (row.status === 'Sent' || row.status === 'Paid' || row.status === 'Partially-Paid')));
+        const purChaseResponse = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`);
+        setPurchase(purChaseResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
+        const maintenanceResponse = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`);
+        setMaintenance(maintenanceResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
+        const resPayment = await axios.get(`${ENDPOINT_URL}/payment`)
+        setPayment(resPayment.data?.data?.filter((row) => row.customerName._id === id));
+        // Fetch POS
+        const resPos = await axios.get(`${ENDPOINT_URL}/pos?summary=true`);
+        if (resPos.data && resPos.data.data) {
+          setPosHistory(resPos.data?.data?.filter((row) => row.customerName && row.customerName._id === id).reverse());
         }
-      } else {
-        const offLineEstimate = await db.estimateSchema.toArray();
-        setEstimate(offLineEstimate.filter((row) => row.customerName._id === id).reverse());
-        const offLineInvoice = await db.invoiceSchema.toArray();
-        setInvoice(offLineInvoice.filter((row) => row.customerName._id === id).reverse());
-        const offLinePurchase = await db.purchaseSchema.toArray();
-        setPurchase(offLinePurchase.filter((row) => row.customerName._id === id).reverse());
-        const offLineMaintenance = await db.maintenanceSchema.toArray();
-        setMaintenance(offLineMaintenance.filter((row) => row.customerName._id === id).reverse());
-        const offLinePayment = await db.paymentSchema.toArray();
-        setPayment(offLinePayment.filter((row) => row.customerName._id === id));
-        // Offline POS
-        const offLinePos = await db.posSchema.toArray();
-        setPosHistory(offLinePos.filter((row) => row.customerName && row.customerName._id === id).reverse());
+      } catch (error) {
+        console.log(error)
       }
     }
     fetchData()
@@ -379,6 +339,18 @@ function CustomerInformationView() {
       credit: row.remaining
     })
   })
+  posHistory.forEach(row => {
+    const usdAmount = row.rate > 0 ? (row.totalInvoice / row.rate) : 0;
+    statement.push({
+      type: 'POS',
+      date: row.invoiceDate || row.paymentDate,
+      number: row.factureNumber,
+      defect: 'POS Sale',
+      amount: usdAmount,
+      payment: row.status === 'Paid' ? usdAmount : (row.TotalAmountPaid / row.rate),
+      status: row.status
+    })
+  })
   let balanceDue = 0;
 
   const filteredStatement = statement.filter((row) => {
@@ -409,6 +381,9 @@ function CustomerInformationView() {
         prevBalance -= parseFloat(row.payment)
         credit = prevBalance
         prevBalance = Math.max(prevBalance, 0)
+      } else if (row.type === 'POS') {
+        prevBalance += parseFloat(row.amount)
+        prevBalance -= parseFloat(row.payment || 0)
       }
     }
   })
@@ -446,17 +421,15 @@ function CustomerInformationView() {
     const data = {
       credit: credit2
     };
-    if (navigator.onLine) {
-      try {
-        const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-customer/${id}`, data)
-        if (res) {
-          setIsCredit('true')
-          handleOpen();
-        }
-      } catch (error) {
-        if (error) {
-          handleError();
-        }
+    try {
+      const res = await axios.put(`${ENDPOINT_URL}/update-customer/${id}`, data)
+      if (res) {
+        setIsCredit('true')
+        handleOpen();
+      }
+    } catch (error) {
+      if (error) {
+        handleError();
       }
     }
   };
@@ -637,11 +610,11 @@ function CustomerInformationView() {
     const fetchComment = async () => {
 
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
-        const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
+        const res = await axios.get(`${ENDPOINT_URL}/comment`)
+        const resp = res.data?.data?.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
-        const resNotification = await axios.get('https://gg-project-production.up.railway.app/endpoint/notification')
-        setNotification(resNotification.data.data.filter((row) => row.idInfo === id))
+        const resNotification = await axios.get(`${ENDPOINT_URL}/notification`)
+        setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -699,7 +672,7 @@ function CustomerInformationView() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-comment/`, data)
       if (res) {
         setReason("");
         handleOpen();
@@ -741,18 +714,22 @@ function CustomerInformationView() {
       amount1 += parseFloat(row.amount)
     } else if (row.type === 'Payment') {
       amount1 -= parseFloat(row.payment)
+    } else if (row.type === 'POS') {
+      amount1 += parseFloat(row.amount)
+      amount1 -= parseFloat(row.payment || 0)
     }
     return (
       <tr key={i}>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-0' + row.number + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-0' + row.number + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-0' + row.number + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-0' + row2.Ref) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
+          <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>
     )
@@ -763,18 +740,24 @@ function CustomerInformationView() {
       amount2 += parseFloat(row.balance)
     } else if (row.type === 'Payment') {
       amount2 -= parseFloat(row.payment)
+    } else if (row.type === 'POS') {
+      // For outstanding, POS is usually fully paid, so amount - payment = 0 if status is Paid.
+      // If partially paid, balance should be row.amount - row.payment
+      const posBalance = (row.amount || 0) - (row.payment || 0);
+      amount2 += posBalance;
     }
     return (
       <tr key={i}>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-0' + row.number + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-0' + row.number + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-0' + row.number + ' $' + row.payment + ' for payment of ' + row.re + row.numberArray?.map((row2) => 'Ref-0' + row2.Ref) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
+          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.re + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${row.paidAmount?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : `$${(row.paidAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>
     )
@@ -785,18 +768,22 @@ function CustomerInformationView() {
       amount3 += parseFloat(row.amount)
     } else if (row.type === 'Payment') {
       amount3 -= parseFloat(row.payment)
+    } else if (row.type === 'POS') {
+      amount3 += parseFloat(row.amount)
+      amount3 -= parseFloat(row.payment || 0)
     }
     return (
       <tr key={i}>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-0' + row.number + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-0' + row.number + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-0' + row.number + ' $' + row.payment + ' for payment of ' + row.re + row.numberArray?.map((row2) => 'Ref-0' + row2.Ref) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
+          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.re + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>
     )
@@ -808,18 +795,22 @@ function CustomerInformationView() {
       amount4 += parseFloat(row.amount)
     } else if (row.type === 'Payment') {
       amount4 -= parseFloat(row.payment)
+    } else if (row.type === 'POS') {
+      amount4 += parseFloat(row.amount)
+      amount4 -= parseFloat(row.payment || 0)
     }
     return (
       <tr key={i}>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-0' + row.number + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-0' + row.number + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-0' + row.number + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-0' + row2.Ref) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
+          <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount4.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>
     )
@@ -868,7 +859,7 @@ function CustomerInformationView() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -1224,21 +1215,21 @@ function CustomerInformationView() {
                                       <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
                                       >
-                                        <Typography>Estimation</Typography>
+                                        <Typography>Quotation</Typography>
                                       </AccordionSummary>
                                       <AccordionDetails>
                                         <div>
-                                          {/** Estimation Table Start*/}
+                                          {/** Quotation Table Start*/}
                                           <TableContainer>
                                             <Table>
                                               <TableHead >
                                                 <TableRow>
                                                   <TableCell><Checkbox /></TableCell>
                                                   <TableCell align="center">Date</TableCell>
-                                                  <TableCell align="center">Estimate#</TableCell>
+                                                  <TableCell align="center">Quotation#</TableCell>
                                                   <TableCell align="center">Customer</TableCell>
                                                   <TableCell align="center">Status</TableCell>
-                                                  <TableCell align="center">Estimate Amount</TableCell>
+                                                  <TableCell align="center">Quotation Amount</TableCell>
                                                   <TableCell align="left">Action</TableCell>
                                                 </TableRow>
                                               </TableHead>
@@ -1247,7 +1238,7 @@ function CustomerInformationView() {
                                                   <TableRow key={row._id}>
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.estimateDate).format('DD/MM/YYYY')}</TableCell>
-                                                    <TableCell align="center">EST-00{row.estimateNumber}</TableCell>
+                                                     <TableCell align="center">Q-{String(row.estimateNumber).padStart(6, '0')}</TableCell>
                                                     <TableCell align="center">{row.customerName.customerName.toUpperCase()}</TableCell>
                                                     <TableCell align="center">
                                                       <Typography
@@ -1289,7 +1280,7 @@ function CustomerInformationView() {
                                               </TableBody>
                                             </Table>
                                           </TableContainer>
-                                          {/** Estimation Table End */}
+                                          {/** Quotation Table End */}
                                         </div>
                                       </AccordionDetails>
                                     </Accordion>
@@ -1301,7 +1292,7 @@ function CustomerInformationView() {
                                       </AccordionSummary>
                                       <AccordionDetails>
                                         <div>
-                                          {/** Estimation Table Start*/}
+                                          {/** Quotation Table Start*/}
                                           <TableContainer>
                                             <Table>
                                               <TableHead >
@@ -1320,7 +1311,7 @@ function CustomerInformationView() {
                                                   <TableRow key={row._id}>
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</TableCell>
-                                                    <TableCell align="center">PUR-00{row.purchaseNumber}</TableCell>
+                                                     <TableCell align="center">PUR-{String(row.purchaseNumber).padStart(6, '0')}</TableCell>
                                                     <TableCell align="center">{row.customerName.customerName.toUpperCase()}</TableCell>
                                                     <TableCell align="center">
                                                       <Typography
@@ -1363,7 +1354,7 @@ function CustomerInformationView() {
                                               </TableBody>
                                             </Table>
                                           </TableContainer>
-                                          {/** Estimation Table End */}
+                                          {/** Quotation Table End */}
                                         </div>
                                       </AccordionDetails>
                                     </Accordion>
@@ -1375,7 +1366,7 @@ function CustomerInformationView() {
                                       </AccordionSummary>
                                       <AccordionDetails>
                                         <div>
-                                          {/** Estimation Table Start*/}
+                                          {/** Quotation Table Start*/}
                                           <TableContainer>
                                             <Table>
                                               <TableHead >
@@ -1394,7 +1385,7 @@ function CustomerInformationView() {
                                                   <TableRow key={row._id}>
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.serviceDate).format('DD/MM/YYYY')}</TableCell>
-                                                    <TableCell align="center">M-00{row.serviceNumber}</TableCell>
+                                                     <TableCell align="center">M-{String(row.serviceNumber).padStart(6, '0')}</TableCell>
                                                     <TableCell align="center">{row.customerName.customerName.toUpperCase()}</TableCell>
                                                     <TableCell align="center">
                                                       <Typography
@@ -1437,7 +1428,7 @@ function CustomerInformationView() {
                                               </TableBody>
                                             </Table>
                                           </TableContainer>
-                                          {/** Estimation Table End */}
+                                          {/** Quotation Table End */}
                                         </div>
                                       </AccordionDetails>
                                     </Accordion>
@@ -1468,7 +1459,7 @@ function CustomerInformationView() {
                                                   <TableRow key={row._id}>
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.invoiceDate).format('DD/MM/YYYY')}</TableCell>
-                                                    <TableCell align="center">INV-00{row.invoiceNumber}</TableCell>
+                                                     <TableCell align="center">INV-{String(row.invoiceNumber).padStart(6, '0')}</TableCell>
                                                     <TableCell >{row.customerName.customerName.toUpperCase()}</TableCell>
                                                     <TableCell align="center"> <Typography
                                                       color={
@@ -1529,17 +1520,7 @@ function CustomerInformationView() {
                                           <tr>
                                             <th style={{ borderBottom: '1px solid black' }}>
                                               <div className='invoiceTest'>
-                                                <span>
-                                                  <img src={Image} />
-                                                </span>
-                                                <address style={{ textAlign: 'right', fontSize: '70%', marginTop: '10px' }}>
-                                                  <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                                  <p style={{ fontWeight: 'normal' }}>RCM CD/KWZ/RCCM/22-B-00317 <br />
-                                                    ID NAT 14-H5300N11179P <br />
-                                                    AVENUE SALONGO Q/INDUSTRIEL C/MANIKA <br />
-                                                    KOLWEZI LUALABA <br />
-                                                    DR CONGO </p>
-                                                </address>
+                                                <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
                                               </div>
                                             </th>
                                           </tr>
@@ -1600,7 +1581,7 @@ function CustomerInformationView() {
 
                                                           return (
                                                             <tr key={row._id}>
-                                                              <td style={{ textAlign: 'left' }}>PAY-{row.paymentNumber}</td>
+                                                              <td style={{ textAlign: 'left' }}>PAY-{String(row.paymentNumber).padStart(6, '0')}</td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{row.modes.toUpperCase()}</td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
@@ -1609,7 +1590,7 @@ function CustomerInformationView() {
                                                                   const relatedInvoice = invoice?.find((row1) => row1._id === Item.id)
                                                                   return (
                                                                     <p key={i}>
-                                                                      <span>INV-00{Item.Ref} / {relatedInvoice?.invoiceSubject?.toUpperCase()}:  ${Item.total}</span>
+                                                                      <span>{row.reason === "Project" ? "P-" : "INV-"}{String(Item.Ref).padStart(6, '0')} / {relatedInvoice?.invoiceSubject?.toUpperCase()}:  ${Item.total}</span>
                                                                     </p>
                                                                   )
                                                                 })}
@@ -1640,20 +1621,7 @@ function CustomerInformationView() {
                                                 <p hidden>...</p>
                                                 <p hidden>...</p>
                                                 <br />
-                                                <section style={{ position: 'fixed', bottom: 0, left: 0, right: 0, justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                  <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                    <span><EmailIcon /></span>
-                                                    <span>contact@globalgate.sarl</span>
-                                                  </p>
-                                                  <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                    <span><PhoneIcon /></span>
-                                                    <span>+243 827 722 222</span>
-                                                  </p>
-                                                  <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                    <span><WebIcon /></span>
-                                                    <span>www.GlobalGate.sarl</span>
-                                                  </p>
-                                                </section>
+                                                <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
 
                                               </div>
                                             </td>
@@ -1687,7 +1655,7 @@ function CustomerInformationView() {
 
                                                 return (
                                                   <tr key={row._id}>
-                                                    <td style={{ textAlign: 'left', width: '50px' }}>PAY-{row.paymentNumber}</td>
+                                                    <td style={{ textAlign: 'left', width: '50px' }}>PAY-{String(row.paymentNumber).padStart(6, '0')}</td>
                                                     <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</td>
                                                     <td style={{ textAlign: 'left', width: '50px', borderLeft: '1px solid #DDD' }}>{row.modes.toUpperCase()}</td>
                                                     <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
@@ -1696,7 +1664,7 @@ function CustomerInformationView() {
                                                         const relatedInvoice = invoice?.find((row1) => row1._id === Item.id)
                                                         return (
                                                           <p key={i}>
-                                                            <span>INV-00{Item.Ref} / {relatedInvoice?.invoiceSubject?.toUpperCase()}:  ${Item.total}</span>
+                                                            <span>{Item.prefix || (relatedInvoice?.ReferenceName2 || relatedInvoice?.invoicePurchase === 'Purchased' ? "P-" : (row.reason === "Project" ? "P-" : "INV-"))}{String(Item.Ref).padStart(6, '0')} / {relatedInvoice?.invoiceSubject?.toUpperCase()}:  ${Item.total}</span>
                                                           </p>
                                                         )
                                                       })}
@@ -1797,17 +1765,7 @@ function CustomerInformationView() {
                                           <tr>
                                             <th style={{ borderBottom: '1px solid black' }}>
                                               <div className='invoiceTest'>
-                                                <span>
-                                                  <img src={Image} />
-                                                </span>
-                                                <address style={{ textAlign: 'right', fontSize: '70%', marginTop: '10px' }}>
-                                                  <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                                  <p style={{ fontWeight: 'normal' }}>RCM CD/KWZ/RCCM/22-B-00317 <br />
-                                                    ID NAT 14-H5300N11179P <br />
-                                                    AVENUE SALONGO Q/INDUSTRIEL C/MANIKA <br />
-                                                    KOLWEZI LUALABA <br />
-                                                    DR CONGO </p>
-                                                </address>
+                                                <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
                                               </div>
                                             </th>
                                           </tr>
@@ -1965,20 +1923,7 @@ function CustomerInformationView() {
                                                 <p hidden>...</p>
                                                 <p hidden>...</p>
                                                 <br />
-                                                <section style={{ position: 'fixed', bottom: 0, left: 0, right: 0, justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                  <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                    <span><EmailIcon /></span>
-                                                    <span>contact@globalgate.sarl</span>
-                                                  </p>
-                                                  <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                    <span><PhoneIcon /></span>
-                                                    <span>+243 827 722 222</span>
-                                                  </p>
-                                                  <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                    <span><WebIcon /></span>
-                                                    <span>www.GlobalGate.sarl</span>
-                                                  </p>
-                                                </section>
+                                                <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
 
                                               </div>
                                             </td>
@@ -1988,19 +1933,7 @@ function CustomerInformationView() {
                                     </Box>
                                     <Box sx={{ padding: '20px' }}>
                                       <div style={{ padding: '20px' }}>
-                                        <header className='invoiceTest'>
-                                          <div>
-                                            <img src={Image} style={{ width: '500px', height: '100px' }} />
-                                          </div>
-                                          <address style={{ textAlign: 'right' }}>
-                                            <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                            <p>RCM CD/KWZ/RCCM/22-B-00317 </p>
-                                            <p> ID NAT 14-H5300N11179P </p>
-                                            <p> AVENUE SALONGO Q/INDUSTRIEL C/MANIKA </p>
-                                            <p>  KOLWEZI LUALABA </p>
-                                            <p>   DR CONGO </p>
-                                          </address>
-                                        </header>
+                                        <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
                                         <hr /><p className='invoicehr'></p>
                                         <article>
                                           <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>

@@ -1,4 +1,4 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -6,8 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import {MenuItem,Grid, IconButton, Table, TableBody, TableCell,TableRow, TableHead,Paper,TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete,styled, Modal, Backdrop, Fade, Box,OutlinedInput,InputAdornment,Divider } from '@mui/material'
-import Tooltip,{tooltipClasses} from '@mui/material/Tooltip';
+import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Divider, Checkbox, FormControlLabel } from '@mui/material'
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,6 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -33,7 +34,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CurrencyExchange from '@mui/icons-material/CurrencyExchange';
 import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import Close from '@mui/icons-material/Close';
@@ -41,7 +42,7 @@ import ProjectFormView from '../ProjectView/ProjectFormView';
 import ProjectFormView2 from '../ProjectView/ProjectFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -120,270 +121,250 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 function DailyExpenseUpdate() {
-  const {id} = useParams();
-   const navigate = useNavigate();
-    const dispatch= useDispatch();
-    const user = useSelector(selectCurrentUser);
-  
-    useEffect(()=> {
-      const storesUserId = localStorage.getItem('user');
-      const fetchUser = async () => {
-        if (storesUserId) {
-       if (navigator.onLine) {
-         try {
-           const res = await  axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-           const Name = res.data.data.employeeName;
-           const Role = res.data.data.role;
-           dispatch(setUser({userName: Name, role: Role}));
-         } catch (error) {
-           console.error('Error fetching data:', error);
-         }
-       } else {
-        const resLocalInfo = await db.employeeUserSchema.get({_id:storesUserId})
-        const Name = resLocalInfo.employeeName;
-        const Role = resLocalInfo.role;
-        dispatch(setUser({userName: Name, role: Role}));
-       }
-      }else {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector(selectCurrentUser);
+
+  useEffect(() => {
+    const storesUserId = localStorage.getItem('user');
+    const fetchUser = async () => {
+      if (storesUserId) {
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      } else {
         navigate('/');
       }
+    }
+    fetchUser()
+  }, [dispatch]);
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch(logOut());
+    navigate('/')
+  }
+  const [categories, setCategories] = useState([]);
+  const [employee, setEmployee] = useState([]);
+  const [project, setProject] = useState([]);
+  const [project2, setProject2] = useState([]);
+  const [accountNameInfo, setAccountNameInfo] = useState({});
+  const [expenseCategory, setExpenseCategory] = useState({});
+  const [description, setDescription] = useState('');
+  const [expenseDate, setExpenseDate] = useState(() => {
+    const date = new Date()
+    return date
+  });
+  const [accountName, setAccountName] = useState('');
+  const [amount, setAmount] = useState(0);
+  const [rate, setRate] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [reason1, setReason1] = useState('');
+  const [expenseNumber, setExpenseNumber] = useState(0);
+  const [employeeName, setEmployeeName] = useState([]);
+  const [projectName, setProjectName] = useState({});
+  const [inputValueProject, setInputValueProject] = React.useState('');
+  const [CheckTvA, setCheckTvA] = useState(false);
+  const [tax, setTax] = useState(0);
+  const [cash, setCash] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-expense/${id}`)
+        setExpenseCategory(res.data.data.expenseCategory);
+        setDescription(res.data.data.description);
+        setExpenseDate(res.data.data.expenseDate);
+        setAmount(res.data.data.amount);
+        setRate(res.data.data.rate);
+        setTotal(res.data.data.total);
+        setExpenseNumber(Number(res.data?.data?.expenseNumber || res.data?.expenseNumber || 0));
+        setAccountName(res.data.data.accountName);
+        setEmployeeName(res.data.data.employeeName);
+        setAccountNameInfo(res.data.data.accountNameInfo);
+        setReason1(res.data.data.reason);
+        const hasTva = res.data.data.CheckTvA || res.data.data.checkTvA || res.data.data.CheckTva || res.data.data.hasTVA || res.data.data.tva || false;
+        setCheckTvA(hasTva);
+        setTax(res.data.data.tax || (hasTva ? (Number(res.data?.data?.total || res.data?.total || 0)) * 0.16 : 0));
+        setIsDataLoaded(true);
+      } catch (error) {
+        console.log(error)
       }
-      fetchUser()
-    },[dispatch]);
-    const handleLogout = () => {
-        localStorage.removeItem('user');
-        dispatch(logOut());
-        navigate('/')
-      }      
-      const [categories,setCategories] = useState([]);
-      const [employee,setEmployee]= useState([]);
-      const [project,setProject] = useState([]);
-      const [project2,setProject2] = useState([]);
-      const [accountNameInfo,setAccountNameInfo] = useState({});
-      const [expenseCategory,setExpenseCategory] = useState({});
-      const [description,setDescription] = useState('');
-      const [expenseDate,setExpenseDate]=useState(()=>{
-        const date = new Date()
-        return date
-      });
-      const [accountName,setAccountName] = useState('');
-      const [amount,setAmount] = useState(0);
-      const [rate,setRate] = useState(0);
-      const [total,setTotal] = useState(0);
-      const [reason1,setReason1] = useState('');
-      const [expenseNumber,setExpenseNumber] = useState(0);
-      const [employeeName,setEmployeeName]= useState([]);
-      const [projectName,setProjectName] = useState({});
-      const [inputValueProject, setInputValueProject] = React.useState('');
-      const [cash,setCash] = useState([]);
-
-      useEffect(()=>{
-        const fetchData = async () => {
-         if (navigator.onLine) {
-           try {
-             const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-expense/${id}`)
-             setExpenseCategory(res.data.data.expenseCategory);
-             setDescription(res.data.data.description);
-             setExpenseDate(res.data.data.expenseDate);
-             setAmount(res.data.data.amount);
-             setRate(res.data.data.rate);
-             setTotal(res.data.data.total);
-             setExpenseNumber(res.data.data.expenseNumber);
-             setAccountName(res.data.data.accountName);
-             setEmployeeName(res.data.data.employeeName);
-             setAccountNameInfo(res.data.data.accountNameInfo);
-             setReason1(res.data.data.reason);
-           } catch (error) {
-             console.log(error)
-           }
-         } else {
-          const resLocal = await db.dailyExpenseSchema.get({_id:id});
-          setExpenseCategory(resLocal.expenseCategory);
-             setDescription(resLocal.description);
-             setExpenseDate(resLocal.expenseDate);
-             setAmount(resLocal.amount);
-             setRate(resLocal.rate);
-             setTotal(resLocal.total);
-             setExpenseNumber(resLocal.expenseNumber);
-             setAccountName(resLocal.accountName);
-             setEmployeeName(resLocal.employeeName);
-             setAccountNameInfo(resLocal.accountNameInfo);
-             setReason1(resLocal.reason);
-         }
-        }
-        fetchData()
-    },[])
-    {/** Category && Project Start */}
-    const handleClearCategory = () =>{
-      setExpenseCategory({
-        _id: '',
-        expensesCategory: ''
-      })
     }
-    useEffect(()=> {
-      const fetchData = async () => {
-        if (navigator.onLine) {
-          try {
-            const projectResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-            const categoryResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory')
-            const employeeResponse = await  axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
-            setProject(projectResponse.data.data);
-            setProject2(projectResponse.data.data.filter((row)=> row.status === "On-Going"));
-            setCategories(categoryResponse.data.data);
-            setEmployee(employeeResponse.data.data);
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const offLineProject = await db.projectSchema.toArray();
-          setProject(offLineProject);
-          setProject2(offLineProject.filter((row)=> row.status === "On-Going"));
-          const offLineCategory = await db.dailyExpensesCategorySchema.toArray();
-          setCategories(offLineCategory);
-          const offLineEmployee = await db.employeeSchema.toArray();
-          setEmployee(offLineEmployee);
-        }
+    fetchData()
+  }, [])
+  {/** Category && Project Start */ }
+  const handleClearCategory = () => {
+    setExpenseCategory({
+      _id: '',
+      expensesCategory: ''
+    })
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const projectResponse = await axios.get(`${ENDPOINT_URL}/projects`)
+        const categoryResponse = await axios.get(`${ENDPOINT_URL}/expensesCategory`)
+        const employeeResponse = await axios.get(`${ENDPOINT_URL}/employee`)
+        setProject(projectResponse.data.data);
+        setProject2(projectResponse.data?.data?.filter((row) => row.status === "On-Going"));
+        setCategories(categoryResponse.data.data);
+        setEmployee(employeeResponse.data.data);
+      } catch (error) {
+        console.log(error)
       }
-      fetchData()
-    },[])
-    useEffect(()=> {
-      const fetchData = async () => {
-       if (navigator.onLine) {
-         try {
-           const cashResponse = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash') 
-           setCash(cashResponse.data.data.filter((row)=> dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(expenseDate).format('DD/MM/YYYY'))
-                                         .map((row)=> row.status)); 
-         } catch (error) {
-           console.error('Error fetching data:', error);
-         }
-       } else {
-        const offLineCash = await db.cashSchema.toArray();
-        setCash(offLineCash.filter((row)=> dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(expenseDate).format('DD/MM/YYYY'))
-                                         .map((row)=> row.status)); 
-       }
+    }
+    fetchData()
+  }, [])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const cashResponse = await axios.get(`${ENDPOINT_URL}/cash`)
+        setCash(cashResponse.data?.data?.filter((row) => dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(expenseDate).format('DD/MM/YYYY'))
+          .map((row) => row.status));
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-      fetchData()
-    },[expenseDate]);
-    const filterCash = cash.map((row)=> row).toString()
-    const handleOpenOpenAutocomplete2 = (e) => {
-      e.stopPropagation()
-     setOpenAutocomplete2(true);
-    };
-    const handleCloseOpenAutocomplete2 = () => {
-      setOpenAutocomplete2(false);
-      setModalOpenLoading(false)
-    };
+    }
+    fetchData()
+  }, [expenseDate]);
+  const filterCash = cash.map((row) => row).toString()
+  const handleOpenOpenAutocomplete2 = (e) => {
+    e.stopPropagation()
+    setOpenAutocomplete2(true);
+  };
+  const handleCloseOpenAutocomplete2 = () => {
+    setOpenAutocomplete2(false);
+    setModalOpenLoading(false)
+  };
 
-    {/** Category && Project End */}
+  {/** Category && Project End */ }
 
-     {/** Employee Start */}
-     const filterEmployee = employee.filter((row)=> row.status !== 'Suspended' && row.status !== 'Fired' && row.status !== 'Resign' )
-     const addItem = () => {
-      setEmployeeName([...employeeName, {
-            idInfo:v4(),
-            idRow:"",
-            employee:"",
-            description: "",
-            amount:0,
-            rate:0,
-            total:0,
-          }]);
+  {/** Employee Start */ }
+  const filterEmployee = employee.filter((row) => row.status !== 'Suspended' && row.status !== 'Fired' && row.status !== 'Resign')
+  const addItem = () => {
+    setEmployeeName([...employeeName, {
+      idInfo: v4(),
+      idRow: "",
+      employee: "",
+      description: "",
+      amount: 0,
+      rate: rate,
+      total: 0,
+    }]);
+  }
+  const handleChangeEmployee = (e, i) => {
+    const { name, value } = e.target;
+    const list = [...employeeName];
+    list[i][name] = value;
+    if (!list[i]['rate'] || parseFloat(list[i]['rate']) === 0) {
+      list[i]['rate'] = rate;
     }
-    const handleChangeEmployee = (e,i) => {
-      const {name, value} = e.target;
-      const list = [...employeeName];
-      list[i][name] = value;
-      list[i]['rate'] = rate
-      list[i]['total'] =Math.round((parseInt(list[i]['amount'])/list[i]['rate'])*100)/100 || list[i]['total']
-      setEmployeeName(list)
-    }
-    const handleChange = (idInfo,newValue) => {
-      const selectedOptions = employee.find((option)=> option === newValue)
-      setEmployeeName( employeeName => employeeName.map((row)=>  row.idInfo === idInfo ?{
-        ...row,
-        idRow: selectedOptions?._id,
-        employee: selectedOptions?.employeeName
-      }:row));
-    }
-    const handleShowAutocomplete = (idInfo) => {
-      setEmployeeName(employeeName=> employeeName.map((row)=> row.idInfo === idInfo ?{...row, 
-        idRow:'', 
-        employee: "",
-        description:'',
-        amount:0,
-        rate:0,
-        total:0,
-       }: row))
-    }
-    const deleteItem = idInfo =>{
-      setEmployeeName (employeeName => employeeName.filter((Item)=> Item.idInfo !==idInfo));
-    };
-    useEffect (() => {
-      let row = document.querySelectorAll('#amountTotalInvoice')
-      let sum = 0
-      for (let i = 0; i < row.length; i++) {
-        if (row[i].id === 'amountTotalInvoice') {
-          sum += isNaN(row[i].innerHTML) ? 0 : parseFloat(row[i].innerHTML);
-          const result = Math.round(sum*100)/100
-          setTotal(result);
-        }
-      }
-      let row1 = document.querySelectorAll('#amountTotalInvoice1')
-      let sum1 = 0
-      for (let i = 0; i < row1.length; i++) {
-        if (row1[i].id === 'amountTotalInvoice1') {
-          sum1 += isNaN(row1[i].innerHTML) ? 0 : parseFloat(row1[i].innerHTML);
-          const result = Math.round(sum1*100)/100
-          setAmount(result);
-        }
-      }
-      })
-      {/** Employee End */}
+    const currentRate = parseFloat(list[i]['rate'] || rate || 1);
+    const currentAmount = parseFloat(list[i]['amount'] || 0);
+    list[i]['total'] = (currentRate > 0) ? Math.round((currentAmount / currentRate) * 100) / 100 : 0;
+    setEmployeeName(list)
+  }
+  const handleChange = (idInfo, newValue) => {
+    const selectedOptions = employee.find((option) => option === newValue)
+    setEmployeeName(employeeName => employeeName.map((row) => row.idInfo === idInfo ? {
+      ...row,
+      idRow: selectedOptions?._id,
+      employee: selectedOptions?.employeeName,
+      rate: row.rate || rate
+    } : row));
+  }
+  const handleShowAutocomplete = (idInfo) => {
+    setEmployeeName(employeeName => employeeName.map((row) => row.idInfo === idInfo ? {
+      ...row,
+      idRow: '',
+      employee: "",
+      description: '',
+      amount: 0,
+      rate: rate,
+      total: 0,
+    } : row))
+  }
+  const deleteItem = idInfo => {
+    setEmployeeName(employeeName => employeeName.filter((Item) => Item.idInfo !== idInfo));
+  };
+  useEffect(() => {
+    // Only run this if we are in Employee mode
+    if (accountName !== 'Employee') return;
 
-    {/** Total Function Start */}
-    const handleAccountChange = (e)=>{
-      setAccountName(e.target.value)
-      setAccountNameInfo({
-        _id: "",
-        name: ""
-      });
-      setTotal(0);
-      setAmount(0)
-      setEmployeeName([])
-    }
-    const handleChangeReason = (e)=>{
-      setReason1(e.target.value)
-      setAccountNameInfo({
-        _id: "",
-        name: ""
-      });
-    }
-      useEffect(()=> {
-        const newTotal = isNaN(amount/rate)?0:parseFloat(amount/rate);
-        const result = Math.round(newTotal*100)/100
-        setTotal(amount === 0?total:result);
-      },[amount,rate,total]);
-    {/** Total Function End */}
+    const sum = employeeName.reduce((acc, row) => acc + (parseFloat(row.total) || 0), 0);
+    const result = Math.round(sum * 100) / 100;
+    setTotal(result);
+    setTax(CheckTvA ? result * 0.16 : 0);
 
-    {/** account info start */}
-    const handleChangeProject = (newValue) => {
-      const selectedOptions = project.find((option)=> option === newValue)
-      setAccountNameInfo({
-        _id: selectedOptions?._id,
-        name: selectedOptions?.projectName
-      });
-    }
-    const handleClearAccountName = ()=> {
-      setAccountNameInfo({
-        _id: "",
-        name: ""
-      });
-    }
-    {/** account info end */}
+    const sum1 = employeeName.reduce((acc, row) => acc + (parseFloat(row.amount) || 0), 0);
+    const result1 = Math.round(sum1 * 100) / 100;
+    setAmount(result1);
+  }, [employeeName, CheckTvA, accountName]); // Added missing dependencies
+  {/** Employee End */ }
 
-    {/** Reason Modal start */}
-  
-  const [open2,setOpen2] = useState(false);
+  {/** Total Function Start */ }
+  const handleAccountChange = (e) => {
+    setAccountName(e.target.value)
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+    setTotal(0);
+    setAmount(0)
+    setEmployeeName([])
+  }
+  const handleChangeReason = (e) => {
+    setReason1(e.target.value)
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+  }
+  useEffect(() => {
+    if (!isDataLoaded) return;
+    if (accountName === 'Employee') return;
+    // Only calculate total from amount/rate if amount is provided
+    if (amount > 0) {
+      const currentRate = parseFloat(rate || 1);
+      const newTotal = (currentRate > 0) ? (parseFloat(amount || 0) / currentRate) : 0;
+      const result = Math.round(newTotal * 100) / 100;
+      setTotal(result);
+      setTax(CheckTvA ? Math.round(result * 0.16 * 100) / 100 : 0);
+    } else {
+      // If amount is 0 (manual USD entry), still update the tax based on the current total
+      // But only if total is actually a number
+      const currentTotal = parseFloat(total) || 0;
+      setTax(CheckTvA ? currentTotal * 0.16 : 0);
+    }
+  }, [amount, rate, total, CheckTvA, isDataLoaded, accountName]);
+  {/** Total Function End */ }
+
+  {/** account info start */ }
+  const handleChangeProject = (newValue) => {
+    const selectedOptions = project.find((option) => option === newValue)
+    setAccountNameInfo({
+      _id: selectedOptions?._id,
+      name: selectedOptions?.projectName
+    });
+  }
+  const handleClearAccountName = () => {
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+  }
+  {/** account info end */ }
+
+  {/** Reason Modal start */ }
+
+  const [open2, setOpen2] = useState(false);
 
   const handleOpenUpdateReason = (e) => {
     e.preventDefault()
@@ -392,100 +373,105 @@ function DailyExpenseUpdate() {
   const handleCloseUpdateReason = () => {
     setOpen2(false);
   };
-  const [reason,setReason]= useState("");
+  const [reason, setReason] = useState("");
   const dateComment = new Date()
-    {/** Reason Modal end */}
-    
-    {/** Loading Start */}
-    const [openBack, setOpenBack] = useState(false);
+  {/** Reason Modal end */ }
 
-    const handleOpenBack = (e) => {
-      e.preventDefault()
-      setOpenBack(true);
+  {/** Loading Start */ }
+  const [openBack, setOpenBack] = useState(false);
+
+  const handleOpenBack = (e) => {
+    e.preventDefault()
+    setOpenBack(true);
+  };
+  const handleCloseBack = () => {
+    setOpenBack(false);
+  };
+  const [loading, setLoading] = useState(false);
+  const [loadingOpenModal, setLoadingOpenModal] = useState(false);
+  const [ErrorOpenModal, setErrorOpenModal] = useState(false);
+
+  const handleOpen = () => {
+
+    setLoadingOpenModal(true);
+    setLoading(true);
+    setOpen2(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500)
+
+  }
+  const handleError = () => {
+    setErrorOpenModal(true);
+    setLoading(true);
+    setOpen2(false);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500)
+  }
+  const handleClose = () => {
+    navigate(-1);
+  }
+  const handleCloseError = () => {
+    setErrorOpenModal(false);
+  }
+  {/** Loading End */ }
+  const [hideBack, setHideBack] = useState('');
+  const handleCreateComment = async () => {
+    const data = {
+      idInfo: id,
+      person: user.data.userName + ' Modify EXPENSE ',
+      reason: 'D-' + String(expenseNumber).padStart(6, '0') + ' ' + reason,
+      dateNotification: dateComment
     };
-    const handleCloseBack = () => {
-      setOpenBack(false);
-    };
-    const [loading,setLoading]= useState(false);
-    const [loadingOpenModal,setLoadingOpenModal] = useState(false);
-    const [ErrorOpenModal,setErrorOpenModal] = useState(false);
-
-    const handleOpen = () => {
-
-      setLoadingOpenModal(true);
-      setLoading(true);
-      setOpen2(false);
-      setTimeout(()=> {
-        setLoading(false);
-      }, 500)
-
+    try {
+      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
+    } catch (error) {
+      console.log(error)
     }
-    const handleError = () => {
-      setErrorOpenModal(true);
-      setLoading(true);
-      setOpen2(false);
-      setTimeout(()=> {
-        setLoading(false);
-     }, 500)
-    }
-    const handleClose = () => {
-      navigate(-1);
-    }
-    const handleCloseError = () => {
-      setErrorOpenModal(false);
-    }
-    {/** Loading End */}
-    const [hideBack,setHideBack] = useState('');
-    const handleCreateComment = async () => {
-      const data = {
-            idInfo:id,
-            person:user.data.userName + ' Modify '+ ' D-'+expenseNumber,
-            reason,
-            dateNotification:dateComment
-      };
-      try {
-       await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification/',data)
-      } catch (error) {
-       console.log(error)
-      }
-    } 
-const handleSubmit = async (e) => {
+  }
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const data = {
-      expenseCategory,accountName,
-      description,expenseDate,amount,
+      expenseCategory, accountName,
+      description, expenseDate, amount,
       employeeName,
-      rate,total,accountNameInfo,reason:reason1,updateS:false
+      CheckTvA,
+      checkTvA: CheckTvA,
+      CheckTva: CheckTvA,
+      hasTVA: CheckTvA,
+      tva: CheckTvA,
+      TVA: CheckTvA,
+      tax: CheckTvA ? Number(total) * 0.16 : 0,
+      taxAmount: CheckTvA ? Number(total) * 0.16 : 0,
+      vatAmount: CheckTvA ? Number(total) * 0.16 : 0,
+      TvaAmount: CheckTvA ? Number(total) * 0.16 : 0,
+      taxUSD: CheckTvA ? Number(total) * 0.16 : 0,
+      rate, total, accountNameInfo, reason: reason1, updateS: false
     }
-if (navigator.onLine) {
-      try {
-          const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-expense/${id}`,data);
-          if (res) {
-            await db.dailyExpenseSchema.update(expenseNumber,{...data, updateS: true})
-            handleCreateComment();
-            handleOpen();
-          }
-      } catch (error) {
-          if (error) {
-              handleError();
-          }
+    try {
+      const res = await axios.put(`${ENDPOINT_URL}/update-expense/${id}`, data);
+      if (res) {
+        handleCreateComment();
+        handleOpen();
       }
-} else {
-  await db.dailyExpenseSchema.update(expenseNumber,data)
-  handleOpen();
-}
-}
+    } catch (error) {
+      if (error) {
+        handleError();
+      }
+    }
+  }
 
-const [sideBar, setSideBar] = React.useState(true);
-const toggleDrawer = () => {
- setSideBar(!sideBar);
-};
+  const [sideBar, setSideBar] = React.useState(true);
+  const toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
   return (
     <div className='Homeemployee'>
-        
-        <Box sx={{ display: 'flex' }}>
-                 <CssBaseline />
-         <AppBar position="absolute" open={sideBar} sx={{backgroundColor:'#30368a'}}>
+
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
           <Toolbar
             sx={{
               pr: '24px', // keep right padding when drawer closed
@@ -510,25 +496,25 @@ const toggleDrawer = () => {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              update Expenses     
-                     </Typography>
-                     {
-        hideBack === 'true'? 
-          <IconButton>
-          <ArrowBack style={{color:'white'}} />
-          </IconButton>:
-          <IconButton onClick={handleOpenBack}>
-          <ArrowBack style={{color:'white'}} />
-          </IconButton>}
-            <NotificationVIewInfo/>
-            <MessageAdminView name={user.data.userName} role={user.data.role}/>
-            <Typography sx={{marginLeft:'10px',marginRight:'10px'}}>{user.data.userName}</Typography>
+              update Expenses
+            </Typography>
+            {
+              hideBack === 'true' ?
+                <IconButton>
+                  <ArrowBack style={{ color: 'white' }} />
+                </IconButton> :
+                <IconButton onClick={handleOpenBack}>
+                  <ArrowBack style={{ color: 'white' }} />
+                </IconButton>}
+            <NotificationVIewInfo />
+            <MessageAdminView name={user.data.userName} role={user.data.role} />
+            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
             <IconButton color="inherit" onClick={handleLogout}>
-            <Logout style={{color:'white'}} /> 
+              <Logout style={{ color: 'white' }} />
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -542,8 +528,8 @@ const toggleDrawer = () => {
             </IconButton>
           </Toolbar>
           <Divider />
-          <List sx={{height:'700px'}}>
-          <SidebarDash1/>
+          <List sx={{ height: '700px' }}>
+            <SidebarDash1 />
           </List>
         </Drawer>
         <Box
@@ -554,614 +540,637 @@ const toggleDrawer = () => {
                 ? theme.palette.grey[100]
                 : theme.palette.grey[900],
             flexGrow: 1,
-            width:'100%',
+            width: '100%',
             height: '100vh',
             overflow: 'auto',
           }}
         >
-          <Toolbar/>
-   <Container maxWidth="none" sx={{ mt: 4}} >
-    <div>
-        <form onSubmit={handleOpenUpdateReason}>
-    <Grid container style={{alignItems:'center',padding:'15px'}} spacing={2} component={Paper}>
-    <Grid item xs={12}>
-      {
-        expenseCategory.expensesCategory !== ''?
-     (   <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
-          <Typography sx={{fontSize:'20px'}}><span style={{fontWeight:'bold'}}> Category: </span> {expenseCategory.expensesCategory}</Typography>
-          <BlackTooltip title="Clear" placement='right'>
-                <IconButton onClick={handleClearCategory} style={{ position:'relative', float:'right'}}> 
-                              <RemoveCircleOutline style={{color:'#202a5a'}}/>
-                </IconButton>
-                </BlackTooltip>
-        </div>)
-        :(
-          <Autocomplete
-          id="expensesCategory"
-          options={categories}
-          getOptionLabel={(Option)=> Option.expensesCategory}
-          onChange={(e,newValue)=>setExpenseCategory(newValue)}
-          sx={{ width: '100%', backgroundColor:'white' }}
-          PaperComponent={({children, ...other})=>(
-                          
-            <Box {...other} sx={{backgroundColor:'white', left:'0',marginTop:'10px'}}>
-                {children}
-                <div>
-                    <button onClick={(e)=>handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
-                  ADD NEW CATEGORY
-                </button>
-                </div>
-              </Box>
-             )}
-          renderInput={(params) => <TextField {...params} label="Category" required/>}
-            />
-        )
-      }
-        </Grid>
-        <Grid item xs={12}>
-        <FormControl sx={{ width: '100%' }}>
-                  <InputLabel id="accountName">Account Name</InputLabel>
-                  <Select
-                      required
-                     id="accountName"
-                     value={accountName} 
-                     onChange={(e)=>handleAccountChange(e)}
-                     name="accountName"
-                     label="Account Name"
-                  >
+          <Toolbar />
+          <Container maxWidth="none" sx={{ mt: 4 }} >
+            <div>
+              <form onSubmit={handleOpenUpdateReason}>
+                <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2} component={Paper}>
+                  <Grid item xs={12}>
+                    {
+                      expenseCategory.expensesCategory !== '' ?
+                        (<div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                          <Typography sx={{ fontSize: '20px' }}><span style={{ fontWeight: 'bold' }}> Category: </span> {expenseCategory.expensesCategory}</Typography>
+                          <BlackTooltip title="Clear" placement='right'>
+                            <IconButton onClick={handleClearCategory} style={{ position: 'relative', float: 'right' }}>
+                              <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                            </IconButton>
+                          </BlackTooltip>
+                        </div>)
+                        : (
+                          <Autocomplete
+                            id="expensesCategory"
+                            options={categories}
+                            getOptionLabel={(Option) => Option.expensesCategory}
+                            onChange={(e, newValue) => setExpenseCategory(newValue)}
+                            sx={{ width: '100%', backgroundColor: 'white' }}
+                            PaperComponent={({ children, ...other }) => (
+
+                              <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
+                                {children}
+                                <div>
+                                  <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                    ADD NEW CATEGORY
+                                  </button>
+                                </div>
+                              </Box>
+                            )}
+                            renderInput={(params) => <TextField {...params} label="Category" required />}
+                          />
+                        )
+                    }
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl sx={{ width: '100%' }}>
+                      <InputLabel id="accountName">Account Name</InputLabel>
+                      <Select
+                        required
+                        id="accountName"
+                        value={accountName}
+                        onChange={(e) => handleAccountChange(e)}
+                        name="accountName"
+                        label="Account Name"
+                      >
                         <MenuItem value="Office">Office</MenuItem>
                         <MenuItem value="Project">Project</MenuItem>
                         <MenuItem value="Employee">Employee</MenuItem>
                         <MenuItem value="Home">Home</MenuItem>
-                  </Select>
-                 </FormControl>
-        </Grid>
-        <Grid item xs={6}> 
-               <FormControl sx={{ width: '100%', backgroundColor:'white' }}>
-                <InputLabel htmlFor="expenseNumber">Expense Number</InputLabel>
-                <OutlinedInput
-                disabled
-                type='number'
-                id='expenseNumber'
-                name='expenseNumber' 
-                label='Expense Number'
-                value={'00' + expenseNumber}
-                startAdornment={<InputAdornment position="start">D</InputAdornment>}
-                />
-               </FormControl>
-               </Grid>
-        <Grid item xs={6}>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <DemoContainer components={['DatePicker']}>
-                    <DatePicker
-                     required
-                    name='expenseDate' 
-                    label='Date'
-                    value={dayjs(expenseDate)}
-                    onChange={(date)=> setExpenseDate(date)}
-                    sx={{ width: '100%', backgroundColor:'white' }} 
-                    format='DD/MM/YYYY'
-               />
-                  </DemoContainer>
-        </LocalizationProvider>
-        </Grid>
-        {
-        accountName === 'Employee'?
-        <>
-          <Grid item xs={12}>
-        <FormControl sx={{ width: '100%' }}>
-                  <InputLabel id="reason">Reason</InputLabel>
-                  <Select
-                      required
-                     id="reason"
-                     value={reason1} 
-                     onChange={(e)=>handleChangeReason(e)}
-                     name="reason"
-                     label="Reason"
-                  >
-                        <MenuItem value="Office">Office</MenuItem>
-                        <MenuItem value="Project">Project</MenuItem>
-                        <MenuItem value="None">None</MenuItem>
-                  </Select>
-                 </FormControl>
-        </Grid>
-         <Grid item xs={12}>
-            <TextField
-            name='description'
-            id='description'
-            label='Expense Description'
-            value={description}
-            multiline
-            maxRows={5}
-            onChange={(e)=>setDescription(e.target.value)}
-            sx={{ width: '100%', backgroundColor:'white' }} 
-            />
-        </Grid>
-        
-        {
-          reason1 ==="Project"?
-          <Grid item xs={12}>
-  {
-          accountNameInfo.name !== "" ? 
-          <div style={{display:'flex', gap:'75px'}}>
-             <TextField
-          label='Project'
-          value={accountNameInfo.name}
-          sx={{ width: '100%', backgroundColor:'white' }} 
-          />
-               <BlackTooltip title="Clear" placement='right'>
-                <IconButton onClick={handleClearAccountName} style={{ position:'relative', float:'right'}}> 
-                              <RemoveCircleOutline style={{color:'#202a5a'}}/>
-                </IconButton>
-                </BlackTooltip>
-          </div>
-          :
-          <div>
-          {
-            user.data.role === 'CEO'?
-            <Autocomplete
-            options={project}
-            getOptionLabel={(option) => option.projectName.toUpperCase()}
-            renderOption={(props,option)=> (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-            renderInput={(params) => <TextField {...params} label="Project Name"/>}
-            onChange={(e,newValue)=> handleChangeProject(newValue? newValue :'')}
-            inputValue={inputValueProject}
-            onInputChange={(event, newInputValue) => {
-             setInputValueProject(newInputValue);
-            }}
-            filterOptions={(options,{inputValue})=>{
-              return options.filter(
-                (option)=>
-                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.description.toLowerCase().includes(inputValue.toLowerCase()) 
-              )
-             }}
-            sx={{  width: '100%', backgroundColor:'white' }} 
-          />
-            :  <Autocomplete
-            options={project2}
-            getOptionLabel={(option) => option.projectName.toUpperCase()}
-            renderOption={(props,option)=> (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-            renderInput={(params) => <TextField {...params} label="Project Name"/>}
-            onChange={(e,newValue)=> handleChangeProject(newValue? newValue :'')}
-            inputValue={inputValueProject}
-            onInputChange={(event, newInputValue) => {
-             setInputValueProject(newInputValue);
-            }}
-            filterOptions={(options,{inputValue})=>{
-              return options.filter(
-                (option)=>
-                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.description.toLowerCase().includes(inputValue.toLowerCase()) 
-              )
-             }}
-            sx={{  width: '100%', backgroundColor:'white' }} 
-          />
-          }
-        </div>
-            
-        }
-          </Grid>:null
-        }
-        <Grid item xs={12}>
-        <div>
-          <Grid container>
-            <Grid item xs={11}>
-            <table className='tableInfo10'>
-            <thead>
-              <tr>
-              <th>#</th>
-              <th>Employee Name</th>
-              <th>Amount FC</th>
-              <th>Rate</th>
-              <th>Total</th> 
-              <th>Action</th> 
-              </tr>
-            </thead>
-            <tbody>
-              {
-                employeeName?
-                employeeName.map((row,i)=> (
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
+                      <InputLabel htmlFor="expenseNumber">Expense Number</InputLabel>
+                      <OutlinedInput
+                        disabled
+                        id='expenseNumber'
+                        name='expenseNumber'
+                        label='Expense Number'
+                        value={String(expenseNumber).padStart(6, '0')}
+                        startAdornment={<InputAdornment position="start">D-</InputAdornment>}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <DemoContainer components={['DatePicker']}>
+                        <DatePicker
+                          required
+                          name='expenseDate'
+                          label='Date'
+                          value={dayjs(expenseDate)}
+                          onChange={(date) => setExpenseDate(date)}
+                          sx={{ width: '100%', backgroundColor: 'white' }}
+                          format='DD/MM/YYYY'
+                        />
+                      </DemoContainer>
+                    </LocalizationProvider>
+                  </Grid>
+                  {
+                    accountName === 'Employee' ?
+                      <>
+                        <Grid item xs={12}>
+                          <FormControl sx={{ width: '100%' }}>
+                            <InputLabel id="reason">Reason</InputLabel>
+                            <Select
+                              required
+                              id="reason"
+                              value={reason1}
+                              onChange={(e) => handleChangeReason(e)}
+                              name="reason"
+                              label="Reason"
+                            >
+                              <MenuItem value="Office">Office</MenuItem>
+                              <MenuItem value="Project">Project</MenuItem>
+                              <MenuItem value="None">None</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                          <TextField
+                            name='description'
+                            id='description'
+                            label='Expense Description'
+                            value={description}
+                            multiline
+                            maxRows={5}
+                            onChange={(e) => setDescription(e.target.value)}
+                            sx={{ width: '100%', backgroundColor: 'white' }}
+                          />
+                        </Grid>
 
-                  <tr key={row.idInfo}>
-                    <td><DragIndicatorRounded/></td>
-                    <td style={{height:'100px'}} >
-        {
-          row.employee !== '' ? (
-            (  
-              <div style={{display:'flex', justifyContent:'space-between',alignItems:'center'}}>
-              <div >
-              <Typography sx={{fontSize:'20px',fontWeight:'bold'}}>{row.employee?row.employee:''}</Typography>
-              <TextField 
-                name='description' id='description' 
-                value={row.description}
-                multiline
-                rows={3}
-                placeholder='Description'
-                onChange={(e) => handleChangeEmployee(e,i)}
-                size="small"
-                disabled={user.data.role === 'User'}
-                sx={{ width: '440px', backgroundColor:'white', fontSize:12}}       
-      />
-              </div>
-              <div>
-              <BlackTooltip title="Clear" placement='top'>
-                
-        <IconButton onClick={()=>handleShowAutocomplete(row.idInfo)} style={{ position:'relative', float:'right'}}> 
-                      <RemoveCircleOutline style={{color:'#202a5a'}}/>
-                   
-        </IconButton>
-        </BlackTooltip>
-              </div>
-      </div>)
-          ):(
-            <div style={{display:'flex', alignItems:'center'}}>
-                          <Autocomplete
-      disableClearable
-                         options={filterEmployee}
-                         getOptionLabel={(option) => option.employeeName.toUpperCase()}
-                         renderOption={(props,option)=> (<Box {...props} sx={{backgroundColor:'#f2f2f2'}}>{option.employeeName.toUpperCase()}</Box>)}
-                         renderInput={(params) =>
-                         <TextField      multiline
-                         rows={4} {...params} required 
-                         />}
-                         onChange={(e,newValue)=>handleChange(row.idInfo, newValue)}
-                         size="small"
-                         sx={{ width: '470px', backgroundColor:'white' }} 
-                       />
-            </div>
-          )
-        }
-          </td>
-          <td>
-          <TextField 
-                       name='amount' id='amount'
-                       value={row.amount}
-                       onChange={(e) => handleChangeEmployee(e,i)}
-                       size="small"
-                       sx={{ width: '100px', backgroundColor:'white' }}       
-                   />
-          </td>
-          <td>
-          <TextField 
-           disabled
-                       name='rate' id='rate' 
-                       value={row.rate}
-                       onChange={(e) => handleChangeEmployee(e,i)}
-                       size="small"
-                       sx={{ width: '100px', backgroundColor:'white' }}       
-                   />
-          </td>
-          <td>
-          <TextField 
-                       name='total' id='total' 
-                       value={row.total}
-                       onChange={(e) => handleChangeEmployee(e,i)}
-                       size="small"
-                       sx={{ width: '100px', backgroundColor:'white' }}       
-                   />
-          </td>
-          <td hidden id='amountTotalInvoice1'>{row.amount}</td>
-          <td hidden id='amountTotalInvoice'>{row.total}</td>
-          <td>
-          <LightTooltip title="Delete" sx={{}}>
-        <IconButton onClick={()=> deleteItem(row.idInfo)} >
-        <DeleteIcon  style={{cursor:'pointer',color:'red'}}/> 
-        </IconButton>
-      </LightTooltip>
-          </td>
-                  </tr>
-                ))
-                :''
-              }
-              <tr>
-                <td colSpan={2} style={{textAlign:'center'}}>
-                  Total
-                </td>
-                <td>
-                <TextField 
-                id='amount'
-                name='amount' 
-                type='number'
-                label='Total FC'
-                value={amount}
-                sx={{ width: '200px', backgroundColor:'white' }}       
-                />
-                </td>
-                <td style={{textAlign:'center'}}>
-                  -
-                </td>
-                <td>
-                <TextField 
-                id='total'
-                name='total' 
-                type='number'
-                label='Total $'
-                value={total}
-                sx={{ width: '200px', backgroundColor:'white' }}       
-                />
-                </td>
-              </tr>
-            </tbody>
-          </table>
-            </Grid>
-            <Grid item xs={1}>
-              <div style={{position:'fixed',zIndex:'1'}}>
-         <BlackTooltip title="Add" placement="bottom">
-            <IconButton onClick={addItem} >
-            <Add className='btn1' style={{fontSize:'40px'}}/>  
-            </IconButton>
-          </BlackTooltip>
-              </div>
-
-            </Grid>
-          </Grid>
-            
-          </div>
-          
-        </Grid>
-        </>
-        :(
-          <>
-          <Grid item xs={12}>
-            {
-              accountNameInfo?
-              <div>
                         {
-          accountNameInfo.name !== "" ?
-          <div style={{display:'flex', gap:'75px'}}>
-          <TextField
-       label='Project'
-       value={accountNameInfo.name?accountNameInfo.name:''}
-       sx={{ width: '100%', backgroundColor:'white' }} 
-       />
-            <BlackTooltip title="Clear" placement='right'>
-             <IconButton onClick={handleClearAccountName} style={{ position:'relative', float:'right'}}> 
-                           <RemoveCircleOutline style={{color:'#202a5a'}}/>
-             </IconButton>
-             </BlackTooltip>
-       </div>
-          :
-          <div>
-          {
-            user.data.role === 'CEO'?
-            (<Autocomplete
-            options={project}
-            disabled ={accountName !== 'Project'}
-            getOptionLabel={(option) => option.projectName.toUpperCase()}
-            renderOption={(props,option)=> (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-            onChange={(e,newValue)=> handleChangeProject(newValue? newValue :'')}
-            inputValue={inputValueProject}
-            onInputChange={(event, newInputValue) => {
-             setInputValueProject(newInputValue);
-            }}
-            filterOptions={(options,{inputValue})=>{
-              return options.filter(
-                (option)=>
-                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.description.toLowerCase().includes(inputValue.toLowerCase()) 
-              )
-             }}
-             renderInput={(params) => <TextField {...params} label="Project Name"/>}
-            sx={{  width: '100%', backgroundColor:'white' }} 
-          />)
-            : ( <Autocomplete
-            options={project2}
-            disabled ={accountName !== 'Project'}
-            getOptionLabel={(option) => option.projectName.toUpperCase()}
-            renderOption={(props,option)=> (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-            renderInput={(params) => <TextField {...params} label="Project Name"/>}
-            onChange={(e,newValue)=> handleChangeProject(newValue? newValue :'')}
-            inputValue={inputValueProject}
-            onInputChange={(event, newInputValue) => {
-             setInputValueProject(newInputValue);
-            }}
-            filterOptions={(options,{inputValue})=>{
-              return options.filter(
-                (option)=>
-                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                option.description.toLowerCase().includes(inputValue.toLowerCase()) 
-              )
-             }}
-            sx={{  width: '100%', backgroundColor:'white' }} 
-          />)
-          }
-        </div>
-        }
-              </div>
-              :''
-            }
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-            name='description'
-            id='description'
-            label='Expense Description'
-            value={description}
-            multiline
-            maxRows={5}
-            onChange={(e)=>setDescription(e.target.value)}
-            sx={{ width: '100%', backgroundColor:'white' }} 
-            />
-        </Grid>
-          <Grid item xs={4}>
-        <FormControl     sx={{ width: '100%', backgroundColor:'white' }} >
-                <InputLabel htmlFor='amount'>Amount</InputLabel>
-                <OutlinedInput 
-                required
-                id='amount'
-                name='amount' 
-                type='number'
-                label='Amount'
-                value={amount}
-                onChange={(e)=>setAmount(e.target.value)}
-                startAdornment={<InputAdornment position='start'>Fc</InputAdornment>}
-                />
-              </FormControl>
-        </Grid>
-        <Grid item xs={4}>
-        <FormControl     sx={{ width: '100%', backgroundColor:'white' }} >
-                <InputLabel htmlFor='rate'>Rate</InputLabel>
-                <OutlinedInput 
-                id='rate'
-                name='rate' 
-                type='number'
-                label='Rate'
-                value={rate}
-                startAdornment={<InputAdornment position='start'><CurrencyExchange/></InputAdornment>}
-                />
-              </FormControl>
-        </Grid>
-        <Grid item xs={4}>
-        <FormControl     sx={{ width: '100%', backgroundColor:'white' }} >
-                <InputLabel htmlFor='total'>Total</InputLabel>
-                <OutlinedInput 
-                id='total'
-                name='total' 
-                type='number'
-                label='Total'
-                value={total}
-                onChange={(e)=>setTotal(e.target.value)}
-                startAdornment={<InputAdornment position='start'><MonetizationOn/></InputAdornment>}
-                />
-              </FormControl>
-        </Grid>
-          </>
-        )
-      }
-        <Grid item xs={12}>
-        <button type='submit' className='btnCustomer6' style={{width:'100%'}}>Save</button>
-        </Grid>
-    </Grid>
-        </form>
-    </div>
-    </Container>
-  </Box>
-  </Box>
-    <Modal  
+                          reason1 === "Project" ?
+                            <Grid item xs={12}>
+                              {
+                                accountNameInfo.name !== "" ?
+                                  <div style={{ display: 'flex', gap: '75px' }}>
+                                    <TextField
+                                      label='Project'
+                                      value={accountNameInfo.name}
+                                      sx={{ width: '100%', backgroundColor: 'white' }}
+                                    />
+                                    <BlackTooltip title="Clear" placement='right'>
+                                      <IconButton onClick={handleClearAccountName} style={{ position: 'relative', float: 'right' }}>
+                                        <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                      </IconButton>
+                                    </BlackTooltip>
+                                  </div>
+                                  :
+                                  <div>
+                                    {
+                                      user.data.role === 'CEO' ?
+                                        <Autocomplete
+                                          options={project}
+                                          getOptionLabel={(option) => option.projectName.toUpperCase()}
+                                          renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                          renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                          onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                          inputValue={inputValueProject}
+                                          onInputChange={(event, newInputValue) => {
+                                            setInputValueProject(newInputValue);
+                                          }}
+                                          filterOptions={(options, { inputValue }) => {
+                                            return options.filter(
+                                              (option) =>
+                                                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                            )
+                                          }}
+                                          sx={{ width: '100%', backgroundColor: 'white' }}
+                                        />
+                                        : <Autocomplete
+                                          options={project2}
+                                          getOptionLabel={(option) => option.projectName.toUpperCase()}
+                                          renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                          renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                          onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                          inputValue={inputValueProject}
+                                          onInputChange={(event, newInputValue) => {
+                                            setInputValueProject(newInputValue);
+                                          }}
+                                          filterOptions={(options, { inputValue }) => {
+                                            return options.filter(
+                                              (option) =>
+                                                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                            )
+                                          }}
+                                          sx={{ width: '100%', backgroundColor: 'white' }}
+                                        />
+                                    }
+                                  </div>
+
+                              }
+                            </Grid> : null
+                        }
+                        <Grid item xs={12}>
+                          <div>
+                            <Grid container>
+                              <Grid item xs={11}>
+                                <table className='tableInfo10'>
+                                  <thead>
+                                    <tr>
+                                      <th>#</th>
+                                      <th>Employee Name</th>
+                                      <th>Amount FC</th>
+                                      <th>Rate</th>
+                                      <th>Total</th>
+                                      <th>Action</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {
+                                      employeeName ?
+                                        employeeName.map((row, i) => (
+
+                                          <tr key={row.idInfo}>
+                                            <td><DragIndicatorRounded /></td>
+                                            <td style={{ height: '100px' }} >
+                                              {
+                                                row.employee !== '' ? (
+                                                  (
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                      <div >
+                                                        <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{row.employee ? row.employee : ''}</Typography>
+                                                        <TextField
+                                                          name='description' id='description'
+                                                          value={row.description}
+                                                          multiline
+                                                          rows={3}
+                                                          placeholder='Description'
+                                                          onChange={(e) => handleChangeEmployee(e, i)}
+                                                          size="small"
+                                                          disabled={user.data.role === 'User'}
+                                                          sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                        />
+                                                      </div>
+                                                      <div>
+                                                        <BlackTooltip title="Clear" placement='top'>
+
+                                                          <IconButton onClick={() => handleShowAutocomplete(row.idInfo)} style={{ position: 'relative', float: 'right' }}>
+                                                            <RemoveCircleOutline style={{ color: '#202a5a' }} />
+
+                                                          </IconButton>
+                                                        </BlackTooltip>
+                                                      </div>
+                                                    </div>)
+                                                ) : (
+                                                  <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                    <Autocomplete
+                                                      disableClearable
+                                                      options={filterEmployee}
+                                                      getOptionLabel={(option) => option.employeeName.toUpperCase()}
+                                                      renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.employeeName.toUpperCase()}</Box>)}
+                                                      renderInput={(params) =>
+                                                        <TextField multiline
+                                                          rows={4} {...params} required
+                                                        />}
+                                                      onChange={(e, newValue) => handleChange(row.idInfo, newValue)}
+                                                      size="small"
+                                                      sx={{ width: '470px', backgroundColor: 'white' }}
+                                                    />
+                                                  </div>
+                                                )
+                                              }
+                                            </td>
+                                            <td>
+                                              <TextField
+                                                name='amount' id='amount'
+                                                value={row.amount}
+                                                onChange={(e) => handleChangeEmployee(e, i)}
+                                                size="small"
+                                                sx={{ width: '100px', backgroundColor: 'white' }}
+                                              />
+                                            </td>
+                                            <td>
+                                              <TextField
+                                                disabled
+                                                name='rate' id='rate'
+                                                value={row.rate || rate}
+                                                onChange={(e) => handleChangeEmployee(e, i)}
+                                                size="small"
+                                                sx={{ width: '100px', backgroundColor: 'white' }}
+                                              />
+                                            </td>
+                                            <td>
+                                              <TextField
+                                                name='total' id='total'
+                                                value={row.total}
+                                                onChange={(e) => handleChangeEmployee(e, i)}
+                                                size="small"
+                                                sx={{ width: '100px', backgroundColor: 'white' }}
+                                              />
+                                            </td>
+                                            <td hidden id='amountTotalInvoice1'>{row.amount}</td>
+                                            <td hidden id='amountTotalInvoice'>{row.total}</td>
+                                            <td>
+                                              <LightTooltip title="Delete" sx={{}}>
+                                                <IconButton onClick={() => deleteItem(row.idInfo)} >
+                                                  <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
+                                                </IconButton>
+                                              </LightTooltip>
+                                            </td>
+                                          </tr>
+                                        ))
+                                        : ''
+                                    }
+                                    <tr>
+                                      <td colSpan={2} style={{ textAlign: 'center' }}>
+                                        Total
+                                      </td>
+                                      <td>
+                                        <TextField
+                                          id='amount'
+                                          name='amount'
+                                          type='number'
+                                          label='Total FC'
+                                          value={amount}
+                                          sx={{ width: '200px', backgroundColor: 'white' }}
+                                        />
+                                      </td>
+                                      <td style={{ textAlign: 'center' }}>
+                                        -
+                                      </td>
+                                      <td>
+                                        <TextField
+                                          id='total'
+                                          name='total'
+                                          type='number'
+                                          label='Total $'
+                                          value={total}
+                                          sx={{ width: '200px', backgroundColor: 'white' }}
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr>
+                                      <td colSpan={2} style={{ textAlign: 'center' }}>
+                                        VAT (16%)
+                                      </td>
+                                      <td>
+                                        <Checkbox checked={CheckTvA} disabled />
+                                      </td>
+                                      <td style={{ textAlign: 'center' }}>
+                                        -
+                                      </td>
+                                      <td>
+                                        <TextField
+                                          disabled
+                                          label='Tax $'
+                                          value={tax.toFixed(2)}
+                                          sx={{ width: '200px', backgroundColor: 'white' }}
+                                        />
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </Grid>
+                              <Grid item xs={1}>
+                                <div style={{ position: 'fixed', zIndex: '1' }}>
+                                  <BlackTooltip title="Add" placement="bottom">
+                                    <IconButton onClick={addItem} >
+                                      <Add className='btn1' style={{ fontSize: '40px' }} />
+                                    </IconButton>
+                                  </BlackTooltip>
+                                </div>
+
+                              </Grid>
+                            </Grid>
+                          </div>
+                          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '10px' }}>
+                            <FormControlLabel control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />} label="TVA (16%)" />
+                          </div>
+
+                        </Grid>
+                      </>
+                      : (
+                        <>
+                          <Grid item xs={12}>
+                            {
+                              accountNameInfo ?
+                                <div>
+                                  {
+                                    accountNameInfo.name !== "" ?
+                                      <div style={{ display: 'flex', gap: '75px' }}>
+                                        <TextField
+                                          label='Project'
+                                          value={accountNameInfo.name ? accountNameInfo.name : ''}
+                                          sx={{ width: '100%', backgroundColor: 'white' }}
+                                        />
+                                        <BlackTooltip title="Clear" placement='right'>
+                                          <IconButton onClick={handleClearAccountName} style={{ position: 'relative', float: 'right' }}>
+                                            <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                          </IconButton>
+                                        </BlackTooltip>
+                                      </div>
+                                      :
+                                      <div>
+                                        {
+                                          user.data.role === 'CEO' ?
+                                            (<Autocomplete
+                                              options={project}
+                                              disabled={accountName !== 'Project'}
+                                              getOptionLabel={(option) => option.projectName.toUpperCase()}
+                                              renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                              onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                              inputValue={inputValueProject}
+                                              onInputChange={(event, newInputValue) => {
+                                                setInputValueProject(newInputValue);
+                                              }}
+                                              filterOptions={(options, { inputValue }) => {
+                                                return options.filter(
+                                                  (option) =>
+                                                    option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                    option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                    option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                                )
+                                              }}
+                                              renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                              sx={{ width: '100%', backgroundColor: 'white' }}
+                                            />)
+                                            : (<Autocomplete
+                                              options={project2}
+                                              disabled={accountName !== 'Project'}
+                                              getOptionLabel={(option) => option.projectName.toUpperCase()}
+                                              renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                              renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                              onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                              inputValue={inputValueProject}
+                                              onInputChange={(event, newInputValue) => {
+                                                setInputValueProject(newInputValue);
+                                              }}
+                                              filterOptions={(options, { inputValue }) => {
+                                                return options.filter(
+                                                  (option) =>
+                                                    option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                    option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                    option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                                )
+                                              }}
+                                              sx={{ width: '100%', backgroundColor: 'white' }}
+                                            />)
+                                        }
+                                      </div>
+                                  }
+                                </div>
+                                : ''
+                            }
+                          </Grid>
+                          <Grid item xs={12}>
+                            <TextField
+                              name='description'
+                              id='description'
+                              label='Expense Description'
+                              value={description}
+                              multiline
+                              maxRows={5}
+                              onChange={(e) => setDescription(e.target.value)}
+                              sx={{ width: '100%', backgroundColor: 'white' }}
+                            />
+                          </Grid>
+                          <Grid item xs={3}>
+                            <FormControl sx={{ width: '100%', backgroundColor: 'white' }} >
+                              <InputLabel htmlFor='amount'>Amount</InputLabel>
+                              <OutlinedInput
+                                required
+                                id='amount'
+                                name='amount'
+                                type='number'
+                                label='Amount'
+                                value={amount}
+                                onChange={(e) => setAmount(e.target.value)}
+                                startAdornment={<InputAdornment position='start'>Fc</InputAdornment>}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <FormControl sx={{ width: '100%', backgroundColor: 'white' }} >
+                              <InputLabel htmlFor='rate'>Rate</InputLabel>
+                              <OutlinedInput
+                                id='rate'
+                                name='rate'
+                                type='number'
+                                label='Rate'
+                                value={rate}
+                                startAdornment={<InputAdornment position='start'><CurrencyExchange /></InputAdornment>}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={3}>
+                            <FormControl sx={{ width: '100%', backgroundColor: 'white' }} >
+                              <InputLabel htmlFor='total'>Total</InputLabel>
+                              <OutlinedInput
+                                id='total'
+                                name='total'
+                                type='number'
+                                label='Total'
+                                value={total}
+                                onChange={(e) => setTotal(e.target.value)}
+                                startAdornment={<InputAdornment position='start'><MonetizationOn /></InputAdornment>}
+                              />
+                            </FormControl>
+                          </Grid>
+                          <Grid item xs={3} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <FormControlLabel control={<Checkbox checked={CheckTvA} onChange={(e) => setCheckTvA(e.target.checked)} />} label="TVA (16%)" />
+                          </Grid>
+                        </>
+                      )
+                  }
+                  <Grid item xs={12}>
+                    <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button>
+                  </Grid>
+                </Grid>
+              </form>
+            </div>
+          </Container>
+        </Box>
+      </Box>
+      <Modal
         open={openBack}
         onClose={handleCloseBack}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
- <Box sx={{ ...style, width: 500 }}>
-        <BlackTooltip title="Close" placement='left'>
-        <IconButton onClick={handleCloseBack} style={{ position:'relative', float:'right'}}> 
-                      <Close style={{color:'#202a5a'}}/>
-        </IconButton>
-        </BlackTooltip>  
-        <Grid container sx={{alignItems:'center',padding:'15px'}} spacing={2}>
-          <Grid item xs={12} sx={{textAlign:'center'}}>
-           <Typography>Do you want to stop updating daily expense ? </Typography>
-           <p><span className="txt2" style={{color:'red'}}>Note :</span> <span className="txt2"> If you stop updating without saving, all your changes will be lost</span></p>
-          </Grid> 
-          <br/>
-          <Grid item xs={6}>
-          <button type='submit' onClick={() => navigate('/DailyExpenses')} className='btnCustomer' style={{width: '100%'}}>Yes</button>
+        <Box sx={{ ...style, width: 500 }}>
+          <BlackTooltip title="Close" placement='left'>
+            <IconButton onClick={handleCloseBack} style={{ position: 'relative', float: 'right' }}>
+              <Close style={{ color: '#202a5a' }} />
+            </IconButton>
+          </BlackTooltip>
+          <Grid container sx={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+            <Grid item xs={12} sx={{ textAlign: 'center' }}>
+              <Typography>Do you want to stop updating daily expense ? </Typography>
+              <p><span className="txt2" style={{ color: 'red' }}>Note :</span> <span className="txt2"> If you stop updating without saving, all your changes will be lost</span></p>
+            </Grid>
+            <br />
+            <Grid item xs={6}>
+              <button type='submit' onClick={() => navigate('/DailyExpenses')} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
+            </Grid>
+            <Grid item xs={6}>
+              <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{ width: '100%' }}>No</button>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-          <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{width: '100%'}}>No</button>
-          </Grid>
-        </Grid> 
         </Box>
       </Modal>
-    <Modal 
-           open={loadingOpenModal}
-           onClose={handleClose}
-           closeAfterTransition
-           BackdropComponent={Backdrop}
-           BackdropProps={{
-            timeout: 500,
-           }}
-           aria-labelledby="modal-modal-title"
-           aria-describedby="modal-modal-description"
+      <Modal
+        open={loadingOpenModal}
+        onClose={handleClose}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, width: 500 }}
         >
-          <Box sx={{ ...style, width: 500 }}
-          >
-              {loading?(<Loader/>
-                ):(
-              <div style={{justifyContent:'center',textAlign:'center'}}>
-                  <p><CheckCircleIcon style={{color:'green',height:'40px', width:'40px'}}/></p>
-                  <h2> Data Saved successfully</h2>
-                  <div style={{display:'flex', gap:'60px',justifyContent:'center'}}>
-              <button onClick={handleClose} className='btnCustomer'>
-                Close
+          {loading ? (<Loader />
+          ) : (
+            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+              <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
+              <h2> Data Saved successfully</h2>
+              <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
+                <button onClick={handleClose} className='btnCustomer'>
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+        </Box>
+      </Modal>
+      <Modal
+        open={ErrorOpenModal}
+        onClose={handleCloseError}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={{ ...style, width: 500 }}
+        >
+          {loading ? (<Loader />
+          ) : (
+            <div style={{ justifyContent: 'center', textAlign: 'center' }}>
+              <p><CancelIcon style={{ color: 'red', height: '40px', width: '40px' }} /></p>
+              <h2> Data Failed to Saved</h2>
+              <button className='btnCustomer' onClick={handleCloseError}>
+                Try Again
               </button>
             </div>
-                </div>
-                )}
-          </Box>
-          </Modal>
-        <Modal 
-           open={ErrorOpenModal}
-           onClose={handleCloseError}
-           closeAfterTransition
-           BackdropComponent={Backdrop}
-           BackdropProps={{
-            timeout: 500,
-           }}
-           aria-labelledby="modal-modal-title"
-           aria-describedby="modal-modal-description"
-        >
-          <Box sx={{ ...style, width: 500 }}
-          >
-              {loading?(<Loader/>
-                ):(
-                  <div style={{justifyContent:'center',textAlign:'center'}}>
-                  <p><CancelIcon style={{color:'red',height:'40px', width:'40px'}}/></p>
-                  <h2> Data Failed to Saved</h2>
-                  <button className='btnCustomer' onClick={handleCloseError}>
-                    Try Again
-                  </button>
-                </div>
-                )}
-          </Box>
-          </Modal>
-          <Modal  
+          )}
+        </Box>
+      </Modal>
+      <Modal
         open={open2}
         onClose={handleCloseUpdateReason}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
- <Box sx={{ ...style, width: 500 }}>
-        <BlackTooltip title="Close" placement='left'>
-        <IconButton onClick={handleCloseUpdateReason} style={{ position:'relative', float:'right'}}> 
-                      <Close style={{color:'#202a5a'}}/>
-        </IconButton>
-        </BlackTooltip>  
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-          Reason Of Updating
+        <Box sx={{ ...style, width: 500 }}>
+          <BlackTooltip title="Close" placement='left'>
+            <IconButton onClick={handleCloseUpdateReason} style={{ position: 'relative', float: 'right' }}>
+              <Close style={{ color: '#202a5a' }} />
+            </IconButton>
+          </BlackTooltip>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Reason Of Updating
           </Typography>
           <form onSubmit={handleSubmit}>
-             <Grid container style={{alignItems:'center',padding:'15px'}} spacing={2}>
-          <Grid item xs={12}>
-          <TextField 
-          required
+            <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  required
                   id='reason'
-                  name='reason' 
+                  name='reason'
                   multiline
                   rows={4}
                   value={reason}
-                  onChange={(e)=>setReason(e.target.value)}
+                  onChange={(e) => setReason(e.target.value)}
                   label='Comments'
-                  sx={{ width:'100%', backgroundColor:'white' }}       
-              />
-          </Grid>
-          <br/>
-          <Grid item xs={12}>
-   <button type='submit' className='btnCustomer'style={{width: '100%'}}>Save</button>
+                  sx={{ width: '100%', backgroundColor: 'white' }}
+                />
               </Grid>
-        </Grid>
+              <br />
+              <Grid item xs={12}>
+                <button type='submit' className='btnCustomer' style={{ width: '100%' }}>Save</button>
+              </Grid>
+            </Grid>
           </form>
-       
+
         </Box>
       </Modal>
-              </div>
-  
+    </div>
+
   )
 }
 

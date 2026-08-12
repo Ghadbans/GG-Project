@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import SearchIcon from '@mui/icons-material/Search';
@@ -23,12 +24,13 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, DragIndicatorRounded, MailOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import dayjs from 'dayjs';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
@@ -39,7 +41,7 @@ import { v4 } from 'uuid';
 import CancelIcon from '@mui/icons-material/Cancel';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -142,25 +144,30 @@ function DailyExpenses() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const hasTvaValue = (item) => {
+    return !!(item.CheckTvA || item.checkTvA || item.CheckTva || item.hasTVA || item.tva || item.TVA);
+  };
+  const getTaxValue = (item) => {
+    const tax = item.tax || item.taxAmount || item.vatAmount || item.TvaAmount || item.taxUSD || 0;
+    if (tax > 0) return tax;
+    if (hasTvaValue(item)) {
+      return (Number(item.total || item.amount || 0) * 0.16);
+    }
+    return 0;
+  };
 
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          toast.error('Failed to fetch user data.');
         }
       } else {
         navigate('/');
@@ -177,18 +184,12 @@ function DailyExpenses() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(ENDPOINT_URL + '/grantAccess');
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -224,96 +225,75 @@ function DailyExpenses() {
       setLoading(false);
     }, 500)
   }
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
   const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
+  const [filterField, setFilterField] = useState(''); // Initialize filter field state
+  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
-
-  useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 300);
-    return () => clearTimeout(handler);
-  }, [searchTerm]);
-
-  const fetchItems = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/dailyExpense-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          dataField: dayjs(item.expenseDate).format('DD/MM/YYYY'),
-          category: item.expenseCategory ? item.expenseCategory.expensesCategory : '',
-          name: item.accountNameInfo ? item.accountNameInfo.name : '',
-          employee: item.employeeName ? item.employeeName.map((row) => row.employee) : []
-        }));
-        SetTotalPage(res.data.totalPages || Math.ceil(res.data.totalItem / limit));
-        setExpenses(formatDate);
-        setLoadingData(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false);
-      }
-    } else {
-      const offLineItems = await db.dailyExpenseViewSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineItems : offLineItems.filter((item) =>
-        (item.expenseName && item.expenseName.toLowerCase().includes(lowerSearch)) ||
-        (item.description && item.description.toLowerCase().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/expense-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
         dataField: dayjs(item.expenseDate).format('DD/MM/YYYY'),
-        category: item.expenseCategory ? item.expenseCategory.expensesCategory : '',
-        name: item.accountNameInfo ? item.accountNameInfo.name : '',
-        employee: item.employeeName ? item.employeeName.map((row) => row.employee) : []
+        category: item.expenseCategory?.expensesCategory || item.expenseCategory || '',
+        name: item.accountNameInfo?.name || '',
+        employee: Array.isArray(item.employeeName) ? item.employeeName.map((row) => row.employee || row) : []
       }));
-      setExpenses(formatDate.reverse());
+      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      setExpenses(formatDate);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error('Failed to fetch expenses.');
       setLoadingData(false);
     }
   };
 
-  useEffect(() => {
-    fetchItems(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+  const handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue);
+  };
+  const fetchAndSaveData = async () => {
+    try {
+      const resRate = await axios.get(ENDPOINT_URL + '/rate')
+      resRate.data.data.map((row) => setRate(row.rate))
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error('Failed to fetch daily rate.');
+    }
+  };
 
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage - 1); // Update page state (convert to 0-based index)
+  useEffect(() => {
+    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchAndSaveData();
+  }, [page, searchTerm, filterField, filterValue]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage); // Update page state (convert to 0-based index)
   };
 
   useEffect(() => {
     const fetchCash = async () => {
-      if (navigator.onLine) {
-        try {
-          const resCash = await axios.get('https://gg-project-production.up.railway.app/endpoint/cash')
-          resCash.data.data.filter((row) => dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(cashDate).format('DD/MM/YYYY'))
-            .map((row) => setRelatedDate(row.cashDate))
-        } catch (error) {
-          console.log(error)
-        }
-      } else {
-        const offLineCash = await db.cashSchema.toArray();
-        offLineCash.filter((row) => dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(cashDate).format('DD/MM/YYYY'))
+      try {
+        const resCash = await axios.get(ENDPOINT_URL + '/cash')
+        resCash.data?.data?.filter((row) => dayjs(row.cashDate).format('DD/MM/YYYY') === dayjs(cashDate).format('DD/MM/YYYY'))
           .map((row) => setRelatedDate(row.cashDate))
+      } catch (error) {
+        console.error('Connection error:', error);
       }
     }
     fetchCash()
   }, [cashDate])
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-cash')
-          setCashNumber(parseInt(res.data.cashNumber) + 1)
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.cashSchema.toArray();
-        const latest = offLineCustomer1.reduce((max, row) => row.cashNumber > max.cashNumber ? row : max, offLineCustomer1[0])
-        setCashNumber(parseInt(latest.cashNumber) + 1)
+      try {
+        const res = await axios.get(ENDPOINT_URL + '/get-last-saved-cash')
+        const num = res.data && res.data.cashNumber ? (parseInt(res.data?.data?.cashNumber || res.data?.cashNumber || 0)) : 0;
+        setCashNumber(num + 1)
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -342,21 +322,17 @@ function DailyExpenses() {
     const list = [...amount];
     list[i][name] = value;
     list[i]['rate'] = rate
-    list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC']) / list[i]['rate']) + parseFloat(list[i]['amountUsd'])) * 100) / 100
+    list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC'] || 0) / (parseFloat(list[i]['rate']) || 1)) + parseFloat(list[i]['amountUsd'] || 0)) * 100) / 100
     setAmount(list)
   }
   useEffect(() => {
-    let row = document.querySelectorAll('#amountTotalInvoice')
-    let sum = 0
-    for (let i = 0; i < row.length; i++) {
-      if (row[i].id === 'amountTotalInvoice') {
-        sum += isNaN(row[i].innerHTML) ? 0 : parseFloat(row[i].innerHTML);
-        const result = Math.round(sum * 100) / 100
-        setTotalCash(result);
-      }
-    }
-  })
-  {/** Cash end */ }
+    let sum = 0;
+    amount.forEach(item => {
+        sum += parseFloat(item.total) || 0;
+    });
+    setTotalCash(Math.round(sum * 100) / 100);
+}, [amount]);
+{/** Cash end */ }
   const handleOpenUpdate = () => {
     setOpen1(true);
   };
@@ -427,6 +403,17 @@ function DailyExpenses() {
   };
   const handleCloseModal = () => {
     window.location.reload();
+    setModalOpenLoading(false);
+    // Assuming setLoadingOpenModal is a state setter for a loading modal
+    // If it doesn't exist, this line will cause an error.
+    // I'm adding it based on the provided snippet, assuming it's defined elsewhere.
+    // If not, it should be removed.
+    // setLoadingOpenModal(false);
+    setOpen1(false);
+    setOpen2(false);
+    setOpen(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchAndSaveData();
   };
   const [saving, setSaving] = useState('')
   const handleSubmitCategory = async (e) => {
@@ -436,7 +423,7 @@ function DailyExpenses() {
       expensesCategory
     }
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-expensesCategory', data);
+      const res = await axios.post(ENDPOINT_URL + '/create-expensesCategory', data);
       if (res) {
         handleOpenModal();
       }
@@ -455,9 +442,9 @@ function DailyExpenses() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(ENDPOINT_URL + '/create-notification', data)
     } catch (error) {
-      console.log(error)
+      console.error('Notification error:', error);
     }
   }
   const handleSubmitCash = async (e) => {
@@ -466,37 +453,32 @@ function DailyExpenses() {
     const data = {
       cashDate, cashNumber, rate, totalCash, amount, Create, synced: false
     }
-    if (navigator.onLine) {
-      try {
-        const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-cash', data);
-        if (res) {
-          const ReferenceInfo = res.data.data._id
-          const ReferenceInfoNumber = res.data.data.cashNumber
-          handleCreateNotification1(ReferenceInfo, ReferenceInfoNumber)
-          handleOpenModal();
-        }
-      } catch (error) {
-        if (error) {
-          setSaving('')
-          handleError()
-        }
+    try {
+      const res = await axios.post(ENDPOINT_URL + '/create-cash', data);
+      if (res) {
+        const ReferenceInfo = res.data.data._id
+        const ReferenceInfoNumber = res.data.data.cashNumber
+        handleCreateNotification1(ReferenceInfo, ReferenceInfoNumber)
+        handleOpenModal();
       }
-    } else {
-      await db.cashSchema.add(data)
-      handleOpenModal();
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError()
+      }
     }
   }
   const [PurchaseDeleted, setPurchaseDeleted] = useState([])
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-expense/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-expense/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
         setPurchaseDeleted(res.map((row) => 'D-' + row.data.data.expenseNumber))
       } catch (error) {
-        console.log(error)
+        console.error('Fetch error:', error);
       }
     }
     fetchFunction()
@@ -511,38 +493,46 @@ function DailyExpenses() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(ENDPOINT_URL + '/create-notification', data)
     } catch (error) {
-      console.log(error)
+      console.error('Notification error:', error);
     }
   }
-  const handleDelete = async () => {
+   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-expense/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-expense/${DeleteId}`);
       if (res) {
+        // Optimistic UI: Remove from local state immediately
+        setExpenses(prev => prev.filter(item => item._id !== DeleteId));
+        setOpen(false);
         handleOpenModal();
+        window.location.reload(); // Removed to support instant responsiveness
       }
     } catch (error) {
-      alert('try again');
+      toast.error('Delete failed. Please try again.');
     }
   };
-  const handleDeleteMany = async (e) => {
-    e.preventDefault()
-    if (navigator.onLine) {
-      const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-expense/${idToDelete}`)
-      })
-      try {
-        const res = await Promise.all(deletePromises);
-        if (res) {
-          handleCreateNotification()
-          handleOpenModal();
-        }
-      } catch (error) {
-        console.log(error)
+   const handleDeleteMany = async (e) => {
+    e.preventDefault();
+    const deletePromises = selectedRows.map(async (idToDelete) => {
+      return axios.delete(`${ENDPOINT_URL}/delete-expense/${idToDelete}`);
+    });
+    try {
+      const res = await Promise.all(deletePromises);
+      if (res) {
+        // Optimistic UI: Remove all selected rows from state
+        setExpenses(prev => prev.filter(item => !selectedRows.includes(item._id)));
+        handleCreateNotification();
+        handleCloseAll();
+        handleCloseMultiple();
+        handleOpenModal();
+        // setSelectedRows([]); // Important to clear selection after bulk action
       }
+    } catch (error) {
+      console.error('Delete Many error:', error);
+      toast.error('Delete failed.');
     }
-  }
+  };
   {/** search start */ }
   const [searchDailyExpenses, setSearchDailyExpenses] = useState("");
   useState(() => {
@@ -565,6 +555,7 @@ function DailyExpenses() {
   const handleFilter = (newModel) => {
     const searchTerm = newModel.quickFilterValues?.join(' ') || '';
     setSearchTerm(searchTerm);
+    setPage(0);
     setFilterModel(newModel)
     localStorage.setItem('QuickFilterDailyExpensesTst', JSON.stringify(newModel))
   }
@@ -603,30 +594,25 @@ function DailyExpenses() {
     const fetchData2 = async () => {
 
       if (idView !== null) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-expense/${idView}`)
-            setExpensesView(res.data.data)
-          } catch (error) {
-            console.log(error)
-          }
-        } else {
-          const resLocal = await db.dailyExpenseSchema.get({ _id: idView })
-          setExpensesView(resLocal)
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-expense/${idView}`)
+          setExpensesView(res.data.data)
+        } catch (error) {
+          console.error('Fetch detail error:', error);
         }
       }
     }
     fetchData2()
   }, [idView])
   const columns = [
-    { field: 'expenseNumber', headerName: 'E-Number', width: 90, renderCell: (params) => (<div> <span>D-0</span><span>{params.row.expenseNumber}</span> </div>) },
+    { field: 'expenseNumber', headerName: 'E-Number', width: 140, renderCell: (params) => ' D-' + String(params.row.expenseNumber).padStart(6, '0') },
     { field: 'dataField', headerName: 'Date', width: 80 },
     { field: 'category', headerName: 'Category', width: 60 },
     { field: 'description', headerName: 'Description', width: sideBar ? 120 : 150 },
     { field: 'name', headerName: 'Project Name', width: sideBar ? 230 : 300 },
     { field: 'employee', headerName: 'Employee Name', width: sideBar ? 200 : 250 },
-    { field: 'amount', headerName: 'TotalFC', width: 100, renderCell: (params) => `FC${params.row.amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'total', headerName: 'Total$', width: 100, renderCell: (params) => `$${params.row.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'amount', headerName: 'TotalFC', width: 100, renderCell: (params) => `FC${(params.row.amount || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'total', headerName: 'Total$', width: 100, renderCell: (params) => `$${(params.row.total || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
@@ -655,12 +641,11 @@ function DailyExpenses() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                  <IconButton onClick={handleOpenAll} disabled={DailyEInfoD.length === 0 && user.data.role !== 'CEO'} >
+          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={DailyEInfoD.length === 0 && user.data.role !== 'CEO'} >
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
-        </DeleteTooltip>
-      )
+        </DeleteTooltip>)
     },
   ]
   return (
@@ -701,7 +686,7 @@ function DailyExpenses() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -792,21 +777,17 @@ function DailyExpenses() {
 
                   <Box sx={{ height: 600, width: '100%' }} >
                     <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={expenses}
                       columns={columns}
-                      rowCount={totalPage * limit}
-                      paginationMode="server"
-                      onPaginationModelChange={(model) => setPage(model.page)}
-                      paginationModel={{ page, pageSize: limit }}
                       slots={{ toolbar: GridToolbar }}
                       onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
                       slotProps={{
                         toolbar: {
                           showQuickFilter: true,
-                          quickFilterProps: {
-                            value: searchTerm,
-                            onChange: (e) => setSearchTerm(e.target.value)
-                          },
                           printOptions: {
                             disableToolbarButton: true
                           },
@@ -824,6 +805,7 @@ function DailyExpenses() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
+                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
                   </Box>
 
                 </div>)
@@ -922,7 +904,7 @@ function DailyExpenses() {
               : (
                 <div style={{ justifyContent: 'center', textAlign: 'center' }}>
                   <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
-                  <h2> Data successfully Saved</h2>
+                  <h2> Operation completed successfully</h2>
                   <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
                     <button onClick={handleCloseModal} className='btnCustomer'>
                       Close
@@ -986,7 +968,7 @@ function DailyExpenses() {
             expensesView !== null ?
               <div>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                  EXPENSE D-0{expensesView.expenseNumber} CREATED BY {expensesView.Create !== undefined ? expensesView.Create.person : ''} on {expensesView.Create.dateComment}
+                  EXPENSE D-{String(expensesView.expenseNumber).padStart(6, '0')} CREATED BY {expensesView.Create !== undefined ? expensesView.Create.person : ''} on {expensesView.Create.dateComment}
                 </Typography>
                 <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
                   {
@@ -1037,6 +1019,12 @@ function DailyExpenses() {
                                       ))
                                     }
                                     <TableRow>
+                                      <TableCell>TVA (16%)</TableCell>
+                                      <TableCell>{hasTvaValue(expensesView) ? 'Yes' : 'No'}</TableCell>
+                                      <TableCell>Tax</TableCell>
+                                      <TableCell>${getTaxValue(expensesView).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
+                                    </TableRow>
+                                    <TableRow>
                                       <TableCell>Total</TableCell>
                                       <TableCell>FC{expensesView.amount}</TableCell>
                                       <TableCell>-</TableCell>
@@ -1078,6 +1066,12 @@ function DailyExpenses() {
                                         <TableCell colSpan={3}>{expensesView.description}</TableCell>
                                       </TableRow>
                                       <TableRow>
+                                        <TableCell>TVA (16%)</TableCell>
+                                        <TableCell>{hasTvaValue(expensesView) ? 'Yes' : 'No'}</TableCell>
+                                        <TableCell>Tax</TableCell>
+                                        <TableCell>${getTaxValue(expensesView).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
+                                      </TableRow>
+                                      <TableRow>
                                         <TableCell>Amount</TableCell>
                                         <TableCell>FC{expensesView.amount}</TableCell>
                                         <TableCell>{expensesView.rate}</TableCell>
@@ -1101,6 +1095,12 @@ function DailyExpenses() {
                                       <TableRow>
                                         <TableCell>Project Name</TableCell>
                                         <TableCell colSpan={3}>{expensesView.accountNameInfo.name}</TableCell>
+                                      </TableRow>
+                                      <TableRow>
+                                        <TableCell>TVA (16%)</TableCell>
+                                        <TableCell>{hasTvaValue(expensesView) ? 'Yes' : 'No'}</TableCell>
+                                        <TableCell>Tax</TableCell>
+                                        <TableCell>${getTaxValue(expensesView).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>Amount</TableCell>

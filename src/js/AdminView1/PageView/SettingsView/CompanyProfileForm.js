@@ -24,6 +24,7 @@ const BlackTooltip = styled(({ className, ...props }) => (
     },
   }));
 function CompanyProfileForm() {
+  const navigate = useNavigate();
   return (
     <div>     <div className='sidemnuandcontent'>
     <SidebarDashE2/>

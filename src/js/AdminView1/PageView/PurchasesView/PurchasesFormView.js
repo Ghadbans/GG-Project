@@ -23,7 +23,9 @@ import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCi
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import { v4 } from 'uuid';
+import { invalidateCache } from '../../../utils/apiCache';
 import { useNavigate } from 'react-router-dom';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -35,7 +37,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import ItemUpdateView2 from '../ItemView/ItemUpdateView2';
@@ -43,6 +45,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import db from '../../../dexieDb';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -156,7 +159,7 @@ function PurchasesFormView() {
       if (storesUserId) {
         if (navigator.onLine) {
           try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+            const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
             const Name = res.data.data.employeeName;
             const Role = res.data.data.role;
             dispatch(setUser({ userName: Name, role: Role }));
@@ -182,7 +185,7 @@ function PurchasesFormView() {
     navigate('/')
   }
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/create-purchase';
+  const apiUrl = `${ENDPOINT_URL}/create-purchase`;
   const [items, SetItems] = useState([]);
   const [purchaseAmount1, setPurchaseAmount1] = useState(0);
   const [purchaseAmount2, setPurchaseAmount2] = useState(0);
@@ -199,7 +202,7 @@ function PurchasesFormView() {
     const fetchProject = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
+          const res = await axios.get(`${ENDPOINT_URL}/projects`)
           setProject(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -235,8 +238,9 @@ function PurchasesFormView() {
     const fetchlastNumber = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-purchase')
-          setPurchaseNumber(parseInt(res.data.purchaseNumber) + 1)
+          const res = await axios.get(`${ENDPOINT_URL}/get-last-saved-purchase`)
+          const num = res.data && res.data.purchaseNumber ? (parseInt(res.data?.data?.purchaseNumber || res.data?.purchaseNumber || 0)) : 0;
+          setPurchaseNumber(num + 1)
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -252,8 +256,8 @@ function PurchasesFormView() {
     const fetchItem = async () => {
       if (navigator.onLine) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          setItemInformation(res.data.data.reverse())
+          const resItem = await axios.get(`${ENDPOINT_URL}/item`)
+          setItemInformation(resItem.data.data.reverse())
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -270,12 +274,12 @@ function PurchasesFormView() {
     setShopLoading(true);
     if (navigator.onLine) {
       try {
-        const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
+        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
         resRate.data.data.forEach((row) => setRate(row.rate))
 
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-        setShopTotalPages(res.data.totalPages)
-        setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+        const resShop = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+        setShopTotalPages(resShop.data.totalPages)
+        setShopItems(resShop.data.items.filter((row) => row.typeItem === "Goods").reverse())
         setShopLoading(false)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -357,6 +361,8 @@ function PurchasesFormView() {
         totalGenerale: 0,
         totalCost: shopItem.itemCostPrice,
         stock: shopItem.itemQuantity,
+        data: shopItem.data,
+        contentType: shopItem.contentType,
         itemOut: 0,
         newItemOut: 0,
       };
@@ -424,6 +430,8 @@ function PurchasesFormView() {
         stock: 0,
         itemOut: 0,
         newItemOut: 0,
+        data: null,
+        contentType: null,
       }
     ]);
   }
@@ -451,6 +459,8 @@ function PurchasesFormView() {
       stock: 0,
       itemOut: 0,
       newItemOut: 0,
+      data: null,
+      contentType: null,
     }]);
   }
   const addItemRow = (i) => {
@@ -520,7 +530,7 @@ function PurchasesFormView() {
     SetItems(newItems)
   };
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
@@ -531,18 +541,20 @@ function PurchasesFormView() {
       itemDescription: selectedOptions?.itemDescription,
       itemRate: selectedOptions?.itemSellingPrice,
       stock: selectedOptions?.itemQuantity,
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
     } : row))
   }
   const deleteItem = idRow => {
     SetItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   //Calculate the total
   useEffect(() => {
-    const result1 = items.reduce((sum, row) => sum + row.totalCost, 0)
-    setPurchaseAmount1(result1.toFixed(2))
-    const result2 = items.reduce((sum, row) => sum + row.totalGenerale, 0)
-    setPurchaseAmount2(result2.toFixed(2))
+    const result1 = items.reduce((sum, row) => sum + Number(row.totalCost || 0), 0)
+    setPurchaseAmount1(Number(result1 || 0).toFixed(2))
+    const result2 = items.reduce((sum, row) => sum + Number(row.totalGenerale || 0), 0)
+    setPurchaseAmount2(Number(result2 || 0).toFixed(2))
   }, [items])
 
   const handleChangeProject = (newValue) => {
@@ -577,8 +589,8 @@ function PurchasesFormView() {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${idItem}`)
-        SetItems(items => items.map((row) => row.itemName._id === res.data.data._id ? {
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
           ...row,
           itemName: {
             _id: res.data.data._id,
@@ -588,6 +600,8 @@ function PurchasesFormView() {
           itemCost: res.data.data.itemCostPrice,
           itemRate: res.data.data.itemSellingPrice,
           stock: res.data.data.itemQuantity,
+          data: res.data.data.data,
+          contentType: res.data.data.contentType,
           totalAmount: row.itemQty * res.data.data.itemSellingPrice,
           discount: (row.itemQty * res.data.data.itemSellingPrice) * row.itemDiscount,
           percentage: ((row.itemQty * res.data.data.itemSellingPrice) * row.itemDiscount) / 100,
@@ -595,6 +609,7 @@ function PurchasesFormView() {
           totalCost: row.itemQty * res.data.data.itemCostPrice,
           totalGenerale: res.data.data.itemCostPrice * row.itemBuy
         } : row))
+
       } catch (error) {
 
       }
@@ -655,7 +670,7 @@ function PurchasesFormView() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -681,6 +696,7 @@ function PurchasesFormView() {
       try {
         const res = await axios.post(apiUrl, data);
         if (res) {
+          invalidateCache('/purchase');
           // Open Loading View
           const ReferenceInfo = res.data.data._id
           const ReferenceInfoNumber = res.data.data.purchaseNumber
@@ -933,9 +949,16 @@ function PurchasesFormView() {
                                                 {
                                                   Item.itemName.itemName ? (
                                                     (
-                                                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                        <div >
-                                                          <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                      <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
+                                                        <ItemThumbnail
+                                                          itemId={Item.itemName?._id}
+                                                          initialData={Item.data}
+                                                          initialType={Item.contentType}
+                                                        />
+                                                        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                                                          {
+                                                            Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (<Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>) : null
+                                                          }
                                                           <TextField
                                                             name='itemDescription' id='itemDescription'
                                                             value={Item.itemDescription}
@@ -943,27 +966,27 @@ function PurchasesFormView() {
                                                             rows={3}
                                                             onChange={(e) => handleChange(e, i)}
                                                             size="small"
-                                                            sx={{ width: '440px', backgroundColor: 'white', fontSize: 12 }}
+                                                            sx={{ width: '400px', backgroundColor: 'white', fontSize: 12 }}
                                                           />
-                                                        </div>
-                                                        <div>
+                                                        </Box>
+                                                        <Box>
                                                           <BlackTooltip title="Clear" placement='top'>
                                                             <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
                                                               <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                             </IconButton>
                                                           </BlackTooltip>
                                                           {
-                                                            Item.itemName._id && (
+                                                            Item.itemName?._id && (
                                                               <BlackTooltip title="Edit" placement='bottom'>
-                                                                <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
+                                                                <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                   <Edit style={{ color: '#202a5a' }} />
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                             )
                                                           }
 
-                                                        </div>
-                                                      </div>)
+                                                        </Box>
+                                                      </Box>)
                                                   ) : (
                                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                                       <Autocomplete
@@ -1033,7 +1056,7 @@ function PurchasesFormView() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='totalPurchase' style={{ width: '100px' }}>{Item.totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='totalPurchase' style={{ width: '100px' }}>{ Number(Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</td>
                                               <td id='totalBuy'>
                                                 <TextField
                                                   name='itemBuy' id='itemBuy'
@@ -1044,7 +1067,7 @@ function PurchasesFormView() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='totalGeneralPurchase' style={{ width: '100px' }}>{Item.totalGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='totalGeneralPurchase' style={{ width: '100px' }}>{ Number(Item.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</td>
                                               <td align="center" >  <LightTooltip title="Delete" >
                                                 <IconButton onClick={() => deleteItem(Item.idRow)} >
                                                   <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
@@ -1210,10 +1233,10 @@ function PurchasesFormView() {
                           {item.itemName}
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
-                          FC {(item.itemSellingPrice * rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          FC {Number((item.itemSellingPrice * rate) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </Typography>
                         <Typography variant="body2" color="primary" fontWeight="bold">
-                          $ {item.itemSellingPrice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          $ {Number(item.itemSellingPrice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                         </Typography>
                         <Typography variant="caption" display="block" gutterBottom>
                           Stock: {item.itemQuantity}

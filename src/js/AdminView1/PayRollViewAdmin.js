@@ -23,18 +23,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -131,20 +132,13 @@ function PayRollViewAdmin() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -155,18 +149,12 @@ function PayRollViewAdmin() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        offLineCustomer1.filter((row) => row.userID === user.data.id)
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -200,54 +188,42 @@ function PayRollViewAdmin() {
   })
   const [page, setPage] = useState(0);
   const limit = 100;
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [filterField, setFilterField] = useState("");
+  const [filterValue, setFilterValue] = useState("");
   const [totalPage, SetTotalPage] = useState(0);
 
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchCustomer);
+      setDebouncedSearchTerm(searchTerm);
+      setPage(0);
     }, 300);
     return () => clearTimeout(handler);
-  }, [searchCustomer]);
-
-  const fetchData = async (page, searchTerm) => {
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/payRoll-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`)
-        const formatDate = res.data.itemI.map((item) => ({
-          ...item,
-          id: item._id,
-          payDay: dayjs(item.payDate).format('DD/MM/YYYY'),
-          month: dayjs(item.month).format('MMMM'),
-        }))
-        setCustomer(formatDate);
-        SetTotalPage(res.data.totalPages);
-        setLoadingData(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false)
-      }
-    } else {
-      const offLineCustomer1 = await db.payRollSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filtered = lowerSearch === '' ? offLineCustomer1 : offLineCustomer1.filter((item) =>
-        (item.employeeName && item.employeeName.name.toLowerCase().includes(lowerSearch)) ||
-        (item.payNumber && item.payNumber.toString().includes(lowerSearch))
-      );
-      const formatDate = filtered.map((item) => ({
+  }, [searchTerm]);
+    const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/payRoll-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
-        payDay: dayjs(item.payDate).format('DD/MM/YYYY'),
-        month: dayjs(item.month).format('MMMM'),
-      }))
-      setCustomer(formatDate.reverse())
-      setLoadingData(false)
+      }));
+      setCustomer(formatDate);
+      SetTotalPage(res.data.totalPages);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData(false);
     }
   }
 
   useEffect(() => {
-    fetchData(page, debouncedSearchTerm);
-  }, [page, debouncedSearchTerm]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
+  }, [page, debouncedSearchTerm, filterField, filterValue]);
+
+  const handlePageChange = (newPage) => {
+    setPage(newPage);
+  };
   const [modalOpenLoading, setModalOpenLoading] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -266,60 +242,15 @@ function PayRollViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const syncOff = async () => {
-    if (navigator.onLine) {
-      const syncedPayRoll = await db.payRollSchema.toArray();
-      const PayRollToSynced = syncedPayRoll.filter((row) => row.synced === false).map(({ payNumber, payDate, month, daysW, status, daysOpen, Lops, basicSalary, earningSalary, advancedSalary, basicTransport, transportEarning, transportDeduction, foodBasic,
-        foodEarning, itemLost, foodDeduction, bounceAllowances, bounceAllowancesEarning, other, otherEarning, loan,
-        bonus, totalActualSalary, totalActualEarning, totalActualDeduction, totalNet, totalPaid, rate, totalPaidDollars, words,
-        employeeName, amountPayUSD, amountPayFC, CreditFC, CreditUSD }) => ({
-          payNumber, payDate, month, daysW, status, daysOpen, Lops, basicSalary, earningSalary, advancedSalary, basicTransport, transportEarning, transportDeduction, foodBasic,
-          foodEarning, itemLost, foodDeduction, bounceAllowances, bounceAllowancesEarning, other, otherEarning, loan,
-          bonus, totalActualSalary, totalActualEarning, totalActualDeduction, totalNet, totalPaid, rate, totalPaidDollars, words,
-          employeeName, amountPayUSD, amountPayFC, CreditFC, CreditUSD
-        }))
-
-      for (const PayRollInfo of PayRollToSynced) {
-        try {
-          const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-payRoll', PayRollInfo)
-          if (res) {
-            const ReferenceInfo = res.data.data._id
-            const ReferenceInfoNumber = res.data.data.payNumber
-            const ReferenceInfoName = res.data.data.employeeName.name
-            handleCreateNotificationOffline(ReferenceInfo, ReferenceInfoName, ReferenceInfoNumber)
-            handleOpenOffline();
-          }
-        } catch (error) {
-          console.log(error)
-        }
-      }
-      const PayRollToSyncedUpdate = syncedPayRoll.filter((row) => row.updateS === false)
-      for (const PayRollInfoUpdate of PayRollToSyncedUpdate) {
-        try {
-          await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-payRoll/${PayRollInfoUpdate._id}`, PayRollInfoUpdate)
-          await db.payRollSchema.update(PayRollInfoUpdate.payNumber, { synced: true, updateS: true })
-          handleOpenOffline();
-        } catch (error) {
-          console.log(error)
-        }
-      }
-    }
     fetchData()
   }
-  useEffect(() => {
-    window.addEventListener('online', syncOff)
-    if (navigator.onLine) {
-      syncOff()
-    }
-    return () => {
-      window.removeEventListener('online', syncOff)
-    }
-  }, [])
+  
 
   const [openReasonDelete, setOpenReasonDelete] = useState(false);
 
@@ -368,11 +299,20 @@ function PayRollViewAdmin() {
   };
   const handleCloseModal = () => {
     window.location.reload();
+    setModalOpenLoading(false);
+    setLoading(false);
+    setOpen(false);
+    setOpenDeleteAll(false);
+    setOpenDeleteMultiple(false);
+    setDeleteId(null);
+    setSelectedRows([]);
+    fetchItems(page, searchTerm, filterField, filterValue);
   };
 
   const handleDelete = async () => {
+    handleClose();
     try {
-      const res = await axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-payRoll/${DeleteId}`);
+      const res = await axios.delete(`${ENDPOINT_URL}/delete-payRoll/${DeleteId}`);
       if (res) {
         handleOpenModal();
       }
@@ -384,7 +324,7 @@ function PayRollViewAdmin() {
   useEffect(() => {
     const fetchFunction = async () => {
       const deletePromises = selectedRows.map(async (idToDelete) => {
-        return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payRoll/${idToDelete}`)
+        return axios.get(`${ENDPOINT_URL}/get-payRoll/${idToDelete}`)
       })
       try {
         const res = await Promise.all(deletePromises);
@@ -405,15 +345,16 @@ function PayRollViewAdmin() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
   }
   const handleDeleteMany = async (e) => {
     e.preventDefault()
+    handleCloseReasonDelete();
     const deletePromises = selectedRows.map(async (idToDelete) => {
-      return axios.delete(`https://gg-project-production.up.railway.app/endpoint/delete-payRoll/${idToDelete}`)
+      return axios.delete(`${ENDPOINT_URL}/delete-payRoll/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
@@ -449,19 +390,23 @@ function PayRollViewAdmin() {
   }
   const handleCloseLoading = () => {
     window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    setUpdateId(null);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   useEffect(() => {
     const fetchId = async () => {
       if (updateId !== null) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-payRoll/${updateId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-payRoll/${updateId}`)
           setStatus(res.data.data.status);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       }
-      fetchId()
     }
+    fetchId()
   }, [updateId]);
   const handleSubmitUpdateStatus = async (e) => {
     e.preventDefault();
@@ -469,7 +414,7 @@ function PayRollViewAdmin() {
       status
     };
     try {
-      const res = await axios.put(`https://gg-project-production.up.railway.app/endpoint/update-payRoll/${updateId}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-payRoll/${updateId}`, data)
       if (res) {
         handleOpenLoading();
       }
@@ -488,13 +433,24 @@ function PayRollViewAdmin() {
     setColumnVisibilityModel(newHidden)
     localStorage.setItem('HiddenColumnsPayRoll', JSON.stringify(newHidden))
   }
-  const handleFilter = (newModel) => {
-    setFilterModel(newModel)
-
-    localStorage.setItem('QuickFilterPayRollTst', JSON.stringify(newModel))
+    const handleFilter = (newModel) => {
+    setFilterModel(newModel);
+    localStorage.setItem('QuickFilterPayrollTst', JSON.stringify(newModel));
+    if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
+      setSearchTerm(newModel.quickFilterValues.join(' '));
+    } else {
+      setSearchTerm('');
+    }
+    if (newModel.items && newModel.items.length > 0) {
+      setFilterField(newModel.items[0].field);
+      setFilterValue(newModel.items[0].value || '');
+    } else {
+      setFilterField('');
+      setFilterValue('');
+    }
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPayRollTst'))
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPayrollTst'))
     if (storedQuick) {
       setFilterModel(storedQuick)
     }
@@ -601,7 +557,7 @@ function PayRollViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -675,6 +631,10 @@ function PayRollViewAdmin() {
                         )
                           : ''}
                         <DataGrid
+                          paginationMode="server"
+                          rowCount={totalPage * limit}
+                          paginationModel={{ page: page, pageSize: limit }}
+                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                           rows={customer}
                           columns={columns}
                           checkboxSelection
@@ -689,6 +649,7 @@ function PayRollViewAdmin() {
                               }
                             },
                           }}
+                          filterMode="server"
                           filterModel={filterModel}
                           onFilterModelChange={(newModel) => handleFilter(newModel)}
                           columnVisibilityModel={columnVisibilityModel}
@@ -697,7 +658,7 @@ function PayRollViewAdmin() {
                         />
                       </Box>
                     ) : <div>
-                      <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                      <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
                     </div>}
                   </div>
                 </div>)

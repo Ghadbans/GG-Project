@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline, ShoppingCartOutlined } from '@mui/icons-material';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
@@ -31,15 +32,17 @@ import dayjs from 'dayjs';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { invalidateCache } from '../../../utils/apiCache';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import ItemThumbnail from '../../../component/ItemThumbnail';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -142,63 +145,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const ItemThumbnail = ({ itemId, initialData, initialType }) => {
-  const [src, setSrc] = useState(null);
-
-  useEffect(() => {
-    const fetchImage = async () => {
-      // 1. Check for initialData (passed from search/shop)
-      if (initialData) {
-        setSrc(`data:${initialType};base64,${initialData}`);
-        return;
-      }
-
-      if (!itemId) return;
-
-      // 2. Try Online if navigator is online
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${itemId}`);
-          if (res.data.data && res.data.data.data) {
-            const buffer = new Uint8Array(res.data.data.data.data);
-            const blob = new Blob([buffer], { type: res.data.data.contentType });
-            const reader = new FileReader();
-            reader.onloadend = () => setSrc(reader.result);
-            reader.readAsDataURL(blob);
-            return;
-          }
-        } catch (err) {
-          console.error("Error fetching online image:", err);
-        }
-      }
-
-      // 3. Try Dexie fallback
-      try {
-        const resLocal = await db.itemSchema.get({ _id: itemId });
-        if (resLocal && resLocal.data) {
-          const buffer = new Uint8Array(resLocal.data.data);
-          const blob = new Blob([buffer], { type: resLocal.contentType });
-          const reader = new FileReader();
-          reader.onloadend = () => setSrc(reader.result);
-          reader.readAsDataURL(blob);
-        }
-      } catch (err) {
-        console.error("Error fetching local image:", err);
-      }
-    };
-    fetchImage();
-  }, [itemId, initialData, initialType]);
-
-  return (
-    <Avatar
-      variant="rounded"
-      src={src}
-      sx={{ width: 80, height: 80, backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}
-    >
-      {!src && <ShoppingCartOutlinedIcon sx={{ fontSize: '40px', color: '#ccc' }} />}
-    </Avatar>
-  );
-};
 function ItemOutViewForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -209,7 +155,7 @@ function ItemOutViewForm() {
     const fetchUser = async () => {
       if (storesUserId) {
         try {
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
@@ -269,19 +215,20 @@ function ItemOutViewForm() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/get-last-saved-itemOut')
-        setOutNumber(parseInt(resItemOut.data.outNumber) + 1)
-        const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
+        const resItemOut = await axios.get(`${ENDPOINT_URL}/get-last-saved-itemOut`)
+        const num = resItemOut.data && resItemOut.data.outNumber ? (parseInt(resItemOut.data?.data?.outNumber || resItemOut.data?.outNumber || 0)) : 0;
+        setOutNumber(num + 1)
+        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(resItem.data.data.reverse())
-        const resPurchase = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-        const resProject = await axios.get('https://gg-project-production.up.railway.app/endpoint/projects')
-        setProject(resProject.data.data.filter((row) => row.status === 'On-Going' && resPurchase.data.data.find((Item) => Item.projectName._id === row._id && Item.items.some((Item1) => Item1.itemQty > Item1.itemOut))).reverse());
-        const resEmployee = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
+        const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
+        setProject(resProject.data?.data?.filter((row) => row.status === 'On-Going' && resPurchase.data?.data?.find((Item) => Item.projectName._id === row._id && Item.items.some((Item1) => Item1.itemQty > Item1.itemOut))).reverse());
+        const resEmployee = await axios.get(`${ENDPOINT_URL}/employee`)
         setEmployee(resEmployee.data.data);
-        const resMaintenance = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-        setMaintenance(resMaintenance.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
-        const resInvoice = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-        const newData = resInvoice.data.data.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
+        const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+        setMaintenance(resMaintenance.data?.data?.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut)));
+        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+        const newData = resInvoice.data?.data?.filter((row) => row.items.some((Item) => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some((Item) => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName))
         setInvoice(newData)
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -295,25 +242,17 @@ function ItemOutViewForm() {
     if (shopOpen) { // Only fetch if side shop is open
       const fetchShop = async () => {
         setShopLoading(true);
-        if (navigator.onLine) {
-          try {
-            const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate')
-            resRate.data.data.forEach((row) => setRate(row.rate))
+        try {
+          const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+          resRate.data.data.forEach((row) => setRate(row.rate))
 
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
-            setShopTotalPages(res.data.totalPages)
-            setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-            setShopLoading(false)
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            setShopLoading(false)
-          }
-        } else {
-          const offLineCustomer1 = await db.itemSchema.toArray();
-          setShopItems(offLineCustomer1.filter((row) => row.typeItem === "Goods").reverse())
+          const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
+          setShopTotalPages(res.data.totalPages)
+          setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
           setShopLoading(false)
-          const offLineRate = await db.rateSchema.toArray();
-          offLineRate.forEach((row) => setRate(row.rate))
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          setShopLoading(false)
         }
       }
       fetchShop()
@@ -405,7 +344,7 @@ function ItemOutViewForm() {
     });
     setReference({
       _id: selectedOptions?._id,
-      referenceName: selectedOptions?.projectName
+      referenceName: selectedOptions ? `P-${String(selectedOptions.projectNumber).padStart(6, '0')} / ${selectedOptions.projectName}` : ''
     });
   }
   const handleChangeInvoice = (newValue) => {
@@ -425,16 +364,16 @@ function ItemOutViewForm() {
     const fetchId = async () => {
       if (projectName !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
+          const res = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+          res.data?.data?.filter((row) => projectName ? row.projectName._id === projectName._id : '')
             .map((row) =>
               SetItems(row.items)
             )
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
+          res.data?.data?.filter((row) => projectName ? row.projectName._id === projectName._id : '')
             .map((row) =>
               SetItems1(row.items)
             )
-          res.data.data.filter((row) => projectName ? row.projectName._id === projectName._id : '')
+          res.data?.data?.filter((row) => projectName ? row.projectName._id === projectName._id : '')
             .map((row) =>
               setProjectId(row._id)
             )
@@ -444,16 +383,16 @@ function ItemOutViewForm() {
       }
       else if (serviceNumber !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/maintenance')
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
+          const res = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
+          res.data?.data?.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
             .map((row) =>
               SetItems(row.items)
             )
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
+          res.data?.data?.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
             .map((row) =>
               SetItems1(row.items)
             )
-          res.data.data.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
+          res.data?.data?.filter((row) => serviceNumber ? row._id === serviceNumber._id : '')
             .map((row) =>
               setServiceId(row._id)
             )
@@ -463,16 +402,16 @@ function ItemOutViewForm() {
       }
       else if (invoiceName !== null) {
         try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/invoice')
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
+          const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+          res.data?.data?.filter((row) => invoiceName ? row._id === invoiceName._id : '')
             .map((row) =>
               SetItems(row.items)
             )
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
+          res.data?.data?.filter((row) => invoiceName ? row._id === invoiceName._id : '')
             .map((row) =>
               SetItems1(row.items)
             )
-          res.data.data.filter((row) => invoiceName ? row._id === invoiceName._id : '')
+          res.data?.data?.filter((row) => invoiceName ? row._id === invoiceName._id : '')
             .map((row) =>
               setInvoiceId(row._id)
             )
@@ -511,54 +450,58 @@ function ItemOutViewForm() {
 
   {/** Item Change End */ }
   {/** Update Qty of project */ }
-  const handleUpdatePurchase = () => {
-    if (projectId !== null && serviceId === null && invoiceId === null) {
-      const result = items1.map((row) => {
-        const newItem = itemsQtyArray.find((Item) => Item.itemName._id === row.itemName._id && Item.itemName.itemName !== '')
-        if (newItem) {
-          const itemOut = parseFloat(row.itemOut) + parseFloat(newItem.newItemOut)
-          return {
-            ...row, itemOut
+  const handleUpdatePurchase = async () => {
+    if (projectId) {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${projectId}`);
+        const currentPurchase = res.data.data;
+        const result = currentPurchase.items.map((row) => {
+          const newItem = itemsQtyArray.find((Item) => Item.itemName._id === row.itemName?._id && Item.itemName.itemName !== '')
+          if (newItem) {
+            const itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut)
+            return {
+              ...row, itemOut
+            }
           }
-        }
-        return row
-      })
-      const data = {
-        items: result
-      };
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${projectId}`, data)
-    } else if (projectId === null && serviceId !== null && invoiceId === null) {
-      const result = items.map((row) => {
-        const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow)
-        if (newItem) {
-          const itemOut = parseFloat(row.itemOut) + parseFloat(newItem.newItemOut)
-          return {
-            ...row, itemOut
+          return row
+        })
+        const data = { items: result };
+        return await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, data)
+      } catch (error) { console.error(error); }
+    } else if (serviceId) {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${serviceId}`);
+        const currentMaintenance = res.data.data;
+        const result = currentMaintenance.items.map((row) => {
+          const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow)
+          if (newItem) {
+            const itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut)
+            return {
+              ...row, itemOut
+            }
           }
-        }
-        return row
-      })
-      const data = {
-        items: result
-      };
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-maintenance/${serviceId}`, data)
-    } else if (projectId === null && serviceId === null && invoiceId !== null) {
-      const result = items.map((row) => {
-        const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow)
-        if (newItem) {
-          const itemOut = parseFloat(row.itemOut) + parseFloat(newItem.newItemOut)
-          return {
-            ...row, itemOut
+          return row
+        })
+        const data = { items: result };
+        return await axios.put(`${ENDPOINT_URL}/update-maintenance/${serviceId}`, data)
+      } catch (error) { console.error(error); }
+    } else if (invoiceId) {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceId}`);
+        const currentInvoice = res.data.data;
+        const result = currentInvoice.items.map((row) => {
+          const newItem = itemsQtyArray.find((Item) => Item.idRow === row.idRow)
+          if (newItem) {
+            const itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut)
+            return {
+              ...row, itemOut
+            }
           }
-        }
-        return row
-      })
-      const data = {
-        items: result
-      };
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-invoice/${invoiceId}`, data)
-    } else {
-
+          return row
+        })
+        const data = { items: result };
+        return await axios.put(`${ENDPOINT_URL}/update-invoice/${invoiceId}`, data)
+      } catch (error) { console.error(error); }
     }
   }
   {/** Update Qty of project */ }
@@ -566,14 +509,14 @@ function ItemOutViewForm() {
     const initialState = {}
     const QtyUpdate = {}
     //Get Qty Arrays
-    const QtyNew = itemsQtyArray.filter((row) => row.itemName._id !== '' && row.itemName._id !== undefined).map((Item) => Item.newItemOut !== 0 ? Item.newItemOut : 0)
+    const QtyNew = itemsQtyArray.filter((row) => row.itemName?._id !== '' && row.itemName?._id !== undefined).map((Item) => Item.newItemOut !== 0 ? Item.newItemOut : 0)
     //Get ItemName Id
-    itemsQtyArray.filter((row) => row.itemName._id !== '' && row.itemName._id !== undefined).forEach((Item, index) => {
+    itemsQtyArray.filter((row) => row.itemName?._id !== '' && row.itemName?._id !== undefined).forEach((Item, index) => {
       initialState[`id${index + 1}`] = { ids: Item.itemName._id }
     })
     // Get Value
     const getRequestId = Object.values(initialState).map(({ ids }) => {
-      return axios.get(`https://gg-project-production.up.railway.app/endpoint/get-item/${ids}`)
+      return axios.get(`${ENDPOINT_URL}/get-item/${ids}`)
     })
     try {
       const res = await Promise.all(getRequestId);
@@ -583,7 +526,7 @@ function ItemOutViewForm() {
     }
     // Update Value 
     const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-item/${ids}`, data)
+      return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
     })
     try {
       await Promise.all(updateRequest);
@@ -609,13 +552,15 @@ function ItemOutViewForm() {
     }]);
   }
   const handleChangeItem = (idRow, newValue) => {
-    const selectedOptions = ItemInformation.find((option) => option === newValue)
+    const selectedOptions = newValue
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
         _id: selectedOptions?._id,
         itemName: selectedOptions?.itemName,
       },
+      data: selectedOptions?.data,
+      contentType: selectedOptions?.contentType,
       itemDescription: selectedOptions?.itemDescription,
     } : row))
   }
@@ -682,7 +627,7 @@ function ItemOutViewForm() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -691,7 +636,7 @@ function ItemOutViewForm() {
 
   const handleQty = async () => {
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/CalculateTotal')
+      await axios.post(`${ENDPOINT_URL}/CalculateTotal`)
     } catch (error) {
       console.log(error)
     }
@@ -709,15 +654,16 @@ function ItemOutViewForm() {
       reference, Create
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-itemOut', data);
+      const res = await axios.post(`${ENDPOINT_URL}/create-itemOut`, data);
       if (res) {
+        invalidateCache('/itemOut-Information');
+        invalidateCache('/itemOut');
         // Open Loading View
         const ReferenceInfo = res.data.data._id
         const ReferenceInfoNumber = res.data.data.outNumber
-        handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
-        handleQty()
-        handleUpdatePurchase();
-        handleUpdateQty();
+        await handleCreateNotification(ReferenceInfo, ReferenceInfoNumber)
+        await handleQty()
+        await handleUpdatePurchase();
         handleOpen();
       } else {
         alert('An Error as Occur');
@@ -894,6 +840,14 @@ function ItemOutViewForm() {
                       rows={4} {...params} required
                     />}
                   onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                  filterOptions={(options, { inputValue }) => {
+                    return options.filter((option) =>
+                      (option.itemName && option.itemName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                      (option.itemBrand && option.itemBrand.toLowerCase().includes(inputValue.toLowerCase())) ||
+                      (option.itemNumber && option.itemNumber.toLowerCase().includes(inputValue.toLowerCase())) ||
+                      (option.itemDescription && option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()))
+                    );
+                  }}
                   size="small"
                   sx={{ width: '470px', backgroundColor: 'white' }}
                 />
@@ -1196,8 +1150,8 @@ function ItemOutViewForm() {
                             (
                               <Autocomplete
                                 options={invoice}
-                                getOptionLabel={(option) => 'INV' + String(option.invoiceNumber)}
-                                renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-00{String(option.invoiceNumber)}
+                                getOptionLabel={(option) => 'INV-' + String(option.invoiceNumber).padStart(6, '0')}
+                                renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-{String(option.invoiceNumber).padStart(6, '0')}
                                 </Box>)}
                                 renderInput={(params) => <TextField {...params} label="Invoice" />}
                                 onChange={(e, newValue) => handleChangeInvoice(newValue ? newValue : '')}

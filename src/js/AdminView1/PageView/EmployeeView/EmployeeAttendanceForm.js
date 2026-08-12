@@ -19,6 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, ArrowUpwardOutlined, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
@@ -33,13 +34,13 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Loader from '../../../component/Loader';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import { error } from 'style';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { DateTimeField, TimeField, TimePicker } from '@mui/x-date-pickers';
-import db from '../../../dexieDb';
+
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -127,20 +128,13 @@ function EmployeeAttendanceForm() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -170,24 +164,9 @@ function EmployeeAttendanceForm() {
   const [employee, setEmployee] = useState([])
   useEffect(() => {
     const fetchEmployee = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/employee')
-          setEmployee(res.data.data.filter((row) => row.status !== 'Fired' && row.status !== 'Resign').map((row2) => ({
-            id: row2._id,
-            name: row2.employeeName,
-            timeIn: new Date(),
-            timeOut: new Date(),
-            observation: '',
-            note: '',
-            daysWN: 0
-          })))
-        } catch (error) {
-          console.log(error)
-        }
-      } else {
-        const syncedEmployee = await db.employeeSchema.toArray();
-        setEmployee(syncedEmployee.filter((row) => row.status !== 'Fired' && row.status !== 'Resign').map((row2) => ({
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/employee`)
+        setEmployee(res.data?.data?.filter((row) => row.status !== 'Fired' && row.status !== 'Resign' && row.department?.toUpperCase() !== 'FACTORY').map((row2) => ({
           id: row2._id,
           name: row2.employeeName,
           timeIn: new Date(),
@@ -196,6 +175,8 @@ function EmployeeAttendanceForm() {
           note: '',
           daysWN: 0
         })))
+      } catch (error) {
+        console.log(error)
       }
     }
     fetchEmployee()
@@ -263,7 +244,7 @@ function EmployeeAttendanceForm() {
       dateNotification: new Date()
     }
     try {
-      await axios.post('https://gg-project-production.up.railway.app/endpoint/create-notification', data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -271,43 +252,24 @@ function EmployeeAttendanceForm() {
   const [saving, setSaving] = useState('')
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSaving('true');
-    const chunkSize = 5; // Process 5 requests at a time
-    let savedCount = 0;
-
-    if (navigator.onLine) {
-      try {
-        // Create an array of functions that return promises, so we don't start them all at once
-        const attendancePromises = employee.map((row) => () => axios.post('https://gg-project-production.up.railway.app/endpoint/create-employeeattendance', row));
-
-        // Process in chunks
-        for (let i = 0; i < attendancePromises.length; i += chunkSize) {
-          const chunk = attendancePromises.slice(i, i + chunkSize);
-          // Execute the current chunk of promises
-          await Promise.all(chunk.map(p => p()));
-          savedCount += chunk.length;
-          // Optional: Update UI with progress if you want to add a more detailed state
-          // setSaving(`Saving ${Math.min(savedCount, attendancePromises.length)}/${attendancePromises.length}...`); 
-        }
-
-        // After all chunks are processed
-        await Promise.all(employee.map(async (item) => {
-          await db.employeeAttendanceSchema.add({ ...item, synced: true })
-        }))
+    setSaving('true')
+    const saveAttendance = employee.map((row) => {
+      return axios.post(`${ENDPOINT_URL}/create-employeeattendance`, row)
+    })
+    try {
+      const res = await Promise.all(saveAttendance);
+      if (res) {
+        // await Promise.all(employee.map(async (item) => {
+        //   await db.employeeAttendanceSchema.add({ ...item, synced: true })
+        // }))
         handleOpen();
         handleCreateNotification();
-
-      } catch (error) {
-        if (error) {
-          setSaving('')
-          handleError();
-        }
       }
-    } else {
-      await Promise.all(employee.map(async (item) => {
-        await db.employeeAttendanceSchema.add({ ...item, synced: false })
-      }))
-      handleOpen();
+    } catch (error) {
+      if (error) {
+        setSaving('')
+        handleError();
+      }
     }
   };
   return (

@@ -1,3 +1,5 @@
+import PrintHeader from '../../../component/PrintHeader';
+import PrintFooter from '../../../component/PrintFooter';
 import React, { useEffect, useState, useRef } from 'react';
 import SidebarDash from '../../../component/SidebarDash';
 import '../../view.css';
@@ -9,7 +11,8 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Collapse, MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Checkbox, LinearProgress, Stepper, Step, StepLabel, Button, Accordion, AccordionSummary, AccordionDetails, Card, CardContent, Tabs, Tab, Menu, Divider } from '@mui/material'
 import axios from 'axios';
-import { useNavigate, NavLink, useParams, Link } from 'react-router-dom';
+import { ENDPOINT_URL } from '../../../apiConfig';
+import { useNavigate, NavLink, useParams, Link, useOutletContext } from 'react-router-dom';
 import dayjs from 'dayjs';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
@@ -24,7 +27,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../../../component/NetworkLogoutIcon';
 import EditIcon from '@mui/icons-material/Edit';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
@@ -47,7 +50,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import Visibility from '@mui/icons-material/Visibility';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import db from '../../../dexieDb';
+
 import ExcelJS from 'exceljs'
 import { saveAs } from 'file-saver';
 import { Explicit, Preview } from '@mui/icons-material';
@@ -149,20 +152,13 @@ function ProjectViewInformation() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -184,112 +180,168 @@ function ProjectViewInformation() {
   const [project2, setProject2] = useState({})
   const [hidden, setHidden] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
+  const [loadingTab, setLoadingTab] = useState(false);
   const [item, SetItems] = useState([])
-  useEffect(() => {
-    const fetchProject = async () => {
-      if (navigator.onLine) {
-        try {
-          console.log('🔍 [FILTERED API] Fetching project details for:', id);
-          const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-projects/${id}`)
-          const item = res.data.data;
-          const projectData = {
-            ...item,
-            id: item._id,
-            visitField: dayjs(item.visitDate).format('DD/MM/YYYY'),
-            startField: dayjs(item.startDate).format('DD/MM/YYYY'),
-          };
 
-          setProject([projectData]);
 
-          // Fetch items separately
-          const resItem = await axios.get('https://gg-project-production.up.railway.app/endpoint/item')
-          SetItems(resItem.data.data)
-          setLoadingData(false)
-        } catch (error) {
-          console.error('❌ [FILTERED API] Error fetching project details:', error);
-          setLoadingData(false)
-        }
-      } else {
-        const itemLocal = await db.projectSchema.get({ _id: id });
-        if (itemLocal) {
-          const projectData = {
-            ...itemLocal,
-            id: itemLocal._id,
-            visitField: dayjs(new Date(itemLocal.visitDate)).format('DD/MM/YYYY'),
-            startField: dayjs(new Date(itemLocal.startDate)).format('DD/MM/YYYY'),
-          };
-          setProject([projectData]);
-        }
-        const offLineItem = await db.itemSchema.toArray();
-        SetItems(offLineItem)
-        setLoadingData(false)
-      }
+  // Priority Data (Initial Load)
+  const [loadingBase, setLoadingBase] = useState(true);
+
+  // Priority Data (Initial Load)
+  const fetchPriorityData = async () => {
+    try {
+      setLoadingBase(true);
+      const [resProjects, resProjectSpec, resHidden] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/projects`),
+        axios.get(`${ENDPOINT_URL}/get-projects/${id}`),
+        axios.get(`${ENDPOINT_URL}/hidden`)
+      ]);
+
+      const formatDate = resProjects.data.data.map((p) => ({
+        ...p,
+        id: p._id,
+        visitField: dayjs(p.visitDate).format('DD/MM/YYYY'),
+        startField: dayjs(p.startDate).format('DD/MM/YYYY'),
+      }));
+      setProject(formatDate.reverse());
+      setProjectName(resProjectSpec.data.data.projectName);
+      setCustomerName1(resProjectSpec.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
+      setHidden(resHidden.data.data);
+
+      setLoadingBase(false);
+      setLoadingData(true); // Still true until details are loaded if we want to wait, or false to show UI.
+      // Let's set it to false so header shows up.
+      setLoadingData(false);
+
+      // Load all other data in background
+      fetchDetailedData();
+    } catch (error) {
+      console.error('Error fetching priority data:', error);
+      setLoadingBase(false);
+      setLoadingData(false);
     }
-    fetchProject()
-  }, [id])
+  };
+
+  const fetchDetailedData = async () => {
+    try {
+      const [resAllItems] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/item`)
+      ]);
+      SetItems(resAllItems.data.data);
+
+      await Promise.all([
+        fetchInvoicesAndPurchases(),
+        fetchExpenses(),
+        fetchPayments(),
+        fetchTimelineAndStaff(),
+        fetchItemsMovement()
+      ]);
+    } catch (error) {
+      console.error('Error fetching detailed data:', error);
+    }
+  };
+
+  // Tab-Specific Loaders
+  const fetchInvoicesAndPurchases = async () => {
+    try {
+      const [resPurchases, resInvoices] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/purchase?summary=true`),
+        axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
+      ]);
+
+      const relatedPurchases = resPurchases.data?.data?.filter((row) => row.projectName?._id === id);
+      const projectPurchaseIds = relatedPurchases.map(p => p._id);
+
+      // Filter Invoices: linked either via Purchase ID or directly via Project ID
+      const relatedInvoices = resInvoices.data?.data?.filter((inv) =>
+        projectPurchaseIds.includes(inv.ReferenceName2) || inv.ReferenceName2 === id
+      );
+
+      const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({
+        ...Item,
+        totalCostOut: (Item.itemName?._id === undefined || Item.itemName?._id === "") && (Number(Item.itemOut) || 0) === 0
+          ? (Number(Item.totalGenerale) || 0)
+          : (Number(Item.itemOut) || 0) * (Number(Item.itemCost) || 0)
+      })));
+
+      setItem(allProjectItems);
+      setPurchase(relatedPurchases);
+      setInvoice(relatedInvoices.map(row => ({ ...row, id: row._id })));
+    } catch (error) {
+      console.error('Error fetching Invoices/Purchases:', error);
+    }
+  };
+
+  const fetchExpenses = async () => {
+    try {
+      const [resExpCat, resExpenses] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/expensesCategory`),
+        axios.get(`${ENDPOINT_URL}/expense?summary=true`)
+      ]);
+      setCategories(resExpCat.data.data);
+      setExpensesInfo(resExpenses.data?.data?.filter((row) => row.accountNameInfo?._id === id).map((row) => ({
+        _id: row._id,
+        category: row.expenseCategory?.expensesCategory,
+        total: row.total,
+        date: row.expenseDate,
+        expenseNumber: row.expenseNumber,
+        description: row.description
+      })));
+    } catch (error) { console.error('Error fetching Expenses:', error); }
+  };
+
+  const fetchPayments = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/payment`);
+      setAdvances(res.data?.data?.filter((pay) => pay.TotalAmount?.some((item) => item.id === id)));
+    } catch (error) { console.error('Error fetching Payments:', error); }
+  };
+
+  const fetchItemsMovement = async () => {
+    try {
+      const [resOut, resReturn, resPrec] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/itemOut`),
+        axios.get(`${ENDPOINT_URL}/itemReturn`),
+        axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true`)
+      ]);
+      setItemOut(resOut.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: "O-" + String(row.outNumber).padStart(6, '0'), type: 'Item Out' })));
+      setItemReturn(resReturn.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: "R-" + String(row.outNumber).padStart(6, '0'), type: 'Item return' })));
+      setItemPurchase(resPrec.data?.data?.filter((row) => row.projectName && row.projectName._id === id));
+    } catch (error) { console.error('Error fetching Item Movement:', error); }
+  };
+
+  const fetchTimelineAndStaff = async () => {
+    try {
+      const [resNotif, resPlaning] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/notification`),
+        axios.get(`${ENDPOINT_URL}/planing`)
+      ]);
+      setNotification(resNotif.data?.data?.filter((row) => row.idInfo === id));
+      setPlaningInfo(resPlaning.data?.data?.filter((row) => row.projectName?._id === id).map((row) => ({
+        ...row,
+        totalWorkDay: parseFloat(Number(row.dayPayUSd || 0) * Number(row.workNumber || 0)).toFixed(2)
+      })));
+    } catch (error) { console.error('Error fetching Timeline/Staff:', error); }
+  };
+
+  // Maps for optimized lookups
+  const itemMap = React.useMemo(() => {
+    const map = {};
+    item.forEach(i => { map[i._id] = i; });
+    return map;
+  }, [item]);
+
+  useEffect(() => {
+    fetchPriorityData();
+  }, [id]);
+
   const [projectNumber, setProjectNumber] = useState("");
   const [projectName, setProjectName] = useState("");
   const [customerName1, setCustomerName1] = useState("");
-  useEffect(() => {
-    const fetchDataHidden = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/hidden')
-          const resP = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-projects/${id}`)
-          setProjectName(resP.data.data.projectName);
-          setCustomerName1(resP.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
-          setProjectNumber(resP.data.data.projectNumber);
-          setHidden(res.data.data)
-          await Promise.all(res.data.data.map(async (item) => {
-            await db.hiddenSchema.put({ ...item, synced: true, updateS: true })
-          }))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.hiddenSchema.toArray();
-        setHidden(offLineCustomer1)
-      }
-    }
-    fetchDataHidden()
-  }, [])
 
   const [purchase, setPurchase] = useState([])
   const [items, setItem] = useState([])
-  useEffect(() => {
-    const fetchPurchase = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/purchase')
-          const NewData = res.data.data.filter((row) => row.projectName._id === id)
-          const newItem = NewData.map((row) => row.items.map((Item) => {
-            const totalCostOut = Item.itemOut * Item.itemCost;
-            return {
-              ...Item, totalCostOut
-            }
-          }))
-          newItem.map((row) => setItem(row))
-          // Handle the response data here
-          setPurchase(NewData);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.purchaseSchema.toArray();
-        const NewData = offLineCustomer1.filter((row) => row.projectName._id === id)
-        const newItem = NewData.map((row) => row.items.map((Item) => {
-          const totalCostOut = Item.itemOut * Item.itemCost;
-          return {
-            ...Item, totalCostOut
-          }
-        }))
-        newItem.map((row) => setItem(row))
-        // Handle the response data here
-        setPurchase(NewData);
-      }
-    }
-    fetchPurchase()
-  }, [id]);
+
   const totalGeneralOutCost = items.length > 0 ? items.reduce((sum, row) => sum + row.totalCostOut, 0) : 0
   const [itemOut, setItemOut] = useState([]);
   const [itemReturn, setItemReturn] = useState([]);
@@ -300,90 +352,12 @@ function ProjectViewInformation() {
   const [planingInfo, setPlaningInfo] = useState([]);
   const [categories, setCategories] = useState([]);
   const [notification, setNotification] = useState([]);
-  useEffect(() => {
-    const fetchProjectRelatedData = async () => {
-      if (navigator.onLine) {
-        try {
-          console.log('🔍 [FILTERED API] Fetching professional project summary for:', id);
+  const [advances, setAdvances] = useState([]);
 
-          // Use professional filtered endpoints (Zoho CRM approach)
-          const [resInvoice, resItemOut, resIReturn, resIPurchase, resCategory, resExpenses, resNotification, resPlaning] = await Promise.all([
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/invoice/project/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemOut/project/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemReturn/project/${id}`),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/itemPurchase/project/${id}`),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/expensesCategory'),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/expense/project/${id}`),
-            axios.get('https://gg-project-production.up.railway.app/endpoint/notification'),
-            axios.get(`https://gg-project-production.up.railway.app/endpoint/planing/project/${id}`)
-          ]);
-
-          setInvoice(resInvoice.data.data);
-          setItemOut(resItemOut.data.data.map((row) => ({ ...row, outNumber: "O-0" + row.outNumber, type: 'Item Out' })));
-          setItemReturn(resIReturn.data.data.map((row) => ({ ...row, outNumber: "R-0" + row.outNumber, type: 'Item return' })));
-          setItemPurchase(resIPurchase.data.data);
-          setCategories(resCategory.data.data);
-
-          const resultExpenses = resExpenses.data.data.map((row) => ({
-            _id: row._id,
-            category: row.expenseCategory.expensesCategory,
-            total: row.total,
-            date: row.expenseDate,
-            expenseNumber: row.expenseNumber,
-            description: row.description
-          }));
-          setExpensesInfo(resultExpenses);
-
-          setNotification(resNotification.data.data.filter((row) => row.idInfo === id));
-
-          const resultPlaning = resPlaning.data.data.map((row) => ({
-            ...row,
-            totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
-          }));
-          setPlaningInfo(resultPlaning);
-
-          console.log('✅ [FILTERED API] Successfully loaded professional project summary');
-        } catch (error) {
-          console.error('❌ [FILTERED API] Error fetching project data:', error);
-        }
-      } else {
-        const invoiceSchemaInfo = await db.invoiceSchema.toArray();
-        const NewData = invoiceSchemaInfo.filter((row) =>
-          purchase.find((Item) => row.ReferenceName2 !== undefined ? row.ReferenceName2 === Item._id : null)
-        )
-        setInvoice(NewData);
-        const outItemInfo = await db.itemOutSchema.toArray();
-        setItemOut(outItemInfo.filter((row) => row.reference._id === id).map((row) => ({ ...row, outNumber: "O-0" + row.outNumber, type: 'Item Out' })))
-        const returnInfo = await db.itemReturn.toArray();
-        setItemReturn(returnInfo.filter((row) => row.reference._id === id).map((row) => ({ ...row, outNumber: "R-0" + row.outNumber, type: 'Item return' })))
-        const categoryInfo = await db.dailyExpensesCategorySchema.toArray();
-        setCategories(categoryInfo);
-        const expensesInfo = await db.dailyExpenseSchema.toArray();
-        const result = expensesInfo.filter((row) => row.accountNameInfo !== undefined && row.accountNameInfo._id === id)
-          .map((row, i) => ({
-            _id: row._id,
-            category: row.expenseCategory.expensesCategory,
-            total: row.total,
-            date: row.expenseDate,
-            expenseNumber: row.expenseNumber,
-            description: row.description
-          }))
-        setExpensesInfo(result)
-        const offLineCustomer1 = await db.planingSchema.toArray();
-        const resultPlaning = offLineCustomer1.filter((row) => row.projectName !== undefined && row.projectName._id === id)
-          .map((row) => ({
-            ...row,
-            totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber).toFixed(2)
-          }))
-        setPlaningInfo(resultPlaning)
-      }
-    }
-    fetchProjectRelatedData()
-  }, [id])
-  {/** const resItemOut = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemOut')
+  {/** const resItemOut = await axios.get(`${ENDPOINT_URL}/itemOut`)
          const OutFilter = resItemOut.data.data.map((row)=>({...row, outNumber: "O-0" + row.outNumber,type:'Out', itemsQtyArray : row.itemsQtyArray.filter((Item)=> Item.itemName._id === id && parseFloat(Item.newItemOut) > 0) }))
          setItemOut(OutFilter.filter((row)=> row.reference._id === id && row.itemsQtyArray.length > 0 ))
-         const resIReturn = await axios.get('https://gg-project-production.up.railway.app/endpoint/itemReturn')
+         const resIReturn = await axios.get(`${ENDPOINT_URL}/itemReturn`)
          const returnFilter = resIReturn.data.data.map((row)=>({...row, outNumber: "R-0" + row.outNumber, type:'return', itemsQtyArray : row.itemsQtyArray.filter((Item)=> Item.itemName._id === id && parseFloat(Item.newItemOut) > 0) }))
          setItemReturn(returnFilter.filter((row)=> row.reference._id === id && row.itemsQtyArray.length > 0 )) */}
 
@@ -395,7 +369,7 @@ function ProjectViewInformation() {
   })).filter(row => row.itemsQtyArray.length > 0)
 
   const relatedItemPurchases = itemPurchase.length > 0 ? itemPurchase.reduce((acc, row) => {
-    row.items.filter((item) => parseFloat(item.itemQty) > 0 && item.itemName._id !== undefined).forEach((item) => {
+    row.items.filter((item) => parseFloat(item.itemQty) >= 0 && item.itemName._id !== undefined).forEach((item) => {
       const ItemName = item.itemName.itemName;
       const Id = item.itemName._id;
       const description = item.itemDescription;
@@ -407,12 +381,20 @@ function ProjectViewInformation() {
     return acc
   }, {}) : null
   const relatedItemPurchases2 = itemPurchase.length > 0 ? itemPurchase.reduce((acc, row) => {
-    row.items.filter((item) => parseFloat(item.itemQty) > 0 && item.itemName._id === undefined).forEach((item) => {
+    row.items.filter((item) => parseFloat(item.itemQty) >= 0 && item.itemName._id === undefined).forEach((item) => {
       const ItemName = item.itemName.itemName;
       const Id = item.itemName._id;
       const description = item.itemDescription;
+      // Capture price from the item purchase - fix property names and fallback
+      const rate = parseFloat(item.itemRate) || 0;
+      const cost = parseFloat(item.cost) || parseFloat(item.itemRate) || 0;
+
       if (!acc[description]) {
-        acc[description] = { ItemName, Id, description, total: 0 }
+        acc[description] = { ItemName, Id, description, total: 0, rate: rate, cost: cost }
+      } else {
+        // Simple update to latest price
+        acc[description].rate = rate;
+        acc[description].cost = cost;
       }
       acc[description].total += parseFloat(item.itemQty)
     });
@@ -427,14 +409,56 @@ function ProjectViewInformation() {
 
   const purchaseInfo = purchase.map((PreviewPurchase) => {
     const updatedPurchase = { ...PreviewPurchase }
-    allItemPurchase?.forEach((row2) => {
+    // Fix: Filter itemPurchase to only include records that match the current purchase number
+    const currentItemPurchases = itemPurchase.filter(ip => ip.itemPurchaseNumber === PreviewPurchase.purchaseNumber);
+    const localRelated = currentItemPurchases.reduce((acc, row) => {
+      row.items.filter((item) => parseFloat(item.itemQty) >= 0 && item.itemName._id !== undefined).forEach((item) => {
+        const ItemName = item.itemName.itemName;
+        const Id = item.itemName._id;
+        const description = item.itemDescription;
+        if (!acc[Id]) {
+          acc[Id] = { ItemName, Id, description, total: 0 }
+        }
+        acc[Id].total += parseFloat(item.itemQty)
+      });
+      return acc
+    }, {});
+    const localRelated2 = currentItemPurchases.reduce((acc, row) => {
+      row.items.filter((item) => parseFloat(item.itemQty) >= 0 && item.itemName._id === undefined).forEach((item) => {
+        const ItemName = item.itemName.itemName;
+        const Id = item.itemName._id;
+        const description = item.itemDescription;
+        const rate = parseFloat(item.itemRate) || 0;
+        const cost = parseFloat(item.cost) || parseFloat(item.itemRate) || 0;
+        if (!acc[description]) {
+          acc[description] = { ItemName, Id, description, total: 0, rate: rate, cost: cost }
+        } else {
+          acc[description].rate = rate;
+          acc[description].cost = cost;
+        }
+        acc[description].total += parseFloat(item.itemQty)
+      });
+      return acc
+    }, {});
+    const localAll = [...Object.values(localRelated), ...Object.values(localRelated2)];
+    localAll?.forEach((row2) => {
       const existingItem = updatedPurchase.items?.findIndex(
         (itemI) => row2.Id ? itemI.itemName._id === row2.Id : itemI.itemDescription === row2.description
       )
       if (existingItem > -1) {
         updatedPurchase.items[existingItem].itemBuy = row2.total
+        // Update costs and rates for manual items if available from actual purchases
+        if (!row2.Id) {
+          updatedPurchase.items[existingItem].itemCost = row2.cost;
+          updatedPurchase.items[existingItem].itemRate = row2.rate;
+          updatedPurchase.items[existingItem].totalAmount = Math.round((row2.rate * updatedPurchase.items[existingItem].itemQty) * 100) / 100;
+          updatedPurchase.items[existingItem].itemAmount = updatedPurchase.items[existingItem].totalAmount; // Simplified, assuming no discount change
+          updatedPurchase.items[existingItem].totalGenerale = Math.round((row2.cost * row2.total) * 100) / 100;
+        }
       } else {
-        const itemDetails = item.find((detail) => detail._id === row2.Id)
+        const itemDetails = itemMap[row2.Id]
+        const rate = row2.Id ? (itemDetails?.itemSellingPrice || 0) : row2.rate;
+        const cost = row2.Id ? (itemDetails?.itemCostPrice || 0) : row2.cost;
         updatedPurchase.items.push({
           idRow: v4(),
           itemName: {
@@ -444,14 +468,14 @@ function ProjectViewInformation() {
           itemDescription: row2.description,
           itemDiscount: 0,
           itemQty: row2.total,
-          itemRate: itemDetails?.itemSellingPrice || 0,
-          itemCost: itemDetails?.itemCostPrice || 0,
-          totalAmount: row2.total * itemDetails?.itemSellingPrice || 0,
-          discount: (row2.total * (itemDetails?.itemSellingPrice || 0)) * 0,
-          percentage: ((row2.total * (itemDetails?.itemSellingPrice || 0)) * 0) / 100,
-          itemAmount: (row2.total * (itemDetails?.itemSellingPrice || 0)) - (((row2.total * (itemDetails?.itemSellingPrice || 0)) * 0) / 100),
-          totalCost: row2.total * itemDetails?.itemCostPrice || 0,
-          totalGenerale: itemDetails?.itemCostPrice || 0 * row2.total,
+          itemRate: rate,
+          itemCost: cost,
+          totalAmount: Math.round((row2.total * rate) * 100) / 100,
+          discount: 0,
+          percentage: 0,
+          itemAmount: Math.round((row2.total * rate) * 100) / 100,
+          totalCost: Math.round((row2.total * cost) * 100) / 100,
+          totalGenerale: Math.round((cost * row2.total) * 100) / 100,
           itemBuy: row2.total,
           itemWeight: "",
           stock: itemDetails?.itemQuantity || 0,
@@ -460,6 +484,10 @@ function ProjectViewInformation() {
         })
       }
     })
+    // Recalculate purchase amounts after all items are updated
+    updatedPurchase.purchaseAmount1 = updatedPurchase.items?.reduce((sum, item) => sum + (parseFloat(item.totalCost) || 0), 0) || 0;
+    updatedPurchase.purchaseAmount2 = updatedPurchase.items?.reduce((sum, item) => sum + (parseFloat(item.totalGenerale) || 0), 0) || 0;
+
     return updatedPurchase
   })
 
@@ -500,7 +528,7 @@ function ProjectViewInformation() {
   const relatedPurchase = purchase.map((row) => ({
     ...row,
     items: row.items.map((Item) => {
-      const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName._id) : null
+      const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName?._id) : null
       return ({
         ...Item,
         itemOut: newAllOutReturnInfo ? newAllOutReturnInfo.total : 0
@@ -541,6 +569,11 @@ function ProjectViewInformation() {
     const totalPayRoll = totalAmount2?.reduce((sum, row) => sum + row.total, 0);
     setTotalAmountPlaning(totalPayRoll)
   }, [expenses, totalAmount2])
+
+  const totalAdvances = advances.reduce((sum, pay) => {
+    const projectAmt = pay.TotalAmount?.filter(item => item.id === id).reduce((s, i) => s + parseFloat(i.total), 0) || 0
+    return sum + projectAmt
+  }, 0)
   const [show2, setShow2] = useState(1);
   const handleShow2 = (e) => {
     setShow2(e);
@@ -611,13 +644,15 @@ function ProjectViewInformation() {
     setShow1(e);
     setAnchorEl(null);
   }
+
+
   const [reason, setReason] = useState("");
   const [Comments1, setComments] = useState([]);
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/comment')
-        const resp = res.data.data.filter((row) => row.CommentInfo.idInfo === id)
+        const res = await axios.get(`${ENDPOINT_URL}/comment`)
+        const resp = res.data?.data?.filter((row) => row.CommentInfo.idInfo === id)
         setComments(resp.reverse())
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -666,7 +701,7 @@ function ProjectViewInformation() {
   const handleSynced = async (e) => {
     e.preventDefault()
     const updatePurchase = relatedPurchase.map((row) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${row._id}`, {
+      return axios.put(`${ENDPOINT_URL}/update-purchase/${row._id}`, {
         items: row.items
       })
     })
@@ -681,7 +716,7 @@ function ProjectViewInformation() {
   const updateForItemBuy = async (e) => {
     e.preventDefault()
     const saveAttendance = purchaseInfo.map((row) => {
-      return axios.put(`https://gg-project-production.up.railway.app/endpoint/update-purchase/${row._id}`, row)
+      return axios.put(`${ENDPOINT_URL}/update-purchase/${row._id}`, row)
     })
     try {
       await Promise.all(saveAttendance);
@@ -700,7 +735,7 @@ function ProjectViewInformation() {
       dateComment
     };
     try {
-      const res = await axios.post('https://gg-project-production.up.railway.app/endpoint/create-comment/', data)
+      const res = await axios.post(`${ENDPOINT_URL}/create-comment/`, data)
       if (res) {
         setReason("");
         handleOpen();
@@ -718,7 +753,7 @@ function ProjectViewInformation() {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'P-00' + projectNumber + ' For ' + customerName1 + ' (' + projectName + ')',
+    documentTitle: 'P-' + String(projectNumber).padStart(6, '0') + ' For ' + customerName1 + ' (' + projectName + ')',
     onBeforeGetContent: () => {
       const PAGE_HEIGHT = 1045;
       const printElement = componentRef.current;
@@ -744,8 +779,16 @@ function ProjectViewInformation() {
       }
     }
   })
-  const handleOpenPrint = () => {
-    handlePrint()
+  const [printData, setPrintData] = useState(null);
+
+  useEffect(() => {
+    if (printData) {
+      handlePrint();
+    }
+  }, [printData]);
+
+  const handleOpenPrint = (data) => {
+    setPrintData(data);
     setAnchorEl1(null);
   };
   const [value3, setValue3] = React.useState('1');
@@ -767,7 +810,7 @@ function ProjectViewInformation() {
   };
 
   const data1 = purchase.map((row) => ({
-    number: 'PUR-00' + row.purchaseNumber,
+    number: 'PUR-' + String(row.purchaseNumber).padStart(6, '0'),
     customer: row.customerName.customerName,
     projectName: row.projectName.projectName,
     purchaseDate: dayjs(row.purchaseDate).format('DD/MM/YYYY'),
@@ -799,7 +842,7 @@ function ProjectViewInformation() {
 
   const data8 = expensesInfo.map((Item, i) => {
     return ({
-      no: 'D-0' + Item.expenseNumber,
+      no: 'D-' + String(Item.expenseNumber).padStart(6, '0'),
       date: dayjs(Item.date).format('DD-MMMM-YYYY'),
       category: Item.category,
       description: Item.description,
@@ -899,7 +942,7 @@ function ProjectViewInformation() {
     workSheet.addRow(['Expenses']);
     workSheet.addRow(columns6.map(col => col.header))
     data8.forEach(item => {
-      workSheet.addRow([item.no, item.date, item.category, item.description, item.itemCost, item.totalCost, item.itemBuy, item.totalGenerale, item.itemOut, item.totalCost])
+      workSheet.addRow([item.no, item.date, item.category, item.description, item.itemCost, item.totalCost, item.itemBuy, item.totalGenerale, item.itemOut, item.totalCost1])
     });
     workSheet.addRow([]);
     data9.forEach(item => {
@@ -914,7 +957,77 @@ function ProjectViewInformation() {
     });
     const buffer = await workbook.xlsx.writeBuffer();
     const bold = new Blob([buffer], { type: 'application/octet-stream' });
-    saveAs(bold, `${'P-00' + projectNumber + ' For ' + customerName1 + ' (' + projectName + ')'}.xlsx`)
+    saveAs(bold, `${'P-' + String(projectNumber).padStart(6, '0') + ' For ' + customerName1 + ' (' + projectName + ')'}.xlsx`)
+  }
+
+  const handleExportCategoryExcel = async (category, list, projectName) => {
+    const workbook = new ExcelJS.Workbook();
+    const workSheet = workbook.addWorksheet('Sheet1');
+    const columns = [
+      { header: "#", key: 'no', width: 20 },
+      { header: "Date", key: 'date', width: 20 },
+      { header: "Category", key: 'category', width: 20 },
+      { header: "Description", key: 'description', width: 60 },
+      { header: "Total", key: 'total', width: 20 },
+    ];
+
+    workSheet.addRow([]);
+    workSheet.addRow([`Category: ${category}`]);
+    workSheet.addRow([`Project: ${projectName}`]);
+    workSheet.addRow([]);
+    workSheet.addRow(columns.map(col => col.header));
+
+    list.forEach((item, i) => {
+      workSheet.addRow([
+        item.expenseNumber ? `D-${String(item.expenseNumber).padStart(6, '0')}` : i + 1,
+        dayjs(item.date).format('DD-MMMM-YYYY'),
+        item.category,
+        item.description,
+        item.total.toFixed(2)
+      ]);
+    });
+
+    workSheet.addRow([]);
+    const total = list.reduce((sum, item) => sum + parseFloat(item.total), 0);
+    workSheet.addRow(['', '', '', 'Total', total.toFixed(2)]);
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const bold = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(bold, `${category}_Expenses_${projectName.replace(/\s+/g, '_')}.xlsx`);
+  }
+
+  const handleExportEmployeeExcel = async (list, projectName) => {
+    const workbook = new ExcelJS.Workbook();
+    const workSheet = workbook.addWorksheet('Sheet1');
+    const columns = [
+      { header: "Name", key: 'name', width: 30 },
+      { header: "Days Works", key: 'workD', width: 20 },
+      { header: "Total Pay Day", key: 'dayPay', width: 20 },
+      { header: "Total Pay", key: 'total', width: 20 },
+    ];
+
+    workSheet.addRow([]);
+    workSheet.addRow([`Category: Employee Expenses`]);
+    workSheet.addRow([`Project: ${projectName}`]);
+    workSheet.addRow([]);
+    workSheet.addRow(columns.map(col => col.header));
+
+    list.forEach((item) => {
+      workSheet.addRow([
+        item.name,
+        `${item.workD} days`,
+        item.dayPay.toFixed(2),
+        item.total.toFixed(2)
+      ]);
+    });
+
+    workSheet.addRow([]);
+    const grandTotal = list.reduce((sum, item) => sum + parseFloat(item.total), 0);
+    workSheet.addRow(['', '', 'Total', grandTotal.toFixed(2)]);
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const bold = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(bold, `Employee_Expenses_${projectName.replace(/\s+/g, '_')}.xlsx`);
   }
 
   function Row3(props) {
@@ -929,9 +1042,8 @@ function ProjectViewInformation() {
             row.newDescription !== undefined ?
               (
                 <>
-                  <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span> {open ? <KeyboardArrowUpIcon /> : <span>{index + 1}</span>}
-                  </span></td>
-                  <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={6}>{row.newDescription}</td>
+                  <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{index + 1}</span></td>
+                  <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={8}>{row.newDescription}</td>
                 </>
               )
               :
@@ -945,11 +1057,11 @@ function ProjectViewInformation() {
                   </td>
                   <td style={{ border: '1px solid #DDD' }} align="left">{row.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
                   <td style={{ border: '1px solid #DDD' }} align="left">{row.itemCost}</td>
-                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.totalCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ (row.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
                   <td style={{ border: '1px solid #DDD' }} align="left">{row.itemBuy}</td>
-                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.totalGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ (row.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
                   <td style={{ border: '1px solid #DDD' }} align="left"><span>{row.itemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
-                  <td style={{ border: '1px solid #DDD' }} align="left"><span>{(row.itemOut * row.itemCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                  <td style={{ border: '1px solid #DDD' }} align="left"><span>{ ((row.itemName?._id === undefined || row.itemName?._id === "") && (Number(row.itemOut) || 0) === 0 ? (row.totalGenerale || 0) : (row.itemOut * row.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
                 </>
               )
           }
@@ -972,13 +1084,13 @@ function ProjectViewInformation() {
                   </thead>
                   <tbody>
                     {
-                      formatDate2?.filter((row1) => row1.itemsQtyArray.some((Item) => Item.itemName._id === row.itemName._id)).map((row1, index1) => (
+                      formatDate2?.filter((row1) => row1.itemsQtyArray.some((Item) => Item.itemName._id === row.itemName?._id)).map((row1, index1) => (
                         <tr key={index1}>
                           <td style={{ border: '1px solid #DDD' }}>{row1.outNumber}</td>
                           <td style={{ border: '1px solid #DDD' }}>{dayjs(row1.itemOutDate).format('DD/MM/YYYY-HH:mm')}</td>
                           <td style={{ border: '1px solid #DDD' }}>{row1.type}</td>
                           <td style={{ border: '1px solid #DDD' }}>
-                            {row1.itemsQtyArray.filter((Item1) => Item1.itemName._id === row.itemName._id).map((Item1, i) => (
+                            {row1.itemsQtyArray.filter((Item1) => Item1.itemName._id === row.itemName?._id).map((Item1, i) => (
                               <p key={i}>
                                 <span>{Item1.newItemOut}</span>
                               </p>
@@ -1000,6 +1112,14 @@ function ProjectViewInformation() {
     const { row } = props;
     const { index } = props;
     const [open, setOpen] = React.useState(false);
+
+    const componentRef = useRef();
+    const handlePrintLocal = useReactToPrint({
+      content: () => componentRef.current,
+    });
+
+    const categoryList = expensesInfo.filter((row1) => row1.category === row);
+
     return (
       <React.Fragment>
         <tr style={{ '& > *': { borderBottom: 'unset' } }}>
@@ -1014,10 +1134,20 @@ function ProjectViewInformation() {
           <td style={{ textAlign: 'left', border: '1px solid #DDD', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography gutterBottom component="div">
-                  Expenses Info
-                </Typography>
-                <table style={{ marginBottom: '5px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography gutterBottom component="div">
+                    Expenses Info
+                  </Typography>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <IconButton size="small" onClick={() => handleExportCategoryExcel(row, categoryList, projectName)} title="Export to Excel">
+                      <Explicit sx={{ color: 'green' }} />
+                    </IconButton>
+                    <IconButton size="small" onClick={handlePrintLocal} title="Print PDF">
+                      <LocalPrintshopIcon sx={{ color: 'gray' }} />
+                    </IconButton>
+                  </div>
+                </div>
+                <table style={{ marginBottom: '5px' }} ref={componentRef}>
                   <thead>
                     <tr>
                       <th style={{ textAlign: 'center', border: '1px solid #DDD' }}>#</th>
@@ -1031,7 +1161,7 @@ function ProjectViewInformation() {
                     {
                       expensesInfo.filter((row1) => row1.category === row).map((row1) => (
                         <tr key={row1._id}>
-                          <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>D-0{row1.expenseNumber}</td>
+                          <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>D-{String(row1.expenseNumber).padStart(6, '0')}</td>
                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}>{dayjs(row1.date).format('DD-MMMM-YYYY')}</td>
                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row1.category}</td>
                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row1.description}</td>
@@ -1054,6 +1184,12 @@ function ProjectViewInformation() {
   }
   function Row2(props) {
     const [open, setOpen] = React.useState(false);
+
+    const componentRef = useRef();
+    const handlePrintLocal = useReactToPrint({
+      content: () => componentRef.current,
+    });
+
     return (
       <React.Fragment>
         <tr style={{ '& > *': { borderBottom: 'unset' } }}>
@@ -1067,10 +1203,20 @@ function ProjectViewInformation() {
           <td style={{ textAlign: 'left', border: '1px solid #DDD', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography gutterBottom component="div">
-                  Expenses Info
-                </Typography>
-                <table style={{ marginBottom: '5px' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <Typography gutterBottom component="div">
+                    Expenses Info
+                  </Typography>
+                  <div style={{ display: 'flex', gap: '10px' }}>
+                    <IconButton size="small" onClick={() => handleExportEmployeeExcel(totalAmount2, projectName)} title="Export to Excel">
+                      <Explicit sx={{ color: 'green' }} />
+                    </IconButton>
+                    <IconButton size="small" onClick={handlePrintLocal} title="Print PDF">
+                      <LocalPrintshopIcon sx={{ color: 'gray' }} />
+                    </IconButton>
+                  </div>
+                </div>
+                <table style={{ marginBottom: '5px' }} ref={componentRef}>
                   <thead>
                     <tr>
                       <th style={{ textAlign: 'left', border: '1px solid #DDD' }}>Name</th>
@@ -1100,1170 +1246,806 @@ function ProjectViewInformation() {
     );
   }
 
+  const { handleShow1: layoutHandleShow1 } = useOutletContext();
+
   return (
-    <div className='Homeemployee'>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
-          <Toolbar
-            sx={{
-              pr: '24px', // keep right padding when drawer closed
-            }}
-          >
-            <IconButton
-              edge="start"
-              color="inherit"
-              aria-label="open drawer"
-              onClick={toggleDrawer}
-              sx={{
-                marginRight: '36px',
-                ...(sideBar && { display: 'none' }),
-              }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              sx={{ flexGrow: 1 }}
-            >
-              Project Information
-            </Typography>
-            <IconButton onClick={() => navigate('/ProjectViewAdmin')}>
-              <ArrowBack style={{ color: 'white' }} />
-            </IconButton>
-            <NotificationVIewInfo />
-            <MessageAdminView name={user.data.userName} role={user.data.role} />
-            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
-            <IconButton color="inherit" onClick={handleLogout}>
-              <Logout style={{ color: 'white' }} />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
-          <Toolbar
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'flex-end',
-              px: [1],
-            }}
-          >
-            <IconButton onClick={toggleDrawer}>
-              <ChevronLeftIcon />
-            </IconButton>
-          </Toolbar>
-          <Divider />
-          <List sx={{ height: '700px' }}>
-            <SidebarDash />
-          </List>
-        </Drawer>
-        <Box
-          component="main"
-          sx={{
-            backgroundColor: (theme) =>
-              theme.palette.mode === 'light'
-                ? theme.palette.grey[100]
-                : theme.palette.grey[900],
-            flexGrow: 1,
-            width: '100%',
-            height: '100vh',
-            overflow: 'auto',
-          }}
-        >
-          <Toolbar />
-          <Container maxWidth="none" sx={{ mt: 2 }} >
-            {
-              loadingData ? <div >
-                <div style={{ position: 'relative', top: '120px' }}>
-                  <Loader />
-                </div>
-              </div> : (
-                <div >
-                  <Grid container spacing={2}>
-                    {show1 === 1 ?
-                      <Grid item xs={3}>
-                        {
-                          user.data.role === 'CEO' ?
-                            (
-                              <div>
-                                {show2 === 1 ? (
-                                  <div className='itemInfoContainer'>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                      <div style={{ display: 'flex', padding: '5px', alignItems: 'center' }}>
-                                        <Checkbox />
-                                        <Typography variant='h6'>All Project</Typography>
-                                      </div>
-                                      <div style={{ padding: '20px' }}>
-                                        <p className='btnCustomer1' onClick={() => handleShow2(2)}>Filter</p>
-                                      </div>
-                                    </div>
-                                    <div style={{ height: '513px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
-                                      <Tabs
-                                        value={value}
-                                        onChange={handleChange}
-                                        orientation="vertical"
-                                        sx={{
-                                          '& .MuiTabs-indicator': {
-                                            backgroundColor: 'white',
-                                            height: '0px'
-                                          }
-                                        }}
-                                      >
-                                        {project?.map((row, index) => (
-                                          <Tab
-                                            key={index}
-                                            label={row.customerName.customerName + ' | ' + 'P-00' + row.projectNumber}
-                                            component={Link}
-                                            to={`/ProjectViewInformation/${row._id}`}
-                                            sx={{
-                                              '&.Mui-selected': {
-                                                color: 'white',
-                                                backgroundColor: '#30368a',
-                                                borderRadius: '10px'
-                                              }
-                                            }}
-                                          />
-                                        ))}
-                                      </Tabs>
-                                    </div>
-                                  </div>
-                                ) : ''
-                                }
-                                {show2 === 2 ? (
-                                  <div className='itemInfoContainer'>
-                                    <Grid container spacing={3}>
-                                      <Grid item xs={10}>
-                                        <TextField
-                                          label='search'
-                                          id='search'
-                                          value={search}
-                                          variant="standard"
-                                          onChange={handleSearch}
-                                        />
-                                      </Grid>
-                                      <Grid item xs={2}>
-                                        <ViewTooltip title="Close" placement='bottom'>
-                                          <IconButton onClick={() => handleShow2(1)} style={{ position: 'relative', float: 'right' }}>
-                                            <Close style={{ color: '#30368a' }} />
-                                          </IconButton>
-                                        </ViewTooltip>
-                                      </Grid>
-                                    </Grid>
+    <Grid container spacing={2}>
+      <Grid item xs={show1 === 1 ? 12 : 9}>
+        <div className='itemInfoContainer2'>
+          <div style={{ width: '100%', background: 'white' }}>
+            {loadingBase ? (
+              <div style={{ position: 'relative', top: '120px' }}>
+                <Loader />
+              </div>
+            ) : (
+              <div>
+                {project.filter(i => i._id === id)
+                  .map((row) => (
+                    <div key={row._id}>
 
-                                    <div style={{ height: '558px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
-                                      <Tabs
-                                        value={value2}
-                                        onChange={handleChange2}
-                                        orientation="vertical"
-                                        sx={{
-                                          '& .MuiTabs-indicator': {
-                                            backgroundColor: '#30368a'
-                                          }
-                                        }}
-                                      >
-                                        {newArray?.map((row, index) => (
-                                          <Tab
-                                            key={index}
-                                            label={row.customerName.customerName + ' | ' + 'P-00' + row.projectNumber}
-                                            component={Link}
-                                            to={`/ProjectViewInformation/${row._id}`}
-                                            sx={{
-                                              '&.Mui-selected': {
-                                                color: '#30368a'
-                                              }
-                                            }}
-                                          />
-                                        ))}
-                                      </Tabs>
-                                    </div>
-                                  </div>
-                                ) : ''
-                                }
-                              </div>
-                            ) :
-                            (
-                              <div>
-                                {show2 === 1 ? (
-                                  <div className='itemInfoContainer'>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                      <div style={{ display: 'flex', padding: '5px', alignItems: 'center' }}>
-                                        <Checkbox />
-                                        <Typography variant='h6'>All Project</Typography>
-                                      </div>
-                                      <div style={{ padding: '20px' }}>
-                                        <p className='btnCustomer1' onClick={() => handleShow2(2)}>Filter</p>
-                                      </div>
-                                    </div>
-                                    <div style={{ height: '513px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
-                                      <Tabs
-                                        value={value}
-                                        onChange={handleChange}
-                                        orientation="vertical"
-                                        sx={{
-                                          '& .MuiTabs-indicator': {
-                                            backgroundColor: 'white',
-                                            height: '0px'
-                                          }
-                                        }}
-                                      >
-                                        {filteredRows?.map((row, index) => (
-                                          <Tab
-                                            key={index}
-                                            label={row.customerName.customerName + ' | ' + 'P-00' + row.projectNumber}
-                                            component={Link}
-                                            to={`/ProjectViewInformation/${row._id}`}
-                                            sx={{
-                                              '&.Mui-selected': {
-                                                color: 'white',
-                                                backgroundColor: '#30368a',
-                                                borderRadius: '10px'
-                                              }
-                                            }}
-                                          />
-                                        ))}
-                                      </Tabs>
-                                    </div>
-                                  </div>
-                                ) : ''
-                                }
-                                {show2 === 2 ? (
-                                  <div className='itemInfoContainer'>
-                                    <Grid container style={{ alignItems: 'center', padding: '10px' }} spacing={3}>
-                                      <Grid item xs={10}>
-                                        <TextField
-                                          label='search'
-                                          id='search'
-                                          value={search}
-                                          variant="standard"
-                                          onChange={handleSearch}
-                                        />
-                                      </Grid>
-                                      <Grid item xs={2}>
-                                        <ViewTooltip title="Close" placement='bottom'>
-                                          <IconButton onClick={() => handleShow2(1)} style={{ position: 'relative', float: 'right' }}>
-                                            <Close style={{ color: '#30368a' }} />
-                                          </IconButton>
-                                        </ViewTooltip>
-                                      </Grid>
-                                    </Grid>
-
-                                    <div style={{ height: '558px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
-                                      <Tabs
-                                        value={value2}
-                                        onChange={handleChange2}
-                                        orientation="vertical"
-                                        sx={{
-                                          '& .MuiTabs-indicator': {
-                                            backgroundColor: '#30368a'
-                                          }
-                                        }}
-                                      >
-                                        {newArray2?.map((row, index) => (
-                                          <Tab
-                                            key={index}
-                                            label={row.customerName.customerName + ' | ' + 'P-00' + row.projectNumber}
-                                            component={Link}
-                                            to={`/ProjectViewInformation/${row._id}`}
-                                            sx={{
-                                              '&.Mui-selected': {
-                                                color: '#30368a'
-                                              }
-                                            }}
-                                          />
-                                        ))}
-                                      </Tabs>
-                                    </div>
-                                  </div>
-                                ) : ''
-                                }
-                              </div>
-                            )
-                        }
-
-                      </Grid> :
-                      ""}
-                    <Grid item xs={9} >
-                      <div className='itemInfoContainer2'>
-                        <div style={{ width: '100%', background: 'white' }}>
-
-                          {project.filter(i => i._id === id)
-                            .map((row) => (
-                              <div key={row._id}>
-
-                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                  <div>
-                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}> {'P-00' + row.projectNumber} | {row.projectName}</Typography>
-                                  </div>
-                                  <div>
-                                    <Button
-                                      aria-controls={open ? 'demo-customized-menu' : undefined}
-                                      aria-haspopup="true"
-                                      aria-expanded={open ? 'true' : undefined}
-                                      variant="contained"
-                                      disableElevation
-                                      onClick={handleClick}
-                                      endIcon={<KeyboardArrowDownIcon />}
-                                      sx={{
-                                        bgcolor: 'gray', '&:hover': {
-                                          color: 'gray',
-                                          bgcolor: 'white',
-                                          border: '1px solid gray',
-                                        }
-                                      }}
-                                    >
-                                      Options
-                                    </Button>
-                                    <Menu
-                                      id="demo-customized-menu"
-                                      MenuListProps={{
-                                        'aria-labelledby': 'demo-customized-button',
-                                      }}
-                                      anchorEl={anchorEl}
-                                      open={open}
-                                      onClose={handleCloseMenu}
-                                      TransitionComponent={Fade}
-                                    >
-                                      <MenuItem>
-                                        <NavLink to={`/ProjectUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
-                                          <EditIcon />
-                                          <Typography>Edit</Typography>
-                                        </NavLink>
-                                      </MenuItem>
-                                      <Divider />
-                                      <MenuItem onClick={() => handleShow1(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
-                                      <MenuItem onClick={() => handleShow1(3)}> <span style={{ color: 'gray' }}>History</span></MenuItem>
-                                    </Menu>
-                                  </div>
-                                </div>
-                                <Box sx={{ width: '100%' }}>
-                                  <TabContext
-                                    value={value3}
-                                  >
-                                    <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                                      <TabList onChange={handleChange3}
-                                        aria-label="lab API tabs example"
-                                        sx={{
-                                          '& .MuiTabs-indicator': {
-                                            backgroundColor: 'white',
-                                            height: '0px'
-                                          }
-                                        }}
-                                      >
-                                        <Tab
-                                          label="Overview"
-                                          value="1"
-                                          sx={{
-                                            '&.Mui-selected': {
-                                              color: 'white',
-                                              backgroundColor: 'gray',
-                                              borderRadius: '10px'
-                                            }, '&:hover': {
-                                              color: 'gray',
-                                              bgcolor: 'white',
-                                              border: '1px solid gray',
-                                              borderRadius: '10px'
-                                            }
-                                          }}
-                                        />
-                                        <Tab label="Invoice" value="2"
-                                          sx={{
-                                            '&.Mui-selected': {
-                                              color: 'white',
-                                              backgroundColor: 'gray',
-                                              borderRadius: '10px'
-                                            },
-                                            '&:hover': {
-                                              color: 'gray',
-                                              bgcolor: 'white',
-                                              border: '1px solid gray',
-                                              borderRadius: '10px'
-                                            }
-                                          }}
-                                        />
-                                        <Tab label="P-Request" value="3"
-                                          sx={{
-                                            '&.Mui-selected': {
-                                              color: 'white',
-                                              backgroundColor: 'gray',
-                                              borderRadius: '10px'
-                                            },
-                                            '&:hover': {
-                                              color: 'gray',
-                                              bgcolor: 'white',
-                                              border: '1px solid gray',
-                                              borderRadius: '10px'
-                                            }
-                                          }}
-                                        />
-                                      </TabList>
-                                    </Box>
-                                    <TabPanel value="1" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
-                                      <div>
-                                        <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-
-                                          <Grid item xs={12}>
-                                            <Card>
-                                              <CardContent sx={{ textAlign: 'center' }}>
-                                                <Typography sx={{ fontSize: '20px' }}>{row.projectName}</Typography>
-                                              </CardContent>
-                                              <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                                                <table style={{ fontSize: '20px' }}>
-                                                  <tbody>
-                                                    <tr>
-                                                      <th align='left'>Visit Date</th>
-                                                      <td>{dayjs(row.visitDate).format('DD/MM/YYYY')}</td>
-                                                    </tr>
-                                                    <tr>
-                                                      <th align='left'>Start Date</th>
-                                                      <td>{dayjs(row.startDate).format('DD/MM/YYYY')}</td>
-                                                    </tr>
-                                                  </tbody>
-                                                  <tbody>
-                                                    <tr>
-                                                      <th align='left'>Project Number</th>
-                                                      <td>P-00{row.projectNumber}</td>
-                                                    </tr>
-                                                    <tr>
-                                                      <th align='left'>Status</th>
-                                                      <td><Typography
-                                                        color={
-                                                          row.status === "Pending"
-                                                            ? "gray" : row.status === "On-Going"
-                                                              ? "blue" :
-                                                              row.status === "Stopped"
-                                                                ? "red" :
-                                                                row.status === "Pending"
-                                                                  ? "Orange" :
-                                                                  row.status === "Completed"
-                                                                    ? "green" : "black"
-                                                        }
-                                                      >
-                                                        {row.status}
-                                                      </Typography></td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                                <Card sx={{ width: '450px', height: '190px' }}>
-
-                                                  <CardContent style={{ position: 'relative', justifyContent: 'center', top: '20px' }}>
-                                                    <table style={{ width: '100%', color: 'gray', fontSize: '20px' }}>
-                                                      <tbody>
-                                                        {invoice ?
-                                                          invoice.map((row1) => (
-                                                            <tr key={row1._id}>
-                                                              <th style={{ textAlign: 'left' }}>Budget</th>
-                                                              <td ><span data-prefix>$</span><span className='InvoiceTotal '>{row1.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                            </tr>
-                                                          )) : ''}
-                                                        {
-                                                          invoice.length === 0 && (
-                                                            <tr>
-                                                              <th style={{ textAlign: 'left' }}>Budget</th>
-                                                              <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(row.budget !== undefined ? row.budget : 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                            </tr>
-                                                          )
-                                                        }
-
-                                                        <tr>
-                                                          <th style={{ textAlign: 'left' }}>Amount Use </th>
-                                                          <td>
-                                                            <span>$</span><span className='PurchaseTotal'>{parseFloat(totalAmount + totalGeneralOutCost + totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-                                                          </td>
-                                                        </tr>
-                                                        {invoice ?
-                                                          invoice.map((row1) => (
-                                                            <tr key={row1._id}>
-                                                              <th style={{ textAlign: 'left' }}></th>
-                                                              <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(row1.totalInvoice - (totalAmount + totalGeneralOutCost + totalAmountPlaning)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                            </tr>
-                                                          )) :
-                                                          ''
-                                                        }
-                                                        {
-                                                          invoice.length === 0 && (
-                                                            <tr>
-                                                              <th style={{ textAlign: 'left' }}></th>
-                                                              <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(row.budget !== undefined ? row.budget - (totalAmount + totalGeneralOutCost + totalAmountPlaning) : 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                            </tr>
-                                                          )
-                                                        }
-                                                      </tbody>
-                                                      <tbody>
-                                                      </tbody>
-                                                    </table>
-                                                  </CardContent>
-                                                </Card>
-                                              </CardContent>
-                                              <CardContent>
-                                                <table style={{ fontSize: '20px' }}>
-                                                  <tbody>
-                                                    <tr>
-                                                      <th style={{ textAlign: 'left', width: '200px' }}>Customer Name</th>
-                                                      <td style={{ textAlign: 'left' }}>{row.customerName.customerName}</td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                              </CardContent>
-                                              <CardContent>
-                                                <table style={{ fontSize: '20px' }}>
-                                                  <tbody>
-                                                    <tr>
-                                                      <th style={{ textAlign: 'left', width: '200px' }}>Description</th>
-                                                      <td style={{ textAlign: 'left' }}>{row.description}</td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                              </CardContent>
-                                            </Card>
-                                          </Grid>
-
-                                        </Grid>
-                                      </div>
-                                    </TabPanel>
-                                    <TabPanel value="2" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
-                                      <div>
-                                        {invoice ?
-                                          invoice.map((row) => (
-                                            <div key={row._id} className='invoicedetails'>
-
-                                              <header className='invoiceTest'>
-                                                <span>
-                                                  <img src={Image} style={{ width: '650px', height: '80px' }} />
-                                                </span>
-                                                <address style={{ textAlign: 'right' }}>
-                                                  <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                                  <p>RCM CD/KWZ/RCCM/22-B-00317 </p>
-                                                  <p> ID NAT 14-H5300N11179P </p>
-                                                  <p> AVENUE SALONGO Q/INDUSTRIEL C/MANIKA </p>
-                                                  <p>  KOLWEZI LUALABA </p>
-                                                  <p>   DR CONGO </p>
-                                                </address>
-                                              </header>
-                                              <hr /><p className='invoicehr'>Invoice</p>
-                                              <article>
-                                                <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
-                                                  <address style={{ lineHeight: 1.35, width: '60%' }}>
-                                                    <p >Bill To<br />
-                                                      <span style={{ fontWeight: 'bold' }}>{row.customerName.customerName}</span>
-                                                      <br />
-                                                      {row.customerName.billingAddress},{row.customerName.billingCity}
-                                                    </p>
-                                                  </address>
-
-                                                  <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
-                                                    <tbody>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Invoice #</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none' }}><span >INV-00{row.invoiceNumber}</span></td>
-                                                      </tr>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.invoiceDate).format('DD/MM/YYYY')}</span></td>
-                                                      </tr>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.invoiceSubject}</span></td>
-                                                      </tr>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Defect</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.invoiceDefect}</span></td>
-                                                      </tr>
-                                                    </tbody>
-                                                  </table>
-                                                </section>
-
-                                                <table className="secondTable" style={{ fontSize: '80%' }}>
-                                                  <thead>
-                                                    <tr>
-                                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
-                                                      <th style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Item</th>
-                                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Description</th>
-                                                      <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Quantity</th>
-                                                      <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Rate</th>
-                                                      <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Discount</th>
-                                                      <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Total</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    {row.items?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
-                                                      return (
-                                                        <tr key={Item.idRow}>
-                                                          <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
-                                                          <td style={{ padding: '10px', border: '1px solid #DDD' }}><span>{Item.itemName.itemName}</span></td>
-                                                          <td style={{ padding: '10px', textAlign: 'left', border: '1px solid #DDD' }}><span>{Item.itemDescription}</span></td>
-                                                          <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
-                                                          <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
-                                                          <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>
-                                                          <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemAmount}</span></td>
-                                                        </tr>
-                                                      )
-                                                    })}
-                                                  </tbody>
-                                                </table>
-                                                <span style={{ float: 'left' }}>
-                                                  <p>{row.note}</p>
-                                                </span>
-                                                <table className="firstTable" style={{ fontSize: '80%' }}>
-                                                  <tbody>
-                                                    <tr style={{ borderBottom: '1px solid black' }}>
-                                                      <th style={{ textAlign: 'center' }}>
-                                                        <span> Sub Total</span><br />
-                                                        <span className='txt1'>(Tax Inclusive)</span>
-                                                      </th>
-                                                      <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                    </tr>
-                                                    {
-                                                      row.shipping ?
-                                                        (
-                                                          <tr style={{ borderBottom: '1px solid black' }}>
-                                                            <th style={{ textAlign: 'center' }}><span>Shipping</span></th>
-                                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{row.shipping.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                          </tr>
-                                                        )
-                                                        : ''
-                                                    }
-                                                    {
-                                                      row.adjustmentNumber ?
-                                                        (
-                                                          <tr style={{ borderBottom: '1px solid black' }}>
-                                                            <th style={{ textAlign: 'center' }}>{row.adjustment}</th>
-                                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                          </tr>
-                                                        )
-                                                        : ''
-                                                    }
-                                                    <tr style={{ borderBottom: '1px solid black' }}>
-                                                      <th style={{ textAlign: 'center' }}><span >Total</span></th>
-                                                      <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{row.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                    </tr>
-                                                    {
-                                                      row.total ? (
-                                                        <tr style={{ borderBottom: '1px solid black' }}>
-                                                          <th style={{ textAlign: 'center' }}><span >Amount Paid</span></th>
-                                                          <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{row.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                        </tr>
-                                                      ) : ''
-                                                    }
-                                                    <tr style={{ borderBottom: '1px solid black' }}>
-                                                      <th style={{ textAlign: 'center', color: '#2f81b7' }}><span >Balance Due</span></th>
-                                                      <td style={{ textAlign: 'right', color: '#2f81b7' }}><span data-prefix>$</span><span>{row.balanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                    </tr>
-                                                    <tr>
-                                                      <th style={{ textAlign: 'center' }}><span >Total In Words</span></th>
-                                                      <td style={{ textAlign: 'left' }}><span>{row.totalW}</span></td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-                                                <section style={{ float: 'left', marginTop: '50px' }}>
-                                                  <table style={{ fontSize: '80%' }}>
-                                                    <tbody>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Bank</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span >SOFIBANQUE SA</span></td>
-                                                      </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Entitled</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span >GLOBAL GATE SARL</span></td>
-                                                      </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span > Bank Account</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span >00023233330214247020073</span></td>
-                                                      </tr>
-                                                    </tbody>
-                                                    <tbody>
-                                                      <tr>
-                                                        <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Code Swift</span></th>
-                                                        <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span>SFBXCDKIXXX</span></td>
-                                                      </tr>
-                                                    </tbody>
-                                                  </table>
-                                                </section>
-                                                <span style={{ textAlign: 'left' }}>
-                                                  <address style={{ lineHeight: 1.30 }}>
-                                                    <p style={{ fontWeight: 'bold' }}>Terms & Conditions</p>
-                                                    <p style={{ fontSize: '12px' }}>
-                                                      {
-                                                        row.terms
-                                                      }
-                                                    </p>
-                                                  </address>
-                                                </span>
-                                              </article>
-                                              <span className='footerinvoice'>
-                                                <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                                  <span><EmailIcon /></span>
-                                                  <span>Global@gmail.com</span>
-                                                </p>
-                                                <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                                  <span><PhoneIcon /></span>
-                                                  <span>+243 827 722 222</span>
-                                                </p>
-                                                <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                                  <span><WebIcon /></span>
-                                                  <span>www.GlobalGate.sarl</span>
-                                                </p>
-                                              </span>
-                                            </div>
-                                          )) : ''
-                                        }
-                                      </div>
-                                    </TabPanel>
-                                    <TabPanel value="3" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
-                                      <div >
-                                        {purchase?.map((row) => (
-                                          <div key={row._id}>
-
-                                            <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                              <div>
-                                                <Typography><span style={{ fontWeight: 'bold' }}>REFERENCE: </span>PUR-00{row.purchaseNumber}</Typography>
-                                              </div>
-                                              <div>
-                                                <Button
-                                                  aria-controls={open1 ? 'demo-customized-menu' : undefined}
-                                                  aria-haspopup="true"
-                                                  aria-expanded={open1 ? 'true' : undefined}
-                                                  variant="contained"
-                                                  disableElevation
-                                                  onClick={handleClick2}
-                                                  endIcon={<KeyboardArrowDownIcon />}
-                                                  sx={{
-                                                    bgcolor: 'gray', '&:hover': {
-                                                      color: 'gray',
-                                                      bgcolor: 'white',
-                                                      border: '1px solid gray',
-                                                    }
-                                                  }}
-                                                >
-                                                  More...
-                                                </Button>
-                                                <Menu
-                                                  id="demo-customized-menu"
-                                                  MenuListProps={{
-                                                    'aria-labelledby': 'demo-customized-button',
-                                                  }}
-                                                  anchorEl={anchorEl1}
-                                                  open={open1}
-                                                  onClose={handleCloseMenu2}
-                                                  TransitionComponent={Fade}
-                                                >
-                                                  <MenuItem onClick={handleCloseMenu2}>
-                                                    <span style={{ color: 'gray' }}>Purchase Reference</span>
-                                                  </MenuItem>
-                                                  <Divider />
-                                                  <MenuItem>
-                                                    <NavLink to={`/PurchaseFormUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
-                                                      <EditIcon />
-                                                      <Typography>Edit</Typography>
-                                                    </NavLink>
-                                                  </MenuItem>
-                                                  <MenuItem>
-                                                    <NavLink to={`/PurchasesViewAdminAll/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
-                                                      <Visibility />
-                                                      <Typography>View</Typography>
-                                                    </NavLink>
-                                                  </MenuItem>
-                                                  <MenuItem onClick={handleOpenPrint} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
-                                                    <LocalPrintshopIcon />
-                                                    <span>Print</span>
-                                                  </MenuItem>
-                                                  <MenuItem onClick={exportToExcel} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
-                                                    <Explicit />
-                                                    <span>Export to Excel</span>
-                                                  </MenuItem>
-                                                  <Divider />
-                                                  <MenuItem>
-                                                    {
-                                                      row.status === 'Draft' && (
-                                                        <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
-                                                          <span>Convert To Invoice</span>
-                                                        </NavLink>
-                                                      ) || row.status === 'Estimated' && (
-                                                        <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
-                                                          <span>Convert To Invoice</span>
-                                                        </NavLink>
-                                                      )
-                                                    }
-                                                    {
-                                                      row.status === 'Invoiced' && (
-                                                        <span style={{ color: 'gray' }} onClick={handleCloseMenu}> Already Converted</span>
-                                                      ) || row.status === 'Make' && (
-                                                        <span style={{ color: 'gray' }} onClick={handleCloseMenu}> Already Converted</span>
-                                                      )
-                                                    }
-                                                  </MenuItem>
-                                                </Menu>
-                                              </div>
-                                            </header>
-                                            <hr />
-                                            {/**  */}
-                                            <Box hidden >
-                                              <table ref={componentRef} className='invoicedetails' style={{ width: '100%' }}>
-                                                <thead>
-                                                  <tr>
-                                                    <th></th>
-                                                  </tr>
-                                                </thead>
-                                                <tbody>
-                                                  <tr>
-                                                    <th style={{ borderBottom: '1px solid black' }}>
-                                                      <div className='invoiceTest'>
-                                                        <span>
-                                                          <img src={Image} />
-                                                        </span>
-                                                        <address style={{ textAlign: 'right', fontSize: '70%', marginTop: '10px' }}>
-                                                          <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                                          <p style={{ fontWeight: 'normal' }}>RCM CD/KWZ/RCCM/22-B-00317 <br />
-                                                            ID NAT 14-H5300N11179P <br />
-                                                            AVENUE SALONGO Q/INDUSTRIEL C/MANIKA <br />
-                                                            KOLWEZI LUALABA <br />
-                                                            DR CONGO </p>
-                                                        </address>
-                                                      </div>
-                                                    </th>
-                                                  </tr>
-                                                </tbody>
-                                                <tbody>
-                                                  <tr>
-                                                    <td>
-                                                      <div>
-                                                        <p className='invoicehr'>Purchase</p>
-                                                        <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
-                                                          <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                            <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                              <span style={{ fontWeight: 'bold' }}>{row.projectName.projectName.toUpperCase()}</span>
-                                                            </address>
-                                                            <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
-                                                              <tbody>
-                                                                <tr>
-                                                                  <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Pur #</span></th>
-                                                                  <td style={{ backgroundColor: 'white', border: 'none' }}><span >PUR-00{row.purchaseNumber}</span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                  <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
-                                                                  <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</span></td>
-                                                                </tr>
-                                                              </tbody>
-                                                            </table>
-                                                          </section>
-                                                          <section style={{}}>
-                                                            <table className="secondTable" style={{ fontSize: '70%' }}>
-                                                              <thead>
-                                                                <tr>
-                                                                  <th style={{ width: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>N</th>
-                                                                  <th style={{ width: '250px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Unit Price</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Need</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Buy</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Buy</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">I-Out</th>
-                                                                  <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Cost</th>
-                                                                </tr>
-                                                              </thead>
-                                                              <tbody>
-                                                                {row.items?.map((Item, i) => {
-                                                                  const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
-                                                                  return (
-                                                                    <Row3 key={i} row={Item} index={i} relatedUnit={relatedUnit} />
-                                                                  )
-                                                                })}
-                                                              </tbody>
-                                                              <tbody>
-                                                                <tr>
-                                                                  <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>
-                                                                  <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.purchaseAmount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                  <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.purchaseAmount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                  <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalGeneralOutCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                </tr>
-                                                                {Object.keys(expenses)?.map((Item, i) => (
-                                                                  <Row key={Item} row={Item} index={i} />
-                                                                ))}
-                                                                <tr>
-                                                                  <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">SubTotal 2</td>
-                                                                  <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                </tr>
-
-                                                                <Row2 />
-
-                                                                <tr>
-                                                                  <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">Total Generale</td>
-                                                                  <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{parseFloat(totalAmount + totalGeneralOutCost + totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                </tr>
-                                                              </tbody>
-                                                            </table>
-                                                            <address style={{ float: 'left', fontSize: '70%', textAlign: 'left' }}>
-                                                              <p style={{ lineHeight: '14px', fontWeight: 'bold' }}>
-                                                                Bank: SOFIBANQUE SA <br />
-                                                                Entitled: GLOBAL GATE SARL<br />
-                                                                Bank Account: 00023233330214247020073<br />
-                                                                Code Swift: SFBXCDKIXXX
-                                                              </p>
-                                                              <p style={{ fontWeight: 'bold' }}>Terms & Conditions </p>
-                                                              <p>     ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL.</p>
-                                                            </address>
-                                                          </section>
-                                                        </div>
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                </tbody>
-                                                <tfoot>
-                                                  <tr>
-                                                    <td>
-                                                      <div style={{ position: 'relative', marginTop: '20px' }}>
-                                                        <p hidden>...</p>
-                                                        <p hidden>...</p>
-                                                        <br />
-                                                        <section style={{ position: 'fixed', bottom: 0, left: 0, right: 0, justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                                          <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                            <span><EmailIcon /></span>
-                                                            <span>contact@globalgate.sarl</span>
-                                                          </p>
-                                                          <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                            <span><PhoneIcon /></span>
-                                                            <span>+243 827 722 222</span>
-                                                          </p>
-                                                          <p style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                                                            <span><WebIcon /></span>
-                                                            <span>www.GlobalGate.sarl</span>
-                                                          </p>
-                                                        </section>
-
-                                                      </div>
-                                                    </td>
-                                                  </tr>
-                                                </tfoot>
-                                              </table>
-                                            </Box>
-                                            <Box sx={{ padding: '20px' }}>
-                                              <div>
-                                                <header className='invoiceTest'>
-                                                  <div>
-                                                    <img src={Image} style={{ width: '500px', height: '100px' }} />
-                                                  </div>
-                                                  <address style={{ textAlign: 'right' }}>
-                                                    <p style={{ fontWeight: 'bold' }}>GLOBAL GATE SARL </p>
-                                                    <p>RCM CD/KWZ/RCCM/22-B-00317 </p>
-                                                    <p> ID NAT 14-H5300N11179P </p>
-                                                    <p> AVENUE SALONGO Q/INDUSTRIEL C/MANIKA </p>
-                                                    <p>  KOLWEZI LUALABA </p>
-                                                    <p>   DR CONGO </p>
-                                                  </address>
-                                                </header>
-                                                <hr /><p className='invoicehr'>Purchase</p>
-                                                <article>
-                                                  <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
-                                                    <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                      <span style={{ fontWeight: 'bold' }}>{row.projectName.projectName.toUpperCase()}</span>
-                                                    </address>
-                                                    <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
-                                                      <tbody>
-                                                        <tr>
-                                                          <th colSpan={2} style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}>
-                                                            {
-                                                              newAllOutReturn && newAllOutReturn.length > 0 && (
-                                                                <button onClick={handleSynced} className='btnCustomer'>sync</button>
-                                                              )
-                                                            }
-                                                          </th>
-                                                          <th colSpan={2} style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}>
-                                                            {allItemPurchase && allItemPurchase.length > 0 && (
-                                                              <button onClick={updateForItemBuy} className='btnCustomer'>IPU</button>
-                                                            )}
-                                                          </th>
-                                                        </tr>
-                                                        <tr>
-                                                          <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Pur #</span></th>
-                                                          <td style={{ backgroundColor: 'white', border: 'none' }}><span >PUR-00{row.purchaseNumber}</span></td>
-                                                        </tr>
-                                                        <tr>
-                                                          <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
-                                                          <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</span></td>
-                                                        </tr>
-                                                      </tbody>
-                                                    </table>
-                                                  </section>
-                                                  <table className="secondTable" style={{ fontSize: '100%' }}>
-                                                    <thead>
-                                                      <tr>
-                                                        <td colSpan={9} style={{ border: '1px solid #DDD', textAlign: 'center' }} >Items</td>
-                                                      </tr>
-                                                      <tr>
-                                                        <th style={{ width: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>N</th>
-                                                        <th style={{ width: '300px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Unit Price</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Need</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Buy</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Buy</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">I-Out</th>
-                                                        <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Cost</th>
-                                                      </tr>
-                                                    </thead>
-
-                                                    <tbody>
-                                                      {row.items?.map((Item, i) => {
-                                                        const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
-                                                        return (
-                                                          <Row3 key={i} row={Item} index={i} relatedUnit={relatedUnit} />
-                                                        )
-                                                      })}
-                                                    </tbody>
-                                                    <tbody>
-                                                      <tr>
-                                                        <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>
-                                                        <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.purchaseAmount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                        <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.purchaseAmount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                        <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalGeneralOutCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                      </tr>
-                                                      {Object.keys(expenses)?.map((Item, i) => (
-                                                        <Row key={Item} row={Item} index={i} />
-                                                      ))}
-                                                      <tr>
-                                                        <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">SubTotal 2</td>
-                                                        <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                      </tr>
-                                                      {
-                                                        user.data.role === 'CEO' ?
-                                                          <Row2 /> : <tr></tr>
-                                                      }
-                                                      <tr>
-                                                        <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">Total Generale</td>
-                                                        <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{parseFloat(totalAmount + totalGeneralOutCost + totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                      </tr>
-                                                    </tbody>
-                                                  </table>
-                                                </article>
-                                                <div className='footerinvoice'>
-                                                  <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                                    <span><EmailIcon /></span>
-                                                    <span>Global@gmail.com</span>
-                                                  </p>
-                                                  <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                                    <span><PhoneIcon /></span>
-                                                    <span>+243 827 722 222</span>
-                                                  </p>
-                                                  <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-                                                    <span><WebIcon /></span>
-                                                    <span>www.GlobalGate.sarl</span>
-                                                  </p>
-                                                </div>
-                                              </div>
-                                            </Box>
-                                            {/** */}
-                                            {/* Purchase View Create End */}
-                                          </div>
-                                        ))}
-                                      </div>
-                                    </TabPanel>
-                                  </TabContext>
-                                </Box>
-                              </div>
-                            ))}
-
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <div>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}> {'P-' + String(row.projectNumber).padStart(6, '0')} | {row.projectName}</Typography>
+                        </div>
+                        <div>
+                          <Button
+                            aria-controls={open ? 'demo-customized-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            variant="contained"
+                            disableElevation
+                            onClick={handleClick}
+                            endIcon={<KeyboardArrowDownIcon />}
+                            sx={{
+                              bgcolor: 'gray', '&:hover': {
+                                color: 'gray',
+                                bgcolor: 'white',
+                                border: '1px solid gray',
+                              }
+                            }}
+                          >
+                            Options
+                          </Button>
+                          <Menu
+                            id="demo-customized-menu"
+                            MenuListProps={{
+                              'aria-labelledby': 'demo-customized-button',
+                            }}
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleCloseMenu}
+                            TransitionComponent={Fade}
+                          >
+                            <MenuItem>
+                              <NavLink to={`/ProjectUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                <EditIcon />
+                                <Typography>Edit</Typography>
+                              </NavLink>
+                            </MenuItem>
+                            <Divider />
+                            <MenuItem onClick={() => handleShow1(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
+                            <MenuItem onClick={() => handleShow1(3)}> <span style={{ color: 'gray' }}>History</span></MenuItem>
+                          </Menu>
                         </div>
                       </div>
-                    </Grid>
-                    {show1 === 2 ?
-                      <Grid item xs={3}>
-                        <div className='itemInfoContainer'>
-                          <div style={{ padding: '10px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                              <p>COMMENTS</p>
-                              <ViewTooltip title="Close" placement='left'>
-                                <IconButton onClick={() => handleShow1(1)} style={{ position: 'relative', float: 'right' }}>
-                                  <Close style={{ color: '#202a5a' }} />
-                                </IconButton>
-                              </ViewTooltip>
-                            </div>
-                            <form onSubmit={handleSubmitEdit}>
-                              <Grid container style={{ alignItems: 'center' }} spacing={1}>
+                      <Box sx={{ width: '100%' }}>
+                        <TabContext
+                          value={value3}
+                        >
+                          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                            <TabList onChange={handleChange3}
+                              aria-label="lab API tabs example"
+                              sx={{
+                                '& .MuiTabs-indicator': {
+                                  backgroundColor: 'white',
+                                  height: '0px'
+                                }
+                              }}
+                            >
+                              <Tab
+                                label="Overview"
+                                value="1"
+                                sx={{
+                                  '&.Mui-selected': {
+                                    color: 'white',
+                                    backgroundColor: 'gray',
+                                    borderRadius: '10px'
+                                  }, '&:hover': {
+                                    color: 'gray',
+                                    bgcolor: 'white',
+                                    border: '1px solid gray',
+                                    borderRadius: '10px'
+                                  }
+                                }}
+                              />
+                              <Tab
+                                label="Invoice"
+                                value="2"
+                                sx={{
+                                  '&.Mui-selected': {
+                                    color: 'white',
+                                    backgroundColor: 'gray',
+                                    borderRadius: '10px'
+                                  },
+                                  '&:hover': {
+                                    color: 'gray',
+                                    bgcolor: 'white',
+                                    border: '1px solid gray',
+                                    borderRadius: '10px'
+                                  }
+                                }}
+                              />
+                              <Tab
+                                label="Purchase"
+                                value="3"
+                                sx={{
+                                  '&.Mui-selected': {
+                                    color: 'white',
+                                    backgroundColor: 'gray',
+                                    borderRadius: '10px'
+                                  },
+                                  '&:hover': {
+                                    color: 'gray',
+                                    bgcolor: 'white',
+                                    border: '1px solid gray',
+                                    borderRadius: '10px'
+                                  }
+                                }}
+                              />
+                              <Tab
+                                label="Advances"
+                                value="4"
+                                sx={{
+                                  '&.Mui-selected': {
+                                    color: 'white',
+                                    backgroundColor: 'gray',
+                                    borderRadius: '10px'
+                                  },
+                                  '&:hover': {
+                                    color: 'gray',
+                                    bgcolor: 'white',
+                                    border: '1px solid gray',
+                                    borderRadius: '10px'
+                                  }
+                                }}
+                              />
+                            </TabList>
+                          </Box>
+                          <TabPanel value="1" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                            {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
+                            <div>
+                              <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+
                                 <Grid item xs={12}>
-                                  <TextField
-                                    required
-                                    id='comments'
-                                    name='comments'
-                                    multiline
-                                    rows={4}
-                                    value={reason}
-                                    onChange={(e) => setReason(e.target.value.toUpperCase())}
-                                    label='Comments'
-                                    sx={{ width: '100%', backgroundColor: 'white' }}
-                                  />
+                                  <Card>
+                                    <CardContent sx={{ textAlign: 'center' }}>
+                                      <Typography sx={{ fontSize: '20px' }}>{row.projectName}</Typography>
+                                    </CardContent>
+                                    <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
+                                      <table style={{ fontSize: '20px' }}>
+                                        <tbody>
+                                          <tr>
+                                            <th align='left'>Visit Date</th>
+                                            <td>{dayjs(row.visitDate).format('DD/MM/YYYY')}</td>
+                                          </tr>
+                                          <tr>
+                                            <th align='left'>Start Date</th>
+                                            <td>{dayjs(row.startDate).format('DD/MM/YYYY')}</td>
+                                          </tr>
+                                        </tbody>
+                                        <tbody>
+                                          <tr>
+                                            <th align='left'>Project Number</th>
+                                            <td>P-{String(row.projectNumber).padStart(6, '0')}</td>
+                                          </tr>
+                                          <tr>
+                                            <th align='left'>Status</th>
+                                            <td><Typography
+                                              color={
+                                                row.status === "Pending"
+                                                  ? "gray" : row.status === "On-Going"
+                                                    ? "blue" :
+                                                    row.status === "Stopped"
+                                                      ? "red" :
+                                                      row.status === "Pending"
+                                                        ? "Orange" :
+                                                        row.status === "Completed"
+                                                          ? "green" : "black"
+                                              }
+                                            >
+                                              {row.status}
+                                            </Typography></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <Card sx={{ width: '450px', minHeight: '190px' }}>
+
+                                        <CardContent style={{ position: 'relative', justifyContent: 'center', top: '20px' }}>
+                                          <table style={{ width: '100%', color: 'gray', fontSize: '20px' }}>
+                                            <tbody>
+                                              <tr>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Budget</th>
+                                                <td ><span data-prefix>$</span><span >{parseFloat(row.budget || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Material Expense</th>
+                                                <td ><span data-prefix>$</span><span >{parseFloat(totalGeneralOutCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Labour Expense</th>
+                                                <td ><span data-prefix>$</span><span >{parseFloat(totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Overhead Expense</th>
+                                                <td ><span data-prefix>$</span><span >{parseFloat(totalAmount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                              <tr style={{ borderBottom: '1px solid black' }}>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Total Expense</th>
+                                                <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(totalAmount + totalGeneralOutCost + totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                              {
+                                                invoice && invoice.length > 0 ?
+                                                  invoice.map((row1) => (
+                                                    <tr key={row1._id}>
+                                                      <th style={{ textAlign: 'left', width: '200px' }}>Invoiced Profit ({row1.invoiceNumber})</th>
+                                                      <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(row1.totalInvoice - (totalAmount + totalGeneralOutCost + totalAmountPlaning)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                    </tr>
+                                                  )) : ''
+                                              }
+                                              <tr style={{ borderBottom: '1px solid black' }}>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Advances Received</th>
+                                                <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(totalAdvances).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                              <tr style={{ borderBottom: '1px solid black' }}>
+                                                <th style={{ textAlign: 'left', width: '200px' }}>Balance Remaining</th>
+                                                <td ><span data-prefix>$</span><span className='InvoiceTotal '>{parseFloat(row.budget !== undefined ? row.budget - (totalAmount + totalGeneralOutCost + totalAmountPlaning) : 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </CardContent>
+                                      </Card>
+                                    </CardContent>
+                                    <CardContent>
+                                      <table style={{ fontSize: '20px' }}>
+                                        <tbody>
+                                          <tr>
+                                            <th style={{ textAlign: 'left', width: '200px' }}>Customer Name</th>
+                                            <td style={{ textAlign: 'left' }}>{row.customerName.customerName}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </CardContent>
+                                    <CardContent>
+                                      <table style={{ fontSize: '20px' }}>
+                                        <tbody>
+                                          <tr>
+                                            <th style={{ textAlign: 'left', width: '200px' }}>Description</th>
+                                            <td style={{ textAlign: 'left' }}>{row.description}</td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </CardContent>
+                                  </Card>
                                 </Grid>
-                                <Grid item xs={12}>
-                                  <button type='submit' style={{ width: '100%' }} className='btnCustomer6'>Save</button>
-                                </Grid>
+
                               </Grid>
+                            </div>
+                          </TabPanel>
+                          <TabPanel value="2" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                            {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
+                            <div>
+                              {invoice ?
+                                invoice.map((row) => (
+                                  <div key={row._id} className='invoicedetails'>
 
-                            </form>
-                            <hr />
-                          </div>
-                          <div style={{ height: '355px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
-                            <div style={{ padding: '10px' }}>
-                              <table style={{ width: '100%' }}>
-                                <tbody>
-                                  {Comments1.map((Item) => (
-                                    <tr key={Item._id}>
-                                      <td style={{ width: '100%', borderBottom: '1px solid black' }}>
-                                        {Item.dateComment ? dayjs(Item.dateComment).format('DD/MM') : ''} {Item.CommentInfo.person + ': ' + Item.CommentInfo.reason}
-                                      </td>
-                                    </tr>
-                                  ))}
-                                </tbody>
-                              </table>
-                            </div>
-                          </div>
-                        </div>
-                      </Grid> : ""}
-                    {show1 === 3 ?
-                      <Grid item xs={3}>
-                        <div className='itemInfoContainer'>
-                          <div style={{ padding: '20px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
-                              <p>HISTORY</p>
-                              <ViewTooltip title="Close" placement='bottom'>
-                                <IconButton onClick={() => handleShow1(1)} style={{ position: 'relative', float: 'right' }}>
-                                  <Close style={{ color: '#202a5a' }} />
-                                </IconButton>
-                              </ViewTooltip>
-                            </div>
-                            <br />
+                                    <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                    <hr /><p className='invoicehr'>Invoice</p>
+                                    <article>
+                                      <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
+                                        <address style={{ lineHeight: 1.35, width: '60%' }}>
+                                          <p >Bill To<br />
+                                            <span style={{ fontWeight: 'bold' }}>{row.customerName.customerName}</span>
+                                            <br />
+                                            {row.customerName.billingAddress},{row.customerName.billingCity}
+                                          </p>
+                                        </address>
 
-                          </div>
-                          <div style={{ height: '510px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
-                            <div style={{ padding: '10px' }}>
-                              {
-                                project.filter((row) => row._id === id)
-                                  .map((row) => (
-                                    <p key={row._id}>{row.Create ? (
-                                      <span>{row.Create.dateComment} {row.Create.person} {row.Create.projectName}</span>
-                                    ) : ''}</p>
-                                  ))
-                              }
-                              {
-                                notification.map((row) => (
-                                  <p key={row._id}>
-                                    <span>{row.person + ' on ' + dayjs(row.dateNotification).format('DD/MMMM')}: {row.reason}</span>
-                                  </p>
-                                ))
+                                        <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
+                                          <tbody>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Invoice #</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none' }}><span >INV-{String(row.invoiceNumber).padStart(6, '0')}</span></td>
+                                            </tr>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.invoiceDate).format('DD/MM/YYYY')}</span></td>
+                                            </tr>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Subject</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.invoiceSubject}</span></td>
+                                            </tr>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Defect</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none' }}><span>{row.invoiceDefect}</span></td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </section>
+
+                                      <table className="secondTable" style={{ fontSize: '80%' }}>
+                                        <thead>
+                                          <tr>
+                                            <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
+                                            <th style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Item</th>
+                                            <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Description</th>
+                                            <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Quantity</th>
+                                            <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Rate</th>
+                                            <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Discount</th>
+                                            <th style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Total</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody>
+                                          {row.items?.map((Item, i) => {
+                                            if (Item.newDescription !== undefined) {
+                                              return (
+                                                <tr key={Item.idRow}>
+                                                  <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
+                                                  <td colSpan={6} style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{Item.newDescription}</span></td>
+                                                </tr>
+                                              )
+                                            }
+                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                            return (
+                                              <tr key={Item.idRow}>
+                                                <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
+                                                <td style={{ padding: '10px', border: '1px solid #DDD' }}><span>{Item.itemName.itemName}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'left', border: '1px solid #DDD' }}><span>{Item.itemDescription}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemAmount}</span></td>
+                                              </tr>
+                                            )
+                                          })}
+                                        </tbody>
+                                      </table>
+                                      <span style={{ float: 'left' }}>
+                                        <p>{row.note}</p>
+                                      </span>
+                                      <table className="firstTable" style={{ fontSize: '80%' }}>
+                                        <tbody>
+                                          <tr style={{ borderBottom: '1px solid black' }}>
+                                            <th style={{ textAlign: 'center' }}>
+                                              <span> Sub Total</span>
+                                              {row.CheckTvA ? '' : <><br /><span className='txt1'>(Tax Inclusive)</span></>}
+                                            </th>
+                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                          </tr>
+                                          {
+                                            row.shipping ?
+                                              (
+                                                <tr style={{ borderBottom: '1px solid black' }}>
+                                                  <th style={{ textAlign: 'center' }}><span>Shipping</span></th>
+                                                  <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{row.shipping.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                </tr>
+                                              )
+                                              : ''
+                                          }
+                                          {
+                                            row.adjustmentNumber ?
+                                              (
+                                                <tr style={{ borderBottom: '1px solid black' }}>
+                                                  <th style={{ textAlign: 'center' }}>{row.adjustment}</th>
+                                                  <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                </tr>
+                                              )
+                                              : ''
+                                          }
+                                          <tr style={{ borderBottom: '1px solid black' }}>
+                                            <th style={{ textAlign: 'center' }}><span >Total</span></th>
+                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{row.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                          </tr>
+                                          {
+                                            row.total ? (
+                                              <tr style={{ borderBottom: '1px solid black' }}>
+                                                <th style={{ textAlign: 'center' }}><span >Amount Paid</span></th>
+                                                <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{row.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              </tr>
+                                            ) : ''
+                                          }
+                                          <tr style={{ borderBottom: '1px solid black' }}>
+                                            <th style={{ textAlign: 'center', color: '#2f81b7' }}><span >Balance Due</span></th>
+                                            <td style={{ textAlign: 'right', color: '#2f81b7' }}><span data-prefix>$</span><span>{row.balanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                          </tr>
+                                          <tr>
+                                            <th style={{ textAlign: 'center' }}><span >Total In Words</span></th>
+                                            <td style={{ textAlign: 'left' }}><span>{row.totalW}</span></td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                      <section style={{ float: 'left', marginTop: '50px' }}>
+                                        <table style={{ fontSize: '80%' }}>
+                                          <tbody>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Bank</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span >SOFIBANQUE SA</span></td>
+                                            </tr>
+                                          </tbody>
+                                          <tbody>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Entitled</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span >GLOBAL GATE SARL</span></td>
+                                            </tr>
+                                          </tbody>
+                                          <tbody>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span > Bank Account</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span >00023233330214247020073</span></td>
+                                            </tr>
+                                          </tbody>
+                                          <tbody>
+                                            <tr>
+                                              <th style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Code Swift</span></th>
+                                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold' }}><span>SFBXCDKIXXX</span></td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </section>
+                                      <span style={{ textAlign: 'left' }}>
+                                        <address style={{ lineHeight: 1.30 }}>
+                                          <p style={{ fontWeight: 'bold' }}>Terms & Conditions</p>
+                                          <p style={{ fontSize: '12px' }}>
+                                            {
+                                              row.terms
+                                            }
+                                          </p>
+                                        </address>
+                                      </span>
+                                    </article>
+                                    <span className='footerinvoice'>
+                                      <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                        <span><EmailIcon /></span>
+                                        <span>Global@gmail.com</span>
+                                      </p>
+                                      <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                        <span><PhoneIcon /></span>
+                                        <span>+243 827 722 222</span>
+                                      </p>
+                                      <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                        <span><WebIcon /></span>
+                                        <span>www.GlobalGate.sarl</span>
+                                      </p>
+                                    </span>
+                                  </div>
+                                )) : ''
                               }
                             </div>
-                          </div>
-                        </div>
-                      </Grid> : ""}
+                          </TabPanel>
+                          <TabPanel value="3" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                            {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
+                            <div >
+                              {purchaseInfo?.map((row) => (
+                                <div key={row._id}>
+
+                                  <header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <div>
+                                      <Typography><span style={{ fontWeight: 'bold' }}>REFERENCE: </span>PUR-{String(row.purchaseNumber).padStart(6, '0')}</Typography>
+                                    </div>
+                                    <div>
+                                      <Button
+                                        aria-controls={open1 ? 'demo-customized-menu' : undefined}
+                                        aria-haspopup="true"
+                                        aria-expanded={open1 ? 'true' : undefined}
+                                        variant="contained"
+                                        disableElevation
+                                        onClick={handleClick2}
+                                        endIcon={<KeyboardArrowDownIcon />}
+                                        sx={{
+                                          bgcolor: 'gray', '&:hover': {
+                                            color: 'gray',
+                                            bgcolor: 'white',
+                                            border: '1px solid gray',
+                                          }
+                                        }}
+                                      >
+                                        More...
+                                      </Button>
+                                      <Menu
+                                        id="demo-customized-menu"
+                                        MenuListProps={{
+                                          'aria-labelledby': 'demo-customized-button',
+                                        }}
+                                        anchorEl={anchorEl1}
+                                        open={open1}
+                                        onClose={handleCloseMenu2}
+                                        TransitionComponent={Fade}
+                                      >
+                                        <MenuItem onClick={handleCloseMenu2}>
+                                          <span style={{ color: 'gray' }}>Purchase Reference</span>
+                                        </MenuItem>
+                                        <Divider />
+                                        <MenuItem>
+                                          <NavLink to={`/PurchaseFormUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                            <EditIcon />
+                                            <Typography>Edit</Typography>
+                                          </NavLink>
+                                        </MenuItem>
+                                        <MenuItem>
+                                          <NavLink to={`/PurchasesViewAdminAll/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                            <Visibility />
+                                            <Typography>View</Typography>
+                                          </NavLink>
+                                        </MenuItem>
+                                        <MenuItem onClick={() => handleOpenPrint(row)} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
+                                          <LocalPrintshopIcon />
+                                          <span>Print</span>
+                                        </MenuItem>
+                                        <MenuItem onClick={exportToExcel} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
+                                          <Explicit />
+                                          <span>Export to Excel</span>
+                                        </MenuItem>
+                                        <Divider />
+                                        <MenuItem>
+                                          {
+                                            (row.status === 'Draft' || row.status === 'Estimated') && (
+                                              <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                <span>Convert To Invoice</span>
+                                              </NavLink>
+                                            )
+                                          }
+                                          {
+                                            (row.status === 'Invoiced' || row.status === 'Make') && (
+                                              <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                                <span>Convert To Invoice (Again)</span>
+                                              </NavLink>
+                                            )
+                                          }
+                                        </MenuItem>
+                                      </Menu>
+                                    </div>
+                                  </header>
+                                  <hr />
+                                  {/**  */}
+
+                                  <Box sx={{ padding: '20px' }}>
+                                    <div>
+                                      <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+                                      <hr /><p className='invoicehr'>Purchase</p>
+                                      <article>
+                                        <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
+                                          <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
+                                            <span style={{ fontWeight: 'bold' }}>{row.projectName.projectName.toUpperCase()}</span>
+                                          </address>
+                                          <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
+                                            <tbody>
+                                              <tr>
+                                                <th colSpan={2} style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}>
+                                                  {
+                                                    newAllOutReturn && newAllOutReturn.length > 0 && (
+                                                      <button onClick={handleSynced} className='btnCustomer'>sync</button>
+                                                    )
+                                                  }
+                                                </th>
+                                                <th colSpan={2} style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}>
+                                                  {allItemPurchase && allItemPurchase.length > 0 && (
+                                                    <button onClick={updateForItemBuy} className='btnCustomer'>IPU</button>
+                                                  )}
+                                                </th>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Pur #</span></th>
+                                                <td style={{ backgroundColor: 'white', border: 'none' }}><span >PUR-{String(row.purchaseNumber).padStart(6, '0')}</span></td>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
+                                                <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
+                                        </section>
+                                        <table className="secondTable" style={{ fontSize: '100%' }}>
+                                          <thead>
+                                            <tr>
+                                              <td colSpan={9} style={{ border: '1px solid #DDD', textAlign: 'center' }} >Items</td>
+                                            </tr>
+                                            <tr>
+                                              <th style={{ width: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>N</th>
+                                              <th style={{ width: '300px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Unit Price</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Need</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Buy</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Buy</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">I-Out</th>
+                                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Cost</th>
+                                            </tr>
+                                          </thead>
+
+                                          <tbody>
+                                            {row.items?.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Item.newDescription !== undefined).map((Item, i) => {
+                                              const relatedUnit = itemMap[Item.itemName?._id]
+                                              return (
+                                                <Row3 key={i} row={Item} index={i} relatedUnit={relatedUnit} />
+                                              )
+                                            })}
+                                          </tbody>
+                                          <tbody>
+                                            <tr>
+                                              <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>
+                                              <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.purchaseAmount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{row.purchaseAmount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                              <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalGeneralOutCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            </tr>
+                                            {Object.keys(expenses)?.map((Item, i) => (
+                                              <Row key={Item} row={Item} index={i} />
+                                            ))}
+                                            <tr>
+                                              <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">SubTotal 2</td>
+                                              <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            </tr>
+                                            {
+                                              user.data.role === 'CEO' ?
+                                                <Row2 /> : <tr></tr>
+                                            }
+                                            <tr>
+                                              <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">Total Generale</td>
+                                              <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{parseFloat(totalAmount + totalGeneralOutCost + totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            </tr>
+                                          </tbody>
+                                        </table>
+                                      </article>
+                                      <div className='footerinvoice'>
+                                        <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                          <span><EmailIcon /></span>
+                                          <span>Global@gmail.com</span>
+                                        </p>
+                                        <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                          <span><PhoneIcon /></span>
+                                          <span>+243 827 722 222</span>
+                                        </p>
+                                        <p style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
+                                          <span><WebIcon /></span>
+                                          <span>www.GlobalGate.sarl</span>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </Box>
+                                  {/** */}
+                                  {/* Purchase View Create End */}
+                                </div>
+                              ))}
+                            </div>
+                          </TabPanel>
+                          <TabPanel value="4" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                            {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
+                            <div style={{ padding: '20px', backgroundColor: 'white' }}>
+                              <Typography variant="h6" gutterBottom>Project Advances / Payments</Typography>
+                              <TableContainer component={Paper}>
+                                <Table>
+                                  <TableHead>
+                                    <TableRow sx={{ backgroundColor: '#e8f7fe' }}>
+                                      <TableCell>Date</TableCell>
+                                      <TableCell>PAY #</TableCell>
+                                      <TableCell>Mode</TableCell>
+                                      <TableCell align="right">Amount</TableCell>
+                                      <TableCell>Status</TableCell>
+                                      <TableCell>Description</TableCell>
+                                      <TableCell>Action</TableCell>
+                                    </TableRow>
+                                  </TableHead>
+                                  <TableBody>
+                                    {advances.map((pay) => (
+                                      <TableRow key={pay._id}>
+                                        <TableCell>{dayjs(pay.paymentDate).format('DD/MM/YYYY')}</TableCell>
+                                        <TableCell>PAY-{String(pay.paymentNumber).padStart(6, '0')}</TableCell>
+                                        <TableCell>{pay.modes}</TableCell>
+                                        <TableCell align="right">${pay.TotalAmount?.find(i => i.id === id)?.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                        <TableCell>{pay.status || 'Cleared'}</TableCell>
+                                        <TableCell>{pay.description}</TableCell>
+                                        <TableCell>
+                                          <NavLink to={`/PaymentInformationView/${pay._id}`} className='LinkName'>
+                                            View
+                                          </NavLink>
+                                        </TableCell>
+                                      </TableRow>
+                                    ))}
+                                    {advances.length === 0 && (
+                                      <TableRow>
+                                        <TableCell colSpan={7} align="center">No advances found for this project.</TableCell>
+                                      </TableRow>
+                                    )}
+                                    <TableRow sx={{ fontWeight: 'bold', backgroundColor: '#f5f5f5' }}>
+                                      <TableCell colSpan={3} align="right">Total Advances:</TableCell>
+                                      <TableCell align="right">${totalAdvances.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                      <TableCell colSpan={3}></TableCell>
+                                    </TableRow>
+                                  </TableBody>
+                                </Table>
+                              </TableContainer>
+                            </div>
+                          </TabPanel>
+                        </TabContext>
+                      </Box>
+                    </div>
+                  ))}
+
+              </div>
+            )}
+          </div>
+        </div>
+      </Grid>
+      {
+        show1 === 2 ?
+          <Grid item xs={3}>
+            <div className='itemInfoContainer'>
+              <div style={{ padding: '10px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <p>COMMENTS</p>
+                  <ViewTooltip title="Close" placement='left'>
+                    <IconButton onClick={() => handleShow1(1)} style={{ position: 'relative', float: 'right' }}>
+                      <Close style={{ color: '#202a5a' }} />
+                    </IconButton>
+                  </ViewTooltip>
+                </div>
+                <form onSubmit={handleSubmitEdit}>
+                  <Grid container style={{ alignItems: 'center' }} spacing={1}>
+                    <Grid item xs={12}>
+                      <TextField
+                        required
+                        id='comments'
+                        name='comments'
+                        multiline
+                        rows={4}
+                        value={reason}
+                        onChange={(e) => setReason(e.target.value.toUpperCase())}
+                        label='Comments'
+                        sx={{ width: '100%', backgroundColor: 'white' }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <button type='submit' style={{ width: '100%' }} className='btnCustomer6'>Save</button>
+                    </Grid>
                   </Grid>
-                </div>)}</Container>
-        </Box>
-      </Box>
+
+                </form>
+                <hr />
+              </div>
+              <div style={{ height: '355px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                <div style={{ padding: '10px' }}>
+                  <table style={{ width: '100%' }}>
+                    <tbody>
+                      {Comments1.map((Item) => (
+                        <tr key={Item._id}>
+                          <td style={{ width: '100%', borderBottom: '1px solid black' }}>
+                            {Item.dateComment ? dayjs(Item.dateComment).format('DD/MM') : ''} {Item.CommentInfo.person + ': ' + Item.CommentInfo.reason}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </Grid> : ""
+      }
+      {
+        show1 === 3 ?
+          <Grid item xs={3}>
+            <div className='itemInfoContainer'>
+              <div style={{ padding: '20px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
+                  <p>HISTORY</p>
+                  <ViewTooltip title="Close" placement='bottom'>
+                    <IconButton onClick={() => handleShow1(1)} style={{ position: 'relative', float: 'right' }}>
+                      <Close style={{ color: '#202a5a' }} />
+                    </IconButton>
+                  </ViewTooltip>
+                </div>
+                <br />
+
+              </div>
+              <div style={{ height: '510px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                <div style={{ padding: '10px' }}>
+                  {
+                    project.filter((row) => row._id === id)
+                      .map((row) => (
+                        <p key={row._id}>{row.Create ? (
+                          <span>{row.Create.dateComment} {row.Create.person} {row.Create.projectName}</span>
+                        ) : ''}</p>
+                      ))
+                  }
+                  {
+                    notification.map((row) => (
+                      <p key={row._id}>
+                        <span>{row.person + ' on ' + dayjs(row.dateNotification).format('DD/MMMM')}: {row.reason}</span>
+                      </p>
+                    ))
+                  }
+                </div>
+              </div>
+            </div>
+          </Grid> : ""
+      }
       <Modal
         open={loadingOpenModal}
         onClose={handleClose}
@@ -2316,7 +2098,127 @@ function ProjectViewInformation() {
           )}
         </Box>
       </Modal>
-    </div>
+
+      <div style={{ display: 'none' }}>
+        {printData && (
+          <table ref={componentRef} className='invoicedetails' style={{ width: '100%' }}>
+            <thead>
+              <tr>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th style={{ borderBottom: '1px solid black' }}>
+                  <div className='invoiceTest'>
+                    <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
+                  </div>
+                </th>
+              </tr>
+            </tbody>
+            <tbody>
+              <tr>
+                <td>
+                  <div>
+                    <p className='invoicehr'>Purchase</p>
+                    <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
+                      <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                        <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
+                          <span style={{ fontWeight: 'bold' }}>{printData.projectName?.projectName?.toUpperCase()}</span>
+                        </address>
+                        <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
+                          <tbody>
+                            <tr>
+                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Pur #</span></th>
+                              <td style={{ backgroundColor: 'white', border: 'none' }}><span >PUR-{String(printData.purchaseNumber).padStart(6, '0')}</span></td>
+                            </tr>
+                            <tr>
+                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
+                              <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(printData.purchaseDate).format('DD/MM/YYYY')}</span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </section>
+                      <section style={{}}>
+                        <table className="secondTable" style={{ fontSize: '70%' }}>
+                          <thead>
+                            <tr>
+                              <th style={{ width: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>N</th>
+                              <th style={{ width: '250px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Item</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Qty</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Unit Price</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Need</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Buy</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Buy</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">I-Out</th>
+                              <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Total-Cost</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {printData.items?.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0).map((Item, i) => {
+                              const relatedUnit = itemMap[Item.itemName?._id]
+                              return (
+                                <Row3 key={i} row={Item} index={i} relatedUnit={relatedUnit} />
+                              )
+                            })}
+                          </tbody>
+                          <tbody>
+                            <tr>
+                              <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>
+                              <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(printData.purchaseAmount1 || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(printData.purchaseAmount2 || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalGeneralOutCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            </tr>
+                            {Object.keys(expenses)?.map((Item, i) => (
+                              <Row key={Item} row={Item} index={i} />
+                            ))}
+                            <tr>
+                              <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">SubTotal 2</td>
+                              <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            </tr>
+
+                            <Row2 />
+
+                            <tr>
+                              <td colSpan={5} style={{ border: '1px solid #DDD' }} align="left">Total Generale</td>
+                              <td colSpan={4} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{parseFloat(totalAmount + totalGeneralOutCost + totalAmountPlaning).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <address style={{ float: 'left', fontSize: '70%', textAlign: 'left' }}>
+                          <p style={{ lineHeight: '14px', fontWeight: 'bold' }}>
+                            Bank: SOFIBANQUE SA <br />
+                            Entitled: GLOBAL GATE SARL<br />
+                            Bank Account: 00023233330214247020073<br />
+                            Code Swift: SFBXCDKIXXX
+                          </p>
+                          <p style={{ fontWeight: 'bold' }}>Terms & Conditions </p>
+                          <p>     ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL.</p>
+                        </address>
+                      </section>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>
+                  <div style={{ position: 'relative', marginTop: '20px' }}>
+                    <p hidden>...</p>
+                    <p hidden>...</p>
+                    <br />
+                    <PrintFooter branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
+
+                  </div>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        )}
+      </div>
+
+    </Grid >
   )
 }
 

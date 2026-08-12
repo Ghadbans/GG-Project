@@ -43,7 +43,7 @@ function SidebarDash1() {
         <ListItemIcon sx={{ color: 'gray' }} >
           <RequestQuoteIcon />
         </ListItemIcon>
-        <ListItemText primary="Estimation" />
+        <ListItemText primary="Quotation" />
       </ListItemButton>
       <ListItemButton sx={{ color: 'gray' }} >
         <ListItemIcon sx={{ color: 'gray' }} >
@@ -87,7 +87,6 @@ function SidebarDash1() {
         </ListItemIcon>
         <ListItemText primary="More" />
       </ListItemButton>
-      <Outlet></Outlet>
     </>
   )
 }

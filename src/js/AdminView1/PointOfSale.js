@@ -23,18 +23,19 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { ENDPOINT_URL } from '../apiConfig';
 import { Close } from '@mui/icons-material';
 import { Add, MailOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import Logout from '@mui/icons-material/Logout';
+import Logout from '../component/NetworkLogoutIcon';
 import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import db from '../dexieDb';
+
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -133,20 +134,13 @@ function PointOfSale() {
     const storesUserId = localStorage.getItem('user');
     const fetchUser = async () => {
       if (storesUserId) {
-        if (navigator.onLine) {
-          try {
-            const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/get-employeeuser/${storesUserId}`)
-            const Name = res.data.data.employeeName;
-            const Role = res.data.data.role;
-            dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          const resLocalInfo = await db.employeeUserSchema.get({ _id: storesUserId })
-          const Name = resLocalInfo.employeeName;
-          const Role = resLocalInfo.role;
-          dispatch(setUser({ userName: Name, role: Role, id: resLocalInfo._id }));
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
+          const Name = res.data.data.employeeName;
+          const Role = res.data.data.role;
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
+        } catch (error) {
+          console.error('Error fetching data:', error);
         }
       } else {
         navigate('/');
@@ -158,17 +152,12 @@ function PointOfSale() {
   const [grantAccess, setGrantAccess] = useState([]);
   useEffect(() => {
     const fetchNumber = async () => {
-      if (navigator.onLine) {
-        try {
-          const res = await axios.get('https://gg-project-production.up.railway.app/endpoint/grantAccess');
-          res.data.data.filter((row) => row.userID === user.data.id)
-            .map((row) => setGrantAccess(row.modules))
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      } else {
-        const offLineCustomer1 = await db.grantAccessSchema.toArray();
-        setGrantAccess(offLineCustomer1);
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        res.data?.data?.filter((row) => row.userID === user.data.id)
+          .map((row) => setGrantAccess(row.modules))
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
     }
     fetchNumber()
@@ -220,62 +209,27 @@ function PointOfSale() {
   const [loadingData, setLoadingData] = useState(true);
   const [rate, setRate] = useState(0);
 
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/item';
+  const apiUrl = `${ENDPOINT_URL}/item`;
 
   useEffect(() => {
-    const fetchRate = async () => {
+    const fetchItem = async () => {
       try {
-        if (navigator.onLine) {
-          const resRate = await axios.get('https://gg-project-production.up.railway.app/endpoint/rate');
-          resRate.data.data.forEach((row) => setRate(row.rate));
-        } else {
-          const offLineRate = await db.rateSchema.toArray();
-          offLineRate.forEach((row) => setRate(row.rate));
-        }
-      } catch (error) {
-        console.error('Error fetching rate:', error);
-      }
-    };
-    fetchRate();
-  }, []);
-
-  const fetchItems = async (page, searchTerm) => {
-    setLoadingData(true);
-    if (navigator.onLine) {
-      try {
-        const res = await axios.get(`https://gg-project-production.up.railway.app/endpoint/item-shop?page=${page}&limit=30&search=${encodeURIComponent(searchTerm.trim())}`);
-        setTotalPages(res.data.totalPages);
-        SetItems(res.data.items); // Server already filters for "Goods" and sorts by newest
-        setLoadingData(false);
+        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+        resRate.data.data.map((row) => setRate(row.rate))
+        const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${page}&limit=60&search=${encodeURIComponent(debouncedSearch)}`)
+        setTotalPages(res.data.totalPages)
+        SetItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+        setLoadingData(false)
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData(false);
+        setLoadingData(false)
       }
-    } else {
-      const offLineItems = await db.itemSchema.toArray();
-      const lowerSearch = searchTerm.toLowerCase().trim();
-      const filteredItems = lowerSearch !== ''
-        ? offLineItems.filter((row) =>
-          row.typeItem === "Goods" && (
-            row.itemName.toLowerCase().includes(lowerSearch) ||
-            (row.itemDescription && row.itemDescription.toLowerCase().includes(lowerSearch)) ||
-            (row.itemBrand && row.itemBrand.toLowerCase().includes(lowerSearch)) ||
-            (row.itemUpc && (row.itemUpc.newCode.toLowerCase().includes(lowerSearch) || row.itemUpc.itemNumber.toString().includes(lowerSearch)))
-          )
-        )
-        : offLineItems.filter((row) => row.typeItem === "Goods");
-
-      SetItems(filteredItems.reverse());
-      setLoadingData(false);
     }
-  };
-
-  useEffect(() => {
-    fetchItems(page, debouncedSearch);
-  }, [page, debouncedSearch]);
+    fetchItem()
+  }, [page, debouncedSearch])
 
   const handleRefreshSearch = () => {
-    fetchItems(page, debouncedSearch);
+    fetchItem(page, search);
   };
 
   const handlePageChange = (e, newPage) => {
@@ -311,7 +265,7 @@ function PointOfSale() {
   };
 
   const handleOpenCart = () => {
-    navigate('/ShopPosForm', { state: { cart } });
+    setOpenCart(true);
   };
 
   const handleCloseCart = () => {
@@ -358,6 +312,11 @@ function PointOfSale() {
             >
               POS Display
             </Typography>
+            <IconButton color="inherit" onClick={handleOpenCart}>
+              <Badge badgeContent={cart.length} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
             <NotificationVIewInfo />
             <MessageAdminView name={user.data.userName} role={user.data.role} />
             <IconButton color="inherit" onClick={handleLogout}>
@@ -366,7 +325,7 @@ function PointOfSale() {
 
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -432,11 +391,14 @@ function PointOfSale() {
                                   <Typography variant="h6" component="div" style={{ display: 'flex', justifyContent: 'space-between' }}><span>{row.itemName.toUpperCase()}</span></Typography>
                                   <Typography variant="body2" color="text.secondary">Brand: {row.itemBrand.toUpperCase()} | Dimension: {row.itemDimension} | weight: {row.weight}</Typography>
                                   <Typography variant="body2" color="text.secondary">Description:{row.itemDescription.toUpperCase()}</Typography>
-                                  {row.itemQuantity > 0 && (
-                                    <Button variant="contained" color="primary" onClick={() => handleAddToCart(row)}>
-                                      Add to Cart
-                                    </Button>
-                                  )}
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
+                                    {row.itemQuantity > 0 ? (
+                                      <Button variant="contained" color="primary" onClick={() => handleAddToCart(row)}>
+                                        Add to Cart
+                                      </Button>
+                                    ) : <div></div>}
+                                    <Typography variant="body2" color="text.secondary">Stock: {row.itemQuantity}</Typography>
+                                  </div>
                                 </CardContent>
                               </Card>
                             </Grid>
