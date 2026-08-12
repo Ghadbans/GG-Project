@@ -21,7 +21,7 @@ import NotificationVIewInfo from './NotificationVIewInfo';
 import CssBaseline from '@mui/material/CssBaseline';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { DataGrid } from '@mui/x-data-grid';
+import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import dayjs from 'dayjs';
 
 const drawerWidth = 240;
@@ -250,7 +250,7 @@ export default function FleetFormUpdate() {
                 <Typography variant="h6">Document History</Typography>
                 {canEdit && <Button variant="contained" size="small" style={{ backgroundColor: '#202a5a' }} onClick={() => { setIsEditDoc(false); setDocData({ _id: '', documentName: '', year: dayjs().format('YYYY'), startDate: '', expiryDate: '', amountPaid: 0, isPaid: false, notes: '' }); setDocModal(true); }}><Add /> Add Document</Button>}
               </Box>
-              <div style={{ height: 300, width: '100%' }}>
+              <Box sx={{ height: 300, width: '100%', '& .row-expiring-soon': { backgroundColor: '#ffebee', '&:hover': { backgroundColor: '#ffcdd2' } } }}>
                 <DataGrid
                   rows={fleet.documents}
                   getRowId={(row) => row._id}
@@ -259,7 +259,7 @@ export default function FleetFormUpdate() {
                     { field: 'year', headerName: 'Year', width: 100 },
                     { field: 'startDate', headerName: 'Valid From', flex: 1, valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY') },
                     { field: 'expiryDate', headerName: 'Expires', flex: 1, valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY') },
-                    { field: 'amountPaid', headerName: 'Cost', width: 120 },
+                    { field: 'amountPaid', headerName: 'Cost', width: 120, valueFormatter: (params) => params.value != null ? `$${params.value}` : '$0' },
                     { field: 'isPaid', headerName: 'Paid?', width: 100, type: 'boolean' },
                     { field: 'actions', headerName: 'Actions', width: 120, renderCell: (params) => (
                         <Box>
@@ -275,8 +275,14 @@ export default function FleetFormUpdate() {
                     }
                     return '';
                   }}
+                  slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                    },
+                  }}
                 />
-              </div>
+              </Box>
             </Box>
 
             {/* Oil Change History */}
@@ -300,6 +306,12 @@ export default function FleetFormUpdate() {
                         </Box>
                     )}
                   ]}
+                  slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                    },
+                  }}
                 />
               </div>
             </Box>

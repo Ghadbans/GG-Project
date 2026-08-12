@@ -247,8 +247,22 @@ export default function FleetViewAdmin() {
                       </span>
                     </ViewTooltip>
                   </section>
-                  <Box sx={{ height: 600, width: '100%' }}>
+                  <Box sx={{ height: 600, width: '100%', '& .super-app-theme--Expiring': { backgroundColor: '#ffebee', '&:hover': { backgroundColor: '#ffcdd2' } } }}>
                     <DataGrid
+                      getRowClassName={(params) => {
+                        if (params.row.status !== 'Running') return '';
+                        const docs = params.row.documents;
+                        if (!docs || docs.length === 0) return '';
+                        const now = dayjs();
+                        let expiring = false;
+                        docs.forEach(doc => {
+                           const exp = dayjs(doc.expiryDate);
+                           if (exp.diff(now, 'day') <= 7 && !doc.isPaid) {
+                             expiring = true;
+                           }
+                        });
+                        return expiring ? 'super-app-theme--Expiring' : '';
+                      }}
                       paginationMode="server"
                       rowCount={totalPage * limit}
                       paginationModel={{ page: page, pageSize: limit }}
