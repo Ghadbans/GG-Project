@@ -109,9 +109,12 @@ app.use(cors());
 const bcrypt = require('bcrypt');
 const User = require("./model/employeeUserSchema");
 
+const fleetRoute = require('./routes/fleet');
+
 // RESTful API root
 app.use('/auth', authRoutes);
 app.use("/endpoint", userRoute);
+app.use("/endpoint/fleet", fleetRoute);
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED!'));
 app.get('/status', (req, res) => res.json({ status: 'ok', uptime: process.uptime() })); // health check
 
