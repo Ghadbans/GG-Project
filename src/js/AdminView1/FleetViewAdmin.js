@@ -270,6 +270,20 @@ export default function FleetViewAdmin() {
                           setSearchTerm('');
                         }
                       }}
+                      getRowClassName={(params) => {
+                        if (params.row.status !== 'Running') return '';
+                        const docs = params.row.documents;
+                        if (!docs || docs.length === 0) return '';
+                        const now = dayjs();
+                        let expiring = false;
+                        docs.forEach(doc => {
+                           const exp = dayjs(doc.expiryDate);
+                           if (exp.diff(now, 'day') <= 7 && !doc.isPaid) {
+                             expiring = true;
+                           }
+                        });
+                        return expiring ? 'row-expiring-soon' : '';
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
                   </Box>

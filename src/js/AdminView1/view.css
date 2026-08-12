@@ -444,3 +444,6 @@
     background-color: white;
     color: #30368a;
 }
+.row-expiring-soon {
+  background-color: #ffebee !important;
+}

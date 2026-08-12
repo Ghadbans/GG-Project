@@ -174,6 +174,20 @@ exports.updateDocument = async (req, res) => {
     }
 };
 
+// Delete a document record
+exports.deleteDocument = async (req, res) => {
+    try {
+        const fleet = await Fleet.findByIdAndUpdate(
+            req.params.id,
+            { "$pull": { "documents": { "_id": req.params.docId } } },
+            { new: true }
+        );
+        res.status(200).json(fleet);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 // --- Oil Changes ---
 
 // Add an oil change record
@@ -185,6 +199,34 @@ exports.addOilChange = async (req, res) => {
         fleet.oilChanges.push(req.body);
         await fleet.save();
         res.status(201).json(fleet);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Update an oil change record
+exports.updateOilChange = async (req, res) => {
+    try {
+        const fleet = await Fleet.findOneAndUpdate(
+            { "_id": req.params.id, "oilChanges._id": req.params.oilId },
+            { "$set": { "oilChanges.$": req.body } },
+            { new: true }
+        );
+        res.status(200).json(fleet);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// Delete an oil change record
+exports.deleteOilChange = async (req, res) => {
+    try {
+        const fleet = await Fleet.findByIdAndUpdate(
+            req.params.id,
+            { "$pull": { "oilChanges": { "_id": req.params.oilId } } },
+            { new: true }
+        );
+        res.status(200).json(fleet);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
