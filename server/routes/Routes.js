@@ -1146,7 +1146,8 @@ Route.route("/invoice-Information").get(async (req, res) => {
       }
     }
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { invoiceNumber: isNaN(Number(search)) ? null : Number(search) },
         { invoiceName: regex },
@@ -2954,7 +2955,8 @@ Route.route("/expense-Information").get(async (req, res) => {
       }
     }
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { itemNumber: isNaN(Number(search)) ? null : Number(search) },
         { itemName: regex },
@@ -3131,7 +3133,8 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       }
     }
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { serviceNumber: isNaN(Number(search)) ? null : Number(search) },
         { serviceName: regex },
@@ -3796,7 +3799,8 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { outNumber: isNaN(Number(search)) ? null : Number(search) },
         { description: regex },
@@ -3930,7 +3934,8 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { outNumber: isNaN(Number(search)) ? null : Number(search) },
         { reason: regex },
@@ -4182,7 +4187,8 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { outNumber: isNaN(Number(search)) ? null : Number(search) },
         { description: regex },
@@ -4518,7 +4524,8 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const regex = new RegExp(search.trim(), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       const orConditions = [
         { description: regex },
         { manufacturer: regex },
@@ -5102,7 +5109,8 @@ Route.route("/customer-Information").get(async (req, res) => {
     // Build the query object dynamically based on the filters
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { Customer: regex },
         { customerFirstName: regex },
@@ -5140,7 +5148,8 @@ Route.route("/Supplier-Information").get(async (req, res) => {
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
-        const regex = new RegExp(search.split(' ').join('|'), 'i');
+        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
         query.$or = [{ supplierName: regex }, { supplierCompany: regex }, { supplierEmail: regex }];
       }
       if (filterField && filterValue) {
@@ -5159,7 +5168,8 @@ Route.route("/estimation-Information").get(async (req, res) => {
 
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.trim(), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       const orConditions = [
         { estimateName: regex },
         { ReferenceName2: regex },
@@ -5202,7 +5212,8 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     // Build the query object dynamically based on the filters
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { outNumber: isNaN(Number(search)) ? null : Number(search) },
         { description: regex },
@@ -5232,7 +5243,8 @@ Route.route("/supplier-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ supplierName: regex }, { storeName: regex }, { description: regex }];
     }
     const itemI = await supplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5247,7 +5259,8 @@ Route.route("/employee-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ employeeName: regex }, { employeeLastName: regex }, { email: regex }, { phone: regex }];
     }
     const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5262,7 +5275,8 @@ Route.route("/payRoll-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ 'employeeName.name': regex }];
     }
     const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5277,7 +5291,8 @@ Route.route("/dailyExpense-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ expenseName: regex }, { description: regex }];
     }
     const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5294,7 +5309,8 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     // Build the query object dynamically based on the filters
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { serviceNumber: isNaN(Number(search)) ? null : Number(search) },
         { technicianAssign: regex },
@@ -5328,7 +5344,8 @@ Route.route("/purchase-Information").get(async (req, res) => {
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
-        const regex = new RegExp(search.split(' ').join('|'), 'i');
+        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
         query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
       }
       if (filterField && filterValue) {
@@ -5346,7 +5363,8 @@ Route.route("/estimate-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ 'customerName.customerName': regex }, { estimateSubject: regex }];
     }
     const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5361,7 +5379,8 @@ Route.route("/project-Information").get(async (req, res) => {
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
-      const regex = new RegExp(search.trim(), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       const orConditions = [
         { projectName: regex },
         { ReferenceName: regex },
@@ -5391,7 +5410,8 @@ Route.route("/pos-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ factureNumber: regex }, { status: regex }];
     }
     const itemI = await posSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).populate('customerName');
@@ -5406,7 +5426,8 @@ Route.route("/payment-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ description: regex }, { paymentNumber: regex }];
     }
     const itemI = await paymentSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).populate('customerName');
@@ -5423,7 +5444,8 @@ Route.route("/expense-Information").get(async (req, res) => {
     // Build the query object dynamically based on the filters
     const query = branchFilter(req);
     if (search) {
-      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         { expenseNumber: isNaN(Number(search)) ? null : Number(search) },
         { description: regex },
