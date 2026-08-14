@@ -497,7 +497,7 @@ function MaintenanceViewAdmin() {
       field: 'view', headerName: 'View', width: 40, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={MaintenanceInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={MaintenanceInfoV.length === 0}>
               <NavLink to={`/MaintenanceViewInformation/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -511,7 +511,7 @@ function MaintenanceViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 40, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status === 'Converted' && MaintenanceInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status === 'Converted' && MaintenanceInfoU.length === 0}>
               <EditIcon style={{ color: 'gray' }} />
             </IconButton>
           </span>
@@ -522,7 +522,7 @@ function MaintenanceViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 40, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={MaintenanceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={handleOpenAll} disabled={MaintenanceInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -628,7 +628,7 @@ function MaintenanceViewAdmin() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={MaintenanceInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={MaintenanceInfoC.length === 0}>
                           <NavLink to={'/MaintenanceFormView'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />

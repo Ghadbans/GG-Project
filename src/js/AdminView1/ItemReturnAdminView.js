@@ -537,7 +537,7 @@ function ItemReturnAdminView() {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton onClick={() => handleOpenView(params.row._id)} disabled={ReturnInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={() => handleOpenView(params.row._id)} disabled={ReturnInfoV.length === 0}>
               <VisibilityIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -548,7 +548,7 @@ function ItemReturnAdminView() {
       field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={ReturnInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={ReturnInfoU.length === 0}>
               <NavLink to={`/ItemReturnViewForm/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -561,7 +561,7 @@ function ItemReturnAdminView() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={ReturnInfoD.length === 0 && user.data.role !== 'CEO'} >
+          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={ReturnInfoD.length === 0} >
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -679,7 +679,7 @@ function ItemReturnAdminView() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={ReturnInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={ReturnInfoC.length === 0}>
                           <NavLink to={'/ItemReturnUpdateForm'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />

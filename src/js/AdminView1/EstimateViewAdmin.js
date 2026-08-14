@@ -565,7 +565,7 @@ function EstimateViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={estimationInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={estimationInfoV.length === 0}>
               <NavLink to={`/EstimateViewAdminAll/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -578,7 +578,7 @@ function EstimateViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status !== 'Draft' && estimationInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status !== 'Draft' && estimationInfoU.length === 0}>
               <EditIcon style={{ color: 'gray' }} />
             </IconButton>
           </span>
@@ -588,7 +588,7 @@ function EstimateViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={estimationInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={estimationInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -711,7 +711,7 @@ function EstimateViewAdmin() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={estimationInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={estimationInfoC.length === 0}>
                           <NavLink to={'/EstimateInvoiceForm'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />
@@ -722,8 +722,7 @@ function EstimateViewAdmin() {
                     </ViewTooltip>
                   </section>
 
-                  {estimate.length > 0 ? (
-                    <Box sx={{ height: 600, width: '100%' }}>
+                  <Box sx={{ height: 600, width: '100%' }}>
                       {estimate.length > 0 ? (
                         <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
                           {
@@ -798,9 +797,6 @@ function EstimateViewAdmin() {
                           />
                         )}
                     </Box>
-                  ) : <div>
-                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                  </div>}
                 </div>
               )
             }

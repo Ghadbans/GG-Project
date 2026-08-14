@@ -47,7 +47,6 @@ mongoose.connect(mongoUri, {
 // This links to your restored Routes.js and AuthRoutes.js files
 const authRoutes = require("./routes/AuthRoutes");
 const userRoute = require("./routes/Routes");
-const fleetRoute = require("./routes/fleet");
 
 const app = express();
 const server = http.createServer(app);
@@ -72,7 +71,6 @@ app.use(function (req, res, next) {
 // Mount the Routers
 app.use("/auth", authRoutes);
 app.use("/endpoint", userRoute);
-app.use("/endpoint/fleet", fleetRoute);
 // Test Route
 app.get('/status', (req, res) => res.send('Backend is operational!'));
 

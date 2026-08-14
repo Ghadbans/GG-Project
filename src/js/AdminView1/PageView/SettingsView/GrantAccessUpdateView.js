@@ -147,11 +147,33 @@ function GrantAccessUpdateView() {
   };
   const [userName, setUserName] = useState('');
   const [modules, setModules] = useState([])
+  const [branches, setBranches] = useState([]);
+  const [costVisibility, setCostVisibility] = useState(false);
+  const [branchOptions, setBranchOptions] = useState([]);
+
+  useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/companyProfile`);
+        if (res.data && res.data.data && res.data.data.length > 0) {
+          const profile = res.data.data[0];
+          if (profile.branches && profile.branches.length > 0) {
+            setBranchOptions(profile.branches.map(b => b.branchName));
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      }
+    };
+    fetchBranches();
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-grantAccess/${id}`)
         setUserName(res.data.data.employeeName);
+        setBranches(res.data.data.branches || []);
+        setCostVisibility(res.data.data.costVisibility || false);
         let fetchedModules = res.data.data.modules;
 
         // Ensure Reports module is present even for old records
@@ -193,6 +215,17 @@ function GrantAccessUpdateView() {
             access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
           });
         }
+        // Ensure Fleet Management module is present even for old records
+        if (!fetchedModules.find(m => m.moduleName === 'Fleet Management')) {
+          fetchedModules.push({
+            id: 24,
+            moduleName: 'Fleet Management',
+            access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
+          });
+        }
+
+        // Apply sequential IDs so unnumbered older records get an ID for rendering
+        fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
 
         setModules(fetchedModules);
       } catch (error) {
@@ -264,7 +297,9 @@ function GrantAccessUpdateView() {
       return;
     }
     const data = {
-      modules
+      modules,
+      branches,
+      costVisibility
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-grantAccess/${id}`, data)
@@ -368,73 +403,109 @@ function GrantAccessUpdateView() {
                   <table className='tableInfo10'>
                     <tbody>
                       {
-                        modules.map((row, i) => (
-                          <tr key={row.id}>
-                            <td>{row.id}</td>
-                            <td style={{ width: '300px' }}>
-                              {row.moduleName}
-                            </td>
-                            <td style={{ textAlign: 'center' }}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={row.access.readM}
-                                    onChange={() => handleCheckBox(i, 'readM')}
-                                  />
-                                }
-                                label='read'
-                              />
+                        modules.map((row, i) => {
+                          const hiddenModules = ['Admin', 'User', 'Role', 'Item-Category', 'Stock', 'Asset', 'Account'];
+                          if (hiddenModules.includes(row.moduleName)) return null;
+                          return (
+                            <tr key={row.id}>
+                              <td>{row.id}</td>
+                              <td style={{ width: '300px' }}>
+                                {row.moduleName === 'Estimate' ? 'Quotation' : row.moduleName}
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={row.access.readM}
+                                      onChange={() => handleCheckBox(i, 'readM')}
+                                    />
+                                  }
+                                  label='read'
+                                />
 
-                            </td>
-                            <td style={{ textAlign: 'center' }}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={row.access.createM}
-                                    onChange={() => handleCheckBox(i, 'createM')}
-                                  />
-                                }
-                                label='Create'
-                              />
-                            </td>
-                            <td style={{ textAlign: 'center' }}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={row.access.viewM}
-                                    onChange={() => handleCheckBox(i, 'viewM')}
-                                  />
-                                }
-                                label='View'
-                              />
-                            </td>
-                            <td style={{ textAlign: 'center' }}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={row.access.editM}
-                                    onChange={() => handleCheckBox(i, 'editM')}
-                                  />
-                                }
-                                label='Edit'
-                              />
-                            </td>
-                            <td style={{ textAlign: 'center' }}>
-                              <FormControlLabel
-                                control={
-                                  <Checkbox
-                                    checked={row.access.deleteM}
-                                    onChange={() => handleCheckBox(i, 'deleteM')}
-                                  />
-                                }
-                                label='Delete'
-                              />
-                            </td>
-                          </tr>
-                        ))
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={row.access.createM}
+                                      onChange={() => handleCheckBox(i, 'createM')}
+                                    />
+                                  }
+                                  label='Create'
+                                />
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={row.access.viewM}
+                                      onChange={() => handleCheckBox(i, 'viewM')}
+                                    />
+                                  }
+                                  label='View'
+                                />
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={row.access.editM}
+                                      onChange={() => handleCheckBox(i, 'editM')}
+                                    />
+                                  }
+                                  label='Edit'
+                                />
+                              </td>
+                              <td style={{ textAlign: 'center' }}>
+                                <FormControlLabel
+                                  control={
+                                    <Checkbox
+                                      checked={row.access.deleteM}
+                                      onChange={() => handleCheckBox(i, 'deleteM')}
+                                    />
+                                  }
+                                  label='Delete'
+                                />
+                              </td>
+                            </tr>
+                          );
+                        })
                       }
                     </tbody>
                   </table>
+                </Grid>
+                <Grid item xs={12}>
+                  <Box sx={{ border: '1px solid #ccc', padding: 2, borderRadius: 1, mt: 2 }}>
+                    <Typography variant="h6" sx={{ mb: 2 }}>Assigned Branches:</Typography>
+                    <Autocomplete
+                      multiple
+                      options={branchOptions}
+                      value={branches}
+                      onChange={(event, newValue) => {
+                        setBranches(newValue);
+                      }}
+                      renderInput={(params) => (
+                        <TextField
+                          {...params}
+                          variant="outlined"
+                          label="Select Branches"
+                        />
+                      )}
+                      sx={{ mb: 3 }}
+                    />
+                    
+                    <Typography variant="h6" sx={{ mb: 1 }}>Special Permissions:</Typography>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={costVisibility}
+                          onChange={(e) => setCostVisibility(e.target.checked)}
+                        />
+                      }
+                      label={`View Costs/Rates: ${costVisibility ? 'Granted' : 'Denied'}`}
+                    />
+                  </Box>
                 </Grid>
                 <Grid item xs={12}>
                   <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button>

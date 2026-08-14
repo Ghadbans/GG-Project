@@ -1040,7 +1040,7 @@ function CustomerInformationView() {
                                     onClose={handleCloseMenu}
                                     TransitionComponent={Fade}
                                   >
-                                    <MenuItem disabled={customerInfoU.length === 0 && user.data.role !== 'CEO'}>
+                                    <MenuItem disabled={customerInfoU.length === 0}>
                                       <NavLink to={`/CustomerFormUpdate/${i._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                         <EditIcon />
                                         <Typography>Edit</Typography>
@@ -1267,7 +1267,7 @@ function CustomerInformationView() {
                                                       </NavLink>
                                                       <EditTooltip title="Edit">
                                                         <span>
-                                                          <IconButton disabled={row.status !== 'Draft' && user.data.role !== 'CEO'}>
+                                                          <IconButton disabled={row.status !== 'Draft'}>
                                                             <NavLink to={`/EstimateInvoiceFormUpdate/${row._id}`} className='LinkName'>
                                                               <EditIcon style={{ color: 'gray' }} />
                                                             </NavLink>
@@ -1341,7 +1341,7 @@ function CustomerInformationView() {
                                                       </NavLink>
                                                       <EditTooltip title="Edit">
                                                         <span>
-                                                          <IconButton disabled={row.status !== 'On-Going' && user.data.role !== 'CEO'}>
+                                                          <IconButton disabled={row.status !== 'On-Going'}>
                                                             <NavLink to={`/PurchaseFormUpdate/${row._id}`} className='LinkName'>
                                                               <EditIcon style={{ color: 'gray' }} />
                                                             </NavLink>
@@ -1415,7 +1415,7 @@ function CustomerInformationView() {
                                                       </NavLink>
                                                       <EditTooltip title="Edit">
                                                         <span>
-                                                          <IconButton disabled={row.status !== 'On-Going' && user.data.role !== 'CEO'}>
+                                                          <IconButton disabled={row.status !== 'On-Going'}>
                                                             <NavLink to={`/MaintenanceUpdateView/${row._id}`} className='LinkName'>
                                                               <EditIcon style={{ color: 'gray' }} />
                                                             </NavLink>
@@ -1490,7 +1490,7 @@ function CustomerInformationView() {
                                                       </NavLink>
                                                       <EditTooltip title="Edit">
                                                         <span>
-                                                          <IconButton disabled={row.status !== 'Draft' && user.data.role !== 'CEO'}>
+                                                          <IconButton disabled={row.status !== 'Draft'}>
                                                             <NavLink to={`/InvoiceFormUpdate/${row._id}`} className='LinkName'>
                                                               <EditIcon style={{ color: 'gray' }} />
                                                             </NavLink>

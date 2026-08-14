@@ -21,6 +21,7 @@ const ItemOutViewAdmin = React.lazy(() => import('./AdminView1/ItemOutViewAdmin'
 const ItemReturnAdminView = React.lazy(() => import('./AdminView1/ItemReturnAdminView'))
 const PurchaseOrderViewAdmin = React.lazy(() => import('./AdminView1/PurchaseOrderViewAdmin'))
 const MaintenanceViewAdmin = React.lazy(() => import('./AdminView1/MaintenanceViewAdmin'))
+const FleetViewAdmin = React.lazy(() => import('./AdminView1/FleetViewAdmin'))
 const ProjectViewAdmin = React.lazy(() => import('./AdminView1/ProjectViewAdmin'))
 const EmployeeViewAdminAll = React.lazy(() => import('./AdminView1/PageView/EmployeeView/EmployeeViewAdminAll'))
 const PurchasesViewAdmin = React.lazy(() => import('./AdminView1/PurchasesViewAdmin'))
@@ -120,6 +121,10 @@ const MaintenanceViewInformation = React.lazy(() => import('./AdminView1/PageVie
 const MaintenanceFormView = React.lazy(() => import('./AdminView1/PageView/MaintenanceView/MaintenanceFormView'))
 const MaintenanceConvertToInvoice = React.lazy(() => import('./AdminView1/PageView/MaintenanceView/MaintenanceConvertToInvoice'))
 const MaintenanceFormClone = React.lazy(() => import('./AdminView1/PageView/MaintenanceView/MaintenanceFormClone'))
+
+// Fleet Management
+const FleetFormUpdate = React.lazy(() => import('./AdminView1/FleetFormUpdate'))
+const FleetFormView = React.lazy(() => import('./AdminView1/FleetFormView'))
 
 // Project
 const ProjectViewInformation = React.lazy(() => import('./AdminView1/PageView/ProjectView/ProjectViewInformation'))
@@ -286,6 +291,11 @@ function App() {
             <Route path='MaintenanceFormView' element={<MaintenanceFormView />}></Route>
             <Route path='MaintenanceConvertToInvoice/:id' element={<MaintenanceConvertToInvoice />}></Route>
             <Route path='MaintenanceFormClone/:id' element={<MaintenanceFormClone />}></Route>
+
+            {/**Fleet Management */}
+            <Route path='FleetViewAdmin' element={<FleetViewAdmin />}></Route>
+            <Route path='FleetFormUpdate/:id' element={<FleetFormUpdate />}></Route>
+            <Route path='FleetFormView' element={<FleetFormView />}></Route>
 
             {/**Project */}
             <Route path='ProjectViewAdmin' element={<ProjectViewAdmin />}></Route>

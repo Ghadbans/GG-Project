@@ -411,7 +411,7 @@ function CustomerViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={customerInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={customerInfoV.length === 0}>
               <NavLink to={`/CustomerInformationView/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -424,7 +424,7 @@ function CustomerViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={customerInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={customerInfoU.length === 0}>
               <NavLink to={`/CustomerFormUpdate/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -436,7 +436,7 @@ function CustomerViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={customerInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={customerInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -527,7 +527,7 @@ function CustomerViewAdmin() {
                     <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                       <ViewTooltip>
                         <span>
-                          <IconButton disabled={customerInfoC.length === 0 && user.data.role !== 'CEO'}>
+                          <IconButton disabled={customerInfoC.length === 0}>
                             <NavLink to={'/CustomerForm'} className='LinkName'>
                               <span className='btnCustomerAdding'>
                                 <Add />

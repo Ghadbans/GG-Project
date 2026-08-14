@@ -307,7 +307,7 @@ function ProjectViewAdmin() {
   };
 
   const rowRenderer = (params) => {
-    if (hiddenRow.includes(params.row._id) && user.data.role !== 'CEO') {
+    if (hiddenRow.includes(params.row._id)) {
       return null;
     }
     return <div>{params.row[params.field]}</div>;
@@ -479,7 +479,7 @@ function ProjectViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={ProjectInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={ProjectInfoV.length === 0}>
               <NavLink to={`/ProjectInfo/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -492,7 +492,7 @@ function ProjectViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit" >
           <span>
-            <IconButton disabled={ProjectInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={ProjectInfoU.length === 0}>
               <NavLink to={`/ProjectUpdateView/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -504,7 +504,7 @@ function ProjectViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                           <IconButton onClick={() => handleOpen(params.row._id)} disabled={ProjectInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                           <IconButton onClick={() => handleOpen(params.row._id)} disabled={ProjectInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -643,7 +643,7 @@ function ProjectViewAdmin() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={ProjectInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={ProjectInfoC.length === 0}>
                           <NavLink to={'/ProjectFormView'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />
@@ -653,8 +653,7 @@ function ProjectViewAdmin() {
                       </span>
                     </ViewTooltip>
                   </section>
-                  {project.length > 0 ? (
-                    <Box sx={{ height: 600, width: '100%' }}>
+                  <Box sx={{ height: 600, width: '100%' }}>
                       {
                         user.data.role === 'CEO' ? (
                           <DataGrid
@@ -715,9 +714,6 @@ function ProjectViewAdmin() {
                         )
                       }
                     </Box>
-                  ) : <div>
-                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                  </div>}
                 </div>)
             }</Container>
         </Box>

@@ -539,7 +539,7 @@ function InvoiceViewAdmin() {
   }
 
   const rowRenderer = (params) => {
-    if (hiddenRow.includes(params.row._id) && user.data.role !== 'CEO') {
+    if (hiddenRow.includes(params.row._id)) {
       return null
     }
     return <div>{params.row[params.field]}</div>
@@ -624,7 +624,7 @@ function InvoiceViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={InvoiceInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={InvoiceInfoV.length === 0}>
               <NavLink to={`/InvoiceViewAdminAll/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -637,7 +637,7 @@ function InvoiceViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status !== 'Draft' && InvoiceInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status !== 'Draft' && InvoiceInfoU.length === 0}>
               <EditIcon style={{ color: 'gray' }} />
             </IconButton>
           </span>
@@ -648,7 +648,7 @@ function InvoiceViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -773,7 +773,7 @@ function InvoiceViewAdmin() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={InvoiceInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={InvoiceInfoC.length === 0}>
                           <NavLink to={'/InvoiceForm'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />

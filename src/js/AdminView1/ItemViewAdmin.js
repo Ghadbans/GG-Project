@@ -469,7 +469,7 @@ function ItemViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton component={NavLink} to={`/ItemInfo/${params.row._id}`} className='LinkName' disabled={ItemInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton component={NavLink} to={`/ItemInfo/${params.row._id}`} className='LinkName' disabled={ItemInfoV.length === 0}>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -480,7 +480,7 @@ function ItemViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton component={NavLink} to={`/ItemFormUpdate/${params.row._id}`} className='LinkName' disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton component={NavLink} to={`/ItemFormUpdate/${params.row._id}`} className='LinkName' disabled={ItemInfoU.length === 0}>
                 <EditIcon style={{ color: 'gray' }} />
             </IconButton>
           </span>
@@ -491,7 +491,7 @@ function ItemViewAdmin() {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
-            <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0}>
               <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
             </IconButton>
           </span>
@@ -513,7 +513,7 @@ function ItemViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton component={NavLink} to={`/ItemInfo/${params.row._id}`} className='LinkName' disabled={ItemInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton component={NavLink} to={`/ItemInfo/${params.row._id}`} className='LinkName' disabled={ItemInfoV.length === 0}>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -524,7 +524,7 @@ function ItemViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton component={NavLink} to={`/ItemFormUpdate/${params.row._id}`} className='LinkName' disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton component={NavLink} to={`/ItemFormUpdate/${params.row._id}`} className='LinkName' disabled={ItemInfoU.length === 0}>
                 <EditIcon style={{ color: 'gray' }} />
             </IconButton>
           </span>
@@ -535,7 +535,7 @@ function ItemViewAdmin() {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
-            <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0}>
               <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
             </IconButton>
           </span>
@@ -831,7 +831,7 @@ function ItemViewAdmin() {
                             <button onClick={handleExportToExcel} className='btnCustomer'>Export to Excel</button>
                             <ViewTooltip>
                               <span>
-                                  <IconButton component={NavLink} to={'/ItemForm'} className='LinkName' disabled={ItemInfoC.length === 0 && user.data.role !== 'CEO'}>
+                                  <IconButton component={NavLink} to={'/ItemForm'} className='LinkName' disabled={ItemInfoC.length === 0}>
                                       <span className='btnCustomerAdding'>
                                         <Add />
                                       </span>

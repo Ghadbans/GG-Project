@@ -439,11 +439,225 @@
     padding: 10px;
     cursor: pointer;
 }
+.purchaseOrderTableExpenses tr {
+    border: 1px solid black;
+}
+
+.purchaseOrderTableExpenses td {
+    text-align: center;
+    border: 1px solid black;
+    padding: 10px;
+}
+
+.modalView {
+    position: fixed;
+    z-index: 1000;
+    width: 80%;
+    max-width: 1200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+}
+
+.modalView2 {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 999;
+    height: 100vh;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+
+.Modal1 {
+    border-radius: 8px;
+    padding: 2rem;
+    background-color: #f2f2f2;
+    width: 100%;
+    max-width: 500px;
+}
+
+.invoice .allTableContainer {
+    height: auto;
+    max-height: 70vh;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.settingsView {
+    width: 100%;
+    background-color: white;
+    min-height: 600px;
+}
+
+.settingsViewtitle {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.projectSection1 {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.projectSectionAdminView,
+.projectSectionAdminView2 {
+    margin-left: 290px;
+    width: calc(40% - 20px);
+    padding: 20px;
+    background-color: #202a5a;
+    color: white;
+    box-shadow: 10px 10px 5px -4px rgba(23, 21, 21, 0.75);
+    display: block;
+}
+
+.projectSectionAdminView2 {
+    width: calc(74% - 20px);
+}
+
+.notificatonsSections {
+    width: 28%;
+    padding: 20px;
+    background-color: #202a5a;
+    color: white;
+    box-shadow: 10px 10px 5px -4px rgba(23, 21, 21, 0.75);
+    display: block;
+}
+
+.customerDetails {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.customerDetails1 {
+    width: 100%;
+    position: relative;
+    left: 0;
+}
+
+.btnCustomer {
+    background-color: #30368a;
+    color: white;
+    border: 1px solid #30368a;
+    border-radius: 10px;
+    padding: 10px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.btnCustomer:hover {
+    background-color: white;
+    color: #30368a;
+}
+
+.btnCustomer2 {
+    background-color: red;
+    color: white;
+    border: 1px solid red;
+    border-radius: 10px;
+    padding: 10px;
+    width: 150px;
+    cursor: pointer;
+}
+
+.btnCustomer2:hover {
+    background-color: white;
+    color: red;
+}
+
+.btnCustomer6 {
+    background-color: #30368a;
+    color: white;
+    border: 1px solid #30368a;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.btnCustomer6:hover {
+    background-color: white;
+    color: #30368a;
+}
+
+.btnMenuItem {
+    display: flex;
+    background-color: white;
+    border: none;
+    align-items: center;
+    color: black;
+    height: 30px;
+    width: 100%;
+}
+
+.btnMenuItem:hover {
+    background-color: #f2f2f2;
+}
+
+.btnCustomerAdding {
+    background-color: #30368a;
+    color: white;
+    border: 1px solid #30368a;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+}
+
+.btnCustomerAdding:hover {
+    background-color: white;
+    color: #30368a;
+}
+
+.btnCustomer7 {
+    background-color: #30368a;
+    color: white;
+    border: 1px solid #30368a;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
 
 .btnCustomer7:hover {
     background-color: white;
     color: #30368a;
 }
-.row-expiring-soon {
-  background-color: #ffebee !important;
-}
+@media print {
+      body.printing-document-history * { visibility: hidden; }
+      body.printing-document-history #printable-document-history, 
+      body.printing-document-history #printable-document-history * { visibility: visible; }
+      body.printing-document-history #printable-document-history { position: absolute; left: 0; top: 0; width: 100%; height: auto !important; }
+      
+      body.printing-document-history .MuiDataGrid-root, 
+      body.printing-document-history .MuiDataGrid-main, 
+      body.printing-document-history .MuiDataGrid-virtualScroller { 
+        display: block !important; 
+        overflow: visible !important; 
+        height: auto !important; 
+      }
+      body.printing-document-history .MuiDataGrid-virtualScrollerContent { 
+        height: auto !important; 
+      }
+      body.printing-document-history .MuiDataGrid-virtualScrollerRenderZone { 
+        position: static !important; 
+        transform: none !important; 
+      }
+      body.printing-document-history .MuiDataGrid-footerContainer { display: none !important; }
+      body.printing-document-history [data-field="actions"] { display: none !important; }
+  }

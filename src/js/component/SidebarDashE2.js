@@ -14,6 +14,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Close from '@mui/icons-material/Close';
 import CategoryIcon from '@mui/icons-material/Category';
 import StoreIcon from '@mui/icons-material/Store';
+import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
 import SideBlockFactory from './SideBlockFactory';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -85,9 +86,10 @@ function SidebarDashE2({ onView }) {
     return null;
   }
 
-
+  const MainInfo = grantAccess.filter((row) => row.moduleName === "Main" && row.access.readM === true);
   const RateInfo = grantAccess.filter((row) => row.moduleName === "Rate" && row.access.readM === true);
   const EmployeeInfo = grantAccess.filter((row) => row.moduleName === "Employee" && row.access.readM === true);
+  const FleetInfo = grantAccess.filter((row) => row.moduleName === "Fleet Management" && row.access.readM === true);
   const PRollInfo = grantAccess.filter((row) => row.moduleName === "Pay-Roll" && row.access.readM === true);
   // Factory uses same permission level as Payroll/Employee for now
   const FactoryInfo = PRollInfo;
@@ -109,19 +111,25 @@ function SidebarDashE2({ onView }) {
 
             )
           }
-          <ListItemButton disabled={RateInfo.length === 0 && user.data.role !== 'CEO'} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={RateInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <CurrencyExchange />
             </ListItemIcon>
             <ListItemText primary="Rate" />
           </ListItemButton>
-          <ListItemButton disabled={EmployeeInfo.length === 0 && user.data.role !== 'CEO'} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={FleetInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+            <ListItemIcon sx={{ color: 'gray' }} style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <DirectionsCarIcon />
+            </ListItemIcon>
+            <ListItemText primary="Fleet Management" />
+          </ListItemButton>
+          <ListItemButton disabled={EmployeeInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <GroupsIcon />
             </ListItemIcon>
             <ListItemText primary="Employee" />
           </ListItemButton>
-          <ListItemButton disabled={PRollInfo.length === 0 && user.data.role !== 'CEO'} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={PRollInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PaymentIcon />
             </ListItemIcon>

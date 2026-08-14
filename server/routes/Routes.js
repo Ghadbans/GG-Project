@@ -203,8 +203,6 @@ Route.route("/notification", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await notificationSchema
       .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .sort({ _id: -1 })
-      .limit(200)
       .then((result) => {
         res.json({
           data: result,
@@ -1151,13 +1149,15 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
         { invoiceNumber: isNaN(Number(search)) ? null : Number(search) },
-        { invoiceSubject: regex },
-        { invoiceDefect: regex },
+        { invoiceName: regex },
+        { ReferenceName2: regex },
+        { ReferenceName: regex },
+        { subject: regex },
         { status: regex },
-        { 'items.itemName': regex },
-        { 'items.itemBrand': regex },
-        { 'items.itemDescription': regex },
+        { noteInfo: regex },
+        { note: regex },
         { 'customerName.customerName': regex },
+        { 'customerName.customerEmail': regex }
       ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
@@ -1261,67 +1261,42 @@ Route.route("/create-invoice").post(async (req, res, next) => {
   } = req.body
    try {
     const branchId = req.body.branchId || req.query.branchId;
-    const invoiceNumberOld = await invoiceSchema.findOne(branchId ? { branchId } : {}).sort({
-    invoiceNumber: -1
-  }).exec();
-    if (invoiceNumberOld && invoiceNumberOld.invoiceNumber === invoiceNumber) {
-      const sum = invoiceNumber + 1
-      await invoiceSchema.create({
-      branchId: req.body.branchId,
-      branchId: req.body.branchId,
-      branchId: req.body.branchId,
-      branchId: req.body.branchId,
-        customerName,
-        invoiceNumber: sum,
-        invoiceDate,
-        invoiceDueDate,
-        invoiceSubject,
-        invoicePurchase,
-        invoiceDefect,
-        status,
-        items,
-        subTotal,Position,
-        ReferenceName,ReferenceName2,
-        total,noteInfo,
-        balanceDue,
-        totalW,actionTaken,
-        invoiceName: "INV-00"+sum,
-        note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref
-      ,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
+    
+      const matchStage = branchId ? { branchId } : {};
+      const aggResult = await invoiceSchema.aggregate([
+        { $match: matchStage },
+        { $group: { _id: null, maxNum: { $max: '$invoiceNumber' } } }
+      ]);
+      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
+      const finalNumber = (invoiceNumber && invoiceNumber > maxNum) ? invoiceNumber : maxNum + 1;
+      req.body.invoiceNumber = finalNumber;
+      req.body.invoiceName = 'INV-' + String(finalNumber).padStart(6, '0');
+  
+    
+        await invoiceSchema.create({
+          customerName,
+          invoiceNumber: finalNumber,
+          invoiceDate,
+          invoiceDueDate,
+          invoiceSubject,
+          invoicePurchase,
+          invoiceDefect,
+          status,
+          items,Position,
+          subTotal,
+          ReferenceName,ReferenceName2,
+          total,noteInfo,
+          balanceDue,
+          totalW,actionTaken,
+          invoiceName: 'INV-' + String(finalNumber).padStart(6, '0'),
+          note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref,
+          branchId
+        }).then((result)=>{
+          res.json({ data: result, message: "Data successfully added.", status: 200 });
+        }).catch((err)=>{
+          return next(err);
         });
-      }).catch((err)=>{
-        return next(err)
-      })
-    } else {
-      await invoiceSchema.create({
-        customerName,
-        invoiceNumber,
-        invoiceDate,
-        invoiceDueDate,
-        invoiceSubject,
-        invoicePurchase,
-        invoiceDefect,
-        status,
-        items,Position,
-        subTotal,
-        ReferenceName,ReferenceName2,noteInfo,
-        total,
-        balanceDue,
-        totalW,actionTaken,
-        invoiceName,
-        note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref
-      ,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
+  );
       }).catch((err)=>{
         return next(err)
       })
@@ -1593,47 +1568,35 @@ Route.route("/create-item").post(async (req, res, next) => {
   stockOnHand,Creates
 , branchId } = req.body
 try {
-  const oldCode = await itemSchema.findOne({itemCategory}).sort({
-    'itemUpc.itemNumber': -1
-  }).exec();
-  if (oldCode && oldCode.itemCategory === itemCategory) {
-    if (oldCode.itemUpc.itemNumber === parseInt(itemUpc.itemNumber)) {
-      const sum = parseInt(itemUpc.itemNumber) + 1
-      await itemSchema.create({
-        typeItem,itemName,itemStore,unit
-        ,itemDimension,
-        itemWeight,itemCategory,itemUpc:{
-          itemNumber: sum ,
-          newCode: itemUpc.newCode
-        },itemManufacturer,
-        itemBrand,itemCostPrice,
-        itemQuantity,itemSellingPrice,itemDescription,
-        stockOnHand,Creates
-      ,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
+  
+    const matchStage = branchId ? { branchId, itemCategory } : { itemCategory };
+    const aggResult = await itemSchema.aggregate([
+      { $match: matchStage },
+      { $group: { _id: null, maxNum: { $max: '$itemUpc.itemNumber' } } }
+    ]);
+    const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
+    const itemNumberInt = parseInt(itemUpc.itemNumber) || 0;
+    const finalNumber = (itemNumberInt > maxNum) ? itemNumberInt : maxNum + 1;
+    req.body.itemUpc = req.body.itemUpc || {};
+    req.body.itemUpc.itemNumber = finalNumber;
+  
+  
+        await itemSchema.create({
+          typeItem,itemName,itemStore,unit,itemDimension,
+          itemWeight,itemCategory,itemUpc:{
+            itemNumber: finalNumber ,
+            newCode: itemUpc.newCode
+          },itemManufacturer,
+          itemBrand,itemCostPrice,
+          itemQuantity,itemSellingPrice,itemDescription,
+          stockOnHand,Creates,
+          branchId
+        }).then((result)=>{
+          res.json({ data: result, message: "Data successfully added.", status: 200 });
+        }).catch((err)=>{
+          return next(err);
         });
-      }).catch((err)=>{
-        return next(err)
-      })
-     } else {
-      await itemSchema.create({
-        typeItem,itemName,itemStore,unit
-        ,itemDimension,
-        itemWeight,itemCategory,itemUpc,itemManufacturer,
-        itemBrand,itemCostPrice,
-        itemQuantity,itemSellingPrice,itemDescription,
-        stockOnHand,Creates
-      ,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
+  );
       }).catch((err)=>{
         return next(err)
       }) }
@@ -2453,65 +2416,42 @@ Route.route("/create-estimation").post(async (req, res, next) => {
 } = req.body
  try {
   const branchId = req.body.branchId || req.query.branchId;
-  const estimateNumberOld = await estimationSchema.findOne(branchId ? { branchId } : {}).sort({
-    estimateNumber: -1
-  }).exec();
-  if (estimateNumberOld && estimateNumberOld.estimateNumber === estimateNumber) {
-    const sum = estimateNumber + 1
-    await estimationSchema.create({
-      branchId: req.body.branchId,
-      branchId: req.body.branchId,
-      customerName,
-      estimateNumber: sum,
-      estimateDate,
-      estimateDefect,
-      estimateSubject,
-      status,
-      items,noteInfo,
-      subTotal,
-      total,
-      totalW,
-      note,
-      estimateName: "EST-00"+sum,
-      Create,balanceDue,
-      terms,shipping,
-      adjustment,adjustmentNumber,
-      totalInvoice,Ref,ReferenceName
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-  } else {
-    await estimationSchema.create({
-      customerName,
-      estimateNumber,
-      estimateDate,
-      estimateDefect,
-      estimateSubject,
-      status,
-      items,
-      subTotal,
-      total,
-      totalW,
-      note,
-      estimateName,noteInfo,
-      Create,
-      terms,shipping,balanceDue,
-      adjustment,adjustmentNumber,
-      totalInvoice,Ref,ReferenceName
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
+  
+      const matchStage = branchId ? { branchId } : {};
+      const aggResult = await estimationSchema.aggregate([
+        { $match: matchStage },
+        { $group: { _id: null, maxNum: { $max: '$estimateNumber' } } }
+      ]);
+      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
+      const finalNumber = (estimateNumber && estimateNumber > maxNum) ? estimateNumber : maxNum + 1;
+      req.body.estimateNumber = finalNumber;
+      req.body.estimateName = 'QT-' + String(finalNumber).padStart(6, '0');
+  
+  
+        await estimationSchema.create({
+          branchId,
+          customerName,
+          estimateNumber: finalNumber,
+          estimateDate,
+          estimateDefect,
+          estimateSubject,
+          status,
+          items,
+          subTotal,
+          total,
+          totalW,
+          note,
+          estimateName: 'QT-' + String(finalNumber).padStart(6, '0'),
+          Create,balanceDue,
+          terms,shipping,noteInfo,
+          adjustment,adjustmentNumber,
+          totalInvoice,Ref,ReferenceName
+        }).then((result)=>{
+          res.json({ data: result, message: "Data successfully added.", status: 200 });
+        }).catch((err)=>{
+          return next(err);
+        });
+  );
     }).catch((err)=>{
       return next(err)
     })
@@ -2910,70 +2850,27 @@ Route.route("/get-last-saved-project").get(async(req,res, next)=>{
 })
 // Create projects
 Route.route("/create-projects").post(async (req, res, next) => {
- // await projectSchema
- const{
-  customerName,
-  projectName,
-  status,
-  phase,
-  description,
-  startDate,
-  visitDate,
-  projectNumber,Create
-} = req.body
- try {
-  const branchId = req.body.branchId || req.query.branchId;
-  const projectNumberInfo = await projectSchema.findOne(branchId ? { branchId } : {}).sort({
-    projectNumber: -1
-  }).exec();
-  if (projectNumberInfo && projectNumberInfo.projectNumber === projectNumber) {
-    await projectSchema.create({
-      customerName,
-      projectName,
-      status,
-      phase,
-      description,
-      startDate,
-      visitDate,
-      projectNumber: projectNumber + 1
-      ,Create
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-  } else {
-    await projectSchema.create({
-      customerName,
-      projectName,
-      status,
-      phase,
-      description,
-      startDate,
-      visitDate,
-      projectNumber,Create
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-  }
- } catch (error) {
-  next(error);
- }
+   const { customerName, projectName, status, phase, description, startDate, visitDate, projectNumber, Create } = req.body;
+   try {
+    const branchId = req.body.branchId || req.query.branchId || 'HQ';
+    const matchStage = branchId ? { branchId } : {};
+    const aggResult = await projectSchema.aggregate([
+      { $match: matchStage },
+      { $group: { _id: null, maxNum: { $max: '$projectNumber' } } }
+    ]);
+    const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
+    const finalNumber = (projectNumber && projectNumber > maxNum) ? projectNumber : maxNum + 1;
+
+    const result = await projectSchema.create({
+      customerName, projectName, status, phase, description, startDate, visitDate, 
+      projectNumber: finalNumber, Create, branchId
+    });
+    res.json({ data: result, message: "Data successfully added.", status: 200 });
+   } catch (err) {
+     return next(err);
+   }
 });
 
-// Get single projects
 Route.route("/get-projects/:id").get(async (req, res, next) => {
   await projectSchema
     .findById(req.params.id, req.body)
@@ -3071,12 +2968,17 @@ Route.route("/expense-Information").get(async (req, res) => {
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
-        { expenseNumber: isNaN(Number(search)) ? null : Number(search) },
-        { description: regex },
-        { accountName: regex },
-        { 'employeeName.employee': regex },
-        { 'expenseCategory.expensesCategory': regex },
-        { 'accountNameInfo.name': regex },
+        { itemNumber: isNaN(Number(search)) ? null : Number(search) },
+        { itemName: regex },
+        { itemDescription: regex },
+        { itemBrand: regex },
+        { category: regex },
+        { subCategory: regex },
+        { model: regex },
+        { location: regex },
+        { note: regex },
+        { 'itemUpc.newCode': regex },
+        { 'itemUpc.itemNumber': regex }
       ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
@@ -3244,16 +3146,23 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
         { serviceNumber: isNaN(Number(search)) ? null : Number(search) },
+        { serviceName: regex },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
         { status: regex },
         { brand: regex },
         { model: regex },
+        { serialNo: regex },
+        { note: regex },
+        { actionTaken: regex },
         { defectDescription: regex },
         { 'items.itemName': regex },
         { 'items.itemBrand': regex },
         { 'items.itemDescription': regex },
         { 'customerName.customerName': regex },
+        { 'customerName.customerEmail': regex },
+        { 'customerName.customerPhone': regex },
+        { 'customerName.billingAddress': regex }
       ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
@@ -3938,10 +3847,24 @@ Route.route("/get-last-saved-itemOut").get(async(req,res, next)=>{
 // Create itemOut
 Route.route("/create-itemOut").post(async (req, res, next) => {
   try {
-    const branchId = req.body.branchId;
+    const branchId = req.body.branchId || 'HQ';
+    let newOutNumber = req.body.outNumber;
+    
+    if (newOutNumber !== undefined) {
+      const existing = await itemOutSchema.findOne({ branchId, outNumber: newOutNumber }).exec();
+      if (existing) {
+        const last = await itemOutSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
+        newOutNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
+        req.body.outNumber = newOutNumber;
+      }
+    }
+
     const result = await itemOutSchema.create(req.body);
     res.json({ data: result, message: "Data successfully added.", status: 200 });
   } catch (err) {
+    if (err.code === 11000) {
+      return res.status(500).json({ message: "Duplicate Item Out number detected. Please refresh and try again.", error: err });
+    }
     return next(err);
   }
 });
@@ -4056,18 +3979,27 @@ Route.route("/get-last-saved-purchaseOrder").get(async(req,res, next)=>{
 })
 // Create purchaseOrder
 Route.route("/create-purchaseOrder").post(async (req, res, next) => {
-  await purchaseOrderSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
+  try {
+    const branchId = req.body.branchId || 'HQ';
+    let newNumber = req.body.outNumber;
+    
+    if (newNumber !== undefined) {
+      const existing = await purchaseOrderSchema.findOne({ branchId, outNumber: newNumber }).exec();
+      if (existing) {
+        const last = await purchaseOrderSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
+        newNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
+        req.body.outNumber = newNumber;
+      }
+    }
+
+    const result = await purchaseOrderSchema.create(req.body);
+    res.json({ data: result, message: "Data successfully added.", status: 200 });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(500).json({ message: "Duplicate number detected. Please refresh and try again.", error: err });
+    }
+    return next(err);
+  }
 });
 
 // Get single purchaseOrder
@@ -4195,7 +4127,7 @@ Route.route("/update-grantAccess/:id").put(async (req, res, next) => {
     .findByIdAndUpdate(
       req.params.id,
       {
-        $set: { employeeName, userID, modules, branches, costVisibility, branchId },
+        $set: { employeeName, userID, modules, branches, branchId },
       },
       { new: true }
     )
@@ -4301,10 +4233,24 @@ Route.route("/get-last-saved-itemReturn").get(async(req,res, next)=>{
 // Create itemReturn
 Route.route("/create-itemReturn").post(async (req, res, next) => {
   try {
-    const branchId = req.body.branchId;
+    const branchId = req.body.branchId || 'HQ';
+    let newNumber = req.body.outNumber;
+    
+    if (newNumber !== undefined) {
+      const existing = await itemReturnSchema.findOne({ branchId, outNumber: newNumber }).exec();
+      if (existing) {
+        const last = await itemReturnSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
+        newNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
+        req.body.outNumber = newNumber;
+      }
+    }
+
     const result = await itemReturnSchema.create(req.body);
     res.json({ data: result, message: "Data successfully added.", status: 200 });
   } catch (err) {
+    if (err.code === 11000) {
+      return res.status(500).json({ message: "Duplicate number detected. Please refresh and try again.", error: err });
+    }
     return next(err);
   }
 });
@@ -4587,15 +4533,15 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
         { itemPurchaseNumber: isNaN(Number(search)) ? null : Number(search) },
-        { manufacturerNumber: regex },
-        { manufacturer: regex },
-        { reason: regex },
-        { status: regex },
         { description: regex },
+        { manufacturer: regex },
+        { manufacturerNumber: regex },
+        { status: regex },
+        { note: regex },
         { 'items.itemName': regex },
-        { 'items.itemBrand': regex },
         { 'items.itemDescription': regex },
         { 'projectName.name': regex },
+        { reason: regex }
       ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
@@ -4631,7 +4577,16 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
   Create,totalUSD,total,totalFC,items,reason,projectName} = req.body
    try {
     const branchId = req.body.branchId || req.query.branchId;
-    const itemPurchase = await itemPurchaseSchema.findOne(branchId ? { branchId } : {}).sort({
+    
+      const matchStage = branchId ? { branchId } : {};
+      const aggResult = await itemPurchaseSchema.aggregate([
+        { $match: matchStage },
+        { $group: { _id: null, maxNum: { $max: '$itemPurchaseNumber' } } }
+      ]);
+      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
+      const finalNumber = (itemPurchaseNumber && itemPurchaseNumber > maxNum) ? itemPurchaseNumber : maxNum + 1;
+      req.body.itemPurchaseNumber = finalNumber;
+  .sort({
       itemPurchaseNumber: -1
     })
     for( const purchaseItem of items) {
@@ -4639,32 +4594,13 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
         await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
       } 
     }
-    if (itemPurchase && itemPurchase.itemPurchaseNumber === itemPurchaseNumber) {
-      await itemPurchaseSchema.create({ itemPurchaseDate,POID,itemPurchaseNumber:itemPurchaseNumber + 1,
-        manufacturer,manufacturerNumber,manufacturerID,status,
-        description,note,
-      Create,totalUSD,total,totalFC,items,reason,projectName,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
+    
+      await itemPurchaseSchema.create(req.body).then((result)=>{
+        res.json({ data: result, message: "Data successfully added.", status: 200 });
       }).catch((err)=>{
-        return next(err)
-      })
-
-    } else {
-      await itemPurchaseSchema.create({ itemPurchaseDate,POID,itemPurchaseNumber,
-        manufacturer,manufacturerNumber,manufacturerID,
-        description,note,status,
-       Create,totalUSD,total,totalFC,items,reason,projectName,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
+        return next(err);
+      });
+  );
       }).catch((err)=>{
         return next(err)
       })
@@ -5220,7 +5156,7 @@ Route.route("/Supplier-Information").get(async (req, res) => {
       const query = branchFilter(req);
       if (search) {
         const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [{ supplierName: regex }, { storeName: regex }, { customerPhone1: regex }, { description: regex }];
+        query.$or = [{ supplierName: regex }, { supplierCompany: regex }, { supplierEmail: regex }];
       }
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
@@ -5240,10 +5176,17 @@ Route.route("/estimation-Information").get(async (req, res) => {
     if (search) {
       const regex = new RegExp(search.split(' ').join('|'), 'i');
       query.$or = [
-        { 'customerName.customerName': regex },
-        { estimateSubject: regex },
+        { estimateNumber: isNaN(Number(search)) ? null : Number(search) },
+        { estimateName: regex },
+        { ReferenceName2: regex },
+        { ReferenceName: regex },
+        { subject: regex },
         { status: regex },
-      ];
+        { noteInfo: regex },
+        { note: regex },
+        { 'customerName.customerName': regex },
+        { 'customerName.customerEmail': regex }
+      ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
       query[filterField] = new RegExp(filterValue, 'i');
@@ -5398,7 +5341,7 @@ Route.route("/purchase-Information").get(async (req, res) => {
       const query = branchFilter(req);
       if (search) {
         const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [{ 'projectName.projectName': regex }, { description: regex }, { 'customerName.customerName': regex }];
+        query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
       }
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
@@ -5430,10 +5373,19 @@ Route.route("/project-Information").get(async (req, res) => {
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
-        const regex = new RegExp(search.split(' ').join('|'), 'i');
-        query.$or = [{ 'projectName': regex }, { 'customerName.customerName': regex }, { 'status': regex }];
-      }
-      if (filterField && filterValue) {
+      const regex = new RegExp(search.split(' ').join('|'), 'i');
+      query.$or = [
+        { projectNumber: isNaN(Number(search)) ? null : Number(search) },
+        { projectName: regex },
+        { ReferenceName: regex },
+        { status: regex },
+        { note: regex },
+        { projectDescription: regex },
+        { 'customerName.customerName': regex },
+        { 'customerName.customerEmail': regex }
+      ].filter(condition => condition !== null);
+    }
+    if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
       const itemI = await projectSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));

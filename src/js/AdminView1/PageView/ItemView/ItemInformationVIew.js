@@ -687,7 +687,7 @@ function ItemInformationVIew() {
                           onClose={handleCloseMenu}
                           TransitionComponent={Fade}
                         >
-                          <MenuItem disabled={ItemInfoU.length === 0 && user.data.role !== 'CEO'}>
+                          <MenuItem disabled={ItemInfoU.length === 0}>
                             <NavLink to={`/ItemFormUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                               <EditIcon />
                               <Typography>Edit</Typography>

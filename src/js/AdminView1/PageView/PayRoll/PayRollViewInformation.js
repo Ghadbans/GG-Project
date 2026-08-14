@@ -625,7 +625,7 @@ function PayRollViewInformation() {
                                           onClose={handleCloseMenu}
                                           TransitionComponent={Fade}
                                         >
-                                          <MenuItem disabled={PRollInfoU.length === 0 && user.data.role !== 'CEO'}>
+                                          <MenuItem disabled={PRollInfoU.length === 0}>
                                             <NavLink to={`/PayRollUpdateFormView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                               <EditIcon />
                                               <Typography>Edit</Typography>

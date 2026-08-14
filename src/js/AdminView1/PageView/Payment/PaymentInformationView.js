@@ -455,7 +455,7 @@ function PaymentInformationView() {
                                         onClose={handleCloseMenu}
                                         TransitionComponent={Fade}
                                       >
-                                        <MenuItem disabled={PaymentInfoU.length === 0 && user.data.role !== 'CEO'}>
+                                        <MenuItem disabled={PaymentInfoU.length === 0}>
                                           <NavLink to={`/PaymentInformationUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                             <Edit />
                                             <Typography>Edit</Typography>

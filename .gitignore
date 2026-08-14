@@ -8,8 +8,3 @@ GG Backup 08Feb26/
 *.asar
 .vercel
 backup_extracts/
-dist2/
-*.exe
-*.zip
-*.rar
-BACKUP SYSTEM 26JUNE26/

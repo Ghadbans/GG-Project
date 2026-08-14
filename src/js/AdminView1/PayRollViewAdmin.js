@@ -485,7 +485,7 @@ function PayRollViewAdmin() {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={PRollInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={PRollInfoV.length === 0}>
               <NavLink to={`/PayRollViewInformation/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -498,7 +498,7 @@ function PayRollViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={PRollInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={PRollInfoU.length === 0}>
               <NavLink to={`/PayRollUpdateFormView/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -511,7 +511,7 @@ function PayRollViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={PRollInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={handleOpenAll} disabled={PRollInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -602,7 +602,7 @@ function PayRollViewAdmin() {
                     <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                       <ViewTooltip>
                         <span>
-                          <IconButton disabled={PRollInfoC.length === 0 && user.data.role !== 'CEO'}>
+                          <IconButton disabled={PRollInfoC.length === 0}>
                             <NavLink to={'/PayRollFormView'} className='LinkName'>
                               <span className='btnCustomerAdding'>
                                 <Add />

@@ -514,7 +514,7 @@ function SellShopInvoiceView() {
   }
 
   const rowRenderer = (params) => {
-    if (hiddenRow.includes(params.row._id) && user.data.role !== 'CEO') {
+    if (hiddenRow.includes(params.row._id)) {
       return null
     }
     return <div>{params.row[params.field]}</div>
@@ -595,7 +595,7 @@ function SellShopInvoiceView() {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton onClick={() => handleOpenView(params.row._id)} hidden={InvoiceInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={() => handleOpenView(params.row._id)} hidden={InvoiceInfoV.length === 0}>
               <VisibilityIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -606,7 +606,7 @@ function SellShopInvoiceView() {
       field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={InvoiceInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={InvoiceInfoU.length === 0}>
               <NavLink to={`/ShopPosUpdateForm/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -619,7 +619,7 @@ function SellShopInvoiceView() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -708,7 +708,7 @@ function SellShopInvoiceView() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={InvoiceInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={InvoiceInfoC.length === 0}>
                           <NavLink to={'/ShopPosForm'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />

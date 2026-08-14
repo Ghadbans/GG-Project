@@ -733,7 +733,7 @@ function PurchasesViewAdminAll() {
                                       onClose={handleCloseMenu}
                                       TransitionComponent={Fade}
                                     >
-                                      <MenuItem disabled={row.statusInfo !== undefined && row.statusInfo === "Completed" && user.data.role !== 'CEO'}>
+                                      <MenuItem disabled={row.statusInfo !== undefined && row.statusInfo === "Completed"}>
                                         <NavLink to={`/PurchaseFormUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                           <EditIcon />
                                           <Typography>Edit</Typography>

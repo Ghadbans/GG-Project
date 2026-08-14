@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
-import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Modal, Grid } from '@mui/material';
+import { IconButton, styled, Typography, Box, Container, TextField, Button, MenuItem, Select, FormControl, InputLabel, Modal, Grid, Autocomplete } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import MuiDrawer from '@mui/material/Drawer';
@@ -12,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, ArrowBack, Edit, Delete } from '@mui/icons-material';
+import { Add, Close, ArrowBack, Edit, Delete, Print as PrintIcon } from '@mui/icons-material';
 import { useSelector, useDispatch } from "react-redux"
 import { selectCurrentUser } from '../features/auth/authSlice';
 import Logout from '../component/NetworkLogoutIcon';
@@ -46,9 +46,10 @@ export default function FleetFormUpdate() {
   // Grant Access
   const [grantAccess, setGrantAccess] = useState([]);
   
-  // Edit Car Modal
+  // Edit Vehicle Modal
   const [carModal, setCarModal] = useState(false);
-  const [carData, setCarData] = useState({ carMake: '', carModel: '', plateNumber: '', chassisNumber: '' });
+  const [carData, setCarData] = useState({ carMake: '', carModel: '', plateNumber: '', chassisNumber: '', branchId: '' });
+  const [branches, setBranches] = useState([]);
 
 
   // Document Modal state
@@ -60,6 +61,9 @@ export default function FleetFormUpdate() {
   const [oilModal, setOilModal] = useState(false);
   const [isEditOil, setIsEditOil] = useState(false);
   const [oilData, setOilData] = useState({ _id: '', date: '', kilometers: '', notes: '' });
+
+  // Year Filter
+  const [yearFilter, setYearFilter] = useState('All');
 
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
@@ -83,10 +87,27 @@ export default function FleetFormUpdate() {
     }
   };
 
+  const fetchBranches = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/companyProfile`);
+      if (res.data?.data?.[0]?.branches) {
+        setBranches(res.data.data[0].branches);
+      }
+    } catch (error) {
+      console.error('Error fetching branches:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBranches();
+  }, []);
+
+  const FleetInfoC = grantAccess.filter((row) => row.moduleName === "Fleet Management" && row.access.createM === true);
   const FleetInfoU = grantAccess.filter((row) => row.moduleName === "Fleet Management" && row.access.editM === true);
   const FleetInfoD = grantAccess.filter((row) => row.moduleName === "Fleet Management" && row.access.deleteM === true);
-  const canEdit = user?.data?.role === "Super Admin" || FleetInfoU.length > 0;
-  const canDelete = user?.data?.role === "Super Admin" || FleetInfoD.length > 0;
+  const canAdd = FleetInfoC.length > 0;
+  const canEdit = FleetInfoU.length > 0;
+  const canDelete = FleetInfoD.length > 0;
 
   const fetchFleet = async () => {
     try {
@@ -113,22 +134,22 @@ export default function FleetFormUpdate() {
   const handleUpdateCar = async () => {
     try {
       await axios.put(`${ENDPOINT_URL}/fleet/${id}`, carData);
-      toast.success('Car details updated');
+      toast.success('Vehicle details updated');
       setCarModal(false);
       fetchFleet();
     } catch (err) {
-      toast.error('Failed to update car details');
+      toast.error('Failed to update vehicle details');
     }
   };
 
   const handleDeleteCar = async () => {
-    if (window.confirm("Are you sure you want to delete this car and all its records?")) {
+    if (window.confirm("Are you sure you want to delete this vehicle and all its records?")) {
       try {
         await axios.delete(`${ENDPOINT_URL}/fleet/${id}`);
-        toast.success('Car deleted successfully');
+        toast.success('Vehicle deleted successfully');
         navigate('/FleetViewAdmin');
       } catch (err) {
-        toast.error('Failed to delete car');
+        toast.error('Failed to delete vehicle');
       }
     }
   };
@@ -139,7 +160,8 @@ export default function FleetFormUpdate() {
         await axios.put(`${ENDPOINT_URL}/fleet/${id}/documents/${docData._id}`, docData);
         toast.success('Document log updated');
       } else {
-        await axios.post(`${ENDPOINT_URL}/fleet/${id}/documents`, docData);
+        const { _id, ...postData } = docData;
+        await axios.post(`${ENDPOINT_URL}/fleet/${id}/documents`, postData);
         toast.success('Document log added');
       }
       setDocModal(false);
@@ -167,7 +189,8 @@ export default function FleetFormUpdate() {
         await axios.put(`${ENDPOINT_URL}/fleet/${id}/oilChanges/${oilData._id}`, oilData);
         toast.success('Oil change log updated');
       } else {
-        await axios.post(`${ENDPOINT_URL}/fleet/${id}/oilChanges`, oilData);
+        const { _id, ...postData } = oilData;
+        await axios.post(`${ENDPOINT_URL}/fleet/${id}/oilChanges`, postData);
         toast.success('Oil change log added');
       }
       setOilModal(false);
@@ -191,6 +214,17 @@ export default function FleetFormUpdate() {
 
   if (!fleet) return null;
 
+  const filteredDocuments = fleet.documents.filter(doc => yearFilter === 'All' || String(doc.year) === String(yearFilter));
+  const availableYears = ['All', ...new Set(fleet.documents.map(d => d.year))].sort();
+
+  const handlePrintDocuments = () => {
+    document.body.classList.add('printing-document-history');
+    window.print();
+    setTimeout(() => {
+        document.body.classList.remove('printing-document-history');
+    }, 1000);
+  };
+
   return (
     <div style={{ backgroundColor: '#f9f9f9', height: '100vh', width: '100%', overflowX: 'hidden' }}>
       <ToastContainer position="top-center" autoClose={3000} />
@@ -199,7 +233,7 @@ export default function FleetFormUpdate() {
         <AppBar position="absolute" open={sideBar} style={{ backgroundColor: '#202a5a' }}>
           <Toolbar sx={{ pr: '24px' }}>
             <IconButton edge="start" color="inherit" onClick={() => setSideBar(!sideBar)} sx={{ marginRight: '36px', ...(sideBar && { display: 'none' }) }}><MenuIcon /></IconButton>
-            <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>Car Details: {fleet.plateNumber}</Typography>
+            <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>Vehicle Details: {fleet.plateNumber}</Typography>
             <NotificationVIewInfo />
             <MessageAdminView name={user?.data?.userName} role={user?.data?.role} />
             <IconButton color="inherit" onClick={() => { localStorage.removeItem('token'); navigate('/LoginSystem'); }}><Logout style={{ color: 'white' }} /></IconButton>
@@ -222,14 +256,15 @@ export default function FleetFormUpdate() {
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Typography variant="h6">Overview</Typography>
                 <Box>
-                  {canEdit && <Button variant="outlined" size="small" startIcon={<Edit />} sx={{ mr: 1 }} onClick={() => { setCarData(fleet); setCarModal(true); }}>Edit Details</Button>}
-                  {canDelete && <Button variant="outlined" color="error" size="small" startIcon={<Delete />} onClick={handleDeleteCar}>Delete Car</Button>}
+                  <Button variant="outlined" size="small" startIcon={<Edit />} sx={{ mr: 1 }} disabled={!canEdit} onClick={() => { setCarData(fleet); setCarModal(true); }}>Edit Details</Button>
+                  <Button variant="outlined" color="error" size="small" startIcon={<Delete />} disabled={!canDelete} onClick={handleDeleteCar}>Delete Vehicle</Button>
                 </Box>
               </Box>
               <Grid container spacing={3} sx={{ mt: 1 }}>
                 <Grid item xs={3}><Typography color="textSecondary">Make/Model</Typography><Typography>{fleet.carMake} {fleet.carModel}</Typography></Grid>
                 <Grid item xs={3}><Typography color="textSecondary">Plate #</Typography><Typography>{fleet.plateNumber}</Typography></Grid>
                 <Grid item xs={3}><Typography color="textSecondary">Chassis #</Typography><Typography>{fleet.chassisNumber || 'N/A'}</Typography></Grid>
+                <Grid item xs={3}><Typography color="textSecondary">Branch ID</Typography><Typography>{fleet.branchId || 'HQ'}</Typography></Grid>
                 <Grid item xs={3}>
                   <FormControl fullWidth size="small">
                     <InputLabel>Status</InputLabel>
@@ -246,32 +281,60 @@ export default function FleetFormUpdate() {
 
             {/* Document History */}
             <Box sx={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', mb: 3, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2, alignItems: 'center' }}>
                 <Typography variant="h6">Document History</Typography>
-                {canEdit && <Button variant="contained" size="small" style={{ backgroundColor: '#202a5a' }} onClick={() => { setIsEditDoc(false); setDocData({ _id: '', documentName: '', year: dayjs().format('YYYY'), startDate: '', expiryDate: '', amountPaid: 0, isPaid: false, notes: '' }); setDocModal(true); }}><Add /> Add Document</Button>}
+                <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                  <FormControl size="small" sx={{ minWidth: 120 }}>
+                    <InputLabel>Filter Year</InputLabel>
+                    <Select value={yearFilter} label="Filter Year" onChange={(e) => setYearFilter(e.target.value)}>
+                      {availableYears.map(yr => (
+                        <MenuItem key={yr} value={yr}>{yr}</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <Button variant="outlined" size="small" startIcon={<PrintIcon />} onClick={handlePrintDocuments}>Print</Button>
+                  <Button variant="contained" size="small" disabled={!canAdd} style={{ backgroundColor: '#202a5a' }} onClick={() => { setIsEditDoc(false); setDocData({ _id: '', documentName: '', year: dayjs().format('YYYY'), startDate: '', expiryDate: '', amountPaid: 0, isPaid: false, notes: '' }); setDocModal(true); }}><Add /> Add Document</Button>
+                </Box>
               </Box>
-              <Box sx={{ height: 300, width: '100%', '& .row-expiring-soon': { backgroundColor: '#ffebee', '&:hover': { backgroundColor: '#ffcdd2' } } }}>
+              <Box id="printable-document-history" sx={{ height: 800, width: '100%', '& .row-expiring-soon': { backgroundColor: '#fff3e0', '&:hover': { backgroundColor: '#ffe0b2' } }, '& .row-expired': { backgroundColor: '#ffebee', '&:hover': { backgroundColor: '#ffcdd2' } } }}>
+                <Box className="print-header" sx={{ display: 'none', '@media print': { display: 'block', mb: 2, pb: 1, borderBottom: '1px solid #ccc' } }}>
+                  <Typography variant="h5">Vehicle Details: {fleet.plateNumber}</Typography>
+                  <Typography variant="subtitle1">Make/Model: {fleet.carMake} {fleet.carModel} | Chassis: {fleet.chassisNumber || 'N/A'} | Branch: {fleet.branchId || 'HQ'}</Typography>
+                </Box>
                 <DataGrid
-                  rows={fleet.documents}
+                  rows={filteredDocuments}
                   getRowId={(row) => row._id}
                   columns={[
                     { field: 'documentName', headerName: 'Document', flex: 1 },
                     { field: 'year', headerName: 'Year', width: 100 },
                     { field: 'startDate', headerName: 'Valid From', flex: 1, valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY') },
                     { field: 'expiryDate', headerName: 'Expires', flex: 1, valueFormatter: (params) => dayjs(params.value).format('DD/MM/YYYY') },
-                    { field: 'amountPaid', headerName: 'Cost', width: 120, valueFormatter: (params) => params.value != null ? `$${params.value}` : '$0' },
+                    { field: 'amountPaid', headerName: 'Cost', width: 120, valueFormatter: (params) => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(params.value || 0) },
                     { field: 'isPaid', headerName: 'Paid?', width: 100, type: 'boolean' },
                     { field: 'actions', headerName: 'Actions', width: 120, renderCell: (params) => (
                         <Box>
-                          {canEdit && <IconButton size="small" color="primary" onClick={() => { setIsEditDoc(true); setDocData(params.row); setDocModal(true); }}><Edit fontSize="small"/></IconButton>}
-                          {canDelete && <IconButton size="small" color="error" onClick={() => handleDeleteDocument(params.row._id)}><Delete fontSize="small"/></IconButton>}
+                          <IconButton size="small" color="primary" disabled={!canEdit} onClick={() => { setIsEditDoc(true); setDocData(params.row); setDocModal(true); }}><Edit fontSize="small"/></IconButton>
+                          <IconButton size="small" color="error" disabled={!canDelete} onClick={() => handleDeleteDocument(params.row._id)}><Delete fontSize="small"/></IconButton>
                         </Box>
                     )}
                   ]}
                   getRowClassName={(params) => {
-                    const diff = dayjs(params.row.expiryDate).diff(dayjs(), 'day');
-                    if (diff <= 7 && !params.row.isPaid) {
-                       return 'row-expiring-soon';
+                    const latestDocs = {};
+                    fleet.documents.forEach(doc => {
+                      const exp = dayjs(doc.expiryDate);
+                      if (!latestDocs[doc.documentName] || exp.isAfter(latestDocs[doc.documentName])) {
+                        latestDocs[doc.documentName] = exp;
+                      }
+                    });
+
+                    const isLatest = dayjs(params.row.expiryDate).isSame(latestDocs[params.row.documentName]);
+                    if (isLatest) {
+                      const diff = dayjs(params.row.expiryDate).diff(dayjs(), 'day');
+                      if (diff < 0 && !params.row.isPaid) {
+                         return 'row-expired';
+                      } else if (diff <= 7 && !params.row.isPaid) {
+                         return 'row-expiring-soon';
+                      }
                     }
                     return '';
                   }}
@@ -289,9 +352,9 @@ export default function FleetFormUpdate() {
             <Box sx={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
                 <Typography variant="h6">Oil Changes</Typography>
-                {canEdit && <Button variant="contained" size="small" style={{ backgroundColor: '#202a5a' }} onClick={() => { setIsEditOil(false); setOilData({ _id: '', date: '', kilometers: '', notes: '' }); setOilModal(true); }}><Add /> Log Oil Change</Button>}
+                <Button variant="contained" size="small" disabled={!canAdd} style={{ backgroundColor: '#202a5a' }} onClick={() => { setIsEditOil(false); setOilData({ _id: '', date: '', kilometers: '', notes: '' }); setOilModal(true); }}><Add /> Log Oil Change</Button>
               </Box>
-              <div style={{ height: 300, width: '100%' }}>
+              <div style={{ height: 500, width: '100%' }}>
                 <DataGrid
                   rows={fleet.oilChanges}
                   getRowId={(row) => row._id}
@@ -301,8 +364,8 @@ export default function FleetFormUpdate() {
                     { field: 'notes', headerName: 'Notes', flex: 2 },
                     { field: 'actions', headerName: 'Actions', width: 120, renderCell: (params) => (
                         <Box>
-                          {canEdit && <IconButton size="small" color="primary" onClick={() => { setIsEditOil(true); setOilData(params.row); setOilModal(true); }}><Edit fontSize="small"/></IconButton>}
-                          {canDelete && <IconButton size="small" color="error" onClick={() => handleDeleteOilChange(params.row._id)}><Delete fontSize="small"/></IconButton>}
+                          <IconButton size="small" color="primary" disabled={!canEdit} onClick={() => { setIsEditOil(true); setOilData(params.row); setOilModal(true); }}><Edit fontSize="small"/></IconButton>
+                          <IconButton size="small" color="error" disabled={!canDelete} onClick={() => handleDeleteOilChange(params.row._id)}><Delete fontSize="small"/></IconButton>
                         </Box>
                     )}
                   ]}
@@ -320,24 +383,52 @@ export default function FleetFormUpdate() {
         </Box>
       </Box>
 
-      {/* Edit Car Details Modal */}
+      {/* Edit Vehicle Details Modal */}
       <Modal open={carModal} onClose={() => setCarModal(false)}>
         <Box sx={modalStyle}>
-          <Typography variant="h6" mb={2}>Edit Car Details</Typography>
+          <Typography variant="h6" mb={2}>Edit Vehicle Details</Typography>
           <TextField fullWidth label="Make" size="small" sx={{ mb: 2 }} value={carData.carMake} onChange={e => setCarData({...carData, carMake: e.target.value})} />
           <TextField fullWidth label="Model" size="small" sx={{ mb: 2 }} value={carData.carModel} onChange={e => setCarData({...carData, carModel: e.target.value})} />
           <TextField fullWidth label="Plate Number" size="small" sx={{ mb: 2 }} value={carData.plateNumber} onChange={e => setCarData({...carData, plateNumber: e.target.value})} />
           <TextField fullWidth label="Chassis Number" size="small" sx={{ mb: 2 }} value={carData.chassisNumber} onChange={e => setCarData({...carData, chassisNumber: e.target.value})} />
-          <Button variant="contained" fullWidth style={{ backgroundColor: '#202a5a' }} onClick={handleUpdateCar}>Update Car Details</Button>
+          <FormControl fullWidth size="small" sx={{ mb: 3 }}>
+            <InputLabel>Branch</InputLabel>
+            <Select value={carData.branchId || 'HQ'} label="Branch" onChange={e => setCarData({...carData, branchId: e.target.value})}>
+              {branches.map(b => (
+                <MenuItem key={b.branchId} value={b.branchId}>{b.branchName} ({b.branchId})</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <Button variant="contained" fullWidth style={{ backgroundColor: '#202a5a' }} onClick={handleUpdateCar}>Update Vehicle Details</Button>
         </Box>
       </Modal>
 
       {/* Add Document Modal */}
-      <Modal open={docModal} onClose={() => setDocModal(false)}>
-        <Box sx={modalStyle}>
-          <Typography variant="h6" mb={2}>Add Document Payment Log</Typography>
-          <TextField fullWidth label="Document Name (e.g. Insurance)" size="small" sx={{ mb: 2 }} value={docData.documentName} onChange={e => setDocData({...docData, documentName: e.target.value})} />
-          <TextField fullWidth label="Year" size="small" sx={{ mb: 2 }} value={docData.year} onChange={e => setDocData({...docData, year: e.target.value})} />
+        <Modal open={docModal} onClose={() => setDocModal(false)}>
+          <Box sx={modalStyle}>
+            <Typography variant="h6" mb={2}>{isEditDoc ? 'Edit Document Payment Log' : 'Add Document Payment Log'}</Typography>
+            <Autocomplete
+              freeSolo
+              options={[
+                "CARTE ROSE (VEHICLE REGISTRATION CARD)",
+                "CONTRÔLE TECHNIQUE (ROADWORTHINESS CERTIFICATE)",
+                "STATIONNEMENT",
+                "VIGNETTE",
+                "ATTESTATION D'ASSURANCE (INSURANCE CERTIFICATE)",
+                "AUTORISATION TRANSPORT (ONLY FOR TRUCKS)"
+              ]}
+              value={docData.documentName || ''}
+              onChange={(event, newValue) => {
+                setDocData({ ...docData, documentName: newValue || '' });
+              }}
+              onInputChange={(event, newInputValue) => {
+                setDocData({ ...docData, documentName: newInputValue || '' });
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Document Name" size="small" sx={{ mb: 2 }} fullWidth />
+              )}
+            />
+            <TextField fullWidth label="Year" size="small" sx={{ mb: 2 }} value={docData.year} onChange={e => setDocData({...docData, year: e.target.value})} />
           <TextField fullWidth type="date" label="Start Date" size="small" InputLabelProps={{ shrink: true }} sx={{ mb: 2 }} value={docData.startDate} onChange={e => setDocData({...docData, startDate: e.target.value})} />
           <TextField fullWidth type="date" label="Expiry Date" size="small" InputLabelProps={{ shrink: true }} sx={{ mb: 2 }} value={docData.expiryDate} onChange={e => setDocData({...docData, expiryDate: e.target.value})} />
           <TextField fullWidth type="number" label="Amount Paid" size="small" sx={{ mb: 2 }} value={docData.amountPaid} onChange={e => setDocData({...docData, amountPaid: e.target.value})} />

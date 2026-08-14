@@ -526,39 +526,43 @@ function RolePermission() {
                           filterGrant.map((item) => (
                             <TableBody key={item._id}>
                               {
-                                item.modules.map((row, i) => (
-                                  <TableRow key={row.id}>
-                                    <TableCell>{row.id}</TableCell>
-                                    <TableCell style={{ width: '300px' }}>
-                                      {row.moduleName}
-                                    </TableCell>
-                                    <TableCell style={{ textAlign: 'center' }}>
-                                      <Checkbox
-                                        checked={row.access.readM}
-                                      />
-                                    </TableCell>
-                                    <TableCell style={{ textAlign: 'center' }}>
-                                      <Checkbox
-                                        checked={row.access.createM}
-                                      />
-                                    </TableCell>
-                                    <TableCell style={{ textAlign: 'center' }}>
-                                      <Checkbox
-                                        checked={row.access.viewM}
-                                      />
-                                    </TableCell>
-                                    <TableCell style={{ textAlign: 'center' }}>
-                                      <Checkbox
-                                        checked={row.access.editM}
-                                      />
-                                    </TableCell>
-                                    <TableCell style={{ textAlign: 'center' }}>
-                                      <Checkbox
-                                        checked={row.access.deleteM}
-                                      />
-                                    </TableCell>
-                                  </TableRow>
-                                ))
+                                item.modules.map((row, i) => {
+                                  const hiddenModules = ['Admin', 'User', 'Role', 'Item-Category', 'Stock', 'Asset', 'Account'];
+                                  if (hiddenModules.includes(row.moduleName)) return null;
+                                  return (
+                                    <TableRow key={row.id}>
+                                      <TableCell>{row.id}</TableCell>
+                                      <TableCell style={{ width: '300px' }}>
+                                        {row.moduleName === 'Estimate' ? 'Quotation' : row.moduleName}
+                                      </TableCell>
+                                      <TableCell style={{ textAlign: 'center' }}>
+                                        <Checkbox
+                                          checked={row.access.readM}
+                                        />
+                                      </TableCell>
+                                      <TableCell style={{ textAlign: 'center' }}>
+                                        <Checkbox
+                                          checked={row.access.createM}
+                                        />
+                                      </TableCell>
+                                      <TableCell style={{ textAlign: 'center' }}>
+                                        <Checkbox
+                                          checked={row.access.viewM}
+                                        />
+                                      </TableCell>
+                                      <TableCell style={{ textAlign: 'center' }}>
+                                        <Checkbox
+                                          checked={row.access.editM}
+                                        />
+                                      </TableCell>
+                                      <TableCell style={{ textAlign: 'center' }}>
+                                        <Checkbox
+                                          checked={row.access.deleteM}
+                                        />
+                                      </TableCell>
+                                    </TableRow>
+                                  );
+                                })
                               }
                             </TableBody>
                           ))

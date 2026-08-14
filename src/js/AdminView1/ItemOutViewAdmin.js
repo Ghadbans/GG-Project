@@ -548,7 +548,7 @@ function ItemOutViewAdmin() {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={ItemOInfoV.length === 0 && user.data.role !== 'CEO'} onClick={() => handleOpenView(params.row._id)}>
+            <IconButton disabled={ItemOInfoV.length === 0} onClick={() => handleOpenView(params.row._id)}>
               <VisibilityIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -559,7 +559,7 @@ function ItemOutViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={ItemOInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={ItemOInfoU.length === 0}>
               <NavLink to={`/ItemOutViewUpdate/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -572,7 +572,7 @@ function ItemOutViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={ItemOInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={ItemOInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -690,7 +690,7 @@ function ItemOutViewAdmin() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={ItemOInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={ItemOInfoC.length === 0}>
                           <NavLink to={'/ItemOutViewForm'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />

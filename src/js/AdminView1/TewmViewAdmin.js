@@ -404,7 +404,7 @@ function TewmViewAdmin() {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={EmployeeInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={EmployeeInfoV.length === 0}>
               <NavLink to={`/EmployeeViewAdminAll/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -418,7 +418,7 @@ function TewmViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 50, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={EmployeeInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={EmployeeInfoU.length === 0}>
               <NavLink to={`/EmployeeUpdateView/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -431,7 +431,7 @@ function TewmViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={EmployeeInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={handleOpenAll} disabled={EmployeeInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -680,7 +680,7 @@ function TewmViewAdmin() {
                         <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                           <ViewTooltip>
                             <span>
-                              <IconButton disabled={EmployeeInfoC.length === 0 && user.data.role !== 'CEO'}>
+                              <IconButton disabled={EmployeeInfoC.length === 0}>
                                 <NavLink to={'/EmployeeFormView'} className='LinkName'>
                                   <span className='btnCustomerAdding'>
                                     <Add />

@@ -720,7 +720,7 @@ const toggleDrawer = () => {
                                     {field: 'view', headerName: 'View', width:50, renderCell:(params)=> (
                                       <ViewTooltip title="View">
                                       <span>
-                                         <IconButton disabled={PaymentInfoV.length === 0 && user.data.role !== 'CEO'}>
+                                         <IconButton disabled={PaymentInfoV.length === 0}>
                                          <NavLink to={`/PaymentInformationView/${params.row._id}`} className='LinkName'>
                                          <VisibilityIcon style={{color:'#202a5a'}}/> 
                                          </NavLink>
@@ -732,7 +732,7 @@ const toggleDrawer = () => {
                                     {field: 'edit', headerName: 'Edit', width:50, renderCell:(params)=> (
                                       <EditTooltip title="Edit">
                                       <span> 
-                                  <IconButton disabled={PaymentInfoU.length === 0 && user.data.role !== 'CEO'}>
+                                  <IconButton disabled={PaymentInfoU.length === 0}>
                                   <NavLink to={`/PaymentInformationUpdate/${params.row._id}`} className='LinkName'>
                                   <EditIcon style={{color:'gray'}}/>
                                   </NavLink>
@@ -742,7 +742,7 @@ const toggleDrawer = () => {
                                        
                                     ) },  {field: 'Delete', headerName: 'Delete', width:50, renderCell:(params)=> (
                                       <DeleteTooltip title="Delete">
-                                        <span>                  <IconButton onClick={() => handleOpen(params.row._id)} hidden={PaymentInfoD.length === 0 && user.data.role !== 'CEO'}>
+                                        <span>                  <IconButton onClick={() => handleOpen(params.row._id)} hidden={PaymentInfoD.length === 0}>
                                                                 <DeleteIcon  style={{cursor:'pointer',color:'red'}}/> 
                                                                 </IconButton>
                                                                 </span>
@@ -912,7 +912,7 @@ const toggleDrawer = () => {
            <section style={{position:'relative',float:'right',margin:'10px'}}>
       <ViewTooltip>
           <span>
-             <IconButton hidden={PaymentInfoC.length === 0 && user.data.role !== 'CEO'}>
+             <IconButton hidden={PaymentInfoC.length === 0}>
              <NavLink to={'/PaymentInformationForm'} className='LinkName'>
              <span className='btnCustomerAdding'>
              <Add /> 

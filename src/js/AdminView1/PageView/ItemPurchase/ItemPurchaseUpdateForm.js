@@ -993,7 +993,13 @@ function ItemPurchaseUpdateForm() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
+    const itemsWithoutData = items.map(({ data, contentType, _id, ...rest }) => {
+      const item = { ...rest };
+      if (_id && _id !== '') {
+        item._id = _id;
+      }
+      return item;
+    });
     const data = {
       itemPurchaseDate,
       itemPurchaseNumber,

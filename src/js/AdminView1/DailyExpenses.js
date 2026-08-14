@@ -617,7 +617,7 @@ function DailyExpenses() {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={DailyEInfoV.length === 0 && user.data.role !== 'CEO'} onClick={() => handleOpenView(params.row._id)}>
+            <IconButton disabled={DailyEInfoV.length === 0} onClick={() => handleOpenView(params.row._id)}>
               <VisibilityIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -629,7 +629,7 @@ function DailyExpenses() {
         <EditTooltip title="Edit">
           <span>
             <IconButton>
-              <NavLink to={`/DailyExpenseUpdate/${params.row._id}`} className='LinkName' disabled={DailyEInfoU.length === 0 && user.data.role !== 'CEO'}>
+              <NavLink to={`/DailyExpenseUpdate/${params.row._id}`} className='LinkName' disabled={DailyEInfoU.length === 0}>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
             </IconButton>
@@ -641,7 +641,7 @@ function DailyExpenses() {
     {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={DailyEInfoD.length === 0 && user.data.role !== 'CEO'} >
+          <span>                  <IconButton onClick={() => handleOpen(params.row._id)} disabled={DailyEInfoD.length === 0} >
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -746,7 +746,7 @@ function DailyExpenses() {
                     <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                       <ViewTooltip>
                         <span>
-                          <IconButton disabled={DailyEInfoC.length === 0 && user.data.role !== 'CEO'}>
+                          <IconButton disabled={DailyEInfoC.length === 0}>
                             <NavLink to={'/DailyExpenseForm'} className='LinkName'>
                               <span className='btnCustomerAdding'>
                                 <Add />

@@ -1010,7 +1010,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                           onClose={handleCloseMenu}
                                           TransitionComponent={Fade}
                                         >
-                                          <MenuItem disabled={row.status === 'Converted' && MaintenanceInfoU.length === 0 && user.data.role !== 'CEO'}>
+                                          <MenuItem disabled={row.status === 'Converted' && MaintenanceInfoU.length === 0}>
                                             <NavLink to={`/MaintenanceUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                               <EditIcon />
                                               <Typography>Edit</Typography>

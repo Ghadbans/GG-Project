@@ -26,8 +26,8 @@ export default function NetworkLogoutIcon({ style, ...props }) {
             if (controllerRef.current) controllerRef.current.abort();
         }, 4000);
 
-        // Ping the Railway backend to accurately reflect if the server is reachable
-        await fetch(`${API_BASE_URL}/`, { mode: 'no-cors', cache: 'no-store', signal });
+        // Ping a public reliable endpoint to check network status without hitting the API and causing 404 console spam
+        await fetch(`https://www.google.com/favicon.ico`, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal });
         clearTimeout(timeoutId);
 
         const duration = Date.now() - startTime;

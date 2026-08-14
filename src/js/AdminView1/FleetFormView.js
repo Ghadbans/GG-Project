@@ -74,9 +74,28 @@ export default function FleetFormView() {
   const [plateNumber, setPlateNumber] = useState('');
   const [chassisNumber, setChassisNumber] = useState('');
   const [status, setStatus] = useState('Running');
+  const [branchId, setBranchId] = useState('');
+  const [branches, setBranches] = useState([]);
 
   const user = useSelector(selectCurrentUser);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const fetchBranches = async () => {
+      try {
+        const res = await axios.get(`${ENDPOINT_URL}/companyProfile`);
+        if (res.data?.data?.[0]?.branches) {
+          setBranches(res.data.data[0].branches);
+          if (res.data.data[0].branches.length > 0) {
+            setBranchId(localStorage.getItem('selectedBranch') || 'HQ');
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching branches:', error);
+      }
+    };
+    fetchBranches();
+  }, []);
 
   const toggleDrawer = () => {
     setSideBar(!sideBar);
@@ -96,9 +115,9 @@ export default function FleetFormView() {
     }
     try {
       const res = await axios.post(`${ENDPOINT_URL}/fleet`, {
-        carMake, carModel, plateNumber, chassisNumber, status, branchId: user.data.branchId || 'HQ'
+        carMake, carModel, plateNumber, chassisNumber, status, branchId: branchId || 'HQ'
       });
-      toast.success('Car added successfully!');
+      toast.success('Vehicle added successfully!');
       setTimeout(() => {
         navigate('/FleetViewAdmin');
       }, 1500);
@@ -118,7 +137,7 @@ export default function FleetFormView() {
               <MenuIcon />
             </IconButton>
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-              Add New Car
+              Add New Vehicle
             </Typography>
             <NotificationVIewInfo />
             <MessageAdminView name={user?.data?.userName} role={user?.data?.role} />
@@ -138,10 +157,10 @@ export default function FleetFormView() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Box component="form" onSubmit={handleSubmit} sx={{ backgroundColor: 'white', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
-               <Typography variant="h5" sx={{ mb: 3 }}>Car Information</Typography>
+               <Typography variant="h5" sx={{ mb: 3 }}>Vehicle Information</Typography>
                <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: '20px' }}>
-                  <TextField label="Car Make" variant="outlined" value={carMake} onChange={e => setCarMake(e.target.value)} required sx={{ flex: '1 1 45%' }} />
-                  <TextField label="Car Model" variant="outlined" value={carModel} onChange={e => setCarModel(e.target.value)} required sx={{ flex: '1 1 45%' }} />
+                  <TextField label="Vehicle Make" variant="outlined" value={carMake} onChange={e => setCarMake(e.target.value)} required sx={{ flex: '1 1 45%' }} />
+                  <TextField label="Vehicle Model" variant="outlined" value={carModel} onChange={e => setCarModel(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <TextField label="Plate Number" variant="outlined" value={plateNumber} onChange={e => setPlateNumber(e.target.value)} required sx={{ flex: '1 1 45%' }} />
                   <TextField label="Chassis Number" variant="outlined" value={chassisNumber} onChange={e => setChassisNumber(e.target.value)} sx={{ flex: '1 1 45%' }} />
                   <FormControl sx={{ flex: '1 1 45%' }}>
@@ -153,10 +172,18 @@ export default function FleetFormView() {
                       <MenuItem value="Damaged">Damaged</MenuItem>
                     </Select>
                   </FormControl>
+                  <FormControl sx={{ flex: '1 1 45%' }}>
+                    <InputLabel>Branch</InputLabel>
+                    <Select value={branchId} label="Branch" onChange={e => setBranchId(e.target.value)}>
+                      {branches.map(b => (
+                        <MenuItem key={b.branchId} value={b.branchId}>{b.branchName} ({b.branchId})</MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
                </Box>
                <Box sx={{ mt: 4, display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                   <Button variant="outlined" color="secondary" onClick={() => navigate('/FleetViewAdmin')}>Cancel</Button>
-                  <Button variant="contained" type="submit" style={{ backgroundColor: '#202a5a' }}>Save Car</Button>
+                  <Button variant="contained" type="submit" style={{ backgroundColor: '#202a5a' }}>Save Vehicle</Button>
                </Box>
             </Box>
           </Container>

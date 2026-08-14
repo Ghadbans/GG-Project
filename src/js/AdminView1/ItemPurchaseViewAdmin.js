@@ -486,7 +486,8 @@ function ItemPurchaseViewAdmin() {
   }
   const handleDeleteCloseLoading = () => {
     setModalDeleteOpenLoading(false);
-    handleDeleteOpenLoading(); // Permanently disabled for instant responsiveness
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
 
   const handleCreateNotification = async () => {
@@ -766,7 +767,7 @@ function ItemPurchaseViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton onClick={() => handleOpenView(params.row._id)} disabled={PurchaseInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton onClick={() => handleOpenView(params.row._id)} disabled={PurchaseInfoV.length === 0}>
               <VisibilityOutlinedIcon style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
@@ -777,7 +778,7 @@ function ItemPurchaseViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={PurchaseInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={PurchaseInfoU.length === 0}>
               <NavLink to={`/ItemPurchaseUpdateForm/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -790,7 +791,7 @@ function ItemPurchaseViewAdmin() {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
-            <IconButton onClick={() => handleOpen(params.row._id)} disabled={PurchaseInfoD.length === 0 && user.data.role !== 'CEO'} >
+            <IconButton onClick={() => handleOpen(params.row._id)} disabled={PurchaseInfoD.length === 0} >
               <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
             </IconButton>
           </span>

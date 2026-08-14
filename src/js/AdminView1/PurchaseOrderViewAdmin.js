@@ -436,7 +436,7 @@ function PurchaseOrderViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={InvoiceInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={InvoiceInfoV.length === 0}>
               <NavLink to={`/PurchaseOrderInfoView/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -449,7 +449,7 @@ function PurchaseOrderViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={InvoiceInfoU.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={InvoiceInfoU.length === 0}>
               <NavLink to={`/PurchaseUpdateOrder/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -461,7 +461,7 @@ function PurchaseOrderViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                  <IconButton onClick={() => handleOpen(params.row._id, params.row.outNumber)} disabled={InvoiceInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                  <IconButton onClick={() => handleOpen(params.row._id, params.row.outNumber)} disabled={InvoiceInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -551,7 +551,7 @@ function PurchaseOrderViewAdmin() {
                 </div>
               </div> : (
                 <div>
-                  <NavLink to="/PurchaseForm" className='ItemsName' disabled={InvoiceInfoC.length === 0 && user.data.role !== 'CEO'} style={{ position: 'relative', float: 'right', margin: '10px' }}>
+                  <NavLink to="/PurchaseForm" className='ItemsName' disabled={InvoiceInfoC.length === 0} style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <Add className='btnCustomer' style={{ fontSize: '40px' }} />
                   </NavLink>
 

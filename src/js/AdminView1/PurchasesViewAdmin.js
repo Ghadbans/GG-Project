@@ -455,7 +455,7 @@ function PurchasesViewAdmin() {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
           <span>
-            <IconButton disabled={PurchaseInfoV.length === 0 && user.data.role !== 'CEO'}>
+            <IconButton disabled={PurchaseInfoV.length === 0}>
               <NavLink to={`/PurchasesViewAdminAll/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
@@ -468,7 +468,7 @@ function PurchasesViewAdmin() {
       field: 'edit', headerName: 'Edit', width: 60, minWidth: 60, renderCell: (params) => (
         <EditTooltip title="Edit">
           <span>
-            <IconButton disabled={PurchaseInfoU.length === 0 && user.data.role !== 'CEO'} >
+            <IconButton disabled={PurchaseInfoU.length === 0} >
               <NavLink to={`/PurchaseFormUpdate/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: 'gray' }} />
               </NavLink>
@@ -480,7 +480,7 @@ function PurchasesViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={PurchaseInfoD.length === 0 && user.data.role !== 'CEO'}>
+          <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={PurchaseInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -570,7 +570,7 @@ function PurchasesViewAdmin() {
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>
                       <span>
-                        <IconButton disabled={PurchaseInfoC.length === 0 && user.data.role !== 'CEO'}>
+                        <IconButton disabled={PurchaseInfoC.length === 0}>
                           <NavLink to={'/PurchasesFormView'} className='LinkName'>
                             <span className='btnCustomerAdding'>
                               <Add />
@@ -596,8 +596,7 @@ function PurchasesViewAdmin() {
                     </section>
                   )
                     : ''}
-                  {purchase.length > 0 ? (
-                    <Box sx={{ height: 600, width: '100%' }}>
+                  <Box sx={{ height: 600, width: '100%' }}>
                       <DataGrid
                           paginationMode="server"
                           rowCount={totalPage * limit}
@@ -628,9 +627,6 @@ function PurchasesViewAdmin() {
                         sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                       />
                     </Box>
-                  ) : <div>
-                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                  </div>}
                 </div>)
             }
           </Container>

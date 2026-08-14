@@ -883,7 +883,13 @@ const handleQty = async () => {
     e.preventDefault();
     if (saving === 'true') return;
     setSaving('true')
-    const itemsWithoutData = arrayItemRelated.map(({ data, contentType, ...rest }) => rest);
+    const itemsWithoutData = arrayItemRelated.map(({ data, contentType, _id, ...rest }) => {
+      const item = { ...rest };
+      if (_id && _id !== '') {
+        item._id = _id;
+      }
+      return item;
+    });
     let currentItemPurchaseNumber = itemPurchaseNumber;
 
     try {

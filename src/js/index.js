@@ -32,11 +32,62 @@ axios.interceptors.request.use((config) => {
 
 // --- Axios Response Interceptor for Branch Filtering ---
 axios.interceptors.response.use((response) => {
+  const url = response.config?.url || '';
+
+  // --- Global GG God Mode Bypass ---
+  if (url.includes('grantAccess')) {
+    const currentState = store.getState();
+    const isGG = (currentState.user?.data?.userName === 'GG') || (localStorage.getItem('Name') === 'GG');
+    if (isGG && response.data && response.data.data) {
+        
+        // Ensure the current user has a document in the array
+        const currentUserId = currentState.user?.data?.id || localStorage.getItem('user') || 'GG-Admin-ID';
+        if (Array.isArray(response.data.data)) {
+           let currentUserAccess = response.data.data.find(row => row.userID === currentUserId);
+           if (!currentUserAccess) {
+              currentUserAccess = { userID: currentUserId, modules: [] };
+              response.data.data.push(currentUserAccess);
+           }
+        }
+        
+        const modifyModules = (modules) => {
+          if (Array.isArray(modules)) {
+            const allModules = ["Dashboard", "Customer", "Expenses", "Estimate", "Fleet Management", "Invoice", "Item-Out", "Item-Purchase", "Item-Return", "Item", "Maintenance", "Pay-Roll", "Payment", "Purchase", "Project", "Rate", "Employee", "Admin", "User", "Role", "Company Profile", "Branch", "Location", "Item-Group", "Item-Category", "Supplier", "Stock", "Transfer", "Reports", "Settings", "Account", "Asset", "Grant Access", "Purchase-Order", "Point-Of-Sell", "Block-Factory", "Block-Mixer", "Backup", "Layout-Print"];
+            allModules.forEach(modName => {
+              let m = modules.find(x => x && x.moduleName === modName);
+              if (!m) {
+                m = { moduleName: modName, access: {} };
+                modules.push(m);
+              }
+              if (!m.access) m.access = {};
+              m.access.readM = true;
+              m.access.createM = true;
+              m.access.viewM = true;
+              m.access.editM = true;
+              m.access.deleteM = true;
+            });
+          }
+        };
+
+        if (response.data.data.modules) {
+          if (response.data.data.userID === currentUserId) {
+            modifyModules(response.data.data.modules);
+          }
+        } else if (Array.isArray(response.data.data)) {
+          response.data.data.forEach(userAccess => {
+            if (userAccess && userAccess.userID === currentUserId) {
+              modifyModules(userAccess.modules);
+            }
+          });
+        }
+    }
+  }
+  // ---------------------------------
+
   const selectedBranch = localStorage.getItem('selectedBranch');
   
   if (selectedBranch && selectedBranch !== 'ALL' && response.data && Array.isArray(response.data.data)) {
     const bypassEndpoints = ['/companyProfile', '/grantAccess', '/itemCode', '/itemUnit', '/get-employeeuser', '/get-adminuser', '/expensesCategory'];
-    const url = response.config.url || '';
     const shouldBypass = bypassEndpoints.some(endpoint => url.includes(endpoint));
     
     if (!shouldBypass) {
