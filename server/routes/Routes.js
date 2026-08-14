@@ -4586,7 +4586,7 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
       req.body.itemPurchaseNumber = finalNumber;
 
     for( const purchaseItem of items) {
-      if (purchaseItem.itemRate !== 0) {
+      if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
         await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
       } 
     }
@@ -4625,7 +4625,7 @@ Route.route("/update-itemPurchase/:id").put(async (req, res, next) => {
   try {
     if (items !== undefined){
       for( const purchaseItem of items) {
-        if (purchaseItem.itemRate !== 0) {
+        if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
           await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
         } 
       }
