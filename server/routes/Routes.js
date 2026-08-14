@@ -1296,11 +1296,6 @@ Route.route("/create-invoice").post(async (req, res, next) => {
         }).catch((err)=>{
           return next(err);
         });
-  );
-      }).catch((err)=>{
-        return next(err)
-      })
-    }
    } catch (error) {
     next(error);
    }
@@ -1568,7 +1563,7 @@ Route.route("/create-item").post(async (req, res, next) => {
   stockOnHand,Creates
 , branchId } = req.body
 try {
-  
+  if (typeItem === "Product") {
     const matchStage = branchId ? { branchId, itemCategory } : { itemCategory };
     const aggResult = await itemSchema.aggregate([
       { $match: matchStage },
@@ -1596,10 +1591,7 @@ try {
         }).catch((err)=>{
           return next(err);
         });
-  );
-      }).catch((err)=>{
-        return next(err)
-      }) }
+
   }else {
     await itemSchema.create({
       typeItem,itemName,itemStore,unit
@@ -2451,11 +2443,7 @@ Route.route("/create-estimation").post(async (req, res, next) => {
         }).catch((err)=>{
           return next(err);
         });
-  );
-    }).catch((err)=>{
-      return next(err)
-    })
-  }
+
  } catch (error) {
   next(error);
  }
@@ -4586,9 +4574,7 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
       const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
       const finalNumber = (itemPurchaseNumber && itemPurchaseNumber > maxNum) ? itemPurchaseNumber : maxNum + 1;
       req.body.itemPurchaseNumber = finalNumber;
-  .sort({
-      itemPurchaseNumber: -1
-    })
+
     for( const purchaseItem of items) {
       if (purchaseItem.itemRate !== 0) {
         await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
@@ -4600,12 +4586,8 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
       }).catch((err)=>{
         return next(err);
       });
-  );
-      }).catch((err)=>{
-        return next(err)
-      })
 
-    }
+
 
    } catch (error) {
     next(error);
