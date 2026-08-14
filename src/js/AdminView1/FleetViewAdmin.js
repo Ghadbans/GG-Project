@@ -312,7 +312,7 @@ export default function FleetViewAdmin() {
                         return expiring ? 'row-expiring-soon' : '';
                       }}
                       paginationMode="server"
-                      rowCount={totalPage * limit}
+                      rowCount={totalItemCount}
                       paginationModel={{ page: page, pageSize: limit }}
                       onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={fleets}

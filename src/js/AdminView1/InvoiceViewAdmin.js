@@ -187,6 +187,7 @@ function InvoiceViewAdmin() {
   const [filterField, setFilterField] = useState(''); // Initialize filter field state
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
@@ -806,7 +807,7 @@ function InvoiceViewAdmin() {
                         <>
                           <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={invoice}
@@ -854,7 +855,7 @@ function InvoiceViewAdmin() {
                         <>
                           <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={filteredRows}

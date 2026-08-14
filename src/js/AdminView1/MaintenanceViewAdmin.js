@@ -179,6 +179,7 @@ function MaintenanceViewAdmin() {
   const [filterField, setFilterField] = useState(''); // Initialize filter field state
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
@@ -190,7 +191,8 @@ function MaintenanceViewAdmin() {
         dateField: dayjs(item.serviceDate).format('DD/MM/YYYY'),
         visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
       }));
-      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      SetTotalPage(Math.ceil(res.data.totalItem / limit));
+      setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
       setMaintenance(formatDate);
       setLoadingData(false);
     } catch (error) {
@@ -643,7 +645,7 @@ function MaintenanceViewAdmin() {
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={maintenance}

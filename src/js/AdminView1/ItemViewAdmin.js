@@ -193,6 +193,7 @@ function ItemViewAdmin() {
   const [newPurchase, setNewPurchase] = useState([]);
   const [lowMargin, setLowMargin] = useState([]);
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
   const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
   const limit = 100;
   const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
@@ -217,7 +218,8 @@ function ItemViewAdmin() {
       const res = await axios.get(`${ENDPOINT_URL}/item-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
       if (currentRequestId !== fetchRequestId.current) return;
       setLoadingData(false);
-      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      SetTotalPage(Math.ceil(res.data.totalItem / limit));
+      setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
@@ -845,7 +847,7 @@ function ItemViewAdmin() {
                           <DataGrid
                           filterMode="server"
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={item}
@@ -891,7 +893,7 @@ function ItemViewAdmin() {
                           </section>
                           <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={newArray}

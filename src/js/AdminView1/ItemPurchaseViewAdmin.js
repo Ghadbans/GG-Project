@@ -219,6 +219,7 @@ function ItemPurchaseViewAdmin() {
   const [filterField, setFilterField] = useState(''); 
   const [filterValue, setFilterValue] = useState(''); 
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
@@ -232,7 +233,8 @@ function ItemPurchaseViewAdmin() {
         itemInfo: (item.items || []).filter(row => parseFloat(row.itemQty) > 0 || row.newDescription !== undefined).map((row) => row.itemName?.itemName || row.newDescription || ''),
         itemDescriptionInfo: (item.items || []).filter(row => parseFloat(row.itemQty) > 0 || row.newDescription !== undefined).map((row) => row.itemDescription || '')
       }));
-      SetTotalPage(Math.ceil(res.data.totalItem / limit)); 
+      SetTotalPage(Math.ceil(res.data.totalItem / limit));
+      setTotalItemCount(res.data.totalItem || 0); 
       setItemPurchase(formatDate);
       setLoadingData(false);
     } catch (error) {
@@ -834,14 +836,14 @@ function ItemPurchaseViewAdmin() {
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={itemPurchase}
                       columns={columns}
                       slots={{ toolbar: GridToolbar }}
                       onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                      slotProps={{ toolbar: { showQuickFilter: true, printOptions: { disableToolbarButton: true } } }}
+                      slotProps={{ toolbar: { showQuickFilter: true, quickFilterProps: { debounceMs: 700 }, printOptions: { disableToolbarButton: true } } }}
                       getRowClassName={(params) => newPurchase.includes(params.row._id) ? 'new-Purchase' : ''}
                       checkboxSelection disableDensitySelector filterModel={filterModel} rowSelectionModel={selectedRows}
                       onFilterModelChange={(newModel) => handleFilter(newModel)}

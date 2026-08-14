@@ -191,6 +191,7 @@ function ItemOutViewAdmin() {
   const [filterField, setFilterField] = useState(''); // Initialize filter field state
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
@@ -203,7 +204,8 @@ function ItemOutViewAdmin() {
         itemInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
         itemDescriptionInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
-      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      SetTotalPage(Math.ceil(res.data.totalItem / limit));
+      setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
       setItemOut(formatDate);
       setLoadingData(false);
     } catch (error) {
@@ -705,7 +707,7 @@ function ItemOutViewAdmin() {
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={itemOut}

@@ -181,6 +181,7 @@ function EstimateViewAdmin() {
   const [filterField, setFilterField] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
   const [selectedRows, setSelectedRows] = useState([]);
   const [reason, setReason] = useState("");
     const fetchItems = async (page, searchTerm, filterField, filterValue) => {
@@ -743,7 +744,7 @@ function EstimateViewAdmin() {
                         user.data.role === 'CEO' ? (
                           <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={estimate}
@@ -770,7 +771,7 @@ function EstimateViewAdmin() {
                           />) : (
                           <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                             rows={filteredRows}

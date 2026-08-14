@@ -175,6 +175,7 @@ function CustomerViewAdmin() {
   const [filterField, setFilterField] = useState('');
   const [filterValue, setFilterValue] = useState('');
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
 
   useEffect(() => {
@@ -561,7 +562,7 @@ function CustomerViewAdmin() {
                           checkboxSelection
                           disableDensitySelector
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                           onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}

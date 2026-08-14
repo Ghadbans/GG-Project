@@ -193,6 +193,7 @@ function PayRollViewAdmin() {
   const [filterField, setFilterField] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -632,7 +633,7 @@ function PayRollViewAdmin() {
                           : ''}
                         <DataGrid
                           paginationMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                           rows={customer}
