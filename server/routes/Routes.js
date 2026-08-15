@@ -5278,17 +5278,17 @@ Route.route("/payRoll-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       const isNum = !isNaN(Number(search)) && search.trim() !== '';
-      const num = isNum ? Number(search) : null;
       query.$or = [
+        { employeeName: regex },
         { 'employeeName.name': regex },
         { status: regex },
         { words: regex }
       ];
       if (isNum) {
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$payNumber" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$daysW" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$totalPaidDollars" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$totalNet" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $where: "this.payNumber && this.payNumber.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $where: "this.daysW && this.daysW.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $where: "this.totalPaidDollars && this.totalPaidDollars.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $where: "this.totalNet && this.totalNet.toString().match(/" + escapedSearch + "/i)" });
       }
     }
     const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5459,18 +5459,20 @@ Route.route("/expense-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       const isNum = !isNaN(Number(search)) && search.trim() !== '';
-      const num = isNum ? Number(search) : null;
       query.$or = [
         { description: regex },
         { accountName: regex },
+        { employeeName: regex },
         { 'employeeName.employee': regex },
+        { expenseCategory: regex },
         { 'expenseCategory.expensesCategory': regex },
+        { accountNameInfo: regex },
         { 'accountNameInfo.name': regex },
       ];
       if (isNum) {
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$expenseNumber" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$amount" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$total" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $where: "this.expenseNumber && this.expenseNumber.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $where: "this.amount && this.amount.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $where: "this.total && this.total.toString().match(/" + escapedSearch + "/i)" });
       }
     }
     if (filterField && filterValue) {
