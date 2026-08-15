@@ -645,18 +645,19 @@ function PayRollViewInformation() {
                                     <div ref={componentRef} className="print-container">
                                       <style type="text/css" media="print">
                                         {`
-                                          @page { size: A5 landscape; margin: 10mm; }
                                           * {
                                             -webkit-print-color-adjust: exact !important;
                                             print-color-adjust: exact !important;
                                           }
                                           .print-container {
-                                            width: 210mm !important;
-                                            max-width: 100% !important;
+                                            width: 100% !important;
                                             margin: 0 auto !important;
-                                            padding: 0 !important;
+                                            padding: 40px 0 !important;
                                           }
                                           .secondTable {
+                                            width: 75% !important;
+                                            max-width: 160mm !important;
+                                            margin: 0 auto !important;
                                             font-size: 10px !important;
                                           }
                                           td, th {
