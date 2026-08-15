@@ -674,7 +674,7 @@ function MaintenanceViewAdmin() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
-                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-50px' }} />
+                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-52px', display: 'flex', justifyContent: 'center', width: 'fit-content', margin: '0 auto' }} />
 
                   </Box>
 

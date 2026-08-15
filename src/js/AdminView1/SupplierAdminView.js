@@ -191,6 +191,7 @@ function SupplierAdminView() {
   const [filterField, setFilterField] = useState("");
   const [filterValue, setFilterValue] = useState("");
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
     const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
       const res = await axios.get(`${ENDPOINT_URL}/Supplier-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
@@ -552,7 +553,7 @@ function SupplierAdminView() {
                         <DataGrid
                           paginationMode="server"
                           filterMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                           rows={customer}

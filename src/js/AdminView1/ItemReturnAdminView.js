@@ -191,6 +191,7 @@ function ItemReturnAdminView() {
   const [filterField, setFilterField] = useState(''); // Initialize filter field state
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
   const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
@@ -203,7 +204,8 @@ function ItemReturnAdminView() {
         itemInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
         itemDescriptionInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
-      SetTotalPage(Math.ceil(res.data.totalItem / limit)); // Ensure totalPage is correctly calculated
+      SetTotalPage(Math.ceil(res.data.totalItem / limit));
+      setTotalItemCount(res.data.totalItem); // Ensure totalPage is correctly calculated
       setItemOut(formatDate);
       setLoadingData(false);
     } catch (error) {
@@ -695,7 +697,7 @@ function ItemReturnAdminView() {
                     <DataGrid
                           paginationMode="server"
                           filterMode="server"
-                          rowCount={totalPage * limit}
+                          rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
                       rows={itemOut}
@@ -723,7 +725,7 @@ function ItemReturnAdminView() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
-                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-50px' }} />
+                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-52px', display: 'flex', justifyContent: 'center', width: 'fit-content', margin: '0 auto' }} />
                   </Box>
 
                 </div>)

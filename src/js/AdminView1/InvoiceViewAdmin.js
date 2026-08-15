@@ -850,7 +850,7 @@ function InvoiceViewAdmin() {
                             page={page + 1} 
                             onChange={(e, value) => setPage(value - 1)} 
                             color="primary" 
-                            sx={{ position: 'relative', top: '-50px', zIndex: 1000, display: 'flex', justifyContent: 'flex-start' }} 
+                            sx={{ position: 'relative', top: '-52px', zIndex: 1000, display: 'flex', justifyContent: 'center', width: 'fit-content', margin: '0 auto' }} 
                           />
                         </>
                       ) : (
@@ -899,7 +899,7 @@ function InvoiceViewAdmin() {
                             page={page + 1} 
                             onChange={(e, value) => setPage(value - 1)} 
                             color="primary" 
-                            sx={{ position: 'relative', top: '-50px', zIndex: 1000, display: 'flex', justifyContent: 'flex-start' }} 
+                            sx={{ position: 'relative', top: '-52px', zIndex: 1000, display: 'flex', justifyContent: 'center', width: 'fit-content', margin: '0 auto' }} 
                           />
                         </>
                       )
