@@ -37,7 +37,7 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
            {payRoll?.filter(row=> row._id === id)?.map((row)=>{
            const related = employee.find((Item)=>Item._id === row.employeeName.id) 
             return(
-           <div key={row._id} ref={ref} style={{fontSize:'12px'}}>
+           <div key={row._id} ref={ref} style={{fontSize:'12px', width: '90%', margin: '0 auto', paddingTop: '20px', paddingBottom: '20px'}}>
              <table className="secondTable" style={{width:'100%', fontSize:'80%',marginBottom:'0px',border:'1px solid #DDD'}}>
            <thead>
              <tr>

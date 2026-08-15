@@ -643,7 +643,7 @@ function PayRollViewInformation() {
                                   <hr />
                                   <Box style={{ height: '550px', overflow: 'hidden', overflowY: 'scroll', width: '100%', background: 'white' }}>
                                     <div ref={componentRef}>
-                                      <table className="secondTable" style={{ fontSize: '80%', marginBottom: '0px', border: '1px solid #DDD' }}>
+                                      <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '0px', border: '1px solid #DDD' }}>
                                         <thead>
                                           <tr>
                                             <th colSpan={5} style={{ padding: '5px', border: '1px solid #DDD', backgroundColor: '#316FF6', color: 'white' }}>Global Gate</th>
@@ -659,43 +659,43 @@ function PayRollViewInformation() {
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Employee Name</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{row.employeeName.name ? row.employeeName.name : ''}</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Total Days</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}> {row.daysOpen}
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Employee Name</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{row.employeeName.name ? row.employeeName.name : ''}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Total Days</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}> {row.daysOpen}
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Employee Details</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{employeePhone !== undefined ? employeePhone : ''}</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>LOPs</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Employee Details</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{employeePhone !== undefined ? employeePhone : ''}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>LOPs</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               {row.Lops}
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Employee Id</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{employeeId !== undefined ? employeeId : ''}</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Paid Days</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Employee Id</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{employeeId !== undefined ? employeeId : ''}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Paid Days</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               {row.daysW}
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Grade</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{employeeRole !== undefined ? employeeRole : ''}</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Bank Name</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>{bankName !== undefined ? bankName : ''}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Grade</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{employeeRole !== undefined ? employeeRole : ''}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Bank Name</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>{bankName !== undefined ? bankName : ''}</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Date</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{dayjs(row.payDate).format('DD-MMMM-YYYY')}</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>A/C No.</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>{bankAccountNumber !== undefined ? bankAccountNumber : ''}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Date</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}>{dayjs(row.payDate).format('DD-MMMM-YYYY')}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>A/C No.</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>{bankAccountNumber !== undefined ? bankAccountNumber : ''}</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '400px', border: '1px solid #DDD', color: 'black' }} colSpan={2}>Department</td>
-                                            <td style={{ width: '400px', border: '1px solid #DDD', color: 'black' }} colSpan={3}>{department !== undefined ? department : ''}</td>
+                                            <td style={{ width: '40%', border: '1px solid #DDD', color: 'black' }} colSpan={2}>Department</td>
+                                            <td style={{ width: '40%', border: '1px solid #DDD', color: 'black' }} colSpan={3}>{department !== undefined ? department : ''}</td>
                                           </tr>
                                         </tbody>
                                         <thead>
@@ -708,74 +708,74 @@ function PayRollViewInformation() {
                                         </thead>
                                         <tbody>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Basic wage</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Basic wage</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.basicSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.basicSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.earningSalary !== undefined ? row.earningSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.earningSalary !== undefined ? row.earningSalary / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>In advanced allowances </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>In advanced allowances </td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.advancedSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.advancedSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Transport allowances</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Transport allowances</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.basicTransport?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.basicTransport / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.transportEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.transportEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Transport</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Transport</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.transportDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.transportDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Food allowances</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Food allowances</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.foodBasic !== undefined ? row.foodBasic?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.foodBasic !== undefined ? row.foodBasic / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.foodEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.foodEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Food</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Food</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.foodDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.foodDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Bounce allowances 3%</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Bounce allowances 3%</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.bounceAllowances?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.bounceAllowances / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.bounceAllowancesEarning !== undefined ? row.bounceAllowancesEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.bounceAllowancesEarning !== undefined ? row.bounceAllowancesEarning / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Loan recovery</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Loan recovery</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
 
                                               <span>{row.loan?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.loan / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Other</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Other</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.other !== undefined ? row.other?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.other !== undefined ? row.other / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.otherEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.otherEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>Item lost recovery / Deduction</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }}>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Item lost recovery / Deduction</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
                                               <span>{row.itemLost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.itemLost / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
                                             </td>
                                           </tr>
                                         </tbody>
                                       </table>
-                                      <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', color: 'black' }}>
+                                      <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', color: 'black' }}>
                                         <tbody>
                                           <tr>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Basic, Earning & Deduction)</td>
@@ -790,50 +790,50 @@ function PayRollViewInformation() {
                                           <tr>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Basic:</span> <span> FC {row.totalActualSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Earning:</span> <span> FC {row.totalActualEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Deduction:</span> <span> FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Basic:</span> <span> FC {row.totalActualSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Earning:</span> <span> FC {row.totalActualEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Deduction:</span> <span> FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Paid)</td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Net payable</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{row.totalPaidDollars?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{row.totalPaidDollars?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Deduction</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Overtime & Bonus</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.bonus?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.bonus / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.bonus?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.bonus / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Generale</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalPaid?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalPaid / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalPaid?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalPaid / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Net)</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Net payable(FC): FC{row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Net payable(FC): FC{row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }}><span>rate</span>: {row.rate}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Net payable($): ${row.totalPaidDollars?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Amount Paid(FC): FC{row.amountPayFC !== undefined ? row.amountPayFC.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Amount Paid(FC): FC{row.amountPayFC !== undefined ? row.amountPayFC.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }}>-</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Amount Paid($): ${row.amountPayUSD !== undefined ? row.amountPayUSD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Credit(FC): FC{row.CreditFC !== undefined ? row.CreditFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Credit(FC): FC{row.CreditFC !== undefined ? row.CreditFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }}>-</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Credit($): ${row.CreditUSD !== undefined ? row.CreditUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Net Words</td>
-                                            <td style={{ width: '200px', border: '1px solid #DDD', color: 'black' }} colSpan={4}>{row.words} Franc Congolais.</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>{row.words} Franc Congolais.</td>
                                           </tr>
                                         </tbody>
                                       </table>
