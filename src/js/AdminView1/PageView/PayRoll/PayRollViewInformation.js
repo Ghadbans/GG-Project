@@ -642,8 +642,29 @@ function PayRollViewInformation() {
                                   </header>
                                   <hr />
                                   <Box style={{ height: '550px', overflow: 'hidden', overflowY: 'scroll', width: '100%', background: 'white' }}>
-                                    <div ref={componentRef}>
-                                      <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '0px', border: '1px solid #DDD' }}>
+                                    <div ref={componentRef} className="print-container">
+                                      <style type="text/css" media="print">
+                                        {`
+                                          @page { size: A5 landscape; margin: 10mm; }
+                                          * {
+                                            -webkit-print-color-adjust: exact !important;
+                                            print-color-adjust: exact !important;
+                                          }
+                                          .print-container {
+                                            width: 210mm !important;
+                                            max-width: 100% !important;
+                                            margin: 0 auto !important;
+                                            padding: 0 !important;
+                                          }
+                                          .secondTable {
+                                            font-size: 10px !important;
+                                          }
+                                          td, th {
+                                            padding: 4px !important;
+                                          }
+                                        `}
+                                      </style>
+                                      <table className="secondTable" style={{ width: '100%', marginBottom: '0px', border: '1px solid #DDD' }}>
                                         <thead>
                                           <tr>
                                             <th colSpan={5} style={{ padding: '5px', border: '1px solid #DDD', backgroundColor: '#316FF6', color: 'white' }}>Global Gate</th>
@@ -775,7 +796,7 @@ function PayRollViewInformation() {
                                           </tr>
                                         </tbody>
                                       </table>
-                                      <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', color: 'black' }}>
+                                      <table className="secondTable" style={{ width: '100%', marginBottom: '5px', border: '1px solid #DDD', color: 'black' }}>
                                         <tbody>
                                           <tr>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Basic, Earning & Deduction)</td>
