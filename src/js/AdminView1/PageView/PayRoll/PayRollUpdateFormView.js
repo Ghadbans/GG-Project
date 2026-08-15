@@ -842,8 +842,8 @@ function PayRollUpdateFormView() {
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>
-                  <Grid item xs={12}>
-                    <table className="secondTable" style={{ fontSize: '20px', marginBottom: '0px', border: '1px solid #DDD' }}>
+                  <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                    <table className="secondTable" style={{ width: '100%', maxWidth: '950px', margin: '0 auto', fontSize: '14px', marginBottom: '0px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                       <thead>
                         <tr>
                           <th colSpan={5} style={{ padding: '5px', border: '1px solid #DDD', backgroundColor: '#316FF6', color: 'white' }}>Global Gate</th>
@@ -928,104 +928,104 @@ function PayRollUpdateFormView() {
                       </thead>
                       <tbody>
                         <tr>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Basic wage</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Basic wage</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {basicSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicSalaryDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {earningSalary ? earningSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {basicEarningDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>In advanced allowances </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>In advanced allowances </td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {advancedSalary !== undefined ? advancedSalary.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {basicAdvancedDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Transport allowances</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Transport allowances</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {basicTransport.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicTransportDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {transportEarning.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicTransportEarningDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Transport</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Transport</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {transportDeduction !== undefined ? transportDeduction.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {basicTransportDeductionDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Food allowances</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Food allowances</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {foodBasic.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicFoodDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {foodEarning.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicFoodEarningDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Food</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Food</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {foodDeduction !== undefined ? foodDeduction.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {basicFoodDeductionDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Bounce allowances 3%</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Bounce allowances 3%</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {bounceAllowances.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicBounceDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {bounceAllowancesEarning.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicBounceEarningDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Loan recovery</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Loan recovery</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {loan !== undefined ? loan.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {basicLoanDeductionDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Other</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Other</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {other.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicOtherDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {otherEarning.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {basicOtherEarningDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                           <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Item lost recovery / Deduction</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {itemLost !== undefined ? itemLost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {basicItemDeductionDollar.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Factory Pot</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Factory Pot</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {factoryEarned.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {(isNaN(factoryEarned / rate) ? 0 : parseFloat(factoryEarned / rate)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {factoryEarned.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                             <p>$ {(isNaN(factoryEarned / rate) ? 0 : parseFloat(factoryEarned / rate)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>Damage Penalty</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '5px' }}>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>Damage Penalty</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD', lineHeight: '1.2' }}>
                             <p>FC {factoryDamage !== undefined ? factoryDamage.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</p>
                             <p>$ {(isNaN(factoryDamage / rate) ? 0 : parseFloat(factoryDamage / rate)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
                           </td>
                         </tr>
                       </tbody>
                     </table>
-                    <table className="secondTable" style={{ fontSize: '20px', marginBottom: '5px', border: '1px solid #DDD' }}>
+                    <table className="secondTable" style={{ width: '100%', maxWidth: '950px', margin: '0 auto', fontSize: '14px', marginBottom: '5px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                       <tbody>
                         <tr>
                           <td style={{ padding: '5px', border: '1px solid #DDD', textAlign: 'center' }} colSpan={6}>Total(FC)</td>
@@ -1063,7 +1063,7 @@ function PayRollUpdateFormView() {
                         </tr>
                         <tr>
                           <td style={{ padding: '5px', border: '1px solid #DDD', textAlign: 'center' }}>Net payable(FC)</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={0}>FC {totalNet.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={2}>FC {totalNet.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                           <td style={{ padding: '5px', border: '1px solid #DDD', textAlign: 'center' }}><TextField
                             required
                             size='small'
@@ -1078,7 +1078,7 @@ function PayRollUpdateFormView() {
                         </tr>
                         <tr>
                           <td style={{ padding: '5px', border: '1px solid #DDD', textAlign: 'center' }}>Amount Paid(FC)</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={0}>
+                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={2}>
                             <TextField
                               size='small'
                               placeholder='Paying Amount FC'
@@ -1111,7 +1111,7 @@ function PayRollUpdateFormView() {
                         </tr>
                         <tr>
                           <td style={{ padding: '5px', border: '1px solid #DDD', textAlign: 'center' }}>Credit(FC)</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={0}>FC {CreditFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={2}>FC {CreditFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                           <td style={{ padding: '5px', border: '1px solid #DDD', textAlign: 'center' }}><TextField
                             required
                             size='small'
@@ -1126,7 +1126,7 @@ function PayRollUpdateFormView() {
                         </tr>
                         <tr>
                           <td style={{ border: '1px solid #DDD' }} colSpan={1}>Net Words</td>
-                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={4}>{words} Franc Congolais.</td>
+                          <td style={{ width: '200px', border: '1px solid #DDD' }} colSpan={5}>{words} Franc Congolais.</td>
                         </tr>
                       </tbody>
                     </table>

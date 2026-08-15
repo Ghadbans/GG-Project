@@ -694,6 +694,7 @@ function ItemReturnAdminView() {
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalPage * limit}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -704,6 +705,7 @@ function ItemReturnAdminView() {
                       slotProps={{
                         toolbar: {
                           showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                           printOptions: {
                             disableToolbarButton: true
                           },
@@ -721,7 +723,7 @@ function ItemReturnAdminView() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
-                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
+                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-50px' }} />
                   </Box>
 
                 </div>)

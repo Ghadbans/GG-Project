@@ -744,6 +744,7 @@ function SellShopInvoiceView() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -769,6 +770,7 @@ function SellShopInvoiceView() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },

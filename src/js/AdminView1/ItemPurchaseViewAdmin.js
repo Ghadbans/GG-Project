@@ -836,6 +836,7 @@ function ItemPurchaseViewAdmin() {
                   <Box sx={{ height: 600, width: '100%' }}>
                     <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -843,7 +844,8 @@ function ItemPurchaseViewAdmin() {
                       columns={columns}
                       slots={{ toolbar: GridToolbar }}
                       onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                      slotProps={{ toolbar: { showQuickFilter: true, quickFilterProps: { debounceMs: 700 }, printOptions: { disableToolbarButton: true } } }}
+                      slotProps={{ toolbar: { showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 }, quickFilterProps: { debounceMs: 700 }, printOptions: { disableToolbarButton: true } } }}
                       getRowClassName={(params) => newPurchase.includes(params.row._id) ? 'new-Purchase' : ''}
                       checkboxSelection disableDensitySelector filterModel={filterModel} rowSelectionModel={selectedRows}
                       onFilterModelChange={(newModel) => handleFilter(newModel)}
@@ -851,7 +853,7 @@ function ItemPurchaseViewAdmin() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
-                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
+                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-50px' }} />
                   </Box>
                 </div>
               )}

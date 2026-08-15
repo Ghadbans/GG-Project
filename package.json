@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.3.63",
+  "version": "3.3.68",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -16,7 +16,7 @@
   "author": "GG SARL(KASONGA MBAYI DANIEL)",
   "license": "ISC",
   "build": {
-    "productName": "Global Gate Setup 3.3.62",
+    "productName": "Global Gate",
     "appId": "com.globalgate.app",
     "npmRebuild": false,
     "directories": {

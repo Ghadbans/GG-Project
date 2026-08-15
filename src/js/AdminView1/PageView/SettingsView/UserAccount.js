@@ -459,6 +459,7 @@ function UserAccount() {
                   slotProps={{
                     toolbar: {
                       showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                       printOptions: {
                         disableToolbarButton: true
                       },

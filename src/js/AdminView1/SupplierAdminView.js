@@ -551,6 +551,7 @@ function SupplierAdminView() {
                           : ''}
                         <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalPage * limit}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -563,6 +564,7 @@ function SupplierAdminView() {
                           slotProps={{
                             toolbar: {
                               showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                               printOptions: {
                                 disableToolbarButton: true
                               }

@@ -856,6 +856,7 @@ function ItemViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -878,7 +879,7 @@ function ItemViewAdmin() {
                           />
 
                         </Box>
-                        <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" />
+                        <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" />
                       </Box>
                     </TabPanel>
                     <TabPanel value="2">

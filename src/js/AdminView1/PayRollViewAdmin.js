@@ -613,8 +613,7 @@ function PayRollViewAdmin() {
                         </span>
                       </ViewTooltip>
                     </section>
-                    {customer.length > 0 ? (
-                      <Box sx={{ height: 600, width: '100%' }}>
+                    <Box sx={{ height: 600, width: '100%' }}>
                         {customer.length > 0 ? (
                           <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
                             {
@@ -645,6 +644,7 @@ function PayRollViewAdmin() {
                           slotProps={{
                             toolbar: {
                               showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                               printOptions: {
                                 disableToolbarButton: true
                               }
@@ -658,9 +658,6 @@ function PayRollViewAdmin() {
                           sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                         />
                       </Box>
-                    ) : <div>
-                      <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                    </div>}
                   </div>
                 </div>)
             }

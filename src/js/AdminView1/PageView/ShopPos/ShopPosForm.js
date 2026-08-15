@@ -1459,7 +1459,7 @@ function ShopPosForm() {
                       </Grid>
                     )}
                     <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                      <Pagination count={totalPages} page={page} onChange={handlePageChange} />
+                      <Pagination count={totalPages} page={page} onChange={(e, value) => setPage(value - 1)} />
                     </Box>
                   </Paper>
                 </Grid>

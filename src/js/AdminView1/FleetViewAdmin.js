@@ -312,6 +312,7 @@ export default function FleetViewAdmin() {
                         return expiring ? 'row-expiring-soon' : '';
                       }}
                       paginationMode="server"
+                          filterMode="server"
                       rowCount={totalItemCount}
                       paginationModel={{ page: page, pageSize: limit }}
                       onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -323,6 +324,7 @@ export default function FleetViewAdmin() {
                       slotProps={{
                         toolbar: {
                           showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                           printOptions: { disableToolbarButton: true },
                         },
                       }}

@@ -600,6 +600,7 @@ function PurchasesViewAdmin() {
                   <Box sx={{ height: 600, width: '100%' }}>
                       <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -610,6 +611,7 @@ function PurchasesViewAdmin() {
                         slotProps={{
                           toolbar: {
                             showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                             printOptions: {
                               disableToolbarButton: true
                             },

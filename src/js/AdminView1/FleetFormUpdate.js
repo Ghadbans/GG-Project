@@ -342,6 +342,7 @@ export default function FleetFormUpdate() {
                   slotProps={{
                     toolbar: {
                       showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                     },
                   }}
                 />
@@ -373,6 +374,7 @@ export default function FleetFormUpdate() {
                   slotProps={{
                     toolbar: {
                       showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                     },
                   }}
                 />

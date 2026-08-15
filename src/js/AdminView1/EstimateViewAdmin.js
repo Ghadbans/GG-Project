@@ -744,6 +744,7 @@ function EstimateViewAdmin() {
                         user.data.role === 'CEO' ? (
                           <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -753,6 +754,7 @@ function EstimateViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -771,6 +773,7 @@ function EstimateViewAdmin() {
                           />) : (
                           <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -780,6 +783,7 @@ function EstimateViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },

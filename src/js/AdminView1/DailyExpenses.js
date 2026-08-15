@@ -788,6 +788,7 @@ function DailyExpenses() {
                       slotProps={{
                         toolbar: {
                           showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                           printOptions: {
                             disableToolbarButton: true
                           },
@@ -798,6 +799,7 @@ function DailyExpenses() {
                       }}
                       checkboxSelection
                       disableDensitySelector
+                      filterMode="server"
                       filterModel={filterModel}
                       rowSelectionModel={selectedRows}
                       onFilterModelChange={(newModel) => handleFilter(newModel)}
@@ -805,7 +807,7 @@ function DailyExpenses() {
                       onColumnVisibilityModelChange={handelHiddenColumn}
                       sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
                     />
-                    <Pagination count={totalPage} page={page + 1} onChange={handlePageChange} color="primary" sx={{ position: 'relative', top: '-50px' }} />
+                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-50px' }} />
                   </Box>
 
                 </div>)

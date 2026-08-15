@@ -659,6 +659,7 @@ function ProjectViewAdmin() {
                         user.data.role === 'CEO' ? (
                           <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -669,6 +670,7 @@ function ProjectViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -687,6 +689,7 @@ function ProjectViewAdmin() {
                         ) : (
                           <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -697,6 +700,7 @@ function ProjectViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },

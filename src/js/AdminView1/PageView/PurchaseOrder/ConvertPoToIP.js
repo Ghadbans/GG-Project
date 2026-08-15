@@ -41,6 +41,7 @@ import ItemFormView2 from '../ItemView/ItemFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import SupplierForm2 from '../Supplier/SupplierForm2';
+import { invalidateCache } from '../../../utils/apiCache';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -788,6 +789,7 @@ const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescr
       }
     } catch (error) {
       if (error) {
+        alert("CRITICAL ERROR IN CONVERT: " + (error.response?.data?.message || error.response?.data || error.message || String(error)));
         setSaving('')
         handleError();
       }

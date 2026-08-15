@@ -323,13 +323,16 @@ function ItemPurchaseUpdateForm() {
   }
   const handleChange = (e, idRow) => {
     const { name, value } = e.target;
-    const list = [...items];
-    const i = items.findIndex(Item => Item.idRow === idRow)
-    list[i][name] = value
-    list[i]['totalAmountUSD'] = Math.round((list[i]['itemQty'] * list[i]['itemRate']) * 100) / 100;
-    list[i]['fcConvertToUsd'] = list[i]['Taux'] && list[i]['Taux'] !== 0 ? Math.round((list[i]['totalAmountFC'] / list[i]['Taux']) * 100) / 100 : 0;
-    list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd'] || 0) + parseFloat(list[i]['totalAmount'] || 0)) * 100) / 100;
-    setItems(list);
+    setItems(items => items.map(item => {
+      if (item.idRow === idRow) {
+        const updatedItem = { ...item, [name]: value };
+        updatedItem.totalAmountUSD = Math.round((parseFloat(updatedItem.itemQty || 0) * parseFloat(updatedItem.itemRate || 0)) * 100) / 100;
+        updatedItem.fcConvertToUsd = updatedItem.Taux && updatedItem.Taux !== 0 ? Math.round((parseFloat(updatedItem.totalAmountFC || 0) / parseFloat(updatedItem.Taux)) * 100) / 100 : 0;
+        updatedItem.fcConvertToUsdTotal = Math.round((parseFloat(updatedItem.fcConvertToUsd || 0) + parseFloat(updatedItem.totalAmount || 0)) * 100) / 100;
+        return updatedItem;
+      }
+      return item;
+    }));
   }
   const addItem = () => {
     setItems([...items, {
@@ -421,13 +424,13 @@ function ItemPurchaseUpdateForm() {
     setItemInformation([newItem, ...ItemInformation])
   }
   useEffect(() => {
-    const result0 = items.reduce((sum, row) => sum + parseFloat(row.fcConvertToUsdTotal), 0)
+    const result0 = items.reduce((sum, row) => sum + parseFloat(row.fcConvertToUsdTotal || 0), 0)
     setTotalUSD(result0.toFixed(2))
-    const result1 = items.reduce((sum, row) => sum + parseFloat(row.totalAmount), 0)
+    const result1 = items.reduce((sum, row) => sum + parseFloat(row.totalAmount || 0), 0)
     setTotal(result1.toFixed(2))
-    const result2 = items.reduce((sum, row) => sum + parseFloat(row.totalAmountFC), 0)
+    const result2 = items.reduce((sum, row) => sum + parseFloat(row.totalAmountFC || 0), 0)
     setTotalFC(result2.toFixed(2))
-  })
+  }, [items])
   {/** Item Info End */ }
   {/** Update purchase start */ }
   const difference = [];

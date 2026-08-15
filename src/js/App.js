@@ -191,6 +191,26 @@ const BlockFactoryLayout = React.lazy(() => import('./BlockFactoryLayout'))
 function App() {
   useLayoutConfig();
 
+  useEffect(() => {
+    const handleGlobalError = (event) => {
+      console.error("Global Error Caught:", event.error || event.message);
+      toast.error(`App Error: ${event.message || 'Unknown error'}`);
+    };
+
+    const handleGlobalRejection = (event) => {
+      console.error("Unhandled Promise Rejection:", event.reason);
+      toast.error(`Unhandled Promise Rejection: ${event.reason?.message || 'Unknown error'}`);
+    };
+
+    window.addEventListener('error', handleGlobalError);
+    window.addEventListener('unhandledrejection', handleGlobalRejection);
+
+    return () => {
+      window.removeEventListener('error', handleGlobalError);
+      window.removeEventListener('unhandledrejection', handleGlobalRejection);
+    };
+  }, []);
+
   return (
     <>
       <Router>

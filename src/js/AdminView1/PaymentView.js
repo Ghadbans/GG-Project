@@ -933,6 +933,7 @@ const toggleDrawer = () => {
                            slotProps={{
                             toolbar: {
                               showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                               printOptions:{
                                disableToolbarButton: true
                              },
@@ -954,6 +955,7 @@ const toggleDrawer = () => {
                         slotProps={{
                          toolbar: {
                            showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                            printOptions:{
                             disableToolbarButton: true
                           },
@@ -989,6 +991,7 @@ const toggleDrawer = () => {
                   slotProps={{
                     toolbar: {
                       showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                       printOptions:{
                        disableToolbarButton: true
                      },

@@ -236,6 +236,7 @@ const columns = [
                            slotProps={{
                             toolbar: {
                               showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                               printOptions:{
                                disableToolbarButton: true
                              },
@@ -257,6 +258,7 @@ const columns = [
                         slotProps={{
                          toolbar: {
                            showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                            printOptions:{
                             disableToolbarButton: true
                           },

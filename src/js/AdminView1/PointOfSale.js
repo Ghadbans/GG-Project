@@ -410,7 +410,7 @@ function PointOfSale() {
                         <Pagination
                           count={totalPages}
                           page={page}
-                          onChange={handlePageChange}
+                          onChange={(e, value) => setPage(value - 1)}
                           color='primary'
                         />
                       </div>

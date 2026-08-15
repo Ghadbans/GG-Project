@@ -807,6 +807,7 @@ function InvoiceViewAdmin() {
                         <>
                           <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -816,6 +817,7 @@ function InvoiceViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -846,7 +848,7 @@ function InvoiceViewAdmin() {
                           <Pagination 
                             count={totalPage} 
                             page={page + 1} 
-                            onChange={handlePageChange} 
+                            onChange={(e, value) => setPage(value - 1)} 
                             color="primary" 
                             sx={{ position: 'relative', top: '-50px', zIndex: 1000, display: 'flex', justifyContent: 'flex-start' }} 
                           />
@@ -855,6 +857,7 @@ function InvoiceViewAdmin() {
                         <>
                           <DataGrid
                           paginationMode="server"
+                          filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
@@ -864,6 +867,7 @@ function InvoiceViewAdmin() {
                             slotProps={{
                               toolbar: {
                                 showQuickFilter: true,
+                          quickFilterProps: { debounceMs: 500 },
                                 printOptions: {
                                   disableToolbarButton: true
                                 },
@@ -893,7 +897,7 @@ function InvoiceViewAdmin() {
                           <Pagination 
                             count={totalPage} 
                             page={page + 1} 
-                            onChange={handlePageChange} 
+                            onChange={(e, value) => setPage(value - 1)} 
                             color="primary" 
                             sx={{ position: 'relative', top: '-50px', zIndex: 1000, display: 'flex', justifyContent: 'flex-start' }} 
                           />
