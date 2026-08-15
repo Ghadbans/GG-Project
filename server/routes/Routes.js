@@ -5282,7 +5282,14 @@ Route.route("/purchase-Information").get(async (req, res) => {
       if (search) {
         const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
-        query.$or = [{ 'projectName.name': regex }, { description: regex }, { 'customerName.customerName': regex }];
+        query.$or = [
+            { $expr: { $regexMatch: { input: { $toString: "$purchaseNumber" }, regex: escapedSearch, options: 'i' } } },
+            { $expr: { $regexMatch: { input: { $toString: "$purchaseAmount1" }, regex: escapedSearch, options: 'i' } } },
+            { 'projectName.projectName': regex },
+            { 'customerName.customerName': regex },
+            { description: regex },
+            { status: regex }
+          ];
       }
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');

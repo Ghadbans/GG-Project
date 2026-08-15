@@ -210,6 +210,7 @@ function PurchasesViewAdmin() {
       }));
       setPurchase(formatDate);
       SetTotalPage(res.data.totalPages);
+        setTotalItemCount(res.data.totalItem);
       setLoadingData(false);
     } catch (error) {
       console.error('Error fetching data:', error);
