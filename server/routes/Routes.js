@@ -1149,7 +1149,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$invoiceNumber" }, regex: escapedSearch, options: 'i' } } },
+        { $where: "this.invoiceNumber && this.invoiceNumber.toString().match(/" + escapedSearch + "/i)" },
         { invoiceName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
@@ -2940,49 +2940,6 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
     }
   }
 );
-Route.route("/expense-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') {
-      if (branchId === 'HQ') {
-        query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
-      } else {
-        query.branchId = branchId;
-      }
-    }
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$itemNumber" }, regex: escapedSearch, options: 'i' } } },
-        { itemName: regex },
-        { itemDescription: regex },
-        { itemBrand: regex },
-        { category: regex },
-        { subCategory: regex },
-        { model: regex },
-        { location: regex },
-        { note: regex },
-        { 'itemUpc.newCode': regex },
-        { 'itemUpc.itemNumber': regex }
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await expenseSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
 Route.route("/get-last-saved-expense").get(async(req,res, next)=>{
   try {
     const rawBranchId = req.query.branchId;
@@ -3136,7 +3093,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$serviceNumber" }, regex: escapedSearch, options: 'i' } } },
+        { $where: "this.serviceNumber && this.serviceNumber.toString().match(/" + escapedSearch + "/i)" },
         { serviceName: regex },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
@@ -3790,39 +3747,6 @@ Route.route("/itemOut", cors(corsOptionsDelegate)).get(
       });
   }
 );
-Route.route("/itemOut-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
-        { description: regex },
-        { reason: regex },
-        { 'itemsQtyArray.itemName': regex },
-        { 'itemsQtyArray.itemBrand': regex },
-        { 'itemsQtyArray.itemDescription': regex },
-        { 'reference.referenceName': regex },
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await itemOutSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
 Route.route("/get-last-saved-itemOut").get(async(req,res, next)=>{
   try {
     const rawBranchId = req.query.branchId;
@@ -3937,7 +3861,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
+        { $where: "this.outNumber && this.outNumber.toString().match(/" + escapedSearch + "/i)" },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
@@ -4190,7 +4114,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
+        { $where: "this.outNumber && this.outNumber.toString().match(/" + escapedSearch + "/i)" },
         { description: regex },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
@@ -5215,7 +5139,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
+        { $where: "this.outNumber && this.outNumber.toString().match(/" + escapedSearch + "/i)" },
         { description: regex },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
@@ -5324,7 +5248,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$serviceNumber" }, regex: escapedSearch, options: 'i' } } },
+        { $where: "this.serviceNumber && this.serviceNumber.toString().match(/" + escapedSearch + "/i)" },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
         { status: regex },
