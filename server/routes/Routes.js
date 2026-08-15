@@ -1149,7 +1149,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $where: "this.invoiceNumber && this.invoiceNumber.toString().match(/" + escapedSearch + "/i)" },
+        { $expr: { $regexMatch: { input: { $toString: "$invoiceNumber" }, regex: escapedSearch, options: 'i' } } },
         { invoiceName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
@@ -3093,7 +3093,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $where: "this.serviceNumber && this.serviceNumber.toString().match(/" + escapedSearch + "/i)" },
+        { $expr: { $regexMatch: { input: { $toString: "$serviceNumber" }, regex: escapedSearch, options: 'i' } } },
         { serviceName: regex },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
@@ -3861,7 +3861,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $where: "this.outNumber && this.outNumber.toString().match(/" + escapedSearch + "/i)" },
+        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
@@ -4114,7 +4114,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $where: "this.outNumber && this.outNumber.toString().match(/" + escapedSearch + "/i)" },
+        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
         { description: regex },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
@@ -5139,7 +5139,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $where: "this.outNumber && this.outNumber.toString().match(/" + escapedSearch + "/i)" },
+        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
         { description: regex },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
@@ -5209,10 +5209,10 @@ Route.route("/payRoll-Information").get(async (req, res) => {
         { words: regex }
       ];
       if (isNum) {
-          query.$or.push({ $where: "this.payNumber && this.payNumber.toString().match(/" + escapedSearch + "/i)" });
-          query.$or.push({ $where: "this.daysW && this.daysW.toString().match(/" + escapedSearch + "/i)" });
-          query.$or.push({ $where: "this.totalPaidDollars && this.totalPaidDollars.toString().match(/" + escapedSearch + "/i)" });
-          query.$or.push({ $where: "this.totalNet && this.totalNet.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$payNumber" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$daysW" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$totalPaidDollars" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$totalNet" }, regex: escapedSearch, options: 'i' } } });
       }
     }
     const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5248,7 +5248,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $where: "this.serviceNumber && this.serviceNumber.toString().match(/" + escapedSearch + "/i)" },
+        { $expr: { $regexMatch: { input: { $toString: "$serviceNumber" }, regex: escapedSearch, options: 'i' } } },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
         { status: regex },
@@ -5394,9 +5394,9 @@ Route.route("/expense-Information").get(async (req, res) => {
         { 'accountNameInfo.name': regex },
       ];
       if (isNum) {
-          query.$or.push({ $where: "this.expenseNumber && this.expenseNumber.toString().match(/" + escapedSearch + "/i)" });
-          query.$or.push({ $where: "this.amount && this.amount.toString().match(/" + escapedSearch + "/i)" });
-          query.$or.push({ $where: "this.total && this.total.toString().match(/" + escapedSearch + "/i)" });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$expenseNumber" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$amount" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$total" }, regex: escapedSearch, options: 'i' } } });
       }
     }
     if (filterField && filterValue) {
