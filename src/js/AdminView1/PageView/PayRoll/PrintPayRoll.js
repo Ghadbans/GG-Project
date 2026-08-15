@@ -37,8 +37,9 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
            {payRoll?.filter(row=> row._id === id)?.map((row)=>{
            const related = employee.find((Item)=>Item._id === row.employeeName.id) 
             return(
-           <div key={row._id} ref={ref} style={{fontSize:'12px', width: '90%', margin: '0 auto', paddingTop: '20px', paddingBottom: '20px'}}>
-             <table className="secondTable" style={{width:'100%', fontSize:'80%',marginBottom:'0px',border:'1px solid #DDD'}}>
+           <div key={row._id} ref={ref} style={{fontSize:'11px', width: '210mm', maxWidth: '100%', minHeight: '148mm', margin: '0 auto', paddingTop: '20px', paddingBottom: '20px', paddingLeft: '10px', paddingRight: '10px', boxSizing: 'border-box'}}>
+             <style>{`@media print { @page { size: A5 landscape; margin: 10mm; } body { -webkit-print-color-adjust: exact; } }`}</style>
+             <table className="secondTable" style={{width:'100%', fontSize:'10px',marginBottom:'0px',border:'1px solid #DDD'}}>
            <thead>
              <tr>
                <th colSpan={5}  style={{padding:'5px',border:'1px solid #DDD',backgroundColor:'#316FF6', color:'white'}}>Global Gate</th>
@@ -155,7 +156,7 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
              </tr>
              </tbody>
          </table>
-         <table className="secondTable" style={{width:'100%', fontSize:'80%',marginBottom:'5px',border:'1px solid #DDD', color:'black'}}>
+         <table className="secondTable" style={{width:'100%', fontSize:'10px',marginBottom:'5px',border:'1px solid #DDD', color:'black'}}>
            <tbody>
              <tr>
                <td  style={{padding:'5px',border:'1px solid #DDD', color:'black',textAlign:'center'}} colSpan={6}>Total(FC)</td>
