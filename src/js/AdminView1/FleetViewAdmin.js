@@ -105,7 +105,9 @@ export default function FleetViewAdmin() {
   const [totalPage, setTotalPage] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [totalItemCount, setTotalItemCount] = useState(0);
   const user = useSelector(selectCurrentUser);
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const toggleDrawer = () => {
@@ -126,6 +128,7 @@ export default function FleetViewAdmin() {
     try {
       const res = await axios.get(`${ENDPOINT_URL}/fleet?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(debouncedSearchTerm)}`);
       setFleets(res.data.itemI);
+      setTotalItemCount(res.data.totalItems);
       setTotalPage(res.data.totalPages);
     } catch (error) {
       console.log(error);
