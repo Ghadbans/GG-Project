@@ -107,7 +107,6 @@ export default function FleetViewAdmin() {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [totalItemCount, setTotalItemCount] = useState(0);
   const user = useSelector(selectCurrentUser);
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const toggleDrawer = () => {
