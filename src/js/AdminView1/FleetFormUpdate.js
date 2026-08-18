@@ -212,7 +212,34 @@ export default function FleetFormUpdate() {
     }
   };
 
-  if (!fleet) return null;
+  if (!fleet) {
+    return (
+      <div style={{ backgroundColor: '#f9f9f9', height: '100vh', width: '100%', overflowX: 'hidden' }}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline />
+          <AppBar position="absolute" open={sideBar} style={{ backgroundColor: '#202a5a' }}>
+            <Toolbar sx={{ pr: '24px' }}>
+              <IconButton edge="start" color="inherit" onClick={() => setSideBar(!sideBar)} sx={{ marginRight: '36px', ...(sideBar && { display: 'none' }) }}><MenuIcon /></IconButton>
+              <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>Loading Vehicle...</Typography>
+              <NotificationVIewInfo />
+              <MessageAdminView name={user?.data?.userName} role={user?.data?.role} />
+              <IconButton color="inherit" onClick={() => { localStorage.removeItem('token'); navigate('/LoginSystem'); }}><Logout style={{ color: 'white' }} /></IconButton>
+            </Toolbar>
+          </AppBar>
+          <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
+            <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: [1] }}><IconButton onClick={() => setSideBar(!sideBar)}><ChevronLeftIcon /></IconButton></Toolbar>
+            <Divider /><List sx={{ height: '700px' }}><SidebarDash /></List>
+          </Drawer>
+          <Box component="main" sx={{ backgroundColor: (theme) => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900], flexGrow: 1, height: '100vh', overflow: 'auto' }}>
+            <Toolbar />
+            <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
+               <Typography variant="h5" align="center" style={{ marginTop: '100px', color: '#666' }}>Loading Vehicle Data...</Typography>
+            </Container>
+          </Box>
+        </Box>
+      </div>
+    );
+  }
 
   const filteredDocuments = fleet.documents.filter(doc => yearFilter === 'All' || String(doc.year) === String(yearFilter));
   const availableYears = ['All', ...new Set(fleet.documents.map(d => d.year))].sort();
@@ -227,7 +254,6 @@ export default function FleetFormUpdate() {
 
   return (
     <div style={{ backgroundColor: '#f9f9f9', height: '100vh', width: '100%', overflowX: 'hidden' }}>
-      <ToastContainer position="top-center" autoClose={3000} />
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={sideBar} style={{ backgroundColor: '#202a5a' }}>

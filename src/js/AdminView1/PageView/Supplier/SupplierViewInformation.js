@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import '../Chartview.css'
 import SideMaintenance from '../../../component/SideMaintenance';
 import SearchIcon from '@mui/icons-material/Search';
@@ -50,6 +50,8 @@ import SupplierName from './SupplierName';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 
 import ItemThumbnail from '../../../component/ItemThumbnail';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 
 const palette = ['blue', 'red', 'orange'];
 const EditTooltip = styled(({ className, ...props }) => (
@@ -246,6 +248,14 @@ function SupplierViewInformation() {
     navigate('/')
   }
 
+  const componentRef = useRef(null);
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    onAfterPrint: () => {
+      setAnchorEl(null);
+    }
+  });
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -373,7 +383,7 @@ function SupplierViewInformation() {
   const [search4, setSearch4] = useState('');
 
   useEffect(() => {
-    const result = localStorage.getItem('QuickFilterItemPurchaseItemSupplier-Summary')
+    const result = null; // localStorage.getItem('QuickFilterItemPurchaseItemSupplier-Summary')
     if (result) {
       setSearch(result)
     }
@@ -382,7 +392,7 @@ function SupplierViewInformation() {
   const handleSearch = (e) => {
     const value = e.target.value
     setSearch(value)
-    localStorage.setItem('QuickFilterItemPurchaseItemSupplier-Summary', value)
+//     localStorage.setItem('QuickFilterItemPurchaseItemSupplier-Summary', value)
   }
   const newArray = search !== '' ? itemPurchase.filter((row) =>
     row.itemPurchaseNumber.toString().includes(search) ||
@@ -681,7 +691,9 @@ function SupplierViewInformation() {
                                   <div style={{ width: '100%', padding: '10px' }}>
                                     <Typography style={{ fontWeight: 'bold', fontSize: '20px' }}>{row.storeName.toUpperCase()}</Typography>
                                   </div>
+                                  <div style={{ position: 'relative', float: 'right' }}>
                                   <Button
+                                    id="demo-customized-button"
                                     aria-controls={open ? 'demo-customized-menu' : undefined}
                                     aria-haspopup="true"
                                     aria-expanded={open ? 'true' : undefined}
@@ -690,9 +702,11 @@ function SupplierViewInformation() {
                                     onClick={handleClick}
                                     endIcon={<KeyboardArrowDown />}
                                     sx={{
-                                      bgcolor: 'gray', '&:hover': {
-                                        color: 'gray',
+                                      bgcolor: 'gray',
+                                      color: 'white',
+                                      '&:hover': {
                                         bgcolor: 'white',
+                                        color: 'gray',
                                         border: '1px solid gray',
                                       }
                                     }}
@@ -716,18 +730,19 @@ function SupplierViewInformation() {
                                       </NavLink>
                                     </MenuItem>
                                     <Divider />
-                                    {   /* <MenuItem>
-              <NavLink to={`/ItemFormClone/${row._id}`} className='LinkName' style={{display:'flex',gap:'20px', alignItems:'center', color:'gray'}}>
-                                    <FileCopy/>
-                                    <Typography>Clone</Typography>
-         </NavLink>
-              </MenuItem>*/}
+                                    <MenuItem onClick={() => { handlePrint(); handleCloseMenu(); }}>
+                                      <div style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                        <LocalPrintshop />
+                                        <Typography>Print</Typography>
+                                      </div>
+                                    </MenuItem>
                                     <Divider />
                                     <MenuItem onClick={() => handleShow(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
                                     <MenuItem onClick={() => handleShow(3)}> <span style={{ color: 'gray' }}>History</span></MenuItem>
                                   </Menu>
+                                  </div>
                                 </div>
-                                <Box sx={{ width: '100%' }}>
+                                <Box sx={{ width: '100%' }} ref={componentRef}>
                                   <TabContext
                                     value={value3}
                                   >
@@ -857,7 +872,7 @@ function SupplierViewInformation() {
                                             <Button onClick={() => handleFilterChange('paid')}>Paid</Button>
                                             <Button onClick={() => handleFilterChange('unpaid')}>Unpaid</Button>
                                           </section>
-                                          <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD' }}>
+                                          <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                                             <thead>
                                               <tr>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
@@ -893,7 +908,7 @@ function SupplierViewInformation() {
                                               onChange={(e) => setSearch4(e.target.value)}
                                             />
                                           </section>
-                                          <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD' }}>
+                                          <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                                             <thead>
                                               <tr>
                                                 <th style={{ border: '1px solid #DDD' }}>#</th>

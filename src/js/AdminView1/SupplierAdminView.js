@@ -178,7 +178,7 @@ function SupplierAdminView() {
   const [reason, setReason] = useState("");
 
   useState(() => {
-    const storedValue = localStorage.getItem('QuickFilterCustomer')
+    const storedValue = null; // localStorage.getItem('QuickFilterCustomer')
     if (storedValue) {
       setSearchCustomer(storedValue)
     }
@@ -372,7 +372,7 @@ function SupplierAdminView() {
   }
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-    localStorage.setItem('QuickFilterSupplierTst', JSON.stringify(newModel));
+//     localStorage.setItem('QuickFilterSupplierTst', JSON.stringify(newModel));
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -387,7 +387,7 @@ function SupplierAdminView() {
     }
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterSupplierTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterSupplierTst'))
     if (storedQuick) {
       setFilterModel(storedQuick)
     }
@@ -532,56 +532,52 @@ function SupplierAdminView() {
                         </span>
                       </ViewTooltip>
                     </section>
-                    {customer.length > 0 ? (
-                      <Box sx={{ height: 600, width: '100%' }}>
-                        {customer.length > 0 ? (
-                          <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                            {
-                              selectedRows.length > 1 && selectedRows.length < customer.length && (
-                                <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                              )
-                            }
+                    <Box sx={{ height: 600, width: '100%' }}>
+                      {customer.length > 0 ? (
+                        <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
+                          {
+                            selectedRows.length > 1 && selectedRows.length < customer.length && (
+                              <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                            )
+                          }
 
-                            {
-                              selectedRows.length === customer.length ? (
-                                <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                              ) : ''
+                          {
+                            selectedRows.length === customer.length ? (
+                              <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                            ) : ''
+                          }
+                        </section>
+                      )
+                        : ''}
+                      <DataGrid
+                        paginationMode="server"
+                        filterMode="server"
+                        rowCount={totalItemCount}
+                        paginationModel={{ page: page, pageSize: limit }}
+                        onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
+                        rows={customer}
+                        columns={columns}
+                        checkboxSelection
+                        disableDensitySelector
+                        onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+                        slots={{ toolbar: GridToolbar }}
+                        slotProps={{
+                          toolbar: {
+                            showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 },
+                            printOptions: {
+                              disableToolbarButton: true
                             }
-                          </section>
-                        )
-                          : ''}
-                        <DataGrid
-                          paginationMode="server"
-                          filterMode="server"
-                          rowCount={totalItemCount}
-                          paginationModel={{ page: page, pageSize: limit }}
-                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
-                          rows={customer}
-                          columns={columns}
-                          checkboxSelection
-                          disableDensitySelector
-                          onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                          slots={{ toolbar: GridToolbar }}
-                          slotProps={{
-                            toolbar: {
-                              showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                              printOptions: {
-                                disableToolbarButton: true
-                              }
-                            },
-                          }}
-                          rowSelectionModel={selectedRows}
-                          filterModel={filterModel}
-                          onFilterModelChange={(newModel) => handleFilter(newModel)}
-                          columnVisibilityModel={columnVisibilityModel}
-                          onColumnVisibilityModelChange={handelHiddenColumn}
-                          sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                        />
-                      </Box>
-                    ) : <div>
-                      <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                    </div>}
+                          },
+                        }}
+                        rowSelectionModel={selectedRows}
+                        filterModel={filterModel}
+                        onFilterModelChange={(newModel) => handleFilter(newModel)}
+                        columnVisibilityModel={columnVisibilityModel}
+                        onColumnVisibilityModelChange={handelHiddenColumn}
+                        sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                      />
+                    </Box>
                   </div>
                 </div>)
             }

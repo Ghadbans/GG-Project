@@ -526,17 +526,17 @@ function PaymentInformationView() {
                                                 <section style={{}}>
                                                   {
                                                     row.description !== undefined ?
-                                                      <table style={{ position: 'relative', fontSize: '80%', float: 'left', left: '0', width: '50%', marginBottom: '5px' }}>
+                                                      <table style={{ position: 'relative', fontSize: '80%', width: '100%', marginBottom: '15px' }}>
                                                         <tbody>
                                                           <tr>
-                                                            <th style={{ textAlign: 'left', width: '30px' }}>Description</th>
+                                                            <th style={{ textAlign: 'left', width: '100px', verticalAlign: 'top' }}>Description</th>
                                                             <td style={{ textAlign: 'left' }}>{row.description}</td>
                                                           </tr>
                                                         </tbody>
                                                       </table>
                                                       : ''
                                                   }
-                                                  <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD' }}>
+                                                  <table className="secondTable" style={{ width: '100%', fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                                                     <thead>
                                                       <tr>
                                                         <th style={{ textAlign: 'center', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
@@ -552,9 +552,9 @@ function PaymentInformationView() {
                                                         const relatedInvoice = invoice?.find((row1) => row1._id === Item.id)
                                                         return (
                                                           <tr key={Item.id} >
-                                                            <td style={{ textAlign: 'center', borderLeft: '1px solid #DDD' }}>{i + 1}</td>
-                                                            <td style={{ textAlign: 'center', borderLeft: '1px solid #DDD' }}> {Item.prefix || (relatedInvoice?.ReferenceName2 || relatedInvoice?.invoicePurchase === 'Purchased' ? "P-" : (row.reason === "Project" || row.TotalAmount?.[0]?.prefix === 'P-' ? "P-" : "INV-"))}{String(Item.Ref).padStart(6, '0')}</td>
-                                                            <td style={{ textAlign: 'center', borderLeft: '1px solid #DDD' }}>{Item.days > 0 ?
+                                                            <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>{i + 1}</td>
+                                                            <td style={{ textAlign: 'center', border: '1px solid #DDD' }}> {Item.prefix || (relatedInvoice?.ReferenceName2 || relatedInvoice?.invoicePurchase === 'Purchased' ? "P-" : (row.reason === "Project" || row.TotalAmount?.[0]?.prefix === 'P-' ? "P-" : "INV-"))}{String(Item.Ref).padStart(6, '0')}</td>
+                                                            <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>{Item.days > 0 ?
                                                               <Typography
                                                                 color={Item.days > 0
                                                                   ? "red" : "black"
@@ -563,16 +563,16 @@ function PaymentInformationView() {
                                                                 Overdue: {Item.days} Days Past Due
                                                               </Typography>
                                                               : <span>{dayjs(Item.invoiceDate).format('DD/MM/YYYY')}</span>}</td>
-                                                            <td style={{ padding: '10px', textAlign: 'right', borderLeft: '1px solid #DDD' }}>{relatedInvoice?.invoiceSubject?.toUpperCase()}</td>
-                                                            <td style={{ textAlign: 'right', borderLeft: '1px solid #DDD' }}>${Item.invoiceAmount !== undefined ? Item.invoiceAmount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                            <td style={{ textAlign: 'right', borderLeft: '1px solid #DDD' }}>${Item.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                            <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}>{relatedInvoice?.invoiceSubject?.toUpperCase()}</td>
+                                                            <td style={{ textAlign: 'right', border: '1px solid #DDD' }}>${Item.invoiceAmount !== undefined ? Item.invoiceAmount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                                            <td style={{ textAlign: 'right', border: '1px solid #DDD' }}>${Item.total?.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
 
                                                           </tr>
                                                         )
                                                       })}
                                                     </tbody>
                                                   </table>
-                                                  <table style={{ position: 'relative', fontSize: '70%', pageBreakInside: 'avoid', marginBottom: '5px' }}>
+                                                  <table style={{ width: '100%', position: 'relative', fontSize: '70%', pageBreakInside: 'avoid', marginBottom: '5px' }}>
                                                     <thead>
                                                       <tr>
                                                         <th></th>

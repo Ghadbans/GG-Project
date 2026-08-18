@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.3.79",
+  "version": "3.3.86",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -28,7 +28,8 @@
       "Icon.png",
       "index.html",
       "main.js",
-      "preload.js"
+      "preload.js",
+      "!node_modules"
     ],
     "win": {
       "icon": "Icon.png",

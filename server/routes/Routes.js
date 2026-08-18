@@ -1153,6 +1153,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
         { invoiceName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
+        { invoiceSubject: regex },
         { subject: regex },
         { status: regex },
         { noteInfo: regex },
@@ -5074,7 +5075,7 @@ Route.route("/Supplier-Information").get(async (req, res) => {
       if (search) {
         const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
-        query.$or = [{ supplierName: regex }, { supplierCompany: regex }, { supplierEmail: regex }];
+        query.$or = [{ supplierName: regex }, { storeName: regex }, { supplierCompany: regex }, { supplierEmail: regex }];
       }
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');

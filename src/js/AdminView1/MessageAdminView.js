@@ -74,7 +74,11 @@ function MessageAdminView({ name, role }) {
       setBadgeNumber(badgeNumber + 1)
       toast.success(`new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`)
       const message = `new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`
-      window.electron.sendNotification(message)
+      if (window.electron && window.electron.sendNotification) {
+        window.electron.sendNotification(message)
+      } else if (window.Notification && window.Notification.permission === "granted") {
+        new window.Notification("Global Gate", { body: message });
+      }
       localStorage.setItem('badgeMessage', badgeNumber + 1)
     });
     return () => {

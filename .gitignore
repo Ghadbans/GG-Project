@@ -8,3 +8,7 @@ GG Backup 08Feb26/
 *.asar
 .vercel
 backup_extracts/
+BACKUP SYSTEM*/
+*.zip
+*.py
+test_*.js

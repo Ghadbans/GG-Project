@@ -367,7 +367,7 @@ function PaymentView() {
   {/** search start */}
 const [searchInvoice, setSearchInvoice] = useState("");
 useState(()=>{
-  const storedValue = localStorage.getItem('QuickFilterInvoicePayment')
+  const storedValue = null; // localStorage.getItem('QuickFilterInvoicePayment')
   if (storedValue) {
     setSearchInvoice(storedValue)
   }
@@ -386,10 +386,10 @@ const [filterModel, setFilterModel] = React.useState({
   const handleFilter = (newModel) => {
     setFilterModel(newModel)
     
-   localStorage.setItem('QuickFilterInvoicePaymentTst',JSON.stringify(newModel))
+//    localStorage.setItem('QuickFilterInvoicePaymentTst',JSON.stringify(newModel))
   }
    useEffect(()=>{
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoicePaymentTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterInvoicePaymentTst'))
     if (storedQuick) {
       setFilterModel(storedQuick)
     }
@@ -403,7 +403,7 @@ const [filterModel, setFilterModel] = React.useState({
   {/** Payment Received start */}
 const [searchPayment, setPaymentInfo] = useState("");
 useState(()=>{
-  const storedValue = localStorage.getItem('QuickFilterPayment')
+  const storedValue = null; // localStorage.getItem('QuickFilterPayment')
   if (storedValue) {
     setPaymentInfo(storedValue)
   }
@@ -422,10 +422,10 @@ const [filterModelPayment, setFilterModelPayment] = React.useState({
   const handleFilterPayment = (newModel) => {
     setFilterModelPayment(newModel)
     
-   localStorage.setItem('QuickFilterPaymentInfo1Tst',JSON.stringify(newModel))
+//    localStorage.setItem('QuickFilterPaymentInfo1Tst',JSON.stringify(newModel))
   }
    useEffect(()=>{
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPaymentInfo1Tst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterPaymentInfo1Tst'))
     if (storedQuick) {
       setFilterModelPayment(storedQuick)
     }

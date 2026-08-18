@@ -211,25 +211,26 @@ function PointOfSale() {
 
   const apiUrl = `${ENDPOINT_URL}/item`;
 
-  useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
-        resRate.data.data.map((row) => setRate(row.rate))
-        const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${page}&limit=60&search=${encodeURIComponent(debouncedSearch)}`)
-        setTotalPages(res.data.totalPages)
-        SetItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
-        setLoadingData(false)
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false)
-      }
+  const fetchItem = async () => {
+    try {
+      const resRate = await axios.get(`${ENDPOINT_URL}/rate`)
+      resRate.data.data.map((row) => setRate(row.rate))
+      const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${page}&limit=60&search=${encodeURIComponent(debouncedSearch)}`)
+      setTotalPages(res.data.totalPages)
+      SetItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+      setLoadingData(false)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData(false)
     }
+  }
+
+  useEffect(() => {
     fetchItem()
   }, [page, debouncedSearch])
 
   const handleRefreshSearch = () => {
-    fetchItem(page, search);
+    fetchItem();
   };
 
   const handlePageChange = (e, newPage) => {

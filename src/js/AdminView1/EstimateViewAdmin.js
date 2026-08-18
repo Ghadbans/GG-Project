@@ -490,7 +490,7 @@ function EstimateViewAdmin() {
   {/** hide End */ }
   const [searchEstimate, setSearchEstimate] = useState("");
   useState(() => {
-    const storedValue = localStorage.getItem('QuickFilterEstimate')
+    const storedValue = null; // localStorage.getItem('QuickFilterEstimate')
     if (storedValue) {
       setSearchEstimate(storedValue)
     }
@@ -508,7 +508,7 @@ function EstimateViewAdmin() {
   }
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-    localStorage.setItem('QuickFilterEstimationTst', JSON.stringify(newModel));
+//     localStorage.setItem('QuickFilterEstimationTst', JSON.stringify(newModel));
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -523,7 +523,7 @@ function EstimateViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterEstimationTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterEstimationTst'))
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

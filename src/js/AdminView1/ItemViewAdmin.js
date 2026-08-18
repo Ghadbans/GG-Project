@@ -399,7 +399,7 @@ function ItemViewAdmin() {
   const [searchItem, setSearchItem] = useState("");
 
   useState(() => {
-    const storedValue = localStorage.getItem('QuickFilterItem');
+    const storedValue = null; // localStorage.getItem('QuickFilterItem');
     if (storedValue) {
       setSearchItem(storedValue);
     }
@@ -417,7 +417,7 @@ function ItemViewAdmin() {
   };
 
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemViewDisplay'));
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterItemViewDisplay'));
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);
@@ -551,7 +551,7 @@ function ItemViewAdmin() {
     setSearchTerm(searchTerm);
     setPage(0);
     setFilterModel(newFilterModel);
-    localStorage.setItem('QuickFilterItemViewDisplay', JSON.stringify(newFilterModel));
+//     localStorage.setItem('QuickFilterItemViewDisplay', JSON.stringify(newFilterModel));
   };
 
   const handleExportToExcel = async () => {

@@ -465,8 +465,8 @@ function EmployeePlaningForm() {
                     reason === "Project" && (
                       <Autocomplete
                         options={projects}
-                        getOptionLabel={(option) => option.projectName}
-                        renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                        getOptionLabel={(option) => 'P-' + String(option.projectNumber || '').padStart(6, '0') + ' | ' + option.projectName}
+                        renderOption={(props, option) => (<Box {...props}> {'P-' + String(option.projectNumber || '').padStart(6, '0')} | {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
                         renderInput={(params) => <TextField {...params} label="Project Name" />}
                         onChange={(e, newValue) => handleChangeProject(newValue ? newValue : 0)}
                         inputValue={inputValueProject}
@@ -476,6 +476,7 @@ function EmployeePlaningForm() {
                         filterOptions={(options, { inputValue }) => {
                           return options.filter(
                             (option) =>
+                              String(option.projectNumber || '').includes(inputValue) ||
                               option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
                               option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
                               option.description.toLowerCase().includes(inputValue.toLowerCase())

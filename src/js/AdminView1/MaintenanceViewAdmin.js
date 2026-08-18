@@ -419,7 +419,7 @@ function MaintenanceViewAdmin() {
   {/** search start */ }
   const [searchMaintenance, setSearchMaintenance] = useState("");
   useState(() => {
-    const storedValue = localStorage.getItem('QuickFilterMaintenance')
+    const storedValue = null; // localStorage.getItem('QuickFilterMaintenance')
     if (storedValue) {
       setSearchMaintenance(storedValue)
     }
@@ -440,10 +440,10 @@ function MaintenanceViewAdmin() {
     setSearchTerm(searchTerm);
     setFilterModel(newModel)
 
-    localStorage.setItem('QuickFilterMaintenanceTst', JSON.stringify(newModel))
+//     localStorage.setItem('QuickFilterMaintenanceTst', JSON.stringify(newModel))
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterMaintenanceTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterMaintenanceTst'))
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

@@ -146,7 +146,7 @@ useEffect(()=> {
   {/** search start */}
 const [searchInvExpenses, setSearchInvExpenses] = useState("");
 useState(()=>{
-  const storedValue = localStorage.getItem('QuickFilterInvExpenses')
+  const storedValue = null; // localStorage.getItem('QuickFilterInvExpenses')
   if (storedValue) {
     setSearchInvExpenses(storedValue)
   }
@@ -162,7 +162,7 @@ const [filterModel, setFilterModel] = React.useState({
     setColumnVisibilityModel(newHidden)
     localStorage.setItem('HiddenColumnsInvExpenses',JSON.stringify(newHidden))
   }
-   localStorage.setItem('QuickFilterInvExpenses',filterModel.quickFilterValues[0] || '')
+//    localStorage.setItem('QuickFilterInvExpenses',filterModel.quickFilterValues[0] || '')
    useEffect(()=>{
     if (searchInvExpenses !== undefined) {
       setFilterModel((prevState)=> ({

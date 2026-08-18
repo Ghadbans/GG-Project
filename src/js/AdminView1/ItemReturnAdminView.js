@@ -241,10 +241,10 @@ function ItemReturnAdminView() {
     setSearchTerm(searchTerm);
     setFilterModel(newModel)
 
-    localStorage.setItem('QuickFilterItemReturnTst', JSON.stringify(newModel))
+//     localStorage.setItem('QuickFilterItemReturnTst', JSON.stringify(newModel))
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemReturnTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterItemReturnTst'))
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

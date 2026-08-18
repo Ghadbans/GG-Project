@@ -481,7 +481,7 @@ function ItemInformationVIew() {
   }, [search3]);
 
   useEffect(() => {
-    const result = localStorage.getItem('QuickFilterItemPurchaseItem-Summary')
+    const result = null; // localStorage.getItem('QuickFilterItemPurchaseItem-Summary')
     if (result) {
       setSearch(result)
     }
@@ -490,7 +490,7 @@ function ItemInformationVIew() {
   const handleSearch = (e) => {
     const value = e.target.value
     setSearch(value)
-    localStorage.setItem('QuickFilterItemPurchaseItem-Summary', value)
+//     localStorage.setItem('QuickFilterItemPurchaseItem-Summary', value)
   }
   const newArray = (debouncedSearch !== '' ? itemPurchase.filter((row) =>
     row.itemPurchaseNumber.toString().includes(debouncedSearch) ||

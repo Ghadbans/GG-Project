@@ -201,10 +201,10 @@ function RateViewAdmin() {
   }
   const handleFilter = (newModel) => {
     setFilterModel(newModel)
-    localStorage.setItem('QuickFilterDailyExpensesCategoryTst', JSON.stringify(newModel))
+//     localStorage.setItem('QuickFilterDailyExpensesCategoryTst', JSON.stringify(newModel))
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterDailyExpensesCategoryTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterDailyExpensesCategoryTst'))
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

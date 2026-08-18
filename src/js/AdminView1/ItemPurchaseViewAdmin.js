@@ -291,10 +291,10 @@ function ItemPurchaseViewAdmin() {
     const searchTerm = newModel.quickFilterValues?.join(' ') || '';
     setSearchTerm(searchTerm);
     setFilterModel(newModel)
-    localStorage.setItem('QuickFilterItemPurchaseTst', JSON.stringify(newModel))
+//     localStorage.setItem('QuickFilterItemPurchaseTst', JSON.stringify(newModel))
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemPurchaseTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterItemPurchaseTst'))
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

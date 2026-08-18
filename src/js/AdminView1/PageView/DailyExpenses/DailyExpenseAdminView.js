@@ -663,7 +663,7 @@ function DailyExpenseAdminView() {
   }, [search2]);
 
   useEffect(() => {
-    const result = localStorage.getItem('QuickFilterDailyExpensesAdminView')
+    const result = null; // localStorage.getItem('QuickFilterDailyExpensesAdminView')
     if (result) {
       setSearch(result)
     }
@@ -671,7 +671,7 @@ function DailyExpenseAdminView() {
   const handleSearch = (e) => {
     const value = e.target.value
     setSearch(value)
-    localStorage.setItem('QuickFilterDailyExpensesAdminView', value)
+//     localStorage.setItem('QuickFilterDailyExpensesAdminView', value)
   }
 
   const newArrayCash = useMemo(() => debouncedSearch2 !== '' ? cash.filter((row) =>

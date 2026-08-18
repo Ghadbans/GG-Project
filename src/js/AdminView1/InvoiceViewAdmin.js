@@ -553,7 +553,7 @@ function InvoiceViewAdmin() {
   {/** search start */ }
   const [searchInvoice, setSearchInvoice] = useState("");
   useEffect(() => {
-    const storedValue = localStorage.getItem('QuickFilterInvoice')
+    const storedValue = null; // localStorage.getItem('QuickFilterInvoice')
     if (storedValue) {
       setSearchInvoice(storedValue)
     }
@@ -572,10 +572,10 @@ function InvoiceViewAdmin() {
     const searchTerm = newModel.quickFilterValues?.join(' ') || '';
     setSearchTerm(searchTerm);
     setFilterModel(newModel)
-    localStorage.setItem('QuickFilterInvoiceTst', JSON.stringify(newModel))
+//     localStorage.setItem('QuickFilterInvoiceTst', JSON.stringify(newModel))
   }
   useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'))
+    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'))
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);
