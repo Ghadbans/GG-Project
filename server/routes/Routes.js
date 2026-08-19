@@ -2537,9 +2537,12 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
 
       if (req.query.itemId) {
-        try {
-          filter['items'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
-        } catch (e) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
+        
+        if (objectId) {
+          filter['items'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
+        } else {
           filter['items'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
         }
       }
@@ -3747,9 +3750,12 @@ Route.route("/itemOut", cors(corsOptionsDelegate)).get(
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
 
       if (req.query.itemId) {
-        try {
-          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
-        } catch (e) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
+        
+        if (objectId) {
+          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
+        } else {
           filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
         }
       }
@@ -4107,9 +4113,12 @@ Route.route("/itemReturn", cors(corsOptionsDelegate)).get(
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
 
       if (req.query.itemId) {
-        try {
-          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
-        } catch (e) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
+        
+        if (objectId) {
+          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
+        } else {
           filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
         }
       }
@@ -4440,9 +4449,12 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
 
       if (req.query.itemId) {
-        try {
-          filter['items'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
-        } catch (e) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
+        
+        if (objectId) {
+          filter['items'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
+        } else {
           filter['items'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
         }
       }
