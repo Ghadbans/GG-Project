@@ -171,31 +171,31 @@ function ItemInformationVIew() {
           axios.get(`${ENDPOINT_URL}/projects?summary=true`),
         ]);
 
-        // itemOut — server already filtered by itemId, just ensure qty > 0
+        // itemOut — server filtered documents, but we still need to filter the inner array to hide other items in the same transaction
         const formatDate1 = resItemOut.data.data.map((row) => ({
           ...row,
-          itemsQtyArray: row.itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) > 0)
+          itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
         })).filter(row => row.itemsQtyArray.length > 0);
         setItemOut(formatDate1.sort((a, b) => b.outNumber - a.outNumber));
 
-        // itemPurchase — server already filtered by itemId
+        // itemPurchase
         const formatDate = resItemPurchase.data.data.map(row => ({
           ...row,
           items: row.items.filter((Item) => Item.itemName._id === id)
         })).filter(row => row.items.length > 0);
         setItemPurchase(formatDate.sort((a, b) => b.itemPurchaseNumber - a.itemPurchaseNumber));
 
-        // POS out — server already filtered by itemId
+        // POS out
         const formatDate3 = resPosOut.data.data.map((row) => ({
           ...row,
           items: row.items.filter((Item) => Item.itemName._id === id && parseFloat(Item.itemQty) >= 0)
         })).filter(row => row.items.length > 0);
         setPosOut(formatDate3.reverse());
 
-        // itemReturn — server already filtered by itemId, ensure qty > 0
+        // itemReturn
         const formatDate2 = resIReturn.data.data.map((row) => ({
           ...row,
-          itemsQtyArray: row.itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) > 0)
+          itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
         })).filter(row => row.itemsQtyArray.length > 0);
         setItemReturn(formatDate2);
 
