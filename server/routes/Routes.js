@@ -2533,9 +2533,17 @@ Route.route("/remove-estimation").delete(async (req, res) => {
 Route.route("/pos", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+
+      if (req.query.itemId) {
+        try {
+          filter['items'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
+        } catch (e) {
+          filter['items'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
+        }
+      }
+
       const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
@@ -2543,6 +2551,7 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
     }
   }
 );
+
 Route.route("/get-last-saved-pos").get(async(req,res, next)=>{
   try {
     const rawBranchId = req.query.branchId;
@@ -3734,20 +3743,25 @@ Route.route("/remove-itemCode").delete(async (req, res) => {
 // -------------get all itemOut-------------------
 Route.route("/itemOut", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await itemOutSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+
+      if (req.query.itemId) {
+        try {
+          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
+        } catch (e) {
+          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
+        }
+      }
+
+      const result = await itemOutSchema.find(filter).sort({ _id: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
+
 Route.route("/get-last-saved-itemOut").get(async(req,res, next)=>{
   try {
     const rawBranchId = req.query.branchId;
@@ -4089,18 +4103,22 @@ Route.route("/remove-grantAccess").delete(async (req, res) => {
 // -------------get all itemReturn-------------------
 Route.route("/itemReturn", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await itemReturnSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
+    try {
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+
+      if (req.query.itemId) {
+        try {
+          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
+        } catch (e) {
+          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
+        }
+      }
+
+      const result = await itemReturnSchema.find(filter).sort({ _id: -1 });
+      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 Route.route("/itemReturn-Information").get(async (req, res) => {
@@ -4418,21 +4436,28 @@ Route.route("/remove-cash").delete(async (req, res) => {
 Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
-      const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      
-        if (req.query.targetDate) {
-          const tDate = new Date(req.query.targetDate);
-          const nextDate = new Date(tDate);
-          nextDate.setDate(tDate.getDate() + 1);
-          filter.payments = { 
-            $elemMatch: { 
-              date: { $gte: tDate, $lt: nextDate } 
-            } 
-          };
+
+      if (req.query.itemId) {
+        try {
+          filter['items'] = { $elemMatch: { 'itemName._id': new mongoose.Types.ObjectId(req.query.itemId) } };
+        } catch (e) {
+          filter['items'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
         }
-        const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      }
+
+      if (req.query.targetDate) {
+        const tDate = new Date(req.query.targetDate);
+        const nextDate = new Date(tDate);
+        nextDate.setDate(tDate.getDate() + 1);
+        filter.payments = {
+          $elemMatch: {
+            date: { $gte: tDate, $lt: nextDate }
+          }
+        };
+      }
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
 
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
@@ -4440,6 +4465,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
     }
   }
 );
+
 Route.route("/itemPurchase-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;

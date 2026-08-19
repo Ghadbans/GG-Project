@@ -162,42 +162,51 @@ function ItemInformationVIew() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItemOut = await axios.get(`${ENDPOINT_URL}/itemOut`)
+        // Run all 4 fetches in parallel with server-side itemId filter — massively faster
+        const [resItemOut, resItemPurchase, resPosOut, resIReturn, resProj] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/itemOut?itemId=${id}`),
+          axios.get(`${ENDPOINT_URL}/itemPurchase?itemId=${id}`),
+          axios.get(`${ENDPOINT_URL}/pos?itemId=${id}`),
+          axios.get(`${ENDPOINT_URL}/itemReturn?itemId=${id}`),
+          axios.get(`${ENDPOINT_URL}/projects?summary=true`),
+        ]);
+
+        // itemOut — server already filtered by itemId, just ensure qty > 0
         const formatDate1 = resItemOut.data.data.map((row) => ({
           ...row,
-          itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
-        })).filter(row => row.itemsQtyArray.length > 0)
-        setItemOut(formatDate1.sort((a,b) => b.outNumber - a.outNumber));
-        const resItemPurchase = await axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true`)
+          itemsQtyArray: row.itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) > 0)
+        })).filter(row => row.itemsQtyArray.length > 0);
+        setItemOut(formatDate1.sort((a, b) => b.outNumber - a.outNumber));
+
+        // itemPurchase — server already filtered by itemId
         const formatDate = resItemPurchase.data.data.map(row => ({
           ...row,
           items: row.items.filter((Item) => Item.itemName._id === id)
-        })).filter(row => row.items.length > 0)
-        setItemPurchase(formatDate.sort((a,b) => b.itemPurchaseNumber - a.itemPurchaseNumber))
-        const resPosOut = await axios.get(`${ENDPOINT_URL}/pos?summary=true`)
+        })).filter(row => row.items.length > 0);
+        setItemPurchase(formatDate.sort((a, b) => b.itemPurchaseNumber - a.itemPurchaseNumber));
+
+        // POS out — server already filtered by itemId
         const formatDate3 = resPosOut.data.data.map((row) => ({
           ...row,
           items: row.items.filter((Item) => Item.itemName._id === id && parseFloat(Item.itemQty) >= 0)
-        })).filter(row => row.items.length > 0)
+        })).filter(row => row.items.length > 0);
         setPosOut(formatDate3.reverse());
 
-        const resIReturn = await axios.get(`${ENDPOINT_URL}/itemReturn`)
+        // itemReturn — server already filtered by itemId, ensure qty > 0
         const formatDate2 = resIReturn.data.data.map((row) => ({
           ...row,
-          itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
-        })).filter(row => row.itemsQtyArray.length > 0)
+          itemsQtyArray: row.itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) > 0)
+        })).filter(row => row.itemsQtyArray.length > 0);
         setItemReturn(formatDate2);
-        
-        const resProj = await axios.get(`${ENDPOINT_URL}/projects?summary=true`);
-        setProjectsList(resProj.data.data);
 
-        setLoadingData2(true)
+        setProjectsList(resProj.data.data);
+        setLoadingData2(true);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData2(true)
+        setLoadingData2(true);
       }
-    }
-    handleFetch()
+    };
+    handleFetch();
   }, [id])
   const [stock, setStock] = useState(0)
   const [totalPurchase, settotalPurchase] = useState(0)
@@ -239,29 +248,33 @@ function ItemInformationVIew() {
 
   const fetchStock = async () => {
     try {
-      const res = await axios.put(`${ENDPOINT_URL}/update-item/${id}`, {
+      await axios.put(`${ENDPOINT_URL}/update-item/${id}`, {
         itemQuantity: stock
-      })
+      });
+      // Update local item state immediately so display refreshes without page reload
+      SetItems(prev => prev.map(row =>
+        row._id === id ? { ...row, itemQuantity: stock } : row
+      ));
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
   const [item, SetItems] = useState([]);
-  const apiUrl = `${ENDPOINT_URL}/item`;
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const res = await axios.get(apiUrl)
-        SetItems(res.data.data.reverse())
-        setLoadingData(false)
+        // Fetch only this single item instead of downloading entire item collection
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`);
+        SetItems([res.data.data]);
+        setLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData(false)
+        setLoadingData(false);
       }
-    }
-    fetchItem()
-  }, [])
+    };
+    fetchItem();
+  }, [id])
 
   const [reason, setReason] = useState("");
   const [Comments1, setComments] = useState([]);
@@ -802,7 +815,7 @@ function ItemInformationVIew() {
                               />
                             </TabList>
                           </Box>
-                          <TabPanel value="1" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                             <div>
 
                               <Card sx={{ marginBottom: '20px' }}>
@@ -964,7 +977,7 @@ function ItemInformationVIew() {
 
                             </div>
                           </TabPanel>
-                          <TabPanel value="2" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                             <Card>
                               <CardContent>
                                 <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -1062,7 +1075,7 @@ function ItemInformationVIew() {
                               </CardContent>
                             </Card>
                           </TabPanel>
-                          <TabPanel value="3" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="3" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                             <Card>
                               <CardContent>
                                 <Card sx={{ position: 'relative', width: '200px', backgroundColor: '#202a5a', color: 'white', marginBottom: '10px', textAlign: 'center' }}>
@@ -1130,7 +1143,7 @@ function ItemInformationVIew() {
                               </CardContent>
                             </Card>
                           </TabPanel>
-                          <TabPanel value="4" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="4" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                             <Card>
                               <CardContent>
                                 <Card sx={{ position: 'relative', width: '200px', backgroundColor: '#202a5a', color: 'white', marginBottom: '10px', textAlign: 'center' }}>
@@ -1185,7 +1198,7 @@ function ItemInformationVIew() {
                               </CardContent>
                             </Card>
                           </TabPanel>
-                          <TabPanel value="5" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="5" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                             <Card sx={{ position: 'relative', top: '90px' }}>
                               <CardContent>
                                 <Typography sx={{ textAlign: 'center', color: 'gray' }}>Summary</Typography>
@@ -1273,7 +1286,7 @@ function ItemInformationVIew() {
                   </Grid>
                 </form>
                 <br />
-                <div style={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                   {Comments1.map((row, i) => (
                     <div key={i} style={{ display: 'flex', gap: '20px', padding: '10px', borderBottom: '1px solid #DDD' }}>
                       <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'gray', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
