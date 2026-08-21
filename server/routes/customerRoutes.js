@@ -132,16 +132,21 @@ Route.route("/update-customer/:id").put(async (req, res, next) => {
     try { objectId = new require('mongoose').Types.ObjectId(id); } catch (e) {}
     const idFilter = objectId ? { $in: [id, objectId] } : id;
 
-    const { customerName, phone, address, email, reference, companyName } = req.body;
-    
-    // Build update object dynamically based on what was sent
-    const updateObj = {};
-    if (customerName !== undefined) updateObj['customerName.customerName'] = customerName;
-    if (phone !== undefined) updateObj['customerName.phone'] = phone;
-    if (address !== undefined) updateObj['customerName.address'] = address;
-    if (email !== undefined) updateObj['customerName.email'] = email;
-    if (reference !== undefined) updateObj['customerName.reference'] = reference;
-    if (companyName !== undefined) updateObj['customerName.companyName'] = companyName;
+    const { Customer, customerCompanyPhone, billingAddress, billingCity, customerEmail, companyName } = req.body;
+      
+      // Build update object dynamically based on what was sent
+      const updateObj = {};
+      if (Customer !== undefined) updateObj['customerName.customerName'] = Customer;
+      if (customerCompanyPhone !== undefined) updateObj['customerName.phone'] = customerCompanyPhone;
+      
+      if (billingAddress !== undefined || billingCity !== undefined) {
+        // If either is updated, rebuild the address. If one is missing from req.body, it might get overwritten with 'undefined', but typical forms send the whole object.
+        const addr = (billingAddress || '') + (billingCity ? ' ' + billingCity : '');
+        updateObj['customerName.address'] = addr.trim();
+      }
+      
+      if (customerEmail !== undefined) updateObj['customerName.email'] = customerEmail;
+      if (companyName !== undefined) updateObj['customerName.companyName'] = companyName;
 
     const updateQuery = Object.keys(updateObj).length > 0 ? { $set: updateObj } : {};
 
