@@ -27,7 +27,8 @@ export default function NetworkLogoutIcon({ style, ...props }) {
         }, 4000);
 
         // Ping a public reliable endpoint to check network status without hitting the API and causing 404 console spam
-        await fetch(`https://www.google.com/favicon.ico`, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal });
+        // Ping the Railway backend /status endpoint to ensure the actual server is reachable
+        await fetch(`${API_BASE_URL}/status`, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal });
         clearTimeout(timeoutId);
 
         const duration = Date.now() - startTime;
