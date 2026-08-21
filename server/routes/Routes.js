@@ -72,6 +72,7 @@ var corsOptionsDelegate = function (req, callback) {
 
 
 // --- DELETE BRANCH ---
+
 Route.route('/delete-branch').post(async (req, res, next) => {
   try {
     const { branchIdToDelete, transferBranchId } = req.body;
@@ -118,7 +119,6 @@ Route.route('/delete-branch').post(async (req, res, next) => {
     res.status(500).json({ msg: 'Server error during branch deletion' });
   }
 });
-
 Route.route("/CalculateTotal").post(async (req, res, next) => {
   try {
     // Disabled legacy manual calculation route. Hooks now handle this automatically.
@@ -127,7 +127,9 @@ Route.route("/CalculateTotal").post(async (req, res, next) => {
     return next(error);
   }
 });
+
 // Get all message
+
 Route.route("/message", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await messageSchema
@@ -144,7 +146,9 @@ Route.route("/message", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create message
+
 Route.route("/create-message").post(async (req, res, next) => {
   try {
     const branchId = req.body.branchId;
@@ -198,7 +202,9 @@ Route.route("/delete-message/:id").delete(async (req, res) => {
     });
 });
 
+
 // Get all notification
+
 Route.route("/notification", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await notificationSchema
@@ -215,7 +221,9 @@ Route.route("/notification", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create notification
+
 Route.route("/create-notification").post(async (req, res, next) => {
   try {
     const branchId = req.body.branchId;
@@ -229,295 +237,75 @@ Route.route("/create-notification").post(async (req, res, next) => {
 });
 
 
+
 // Get all customers
-Route.route("/customer", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await customerSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create customer
-Route.route("/create-customer").post(async (req, res, next) => {
-  await customerSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single customer
-Route.route("/get-customer/:id").get(async (req, res, next) => {
-  await customerSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single customer
-Route.route("/update-customer/:id").put(async (req, res, next) => {
-  const id = req.params.id
-  const {Customer} = req.body
-  try {
-    await Promise.all([
-      customerSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      }).then((result) => {res.json({ data: result,
-          msg: "Data successfully updated.",
-        });
-      }).catch((err) => {
-        return next(err);
-      }),
-      invoiceSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      estimationSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      purchaseSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      maintenanceSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      projectSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      paymentSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-    ])
-  } catch (error) {
-    return next(error);
-  }
-});
+
+
 // Delete single customer
-Route.route("/remove-customer/:id").delete(async (req, res) => {
-  await customerSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully Deleted.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all customer
-Route.route("/remove-customer").delete(async (req, res) => {
-  await customerSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get all daily expenses
 
-Route.route("/dailyexpense", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await dailyExpenseSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 
 // Create daily expenses
-Route.route("/create-dailyexpense").post(async (req, res, next) => {
-  await dailyExpenseSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single daily expense
-Route.route("/get-dailyexpense/:id").get(async (req, res, next) => {
-  await dailyExpenseSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single dailyexpense
-Route.route("/update-dailyexpense/:id").put(async (req, res, next) => {
-  await dailyExpenseSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single dailyexpense
-Route.route("/delete-dailyexpense/:id").delete(async (req, res) => {
-  await dailyExpenseSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all dailyexpense
-Route.route("/remove-dailyexpense").delete(async (req, res) => {
-  await dailyExpenseSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get all Supplier
 
-Route.route("/Supplier", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await SupplierSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create Supplier
-Route.route("/create-Supplier").post(async (req, res, next) => {
-  await SupplierSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single Supplier
-Route.route("/get-Supplier/:id").get(async (req, res, next) => {
-  await SupplierSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single Supplier
-Route.route("/update-Supplier/:id").put(async (req, res, next) => {
-  await SupplierSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single Supplier
-Route.route("/delete-Supplier/:id").delete(async (req, res) => {
-  await SupplierSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all Supplier
-Route.route("/remove-Supplier").delete(async (req, res) => {
-  await SupplierSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all dailyreport
+
 
 Route.route("/dailyreport", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
@@ -535,7 +323,9 @@ Route.route("/dailyreport", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create daily dailyreport
+
 Route.route("/create-dailyreport").post(async (req, res, next) => {
   await dailyReportSchema
     .create(req.body)
@@ -551,7 +341,9 @@ Route.route("/create-dailyreport").post(async (req, res, next) => {
     });
 });
 
+
 // Get single dailyreport
+
 Route.route("/get-dailyreport/:id").get(async (req, res, next) => {
   await dailyReportSchema
     .findById(req.params.id, req.body)
@@ -566,7 +358,9 @@ Route.route("/get-dailyreport/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single dailyreport
+
 Route.route("/update-dailyreport/:id").put(async (req, res, next) => {
   await dailyReportSchema
     .findByIdAndUpdate(req.params.id, {
@@ -582,7 +376,9 @@ Route.route("/update-dailyreport/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single dailyreport
+
 Route.route("/delete-dailyreport/:id").delete(async (req, res) => {
   await dailyReportSchema
     .findByIdAndRemove(req.params.id)
@@ -596,7 +392,9 @@ Route.route("/delete-dailyreport/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all dailyreport
+
 Route.route("/remove-dailyreport").delete(async (req, res) => {
   await dailyReportSchema
     .findByIdAndRemove(req.params.id)
@@ -610,99 +408,30 @@ Route.route("/remove-dailyreport").delete(async (req, res) => {
     });
 });
 
+
 // get all employeeattendance
 
-Route.route("/employeeattendance", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await employeeAttendanceShema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create employeeattendance
-Route.route("/create-employeeattendance").post(async (req, res, next) => {
-  await employeeAttendanceShema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single employeeattendance
-Route.route("/get-employeeattendance/:id").get(async (req, res, next) => {
-  await employeeAttendanceShema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single employeeattendance
-Route.route("/update-employeeattendance/:id").put(async (req, res, next) => {
-  await employeeAttendanceShema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single employeeattendance
-Route.route("/delete-employeeattendance/:id").delete(async (req, res) => {
-  await employeeAttendanceShema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all employeeattendance
-Route.route("/remove-employeeattendance").delete(async (req, res) => {
-  await employeeAttendanceShema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // get all planing
+
 
 Route.route("/planing", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
@@ -720,7 +449,9 @@ Route.route("/planing", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create planing
+
 Route.route("/create-planing").post(async (req, res, next) => {
   await planingSchema
     .create(req.body)
@@ -736,7 +467,9 @@ Route.route("/create-planing").post(async (req, res, next) => {
     });
 });
 
+
 // Get single planing
+
 Route.route("/get-planing/:id").get(async (req, res, next) => {
   await planingSchema
     .findById(req.params.id, req.body)
@@ -751,7 +484,9 @@ Route.route("/get-planing/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single planing
+
 Route.route("/update-planing/:id").put(async (req, res, next) => {
   await planingSchema
     .findByIdAndUpdate(req.params.id, {
@@ -767,7 +502,9 @@ Route.route("/update-planing/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single planing
+
 Route.route("/delete-planing/:id").delete(async (req, res) => {
   await planingSchema
     .findByIdAndRemove(req.params.id)
@@ -781,7 +518,9 @@ Route.route("/delete-planing/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all planing
+
 Route.route("/remove-planing").delete(async (req, res) => {
   await planingSchema
     .findByIdAndRemove(req.params.id)
@@ -794,919 +533,110 @@ Route.route("/remove-planing").delete(async (req, res) => {
       return next(err);
     });
 });
+
 // get all payRoll
 
-Route.route("/payRoll", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await payRollSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
-Route.route("/get-last-saved-payRoll").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await payRollSchema.findOne(query).sort({
-    payNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create payRoll
-Route.route("/create-payRoll").post(async (req, res, next) => {
 
-  try {
-    const branchId = req.body.branchId;
-    const existing = await payRollSchema.findOne({
-      'employeeName.name': req.body.employeeName.name,
-       month: req.body.month
-    })
-    if (existing) {
-      return res.status(401).json({ message: 'ALREADY BEEN CREATED' });
-    }else{
-      await payRollSchema
-      .create(req.body)
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
-      })
-    }
-  } catch (error) {
-    next(error);
-  }
-});
+
 
 // Get single payRoll
-Route.route("/get-payRoll/:id").get(async (req, res, next) => {
-  await payRollSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single payRoll
-Route.route("/update-payRoll/:id").put(async (req, res, next) => {
-  await payRollSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single payRoll
-Route.route("/delete-payRoll/:id").delete(async (req, res) => {
-  await payRollSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all payRoll
-Route.route("/remove-payRoll").delete(async (req, res) => {
-  await payRollSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all employee
 
-Route.route("/employee", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await employeeSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
-// Create employeeattendance
-Route.route("/create-employee").post(async (req, res, next) => {
-  await employeeSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
 
-Route.route("/get-last-saved-employee").get(async (req, res, next) => {
-  try {
-    const last = await employeeSchema.findOne().sort({ _id: -1 }).exec();
-    res.json(last);
-  } catch (error) {
-    next(error);
-  }
-});
+
+// Create employeeattendance
+
+
 
 // Get single employee
-Route.route("/get-employee/:id").get(async (req, res, next) => {
-  await employeeSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-// Update single employee
-Route.route("/update-employee/:id").put(async (req, res, next) => {
-  const id = req.params.id
-  const {employeeName} = req.body
-  try {
-    await Promise.all([
-      employeeSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      }).then((result) => {res.json({ data: result,
-          msg: "Data successfully updated.",
-        });
-      }).catch((err) => {
-        return next(err);
-      }),
-      expenseSchema.updateMany({'employeeName.idRow': id},{$set:{'employeeName.$.employee':employeeName}}),
-      payRollSchema.updateMany({'employeeName.id': id},{$set:{'employeeName.name':employeeName}}),
-      itemOutSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':employeeName}}),
-      itemReturnSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':employeeName}}),
-      employeeAttendanceShema.updateMany({'id': id},{$set:{'name':employeeName}}),
-    ])
-  } catch (error) {
-    return next(error);
-  }
 
-});
+
+// Update single employee
+
+
 // Delete single employee
-Route.route("/delete-employee/:id").delete(async (req, res) => {
-  await employeeSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all employee
-Route.route("/remove-employee").delete(async (req, res) => {
-  await employeeSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all employeeuser
 
-Route.route("/employeeuser", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await employeeUserSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create employeeuser
-Route.route("/create-employeeuser").post(async (req, res, next) => {
-  await employeeUserSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Account successfully created",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 
 
 // Get single employeeuser
-Route.route("/get-employeeuser/:id").get(async (req, res, next) => {
-  await employeeUserSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single employeeuser
-Route.route("/update-employeeuser/:id").put(async (req, res, next) => {
-  await employeeUserSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single employeeuser
-Route.route("/delete-employeeuser/:id").delete(async (req, res) => {
-  await employeeUserSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all employeeuser
-Route.route("/remove-employeeuser").delete(async (req, res) => {
-  await employeeUserSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all invoice
-Route.route("/invoice", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const summary = req.query.summary === 'true';
-      const projection = {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-Route.route("/invoice-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
 
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') {
-      if (branchId === 'HQ') {
-        query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
-      } else {
-        query.branchId = branchId;
-      }
-    }
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        ...(!isNaN(Number(search)) ? [{ invoiceNumber: Number(search) }] : []),
-        { invoiceName: regex },
-        { ReferenceName2: regex },
-        { ReferenceName: regex },
-        { invoiceSubject: regex },
-        { subject: regex },
-        { status: regex },
-        { noteInfo: regex },
-        { note: regex },
-        { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex }
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`items.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await invoiceSchema.countDocuments(query);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-Route.route("/invoice-Overdue", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const branchId = req.query.branchId;
-      const query = {};
-      if (branchId) {
-        if (branchId === 'HQ') {
-          query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
-        } else {
-          query.branchId = branchId;
-        }
-      }
-      const payments = await invoiceSchema.find(query);
-      const today = new Date();
-      payments.forEach(row => {
-        const invoiceDueDate = new Date(row.invoiceDueDate);
-        row.overdue = invoiceDueDate < today;
-        row.daysPastDue = row.overdue ? Math.ceil((today - invoiceDueDate) / (1000 * 60 * 60 * 24)) : 0;
-      });
-      res.json(payments);
-    } catch (error) {
-      return next(error);
-    }
-  }
-);
-Route.route("/get-last-saved-invoice").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = {};
-    if (branchId && branchId !== 'ALL') {
-      if (branchId === 'HQ') {
-        query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
-      } else {
-        query.branchId = branchId;
-      }
-    }
-    const last = await invoiceSchema.findOne(query).sort({
-    invoiceNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create invoice
-Route.route("/create-invoice").post(async (req, res, next) => {
-  if (!req.body.invoiceDueDate) {
-    req.body.invoiceDueDate = new Date();
-  }
-  
-  if (!req.body.customerName || !req.body.customerName.customerName || req.body.customerName.customerName.includes("Unknown Customer")) {
-    if (req.body.ReferenceName2) {
-      try {
-        const purchaseSchema = require('../model/purchaseSchema');
-        const purchase = await purchaseSchema.findById(req.body.ReferenceName2);
-        if (purchase && purchase.customerName && purchase.customerName.customerName) {
-          req.body.customerName = purchase.customerName;
-        } else {
-          req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-        }
-      } catch(err) {
-        req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-      }
-    } else {
-      req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-    }
-  }
-  //await invoiceSchema
-  const  {
-    customerName,
-    invoiceNumber,
-    invoiceDate,
-    invoiceDueDate,
-    invoiceSubject,
-    invoicePurchase,
-    invoiceDefect,
-    status,
-    items,
-    subTotal,
-    ReferenceName,ReferenceName2,
-    total,noteInfo,
-    balanceDue,
-    totalW,actionTaken,
-    invoiceName,Position,
-    note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref
-  } = req.body
-   try {
-    const branchId = req.body.branchId || req.query.branchId;
-    
-      const matchStage = branchId ? { branchId } : {};
-      const aggResult = await invoiceSchema.aggregate([
-        { $match: matchStage },
-        { $group: { _id: null, maxNum: { $max: '$invoiceNumber' } } }
-      ]);
-      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-      const finalNumber = (invoiceNumber && invoiceNumber > maxNum) ? invoiceNumber : maxNum + 1;
-      req.body.invoiceNumber = finalNumber;
-      req.body.invoiceName = 'INV-' + String(finalNumber).padStart(6, '0');
-  
-    
-        await invoiceSchema.create({
-          customerName,
-          invoiceNumber: finalNumber,
-          invoiceDate,
-          invoiceDueDate,
-          invoiceSubject,
-          invoicePurchase,
-          invoiceDefect,
-          status,
-          items,Position,
-          subTotal,
-          ReferenceName,ReferenceName2,
-          total,noteInfo,
-          balanceDue,
-          totalW,actionTaken,
-          invoiceName: 'INV-' + String(finalNumber).padStart(6, '0'),
-          note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref,
-          branchId
-        }).then((result)=>{
-          res.json({ data: result, message: "Data successfully added.", status: 200 });
-        }).catch((err)=>{
-          return next(err);
-        });
-   } catch (error) {
-    next(error);
-   }
-});
 
 // Get single invoice
-Route.route("/get-invoice/:id").get(async (req, res, next) => {
-  await invoiceSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-// Update single invoice
-Route.route("/update-invoice/:id").put(async (req, res, next) => {
-  await invoiceSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-// Delete single invoice
-Route.route("/delete-invoice/:id").delete(async (req, res, next) => {
-    const id = req.params.id;
-    try {
-      const invoiceFiltered = await invoiceSchema.find({_id:id});
-      if (invoiceFiltered && invoiceFiltered.length > 0) {
-        await Promise.all(invoiceFiltered.map(async (row) => {
-          // Unconditional delete before cascade chain
-          await invoiceSchema.findOneAndDelete({_id:row._id});
 
-          if (row.ReferenceName === undefined && row.invoicePurchase === '') {
-            await purchaseSchema.findOneAndDelete({ReferenceName2:row._id});
-          } else if (row.Position === 'Last') {
-            await purchaseSchema.findOneAndUpdate({ReferenceName2:row._id},{$set:{status: 'Estimated',ReferenceName2:'null'}});
-          } else if (row.Position === 'Maintenance') {
-            await maintenanceSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{Converted: false,ReferenceName:''}});
-          } else if (row.Position === 'Second' && row.ReferenceName2 === 'null') {
-            await estimationSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{status: 'Approved',ReferenceName:'null'}});
-          }
-        }));
-        res.json({ msg: "Data successfully deleted." });
-      } else {
-        res.status(404).json({ msg: "Invoice not found" });
-      }
-    } catch (error) {
-      return next(error);
-    }
-});
+
+// Update single invoice
+
+
+// Delete single invoice
+
+
 
 // Delete all invoice
-Route.route("/remove-invoice").delete(async (req, res) => {
-  await invoiceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all item
-Route.route("/item", cors(corsOptionsDelegate)).get(async (req, res, next) => {
-  const rawBranchId = req.query.branchId;
-  const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-  const filter = branchId && branchId !== 'ALL' ? { branchId } : {};
-  await itemSchema
-    .find(filter, {data:0})
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully fetched!",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
 
-Route.get('/item-usage', async (req, res) => {
-  try {
-    const items = await itemSchema.find({});
-    const outDocs = await itemOutSchema.find({});
-    const returnDocs = await itemReturnSchema.find({});
 
-    // Flatten itemQtyArray from out and return
-    const outArray = outDocs.flatMap(doc => doc.itemsQtyArray || []);
-    const returnArray = returnDocs.flatMap(doc => doc.itemsQtyArray || []);
-
-    // Helper to aggregate totals
-    function aggregateTotals(arr, qtyKey) {
-      const totals = {};
-      arr.forEach(entry => {
-        if (entry.itemName && entry.itemName._id) {
-          const id = entry.itemName._id.toString();
-          const qty = parseFloat(entry[qtyKey] || "0");
-
-          if (!totals[id]) {
-            totals[id] = { count: 1, total: qty };
-          } else {
-            totals[id].count += 1;
-            totals[id].total += qty;
-          }
-        }
-      });
-      return totals;
-    }
-
-    const outStats = aggregateTotals(outArray, "newItemOut");
-    const returnStats = aggregateTotals(returnArray, "newItemOut");
-
-    // Merge data into item catalog
-    const result = items.map(item => {
-      const id = item._id.toString();
-
-      const out = outStats[id] || { count: 0, total: 0 };
-      const ret = returnStats[id] || { count: 0, total: 0 };
-
-      return {
-        itemId: id,
-        itemUpc:item.itemUpc,
-        itemName: item.itemName,
-        Sell: item.itemSellingPrice,
-        timesOut: out.count,
-        totalQtyOut: out.total,
-        timesReturn: ret.count,
-        totalQtyReturn: ret.total,
-        balanceQty: out.total - ret.total
-      };
-    });
-
-    // Sort by highest balanceQty and return top 200
-    const sortedResult = result.sort((a, b) => b.balanceQty - a.balanceQty).slice(0, 1000);
-
-    res.json(sortedResult);
-
-  } catch (error) {
-    console.error("Error getting item usage:", error);
-    res.status(500).json({ error: "Internal server error" });
-  }
-});
-
-Route.route("/item-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
-    if (search.trim()) {
-      const rawTerms = search.trim().split(/\s+/);
-      query.$and = rawTerms.map(rawTerm => {
-        const term = new RegExp(rawTerm, 'i');
-        const numTerm = isNaN(Number(rawTerm)) ? null : Number(rawTerm);
-        return {
-          $or: [
-            { itemName: term },
-            { itemBrand: term },
-            { itemDescription: term },
-            { itemCategory: term },
-            { itemManufacturer: term },
-            { 'itemUpc.newCode': term },
-            { 'itemUpc.itemNumber': numTerm },
-          ],
-        };
-      });
-    }
-    if (filterField && filterValue) {
-      query[filterField] = new RegExp(filterValue, 'i');
-    }
-
-    const isSummary = req.query.summary === 'true';
-    const projection = isSummary ? { itemName: 1, itemCategory: 1, unit: 1, itemSellingPrice: 1, itemCostPrice: 1, itemUpc: 1, _id: 1, itemDescription: 1, itemBrand: 1, itemManufacturer: 1, typeItem: 1 } : {};
-
-    const [itemI, totalItem] = await Promise.all([
-      itemSchema.find(query, projection).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)),
-      itemSchema.countDocuments(query),
-    ]);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    res.status(500).json({ message: "An error occurred while fetching data.", error: error.message });
-  }
-});
-
-Route.route("/item-shop").get(async (req, res) => {
-  try {
-    const {page = 1, limit = 60, search = ''} = req.query;
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const skip = (page - 1) * limit;
-
-    const query = {}
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
-
-    if (search.trim()) {
-      const searchTerms = search.split(' ').map(term => new RegExp(term, 'i'));
-      query.$and = searchTerms.map(term => ({
-        $or: [
-          { itemName: term },
-          { itemBrand: term },
-          { itemDescription: term },
-          { itemCategory: term },
-          { 'itemUpc.newCode': term },
-          { 'itemUpc.itemNumber': isNaN(Number(search)) ? null : Number(search)  },
-        ],
-      }));
-    }
-
-    const items = await itemSchema.find(query).skip(skip).limit(parseInt(limit)).select('typeItem itemName itemCategory itemQuantity itemDimension itemWeight unit itemUpc itemBrand itemManufacturer itemCostPrice itemSellingPrice itemDescription data contentType').lean();
-    const totalItem = await itemSchema.countDocuments(query);
-
-    res.status(200).json({
-      items,
-      totalItem,
-      totalPages: Math.ceil(totalItem/limit)
-    })
-
-  } catch (error) {
-    res.status(500).json({msg:"service error"})
-  }
-})
-
-Route.route("/get-last-saved-item/:category").get(async(req,res, next)=>{
-  const category = req.params.category;
-  try {
-    const last = await itemSchema.findOne({'itemUpc.newCode':category}).sort({
-      'itemUpc.itemNumber': -1
-    }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create item
-Route.route("/create-item").post(async (req, res, next) => {
- const{
-  typeItem,itemName,itemStore,unit
-  ,itemDimension,
-  itemWeight,itemCategory,itemUpc,itemManufacturer,
-  itemBrand,itemCostPrice,
-  itemQuantity,itemSellingPrice,itemDescription,
-  stockOnHand,Creates
-, branchId } = req.body
-try {
-  if (typeItem === "Product") {
-    const matchStage = branchId ? { branchId, itemCategory } : { itemCategory };
-    const aggResult = await itemSchema.aggregate([
-      { $match: matchStage },
-      { $group: { _id: null, maxNum: { $max: '$itemUpc.itemNumber' } } }
-    ]);
-    const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-    const itemNumberInt = parseInt(itemUpc.itemNumber) || 0;
-    const finalNumber = (itemNumberInt > maxNum) ? itemNumberInt : maxNum + 1;
-    req.body.itemUpc = req.body.itemUpc || {};
-    req.body.itemUpc.itemNumber = finalNumber;
-  
-  
-        await itemSchema.create({
-          typeItem,itemName,itemStore,unit,itemDimension,
-          itemWeight,itemCategory,itemUpc:{
-            itemNumber: finalNumber ,
-            newCode: itemUpc.newCode
-          },itemManufacturer,
-          itemBrand,itemCostPrice,
-          itemQuantity,itemSellingPrice,itemDescription,
-          stockOnHand,Creates,
-          branchId
-        }).then((result)=>{
-          res.json({ data: result, message: "Data successfully added.", status: 200 });
-        }).catch((err)=>{
-          return next(err);
-        });
-
-  }else {
-    await itemSchema.create({
-      typeItem,itemName,itemStore,unit
-      ,itemDimension,
-      itemWeight,itemCategory,itemUpc,itemManufacturer,
-      itemBrand,itemCostPrice,
-      itemQuantity,itemSellingPrice,itemDescription,
-      stockOnHand,Creates
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-  }
-} catch (error) {
-  next(error);
-}
-});
 
 // Get single item
-Route.route("/get-item/:id").get(async (req, res, next) => {
-  await itemSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 //Get Item that are less than 30%
-Route.route("/low-margin-item").get(async (req,res) => {
-  try {
-    const lowMarginItems = await itemSchema.find({
-      $expr:{
-        $lte:['$itemSellingPrice',{$multiply:['$itemCostPrice',1.3]}]
-      }
-    })
-  res.status(200).json({
-    success: true,
-    data: lowMarginItems
-  })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "An Error Occurred"
-    })
-  }
-})
-// Update single item
-Route.route("/update-item/:id").put(async (req, res, next) => {
-  const id = req.params.id
-  const {itemName,itemDescription} = req.body
-  try {
-    await Promise.all([
-      itemSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      }).then((result) => {res.json({ data: result,
-          msg: "Data successfully updated.",
-        });
-      }).catch((err) => {
-        return next(err);
-      }),
-      invoiceSchema.updateMany({'items.itemName._id': id},{$set:{'items.$.itemName.itemName':itemName,'items.$.itemDescription':itemDescription}}),
-      estimationSchema.updateMany({'items.itemName._id': id},{$set:{'items.$.itemName.itemName':itemName,'items.$.itemDescription':itemDescription}}),
-      purchaseSchema.updateMany({'items.itemName._id': id},{$set:{'items.$.itemName.itemName':itemName,'items.$.itemDescription':itemDescription}}),
-      maintenanceSchema.updateMany({'items.itemName._id': id},{$set:{'items.$.itemName.itemName':itemName,'items.$.itemDescription':itemDescription}}),
-      itemPurchaseSchema.updateMany({'items.itemName._id': id},{$set:{'items.$.itemName.itemName':itemName,'items.$.itemDescription':itemDescription}}),
-      itemOutSchema.updateMany({'itemsQtyArray.itemName._id': id},{$set:{'itemsQtyArray.$.itemName.itemName':itemName,'itemsQtyArray.$.itemDescription':itemDescription}}),
-      itemReturnSchema.updateMany({'itemsQtyArray.itemName._id': id},{$set:{'itemsQtyArray.$.itemName.itemName':itemName,'itemsQtyArray.$.itemDescription':itemDescription}})
-    ])
-  } catch (error) {
-    return next(error);
-  }
-});
+
+
 // Delete single item
-Route.route("/delete-item/:id").delete(async (req, res) => {
-  await itemSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all item
-Route.route("/remove-item").delete(async (req, res) => {
-  await itemSchema
-    .findByIdAndRemove(req.params._id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all payment
+
 
 Route.route("/payment", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
@@ -1834,7 +764,9 @@ Route.route("/create-payment").post(async (req, res, next) => {
    }
 });
 
+
 // Get single payment
+
 Route.route("/get-payment/:id").get(async (req, res, next) => {
   await paymentSchema
     .findById(req.params.id, req.body)
@@ -1849,7 +781,9 @@ Route.route("/get-payment/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single payment
+
 Route.route("/update-payment/:id").put(async (req, res, next) => {
   await paymentSchema
     .findByIdAndUpdate(req.params.id, {
@@ -1865,7 +799,9 @@ Route.route("/update-payment/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single payment
+
 Route.route("/delete-payment/:id").delete(async (req, res) => {
   await paymentSchema
     .findByIdAndRemove(req.params.id)
@@ -1879,7 +815,9 @@ Route.route("/delete-payment/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all payment
+
 Route.route("/remove-payment").delete(async (req, res) => {
   await paymentSchema
     .findByIdAndRemove(req.params.id)
@@ -1893,362 +831,72 @@ Route.route("/remove-payment").delete(async (req, res) => {
     });
 });
 
+
 // get all purchase
 
-Route.route("/purchase", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const summary = req.query.summary === 'true';
-      const projection = {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-Route.route("/get-last-saved-purchase").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await purchaseSchema.findOne(query).sort({
-    purchaseNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create purchase
-Route.route("/create-purchase").post(async (req, res, next) => {
-  if (!req.body.customerName || !req.body.customerName.customerName || req.body.customerName.customerName.includes("Unknown Customer")) {
-    if (req.body.ReferenceName2) {
-      try {
-        const purchaseSchema = require('../model/purchaseSchema');
-        const purchase = await purchaseSchema.findById(req.body.ReferenceName2);
-        if (purchase && purchase.customerName && purchase.customerName.customerName) {
-          req.body.customerName = purchase.customerName;
-        } else {
-          req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-        }
-      } catch(err) {
-        req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-      }
-    } else {
-      req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-    }
-  }
 
- // await purchaseSchema
- const { customerName,purchaseNumber,noteInfo,estimateDefect,estimateSubject,
-  purchaseName,projectName,description,Position,
-  purchaseDate,status,statusInfo,items,purchaseAmount1,
-  purchaseAmount2,Create,ReferenceName,ReferenceName2} = req.body
- try {
-  const branchId = req.body.branchId || req.query.branchId;
-  const purchaseNumberInfo = await purchaseSchema.findOne(branchId ? { branchId } : {}).sort({
-    purchaseNumber: -1
-  }).exec();
-  if ( purchaseNumberInfo && purchaseNumberInfo.purchaseNumber === purchaseNumber) {
-    const sum = purchaseNumber + 1
-    await purchaseSchema.create({ customerName,
-      purchaseNumber: sum,
-      purchaseName: "PUR-00"+ sum
-      ,projectName,description,noteInfo,estimateDefect,estimateSubject,
-      purchaseDate,status,statusInfo,items,purchaseAmount1,Position,
-      purchaseAmount2,Create,ReferenceName,ReferenceName2,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-  } else {
-    await purchaseSchema.create({ customerName,purchaseNumber,
-      purchaseName,projectName,description,noteInfo,estimateDefect,estimateSubject,
-      purchaseDate,status,statusInfo,items,purchaseAmount1,Position,
-      purchaseAmount2,Create,ReferenceName,ReferenceName2,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-  }
- } catch (error) {
-  next(error);
- }
-});
+
 
 // Get single purchase
-Route.route("/get-purchase/:id").get(async (req, res, next) => {
-  await purchaseSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-// Update single purchase
-Route.route("/update-purchase/:id").put(async (req, res, next) => {
-  await purchaseSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-// Delete single purchase
-Route.route("/delete-purchase/:id").delete(async (req, res, next) => {
-    const id = req.params.id;
-    try {
-      const purchaseFiltered = await purchaseSchema.find({_id:id});
-      if (purchaseFiltered && purchaseFiltered.length > 0) {
-        await Promise.all(purchaseFiltered.map(async (row) => {
-          // Unconditional delete before cascade chain
-          await purchaseSchema.findOneAndDelete({_id:row._id});
 
-          if (row.status === 'Draft') {
-            // No cascade needed
-          } else if (row.ReferenceName === undefined && row.status === 'Invoiced') {
-            await invoiceSchema.findOneAndDelete({ReferenceName2:row._id});
-          } else if (row.ReferenceName2 !== undefined && row.ReferenceName === undefined && row.Position === 'Last') {
-            await invoiceSchema.findOneAndUpdate({ReferenceName2:row._id},{$set:{invoicePurchase: '',ReferenceName2:'null'}});
-          } else if(row.ReferenceName !== undefined && row.Position === 'Second' && row.ReferenceName2 === 'null') {
-            await estimationSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{status: 'Approved',ReferenceName:''}});
-          }
-        }));
-        res.json({ msg: "Data successfully deleted." });
-      } else {
-        res.status(404).json({ msg: "Purchase not found" });
-      }
-    } catch (error) {
-      return next(error);
-    }
-});
+
+// Update single purchase
+
+
+// Delete single purchase
+
+
 
 // Delete all purchase
-Route.route("/remove-purchase").delete(async (req, res) => {
-  await purchaseSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all recurringinvoice
 
-Route.route("/recurringinvoice", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await recurringInvoiceSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create recurringinvoice
-Route.route("/create-recurringinvoice").post(async (req, res, next) => {
-  await recurringInvoiceSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single recurringinvoice
-Route.route("/get-recurringinvoice/:id").get(async (req, res, next) => {
-  await recurringInvoiceSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single recurringinvoice
-Route.route("/update-recurringinvoice/:id").put(async (req, res, next) => {
-  await recurringInvoiceSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single recurringinvoice
-Route.route("/delete-recurringinvoice/:id").delete(async (req, res) => {
-  await recurringInvoiceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully deleted.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all recurringinvoice
-Route.route("/remove-recurringinvoice").delete(async (req, res) => {
-  await recurringInvoiceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully deleted.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all retainerinvoice
 
-Route.route("/retainerinvoice", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await retainerInvoiceSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create retainerinvoice
-Route.route("/create-retainerinvoice").post(async (req, res, next) => {
-  await retainerInvoiceSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single retainerinvoice
-Route.route("/get-retainerinvoice/:id").get(async (req, res, next) => {
-  await retainerInvoiceSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single retainerinvoice
-Route.route("/update-retainerinvoice/:id").put(async (req, res, next) => {
-  await retainerInvoiceSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single retainerinvoice
-Route.route("/delete-retainerinvoice/:id").delete(async (req, res) => {
-  await retainerInvoiceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully Deleted.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all retainerinvoice
-Route.route("/remove-retainerinvoice").delete(async (req, res) => {
-  await retainerInvoiceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // get all companyProfile
+
 
 Route.route("/companyProfile", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
@@ -2266,7 +914,9 @@ Route.route("/companyProfile", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create companyProfile
+
 Route.route("/create-companyProfile").post(async (req, res, next) => {
   await companyProfileSchema
     .create(req.body)
@@ -2282,7 +932,9 @@ Route.route("/create-companyProfile").post(async (req, res, next) => {
     });
 });
 
+
 // Get single companyProfile
+
 Route.route("/get-companyProfile/:id").get(async (req, res, next) => {
   await companyProfileSchema
     .findById(req.params.id, req.body)
@@ -2297,7 +949,9 @@ Route.route("/get-companyProfile/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single companyProfile
+
 Route.route("/update-companyProfile/:id").put(async (req, res, next) => {
   await companyProfileSchema
     .findByIdAndUpdate(req.params.id, {
@@ -2313,7 +967,9 @@ Route.route("/update-companyProfile/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single companyProfile
+
 Route.route("/delete-companyProfile/:id").delete(async (req, res) => {
   await companyProfileSchema
     .findByIdAndRemove(req.params.id)
@@ -2327,7 +983,9 @@ Route.route("/delete-companyProfile/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all companyProfile
+
 Route.route("/remove-companyProfile").delete(async (req, res) => {
   await companyProfileSchema
     .findByIdAndRemove(req.params.id)
@@ -2341,194 +999,27 @@ Route.route("/remove-companyProfile").delete(async (req, res) => {
     });
 });
 
+
 // -------------get all estimation-------------------
 
-Route.route("/estimation", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const summary = req.query.summary === 'true';
-      const projection = {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-Route.route("/get-last-saved-estimation").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await estimationSchema.findOne(query).sort({
-    estimateNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create estimation
-Route.route("/create-estimation").post(async (req, res, next) => {
-  if (!req.body.customerName || !req.body.customerName.customerName || req.body.customerName.customerName.includes("Unknown Customer")) {
-    if (req.body.ReferenceName2) {
-      try {
-        const purchaseSchema = require('../model/purchaseSchema');
-        const purchase = await purchaseSchema.findById(req.body.ReferenceName2);
-        if (purchase && purchase.customerName && purchase.customerName.customerName) {
-          req.body.customerName = purchase.customerName;
-        } else {
-          req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-        }
-      } catch(err) {
-        req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-      }
-    } else {
-      req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-    }
-  }
 
- // await estimationSchema
- const{
-  customerName,
-  estimateNumber,
-  estimateDate,
-  estimateDefect,
-  estimateSubject,
-  status,
-  items,
-  subTotal,
-  total,
-  totalW,
-  note,
-  estimateName,
-  Create,balanceDue,
-  terms,shipping,noteInfo,
-  adjustment,adjustmentNumber,
-  totalInvoice,Ref,ReferenceName
-} = req.body
- try {
-  const branchId = req.body.branchId || req.query.branchId;
-  
-      const matchStage = branchId ? { branchId } : {};
-      const aggResult = await estimationSchema.aggregate([
-        { $match: matchStage },
-        { $group: { _id: null, maxNum: { $max: '$estimateNumber' } } }
-      ]);
-      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-      const finalNumber = (estimateNumber && estimateNumber > maxNum) ? estimateNumber : maxNum + 1;
-      req.body.estimateNumber = finalNumber;
-      req.body.estimateName = 'QT-' + String(finalNumber).padStart(6, '0');
-  
-  
-        await estimationSchema.create({
-          branchId,
-          customerName,
-          estimateNumber: finalNumber,
-          estimateDate,
-          estimateDefect,
-          estimateSubject,
-          status,
-          items,
-          subTotal,
-          total,
-          totalW,
-          note,
-          estimateName: 'QT-' + String(finalNumber).padStart(6, '0'),
-          Create,balanceDue,
-          terms,shipping,noteInfo,
-          adjustment,adjustmentNumber,
-          totalInvoice,Ref,ReferenceName
-        }).then((result)=>{
-          res.json({ data: result, message: "Data successfully added.", status: 200 });
-        }).catch((err)=>{
-          return next(err);
-        });
 
- } catch (error) {
-  next(error);
- }
-});
 
 // Get single estimation
-Route.route("/get-estimation/:id").get(async (req, res, next) => {
-  await estimationSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single estimation
-Route.route("/update-estimation/:id").put(async (req, res, next) => {
-  await estimationSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single estimation
-Route.route("/delete-estimation/:id").delete(async (req, res, next) => {
-  await estimationSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully delete.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-    const id = req.params.id
-    try {
-      const deletePurchaseId = await purchaseSchema.find({ReferenceName:id});
-      const deleteInvoiceId = await invoiceSchema.find({ReferenceName:id});
-    if (deletePurchaseId) {
-        await Promise.all (deletePurchaseId.map(async (row)=>{
-          await purchaseSchema.findOneAndDelete({_id:row._id}),
-          await  invoiceSchema.findOneAndDelete({ReferenceName2:row._id})
-        }))
-    } 
-  if (deleteInvoiceId) {
-      await Promise.all (deleteInvoiceId.map(async (row)=>{
-        await invoiceSchema.findOneAndDelete({_id:row._id}),
-        await  purchaseSchema.findOneAndDelete({ReferenceName2:row._id})
-      }))
-    }
-    } catch (error) {
-      
-    }
-});
+
+
 
 // Delete all estimation
-Route.route("/remove-estimation").delete(async (req, res) => {
-  await estimationSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully delete.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all pos-------------------
+
 
 Route.route("/pos", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
@@ -2554,7 +1045,6 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
     }
   }
 );
-
 Route.route("/get-last-saved-pos").get(async(req,res, next)=>{
   try {
     const rawBranchId = req.query.branchId;
@@ -2669,7 +1159,9 @@ Route.route("/create-pos").post(async (req, res, next) => {
  }
 });
 
+
 // Get single pos
+
 Route.route("/get-pos/:id").get(async (req, res, next) => {
   await posSchema
     .findById(req.params.id, req.body)
@@ -2684,7 +1176,9 @@ Route.route("/get-pos/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single pos
+
 Route.route("/update-pos/:id").put(async (req, res, next) => {
   await posSchema
     .findByIdAndUpdate(req.params.id, {
@@ -2700,7 +1194,9 @@ Route.route("/update-pos/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single pos
+
 Route.route("/delete-pos/:id").delete(async (req, res, next) => {
   await posSchema
     .findByIdAndRemove(req.params.id)
@@ -2714,7 +1210,9 @@ Route.route("/delete-pos/:id").delete(async (req, res, next) => {
     });
 });
 
+
 // Delete all pos
+
 Route.route("/remove-pos").delete(async (req, res) => {
   await posSchema
     .findByIdAndRemove(req.params.id)
@@ -2727,765 +1225,128 @@ Route.route("/remove-pos").delete(async (req, res) => {
       return next(err);
     });
 });
+
 // -------------get all expensesMonthlyTotal-------------------
 
-Route.route("/expensesMonthlyTotal", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await dailyExpensesMonthlyTotalSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create expensesMonthlyTotal
-Route.route("/create-expensesMonthlyTotal").post(async (req, res, next) => {
-  await dailyExpensesMonthlyTotalSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single expensesMonthlyTotal
-Route.route("/get-expensesMonthlyTotal/:id").get(async (req, res, next) => {
-  await dailyExpensesMonthlyTotalSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single expensesMonthlyTotal
-Route.route("/update-expensesMonthlyTotal/:id").put(async (req, res, next) => {
-  await dailyExpensesMonthlyTotalSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single expensesMonthlyTotal
-Route.route("/delete-expensesMonthlyTotal/:id").delete(async (req, res) => {
-  await dailyExpensesMonthlyTotalSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully delete.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all expensesMonthlyTotal
-Route.route("/remove-expensesMonthlyTotal").delete(async (req, res) => {
-  await dailyExpensesMonthlyTotalSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully delete.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 
 // -------------get all projects-------------------
 
-Route.route("/projects", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await projectSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
-Route.route("/get-last-saved-project").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await projectSchema.findOne(query).sort({ _id: -1 }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create projects
-Route.route("/create-projects").post(async (req, res, next) => {
-   const { customerName, projectName, status, phase, description, startDate, visitDate, projectNumber, Create } = req.body;
-   try {
-    const branchId = req.body.branchId || req.query.branchId || 'HQ';
-    const matchStage = branchId ? { branchId } : {};
-    const aggResult = await projectSchema.aggregate([
-      { $match: matchStage },
-      { $group: { _id: null, maxNum: { $max: '$projectNumber' } } }
-    ]);
-    const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-    const finalNumber = (projectNumber && projectNumber > maxNum) ? projectNumber : maxNum + 1;
 
-    const result = await projectSchema.create({
-      customerName, projectName, status, phase, description, startDate, visitDate, 
-      projectNumber: finalNumber, Create, branchId
-    });
-    res.json({ data: result, message: "Data successfully added.", status: 200 });
-   } catch (err) {
-     return next(err);
-   }
-});
 
-Route.route("/get-projects/:id").get(async (req, res, next) => {
-  await projectSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
 // Update single projects
-Route.route("/update-projects/:id").put(async (req, res, next) => {
-  const id = req.params.id
-  const {projectName,status,description} = req.body
-  try {
-    await Promise.all([
-      projectSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      }).then((result) => {res.json({ data: result,
-          msg: "Data successfully updated.",
-        });
-      }).catch((err) => {
-        return next(err);
-      }),
-      itemPurchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.name':projectName}}),
-      purchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.projectName':projectName,'statusInfo':status,'description':description}}),
-      itemOutSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}),
-      itemReturnSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}),
-      expenseSchema.updateMany({'accountNameInfo._id': id},{$set:{'accountNameInfo.name':projectName}}),
-    ])
-  } catch (error) {
-    return next(error);
-  }
-});
+
+
 // Delete single projects
-Route.route("/delete-projects/:id").delete(async (req, res) => {
-  await projectSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all projects
-Route.route("/remove-projects").delete(async (req, res) => {
-  await projectSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all expense-------------------
 
-Route.route("/expense", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const summary = req.query.summary === 'true';
-      const projection = {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-Route.route("/get-last-saved-expense").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await expenseSchema.findOne(query).sort({ expenseNumber: -1 }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create expense
-Route.route("/create-expense").post(async (req, res, next) => {
-  //await expenseSchema
-  const{
-    expenseCategory,accountName,
-    description,expenseDate,amount,
-    employeeName,
-    rate,total,Create,expenseNumber,accountNameInfo,reason
-} = req.body
-   try {
-    const branchId = req.body.branchId || req.query.branchId;
-    const expenseNumberOld = await expenseSchema.findOne(branchId ? { branchId } : {}).sort({
-    expenseNumber: -1
-  }).exec();
-    if ( expenseNumberOld && expenseNumberOld.expenseNumber === expenseNumber) {
-      await expenseSchema.create({
-        expenseCategory,accountName,
-        description,expenseDate,amount,
-        employeeName,
-        rate,total,Create,expenseNumber:expenseNumber+1,accountNameInfo,reason
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-    } else {
-      await expenseSchema.create({
-        expenseCategory,accountName,
-        description,expenseDate,amount,
-        employeeName,
-        rate,total,Create,expenseNumber,accountNameInfo,reason
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-    }
-   } catch (error) {
-    next(error);
-   }
-});
+
+
 
 // Get single expense
-Route.route("/get-expense/:id").get(async (req, res, next) => {
-  await expenseSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single expense
-Route.route("/update-expense/:id").put(async (req, res, next) => {
-  await expenseSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single expense
-Route.route("/delete-expense/:id").delete(async (req, res) => {
-  await expenseSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all expense
-Route.route("/remove-expense").delete(async (req, res) => {
-  await expenseSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all maintenance-------------------
-Route.route("/maintenance", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const summary = req.query.summary === 'true';
-      const projection = {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await maintenanceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-Route.route("/maintenance-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
 
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') {
-      if (branchId === 'HQ') {
-        query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
-      } else {
-        query.branchId = branchId;
-      }
-    }
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
-        { serviceName: regex },
-        { technicianAssign: regex },
-        { itemDescriptionInfo: regex },
-        { status: regex },
-        { brand: regex },
-        { model: regex },
-        { serialNo: regex },
-        { note: regex },
-        { actionTaken: regex },
-        { defectDescription: regex },
-        { 'items.itemName': regex },
-        { 'items.itemBrand': regex },
-        { 'items.itemDescription': regex },
-        { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex },
-        { 'customerName.customerPhone': regex },
-        { 'customerName.billingAddress': regex }
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`items.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await maintenanceSchema.countDocuments(query);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-Route.route("/get-last-saved-maintenance").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await maintenanceSchema.findOne(query).sort({ serviceDate: -1 }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create maintenance
-Route.route("/create-maintenance").post(async (req, res, next) => {
-  const { customerName,serviceNumber,action,
-    serviceName,serviceDate,laborQty,totalLaborFeesGenerale,
-    technicianAssign,note,totalLaborFees,laborPercentage,totalDiscount,laborDiscount,
-    visitDate,status,items,itemDescriptionInfo,brand,actionTaken,model,
-    warranty,serialNo,defectDescription,adjustment,adjustmentNumber,
-    totalInvoice,subTotal,Create,Converted,ReferenceName} = req.body;
-  try {
-    const branchId = req.body.branchId || req.query.branchId;
-    const matchStage = branchId ? { branchId } : {};
-
-    // Use $max aggregation â€” works on any collection size without RAM or sort limits
-    const aggResult = await maintenanceSchema.aggregate([
-      { $match: matchStage },
-      { $group: { _id: null, maxNum: { $max: '$serviceNumber' } } }
-    ]);
-    const maxServiceNumber = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-
-    // If the frontend sent the same number as the current max, auto-increment
-    const finalServiceNumber = (serviceNumber && serviceNumber > maxServiceNumber)
-      ? serviceNumber
-      : maxServiceNumber + 1;
-
-    // ALWAYS generate serviceName from finalServiceNumber to avoid E11000 duplicate key errors.
-    // Never trust the frontend-sent serviceName (it may already exist in the DB).
-    const digits = String(finalServiceNumber).padStart(6, '0');
-    const finalServiceName = 'M-' + digits;
-
-    const result = await maintenanceSchema.create({
-      customerName, serviceNumber: finalServiceNumber,
-      serviceName: finalServiceName, serviceDate, laborQty, totalLaborFeesGenerale, action,
-      technicianAssign, note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount,
-      visitDate, status, items, itemDescriptionInfo, brand, actionTaken, model,
-      warranty, serialNo, defectDescription, adjustment, adjustmentNumber,
-      totalInvoice, subTotal, Create, Converted, ReferenceName, branchId
-    });
-    res.json({ data: result, message: "Data successfully added.", status: 200 });
-  } catch (error) {
-    next(error);
-  }
-});
 
 // Get single maintenance
-Route.route("/get-maintenance/:id").get(async (req, res, next) => {
-  await maintenanceSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single maintenance
-Route.route("/update-maintenance/:id").put(async (req, res, next) => {
-  await maintenanceSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single maintenance
-Route.route("/delete-maintenance/:id").delete(async (req, res) => {
-  await maintenanceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-    const id = req.params.id
-    try {
-      const deleteInvoiceId = await invoiceSchema.find({ReferenceName:id});
-  if (deleteInvoiceId) {
-      await Promise.all (deleteInvoiceId.map(async (row)=>{
-        await invoiceSchema.findOneAndDelete({_id:row._id})
-      }))
-    }
-    } catch (error) {
-      
-    }
-});
+
+
 
 // Delete all maintenance
-Route.route("/remove-maintenance").delete(async (req, res) => {
-  await maintenanceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all itemUnit-------------------
-Route.route("/itemUnit", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await itemUnitSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create itemUnit
-Route.route("/create-itemUnit").post(async (req, res, next) => {
-  await itemUnitSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // -------------get all expensesCategory-------------------
-Route.route("/expensesCategory", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await dailyExpensesCategorySchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create expensesCategory
-Route.route("/create-expensesCategory").post(async (req, res, next) => {
-  await dailyExpensesCategorySchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single expensesCategory
-Route.route("/get-expensesCategory/:id").get(async (req, res, next) => {
-  await dailyExpensesCategorySchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single expensesCategory
-Route.route("/update-expensesCategory/:id").put(async (req, res, next) => {
-  await dailyExpensesCategorySchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single expensesCategory
-Route.route("/delete-expensesCategory/:id").delete(async (req, res) => {
-  await dailyExpensesCategorySchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all expensesCategory
-Route.route("/remove-expensesCategory").delete(async (req, res) => {
-  await dailyExpensesCategorySchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all department-------------------
-Route.route("/department", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await departmentSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create department
-Route.route("/create-department").post(async (req, res, next) => {
-  await departmentSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single department
-Route.route("/get-department/:id").get(async (req, res, next) => {
-  await departmentSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single department
-Route.route("/update-department/:id").put(async (req, res, next) => {
-  await departmentSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single department
-Route.route("/delete-department/:id").delete(async (req, res) => {
-  await departmentSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all department
-Route.route("/remove-department").delete(async (req, res) => {
-  await departmentSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all rate-------------------
+
 Route.route("/rate", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
@@ -3502,38 +1363,50 @@ Route.route("/rate", cors(corsOptionsDelegate)).get(
     } catch (err) { next(err); }
   }
 );
+
 // Create rate
+
 Route.route("/create-rate").post(async (req, res, next) => {
   await rateSchema.create(req.body)
     .then((result) => { res.json({ data: result, message: "Data successfully added.", status: 200 }); })
     .catch((err) => { return next(err); });
 });
+
 // Get single rate
+
 Route.route("/get-rate/:id").get(async (req, res, next) => {
   await rateSchema.findById(req.params.id, req.body)
     .then((result) => { res.json({ data: result, message: "Data successfully retrieved.", status: 200 }); })
     .catch((err) => { return next(err); });
 });
+
 // Update single rate
+
 Route.route("/update-rate/:id").put(async (req, res, next) => {
   await rateSchema.findByIdAndUpdate(req.params.id, { $set: req.body })
     .then((result) => { res.json({ data: result, msg: "Data successfully updated." }); })
     .catch((err) => { return next(err); });
 });
+
 // Delete single rate
+
 Route.route("/delete-rate/:id").delete(async (req, res) => {
   await rateSchema.findByIdAndRemove(req.params.id)
     .then(() => { res.json({ msg: "Data successfully updated." }); })
     .catch((err) => { return res.status(400).json(err); });
 });
+
 // Delete all rate
+
 Route.route("/remove-rate").delete(async (req, res) => {
   await rateSchema.findByIdAndRemove(req.params.id)
     .then(() => { res.json({ msg: "Data successfully updated." }); })
     .catch((err) => { return res.status(400).json(err); });
 });
 
+
 // -------------get all rateReturn-------------------
+
 Route.route("/rateReturn", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
@@ -3549,38 +1422,50 @@ Route.route("/rateReturn", cors(corsOptionsDelegate)).get(
     } catch (err) { next(err); }
   }
 );
+
 // Create rateReturn
+
 Route.route("/create-rateReturn").post(async (req, res, next) => {
   await RateReturnSchema.create(req.body)
     .then((result) => { res.json({ data: result, message: "Data successfully added.", status: 200 }); })
     .catch((err) => { return next(err); });
 });
+
 // Get single rateReturn
+
 Route.route("/get-rateReturn/:id").get(async (req, res, next) => {
   await RateReturnSchema.findById(req.params.id, req.body)
     .then((result) => { res.json({ data: result, message: "Data successfully retrieved.", status: 200 }); })
     .catch((err) => { return next(err); });
 });
+
 // Update single rateReturn
+
 Route.route("/update-rateReturn/:id").put(async (req, res, next) => {
   await RateReturnSchema.findByIdAndUpdate(req.params.id, { $set: req.body })
     .then((result) => { res.json({ data: result, msg: "Data successfully updated." }); })
     .catch((err) => { return next(err); });
 });
+
 // Delete single rateReturn
+
 Route.route("/delete-rateReturn/:id").delete(async (req, res) => {
   await RateReturnSchema.findByIdAndRemove(req.params.id)
     .then(() => { res.json({ msg: "Data successfully updated." }); })
     .catch((err) => { return res.status(400).json(err); });
 });
+
 // Delete all rateReturn
+
 Route.route("/remove-rateReturn").delete(async (req, res) => {
   await RateReturnSchema.findByIdAndRemove(req.params.id)
     .then(() => { res.json({ msg: "Data successfully updated." }); })
     .catch((err) => { return res.status(400).json(err); });
 });
 
+
 // -------------get all paymentRate-------------------
+
 Route.route("/paymentRate", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
@@ -3596,20 +1481,26 @@ Route.route("/paymentRate", cors(corsOptionsDelegate)).get(
     } catch (err) { next(err); }
   }
 );
+
 // Create paymentRate
+
 Route.route("/create-paymentRate").post(async (req, res, next) => {
   await paymentRateSchema.create(req.body)
     .then((result) => { res.json({ data: result, message: "Data successfully added.", status: 200 }); })
     .catch((err) => { return next(err); });
 });
+
 // Get single paymentRate
+
 Route.route("/get-paymentRate/:id").get(async (req, res, next) => {
   await paymentRateSchema.findById(req.params.id, req.body)
     .then((result) => { res.json({ data: result, message: "Data successfully retrieved.", status: 200 }); })
     .catch((err) => { return next(err); });
 });
 
+
 // Update single paymentRate
+
 Route.route("/update-paymentRate/:id").put(async (req, res, next) => {
   await paymentRateSchema
     .findByIdAndUpdate(req.params.id, {
@@ -3625,7 +1516,9 @@ Route.route("/update-paymentRate/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single paymentRate
+
 Route.route("/delete-paymentRate/:id").delete(async (req, res) => {
   await paymentRateSchema
     .findByIdAndRemove(req.params.id)
@@ -3639,7 +1532,9 @@ Route.route("/delete-paymentRate/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all paymentRate
+
 Route.route("/remove-paymentRate").delete(async (req, res) => {
   await paymentRateSchema
     .findByIdAndRemove(req.params.id)
@@ -3652,353 +1547,63 @@ Route.route("/remove-paymentRate").delete(async (req, res) => {
       return next(err);
     });
 });
+
 // -------------get all itemCode-------------------
-Route.route("/itemCode", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await itemCodeSchema
-      .find()
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
+
+
 // Create itemCode
-Route.route("/create-itemCode").post(async (req, res, next) => {
-  await itemCodeSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Get single itemCode
-Route.route("/get-itemCode/:id").get(async (req, res, next) => {
-  await itemCodeSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single itemCode
-Route.route("/update-itemCode/:id").put(async (req, res, next) => {
-  await itemCodeSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single itemCode
-Route.route("/delete-itemCode/:id").delete(async (req, res) => {
-  await itemCodeSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all itemCode
-Route.route("/remove-itemCode").delete(async (req, res) => {
-  await itemCodeSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all itemOut-------------------
-Route.route("/itemOut", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
 
-      if (req.query.itemId) {
-        let objectId = null;
-        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
-        
-        if (objectId) {
-          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
-        } else {
-          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
-        }
-      }
 
-      const result = await itemOutSchema.find(filter).sort({ _id: -1 });
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-
-Route.route("/get-last-saved-itemOut").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await itemOutSchema.findOne(query).sort({
-    outNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create itemOut
-Route.route("/create-itemOut").post(async (req, res, next) => {
-  try {
-    const branchId = req.body.branchId || 'HQ';
-    let newOutNumber = req.body.outNumber;
-    
-    if (newOutNumber !== undefined) {
-      const existing = await itemOutSchema.findOne({ branchId, outNumber: newOutNumber }).exec();
-      if (existing) {
-        const last = await itemOutSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
-        newOutNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
-        req.body.outNumber = newOutNumber;
-      }
-    }
-
-    const result = await itemOutSchema.create(req.body);
-    res.json({ data: result, message: "Data successfully added.", status: 200 });
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(500).json({ message: "Duplicate Item Out number detected. Please refresh and try again.", error: err });
-    }
-    return next(err);
-  }
-});
 
 // Get single itemOut
-Route.route("/get-itemOut/:id").get(async (req, res, next) => {
-  await itemOutSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single itemOut
-Route.route("/update-itemOut/:id").put(async (req, res, next) => {
-  try {
-    const result = await itemOutSchema.findByIdAndUpdate(req.params.id, { $set: req.body });
-    res.json({ data: result, msg: "Data successfully updated." });
-  } catch (err) {
-    return next(err);
-  }
-});
+
+
 // Delete single itemOut
-Route.route("/delete-itemOut/:id").delete(async (req, res, next) => {
-  try {
-    await itemOutSchema.findByIdAndRemove(req.params.id);
-    res.json({ msg: "Data successfully updated." });
-  } catch (err) {
-    return next(err);
-  }
-});
+
+
 
 // Delete all itemOut
-Route.route("/remove-itemOut").delete(async (req, res) => {
-  await itemOutSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all purchaseOrder-------------------
-Route.route("/purchaseOrder", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await purchaseOrderSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
-      });
-  }
-);
-Route.route("/purchaseOrder-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
 
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
-        { reason: regex },
-        { 'itemsQtyArray.itemName': regex },
-        { 'itemsQtyArray.itemBrand': regex },
-        { 'itemsQtyArray.itemDescription': regex },
-        { 'reference.referenceName': regex },
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await purchaseOrderSchema.countDocuments(query);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-Route.route("/get-last-saved-purchaseOrder").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await purchaseOrderSchema.findOne(query).sort({
-    outNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create purchaseOrder
-Route.route("/create-purchaseOrder").post(async (req, res, next) => {
-  try {
-    const branchId = req.body.branchId || 'HQ';
-    let newNumber = req.body.outNumber;
-    
-    if (newNumber !== undefined) {
-      const existing = await purchaseOrderSchema.findOne({ branchId, outNumber: newNumber }).exec();
-      if (existing) {
-        const last = await purchaseOrderSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
-        newNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
-        req.body.outNumber = newNumber;
-      }
-    }
-
-    const result = await purchaseOrderSchema.create(req.body);
-    res.json({ data: result, message: "Data successfully added.", status: 200 });
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(500).json({ message: "Duplicate number detected. Please refresh and try again.", error: err });
-    }
-    return next(err);
-  }
-});
 
 // Get single purchaseOrder
-Route.route("/get-purchaseOrder/:id").get(async (req, res, next) => {
-  await purchaseOrderSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single purchaseOrder
-Route.route("/update-purchaseOrder/:id").put(async (req, res, next) => {
-  await purchaseOrderSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Delete single purchaseOrder
-Route.route("/delete-purchaseOrder/:id").delete(async (req, res) => {
-  await purchaseOrderSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // Delete all purchaseOrder
-Route.route("/remove-purchaseOrder").delete(async (req, res) => {
-  await purchaseOrderSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all grantAccess-------------------
+
 Route.route("/grantAccess", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await grantAccessSchema
@@ -4043,7 +1648,9 @@ Route.route("/create-grantAccess").post(async (req, res, next) => {
     });
 });
 
+
 // Get single grantAccess
+
 Route.route("/get-grantAccess/:id").get(async (req, res, next) => {
   await grantAccessSchema
     .findById(req.params.id, req.body)
@@ -4058,7 +1665,9 @@ Route.route("/get-grantAccess/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single grantAccess
+
 Route.route("/update-grantAccess/:id").put(async (req, res, next) => {
   const { employeeName, userID, modules, branches, costVisibility, branchId } = req.body;
   await grantAccessSchema
@@ -4079,7 +1688,9 @@ Route.route("/update-grantAccess/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single grantAccess
+
 Route.route("/delete-grantAccess/:id").delete(async (req, res) => {
   await grantAccessSchema
     .findByIdAndRemove(req.params.id)
@@ -4093,7 +1704,9 @@ Route.route("/delete-grantAccess/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all grantAccess
+
 Route.route("/remove-grantAccess").delete(async (req, res) => {
   await grantAccessSchema
     .findByIdAndRemove(req.params.id)
@@ -4106,149 +1719,26 @@ Route.route("/remove-grantAccess").delete(async (req, res) => {
       return next(err);
     });
 });
+
 // -------------get all itemReturn-------------------
-Route.route("/itemReturn", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
 
-      if (req.query.itemId) {
-        let objectId = null;
-        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
-        
-        if (objectId) {
-          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
-        } else {
-          filter['itemsQtyArray'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
-        }
-      }
 
-      const result = await itemReturnSchema.find(filter).sort({ _id: -1 });
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-Route.route("/itemReturn-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
-        { description: regex },
-        { reason: regex },
-        { 'itemsQtyArray.itemName': regex },
-        { 'itemsQtyArray.itemBrand': regex },
-        { 'itemsQtyArray.itemDescription': regex },
-        { 'reference.referenceName': regex },
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await itemReturnSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-Route.route("/get-last-saved-itemReturn").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await itemReturnSchema.findOne(query).sort({
-    outNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create itemReturn
-Route.route("/create-itemReturn").post(async (req, res, next) => {
-  try {
-    const branchId = req.body.branchId || 'HQ';
-    let newNumber = req.body.outNumber;
-    
-    if (newNumber !== undefined) {
-      const existing = await itemReturnSchema.findOne({ branchId, outNumber: newNumber }).exec();
-      if (existing) {
-        const last = await itemReturnSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
-        newNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
-        req.body.outNumber = newNumber;
-      }
-    }
-
-    const result = await itemReturnSchema.create(req.body);
-    res.json({ data: result, message: "Data successfully added.", status: 200 });
-  } catch (err) {
-    if (err.code === 11000) {
-      return res.status(500).json({ message: "Duplicate number detected. Please refresh and try again.", error: err });
-    }
-    return next(err);
-  }
-});
 
 // Get single itemReturn
-Route.route("/get-itemReturn/:id").get(async (req, res, next) => {
-  await itemReturnSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // Update single itemReturn
-Route.route("/update-itemReturn/:id").put(async (req, res, next) => {
-  try {
-    const result = await itemReturnSchema.findByIdAndUpdate(req.params.id, { $set: req.body });
-    res.json({ data: result, msg: "Data successfully updated." });
-  } catch (err) {
-    return next(err);
-  }
-});
+
+
 // Delete single itemReturn
-Route.route("/delete-itemReturn/:id").delete(async (req, res, next) => {
-  try {
-    await itemReturnSchema.findByIdAndRemove(req.params.id);
-    res.json({ msg: "Data successfully updated." });
-  } catch (err) {
-    return next(err);
-  }
-});
+
+
 
 // Delete all itemReturn
-Route.route("/remove-itemReturn").delete(async (req, res) => {
-  await itemReturnSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 // -------------get all comment-------------------
+
 Route.route("/comment", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await commentSchema
@@ -4265,7 +1755,9 @@ Route.route("/comment", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create comment
+
 Route.route("/create-comment").post(async (req, res, next) => {
   await commentSchema
     .create(req.body)
@@ -4281,7 +1773,9 @@ Route.route("/create-comment").post(async (req, res, next) => {
     });
 });
 
+
 // Get single comment
+
 Route.route("/get-comment/:id").get(async (req, res, next) => {
   await commentSchema
     .findById(req.params.id, req.body)
@@ -4296,7 +1790,9 @@ Route.route("/get-comment/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single comment
+
 Route.route("/update-comment/:id").put(async (req, res, next) => {
   await commentSchema
     .findByIdAndUpdate(req.params.id, {
@@ -4312,7 +1808,9 @@ Route.route("/update-comment/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single comment
+
 Route.route("/delete-comment/:id").delete(async (req, res) => {
   await commentSchema
     .findByIdAndRemove(req.params.id)
@@ -4326,7 +1824,9 @@ Route.route("/delete-comment/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all comment
+
 Route.route("/remove-comment").delete(async (req, res) => {
   await commentSchema
     .findByIdAndRemove(req.params.id)
@@ -4339,7 +1839,9 @@ Route.route("/remove-comment").delete(async (req, res) => {
       return next(err);
     });
 });
+
 // -------------get all cash-------------------
+
 Route.route("/cash", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await cashSchema
@@ -4383,7 +1885,9 @@ Route.route("/create-cash").post(async (req, res, next) => {
     });
 });
 
+
 // Get single cash
+
 Route.route("/get-cash/:id").get(async (req, res, next) => {
   await cashSchema
     .findById(req.params.id, req.body)
@@ -4398,7 +1902,9 @@ Route.route("/get-cash/:id").get(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Update single cash
+
 Route.route("/update-cash/:id").put(async (req, res, next) => {
   await cashSchema
     .findByIdAndUpdate(req.params.id, {
@@ -4414,7 +1920,9 @@ Route.route("/update-cash/:id").put(async (req, res, next) => {
       return next(err);
     });
 });
+
 // Delete single cash
+
 Route.route("/delete-cash/:id").delete(async (req, res) => {
   await cashSchema
     .findByIdAndRemove(req.params.id)
@@ -4428,7 +1936,9 @@ Route.route("/delete-cash/:id").delete(async (req, res) => {
     });
 });
 
+
 // Delete all cash
+
 Route.route("/remove-cash").delete(async (req, res) => {
   await cashSchema
     .findByIdAndRemove(req.params.id)
@@ -4441,204 +1951,27 @@ Route.route("/remove-cash").delete(async (req, res) => {
       return next(err);
     });
 });
+
 // -------------get all itemPurchase-------------------
-Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    try {
-      const projection = {};
-      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-
-      if (req.query.itemId) {
-        let objectId = null;
-        try { objectId = new mongoose.Types.ObjectId(req.query.itemId); } catch (e) {}
-        
-        if (objectId) {
-          filter['items'] = { $elemMatch: { 'itemName._id': { $in: [req.query.itemId, objectId] } } };
-        } else {
-          filter['items'] = { $elemMatch: { 'itemName._id': req.query.itemId } };
-        }
-      }
-
-      if (req.query.targetDate) {
-        const tDate = new Date(req.query.targetDate);
-        const nextDate = new Date(tDate);
-        nextDate.setDate(tDate.getDate() + 1);
-        filter.payments = {
-          $elemMatch: {
-            date: { $gte: tDate, $lt: nextDate }
-          }
-        };
-      }
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
-
-      res.json({ data: result, message: "Data successfully fetched!", status: 200 });
-    } catch (err) {
-      return next(err);
-    }
-  }
-);
-
-Route.route("/itemPurchase-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      const orConditions = [
-        { description: regex },
-        { manufacturer: regex },
-        { manufacturerNumber: regex },
-        { status: regex },
-        { note: regex },
-        { 'items.itemName': regex },
-        { 'items.itemDescription': regex },
-        { 'projectName.name': regex },
-        { reason: regex }
-      ];
-      if (!isNaN(Number(search))) {
-        orConditions.push({ itemPurchaseNumber: Number(search) });
-      }
-      query.$or = orConditions;
-    }
-    if (filterField && filterValue) {
-      query[`items.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
-    const totalItem = await itemPurchaseSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-Route.route("/get-last-saved-itemPurchase").get(async(req,res, next)=>{
-  try {
-    const rawBranchId = req.query.branchId;
-    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
-    const last = await itemPurchaseSchema.findOne(query).sort({
-    itemPurchaseNumber: -1
-  }).exec();
-    res.json(last)
-  } catch (error) {
-    next(error);
-  }
-})
-// Create itemPurchase
-Route.route("/create-itemPurchase").post(async (req, res, next) => {
-  const { itemPurchaseDate,POID,itemPurchaseNumber,
-    manufacturer,manufacturerNumber,manufacturerID,status,
-    description,note,
-  Create,totalUSD,total,totalFC,items,reason,projectName} = req.body
-   try {
-    const branchId = req.body.branchId || req.query.branchId;
-    
-      const matchStage = branchId ? { branchId } : {};
-      const aggResult = await itemPurchaseSchema.aggregate([
-        { $match: matchStage },
-        { $group: { _id: null, maxNum: { $max: '$itemPurchaseNumber' } } }
-      ]);
-      const maxNum = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
-      const finalNumber = (itemPurchaseNumber && itemPurchaseNumber > maxNum) ? itemPurchaseNumber : maxNum + 1;
-      req.body.itemPurchaseNumber = finalNumber;
-
-    for( const purchaseItem of items) {
-      if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
-        await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
-      } 
-    }
-    
-      await itemPurchaseSchema.create(req.body).then((result)=>{
-        res.json({ data: result, message: "Data successfully added.", status: 200 });
-      }).catch((err)=>{
-        return next(err);
-      });
 
 
-
-   } catch (error) {
-    next(error);
-   }
-
-});
 // Get single itemPurchase
-Route.route("/get-itemPurchase/:id").get(async (req, res, next) => {
-  await itemPurchaseSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
-// Update single itemPurchase
-Route.route("/update-itemPurchase/:id").put(async (req, res, next) => {
-  const {items} = req.body
-  try {
-    if (items !== undefined){
-      for( const purchaseItem of items) {
-        if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
-          await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
-        } 
-      }
-    }
-    await itemPurchaseSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-  } catch (error) {
-    return next(error);
-  }
 
-});
+
+// Update single itemPurchase
+
+
 // Delete single itemPurchase
-const deleteItemPurchaseHandler = async (req, res, next) => {
-  try {
-    const id = req.body.id || req.params.id;
-    await itemPurchaseSchema.findByIdAndRemove(id);
-    res.json({ msg: "Data successfully updated." });
-  } catch (err) {
-    return next(err);
-  }
-};
-Route.route("/delete-itemPurchase/:id").post(deleteItemPurchaseHandler).delete(deleteItemPurchaseHandler);
-Route.route("/delete-itemPurchase").post(deleteItemPurchaseHandler).delete(deleteItemPurchaseHandler);
+
+
+
 
 // Delete all itemPurchase
-Route.route("/remove-itemPurchase").delete(async (req, res) => {
-  await itemPurchaseSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-});
+
+
 
 // -------------get all hidden-------------------
+
 Route.route("/hidden", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     await hiddenSchema
@@ -4655,7 +1988,9 @@ Route.route("/hidden", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 // Create hidden
+
 Route.route("/create-hidden").post(async (req, res, next) => {
   await hiddenSchema
     .create(req.body)
@@ -4671,7 +2006,9 @@ Route.route("/create-hidden").post(async (req, res, next) => {
     });
 });
 
+
 // Delete single hidden
+
 Route.route("/delete-hidden/:id").delete(async (req, res) => {
   await hiddenSchema
     .findByIdAndRemove(req.params.id)
@@ -4685,10 +2022,12 @@ Route.route("/delete-hidden/:id").delete(async (req, res) => {
     });
 });
 
+
 const storage = multer.memoryStorage();
 const upload = multer({storage})
 
 // Post Images
+
 Route.route('/upload-image').post(upload.single('image'), async (req, res)=> {
   try {
     const newImage = await imageSchema.create({
@@ -4702,22 +2041,6 @@ Route.route('/upload-image').post(upload.single('image'), async (req, res)=> {
   } catch (error) {
     res.status(500).send('error')
   }
-});
-Route.route('/upload-image-item/:id').put(upload.single('image'), async (req, res)=> {
-  const contentType = req.file.mimetype
-  const data = req.file.buffer
-    await itemSchema
-    .findByIdAndUpdate(req.params.id,{
-      $set:{'contentType':contentType,'data':data},
-    })
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
 });
 Route.route("/image", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
@@ -4735,7 +2058,9 @@ Route.route("/image", cors(corsOptionsDelegate)).get(
       });
   }
 );
+
 //get Image 
+
 Route.route("/get-image/:name").get(async (req, res, next) => {
  // await imageSchema
  try {
@@ -4745,7 +2070,9 @@ Route.route("/get-image/:name").get(async (req, res, next) => {
   next(error)
  }
 });
+
 // Delete single image
+
 Route.route("/delete-image/:id").delete(async (req, res) => {
   await imageSchema
     .findByIdAndRemove(req.params.id)
@@ -4758,6 +2085,7 @@ Route.route("/delete-image/:id").delete(async (req, res) => {
       return next(err);
     });
 });
+
 
 // =====================================================================
 // BLOCK FACTORY ROUTES
@@ -4775,6 +2103,7 @@ function branchFilter(req) {
 }
 
 // ---------- block-config ----------
+
 Route.route("/block-config").get(async (req, res, next) => {
   try {
     const filter = branchFilter(req);
@@ -4801,7 +2130,9 @@ Route.route("/upsert-block-config").post(async (req, res, next) => {
     res.json({ data: doc, status: 200 });
   } catch (err) { next(err); }
 });
+
 // Alias: frontend calls create-block-config to save pricing config
+
 Route.route("/create-block-config").post(async (req, res, next) => {
   try {
     const { blockType, branchId } = req.body;
@@ -4815,7 +2146,9 @@ Route.route("/create-block-config").post(async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
+
 // ---------- block-production ----------
+
 Route.route("/block-production").get(async (req, res, next) => {
   try {
     const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
@@ -4843,7 +2176,9 @@ Route.route("/update-block-production/:id").put(async (req, res, next) => {
     res.json({ data: doc, status: 200 });
   } catch (err) { next(err); }
 });
+
 // POST alias â€” frontend may POST with id in body
+
 Route.route("/update-block-production").post(async (req, res, next) => {
   try {
     const { id, _id, ...rest } = req.body;
@@ -4863,7 +2198,9 @@ Route.route("/delete-block-production").post(async (req, res, next) => {
   } catch (err) { res.status(500).json({ status: 500, message: err.message }); }
 });
 
+
 // ---------- block-damage ----------
+
 Route.route("/block-damage").get(async (req, res, next) => {
   try {
     const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
@@ -4891,7 +2228,9 @@ Route.route("/update-block-damage/:id").put(async (req, res, next) => {
     res.json({ data: doc, status: 200 });
   } catch (err) { next(err); }
 });
+
 // POST alias
+
 Route.route("/update-block-damage").post(async (req, res, next) => {
   try {
     const { id, _id, ...rest } = req.body;
@@ -4911,7 +2250,9 @@ Route.route("/delete-block-damage").post(async (req, res, next) => {
   } catch (err) { res.status(500).json({ status: 500, message: err.message }); }
 });
 
+
 // ---------- block-sales ----------
+
 Route.route("/block-sales").get(async (req, res, next) => {
   try {
     const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
@@ -4939,7 +2280,9 @@ Route.route("/update-block-sales/:id").put(async (req, res, next) => {
     res.json({ data: doc, status: 200 });
   } catch (err) { next(err); }
 });
+
 // POST alias
+
 Route.route("/update-block-sales").post(async (req, res, next) => {
   try {
     const { id, _id, ...rest } = req.body;
@@ -4959,7 +2302,9 @@ Route.route("/delete-block-sales").post(async (req, res, next) => {
   } catch (err) { res.status(500).json({ status: 500, message: err.message }); }
 });
 
+
 // ---------- block-mixer ----------
+
 Route.route("/block-mixer").get(async (req, res, next) => {
   try {
     const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
@@ -4987,7 +2332,9 @@ Route.route("/update-block-mixer/:id").put(async (req, res, next) => {
     res.json({ data: doc, status: 200 });
   } catch (err) { next(err); }
 });
+
 // POST alias
+
 Route.route("/update-block-mixer").post(async (req, res, next) => {
   try {
     const { id, _id, ...rest } = req.body;
@@ -5007,10 +2354,12 @@ Route.route("/delete-block-mixer").post(async (req, res, next) => {
   } catch (err) { res.status(500).json({ status: 500, message: err.message }); }
 });
 
+
 // =====================================================================
 // IMAGE ENDPOINT â€” supports lookup by employeeName OR MongoDB _id
 // Fixes HTTP 400 errors when worker thumbnails are loaded by _id
 // =====================================================================
+
 Route.route("/get-image/:name").get(async (req, res, next) => {
   try {
     const name = req.params.name;
@@ -5028,317 +2377,6 @@ Route.route("/get-image/:name").get(async (req, res, next) => {
     next(error);
   }
 });
-
-Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const maintenanceData = await maintenanceSchema.findById(id);
-    const refName = maintenanceData ? maintenanceData.ReferenceName : null;
-    const objectId = mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : null;
-    const refQuery = objectId ? { $or: [{ "reference._id": id }, { "reference._id": objectId }] } : { "reference._id": id };
-    const projectQuery = objectId ? { $or: [{ "projectName._id": id }, { "projectName._id": objectId }] } : { "projectName._id": id };
-    const [itemOuts, itemReturns, planings, invoices, comments, notifications] = await Promise.all([
-      itemOutSchema.find(refQuery),
-      itemReturnSchema.find(refQuery),
-      planingSchema.find(projectQuery),
-      refName ? invoiceSchema.find({ $or: [{ invoiceName: refName }, { ReferenceName: id }] }) : invoiceSchema.find({ ReferenceName: id }),
-      commentSchema.find({ "CommentInfo.idInfo": id }),
-      notificationSchema.find({ idInfo: id })
-    ]);
-    res.json({
-      data: {
-        itemOuts,
-        itemReturns,
-        planings,
-        invoices,
-        comments,
-        notifications
-      },
-      message: "Data successfully retrieved.",
-      status: 200,
-    });
-  } catch (error) {
-    return next(error);
-  }
-});
-
-
-
-Route.route("/customer-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        { Customer: regex },
-        { customerFirstName: regex },
-        { customerLastName: regex },
-        { customerFullName: regex },
-        { companyName: regex },
-        { customerEmail: regex },
-        { customerPhone: regex },
-        { customerCompanyPhone: regex },
-        { billingAddress: regex },
-        { billingCity: regex }
-      ];
-    }
-    if (filterField && filterValue) {
-      query[filterField] = new RegExp(filterValue, 'i');
-    }
-
-    const itemI = await customerSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await customerSchema.countDocuments(query);
-
-    res.status(200).json({
-      itemI,
-      totalItem,
-      totalPages: Math.ceil(totalItem / Number(limit))
-    });
-  } catch (error) {
-    console.error("Error fetching customer-Information:", error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-Route.route("/Supplier-Information").get(async (req, res) => {
-    try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
-      const query = branchFilter(req);
-      if (search) {
-        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-        query.$or = [{ supplierName: regex }, { storeName: regex }, { supplierCompany: regex }, { supplierEmail: regex }];
-      }
-      if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
-      const itemI = await SupplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-      const totalItem = await SupplierSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-    } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-Route.route("/estimation-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, summary } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      const orConditions = [
-        { estimateName: regex },
-        { ReferenceName2: regex },
-        { ReferenceName: regex },
-        { subject: regex },
-        { status: regex },
-        { noteInfo: regex },
-        { note: regex },
-        { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex }
-      ];
-      if (!isNaN(Number(search))) {
-        orConditions.push({ estimateNumber: Number(search) });
-      }
-      query.$or = orConditions;
-    }
-    if (filterField && filterValue) {
-      query[filterField] = new RegExp(filterValue, 'i');
-    }
-
-    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await estimationSchema.countDocuments(query);
-
-    res.status(200).json({
-      itemI,
-      totalItem,
-      totalPages: Math.ceil(totalItem / Number(limit))
-    });
-  } catch (error) {
-    console.error("Error fetching estimation-Information:", error);
-    res.status(500).json({ message: error.message });
-  }
-});
-
-Route.route("/itemOut-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
-        { description: regex },
-        { reason: regex },
-        { 'itemsQtyArray.itemName': regex },
-        { 'itemsQtyArray.itemBrand': regex },
-        { 'itemsQtyArray.itemDescription': regex },
-        { 'reference.referenceName': regex },
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await itemOutSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-
-Route.route("/supplier-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '' } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [{ supplierName: regex }, { storeName: regex }, { description: regex }];
-    }
-    const itemI = await supplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await supplierSchema.countDocuments(query);
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-Route.route("/employee-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '' } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [{ employeeName: regex }, { employeeLastName: regex }, { email: regex }, { phone: regex }];
-    }
-    const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await employeeSchema.countDocuments(query);
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-Route.route("/payRoll-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '' } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      const isNum = !isNaN(Number(search)) && search.trim() !== '';
-      query.$or = [
-        { employeeName: regex },
-        { 'employeeName.name': regex },
-        { status: regex },
-        { words: regex }
-      ];
-      if (isNum) {
-          query.$or.push(...(!isNaN(Number(search)) ? [{ payNumber: Number(search) }] : []));
-          query.$or.push(...(!isNaN(Number(search)) ? [{ daysW: Number(search) }] : []));
-          query.$or.push(...(!isNaN(Number(search)) ? [{ totalPaidDollars: Number(search) }] : []));
-          query.$or.push(...(!isNaN(Number(search)) ? [{ totalNet: Number(search) }] : []));
-      }
-    }
-    const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await payRollSchema.countDocuments(query);
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-Route.route("/dailyExpense-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '' } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [{ expenseName: regex }, { description: regex }];
-    }
-    const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await dailyExpenseSchema.countDocuments(query);
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
-Route.route("/maintenance-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
-        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
-        { technicianAssign: regex },
-        { itemDescriptionInfo: regex },
-        { status: regex },
-        { brand: regex },
-        { model: regex },
-        { defectDescription: regex },
-        { 'items.itemName': regex },
-        { 'items.itemBrand': regex },
-        { 'items.itemDescription': regex },
-        { 'customerName.customerName': regex },
-      ].filter(condition => condition !== null);
-    }
-    if (filterField && filterValue) {
-      query[`items.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await maintenanceSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
-
-Route.route("/purchase-Information").get(async (req, res) => {
-    try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
-      const query = branchFilter(req);
-      if (search) {
-        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-        query.$or = [
-            ...(!isNaN(Number(search)) ? [{ purchaseNumber: Number(search) }] : []),
-            ...(!isNaN(Number(search)) ? [{ purchaseAmount1: Number(search) }] : []),
-            { 'projectName.projectName': regex },
-            { 'customerName.customerName': regex },
-            { description: regex },
-            { status: regex }
-          ];
-      }
-      if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
-      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-      const totalItem = await purchaseSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-    } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
 Route.route("/estimate-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
@@ -5354,38 +2392,6 @@ Route.route("/estimate-Information").get(async (req, res) => {
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
-
-Route.route("/project-Information").get(async (req, res) => {
-    try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
-      const query = branchFilter(req);
-      if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      const orConditions = [
-        { projectName: regex },
-        { ReferenceName: regex },
-        { status: regex },
-        { note: regex },
-        { projectDescription: regex },
-        { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex }
-      ];
-      if (!isNaN(Number(search))) {
-        orConditions.push({ projectNumber: Number(search) });
-      }
-      query.$or = orConditions;
-    }
-    if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
-      const itemI = await projectSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-      const totalItem = await projectSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-    } catch (error) { res.status(500).json({ message: error.message }); }
-});
-
 Route.route("/pos-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 10, search = '' } = req.query;
@@ -5401,7 +2407,6 @@ Route.route("/pos-Information").get(async (req, res) => {
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
-
 Route.route("/payment-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '' } = req.query;
@@ -5418,51 +2423,13 @@ Route.route("/payment-Information").get(async (req, res) => {
   } catch (error) { res.status(500).json({ message: error.message }); }
 });
 
-Route.route("/expense-Information").get(async (req, res) => {
-  try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
-
-    // Build the query object dynamically based on the filters
-    const query = branchFilter(req);
-    if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      const isNum = !isNaN(Number(search)) && search.trim() !== '';
-      query.$or = [
-        { description: regex },
-        { accountName: regex },
-        { employeeName: regex },
-        { 'employeeName.employee': regex },
-        { expenseCategory: regex },
-        { 'expenseCategory.expensesCategory': regex },
-        { accountNameInfo: regex },
-        { 'accountNameInfo.name': regex },
-      ];
-      if (isNum) {
-          query.$or.push(...(!isNaN(Number(search)) ? [{ expenseNumber: Number(search) }] : []));
-          query.$or.push(...(!isNaN(Number(search)) ? [{ amount: Number(search) }] : []));
-          query.$or.push(...(!isNaN(Number(search)) ? [{ total: Number(search) }] : []));
-      }
-    }
-    if (filterField && filterValue) {
-      query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
-    }
-    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
-    const totalItem = await expenseSchema.countDocuments(query);
-
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
-  } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
-    res.status(500).json({ message: error.message });
-  }
-});
 
 
 // ─── SECURE BACKUP EXPORT ENDPOINT ─────────────────────────────────────────
 // Called by the daily laptop backup script. Returns all DB collections as JSON.
 const BACKUP_SECRET = 'GG_BACKUP_2026_SECURE';
 const mongoose_backup = require('mongoose');
+
 Route.get('/backup-export', async (req, res) => {
   try {
     const { secret, col } = req.query;
@@ -5488,7 +2455,9 @@ Route.get('/backup-export', async (req, res) => {
   }
 });
 
+
 module.exports = Route;
 
 
 // Trigger Railway restart after MongoDB upgrade
+

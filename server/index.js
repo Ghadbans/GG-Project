@@ -86,7 +86,20 @@ mongoDbConnection().then(async () => {
   };
 
 const authRoutes = require('./routes/AuthRoutes');
+
 const userRoute = require("./routes/Routes");
+const invoiceRoutes = require("./routes/invoiceRoutes");
+const itemRoutes = require("./routes/itemRoutes");
+const supplierRoutes = require("./routes/supplierRoutes");
+const purchaseRoutes = require("./routes/purchaseRoutes");
+const employeeRoutes = require("./routes/employeeRoutes");
+const payrollRoutes = require("./routes/payrollRoutes");
+const expenseRoutes = require("./routes/expenseRoutes");
+const maintenanceRoutes = require("./routes/maintenanceRoutes");
+const customerRoutes = require("./routes/customerRoutes");
+const estimationRoutes = require("./routes/estimationRoutes");
+const projectRoutes = require("./routes/projectRoutes");
+
 
 const app = express();
 const server = http.createServer(app)
@@ -111,7 +124,20 @@ const User = require("./model/employeeUserSchema");
 
 // RESTful API root
 app.use('/auth', authRoutes);
+
 app.use("/endpoint", userRoute);
+app.use("/endpoint", invoiceRoutes);
+app.use("/endpoint", itemRoutes);
+app.use("/endpoint", supplierRoutes);
+app.use("/endpoint", purchaseRoutes);
+app.use("/endpoint", employeeRoutes);
+app.use("/endpoint", payrollRoutes);
+app.use("/endpoint", expenseRoutes);
+app.use("/endpoint", maintenanceRoutes);
+app.use("/endpoint", customerRoutes);
+app.use("/endpoint", estimationRoutes);
+app.use("/endpoint", projectRoutes);
+
 
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
