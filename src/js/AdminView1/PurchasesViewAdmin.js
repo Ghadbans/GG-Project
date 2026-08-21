@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import { Skeleton, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import './view.css'
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop, Grid } from '@mui/material';
+import { Skeleton,  Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop, Grid  } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';

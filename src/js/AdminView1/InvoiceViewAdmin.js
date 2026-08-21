@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Skeleton, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import './view.css'
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
@@ -9,7 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Pagination } from '@mui/material';
+import { Skeleton,  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Pagination  } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';

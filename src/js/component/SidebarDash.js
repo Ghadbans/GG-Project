@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Skeleton, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import '../css/SidebarNew.scss'
 import { Outlet, NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import DashboardIcon from '@mui/icons-material/Dashboard';

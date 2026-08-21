@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Skeleton, toast } from 'react-toastify';
+import {  toast } from 'react-toastify';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import SearchIcon from '@mui/icons-material/Search';
@@ -9,7 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop, Grid, Pagination } from '@mui/material';
+import { Skeleton,  Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop, Grid, Pagination  } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
