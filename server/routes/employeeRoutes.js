@@ -1,5 +1,10 @@
 const express = require("express");
 const Route = express.Router();
+
+function branchFilter(req) {
+  const { branchId } = req.query;
+  return branchId && branchId !== 'ALL' ? { branchId } : {};
+}
 const { authenticate } = require("../Middleware/auth");
 const cors = require("cors");
 const multer = require("multer");
