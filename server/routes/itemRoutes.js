@@ -778,6 +778,25 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
     try {
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      if (req.query.projectId) {
+        let objectId = null;
+        try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
+        if (objectId) {
+          filter['projectName._id'] = { $in: [req.query.projectId, objectId] };
+        } else {
+          filter['projectName._id'] = req.query.projectId;
+        }
+      }
+
+        if (req.query.supplierId) {
+          let objectId = null;
+          try { objectId = new mongoose.Types.ObjectId(req.query.supplierId); } catch (e) {}
+          let conditions = [{ manufacturerID: req.query.supplierId }];
+          if (objectId) conditions.push({ manufacturerID: objectId });
+          if (req.query.supplierName && req.query.supplierName !== 'undefined') conditions.push({ manufacturer: req.query.supplierName });
+          filter['$or'] = conditions;
+        }
+
 
       if (req.query.itemId) {
         let objectId = null;

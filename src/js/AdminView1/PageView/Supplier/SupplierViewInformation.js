@@ -230,7 +230,7 @@ function SupplierViewInformation() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resItemPurchase = await axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true`)
+        const resItemPurchase = await axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${StoreName}`)
         const formatDate = resItemPurchase.data.data
         const filteredData = formatDate.filter(data =>
           item.some(i => data.manufacturerID === i._id || i.storeName === data.manufacturer)

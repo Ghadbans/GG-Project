@@ -257,6 +257,16 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      if (req.query.projectId) {
+        let objectId = null;
+        try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
+        if (objectId) {
+          filter['accountNameInfo._id'] = { $in: [req.query.projectId, objectId] };
+        } else {
+          filter['accountNameInfo._id'] = req.query.projectId;
+        }
+      }
+
       const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {

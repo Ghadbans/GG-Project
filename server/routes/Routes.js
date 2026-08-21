@@ -1026,6 +1026,16 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
     try {
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      if (req.query.customerId) {
+        let objectId = null;
+        try { objectId = new require('mongoose').Types.ObjectId(req.query.customerId); } catch (e) {}
+        if (objectId) {
+          filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
+        } else {
+          filter['customerName._id'] = req.query.customerId;
+        }
+      }
+
 
       if (req.query.itemId) {
         let objectId = null;

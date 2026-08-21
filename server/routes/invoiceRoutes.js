@@ -79,6 +79,34 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      if (req.query.projectId || req.query.purchaseIds) {
+        let orConditions = [];
+        if (req.query.projectId) {
+            orConditions.push({ 'ReferenceName2': req.query.projectId });
+            try { orConditions.push({ 'ReferenceName2': new require('mongoose').Types.ObjectId(req.query.projectId) }); } catch (e) {}
+        }
+        if (req.query.purchaseIds) {
+            const pIds = req.query.purchaseIds.split(',');
+            pIds.forEach(id => {
+                orConditions.push({ 'ReferenceName2': id });
+                try { orConditions.push({ 'ReferenceName2': new require('mongoose').Types.ObjectId(id) }); } catch (e) {}
+            });
+        }
+        if (orConditions.length > 0) {
+            filter['$or'] = orConditions;
+        }
+      }
+
+      if (req.query.customerId) {
+        let objectId = null;
+        try { objectId = new require('mongoose').Types.ObjectId(req.query.customerId); } catch (e) {}
+        if (objectId) {
+          filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
+        } else {
+          filter['customerName._id'] = req.query.customerId;
+        }
+      }
+
       const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {

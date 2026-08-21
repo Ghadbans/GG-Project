@@ -264,21 +264,21 @@ function CustomerInformationView() {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-customer/${id}`)
         setCustomerInfo(res.data.data.Customer)
-        const estimateResponse = await axios.get(`${ENDPOINT_URL}/estimation?summary=true`);
-        setEstimate(estimateResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
-        const invoiceResponse = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`);
-        setInvoice(invoiceResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
-        setInvoice1(invoiceResponse.data?.data?.filter((row) => row.customerName._id === id && (row.status === 'Sent' || row.status === 'Paid' || row.status === 'Partially-Paid')));
-        const purChaseResponse = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`);
-        setPurchase(purChaseResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
-        const maintenanceResponse = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`);
-        setMaintenance(maintenanceResponse.data?.data?.filter((row) => row.customerName._id === id).reverse());
-        const resPayment = await axios.get(`${ENDPOINT_URL}/payment`)
-        setPayment(resPayment.data?.data?.filter((row) => row.customerName._id === id));
+        const estimateResponse = await axios.get(`${ENDPOINT_URL}/estimation?summary=true&customerId=${id}`);
+        setEstimate(estimateResponse.data?.data?.reverse());
+        const invoiceResponse = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&customerId=${id}`);
+        setInvoice(invoiceResponse.data?.data?.reverse());
+        setInvoice1(invoiceResponse.data?.data?.filter((row) => row.status === 'Sent' || row.status === 'Paid' || row.status === 'Partially-Paid'));
+        const purChaseResponse = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&customerId=${id}`);
+        setPurchase(purChaseResponse.data?.data?.reverse());
+        const maintenanceResponse = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true&customerId=${id}`);
+        setMaintenance(maintenanceResponse.data?.data?.reverse());
+        const resPayment = await axios.get(`${ENDPOINT_URL}/payment?customerId=${id}`)
+        setPayment(resPayment.data?.data);
         // Fetch POS
-        const resPos = await axios.get(`${ENDPOINT_URL}/pos?summary=true`);
+        const resPos = await axios.get(`${ENDPOINT_URL}/pos?summary=true&customerId=${id}`);
         if (resPos.data && resPos.data.data) {
-          setPosHistory(resPos.data?.data?.filter((row) => row.customerName && row.customerName._id === id).reverse());
+          setPosHistory(resPos.data?.data?.reverse());
         }
       } catch (error) {
         console.log(error)
