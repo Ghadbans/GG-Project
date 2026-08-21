@@ -1149,7 +1149,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$invoiceNumber" }, regex: escapedSearch, options: 'i' } } },
+        ...(!isNaN(Number(search)) ? [{ invoiceNumber: Number(search) }] : []),
         { invoiceName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
@@ -3106,7 +3106,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$serviceNumber" }, regex: escapedSearch, options: 'i' } } },
+        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
         { serviceName: regex },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
@@ -3882,7 +3882,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
+        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
@@ -4142,7 +4142,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
+        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
         { description: regex },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
@@ -5178,7 +5178,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$outNumber" }, regex: escapedSearch, options: 'i' } } },
+        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
         { description: regex },
         { reason: regex },
         { 'itemsQtyArray.itemName': regex },
@@ -5248,10 +5248,10 @@ Route.route("/payRoll-Information").get(async (req, res) => {
         { words: regex }
       ];
       if (isNum) {
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$payNumber" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$daysW" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$totalPaidDollars" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$totalNet" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push(...(!isNaN(Number(search)) ? [{ payNumber: Number(search) }] : []));
+          query.$or.push(...(!isNaN(Number(search)) ? [{ daysW: Number(search) }] : []));
+          query.$or.push(...(!isNaN(Number(search)) ? [{ totalPaidDollars: Number(search) }] : []));
+          query.$or.push(...(!isNaN(Number(search)) ? [{ totalNet: Number(search) }] : []));
       }
     }
     const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
@@ -5287,7 +5287,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
-        { $expr: { $regexMatch: { input: { $toString: "$serviceNumber" }, regex: escapedSearch, options: 'i' } } },
+        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
         { status: regex },
@@ -5322,8 +5322,8 @@ Route.route("/purchase-Information").get(async (req, res) => {
         const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
         query.$or = [
-            { $expr: { $regexMatch: { input: { $toString: "$purchaseNumber" }, regex: escapedSearch, options: 'i' } } },
-            { $expr: { $regexMatch: { input: { $toString: "$purchaseAmount1" }, regex: escapedSearch, options: 'i' } } },
+            ...(!isNaN(Number(search)) ? [{ purchaseNumber: Number(search) }] : []),
+            ...(!isNaN(Number(search)) ? [{ purchaseAmount1: Number(search) }] : []),
             { 'projectName.projectName': regex },
             { 'customerName.customerName': regex },
             { description: regex },
@@ -5440,9 +5440,9 @@ Route.route("/expense-Information").get(async (req, res) => {
         { 'accountNameInfo.name': regex },
       ];
       if (isNum) {
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$expenseNumber" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$amount" }, regex: escapedSearch, options: 'i' } } });
-          query.$or.push({ $expr: { $regexMatch: { input: { $toString: "$total" }, regex: escapedSearch, options: 'i' } } });
+          query.$or.push(...(!isNaN(Number(search)) ? [{ expenseNumber: Number(search) }] : []));
+          query.$or.push(...(!isNaN(Number(search)) ? [{ amount: Number(search) }] : []));
+          query.$or.push(...(!isNaN(Number(search)) ? [{ total: Number(search) }] : []));
       }
     }
     if (filterField && filterValue) {
