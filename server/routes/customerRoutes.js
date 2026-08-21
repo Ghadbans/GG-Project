@@ -126,25 +126,40 @@ Route.route("/get-customer/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-customer/:id").put(async (req, res, next) => {
-  const id = req.params.id
-  const {Customer} = req.body
+  const id = req.params.id;
   try {
-    await Promise.all([
-      customerSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      }).then((result) => {res.json({ data: result,
-          msg: "Data successfully updated.",
-        });
-      }).catch((err) => {
-        return next(err);
-      }),
-      invoiceSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      estimationSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      purchaseSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      maintenanceSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      projectSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-      paymentSchema.updateMany({'customerName._id': id},{$set:{'customerName.customerName':Customer}}),
-    ])
+    let objectId = null;
+    try { objectId = new require('mongoose').Types.ObjectId(id); } catch (e) {}
+    const idFilter = objectId ? { $in: [id, objectId] } : id;
+
+    const { customerName, phone, address, email, reference, companyName } = req.body;
+    
+    // Build update object dynamically based on what was sent
+    const updateObj = {};
+    if (customerName !== undefined) updateObj['customerName.customerName'] = customerName;
+    if (phone !== undefined) updateObj['customerName.phone'] = phone;
+    if (address !== undefined) updateObj['customerName.address'] = address;
+    if (email !== undefined) updateObj['customerName.email'] = email;
+    if (reference !== undefined) updateObj['customerName.reference'] = reference;
+    if (companyName !== undefined) updateObj['customerName.companyName'] = companyName;
+
+    const updateQuery = Object.keys(updateObj).length > 0 ? { $set: updateObj } : {};
+
+    const updatePromises = [
+      customerSchema.findByIdAndUpdate(id, { $set: req.body })
+    ];
+
+    if (Object.keys(updateObj).length > 0) {
+      updatePromises.push(invoiceSchema.updateMany({ 'customerName._id': idFilter }, updateQuery));
+      updatePromises.push(estimationSchema.updateMany({ 'customerName._id': idFilter }, updateQuery));
+      updatePromises.push(purchaseSchema.updateMany({ 'customerName._id': idFilter }, updateQuery));
+      updatePromises.push(maintenanceSchema.updateMany({ 'customerName._id': idFilter }, updateQuery));
+      updatePromises.push(projectSchema.updateMany({ 'customerName._id': idFilter }, updateQuery));
+      updatePromises.push(paymentSchema.updateMany({ 'customerName._id': idFilter }, updateQuery));
+    }
+
+    const results = await Promise.all(updatePromises);
+    res.json({ data: results[0], msg: "Data successfully updated." });
   } catch (error) {
     return next(error);
   }
