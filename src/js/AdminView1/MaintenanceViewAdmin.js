@@ -9,7 +9,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {  NavLink, useNavigate } from 'react-router-dom';
-import { Skeleton,  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Pagination  } from '@mui/material';
+import {  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField, Pagination  } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -606,7 +606,11 @@ function MaintenanceViewAdmin() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
             {
-              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
+              loadingData ? <div >
+                <div style={{ position: 'relative', top: '120px' }}>
+                  <Loader />
+                </div>
+              </div> : (
                 <div >
                   {maintenance.length > 0 ? (
                     <section style={{ position: 'relative', float: 'left', margin: '10px' }}>

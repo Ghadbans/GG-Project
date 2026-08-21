@@ -220,7 +220,7 @@ function PaymentView() {
             await db.paymentSchema.bulkPut(validItems);
           } catch (error) {
             console.error('Error fetching data:', error);
-            setLoadingData(false)
+            /* setLoadingData(false) disabled here to fix race */
           }
         } else {
           const offLineCustomer1 = await db.paymentSchema.toArray();
@@ -231,7 +231,7 @@ function PaymentView() {
       reference: item.referenceNumber?.map((row1)=> 'INV-'+ String(row1).padStart(6, '0'))
      })) 
      setPayment(formatDate.reverse())
-     setLoadingData(false)
+       setLoadingData(false)
         }
       }
       const [loading,setLoading]= useState(false);
@@ -312,7 +312,7 @@ function PaymentView() {
                   })) 
                   setCustomer(CustomerInfo.filter((row)=> row.credit !== undefined && row.credit > 0))
         // Stop loading spinner immediately after customer loads — don't block on invoice-Overdue
-        setLoadingData(false)
+        /* setLoadingData(false) disabled here to fix race */
         // Load overdue invoices in background — if this endpoint is slow/missing it won't freeze the UI
         try {
           const resOverdue = await cachedGet(`${ENDPOINT_URL}/invoice-Overdue`)
@@ -330,7 +330,7 @@ function PaymentView() {
         }else{
           setInvoice([])
         }
-        setLoadingData(false)
+        /* setLoadingData(false) disabled here to fix race */
       }
     }
     fetchData()

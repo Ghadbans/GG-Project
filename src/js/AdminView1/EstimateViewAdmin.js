@@ -21,7 +21,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { Skeleton,  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField  } from '@mui/material';
+import {  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField  } from '@mui/material';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
@@ -704,7 +704,11 @@ function EstimateViewAdmin() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
             {
-              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
+              loadingData ? <div >
+                <div style={{ position: 'relative', top: '120px' }}>
+                  <Loader />
+                </div>
+              </div> : (
                 <div >
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>

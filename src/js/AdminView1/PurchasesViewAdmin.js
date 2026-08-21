@@ -5,7 +5,7 @@ import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Skeleton,  Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop, Grid  } from '@mui/material';
+import {  Table, Modal, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Box, Autocomplete, TextField, Backdrop, Grid  } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -564,7 +564,11 @@ function PurchasesViewAdmin() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
             {
-              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
+              loadingData ? <div >
+                <div style={{ position: 'relative', top: '120px' }}>
+                  <Loader />
+                </div>
+              </div> : (
                 <div >
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>

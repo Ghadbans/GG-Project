@@ -7,7 +7,7 @@ import '../Chartview.css'
 import SearchIcon from '@mui/icons-material/Search';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { Skeleton,   Collapse, MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Checkbox, LinearProgress, Stepper, Step, StepLabel, Button, Accordion, AccordionSummary, AccordionDetails, Divider, Tabs, Tab, Menu, Card, CardContent  } from '@mui/material'
+import {   Collapse, MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Checkbox, LinearProgress, Stepper, Step, StepLabel, Button, Accordion, AccordionSummary, AccordionDetails, Divider, Tabs, Tab, Menu, Card, CardContent  } from '@mui/material'
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -855,7 +855,11 @@ function EmployeeViewAdminAll() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 2 }} >
             {
-              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
+              loadingData ? <div >
+                <div style={{ position: 'relative', top: '120px' }}>
+                  <Loader />
+                </div>
+              </div> : (
                 <div >
                   <Grid container spacing={2}>
 
