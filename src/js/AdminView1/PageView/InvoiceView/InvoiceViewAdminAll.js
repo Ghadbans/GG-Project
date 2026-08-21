@@ -1587,16 +1587,20 @@ function InvoiceViewAdminAll() {
                                                         </>
                                                       )}
                                                       
-                                                      {row.actionTaken !== undefined && row.actionTaken !== "" && (
-                                                        <>
-                                                          <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Action</div>
-                                                          <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.actionTaken.toUpperCase()}</div>
-                                                        </>
-                                                      )}
                                                     </div>
                                                   </div>
                                                   </section>
-                                                  <section style={{}}>
+                                                  <section style={{ clear: 'both' }}>
+                                                    {row.actionTaken !== undefined && row.actionTaken !== "" && (
+                                                        <table style={{ position: 'relative', fontSize: '70%', float: 'left', clear: 'both', left: '0', width: '100%', marginBottom: '5px' }}>
+                                                          <tbody>
+                                                            <tr>
+                                                              <th style={{ textAlign: 'left', width: '40px' }}>Action</th>
+                                                              <td style={{ textAlign: 'left' }}>{row.actionTaken.toUpperCase()}</td>
+                                                            </tr>
+                                                          </tbody>
+                                                        </table>
+                                                    )}
                                                     {
                                                       row.noteInfo !== undefined ?
                                                         <table style={{ position: 'relative', fontSize: '70%', float: 'left', left: '0', width: '50%', marginBottom: '5px' }}>
@@ -1821,16 +1825,20 @@ function InvoiceViewAdminAll() {
                                               </>
                                             )}
                                             
-                                            {row.actionTaken !== undefined && row.actionTaken !== "" && (
-                                              <>
-                                                <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Action</div>
-                                                <div style={{ textAlign: 'left', wordBreak: 'break-word', maxWidth: '400px' }}>{row.actionTaken.toUpperCase()}</div>
-                                              </>
-                                            )}
                                           </div>
                                         </div>
                                         </section>
-                                        <section>
+                                        <section style={{ clear: 'both' }}>
+                                          {row.actionTaken !== undefined && row.actionTaken !== "" && (
+                                              <table style={{ position: 'relative', fontSize: '80%', float: 'left', clear: 'both', left: '0', width: '100%', marginBottom: '5px' }}>
+                                                <tbody>
+                                                  <tr>
+                                                    <th style={{ textAlign: 'left', width: '40px' }}>Action</th>
+                                                    <td style={{ textAlign: 'left' }}>{row.actionTaken.toUpperCase()}</td>
+                                                  </tr>
+                                                </tbody>
+                                              </table>
+                                          )}
                                           {
                                             row.noteInfo !== undefined ?
                                               <table style={{ position: 'relative', fontSize: '80%', float: 'left', left: '0', width: '50%', marginBottom: '5px' }}>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Checkbox, LinearProgress, Stepper, Step, StepLabel, Button, Tabs, Tab } from '@mui/material';
 import { NavLink, useNavigate, Link } from 'react-router-dom';
@@ -47,7 +48,7 @@ function InvoiceInformation({ onId }) {
   useEffect(() => {
     const fetchEstimate = async () => {
       try {
-        const res = await axios.get(apiUrl)
+        const res = await cachedGet(apiUrl)
         setInvoice(res.data.data); // Backend already sorts newest first (_id: -1)
       } catch (error) {
         console.error('Error fetching data:', error);

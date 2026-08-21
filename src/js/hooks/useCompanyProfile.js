@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 
 const useCompanyProfile = () => {
@@ -12,7 +13,7 @@ const useCompanyProfile = () => {
 
   const fetchProfile = async () => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/companyProfile`);
+      const res = await cachedGet(`${ENDPOINT_URL}/companyProfile`);
       if (res.data && res.data.data && res.data.data.length > 0) {
         setProfileData(res.data?.data?.[0]);
       }
