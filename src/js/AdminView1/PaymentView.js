@@ -218,6 +218,7 @@ function PaymentView() {
             const validItems = res.data.data.filter(item => item.paymentNumber).map(item => ({...item, synced:true, updateS:true}));
             await db.paymentSchema.clear();
             await db.paymentSchema.bulkPut(validItems);
+              setLoadingData(false);
           } catch (error) {
             console.error('Error fetching data:', error);
             /* setLoadingData(false) disabled here to fix race */
