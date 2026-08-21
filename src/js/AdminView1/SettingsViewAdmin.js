@@ -19,6 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -136,7 +137,7 @@ function SettingsViewAdmin() {
           return;
         }
 
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         const myAccess = res.data.data.slice().reverse().find(
           a => a.userID === userId
         );

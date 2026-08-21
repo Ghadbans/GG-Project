@@ -23,7 +23,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import { ENDPOINT_URL } from '../apiConfig';
 import dayjs from 'dayjs';
@@ -156,7 +157,7 @@ function PurchasesViewAdmin() {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
       } catch (error) {

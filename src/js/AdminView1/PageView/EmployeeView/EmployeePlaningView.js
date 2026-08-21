@@ -6,6 +6,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import dayjs from 'dayjs';
 import { NavLink } from 'react-router-dom';
@@ -87,7 +88,7 @@ function EmployeePlaningView({ user }) {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
       } catch (error) {

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import {
     Typography, Paper, Grid, TextField, Button, Box,
     CssBaseline, AppBar, Toolbar, Drawer, Divider, List,
@@ -75,7 +76,7 @@ function BlockDamageView() {
     useEffect(() => {
         const fetchAccess = async () => {
             try {
-                const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = res.data?.data?.find(row => row.userID === user.data.id);
                 const isGG = user.data.userName === 'GG';
                 if (userAccess) {
@@ -114,7 +115,7 @@ function BlockDamageView() {
         const fetchInitialData = async () => {
             try {
                 // Fetch Access
-                const accRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const accRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = accRes.data?.data?.find(row => row.userID === user.data.id);
                 if (userAccess) {
                     const blockAccess = userAccess.modules.find(m => m.moduleName === 'Block-Factory')?.access;

@@ -23,6 +23,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded } from '@mui/icons-material';
 import dayjs from 'dayjs';
@@ -150,7 +151,7 @@ function PayRollViewAdmin() {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
       } catch (error) {

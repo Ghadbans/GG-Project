@@ -15,6 +15,7 @@ import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import InvoiceInformation from './InvoiceInformation';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
@@ -47,7 +48,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { Close, FileCopy, KeyboardArrowDown, VisibilityOutlined } from '@mui/icons-material';
 import ArrowBack from '@mui/icons-material/ArrowBack';
-import { cachedGet } from '../../../utils/apiCache';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -198,7 +198,7 @@ function InvoiceViewAdminAll() {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
       } catch (error) {

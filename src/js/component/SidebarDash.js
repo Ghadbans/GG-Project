@@ -28,6 +28,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import pkg from '../../../package.json';
 
@@ -94,7 +95,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
       } catch (error) {

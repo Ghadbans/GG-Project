@@ -25,6 +25,7 @@ import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -91,7 +92,7 @@ function BlockProductionView() {
     useEffect(() => {
         const fetchAccess = async () => {
             try {
-                const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = res.data?.data?.find(row => row.userID === user.data.id);
                 if (userAccess) {
                     setGrantAccess(userAccess.modules);

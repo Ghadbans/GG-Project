@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { toast } from 'react-toastify';
 import {
@@ -70,7 +71,7 @@ function BlockTrackingView() {
     useEffect(() => {
         const fetchAccess = async () => {
             try {
-                const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = res.data?.data?.find(row => row.userID === user.data.id);
                 const isGG = user.data.userName === 'GG';
                 if (userAccess) {

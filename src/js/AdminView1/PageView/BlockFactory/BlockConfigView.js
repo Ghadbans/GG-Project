@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import dayjs from 'dayjs';
 import {
     Container, Typography, Paper, Grid, TextField, Button, Box, IconButton,
@@ -109,7 +110,7 @@ function BlockConfigView() {
         const fetchAccess = async () => {
             try {
                 // Fetch Access
-                const accRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const accRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = accRes.data?.data?.find(row => row.userID === user.data.id);
                 const isGG = user.data.userName === 'GG';
                 if (userAccess) {

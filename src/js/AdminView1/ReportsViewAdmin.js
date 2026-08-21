@@ -16,6 +16,7 @@ import MuiAppBar from '@mui/material/AppBar';
 import MuiDrawer from '@mui/material/Drawer';
 import { useDispatch, useSelector } from "react-redux";
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
@@ -289,7 +290,7 @@ function ReportsViewAdmin() {
     if (user?.data?.id) {
       const fetchNumber = async () => {
         try {
-          const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+          const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
           const userAccess = res.data?.data?.filter((row) => row.userID === user.data.id);
           if (userAccess.length > 0) {
             setGrantAccess(userAccess[0].modules);

@@ -32,6 +32,7 @@ import { Refresh } from '@mui/icons-material';
 import isBetween from 'dayjs/plugin/isBetween';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 
 import PaymentsIcon from '@mui/icons-material/Payments';
 import MoneyOffIcon from '@mui/icons-material/MoneyOff';
@@ -458,7 +459,7 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
         const fetchInitialData = async () => {
             try {
                 // Fetch Access
-                const accRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const accRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = accRes.data?.data?.find(row => row.userID === user.data.id);
                 const isGG = user.data.userName === 'GG';
                 if (userAccess) {

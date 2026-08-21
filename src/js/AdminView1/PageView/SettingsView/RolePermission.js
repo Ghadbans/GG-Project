@@ -8,6 +8,7 @@ import { Table, InputAdornment, IconButton, styled, OutlinedInput, TableBody, Ta
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import DeleteIcon from '@mui/icons-material/Delete';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, Delete, MailOutline } from '@mui/icons-material';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -164,7 +165,7 @@ function RolePermission() {
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`)
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`)
         let data = res.data.data;
 
         // Patch each access record to ensure Block-Factory is present for the UI list

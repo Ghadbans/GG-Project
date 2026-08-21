@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Select, MenuItem, FormControl, Box, CircularProgress } from '@mui/material';
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../features/auth/authSlice';
 import { ENDPOINT_URL } from '../apiConfig';
@@ -40,7 +41,7 @@ function BranchSwitcher() {
         if (empName && empName.trim().toUpperCase() === 'GG') {
           finalBranches = [...allBranches];
         } else {
-          const accessRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+          const accessRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
           const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === userId);
           if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
             const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));

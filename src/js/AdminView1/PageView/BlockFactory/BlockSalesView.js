@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../../../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import {
     Container, Typography, Paper, Grid, TextField, Button, Box,
     MenuItem, Table, TableBody, TableCell, TableHead, TableRow,
@@ -90,7 +91,7 @@ function BlockSalesView() {
         const fetchData = async () => {
             try {
                 // Fetch Access
-                const accRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const accRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = accRes.data?.data?.find(row => row.userID === user.data.id);
                 const isGG = user.data.userName === 'GG';
                 if (userAccess) {

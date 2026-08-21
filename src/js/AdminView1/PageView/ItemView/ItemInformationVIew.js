@@ -4,6 +4,7 @@ import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, 
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Toolbar from '@mui/material/Toolbar';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -111,7 +112,7 @@ function ItemInformationVIew() {
   useEffect(() => {
     const fetchNumber = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         res.data?.data?.filter((row) => row.userID === user.data.id)
           .map((row) => setGrantAccess(row.modules))
       } catch (error) {

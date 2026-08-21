@@ -11,6 +11,7 @@ import Divider from '@mui/material/Divider';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
+import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, ArrowBack, Edit, Delete, Print as PrintIcon } from '@mui/icons-material';
 import { useSelector, useDispatch } from "react-redux"
@@ -75,7 +76,7 @@ export default function FleetFormUpdate() {
 
   const fetchAccess = async () => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+      const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
       if (user?.data?.id) {
          const userAccess = res.data?.data?.filter((row) => row.userID === user.data.id);
          if (userAccess.length > 0) {

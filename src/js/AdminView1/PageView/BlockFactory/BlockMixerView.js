@@ -24,6 +24,7 @@ import { ENDPOINT_URL } from '../../../apiConfig';
 import { toast } from 'react-toastify';
 import dayjs from 'dayjs';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
@@ -84,7 +85,7 @@ function BlockMixerView() {
         const fetchInitialData = async () => {
             try {
                 // Fetch Access
-                const accRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+                const accRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
                 const userAccess = accRes.data?.data?.find(row => row.userID === user.data.id);
                 if (userAccess) {
                     const blockAccess = userAccess.modules.find(m => m.moduleName === 'Block-Mixer')?.access;

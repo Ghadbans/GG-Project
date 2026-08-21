@@ -13,6 +13,7 @@ import { useLoginMutation } from './app/api/apiSlice';
 
 import { Modal, Box, Typography, Button, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import axios from 'axios';
+import { cachedGet } from './utils/apiCache';
 import { ENDPOINT_URL } from './apiConfig';
 
 function Loginemployee() {
@@ -62,7 +63,7 @@ function Loginemployee() {
 					setAvailableBranches([...allBranches]);
 					setSelectedBranch(allBranches[0] ? allBranches[0].branchId : 'HQ');
 				} else {
-					const accessRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+					const accessRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
 					const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === user.userId);
 					if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
 						const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));

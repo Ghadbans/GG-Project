@@ -194,7 +194,7 @@ function AdminHome() {
         }
 
         // For all others: check Grant Access module
-        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
         const myAccess = res.data.data.slice().reverse().find(
           a => a.userID === userId
         );

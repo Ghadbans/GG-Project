@@ -14,6 +14,7 @@ import { selectCurrentUser, setUser } from './features/auth/authSlice';
 import { Checkbox, Modal, Box, Typography, Button, FormControl, Select, MenuItem, InputLabel } from '@mui/material';
 import Visibility from '@mui/icons-material/Visibility';
 import axios from 'axios';
+import { cachedGet } from './utils/apiCache';
 import { ENDPOINT_URL } from './apiConfig';
 
 
@@ -116,7 +117,7 @@ function Loginadmin() {
 					setSelectedBranch(allBranches[0] ? allBranches[0].branchId : 'HQ');
 				} else {
 					// Fetch Grant Access for this user
-					const accessRes = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+					const accessRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
 					const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === user.userId);
 					if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
 						const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));
