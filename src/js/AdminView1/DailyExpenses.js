@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
+import { Skeleton, toast } from 'react-toastify';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
 import SearchIcon from '@mui/icons-material/Search';
@@ -723,11 +723,7 @@ function DailyExpenses() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
             {
-              loadingData ? <div>
-                <div style={{ position: 'relative', top: '150px' }}>
-                  <Loader />
-                </div>
-              </div> : (
+              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
                 <div>
                   <section style={{ position: 'absolute', right: '10px', display: 'flex', alignItems: 'center', top: '60px' }}>
                     {expenses.length > 0 ? (

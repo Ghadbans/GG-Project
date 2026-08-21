@@ -8,7 +8,7 @@ import './PageView/Chartview.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { Skeleton, NavLink, useNavigate } from 'react-router-dom';
 import { Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Backdrop, Fade, Box, Autocomplete, TextField, Grid } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
@@ -513,11 +513,7 @@ function SupplierAdminView() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
             {
-              loadingData ? <div >
-                <div style={{ position: 'relative', top: '120px' }}>
-                  <Loader />
-                </div>
-              </div> : (
+              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
                 <div>
                   <div>
                     <section style={{ position: 'relative', float: 'right', display: 'flex', alignItems: 'center', gap: '20px' }}>

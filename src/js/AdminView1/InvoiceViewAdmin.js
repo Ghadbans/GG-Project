@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { toast } from 'react-toastify';
+import { Skeleton, toast } from 'react-toastify';
 import './view.css'
 import './PageView/Chartview.css';
 import SidebarDash from '../component/SidebarDash'
@@ -766,11 +766,7 @@ function InvoiceViewAdmin() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
             {
-              loadingData ? <div >
-                <div style={{ position: 'relative', top: '120px' }}>
-                  <Loader />
-                </div>
-              </div> : (
+              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
                 <div  >
                   <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                     <ViewTooltip>

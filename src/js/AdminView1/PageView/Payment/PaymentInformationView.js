@@ -6,7 +6,7 @@ import '../Chartview.css'
 import SidebarDash from '../../../component/SidebarDash';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import { TableContainer, Checkbox, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Autocomplete, Table, TableBody, TableCell, TableRow, TableHead, Button, Menu, Divider } from '@mui/material';
+import { Skeleton, TableContainer, Checkbox, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Autocomplete, Table, TableBody, TableCell, TableRow, TableHead, Button, Menu, Divider } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -396,11 +396,7 @@ function PaymentInformationView() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 2 }} >
             {
-              loadingData ? <div>
-                <div style={{ position: 'relative', top: '120px' }}>
-                  <Loader />
-                </div>
-              </div> : (
+              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
                 <div>
                   <div>
                     <Grid container spacing={2}>

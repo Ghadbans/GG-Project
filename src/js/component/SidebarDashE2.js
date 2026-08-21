@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../css/SidebarNew.scss'
-import { Outlet, NavLink, useLocation } from 'react-router-dom'
+import { Skeleton, Outlet, NavLink, useLocation } from 'react-router-dom'
 import { AccountBox, AllInclusive, AssignmentInd, CurrencyExchange, Home, SupervisedUserCircle } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -57,6 +57,7 @@ function SidebarDashE2({ onView }) {
           dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
         } catch (error) {
           console.error('Error fetching data:', error);
+            setLoadingAccess(false);
         }
       } else {
         navigate('/');
@@ -66,6 +67,7 @@ function SidebarDashE2({ onView }) {
   }, [dispatch]);
 
   const [grantAccess, setGrantAccess] = useState([]);
+  const [loadingAccess, setLoadingAccess] = useState(true);
   useEffect(() => {
     if (user?.data?.id) {
       const fetchNumber = async () => {
@@ -74,6 +76,7 @@ function SidebarDashE2({ onView }) {
           const userAccess = res.data?.data?.filter((row) => row.userID === user.data.id);
           if (userAccess.length > 0) {
             userAccess.map((row) => setGrantAccess(row.modules));
+            setLoadingAccess(false);
           }
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -112,25 +115,25 @@ function SidebarDashE2({ onView }) {
 
             )
           }
-          <ListItemButton disabled={RateInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={!loadingAccess && RateInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <CurrencyExchange />
             </ListItemIcon>
             <ListItemText primary="Rate" />
           </ListItemButton>
-          <ListItemButton disabled={FleetInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={!loadingAccess && FleetInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <DirectionsCarIcon />
             </ListItemIcon>
             <ListItemText primary="Fleet Management" />
           </ListItemButton>
-          <ListItemButton disabled={EmployeeInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={!loadingAccess && EmployeeInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <GroupsIcon />
             </ListItemIcon>
             <ListItemText primary="Employee" />
           </ListItemButton>
-          <ListItemButton disabled={PRollInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={!loadingAccess && PRollInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PaymentIcon />
             </ListItemIcon>

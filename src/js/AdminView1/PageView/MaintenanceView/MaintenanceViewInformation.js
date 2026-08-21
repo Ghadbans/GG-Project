@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Checkbox, LinearProgress, Stepper, Step, StepLabel, Button, Tabs, Tab, Menu, Divider, Card, CardContent, colors, Collapse } from '@mui/material';
+import { Skeleton, MenuItem, Grid, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, Autocomplete, styled, Modal, Backdrop, Fade, Box, OutlinedInput, InputAdornment, Checkbox, LinearProgress, Stepper, Step, StepLabel, Button, Tabs, Tab, Menu, Divider, Card, CardContent, colors, Collapse } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
@@ -852,11 +852,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 2 }} >
             {
-              loadingData ? <div >
-                <div style={{ position: 'relative', top: '120px' }}>
-                  <Loader />
-                </div>
-              </div> : (
+              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
                 <div>
                   <Grid container spacing={2}>
                     {show === 1 ?

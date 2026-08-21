@@ -8,7 +8,7 @@ import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { TableContainer, Checkbox, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Autocomplete, Table, TableBody, TableCell, TableRow, TableHead, Button, Menu, Divider } from '@mui/material';
+import { Skeleton, TableContainer, Checkbox, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Autocomplete, Table, TableBody, TableCell, TableRow, TableHead, Button, Menu, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
@@ -606,11 +606,7 @@ function EstimateViewAdminAll() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 2 }} >
             {
-              loadingData ? <div>
-                <div style={{ position: 'relative', top: '120px' }}>
-                  <Loader />
-                </div>
-              </div> : (
+              loadingData ? <Skeleton variant="rectangular" width="100%" height={600} sx={{ mt: 2, borderRadius: 2 }} /> : (
                 <div>
                   <Grid container spacing={2}>
                     {show1 === 1 ?
