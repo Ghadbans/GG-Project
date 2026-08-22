@@ -784,8 +784,22 @@ function ItemOutViewUpdate() {
                 helperText={relatedItemQty && relatedItemQty.itemQuantity !== undefined ? 'Stock :' + relatedItemQty.itemQuantity : 0}
                 max={relatedItemQty && relatedItemQty.itemQuantity}
                 onChange={(e) => {
-                  handleChange(e, Item.idRow)
-                }}
+                      const value = e.target.value;
+                      if (!isNaN(value) && value !== '') {
+                        const numericValue = parseInt(value, 10);
+                        const maxStock = relatedItemQty?.itemQuantity || 0;
+                        const maxNeeded = (typeof related !== 'undefined' && related?.itemQty !== undefined) ? (related.itemQty - (related.itemOut || 0)) : Infinity;
+                        const maxAllowed = Math.min(maxStock, maxNeeded);
+                        if (numericValue <= maxAllowed) {
+                          handleChange(e, Item.idRow);
+                        } else {
+                          e.target.value = '';
+                          handleChange(e, Item.idRow);
+                        }
+                      } else {
+                        handleChange(e, Item.idRow);
+                      }
+                    }}
                 sx={{ width: '100px', backgroundColor: 'white' }}
               />
             </td>
@@ -866,11 +880,20 @@ function ItemOutViewUpdate() {
           helperText={relatedItemQty && relatedItemQty.itemQuantity !== undefined ? 'Stock :' + relatedItemQty.itemQuantity : 0}
           max={relatedItemQty && relatedItemQty.itemQuantity}
           onChange={(e) => {
-            let value = e.target.value
-            if (value <= (relatedItemQty && relatedItemQty.itemQuantity)) {
-              handleChange(e, Item.idRow)
-            }
-          }}
+              const value = e.target.value;
+              if (!isNaN(value) && value !== '') {
+                const numericValue = parseInt(value, 10);
+                const maxStock = relatedItemQty?.itemQuantity || 0;
+                if (numericValue <= maxStock) {
+                  handleChange(e, Item.idRow);
+                } else {
+                  e.target.value = '';
+                  handleChange(e, Item.idRow);
+                }
+              } else {
+                handleChange(e, Item.idRow);
+              }
+            }}
           sx={{ width: '100px', backgroundColor: 'white' }}
         />
       </td>

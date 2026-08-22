@@ -770,10 +770,13 @@ function ItemOutViewForm() {
                           const value = e.target.value
                           if (!isNaN(value) && value !== '') {
                             const numericValue = parseInt(value, 10);
-                            if (numericValue <= (relatedItemQty?.itemQuantity || 0)) {
+                            const maxStock = relatedItemQty?.itemQuantity || 0;
+                            const maxNeeded = (typeof related !== 'undefined' && related?.itemQty !== undefined) ? (related.itemQty - (related.itemOut || 0)) : Infinity;
+                            const maxAllowed = Math.min(maxStock, maxNeeded);
+                            if (numericValue <= maxAllowed) {
                               handleChange(Item.idRow, 'newItemOut', value)
                             } else {
-                              handleChange(Item.idRow, 'newItemOut', 0)
+                              handleChange(Item.idRow, 'newItemOut', '')
                             }
                           } else {
                             handleChange(Item.idRow, 'newItemOut', '')
@@ -867,11 +870,12 @@ function ItemOutViewForm() {
               const value = e.target.value
               if (!isNaN(value) && value !== '') {
                 const numericValue = parseInt(value, 10);
-                if (numericValue <= (relatedItemQty?.itemQuantity || 0)) {
-                  handleChange(Item.idRow, 'newItemOut', value)
-                } else {
-                  handleChange(Item.idRow, 'newItemOut', 0)
-                }
+                            const maxStock = relatedItemQty?.itemQuantity || 0;
+                            if (numericValue <= maxStock) {
+                              handleChange(Item.idRow, 'newItemOut', value)
+                            } else {
+                              handleChange(Item.idRow, 'newItemOut', '')
+                            }
               } else {
                 handleChange(Item.idRow, 'newItemOut', '')
               }
