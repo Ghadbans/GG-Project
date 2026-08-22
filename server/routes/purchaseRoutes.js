@@ -229,12 +229,11 @@ Route.route("/delete-purchase/:id").delete(async (req, res, next) => {
         const itemPurchaseLink = await itemPurchaseSchema.findOne({ ReferenceName: id });
         if (itemPurchaseLink) return res.status(400).json({ error: "Cannot delete Purchase Request because it has linked Item Purchases. Please delete the Item Purchases first." });
 
-        const invoiceLink = await invoiceSchema.findOne({ ReferenceName2: id }); // Purchase creates Invoice with ReferenceName2
+        const invoiceLink = await invoiceSchema.findOne({ ReferenceName2: id });
         if (invoiceLink) return res.status(400).json({ error: "Cannot delete Purchase Request because it has linked Invoices. Please delete the Invoices first." });
 
         const purchase = await purchaseSchema.findById(id);
         if (purchase && purchase.ReferenceName) {
-            // Revert parent estimation
             await estimationSchema.findByIdAndUpdate(purchase.ReferenceName, {
                 $set: { status: 'Approved' },
                 $unset: { ReferenceName: 1 }
@@ -246,6 +245,164 @@ Route.route("/delete-purchase/:id").delete(async (req, res, next) => {
     } catch (err) {
         return res.status(500).json({ error: err.message });
     }
+});
+
+Route.route("/remove-purchase").delete(async (req, res) => {
+  await purchaseSchema
+    .findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.json({
+        msg: "Data successfully updated.",
+      });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
+Route.route("/purchaseOrder", cors(corsOptionsDelegate)).get(
+  async (req, res, next) => {
+    await purchaseOrderSchema
+      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
+      .then((result) => {
+        res.json({
+          data: result,
+          message: "Data successfully fetched!",
+          status: 200,
+        });
+      })
+      .catch((err) => {
+        return next(err);
+      });
+  }
+);
+
+Route.route("/purchaseOrder-Information").get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Build the query object dynamically based on the filters
+    const query = branchFilter(req);
+    if (branchId && branchId !== 'ALL') query.branchId = branchId;
+    if (search) {
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(escapedSearch, 'i');
+      query.$or = [
+        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
+        { reason: regex },
+        { 'itemsQtyArray.itemName': regex },
+        { 'itemsQtyArray.itemBrand': regex },
+        { 'itemsQtyArray.itemDescription': regex },
+        { 'reference.referenceName': regex },
+      ].filter(condition => condition !== null);
+    }
+    if (filterField && filterValue) {
+      query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
+    }
+    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const totalItem = await purchaseOrderSchema.countDocuments(query);
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) {
+    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    res.status(500).json({ message: error.message });
+  }
+});
+
+Route.route("/get-last-saved-purchaseOrder").get(async(req,res, next)=>{
+  try {
+    const rawBranchId = req.query.branchId;
+    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
+    const query = branchId && branchId !== 'ALL' ? { branchId } : {};
+    const last = await purchaseOrderSchema.findOne(query).sort({
+    outNumber: -1
+  }).exec();
+    res.json(last)
+  } catch (error) {
+    next(error);
+  }
+})
+// Create purchaseOrder
+Route.route("/create-purchaseOrder").post(async (req, res, next) => {
+  try {
+    const branchId = req.body.branchId || 'HQ';
+    let newNumber = req.body.outNumber;
+    
+    if (newNumber !== undefined) {
+      const existing = await purchaseOrderSchema.findOne({ branchId, outNumber: newNumber }).exec();
+      if (existing) {
+        const last = await purchaseOrderSchema.findOne({ branchId }).sort({ outNumber: -1 }).exec();
+        newNumber = last && last.outNumber ? parseInt(last.outNumber) + 1 : 1;
+        req.body.outNumber = newNumber;
+      }
+    }
+
+    const result = await purchaseOrderSchema.create(req.body);
+    res.json({ data: result, message: "Data successfully added.", status: 200 });
+  } catch (err) {
+    if (err.code === 11000) {
+      return res.status(500).json({ message: "Duplicate number detected. Please refresh and try again.", error: err });
+    }
+    return next(err);
+  }
+});
+
+Route.route("/get-purchaseOrder/:id").get(async (req, res, next) => {
+  await purchaseOrderSchema
+    .findById(req.params.id, req.body)
+    .then((result) => {
+      res.json({
+        data: result,
+        message: "Data successfully retrieved.",
+        status: 200,
+      });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
+Route.route("/update-purchaseOrder/:id").put(async (req, res, next) => {
+  await purchaseOrderSchema
+    .findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    })
+    .then((result) => {
+      res.json({
+        data: result,
+        msg: "Data successfully updated.",
+      });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
+Route.route("/delete-purchaseOrder/:id").delete(async (req, res) => {
+  await purchaseOrderSchema
+    .findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.json({
+        msg: "Data successfully updated.",
+      });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
+
+Route.route("/remove-purchaseOrder").delete(async (req, res) => {
+  await purchaseOrderSchema
+    .findByIdAndRemove(req.params.id)
+    .then(() => {
+      res.json({
+        msg: "Data successfully updated.",
+      });
+    })
+    .catch((err) => {
+      return next(err);
+    });
 });
 
 Route.route("/purchase-Information").get(async (req, res) => {
