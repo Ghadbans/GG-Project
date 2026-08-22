@@ -147,6 +147,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 function PurchaseFormUpdate() {
   const { id } = useParams();
+  const { isLocked, lockConfig, lockedBy } = useDocumentLock(id, 'purchase');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -683,7 +685,7 @@ function PurchaseFormUpdate() {
       purchaseAmount2, updateS: false
     };
     try {
-      const response = await axios.put(`${ENDPOINT_URL}/update-purchase/${id}`, data)
+      const response = await axios.put(`${ENDPOINT_URL}/update-purchase/${id}`, data, lockConfig)
       if (response) {
         handleCreateComment()
         // const resLocal = await db.purchaseSchema.get({ _id: id })
@@ -711,8 +713,20 @@ function PurchaseFormUpdate() {
     Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
   ) : items, [items, search2])
 
+  if (isLocked) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
+        <h2>This document is currently being edited by {lockedBy || 'another user'}</h2>
+        <p>Please wait until they are finished.</p>
+        <Button variant="contained" color="primary" onClick={() => window.history.back()} sx={{ mt: 3 }}>Go Back</Button>
+      </div>
+    );
+  }
+
 
   return (
+
+
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />

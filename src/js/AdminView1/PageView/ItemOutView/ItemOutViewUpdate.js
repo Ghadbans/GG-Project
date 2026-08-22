@@ -148,6 +148,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 function ItemOutViewUpdate() {
   const { id } = useParams();
+  const { isLocked, lockConfig, lockedBy } = useDocumentLock(id, 'itemOut');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -707,7 +709,7 @@ function ItemOutViewUpdate() {
       itemsQtyArray,
     };
     try {
-      const res = await axios.put(`${ENDPOINT_URL}/update-itemOut/${id}`, data)
+      const res = await axios.put(`${ENDPOINT_URL}/update-itemOut/${id}`, data, lockConfig)
       if (res) {
         handleUpdateInfo();
         handleQty()
@@ -900,7 +902,18 @@ function ItemOutViewUpdate() {
     </tr>)
   });
 
+  if (isLocked) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
+        <h2>This document is currently being edited by {lockedBy || 'another user'}</h2>
+        <p>Please wait until they are finished.</p>
+        <Button variant="contained" color="primary" onClick={() => window.history.back()} sx={{ mt: 3 }}>Go Back</Button>
+      </div>
+    );
+  }
+
   return (
+
     <div>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />

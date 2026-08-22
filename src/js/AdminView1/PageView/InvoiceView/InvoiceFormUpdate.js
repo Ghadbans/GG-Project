@@ -7,6 +7,8 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { MenuItem, Grid, IconButton, Paper, TableContainer, TextField, FormControl, InputLabel, Select, Typography, styled, Autocomplete, Box, Modal, Backdrop, OutlinedInput, InputAdornment, Divider } from '@mui/material'
 import axios from 'axios';
+import { useDocumentLock } from '../../../hooks/useDocumentLock';
+
 import { Drawer as SideDrawer, Card, CardContent, CardMedia, Button, Pagination } from '@mui/material';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
@@ -148,6 +150,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function InvoiceFormUpdate() {
 
   const { id } = useParams();
+  const { isLocked, lockConfig, lockedBy } = useDocumentLock(id, 'invoice');
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -838,6 +842,16 @@ function InvoiceFormUpdate() {
     Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
     Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
   ) : items
+
+  if (isLocked) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
+        <h2>This document is currently being edited by {lockedBy || 'another user'}</h2>
+        <p>Please wait until they are finished.</p>
+        <Button variant="contained" color="primary" onClick={() => window.history.back()} sx={{ mt: 3 }}>Go Back</Button>
+      </div>
+    );
+  }
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

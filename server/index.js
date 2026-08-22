@@ -86,6 +86,8 @@ mongoDbConnection().then(async () => {
   };
 
 const authRoutes = require('./routes/AuthRoutes');
+const lockRoutes = require('./routes/lockRoutes');
+const verifyLock = require('./middleware/lockMiddleware');
 
 const userRoute = require("./routes/Routes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
@@ -124,6 +126,12 @@ const User = require("./model/employeeUserSchema");
 
 // RESTful API root
 app.use('/auth', authRoutes);
+
+app.use('/api/locks', lockRoutes);
+
+// Apply verifyLock to all PUT update routes
+app.put('/endpoint/update-*', verifyLock);
+
 
 app.use("/endpoint", userRoute);
 app.use("/endpoint", invoiceRoutes);

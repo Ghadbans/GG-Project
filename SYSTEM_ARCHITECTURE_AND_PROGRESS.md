@@ -44,6 +44,33 @@
 - **Global UI Freeze and Sidebar Gray-Out Fix (Ver 3.3.89)**: Identified that almost 50 separate frontend components (including `SidebarDash`, `EstimateViewAdmin`, etc.) were firing simultaneous `axios.get('/grantAccess')` requests on every page navigation. This blocked the browser's 6-request connection limit, drastically slowing down data fetches like `/estimation-Information`, and causing the sidebar menus to gray out (disabled state) for 1-2 seconds until the permissions arrived. Replaced all 50 global instances with `cachedGet` (memory cached for 5 minutes). Module navigations and sidebar states are now instantaneous.
 - **Invoice Information Layout & Load Fix (Ver 3.3.90)**: The `InvoiceInformation` left-sidebar list and `PrintHeader` company profile logo were taking a few seconds to load due to duplicate full-collection fetches that were not being cached. Replaced `axios.get` with `cachedGet` in both `InvoiceInformation.js` and `useCompanyProfile.js` so they load instantly from memory alongside the main view. Also relocated the `Action` popup block in `InvoiceViewAdminAll.js` to render cleanly above the `Note` section instead of inside the upper grid, per user request.
 
+- **v3.3.92 Server Routes Split**: Broke apart the 5,500-line `Routes.js` monolith into 11 specialized, domain-specific backend controllers (`invoiceRoutes.js`, `itemRoutes.js`, `customerRoutes.js`, etc.) while meticulously preserving all business logic. Hot-patched an oversight where the `branchFilter` middleware was dropped, which temporarily caused 500 crashes.
+- **v3.3.93 React DOM Thrashing Revert (Issue #4 & #6)**: Initially replaced legacy spinner `<Loader>` components with `<Skeleton>` blocks across 26 views to prevent layout thrashing. Reverted back to the original spinning `<Loader>` per user preference. 
+- **v3.3.94 Backend Sync & Payment Fixes (Issue #5, #7, #8, #9)**: 
+  - Changed the `NetworkLogoutIcon.js` ping monitor to accurately hit the Railway backend `/status` instead of google.com.
+  - Fixed a race condition in `PaymentView.js` where the empty state balloon flashed because `setLoadingData(false)` fired before the data array populated, and then fixed an infinite spinner when the early exit was removed.
+  - Fixed the backend MongoDB customer update route. When a user updates a Customer's information in the Customer module, the backend now properly maps and pushes *all* updated fields (Phone, Address, Email, Company Name) into the embedded `customerName` objects stored inside the Maintenance, Invoice, Project, and Payment records.
+  - Corrected table column widths in `MaintenanceViewInformation.js` to prevent the customer name cell from squishing into two lines while giving the phone number field too much empty space.
+
+
+- **v3.3.95 Item Quantity Validation & Deletion Dependencies (Issue #10, #11, #12)**:
+  - Added dependency-aware deletion checks across `delete-estimation`, `delete-invoice`, `delete-project`, `delete-maintenance`, `delete-purchase`, and `remove-customer` routes. Users are now blocked (HTTP 400) from deleting records that have active child links. The parent's status is also correctly reverted when a child link is deleted.
+  - Re-mapped the frontend `handleDelete` UI in all Admin Views to display the backend's dependency warning messages cleanly in an alert.
+  - Implemented client-side input validation on `ItemOutViewForm.js`, `ItemOutViewUpdate.js`, and `ItemReturnUpdateForm.js`. The quantity typed by the user cannot exceed the dynamically allowed maximum (Stock, remaining required Quantity, or original QTY Out). If they type an excessive number, the box automatically clears itself.
+  - Fixed confusing component titles (e.g. changing "MAKE NEW ITEM OUT" to "ITEM RETURN" on return forms).
+  - Recovered from a patching error that mistakenly deleted the `/purchaseOrder` routes in the backend (which crashed the Daily Expenses module with a 404), restored the routes, pushed to Railway, and successfully built `3.3.95`.
+
+
+- **v3.3.96 Item Out Quantity Validation Fix (Issue #13)**:
+  - Discovered that the Item Out quantity validation patch applied in v3.3.95 had silently failed to inject into `ItemOutViewForm.js` and `ItemOutViewUpdate.js` due to a regex mismatch, causing the form to only check against `Stock` and ignore the required `Quantity`.
+  - Forcefully rewrote the logic in both `ItemOutView` files so it correctly calculates `maxAllowed = Math.min(Stock, Quantity - QTY Out)`. Users are now strictly blocked from typing an amount greater than what is allowed by either constraint.
+
+
+- **v3.3.97 Concurrency Control & Document Locking (Issue #14)**:
+  - Implemented a centralized, pessimistic lock system across 8 major modules (Quotations, Invoices, Projects, Maintenance, Purchase Requests, Purchase Orders, Item Out, Item Purchases) to prevent data collisions and dirty-writes.
+  - **Backend**: Created a `Lock` collection (MongoDB TTL of 60s) and endpoints (`/api/locks/acquire`, `/api/locks/heartbeat`, `/api/locks/release`). Added `verifyLock` middleware globally to `/update-*` routes to reject unauthorized saves.
+  - **Frontend**: Created the `useDocumentLock` hook that polls the heartbeat every 30s. If a user disconnects, the lock drops, and if another user takes over, the frontend alerts the user and auto-refreshes the page.
+
 ## Recovery Points
 - **v3.3.90 Baseline (2026-08-21)**: The system is confirmed working. Frontend loading is optimized (grantAccess and companyProfile are cached), Item summaries load properly with server-side `$in` filtering, and exact-number searches are using `$where` in the monolithic `Routes.js` file (which is insecure and slow but currently functional). The UI layout rendering issues (Action popup in invoices) are resolved. This is the baseline state before tackling the major technical debt (NoSQL injection `$where`, breaking up `Routes.js`, implementing proper pagination, and preventing React DOM thrashing).
 - **v3.3.91 Routes.js Split Baseline (2026-08-21)**: The critical NoSQL injection vulnerability (Issue #1) has been resolved. All instances of MongoDB `$expr` with `$regexMatch` and `$toString` on numeric ID fields (like `invoiceNumber`, `payNumber`) have been removed and replaced with safe, indexed exact numeric equality matches (e.g., `...(!isNaN(Number(search)) ? [{ invoiceNumber: Number(search) }] : [])`). This restores database indexing and closes the security gap, while retaining full regex matching for string fields. The live app is stable. I am now about to split the 5,500-line `Routes.js` monolith into domain-specific controller files (`invoiceRoutes.js`, `itemRoutes.js`, etc.) and safely delete confirmed dead duplicate routes.
