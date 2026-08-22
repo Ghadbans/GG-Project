@@ -87,7 +87,7 @@ mongoDbConnection().then(async () => {
 
 const authRoutes = require('./routes/AuthRoutes');
 const lockRoutes = require('./routes/lockRoutes');
-const verifyLock = require('./middleware/lockMiddleware');
+const verifyLock = require('./Middleware/lockMiddleware');
 
 const userRoute = require("./routes/Routes");
 const invoiceRoutes = require("./routes/invoiceRoutes");
