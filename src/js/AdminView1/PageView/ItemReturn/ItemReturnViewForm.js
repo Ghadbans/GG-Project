@@ -832,7 +832,7 @@ function ItemReturnViewForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              UPDATE ITEM OUT
+              MAKE NEW ITEM RETURN
             </Typography>
             <IconButton onClick={handleOpenBack}>
               <ArrowBack style={{ color: 'white' }} />
@@ -1058,8 +1058,8 @@ function ItemReturnViewForm() {
           </BlackTooltip>
           <Grid container sx={{ alignItems: 'center', padding: '15px' }} spacing={2}>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
-              <Typography>Do you want to stop making item out ? </Typography>
-              <p><span className="txt2" style={{ color: 'red' }}>Note :</span> <span className="txt2"> If you stop making item out without saving, all your changes will be lost</span></p>
+              <Typography>Do you want to stop making item return ? </Typography>
+              <p><span className="txt2" style={{ color: 'red' }}>Note :</span> <span className="txt2"> If you stop making item return without saving, all your changes will be lost</span></p>
             </Grid>
             <br />
             <Grid item xs={6}>

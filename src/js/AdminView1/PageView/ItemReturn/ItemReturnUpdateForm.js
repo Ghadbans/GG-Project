@@ -742,7 +742,21 @@ function ItemReturnUpdateForm() {
                     size="small"
                     name='newItemOut' id='newItemOut'
                     value={Item.newItemOut}
-                    onChange={(e) => handleChange(e, Item.idRow)}
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (!isNaN(value) && value !== '') {
+                        const numericValue = parseInt(value, 10);
+                        const maxOut = related.itemOut1 == undefined ? (related.itemOut || 0) : 0;
+                        if (numericValue <= maxOut) {
+                          handleChange(e, Item.idRow);
+                        } else {
+                          e.target.value = '';
+                          handleChange(e, Item.idRow);
+                        }
+                      } else {
+                        handleChange(e, Item.idRow);
+                      }
+                    }}
                     sx={{ width: '100px', backgroundColor: 'white' }}
                   />
                 </td>
@@ -861,7 +875,7 @@ function ItemReturnUpdateForm() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              MAKE NEW ITEM OUT
+              UPDATE ITEM RETURN
             </Typography>
             <IconButton onClick={handleOpenBack}>
               <ArrowBack style={{ color: 'white' }} />
