@@ -1,3 +1,4 @@
+import { useDocumentLock } from '../../../hooks/useDocumentLock';
 import React, { useEffect, useState } from 'react';
 import SideMaintenance2 from '../../../component/SideMaintenance2';
 import '../../view.css';

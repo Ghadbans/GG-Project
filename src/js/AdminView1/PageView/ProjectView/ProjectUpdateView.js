@@ -1,3 +1,4 @@
+import { useDocumentLock } from '../../../hooks/useDocumentLock';
 import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
