@@ -471,7 +471,7 @@ Route.route("/employee-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ employeeName: regex }, { employeeLastName: regex }, { email: regex }, { phone: regex }];
     }
-    const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await employeeSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }

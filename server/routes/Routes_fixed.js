@@ -1124,7 +1124,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -1165,7 +1165,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await invoiceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -1901,7 +1901,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2349,7 +2349,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2547,7 +2547,7 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2946,7 +2946,7 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3081,7 +3081,7 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      const result = await maintenanceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await maintenanceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -3129,7 +3129,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await maintenanceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3893,7 +3893,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4154,7 +4154,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemReturnSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4469,7 +4469,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
           }
         };
       }
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
 
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
@@ -4508,7 +4508,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemPurchaseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4818,13 +4818,13 @@ Route.route("/create-block-config").post(async (req, res, next) => {
 // ---------- block-production ----------
 Route.route("/block-production").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-production2").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4866,13 +4866,13 @@ Route.route("/delete-block-production").post(async (req, res, next) => {
 // ---------- block-damage ----------
 Route.route("/block-damage").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-damage2").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4914,13 +4914,13 @@ Route.route("/delete-block-damage").post(async (req, res, next) => {
 // ---------- block-sales ----------
 Route.route("/block-sales").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-sales2").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -4962,13 +4962,13 @@ Route.route("/delete-block-sales").post(async (req, res, next) => {
 // ---------- block-mixer ----------
 Route.route("/block-mixer").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-mixer2").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -5091,7 +5091,7 @@ Route.route("/customer-Information").get(async (req, res) => {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
-    const itemI = await customerSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await customerSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await customerSchema.countDocuments(query);
 
     res.status(200).json({
@@ -5118,7 +5118,7 @@ Route.route("/Supplier-Information").get(async (req, res) => {
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
-      const itemI = await SupplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const itemI = await SupplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await SupplierSchema.countDocuments(query);
       res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
     } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5153,7 +5153,7 @@ Route.route("/estimation-Information").get(async (req, res) => {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
-    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await estimationSchema.countDocuments(query);
 
     res.status(200).json({
@@ -5190,7 +5190,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemOutSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -5210,7 +5210,7 @@ Route.route("/supplier-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ supplierName: regex }, { storeName: regex }, { description: regex }];
     }
-    const itemI = await supplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await supplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await supplierSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5226,7 +5226,7 @@ Route.route("/employee-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ employeeName: regex }, { employeeLastName: regex }, { email: regex }, { phone: regex }];
     }
-    const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await employeeSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await employeeSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5254,7 +5254,7 @@ Route.route("/payRoll-Information").get(async (req, res) => {
           query.$or.push(...(!isNaN(Number(search)) ? [{ totalNet: Number(search) }] : []));
       }
     }
-    const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await payRollSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5270,7 +5270,7 @@ Route.route("/dailyExpense-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ expenseName: regex }, { description: regex }];
     }
-    const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await dailyExpenseSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5303,7 +5303,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await maintenanceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -5333,7 +5333,7 @@ Route.route("/purchase-Information").get(async (req, res) => {
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
-      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await purchaseSchema.countDocuments(query);
       res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
     } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5349,7 +5349,7 @@ Route.route("/estimate-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ 'customerName.customerName': regex }, { estimateSubject: regex }];
     }
-    const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await estimateSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5380,7 +5380,7 @@ Route.route("/project-Information").get(async (req, res) => {
     if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
-      const itemI = await projectSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const itemI = await projectSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await projectSchema.countDocuments(query);
       res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
     } catch (error) { res.status(500).json({ message: error.message }); }
@@ -5448,7 +5448,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await expenseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });

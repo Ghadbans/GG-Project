@@ -684,7 +684,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemReturnSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -824,7 +824,7 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
           }
         };
       }
-      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await itemPurchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
 
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
@@ -863,7 +863,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemPurchaseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -1025,7 +1025,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemOutSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });

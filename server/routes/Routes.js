@@ -1048,7 +1048,7 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await posSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -2161,13 +2161,13 @@ Route.route("/create-block-config").post(async (req, res, next) => {
 
 Route.route("/block-production").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-production2").get(async (req, res, next) => {
   try {
-    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockProduction.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -2213,13 +2213,13 @@ Route.route("/delete-block-production").post(async (req, res, next) => {
 
 Route.route("/block-damage").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-damage2").get(async (req, res, next) => {
   try {
-    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockDamage.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -2265,13 +2265,13 @@ Route.route("/delete-block-damage").post(async (req, res, next) => {
 
 Route.route("/block-sales").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-sales2").get(async (req, res, next) => {
   try {
-    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockSales.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -2317,13 +2317,13 @@ Route.route("/delete-block-sales").post(async (req, res, next) => {
 
 Route.route("/block-mixer").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
 Route.route("/block-mixer2").get(async (req, res, next) => {
   try {
-    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true);
+    const data = await BlockMixer.find(branchFilter(req)).sort({ date: -1 }).allowDiskUse(true).lean();
     res.json({ data, status: 200 });
   } catch (err) { next(err); }
 });
@@ -2397,7 +2397,7 @@ Route.route("/estimate-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ 'customerName.customerName': regex }, { estimateSubject: regex }];
     }
-    const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await estimateSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }

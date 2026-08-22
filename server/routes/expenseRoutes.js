@@ -272,7 +272,7 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await expenseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -499,7 +499,7 @@ Route.route("/dailyExpense-Information").get(async (req, res) => {
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [{ expenseName: regex }, { description: regex }];
     }
-    const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await dailyExpenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await dailyExpenseSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }
@@ -535,7 +535,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await expenseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });

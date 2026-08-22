@@ -104,7 +104,7 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await purchaseSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -300,7 +300,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -425,7 +425,7 @@ Route.route("/purchase-Information").get(async (req, res) => {
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
-      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await purchaseSchema.countDocuments(query);
       res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
     } catch (error) { res.status(500).json({ message: error.message }); }

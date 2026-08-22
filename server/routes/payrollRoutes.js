@@ -214,7 +214,7 @@ Route.route("/payRoll-Information").get(async (req, res) => {
           query.$or.push(...(!isNaN(Number(search)) ? [{ totalNet: Number(search) }] : []));
       }
     }
-    const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await payRollSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await payRollSchema.countDocuments(query);
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) { res.status(500).json({ message: error.message }); }

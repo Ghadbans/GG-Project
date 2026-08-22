@@ -223,7 +223,7 @@ Route.route("/customer-Information").get(async (req, res) => {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
-    const itemI = await customerSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await customerSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await customerSchema.countDocuments(query);
 
     res.status(200).json({

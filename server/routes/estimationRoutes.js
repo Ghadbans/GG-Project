@@ -94,7 +94,7 @@ Route.route("/estimation", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await estimationSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -280,7 +280,7 @@ Route.route("/estimation-Information").get(async (req, res) => {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
-    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await estimationSchema.countDocuments(query);
 
     res.status(200).json({

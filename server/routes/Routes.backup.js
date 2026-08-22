@@ -1160,7 +1160,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await invoiceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -2949,7 +2949,7 @@ Route.route("/expense-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`employeeName.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await expenseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await expenseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3118,7 +3118,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await maintenanceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -3874,7 +3874,7 @@ Route.route("/itemOut-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemOutSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemOutSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4005,7 +4005,7 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4244,7 +4244,7 @@ Route.route("/itemReturn-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemReturnSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemReturnSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
@@ -4571,7 +4571,7 @@ Route.route("/itemPurchase-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+    const itemI = await itemPurchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await itemPurchaseSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });

@@ -112,7 +112,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true);
+      const result = await invoiceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -154,7 +154,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit));
+    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await invoiceSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });

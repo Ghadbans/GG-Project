@@ -180,7 +180,7 @@ Route.route("/Supplier-Information").get(async (req, res) => {
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
-      const itemI = await SupplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit));
+      const itemI = await SupplierSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await SupplierSchema.countDocuments(query);
       res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
     } catch (error) { res.status(500).json({ message: error.message }); }
