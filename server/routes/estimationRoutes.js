@@ -213,64 +213,42 @@ Route.route("/get-estimation/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-estimation/:id").put(async (req, res, next) => {
-  await estimationSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
+    try {
+        const est = await estimationSchema.findById(req.params.id);
+        if (est && (est.ReferenceName || (est.Ref && est.Ref._id))) {
+            req.body.status = 'Converted';
+        }
+        
+        const result = await estimationSchema.findByIdAndUpdate(req.params.id, {
+            $set: req.body,
+        }, { new: true });
+        
+        res.json({
+            data: result,
+            msg: "Data successfully updated.",
+        });
+    } catch (err) {
+        return next(err);
+    }
 });
 
 Route.route("/delete-estimation/:id").delete(async (req, res, next) => {
-  await estimationSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully delete.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
-    const id = req.params.id
+    const id = req.params.id;
     try {
-      const deletePurchaseId = await purchaseSchema.find({ReferenceName:id});
-      const deleteInvoiceId = await invoiceSchema.find({ReferenceName:id});
-    if (deletePurchaseId) {
-        await Promise.all (deletePurchaseId.map(async (row)=>{
-          await purchaseSchema.findOneAndDelete({_id:row._id}),
-          await  invoiceSchema.findOneAndDelete({ReferenceName2:row._id})
-        }))
-    } 
-  if (deleteInvoiceId) {
-      await Promise.all (deleteInvoiceId.map(async (row)=>{
-        await invoiceSchema.findOneAndDelete({_id:row._id}),
-        await  purchaseSchema.findOneAndDelete({ReferenceName2:row._id})
-      }))
-    }
-    } catch (error) {
-      
-    }
-});
+        const purchaseLink = await purchaseSchema.findOne({ ReferenceName: id });
+        if (purchaseLink) return res.status(400).json({ error: "Cannot delete Quotation because it is linked to a Purchase Request. Please delete the Purchase Request first." });
+        
+        const invoiceLink = await invoiceSchema.findOne({ ReferenceName: id });
+        if (invoiceLink) return res.status(400).json({ error: "Cannot delete Quotation because it is linked to an Invoice. Please delete the Invoice first." });
+        
+        const maintenanceLink = await maintenanceSchema.findOne({ ReferenceName: id });
+        if (maintenanceLink) return res.status(400).json({ error: "Cannot delete Quotation because it is linked to a Maintenance record. Please delete the Maintenance first." });
 
-Route.route("/remove-estimation").delete(async (req, res) => {
-  await estimationSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully delete.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
+        await estimationSchema.findByIdAndRemove(id);
+        res.json({ msg: "Data successfully deleted." });
+    } catch (err) {
+        return res.status(500).json({ error: err.message });
+    }
 });
 
 Route.route("/estimation-Information").get(async (req, res) => {

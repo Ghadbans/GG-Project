@@ -358,7 +358,11 @@ function EstimateViewAdmin() {
           handleDeleteOpenLoading();
         }
       } catch (error) {
-        alert('An error as Occur');
+        if (error.response && error.response.data && error.response.data.error) {
+          alert(error.response.data.error);
+        } else {
+          alert('An error as Occur');
+        }
       }
     };
   const [EstimateDeleted, setEstimateDeleted] = useState([])
