@@ -7,9 +7,14 @@ import { selectCurrentUser } from '../features/auth/authSlice';
 // Global flag to stop heartbeat when unmounting
 let lockTimeouts = {};
 
+
+// Generate a unique session ID for this browser tab so we can distinguish multiple tabs logged in as the same user
+const sessionLockId = Math.random().toString(36).substring(2, 6).toUpperCase();
+
 export const useDocumentLock = (documentId, collectionName) => {
     const user = useSelector(selectCurrentUser);
-    const lockedBy = user?.data?.employeeName || user?.data?.employeeId || 'Unknown User';
+    const lockedBy = (user?.data?.userName || 'Unknown User') + ' (' + sessionLockId + ')';
+
 
     const [isLocked, setIsLocked] = useState(false);
     const [lockedByUser, setLockedByUser] = useState(null);
