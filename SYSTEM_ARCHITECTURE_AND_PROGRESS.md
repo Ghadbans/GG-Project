@@ -81,6 +81,11 @@
   - Fixed a bug where identical `userName` logins across different machines would bypass the pessimistic document lock. Injected a localized `sessionLockId` into `useDocumentLock.js` to ensure each browser tab is treated as a unique entity, even if they share the same username.
   - Fixed a React Router history corruption issue where the "Go Back" button on the lock overlay used `window.history.back()`, which broke subsequent `NavLink` "View" button clicks in list views. Replaced with React Router's `navigate(-1)` for safe traversal.
 
+
+- **v3.3.99 Concurrency Lock UI Polish**:
+  - Fixed a frontend variable shadowing issue where the lock screen overlay printed the current viewer's ID instead of the lock holder's ID. Switched the overlay to render the `lockError` string returned from the backend (which contains the exact locker name).
+  - Removed the annoying native `window.alert()` double-popup in `useDocumentLock.js` to provide a cleaner UX when encountering a lock.
+
 ## Recovery Points
 - **v3.3.90 Baseline (2026-08-21)**: The system is confirmed working. Frontend loading is optimized (grantAccess and companyProfile are cached), Item summaries load properly with server-side `$in` filtering, and exact-number searches are using `$where` in the monolithic `Routes.js` file (which is insecure and slow but currently functional). The UI layout rendering issues (Action popup in invoices) are resolved. This is the baseline state before tackling the major technical debt (NoSQL injection `$where`, breaking up `Routes.js`, implementing proper pagination, and preventing React DOM thrashing).
 - **v3.3.91 Routes.js Split Baseline (2026-08-21)**: The critical NoSQL injection vulnerability (Issue #1) has been resolved. All instances of MongoDB `$expr` with `$regexMatch` and `$toString` on numeric ID fields (like `invoiceNumber`, `payNumber`) have been removed and replaced with safe, indexed exact numeric equality matches (e.g., `...(!isNaN(Number(search)) ? [{ invoiceNumber: Number(search) }] : [])`). This restores database indexing and closes the security gap, while retaining full regex matching for string fields. The live app is stable. I am now about to split the 5,500-line `Routes.js` monolith into domain-specific controller files (`invoiceRoutes.js`, `itemRoutes.js`, etc.) and safely delete confirmed dead duplicate routes.

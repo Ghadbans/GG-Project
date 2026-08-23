@@ -35,7 +35,7 @@ export const useDocumentLock = (documentId, collectionName) => {
             if (error.response && error.response.status === 409) {
                 setIsLocked(true);
                 setLockError(error.response.data.error);
-                alert(error.response.data.error);
+                // alert removed in favor of UI overlay
             }
         }
     }, [documentId, collectionName, lockedBy]);
