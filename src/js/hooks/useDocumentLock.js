@@ -52,10 +52,10 @@ export const useDocumentLock = (documentId, collectionName) => {
                     lockedBy
                 });
             } catch (error) {
-                if (error.response && error.response.status === 409) {
+                if (error.response && (error.response.status === 409 || error.response.status === 404)) {
                     clearInterval(lockTimeouts[documentId]);
                     setIsLocked(true);
-                    alert("Your session expired and another user took over. Refreshing page to load their latest data...");
+                    alert("Your connection was lost and your lock expired. The page will now refresh to load any potential changes.");
                     window.location.reload();
                 }
             }
