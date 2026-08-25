@@ -55,7 +55,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.ProvidePlugin({
+    new webpack.DefinePlugin({
       global: 'globalThis',
     })
   ],

@@ -1,6 +1,6 @@
 import React from 'react'
 import Loader from './Loader'
-import '../css/LoadingView.css'
+import '../css/loadingView.css'
 function LoadingView() {
   return (
     <div className='loading'>
