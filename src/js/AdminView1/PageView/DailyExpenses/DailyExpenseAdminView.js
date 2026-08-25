@@ -306,7 +306,7 @@ function DailyExpenseAdminView() {
   const handleChangeAmount = (e, i) => {
     const { name, value } = e.target;
     const list = [...amount];
-    list[i][name] = value;
+    list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : value;
     list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseInt(list[i]['amountFC']) / list[i]['rate']) + list[i]['amountUsd']) * 100) / 100
     setAmount(list)
@@ -584,11 +584,11 @@ function DailyExpenseAdminView() {
   const deleteItem1 = idRow => {
     setAmount1(amount => amount.filter((Item) => Item.idRow !== idRow));
   };
-  const handleChangeAmount1 = (e, i) => {
-    const { name, value } = e.target;
-    const list = [...amount1];
-    list[i][name] = value;
-    list[i]['rate'] = rate
+    const handleChangeAmount1 = (e, i) => {
+      const { name, value } = e.target;
+      const list = [...amount1];
+      list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : value;
+      list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC']) / list[i]['rate']) + parseFloat(list[i]['amountUsd'])) * 100) / 100
     setAmount1(list)
   }

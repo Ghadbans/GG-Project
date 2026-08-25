@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.3.100",
+  "version": "3.4.3",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -8,6 +8,7 @@
     "start": "electron .",
     "watch": "webpack --config webpack.common.js --watch",
     "build": "webpack --config webpack.prod.js",
+    "build:web": "webpack --config webpack.web.prod.js && node scripts/copy-web.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "make:win": "electron-builder --win",

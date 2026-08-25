@@ -320,11 +320,11 @@ function DailyExpenses() {
   const deleteItem = idRow => {
     setAmount(amount => amount.filter((Item) => Item.idRow !== idRow));
   };
-  const handleChangeAmount = (e, i) => {
-    const { name, value } = e.target;
-    const list = [...amount];
-    list[i][name] = value;
-    list[i]['rate'] = rate
+    const handleChangeAmount = (e, i) => {
+      const { name, value } = e.target;
+      const list = [...amount];
+      list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : value;
+      list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC'] || 0) / (parseFloat(list[i]['rate']) || 1)) + parseFloat(list[i]['amountUsd'] || 0)) * 100) / 100
     setAmount(list)
   }
