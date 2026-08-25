@@ -383,9 +383,10 @@ function AdminHome() {
           setPayment(resPayment.data?.data?.filter(row => dayjs(row.paymentDate).format('YYYY') === dayjs(date).format('YYYY')));
         });
 
-        safeGet(`${ENDPOINT_URL}/Rate`).then(resRate => {
+        safeGet(`${ENDPOINT_URL}/rate`).then(resRate => {
           if (resRate.data?.data?.length > 0) {
-            setSystemRate(parseFloat(resRate.data?.data?.[0]?.rate || 1));
+            const fetchedRate = resRate.data.data[0]?.rate;
+            setSystemRate(fetchedRate != null && fetchedRate !== 0 ? parseFloat(fetchedRate) : 1);
           }
         });
 
@@ -2422,7 +2423,7 @@ function AdminHome() {
                             <h2>Welcome {user.data.userName}</h2>
                             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                               <section style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <h2> Today's Rate: {systemRate} </h2>
+                                <h2> Today's Rate: $ 1 = FC {systemRate} </h2>
                                 <CurrencyExchangeIcon />
                               </section>
                             </div>
