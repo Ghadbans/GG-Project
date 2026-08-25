@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import '../css/SidebarNew.scss'
 import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
 import { AccountBox, AllInclusive, ContactEmergencyRounded, Home, InventoryOutlined, Shop2Outlined, SupervisedUserCircle } from '@mui/icons-material';
@@ -76,6 +76,7 @@ function SideMaintenance({ onView }) {
   const ItemOInfo = grantAccess.filter((row) => row.moduleName === "Item-Out" && row.access.readM === true);
   const ReturnInfo = grantAccess.filter((row) => row.moduleName === "Item-Return" && row.access.readM === true);
   const IPurchaseInfo = grantAccess.filter((row) => row.moduleName === "Item-Purchase" && row.access.readM === true);
+  const PurchaseOrderInfo = grantAccess.filter((row) => row.moduleName === "Purchase-Order" && row.access.readM === true);
 
   return (
     <>
@@ -121,7 +122,7 @@ function SideMaintenance({ onView }) {
             </ListItemIcon>
             <ListItemText primary="Item Purchase" />
           </ListItemButton>
-          <ListItemButton sx={{ color: 'gray' }} component={NavLink} to="/PurchaseOrderViewAdmin" style={isActive('/PurchaseOrderViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && PurchaseOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PurchaseOrderViewAdmin" style={isActive('/PurchaseOrderViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PurchaseOrderViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <InventoryOutlined />
             </ListItemIcon>
