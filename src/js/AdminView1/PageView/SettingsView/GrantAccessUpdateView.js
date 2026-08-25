@@ -176,6 +176,22 @@ function GrantAccessUpdateView() {
         setCostVisibility(res.data.data.costVisibility || false);
         let fetchedModules = res.data.data.modules;
 
+        
+        if (!fetchedModules.find(m => m.moduleName === 'Purchase-Order')) {
+          fetchedModules.push({
+            id: 17,
+            moduleName: 'Purchase-Order',
+            access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
+          });
+        }
+        if (!fetchedModules.find(m => m.moduleName === 'Point-Of-Sell')) {
+          fetchedModules.push({
+            id: 18,
+            moduleName: 'Point-Of-Sell',
+            access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
+          });
+        }
+
         // Ensure Reports module is present even for old records
         if (!fetchedModules.find(m => m.moduleName === 'Reports')) {
           fetchedModules.push({

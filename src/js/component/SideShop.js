@@ -81,13 +81,14 @@ function SideShop({ onView }) {
   const ItemOInfo = grantAccess.filter((row) => row.moduleName === "Item-Out" && row.access.readM === true);
   const ReturnInfo = grantAccess.filter((row) => row.moduleName === "Item-Return" && row.access.readM === true);
   const IPurchaseInfo = grantAccess.filter((row) => row.moduleName === "Item-Purchase" && row.access.readM === true);
+  const POSInfo = grantAccess.filter((row) => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
   return (
     <>
       {show1 === 1 ?
         <div>
           {
             parseInt(onView) === 4 ? null : (
-              <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
+              <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
                 </ListItemIcon>
@@ -95,19 +96,19 @@ function SideShop({ onView }) {
               </ListItemButton>
             )
           }
-          <ListItemButton sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ArtTrack />
             </ListItemIcon>
             <ListItemText primary="Item Display" />
           </ListItemButton>
-          <ListItemButton sx={{ color: 'gray' }} component={NavLink} to="/SellShopInvoiceView" style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SellShopInvoiceView" style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <SellOutlined />
             </ListItemIcon>
             <ListItemText primary="Invoice" />
           </ListItemButton>
-          <ListItemButton sx={{ color: 'gray' }} component={NavLink} to="/ReportPos" style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ReportPos" style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <Assessment />
             </ListItemIcon>

@@ -149,7 +149,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             )}
           {
             parseInt(onView4) === 2 ? null : (
-              <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(4)}>
+              <ListItemButton disabled={!loadingAccess && user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} onClick={() => handleShow(4)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <Storefront />
                 </ListItemIcon>
