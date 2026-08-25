@@ -187,3 +187,6 @@
 ## v3.4.12 - Strict Grant Access Enforcement & Supplier Fix
 - **Strict Grant Access Enforcement**: Revoked the hardcoded `CEO` role bypass across all module sidebars (`SidebarDash`, `SideMaintenance`, `SideShop`, etc.). From now on, *every single user and role* (including CEO and Admin) must explicitly be granted permission via the Grant Access interface. The only account with an absolute system bypass is the creator account (`userName === 'GG'`).
 - **Supplier Menu Permissions Fix**: Fixed a bug where the `Supplier` module in the `STORE` sidebar was erroneously tied to the `Item` Grant Access rule. It now correctly enforces the `Supplier` rule (`SupplierInfo`).
+
+## v3.4.13 - Grant Access Missing Module Injection
+- **Supplier Grant Access Visibility**: Found that the `Supplier` module was completely missing from the internal `GrantAccessFormView` defaults and the `GrantAccessUpdateView` UI list, making it impossible for administrators to check or uncheck its access boxes for employees. Added fallback injection logic for `Supplier` so it natively renders in the Settings UI alongside the other dynamically injected modules (Point-Of-Sell, Purchase-Order).

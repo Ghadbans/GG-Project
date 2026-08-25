@@ -184,6 +184,13 @@ function GrantAccessUpdateView() {
             access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
           });
         }
+        if (!fetchedModules.find(m => m.moduleName === 'Supplier')) {
+          fetchedModules.push({
+            id: 25,
+            moduleName: 'Supplier',
+            access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
+          });
+        }
         if (!fetchedModules.find(m => m.moduleName === 'Point-Of-Sell')) {
           fetchedModules.push({
             id: 18,
