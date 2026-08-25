@@ -88,7 +88,7 @@ function SideShop({ onView }) {
         <div>
           {
             parseInt(onView) === 4 ? null : (
-              <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
+              <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
                 </ListItemIcon>
@@ -96,19 +96,19 @@ function SideShop({ onView }) {
               </ListItemButton>
             )
           }
-          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ArtTrack />
             </ListItemIcon>
             <ListItemText primary="Item Display" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SellShopInvoiceView" style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SellShopInvoiceView" style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <SellOutlined />
             </ListItemIcon>
             <ListItemText primary="Invoice" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ReportPos" style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ReportPos" style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <Assessment />
             </ListItemIcon>

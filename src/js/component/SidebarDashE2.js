@@ -116,25 +116,25 @@ function SidebarDashE2({ onView }) {
 
             )
           }
-          <ListItemButton disabled={loadingAccess || (user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && RateInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && RateInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <CurrencyExchange />
             </ListItemIcon>
             <ListItemText primary="Rate" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && FleetInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && FleetInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <DirectionsCarIcon />
             </ListItemIcon>
             <ListItemText primary="Fleet Management" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && EmployeeInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && EmployeeInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <GroupsIcon />
             </ListItemIcon>
             <ListItemText primary="Employee" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && PRollInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && PRollInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PaymentIcon />
             </ListItemIcon>
