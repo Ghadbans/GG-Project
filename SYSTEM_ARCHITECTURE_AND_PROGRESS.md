@@ -194,3 +194,7 @@
 ## v3.4.14 - Dashboard Exchange Rate Formatting & Fetch Fix
 - **Today's Rate UI Formatting**: Updated the `AdminHome.js` dashboard to format the exchange rate as `Today's Rate: $ 1 = FC [RATE]` instead of a raw integer (`Today's Rate: [RATE]`), providing clear currency context for all users.
 - **Rate Fetch Accuracy**: Fixed a bug where the dashboard rate fetch could fail or pull a `0` value (defaulting the UI to `1`) due to incorrect route casing (`/Rate` instead of `/rate`) and poor fallback logic. The dashboard now reliably retrieves the correct active system rate.
+
+## v3.4.15 - Dashboard Rate Fetching Resilience
+- **Rate Network Failure Fallback**: Discovered that the dashboard was occasionally failing to fetch the active rate because it fires 15 simultaneous API requests on load, causing the Railway backend to sometimes drop or rate-limit the `/rate` request. 
+- **Branch-Specific Rate & Caching**: The dashboard now falls back to `localStorage` if the network request is dropped. It also now correctly maps the fetched rate array to the logged-in user's specific `branchId` (e.g. HQ vs LUB) instead of blindly picking the first result.

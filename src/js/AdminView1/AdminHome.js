@@ -384,9 +384,22 @@ function AdminHome() {
         });
 
         safeGet(`${ENDPOINT_URL}/rate`).then(resRate => {
-          if (resRate.data?.data?.length > 0) {
-            const fetchedRate = resRate.data.data[0]?.rate;
+          let rateData = resRate.data?.data;
+          
+          if (!rateData || rateData.length === 0) {
+            try {
+              const local = localStorage.getItem('Rate');
+              if (local) rateData = JSON.parse(local);
+            } catch(e) {}
+          }
+
+          if (rateData && rateData.length > 0) {
+            const branchRate = rateData.find(r => r.branchId === user.data?.branchId) || rateData[0];
+            const fetchedRate = branchRate?.rate || rateData[0]?.rate;
             setSystemRate(fetchedRate != null && fetchedRate !== 0 ? parseFloat(fetchedRate) : 1);
+          } else {
+             // Hard fallback to a reasonable default if DB is completely unreachable
+             // We'll leave it as whatever it currently is, or 1.
           }
         });
 
