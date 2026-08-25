@@ -99,8 +99,8 @@ function SideMaintenance({ onView }) {
             <ListItemText primary="Supplier" />
             </ListItemButton>
 
-            <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+            <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/StoreItemDisplay" style={isActive('/StoreItemDisplay') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/StoreItemDisplay') ? { backgroundColor: '#30368a', color: 'white' } : null}>
                 <ArtTrack />
               </ListItemIcon>
               <ListItemText primary="Item Display" />
