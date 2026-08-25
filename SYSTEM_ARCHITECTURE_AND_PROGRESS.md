@@ -172,3 +172,7 @@
 ## v3.4.7 - Point-Of-Sell Permission Guard
 - **POS Module Protection**: Discovered that the "POS" navigation button in `SidebarDash` and all sub-modules inside `SideShop.js` (Main, Item Display, Invoice, Report) completely lacked `disabled={}` protection attributes. Connected them to the `Point-Of-Sell` rule in the `grantAccess` database so they are now strictly controlled by the security system.
 - **Grant Access Missing Inject**: Fixed a bug in `GrantAccessUpdateView.js` where older employee records created before the `Point-Of-Sell` and `Purchase-Order` modules existed in the schema would simply not render them on the update screen. Added manual injection logic so all modules guarantee visibility.
+
+## v3.4.9 - Sidebar Race Condition & Item Display Clone
+- **Sidebar Fail-Open Fix**: Resolved a critical race condition where users could bypass the `grantAccess` security rules by clicking a module button during the 1-2 second loading delay on initial application boot. Rewrote the rendering logic in `SidebarDash.js` and `SidebarDashE2.js` to be Fail-Closed: buttons are now strictly forced into a `disabled` state until the server definitively confirms authorization.
+- **STORE Item Display Integration**: Cloned the `Item Display` navigation button from the POS module and directly integrated it into the `STORE` module (`SideMaintenance.js`) beneath the `Supplier` menu. Bound its security logic exclusively to the `Item` Grant Access rule, seamlessly unifying its access control with the rest of the STORE module.
