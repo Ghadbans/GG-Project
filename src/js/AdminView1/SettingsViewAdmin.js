@@ -251,6 +251,13 @@ function SettingsViewAdmin() {
                       <h4> Profile Info</h4>
                       <p>{user?.data?.role}</p>
                     </div>
+                    <div style={{ marginTop: '30px' }}>
+                      <a href="https://www.globalgate.sarl/downloads/GlobalGate_Setup.exe" style={{ textDecoration: 'none' }}>
+                        <button className='btnCustomer' style={{ padding: '10px 20px', cursor: 'pointer', fontSize: '14px', fontWeight: 'bold' }}>
+                          Download Windows App (.exe)
+                        </button>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
