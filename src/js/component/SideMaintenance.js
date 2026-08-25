@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import '../css/SidebarNew.scss'
 import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
-import { AccountBox, AllInclusive, ContactEmergencyRounded, Home, InventoryOutlined, Shop2Outlined, SupervisedUserCircle } from '@mui/icons-material';
+import { AccountBox, ArtTrack, AllInclusive, ContactEmergencyRounded, Home, InventoryOutlined, Shop2Outlined, SupervisedUserCircle } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EngineeringIcon from '@mui/icons-material/Engineering';
 import RoomPreferencesIcon from '@mui/icons-material/RoomPreferences';
@@ -97,7 +97,15 @@ function SideMaintenance({ onView }) {
               <ContactEmergencyRounded />
             </ListItemIcon>
             <ListItemText primary="Supplier" />
-          </ListItemButton>
+            </ListItemButton>
+
+            <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+                <ArtTrack />
+              </ListItemIcon>
+              <ListItemText primary="Item Display" />
+            </ListItemButton>
+
           <ListItemButton disabled={user.data?.role !== 'CEO' && user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemViewAdmin" style={isActive('/ItemViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ListAltIcon />
