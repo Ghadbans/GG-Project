@@ -168,3 +168,7 @@
 ## v3.4.6 - Purchase Order Permission Guard & Search Persistence 
 - **Purchase Order Module Protection**: Found that the "Purchase Order" navigation button in the STORE sub-menu (`SideMaintenance.js`) was missing its `disabled={}` protection attribute entirely. Added the guard and properly mapped it to the `Purchase-Order` ruleset in the `grantAccess` settings.
 - **Search Bar Persistence Cleanup**: Removed aggressive `localStorage.setItem('search', ...)` hooks inside `InvoiceInformation.js` and `ItemViewLayout.js`. Previously, any search entered in these modules was saved globally to the browser, causing the input to persist and bleed over even when navigating between different views. React component state now handles the search query, cleanly resetting it to empty whenever a module unmounts.
+
+## v3.4.7 - Point-Of-Sell Permission Guard
+- **POS Module Protection**: Discovered that the "POS" navigation button in `SidebarDash` and all sub-modules inside `SideShop.js` (Main, Item Display, Invoice, Report) completely lacked `disabled={}` protection attributes. Connected them to the `Point-Of-Sell` rule in the `grantAccess` database so they are now strictly controlled by the security system.
+- **Grant Access Missing Inject**: Fixed a bug in `GrantAccessUpdateView.js` where older employee records created before the `Point-Of-Sell` and `Purchase-Order` modules existed in the schema would simply not render them on the update screen. Added manual injection logic so all modules guarantee visibility.
