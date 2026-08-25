@@ -639,10 +639,21 @@ Route.route("/remove-planing").delete(async (req, res) => {
 
 
 Route.route("/payment", cors(corsOptionsDelegate)).get(
-  async (req, res, next) => {
-    await paymentSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
+    async (req, res, next) => {
+      const filter = {};
+      if (req.query.branchId && req.query.branchId !== 'ALL') filter.branchId = req.query.branchId;
+      if (req.query.customerId) {
+        try {
+          const mongoose = require('mongoose');
+          const objectId = new mongoose.Types.ObjectId(req.query.customerId);
+          filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
+        } catch(e) {
+          filter['customerName._id'] = req.query.customerId;
+        }
+      }
+      await paymentSchema
+        .find(filter)
+        .then((result) => {
         res.json({
           data: result,
           message: "Data successfully fetched!",

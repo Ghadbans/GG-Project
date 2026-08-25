@@ -96,3 +96,62 @@
 
 
 
+
+## v3.3.101 - Customer Module Fixes
+- **Customer Search Bar**: Removed a custom `no-data.png` overlay in `CustomerViewAdmin.js` that was unmounting the DataGrid when a search returned 0 results, allowing the native DataGrid 'No rows' state to correctly display without hiding the search bar.
+- **Customer Payments & Statement Filtering**: Fixed the backend `GET /payment` API in `Routes.js` which was completely ignoring the `customerId` query parameter. It now correctly parses `req.query.customerId` and filters by `customerName._id`, instantly fixing both the Payment and Statement tabs which were previously mixing all customer payments together.
+- **Statement Layout Tweaks**: Fixed a typo concatenating an undefined `row.re` which displayed as `undefinedINV`. Fixed the floating `Statement of Accounts` header box which had an arbitrary `left: 83px` offset, causing alignment issues.
+
+## v3.3.102 - Customer Module Client-Side Filtering & Layout
+- **Customer View Payments & Statement Filtering**: Realized that the backend API fix from 3.3.101 wasn't taking effect because the Electron app is a frontend-only client and the backend is deployed separately to Railway. To immediately fix the mixed payments issue without requiring a backend deployment, I implemented client-side filtering directly in the frontend inside `CustomerInformationView.js`. The table will now correctly filter `allPayments` down to the specific `customerId` on the fly.
+- **Statement of Accounts Layout**: Changed the `Statement of Accounts` mini-table on the top right to have a fixed width of `450px` instead of a relative `40%`/`50%` which was causing it to compress text (like the '$2,691,565.09' total) and look unorganized.
+
+## v3.3.103 - Payment Mode Column
+- **Payment View Mode Column**: Added the Payment MODE (e.g., CASH, BANK TRANSFER) to the main `PAYMENT RECEIVED` table in the Payment Module so the user can easily see the mode of payment without having to click inside each one.
+
+## v3.3.104 - Statement Table Borders
+- **Statement Layout Fix**: Applied `borderCollapse: collapse` to the Account Summary table so the bottom borders on rows connect seamlessly without horizontal gaps, and finalized its width to exactly match the data columns of the bottom table.
+- **Version String Fix**: Ensured the version was bumped *before* the Webpack build step, fixing the bug where the UI was falsely reporting the previous version number.
+
+## v3.3.105 - Statement Table Alignment
+- **Statement Layout Fix**: Shrank the `Statement of Accounts` mini-table from `450px` to `350px` to perfectly match the sum of the `Amount` (100px), `Payments` (100px), and `Balance` (150px) columns beneath it. Also reduced the address section width from 60% to 40% so the table can sit flush with the right edge.
+
+## v3.3.106 - Statement Table Full Alignment
+- **Statement Layout Fix**: Expanded the overall width of the Statement of Accounts table to `750px` and set explicit widths for its left (`400px`) and right (`350px`) columns. This guarantees that its left column perfectly aligns with the `Details` column below it, and its right column perfectly aligns with the sum of the `Amount`, `Payments`, and `Balance` columns below it, resolving the offset issue.
+
+## v3.3.107 - Statement Table Alignment Revert
+- **Statement Layout Fix**: Reverted the table width back to `350px` to fix the flex container overflow that caused it to center. The `350px` table now correctly floats to the far right, matching the exact width of the Amount, Payments, and Balance columns.
+
+## v3.3.108 - Statement Table Structural Refactor
+- **Statement Layout Fix**: Removed the `flex` wrapper entirely and instead embedded the `firstTable` directly into the `thead` of the `secondTable`. The `firstTable` now lives inside a `th colSpan={3}` that exactly spans the `Amount`, `Payments`, and `Balance` columns. This mathematically guarantees that its left and right edges will perfectly align with those columns regardless of screen size or dynamic column widths.
+
+## v3.3.109 - Statement Customer Address Font & Alignment
+- **Address Layout Fix**: Refactored the `CustomerInformationView` address block in the Statement tab to match the requested mockup (Screenshut 2). Changed the 'TO' font to be smaller, the customer name to be `15px` and bold, and the address to be `11px` and italicized. Also changed the `th` vertical alignment from `bottom` to `top` with a `10px` padding so the address aligns nicely with the 'Statement of Accounts' text on the right side.
+
+## v3.3.110 - Statement Customer Address Un-Bold Fix
+- **Address Layout Fix**: Explicitly applied `fontWeight: 'normal'` to the billing address span in `CustomerInformationView.js`. Because the address was structurally moved inside a `<th>` table header cell in version 3.3.108 to enforce perfect table alignment, the browser implicitly applied its default `bold` font weight to the text. Explicitly declaring `normal` weight fixes this and perfectly matches the user's requested mockup.
+
+## v3.3.112 - Statement Table Font Weight Fix
+- **Table Body Font Weight**: Explicitly applied `fontWeight: 'normal'` to the `<tbody>` containing the Account Summary rows in `firstTable`. Since the entire `firstTable` was embedded inside a `<th>` tag in v3.3.108 for layout alignment, the browser implicitly applied its default `bold` font weight to all text inside the table. Adding `normal` overrides this inheritance so only intended elements (like headers) remain bold.
+
+## v3.3.113 - Item Purchase Update Crash & Invoice Pagination
+- **Item Purchase Crash**: Fixed a bug in `ItemPurchaseUpdateForm.js` where the `handleDecision` function parameter was named `navigate`, shadowing the outer `useNavigate()` react-router-dom hook. Clicking 'Go Back' attempted to execute the string `'previous'` as a function (`navigate(-1)`), resulting in `TypeError: e is not a function`. Renamed the parameter to `decision`.
+- **Invoice Pagination Counter**: Fixed a bug in `InvoiceViewAdmin.js` where the `<DataGrid>` displayed `0-0 of 0` despite having records. The component was correctly configured for `paginationMode='server'` with `rowCount={totalItemCount}`, but `setTotalItemCount` was never called when the invoice data was fetched. Added `setTotalItemCount(res.data.totalItem)` to explicitly pipe the backend's total count to the table UI.
+
+## v3.3.114 - Customer Statement Balance Fix
+- **Customer Statement Balance**: Fixed a bug in `CustomerInformationView.js` where the Statement of Accounts `All` view ignored unallocated payments (credits). The ledger mapped `payment` to `row.amount - row.remaining` instead of `row.amount`, which artificially inflated the customer's overall Balance Due by omitting their unallocated credits. Corrected it to use the full `row.amount` so the true account balance is reflected, solving the discrepancy between 'All' and 'All Outstanding'.
+
+## v3.4.0 - Customer Statement Credit Double Counting Fix
+- **Customer Statement Balance**: Fixed a massive double-counting bug introduced in 3.3.114. When a user paid with `Cash`, the full amount was added to the statement. But when they later allocated that credit via a `Credit` or `Credit-Account` payment, it was added *again* to the statement, doubling the payment amount. Fixed this by filtering out `row.modes === 'Credit'` and `Credit-Account` from the Statement array in `CustomerInformationView.js`, while keeping `payment: row.amount` so that the true cash flow ledger correctly reflects the original cash receipt in full. The separate `Payment` tab remains unfiltered so allocations can still be tracked.
+
+## v3.4.1 - Customer Statement Revert
+- **Customer Statement Math**: Reverted the `payment: row.amount` change back to `payment: row.amount - row.remaining` and removed the `Credit` filter. This correctly un-does the double counting bug while handling the database's internal `Credit` payment allocations properly. Note that missing payment records or `ItemReturn` credit notes can still cause valid differences between 'All' and 'All Outstanding', as the 'All' Ledger relies strictly on original `row.total` and actual payment records.
+
+## v3.4.2 - ALL Statement Synchronization & Audit Tool
+- **ALL Statement Math**: Modified the `CustomerInformationView` ALL statement summary to calculate `Balance Due` by explicitly subtracting unallocated `credit` from the `InvoiceTotal - PaymentTotal`. This aligns the math exactly with the user's expected formula (`Total Invoices - Payment Records - Credits = Balance Due`).
+- **Running Balance Table**: The ALL statement table running balance will now correctly display the subtraction of any available credit at the bottom of the table so it matches the Summary Box.
+- **Data Audit**: Created a `data_audit_report.md` artifact by querying the production MongoDB to expose exact invoices where `A-Paid` is greater than $0, but the corresponding `Payment` records in the database do not match (or are missing), which explains the $3,106.50 discrepancy for GLOBAL PVA and $10 for ALU-DESIGN.
+- **Customer Statement Math Finalization**: Tested and verified that the ALL statement correctly calculates `Balance Due = Total Invoices - Payment Records - Credits`, aligning the customer ledger perfectly with the outstanding balances while appropriately isolating database integrity issues (missing payment records vs invoice paid amounts) for manual auditing.
+
+## v3.4.3 - Expense and Cash Form Input Sanitization
+- **Input Sanitization**: Fixed an issue in `DailyExpenses.js` and `DailyExpenseAdminView.js` where user-entered commas in numerical fields (like `86,000`) caused the string to parse prematurely as `86` due to `parseFloat` behavior. Added dynamic comma-stripping logic to `handleChangeAmount` and `handleChangeAmount1` to intercept typed commas and parse the full value cleanly, correcting downstream summation bugs in the `Daily Expenses` ledger.

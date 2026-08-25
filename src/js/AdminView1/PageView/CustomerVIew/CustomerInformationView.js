@@ -273,8 +273,9 @@ function CustomerInformationView() {
         setPurchase(purChaseResponse.data?.data?.reverse());
         const maintenanceResponse = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true&customerId=${id}`);
         setMaintenance(maintenanceResponse.data?.data?.reverse());
-        const resPayment = await axios.get(`${ENDPOINT_URL}/payment?customerId=${id}`)
-        setPayment(resPayment.data?.data);
+        const resPayment = await axios.get(`${ENDPOINT_URL}/payment?customerId=${id}`);
+          const allPayments = resPayment.data?.data || [];
+          setPayment(allPayments.filter(p => (p.customerName && p.customerName._id === id) || p.customerName === id));
         // Fetch POS
         const resPos = await axios.get(`${ENDPOINT_URL}/pos?summary=true&customerId=${id}`);
         if (resPos.data && resPos.data.data) {
@@ -329,13 +330,13 @@ function CustomerInformationView() {
     })
   })
   payment.forEach(row => {
-    statement.push({
-      type: 'Payment',
-      date: row.paymentDate,
-      number: row.paymentNumber,
-      numberArray: row.TotalAmount,
-      defect: row.modes,
-      payment: row.amount - row.remaining,
+      statement.push({
+        type: 'Payment',
+        date: row.paymentDate,
+        number: row.paymentNumber,
+        numberArray: row.TotalAmount,
+        defect: row.modes,
+        payment: row.amount - row.remaining,
       status: '',
       credit: row.remaining
     })
@@ -493,7 +494,7 @@ function CustomerInformationView() {
       setInvoiceTotal(InvoiceTotal1)
       const PaymentTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Payment').reduce((sum, row) => sum + parseFloat(row.payment), 0) : 0
       setPaymentTotal(PaymentTotal1)
-      const totalBalance1 = InvoiceTotal1 - PaymentTotal1
+      const totalBalance1 = InvoiceTotal1 - PaymentTotal1 - parseFloat(credit2)
       setTotalBalance(totalBalance1)
     } else if (selectOptions === 'All Outstanding') {
       setOpeningBalanceTotal(0)
@@ -754,7 +755,7 @@ function CustomerInformationView() {
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
           <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
           <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.re + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
           <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
         </td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
@@ -780,7 +781,7 @@ function CustomerInformationView() {
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
           <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
           <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.re + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
+          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
           <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
         </td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
@@ -1532,23 +1533,26 @@ function CustomerInformationView() {
                                               <div>
                                                 <p className='invoicehr'></p>
                                                 <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
-                                                  <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                    <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                      <p style={{}}>
-                                                        <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                          TO
-                                                        </span>
+                                                  <table className="secondTable" style={{ width: '100%', fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto'  }} >
+  <thead>
+    <tr>
+      <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', textAlign: 'left', paddingTop: '10px' }}>
+        <address style={{ position: 'relative', lineHeight: 1.35, width: '40%' }}>
+                                                      <p style={{ margin: 0, padding: 0 }}>
+                                                        <span style={{ fontWeight: 'bold', fontSize: '11px' }}>TO</span>
                                                         <br />
-                                                        <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                          {i.Customer.toUpperCase()}
-                                                        </span>
+                                                        <span style={{ fontWeight: 'bold', fontSize: '15px' }}>
+{i.Customer.toUpperCase()}
+</span>
                                                         <br />
-                                                        <span style={{ fontSize: '13px' }}>
-                                                          {i.billingAddress.toUpperCase()}, {i.billingCity.toUpperCase()}
-                                                        </span>
+                                                        <span style={{ fontSize: '11px', fontStyle: 'italic', fontWeight: 'normal' }}>
+{i.billingAddress.toUpperCase()}, {i.billingCity.toUpperCase()}
+</span>
                                                       </p>
                                                     </address>
-                                                    <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
+      </th>
+      <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', padding: 0, verticalAlign: 'top', paddingTop: '10px' }}>
+        <table className="firstTable" style={{ position: 'relative', fontSize: '11px', width: '100%', right: '0', marginBottom: '10px', pageBreakInside: 'auto', borderCollapse: 'collapse' }}>
                                                       <thead>
                                                         <tr>
                                                           <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Payment Summary</th>
@@ -1564,10 +1568,9 @@ function CustomerInformationView() {
                                                         </tr>
                                                       </tbody>
                                                     </table>
-                                                  </section>
-                                                  <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto' }}>
-                                                    <thead>
-                                                      <tr>
+      </th>
+    </tr>
+    <tr>
                                                         <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
                                                         <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
                                                         <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Mode</th>
@@ -1638,7 +1641,7 @@ function CustomerInformationView() {
                                             <Typography>Credit: ${i.credit !== undefined ? i.credit : 0}</Typography>
                                           </CardContent>
                                         </Card>
-                                        <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD' }} >
+                                        <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD'  }} >
                                           <thead>
                                             <tr>
                                               <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
@@ -1777,24 +1780,26 @@ function CustomerInformationView() {
                                               <div>
                                                 <p className='invoicehr'></p>
                                                 <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
-                                                  <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                    <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                      <p style={{}}>
-                                                        <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                          TO
-                                                        </span>
+                                                  <table className="secondTable" style={{ width: '100%', fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto'  }} >
+  <thead>
+    <tr>
+      <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', textAlign: 'left', paddingTop: '10px' }}>
+        <address style={{ position: 'relative', lineHeight: 1.35, width: '40%' }}>
+                                                      <p style={{ margin: 0, padding: 0 }}>
+                                                        <span style={{ fontWeight: 'bold', fontSize: '11px' }}>TO</span>
                                                         <br />
-                                                        <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                          {i.Customer.toUpperCase()}
-                                                        </span>
+                                                        <span style={{ fontWeight: 'bold', fontSize: '15px' }}>
+{i.Customer.toUpperCase()}
+</span>
                                                         <br />
-                                                        <span style={{ fontSize: '13px' }}>
-                                                          {i.billingAddress.toUpperCase()}, {i.billingCity.toUpperCase()}
-                                                        </span>
+                                                        <span style={{ fontSize: '11px', fontStyle: 'italic', fontWeight: 'normal' }}>
+{i.billingAddress.toUpperCase()}, {i.billingCity.toUpperCase()}
+</span>
                                                       </p>
                                                     </address>
-
-                                                    <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
+      </th>
+      <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', padding: 0, verticalAlign: 'top', paddingTop: '10px' }}>
+        <table className="firstTable" style={{ position: 'relative', fontSize: '11px', width: '100%', right: '0', marginBottom: '10px', pageBreakInside: 'auto', borderCollapse: 'collapse' }}>
                                                       <thead>
                                                         <tr>
                                                           <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts</th>
@@ -1826,7 +1831,7 @@ function CustomerInformationView() {
                                                           </td>
                                                         </tr>
                                                       </tbody>
-                                                      <tbody>
+                                                      <tbody style={{ fontWeight: 'normal' }}>
                                                         <tr>
                                                           <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Account Summary</td>
                                                         </tr>
@@ -1848,11 +1853,9 @@ function CustomerInformationView() {
                                                         </tr>
                                                       </tbody>
                                                     </table>
-                                                  </section>
-                                                  <section style={{}}>
-                                                    <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto' }}>
-                                                      <thead>
-                                                        <tr>
+      </th>
+    </tr>
+    <tr>
                                                           <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
                                                           <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Transaction</th>
                                                           <th style={{ width: '400px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Details</th>
@@ -1877,10 +1880,17 @@ function CustomerInformationView() {
                                                         selectOptions === 'All' && (
                                                           <tbody>
                                                             {allRow}
+                                                            {parseFloat(credit2) > 0 && (
+                                                              <tr>
+                                                                <td colSpan={3}></td>
+                                                                <td colSpan={2}>Available Credit</td>
+                                                                <td>{`-$${parseFloat(credit2).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+                                                              </tr>
+                                                            )}
                                                             <tr>
                                                               <td colSpan={3}></td>
                                                               <td colSpan={2}>Balance Due</td>
-                                                              <td>{`$${amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+                                                              <td>{`$${(amount3 - parseFloat(credit2)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
                                                             </tr>
                                                           </tbody>
                                                         )
@@ -1911,7 +1921,6 @@ function CustomerInformationView() {
                                                       }
 
                                                     </table>
-                                                  </section>
                                                 </div>
                                               </div>
                                             </td>
@@ -1937,23 +1946,26 @@ function CustomerInformationView() {
                                         <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
                                         <hr /><p className='invoicehr'></p>
                                         <article>
-                                          <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
-                                            <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                              <p style={{}}>
-                                                <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                  TO
-                                                </span>
+                                          <table className="secondTable" style={{ width: '100%', fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto'  }} >
+  <thead>
+    <tr>
+      <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', textAlign: 'left', paddingTop: '10px' }}>
+        <address style={{ position: 'relative', lineHeight: 1.35, width: '40%' }}>
+                                              <p style={{ margin: 0, padding: 0 }}>
+                                                <span style={{ fontWeight: 'bold', fontSize: '11px' }}>TO</span>
                                                 <br />
-                                                <span style={{ fontWeight: 'bold', fontSize: '13px' }}>
-                                                  {i.Customer.toUpperCase()}
-                                                </span>
+                                                <span style={{ fontWeight: 'bold', fontSize: '15px' }}>
+{i.Customer.toUpperCase()}
+</span>
                                                 <br />
-                                                <span style={{ fontSize: '13px' }}>
-                                                  {i.billingAddress.toUpperCase()}, {i.billingCity.toUpperCase()}
-                                                </span>
+                                                <span style={{ fontSize: '11px', fontStyle: 'italic', fontWeight: 'normal' }}>
+{i.billingAddress.toUpperCase()}, {i.billingCity.toUpperCase()}
+</span>
                                               </p>
                                             </address>
-                                            <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
+      </th>
+      <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', padding: 0, verticalAlign: 'top', paddingTop: '10px' }}>
+        <table className="firstTable" style={{ position: 'relative', fontSize: '11px', width: '100%', right: '0', marginBottom: '10px', pageBreakInside: 'auto', borderCollapse: 'collapse' }}>
                                               <thead>
                                                 <tr>
                                                   <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts</th>
@@ -1985,7 +1997,7 @@ function CustomerInformationView() {
                                                   </td>
                                                 </tr>
                                               </tbody>
-                                              <tbody>
+                                              <tbody style={{ fontWeight: 'normal' }}>
                                                 <tr>
                                                   <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Account Summary</td>
                                                 </tr>
@@ -2007,10 +2019,9 @@ function CustomerInformationView() {
                                                 </tr>
                                               </tbody>
                                             </table>
-                                          </section>
-                                          <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD', maxHeight: '400px', overflow: 'auto', pageBreakInside: 'auto' }}>
-                                            <thead>
-                                              <tr>
+      </th>
+    </tr>
+    <tr>
                                                 <th style={{ width: '100px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
                                                 <th style={{ width: '150px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Transaction</th>
                                                 <th style={{ width: '400px', borderBottom: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Details</th>
@@ -2035,10 +2046,17 @@ function CustomerInformationView() {
                                               selectOptions === 'All' && (
                                                 <tbody>
                                                   {allRow}
+                                                  {parseFloat(credit2) > 0 && (
+                                                    <tr>
+                                                      <td colSpan={3}></td>
+                                                      <td colSpan={2}>Available Credit</td>
+                                                      <td>{`-$${parseFloat(credit2).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+                                                    </tr>
+                                                  )}
                                                   <tr>
                                                     <td colSpan={3}></td>
                                                     <td colSpan={2}>Balance Due</td>
-                                                    <td>{`$${amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+                                                    <td>{`$${(amount3 - parseFloat(credit2)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
                                                   </tr>
                                                 </tbody>
                                               )

@@ -717,6 +717,7 @@ const toggleDrawer = () => {
                                     {field: 'customer', headerName: 'Customer Name', width:sideBar?360:460, valueGetter:(params)=> params.row.customerName.customerName !== undefined?params.row.customerName.customerName.toUpperCase():null},
                                     {field: 'description', headerName: 'Description', width:sideBar?200:250},
                                     {field: 'dateField', headerName: 'Date', width:140},
+                                      {field: 'modes', headerName: 'Mode', width:120, renderCell: (params)=> params.row.modes ? params.row.modes.toUpperCase() : ''},
                                     {field: 'amount', headerName: 'A-Paid', width:130,renderCell: (params)=> `$${params.row.amount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}` },
                                     {field: 'view', headerName: 'View', width:50, renderCell:(params)=> (
                                       <ViewTooltip title="View">

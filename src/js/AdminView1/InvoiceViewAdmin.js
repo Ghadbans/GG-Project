@@ -213,6 +213,7 @@ function InvoiceViewAdmin() {
       }));
       const invoices = formatDate;
       SetTotalPage(res.data.totalPages); // Ensure totalPage is correctly calculated
+        setTotalItemCount(res.data.totalItem);
       setInvoice(invoices);
       setLoadingData(false);
 
