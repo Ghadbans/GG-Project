@@ -95,20 +95,12 @@ function InvoiceInformation({ onId }) {
   const handleChange2 = (e, newValue) => {
     setValue2(newValue)
   }
-  const [search, setSearch] = useState(() => localStorage.getItem('search') || '');
+  const [search, setSearch] = useState('');
 
   const handleSearch = (e) => {
     const value = e.target.value;
     setSearch(value);
-    localStorage.setItem('search', value);
   };
-
-  useEffect(() => {
-    const storedSearch = localStorage.getItem('search');
-    if (storedSearch) {
-      setSearch(storedSearch);
-    }
-  }, []);
 
   const newArray = search !== '' ? invoice.filter((row) =>
     row.invoiceName.toLowerCase().includes(search.toLowerCase()) ||

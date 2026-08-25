@@ -83,7 +83,7 @@ function ItemViewLayout() {
     const user = useSelector(selectCurrentUser);
     const [sideBar, setSideBar] = useState(true);
     const [item, setItems] = useState([]);
-    const [search, setSearch] = useState(localStorage.getItem('ItemSidebarSearch') || '');
+    const [search, setSearch] = useState('');
     const [debouncedSearch, setDebouncedSearch] = useState(search);
 
     useEffect(() => {
@@ -102,13 +102,15 @@ function ItemViewLayout() {
         const handler = setTimeout(() => {
             setDebouncedSearch(search);
         }, 300);
-        return () => clearTimeout(handler);
+
+        return () => {
+            clearTimeout(handler);
+        };
     }, [search]);
 
     const handleSearch = (e) => {
         const value = e.target.value;
         setSearch(value);
-        localStorage.setItem('ItemSidebarSearch', value);
     };
 
     const toggleDrawer = () => {
