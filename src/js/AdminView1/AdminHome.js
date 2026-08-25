@@ -2422,7 +2422,7 @@ function AdminHome() {
                             <h2>Welcome {user.data.userName}</h2>
                             <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
                               <section style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                <h2> Today's Rate </h2>
+                                <h2> Today's Rate: {systemRate} </h2>
                                 <CurrencyExchangeIcon />
                               </section>
                             </div>

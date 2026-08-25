@@ -103,6 +103,8 @@ function SidebarDash({ onView2, onView3, onView4 }) {
       } catch (error) {
         console.error('Error fetching data:', error);
         toast.error('Connection error. Please check your network.');
+      } finally {
+        setLoadingAccess(false);
       }
     }
     fetchNumber()

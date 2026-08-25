@@ -76,10 +76,11 @@ function SidebarDashE2({ onView }) {
           const userAccess = res.data?.data?.filter((row) => row.userID === user.data.id);
           if (userAccess.length > 0) {
             userAccess.map((row) => setGrantAccess(row.modules));
-            setLoadingAccess(false);
           }
         } catch (error) {
           console.error('Error fetching data:', error);
+        } finally {
+          setLoadingAccess(false);
         }
       }
       fetchNumber()
