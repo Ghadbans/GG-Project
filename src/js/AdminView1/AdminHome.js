@@ -316,7 +316,19 @@ function AdminHome() {
   const [customer1, setCustomer1] = useState([]);
   const [itemsValue, setItemValue] = useState([]);
   const [purchaseOrder, setPurchaseOrder] = useState([]);
-  const [systemRate, setSystemRate] = useState(1);
+  const [systemRate, setSystemRate] = useState(() => {
+    try {
+      const local = localStorage.getItem('Rate');
+      if (local) {
+        const rateData = JSON.parse(local);
+        const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+        const branchRate = rateData.find(r => r.branchId === selectedBranch) || rateData.find(r => r.branchId === 'HQ') || rateData[0];
+        const fetchedRate = branchRate?.rate || rateData[0]?.rate;
+        if (fetchedRate != null && fetchedRate !== 0) return parseFloat(fetchedRate);
+      }
+    } catch (e) {}
+    return '...'; // Show loading dots instead of 1 so it doesn't flash falsely
+  });
   const [date, setDate] = useState(() => {
     const date1 = new Date()
     return date1
@@ -422,8 +434,8 @@ function AdminHome() {
             id: row._id,
             factureNumber: 'S-' + (row.factureNumber || "").toString().padStart(6, '0'),
             dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
-            infoSell: Math.round(((row.TotalAmountPaid - (row.tax || 0)) / (row.rate || systemRate || 1)) * 100) / 100,
-            infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / (row.rate || systemRate || 1)
+            infoSell: Math.round(((row.TotalAmountPaid - (row.tax || 0)) / (row.rate || (!isNaN(systemRate) ? systemRate : 1))) * 100) / 100,
+            infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / (row.rate || (!isNaN(systemRate) ? systemRate : 1))
           })).reverse());
         });
 
@@ -716,7 +728,7 @@ function AdminHome() {
         if (!acc[month]) {
           acc[month] = { month, total: 0 }
         }
-        const rateToUse = parseFloat(p.rate || systemRate || 1);
+        const rateToUse = parseFloat(p.rate || (!isNaN(systemRate) ? systemRate : 1));
         const pAmount = parseFloat(p.totalUSD || (parseFloat(p.amount || 0) + (parseFloat(p.amountFC || 0) / rateToUse)) || 0);
         acc[month].total += pAmount;
       });
@@ -801,7 +813,7 @@ function AdminHome() {
     if (!acc[month]) {
       acc[month] = { month, total: 0 }
     }
-    acc[month].total += parseFloat((item.totalInvoice || item.TotalAmountPaid || 0) / (item.rate || systemRate || 1))
+    acc[month].total += parseFloat((item.totalInvoice || item.TotalAmountPaid || 0) / (item.rate || (!isNaN(systemRate) ? systemRate : 1)))
     return acc
   }, {}) : {}
 
@@ -839,7 +851,7 @@ function AdminHome() {
     if (!acc[month]) {
       acc[month] = { month, total: 0 }
     }
-    acc[month].total += parseFloat(item.TotalAmountPaid / (item.rate || systemRate || 1))
+    acc[month].total += parseFloat(item.TotalAmountPaid / (item.rate || (!isNaN(systemRate) ? systemRate : 1)))
     return acc
   }, {}) : {}
 
