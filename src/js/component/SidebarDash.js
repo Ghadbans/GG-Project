@@ -122,6 +122,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
   const ReportsInfo = grantAccess.filter((row) => row.moduleName === "Reports" && row.access.readM === true);
   const PRollInfo = grantAccess.filter((row) => row.moduleName === "Pay-Roll" && row.access.readM === true);
   const BlockFactoryInfo = grantAccess.filter((row) => row.moduleName === "Block-Factory" && row.access.readM === true);
+  const POSInfo = grantAccess.filter((row) => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
   return (
     <>
       {show1 === 1 ?
