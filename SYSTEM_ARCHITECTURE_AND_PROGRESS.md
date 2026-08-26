@@ -212,3 +212,6 @@
 
 ## v3.4.19 - Quotation Date Update Fix
 - **Quotation/Estimate View**: Fixed a bug in `EstimateInvoiceFormUpdate.js` where the updated `estimateDate` was missing from the PUT payload, causing date changes to be ignored by the backend during saves. Added `estimateDate` to the data object submitted to `/update-estimation/:id`.
+
+## v3.4.20 - Item Return Crash Fix
+- **Item Return View**: Fixed a critical crash (`ReferenceError: isLocked is not defined`) in `ItemReturnUpdateForm.js`. This occurred because a document lock check (`if (isLocked)`) was blindly copied into a create form without importing or initializing the `useDocumentLock` hook. The invalid block was removed.
