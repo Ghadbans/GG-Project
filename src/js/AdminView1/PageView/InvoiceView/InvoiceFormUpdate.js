@@ -1000,7 +1000,7 @@ function InvoiceFormUpdate() {
                           name='invoiceDueDate'
                           label='Due Date'
                           value={dayjs(invoiceDueDate)}
-                          onChange={(date) => invoiceDueDate(date)}
+                          onChange={(date) => setInvoiceDueDate(date)}
                           sx={{ width: '100%', backgroundColor: 'white' }}
                           format='DD/MM/YYYY'
                         />
