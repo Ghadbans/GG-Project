@@ -105,11 +105,13 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
 
 Route.route('/technician-maintenance-Information').get(async (req, res) => {
   try {
-    const { page = 1, limit = 100, search = '', technician } = req.query;
+    const { page = 1, limit = 100, search = '', technician, isOffice } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
-    // Filter strictly by the technician's name
-    const query = { technicianAssign: technician, status: { $nin: ['Close', 'Converted', 'Cancel'] } };
+    const query = { status: { $nin: ['Close', 'Converted', 'Cancel'] } };
+    if (isOffice !== 'true' && technician) {
+      query.technicianAssign = technician;
+    }
     
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

@@ -691,7 +691,7 @@ function MaintenanceOrderUpdate() {
     }, 500)
   }
   const handleClose = () => {
-    navigate(-1);
+    navigate('/MaintenanceOrderAdmin');
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -699,28 +699,14 @@ function MaintenanceOrderUpdate() {
   const handleDecision = (decision) => {
     //Navigate Based on th Decision
     if (decision === 'previous') {
-      navigate(-1);
+      navigate('/MaintenanceOrderAdmin');
     } else if (decision === 'stay') {
       handleClose();
     }
   }
   {/** Loading End */ }
 
-  let status = ''
-  if (statusInfo === 'Close') {
-    if (adjustmentNumber > 0) {
-      status = 'Close'
-    } else {
-      status = 'Pending'
-    }
-  }
-  else {
-    if (adjustmentNumber > 0) {
-      status = 'Close'
-    } else {
-      status = statusInfo
-    }
-  }
+  
   const serviceName = `M-${String(serviceNumber).padStart(6, '0')}`;
 
   const [hideBack, setHideBack] = useState('');
@@ -755,7 +741,7 @@ function MaintenanceOrderUpdate() {
       serviceNumber,
       serviceName,
       serialNo,
-      status, action,
+      status: statusInfo || "Open", action,
       items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false
     };
@@ -802,7 +788,7 @@ function MaintenanceOrderUpdate() {
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
         <h2>{lockError || 'This document is currently being edited by another user.'}</h2>
         <p>Please wait until they are finished.</p>
-        <Button variant="contained" color="primary" onClick={() => navigate(-1)} sx={{ mt: 3 }}>Go Back</Button>
+        <Button variant="contained" color="primary" onClick={() => navigate('/MaintenanceOrderAdmin')} sx={{ mt: 3 }}>Go Back</Button>
       </div>
     );
   }
@@ -921,9 +907,7 @@ function MaintenanceOrderUpdate() {
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                           <p>{customerName.customerName}</p>
                           <BlackTooltip title="Clear" placement='top'>
-                            <IconButton onClick={handleClearCustomer} style={{ position: 'relative', float: 'right' }}>
-                              <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                            </IconButton>
+                            
                           </BlackTooltip>
                         </div>
 
@@ -1138,7 +1122,273 @@ function MaintenanceOrderUpdate() {
                       <DragDropContext onDragEnd={handleDragEnd}>
                         <table className='tableInfo10' style={{ marginLeft: '-30px' }}>
                           <thead>
-                            <tr style={{ display: "none" }}></tr>
+                            <tr>
+                              <th>#</th>
+                              <th>Item</th>
+                              
+                              <th>Quantity</th>
+                              
+                              
+                              
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <Droppable droppableId="droppable" >
+                            {(provided, snapshot) => (
+                              <tbody
+                                id="droppable"
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                              >
+                                {newArray2.map((Item, i) => (
+                                  <Draggable key={Item.idRow} draggableId={`droppable${Item.idRow}`} index={i}>
+                                    {(provided, snapshot) => {
+                                      const related = serviceItem.find((row1) => row1._id === Item.itemName._id)
+                                      return (
+                                        <tr
+                                          ref={provided.innerRef}
+                                          {...provided.draggableProps}
+                                        >
+                                          {
+                                            Item.newDescription !== undefined ? (
+                                              <>
+                                                <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
+                                                <td colSpan={5}><TextField
+                                                  name='newDescription' id='newDescription'
+                                                  value={Item.newDescription}
+                                                  onChange={(e) => handleChange(e, Item.idRow)}
+                                                  size="small"
+                                                  sx={{ width: '100%', backgroundColor: 'white', fontSize: 12 }}
+                                                /></td>
+                                                <td >
+                                                  <LightTooltip title="Delete" sx={{}}>
+                                                    <IconButton onClick={() => deleteItem(Item.idRow)} >
+                                                      <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
+                                                    </IconButton>
+                                                  </LightTooltip>
+                                                </td>
+                                              </>
+                                            ) : (
+                                              <>
+                                                <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
+                                                <td style={{ height: '100px' }}>
+                                                  {
+                                                    Item.itemName._id || Item.itemName.itemName === 'empty' ? (
+                                                      (
+                                                        <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                                                          <ItemThumbnail
+                                                            itemId={Item.itemName?._id}
+                                                            initialData={Item.data}
+                                                            initialType={Item.contentType}
+                                                          />
+                                                          <div >
+                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                            <TextField
+                                                              name='itemDescription' id='itemDescription'
+                                                              value={Item.itemDescription}
+                                                              multiline
+                                                              rows={3}
+                                                              onChange={(e) => handleChange(e, Item.idRow)}
+                                                              size="small"
+                                                              sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
+                                                            />
+                                                          </div>
+                                                          <div>
+                                                            <BlackTooltip title="Clear" placement='top'>
+                                                              <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                                                                <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                                              </IconButton>
+                                                            </BlackTooltip>
+                                                            
+
+                                                          </div>
+                                                        </div>)
+                                                    ) : (
+                                                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                                                        <Autocomplete
+                                                          disableClearable
+                                                          options={filterItemInformation}
+                                                          getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
+                                                          renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + '/' + option.itemBrand}</Box>)}
+                                                          renderInput={(params) =>
+                                                            <TextField multiline
+                                                              rows={4} {...params} required
+                                                            />}
+                                                          inputValue={inputValue}
+                                                          onInputChange={(event, newInputValue) => {
+                                                            setInputValue(newInputValue);
+                                                          }}
+                                                          filterOptions={(options, { inputValue }) => {
+                                                            return options.filter(
+                                                              (option) =>
+                                                                option.itemName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                                option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                                option.itemDescription.toLowerCase().includes(inputValue.toLowerCase())
+                                                            )
+                                                          }}
+                                                          onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
+                                                          size="small"
+                                                          PaperComponent={({ children, ...other }) => (
+
+                                                            <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
+                                                              {children}
+                                                              <div>
+                                                                <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                  ADD NEW Item
+                                                                </button>
+                                                              </div>
+                                                            </Box>
+                                                          )}
+                                                          sx={{ width: '470px', backgroundColor: 'white' }}
+                                                        />
+                                                        <BlackTooltip title="Clear" placement='top'>
+                                                          <IconButton onClick={() => handleShowAutocompleteDescription(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                                                            <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                                          </IconButton>
+                                                        </BlackTooltip>
+                                                      </div>
+                                                    )
+                                                  }
+                                                </td>
+                                                <td style={{ display: "none" }}>
+<TextField name="stock" id='stock'
+                                                    value={Item.stock}
+
+                                                    onChange={(e) => handleChange(e, Item.idRow)}
+                                                    size="small"
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                                <td>
+                                                  <TextField
+                                                    name='itemQty' id='itemQty'
+                                                    onChange={(e) => handleChange(e, Item.idRow)}
+                                                    size="small"
+
+                                                    value={Item.itemQty}
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                                <td style={{ display: "none" }}>
+<TextField name="itemRate" id='itemRate'
+                                                    value={Item.itemRate}
+
+                                                    disabled={user.data.role !== 'CEO'}
+                                                    onChange={(e) => handleChange(e, Item.idRow)}
+                                                    size="small"
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                                <td style={{ display: "none" }}>
+<TextField name="itemDiscount" id='itemDiscount'
+                                                    value={Item.itemDiscount}
+                                                    onChange={(e) => handleChange(e, Item.idRow)}
+                                                    size="small"
+
+                                                    placeholder='1 to 5 %'
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                                
+                                                <td style={{ textAlign: 'center' }} >
+                                                  <span style={{ display: 'flex' }}>
+                                                    <LightTooltip title="Delete" placement='top'>
+                                                      <IconButton onClick={() => deleteItem(Item.idRow)} >
+                                                        <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
+                                                      </IconButton>
+                                                    </LightTooltip>
+                                                    {
+                                                      related && (
+                                                        <BlackTooltip title="Completed" placement="bottom">
+                                                          <span hidden={parseFloat(Item.itemOut) === parseFloat(Item.itemQty)}>
+                                                            <IconButton onClick={() => onServiceHandle(Item.idRow)}>
+                                                              <Check style={{ color: 'green' }} />
+                                                            </IconButton>
+                                                          </span>
+                                                        </BlackTooltip>
+                                                      )
+                                                    }
+                                                  </span>
+
+                                                  <span style={{ display: 'flex' }}>
+                                                    <BlackTooltip title="New-Row" placement="bottom">
+                                                      <IconButton onClick={() => addItemRow(i)}>
+                                                        <Add style={{ color: '#202a5a' }} />
+                                                      </IconButton>
+                                                    </BlackTooltip>
+                                                    <BlackTooltip title="Blank-Row" placement="bottom">
+                                                      <IconButton onClick={() => addItemWhiteRow(i)}>
+                                                        <Add style={{ color: 'gray' }} />
+                                                      </IconButton>
+                                                    </BlackTooltip>
+                                                  </span>
+                                                </td>
+                                              </>
+                                            )
+                                          }
+                                        </tr>
+                                      )
+                                    }
+                                    }
+                                  </Draggable>
+                                ))}
+                                {provided.placeholder}
+                              </tbody>
+                            )}
+                          </Droppable>
+                          <tbody>
+                            <tr>
+                              <td></td>
+                              <td colSpan={2}>
+                                <TextField
+                                  name='adjustment' id='adjustment'
+                                  size="small"
+                                  value={adjustment}
+                                  onChange={(e) => setAdjustment(e.target.value)}
+                                  sx={{ backgroundColor: 'white' }}
+                                />
+                              </td>
+                              <td>
+                                <TextField
+                                  id='laborQty'
+                                  disabled={action === undefined || action === 'Carry-In'}
+                                  size="small"
+                                  placeholder='labor QTY'
+                                  name='laborQty'
+                                  value={laborQty !== undefined ? laborQty : 0}
+                                  onChange={(e) => setLaborQty(e.target.value)}
+                                  sx={{ width: '150px', backgroundColor: 'white' }}
+                                />
+                              </td>
+                              <td style={{ display: "none" }}>
+<TextField id="adjustmentNumber"
+                                  disabled={action === undefined || action === 'Carry-In'}
+                                  size="small"
+                                  placeholder='labor fees'
+                                  name='adjustmentNumber'
+                                  value={adjustmentNumber}
+                                  onChange={(e) => setAdjustmentNumber(e.target.value)}
+                                  sx={{ width: '150px', backgroundColor: 'white' }}
+                                />
+                              </td>
+                              <td style={{ display: "none" }}>
+<TextField name="laborDiscount" id='laborDiscount'
+                                  size="small"
+                                  value={laborDiscount}
+                                  onChange={(e) => setLaborDiscount(e.target.value)}
+                                  placeholder='Discount'
+                                  sx={{ backgroundColor: 'white' }}
+                                />
+                              </td>
+                              <td style={{ display: "none" }}></td>
+                            </tr>
+                            <tr>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td colSpan={3} style={{ display: "none" }}>Total Generale</td>
+                              <td style={{ display: "none" }}><span>$</span><span>{totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            </tr>
                           </tbody>
                         </table>
                       </DragDropContext>
@@ -1172,7 +1422,7 @@ function MaintenanceOrderUpdate() {
             </Grid>
             <br />
             <Grid item xs={6}>
-              <button type='submit' onClick={() => navigate('/MaintenanceViewAdmin')} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
+              <button type='submit' onClick={() => navigate('/MaintenanceOrderAdmin')} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
             </Grid>
             <Grid item xs={6}>
               <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{ width: '100%' }}>No</button>

@@ -184,7 +184,9 @@ function MaintenanceOrderAdmin() {
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?technician=${encodeURIComponent(user?.data?.userName || '')}&page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
+      const hasMainMaintenance = grantAccess.some(row => row.moduleName === "Maintenance" && row.access.readM);
+      const isOffice = (user?.data?.role === 'CEO' || hasMainMaintenance);
+      const res = await axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?technician=${encodeURIComponent(user?.data?.userName || '')}&isOffice=${isOffice}&page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
@@ -501,7 +503,7 @@ function MaintenanceOrderAdmin() {
         <ViewTooltip title="View">
           <span>
             <IconButton>
-              <NavLink to={`/MaintenanceViewInformation/${params.row._id}`} className='LinkName'>
+              <NavLink to={`/MaintenanceOrderViewInformation/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
             </IconButton>
@@ -515,9 +517,15 @@ function MaintenanceOrderAdmin() {
         <EditTooltip title="Edit Order">
           <span>
             <IconButton disabled={params.row.status === 'Converted' || params.row.status === 'Close'}>
-              <NavLink to={`/MaintenanceOrderUpdate/${params.row._id}`} className='LinkName'>
+              
+  { (user?.data?.userName === params.row.technicianAssign) ? (
+    <NavLink to={`/MaintenanceOrderUpdate/${params.row._id}`} className='LinkName'>
                 <EditIcon style={{ color: (params.row.status === 'Converted' || params.row.status === 'Close') ? 'lightgray' : 'gray' }} />
               </NavLink>
+  ) : (
+    <IconButton disabled><Edit style={{ color: '#d3d3d3' }} /></IconButton>
+  )}
+
             </IconButton>
           </span>
         </EditTooltip>
