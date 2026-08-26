@@ -256,10 +256,10 @@ function ItemOutViewAdmin() {
     const searchTerm = newModel.quickFilterValues?.join(' ') || '';
     setSearchTerm(searchTerm);
     setFilterModel(newModel)
-//     localStorage.setItem('QuickFilterItemOutTst', JSON.stringify(newModel))
+
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterItemOutTst'))
+    const storedQuick = 
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

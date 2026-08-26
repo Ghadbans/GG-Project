@@ -380,7 +380,7 @@ function PurchasesViewAdmin() {
   {/** search start */ }
   const [searchPurchase, setSearchPurchase] = useState("");
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterPurchase')
+    const storedValue = 
     if (storedValue) {
       setSearchPurchase(storedValue)
     }
@@ -397,7 +397,7 @@ function PurchasesViewAdmin() {
   }
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-//     localStorage.setItem('QuickFilterPurchaseTst', JSON.stringify(newModel));
+
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -412,7 +412,7 @@ function PurchasesViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterPurchaseTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

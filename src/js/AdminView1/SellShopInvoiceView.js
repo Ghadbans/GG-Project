@@ -528,7 +528,7 @@ function SellShopInvoiceView() {
   {/** search start */ }
   const [searchInvoice, setSearchInvoice] = useState("");
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterInvoice')
+    const storedValue = 
     if (storedValue) {
       setSearchInvoice(storedValue)
     }
@@ -546,10 +546,10 @@ function SellShopInvoiceView() {
   }
   const handleFilter = (newModel) => {
     setFilterModel(newModel)
-//     localStorage.setItem('QuickFilterInvoiceTst', JSON.stringify(newModel))
+
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

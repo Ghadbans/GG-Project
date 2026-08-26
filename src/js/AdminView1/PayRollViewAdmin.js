@@ -181,7 +181,7 @@ function PayRollViewAdmin() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [reason, setReason] = useState("");
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterPayRoll')
+    const storedValue = 
     if (storedValue) {
       setSearchCustomer(storedValue)
     }
@@ -437,7 +437,7 @@ function PayRollViewAdmin() {
   }
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-//     localStorage.setItem('QuickFilterPayrollTst', JSON.stringify(newModel));
+
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -452,7 +452,7 @@ function PayRollViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterPayrollTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

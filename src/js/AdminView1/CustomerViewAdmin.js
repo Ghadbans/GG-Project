@@ -191,7 +191,7 @@ function CustomerViewAdmin() {
   const [reason, setReason] = useState("");
 
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterCustomer')
+    const storedValue = 
     if (storedValue) {
       setSearchCustomer(storedValue)
     }
@@ -371,7 +371,7 @@ function CustomerViewAdmin() {
   }
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-//     localStorage.setItem('QuickFilterCustomerTst', JSON.stringify(newModel));
+
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -386,7 +386,7 @@ function CustomerViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterCustomerTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

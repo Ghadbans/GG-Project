@@ -539,7 +539,7 @@ function DailyExpenses() {
   {/** search start */ }
   const [searchDailyExpenses, setSearchDailyExpenses] = useState("");
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterDailyExpenses')
+    const storedValue = 
     if (storedValue) {
       setSearchDailyExpenses(storedValue)
     }
@@ -560,10 +560,10 @@ function DailyExpenses() {
     setSearchTerm(searchTerm);
     setPage(0);
     setFilterModel(newModel)
-//     localStorage.setItem('QuickFilterDailyExpensesTst', JSON.stringify(newModel))
+
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterDailyExpensesTst'))
+    const storedQuick = 
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

@@ -334,7 +334,7 @@ function ProjectViewAdmin() {
   };
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-//     localStorage.setItem('QuickFilterProjectTst', JSON.stringify(newModel));
+
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -349,7 +349,7 @@ function ProjectViewAdmin() {
     }
   };
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterProjectTst'));
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick);
     }

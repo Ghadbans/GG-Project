@@ -267,10 +267,10 @@ function PurchaseOrderViewAdmin() {
     setSearchTerm(searchTerm);
     setFilterModel(newModel)
 
-//     localStorage.setItem('QuickFilterPurchaseOrderTst', JSON.stringify(newModel))
+
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterPurchaseOrderTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

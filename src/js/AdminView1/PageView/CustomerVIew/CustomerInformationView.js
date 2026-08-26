@@ -275,7 +275,7 @@ function CustomerInformationView() {
         setMaintenance(maintenanceResponse.data?.data?.reverse());
         const resPayment = await axios.get(`${ENDPOINT_URL}/payment?customerId=${id}`);
           const allPayments = resPayment.data?.data || [];
-          setPayment(allPayments.filter(p => (p.customerName && p.customerName._id === id) || p.customerName === id));
+          setPayment(allPayments.filter(p => (p.customerName && String(p.customerName._id) === String(id)) || String(p.customerName) === String(id)));
         // Fetch POS
         const resPos = await axios.get(`${ENDPOINT_URL}/pos?summary=true&customerId=${id}`);
         if (resPos.data && resPos.data.data) {

@@ -179,7 +179,7 @@ function SupplierAdminView() {
   const [reason, setReason] = useState("");
 
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterCustomer')
+    const storedValue = 
     if (storedValue) {
       setSearchCustomer(storedValue)
     }
@@ -373,7 +373,7 @@ function SupplierAdminView() {
   }
     const handleFilter = (newModel) => {
     setFilterModel(newModel);
-//     localStorage.setItem('QuickFilterSupplierTst', JSON.stringify(newModel));
+
     if (newModel.quickFilterValues && newModel.quickFilterValues.length > 0) {
       setSearchTerm(newModel.quickFilterValues.join(' '));
     } else {
@@ -388,7 +388,7 @@ function SupplierAdminView() {
     }
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterSupplierTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

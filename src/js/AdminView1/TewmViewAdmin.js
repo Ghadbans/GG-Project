@@ -345,7 +345,7 @@ function TewmViewAdmin() {
   {/** search start */ }
   const [searchEmployee, setSearchEmployee] = useState("");
   useState(() => {
-    const storedValue = null; // localStorage.getItem('QuickFilterEmployee')
+    const storedValue = 
     if (storedValue) {
       setSearchEmployee(storedValue)
     }
@@ -364,10 +364,10 @@ function TewmViewAdmin() {
   const handleFilter = (newModel) => {
     setFilterModel(newModel)
 
-//     localStorage.setItem('QuickFilterEmployeeTst', JSON.stringify(newModel))
+
   }
   useEffect(() => {
-    const storedQuick = null; // JSON.parse(localStorage.getItem('QuickFilterEmployeeTst'))
+    const storedQuick = 
     if (storedQuick) {
       setFilterModel(storedQuick)
     }
