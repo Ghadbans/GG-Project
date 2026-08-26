@@ -3,7 +3,7 @@ import '../../view.css';
 import SideMaintenance from '../../../component/SideMaintenance';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import './PageView/Chartview.css'
+import '../Chartview.css'
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -23,7 +23,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
-import { cachedGet } from '../utils/apiCache';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { Close } from '@mui/icons-material';
 import { Add, MailOutline } from '@mui/icons-material';
@@ -32,10 +32,10 @@ import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authS
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Logout from '../../../component/NetworkLogoutIcon';
-import Image from '../img/no-data.png';
+import Image from '../../../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import MessageAdminView from './MessageAdminView';
-import NotificationVIewInfo from './NotificationVIewInfo';
+import MessageAdminView from '../../MessageAdminView';
+import NotificationVIewInfo from '../../NotificationVIewInfo';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 

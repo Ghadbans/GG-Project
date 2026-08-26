@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ConfirmDeleteModal from '../../../component/ConfirmDeleteModal';
 import '../../view.css'
-import './PageView/Chartview.css';
+import '../Chartview.css';
 import SidebarDash from '../../../component/SidebarDash'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -24,7 +24,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
-import { cachedGet } from '../utils/apiCache';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import dayjs from 'dayjs';
@@ -33,10 +33,10 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import Logout from '../../../component/NetworkLogoutIcon';
-import Image from '../img/no-data.png';
+import Image from '../../../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
-import MessageAdminView from './MessageAdminView';
-import NotificationVIewInfo from './NotificationVIewInfo';
+import MessageAdminView from '../../MessageAdminView';
+import NotificationVIewInfo from '../../NotificationVIewInfo';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (

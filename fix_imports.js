@@ -1,20 +1,18 @@
 const fs = require('fs');
-
 const files = [
-    'src/js/AdminView1/PageView/EstimateView/EstimateInvoiceFormUpdate.js',
-    'src/js/AdminView1/PageView/InvoiceView/InvoiceFormUpdate.js',
-    'src/js/AdminView1/PageView/ItemOutView/ItemOutViewUpdate.js',
-    'src/js/AdminView1/PageView/ItemPurchase/ItemPurchaseUpdateForm.js',
-    'src/js/AdminView1/PageView/MaintenanceView/MaintenanceUpdateView.js',
-    'src/js/AdminView1/PageView/ProjectView/ProjectUpdateView.js',
-    'src/js/AdminView1/PageView/PurchaseOrder/PurchaseUpdateOrder.js',
-    'src/js/AdminView1/PageView/PurchasesView/PurchaseFormUpdate.js'
+  'src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderAdmin.js',
+  'src/js/AdminView1/PageView/MaintenanceOrder/TechnicianStoreCatalog.js'
 ];
 
-for (const file of files) {
-    let content = fs.readFileSync(file, 'utf8');
-    // Remove the bad import I added
-    content = content.replace("import useDocumentLock from '../../../hooks/useDocumentLock';\n", "");
-    fs.writeFileSync(file, content);
-    console.log(`Cleaned ${file}`);
-}
+files.forEach(file => {
+  let code = fs.readFileSync(file, 'utf8');
+  
+  code = code.replace(/'\.\/PageView\/Chartview\.css'/g, "'../Chartview.css'");
+  code = code.replace(/'\.\.\/utils\/apiCache'/g, "'../../../utils/apiCache'");
+  code = code.replace(/'\.\.\/img\/no-data\.png'/g, "'../../../img/no-data.png'");
+  code = code.replace(/'\.\/MessageAdminView'/g, "'../../MessageAdminView'");
+  code = code.replace(/'\.\/NotificationVIewInfo'/g, "'../../NotificationVIewInfo'");
+  
+  fs.writeFileSync(file, code);
+});
+console.log('Fixed relative imports');
