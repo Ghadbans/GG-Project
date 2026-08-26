@@ -112,7 +112,7 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
     const query = { technicianAssign: technician };
     
     if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${()|[\]\]/g, '\Route.route("/maintenance-Information").get');
+      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const regex = new RegExp(escapedSearch, 'i');
       query.$or = [
         ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
@@ -138,7 +138,6 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 });
-
 
 Route.route("/maintenance-Information").get(async (req, res) => {
   try {
