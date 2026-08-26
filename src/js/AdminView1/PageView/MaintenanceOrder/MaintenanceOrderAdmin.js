@@ -501,7 +501,7 @@ function MaintenanceOrderAdmin() {
         <ViewTooltip title="View">
           <span>
             <IconButton>
-              <NavLink to={`/MaintenanceOrderUpdate/${params.row._id}`} className='LinkName'>
+              <NavLink to={`/MaintenanceViewInformation/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
             </IconButton>
@@ -631,7 +631,22 @@ function MaintenanceOrderAdmin() {
                     : ''}
                   
 
-                  <Box sx={{ height: 600, width: '100%' }}>
+                  
+  <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
+    <ViewTooltip>
+      <span>
+        <IconButton disabled={MaintenanceInfoC.length === 0}>
+          <NavLink to={'/MaintenanceFormView'} className='LinkName'>
+            <span className='btnCustomerAdding'>
+              <Add />
+            </span>
+          </NavLink>
+        </IconButton>
+      </span>
+    </ViewTooltip>
+  </section>
+  <Box sx={{ height: 600, width: '100%' }}>
+
                     <DataGrid
                           paginationMode="server"
                           filterMode="server"

@@ -807,7 +807,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
             >
               Maintenance Information
             </Typography>
-            <IconButton onClick={() => navigate('/MaintenanceViewAdmin')}>
+            <IconButton onClick={() => navigate(-1)}>
               <ArrowBack style={{ color: 'white' }} />
             </IconButton>
             <NotificationVIewInfo />

@@ -37,6 +37,7 @@ const ReportsViewAdmin = React.lazy(() => import('./AdminView1/ReportsViewAdmin'
 const PaymentView = React.lazy(() => import('./AdminView1/PaymentView'))
 const PointOfSale = React.lazy(() => import('./AdminView1/PointOfSale'))
 const StoreItemDisplay = React.lazy(() => import('./AdminView1/StoreItemDisplay'))
+const TechnicianStoreDisplay = React.lazy(() => import('./AdminView1/TechnicianStoreDisplay'))
 const RecuringInvoiceViewAdmin = React.lazy(() => import('./AdminView1/RecuringInvoiceViewAdmin'))
 const RetainerInvoiceView = React.lazy(() => import('./AdminView1/RetainerInvoiceView'))
 const EstimateViewAdmin = React.lazy(() => import('./AdminView1/EstimateViewAdmin'))
@@ -384,6 +385,7 @@ function App() {
             <Route path='ReportsViewAdmin' element={<ReportsViewAdmin />}></Route>
             <Route path='PointOfSale' element={<PointOfSale />}></Route>
             <Route path='StoreItemDisplay' element={<StoreItemDisplay />}></Route>
+            <Route path='TechnicianStoreDisplay' element={<TechnicianStoreDisplay />}></Route>
             <Route path='ReportPos' element={<ReportPos />}></Route>
             <Route path='SellShopInvoiceView' element={<SellShopInvoiceView />}></Route>
             <Route path='ShopPosForm' element={<ShopPosForm />}></Route>
