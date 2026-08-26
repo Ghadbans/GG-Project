@@ -740,6 +740,7 @@ The GLOBAL GATE Team`;
     const data = {
       customerName,
       estimateNumber: quotationNumber,
+      estimateDate,
       estimateSubject, estimateDefect,
       items: itemsWithoutData, subTotal, total, totalW, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, noteInfo, balanceDue, tax, CheckTvA, updateS: false,
       includeLetter, attachedLetter
