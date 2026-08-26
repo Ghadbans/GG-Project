@@ -204,3 +204,8 @@
 
 ## v3.4.17 - Dashboard Rate UX (Flash Prevention)
 - **State Initialization**: Updated `AdminHome.js` to initialize the `systemRate` state synchronously from `localStorage` on component mount. This prevents a UI flash where the rate momentarily defaulted to `1` before the network request could finish resolving to the true rate (e.g., `2250`). The dashboard now renders seamlessly with the correct rate on initial load for both Web and Desktop platforms.
+
+## v3.4.18 - Search Persistence & Filtering Accuracy
+- **Global Search Bar Persistence**: Restored `localStorage` state initialization (`QuickFilter`) across 19 Admin View table components (including Customer, Supplier, Purchases, Payment, Payroll, etc.) ensuring search terms properly persist across navigation.
+- **Customer View Filtering**: Fixed a critical bug in `CustomerInformationView.js` where the PAYMENT and STATEMENT tabs displayed all global records mixed together. Resolved a type-matching failure by explicitly casting MongoDB `ObjectId`s and URL string IDs to Strings during the frontend filter operations.
+- **Search Engine Accuracy**: Audited and verified backend search endpoints (`/customer-Information`, `/invoice-Information`, etc.) to guarantee 100% search accuracy. Ensured all refactored schema fields correctly process case-insensitive regex queries and numeric fallbacks.
