@@ -109,7 +109,7 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     // Filter strictly by the technician's name
-    const query = { technicianAssign: technician };
+    const query = { technicianAssign: technician, status: { $nin: ['Close', 'Converted', 'Cancelled'] } };
     
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");

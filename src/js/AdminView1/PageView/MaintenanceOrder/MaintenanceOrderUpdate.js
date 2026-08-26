@@ -928,9 +928,7 @@ function MaintenanceOrderUpdate() {
                         </div>
 
                       ) : (
-                        <Autocomplete
-                          disableClearable
-                          options={customer}
+                        <Autocomplete readOnly disableClearable options={customer}
                           getOptionLabel={(option) => option.Customer}
                           onChange={(e, newValue) => {
                             handleChangeCustomer(newValue);
@@ -1063,15 +1061,11 @@ function MaintenanceOrderUpdate() {
                             sx={{ width: '100%', backgroundColor: 'white' }}
                           />
                           <BlackTooltip title="Clear" placement='right'>
-                            <IconButton onClick={handleClearTech} style={{ position: 'relative', float: 'right' }}>
-                              <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                            </IconButton>
+                            
                           </BlackTooltip>
                         </div>
                       ) : (
-                        <Autocomplete
-                          disableClearable
-                          options={filterEmployee}
+                        <Autocomplete readOnly disableClearable options={filterEmployee}
                           getOptionLabel={(option) => option.employeeName}
                           renderOption={(props, option) => (<Box {...props}>{option.employeeName}</Box>)}
                           renderInput={(params) => <TextField {...params} label="Technician" required />}
@@ -1223,11 +1217,7 @@ function MaintenanceOrderUpdate() {
                                                             </BlackTooltip>
                                                             {
                                                               Item.itemName._id && (
-                                                                <BlackTooltip title="Edit" placement='bottom'>
-                                                                  <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
-                                                                    <Edit style={{ color: '#202a5a' }} />
-                                                                  </IconButton>
-                                                                </BlackTooltip>
+                                                                
                                                               )
                                                             }
 
@@ -1280,10 +1270,8 @@ function MaintenanceOrderUpdate() {
                                                     )
                                                   }
                                                 </td>
-                                                <td>
-                                                  <TextField
-                                                    disabled
-                                                    name='stock' id='stock'
+                                                <td style={{ display: "none" }}>
+<TextField name="stock" id='stock'
                                                     value={Item.stock}
 
                                                     onChange={(e) => handleChange(e, Item.idRow)}
@@ -1301,9 +1289,8 @@ function MaintenanceOrderUpdate() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </td>
-                                                <td >
-                                                  <TextField
-                                                    name='itemRate' id='itemRate'
+                                                <td style={{ display: "none" }}>
+<TextField name="itemRate" id='itemRate'
                                                     value={Item.itemRate}
 
                                                     disabled={user.data.role !== 'CEO'}
@@ -1312,9 +1299,8 @@ function MaintenanceOrderUpdate() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </td>
-                                                <td >
-                                                  <TextField
-                                                    name='itemDiscount' id='itemDiscount'
+                                                <td style={{ display: "none" }}>
+<TextField name="itemDiscount" id='itemDiscount'
                                                     value={Item.itemDiscount}
                                                     onChange={(e) => handleChange(e, Item.idRow)}
                                                     size="small"
@@ -1394,9 +1380,8 @@ function MaintenanceOrderUpdate() {
                                   sx={{ width: '150px', backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td>
-                                <TextField
-                                  id='adjustmentNumber'
+                              <td style={{ display: "none" }}>
+<TextField id="adjustmentNumber"
                                   disabled={action === undefined || action === 'Carry-In'}
                                   size="small"
                                   placeholder='labor fees'
@@ -1406,10 +1391,8 @@ function MaintenanceOrderUpdate() {
                                   sx={{ width: '150px', backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td>
-                                <TextField
-                                  disabled={action === undefined || action === 'Carry-In'}
-                                  name='laborDiscount' id='laborDiscount'
+                              <td style={{ display: "none" }}>
+<TextField name="laborDiscount" id='laborDiscount'
                                   size="small"
                                   value={laborDiscount}
                                   onChange={(e) => setLaborDiscount(e.target.value)}
@@ -1417,9 +1400,7 @@ function MaintenanceOrderUpdate() {
                                   sx={{ backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td>
-                                <span>$</span><span>{totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-                              </td>
+                              <td style={{ display: "none" }}></td>
                             </tr>
                             <tr>
                               <td></td>
@@ -1699,15 +1680,9 @@ function MaintenanceOrderUpdate() {
                         <Typography variant="subtitle2" component="div">
                           {item.itemName}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          FC {(item.itemSellingPrice * rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        </Typography>
-                        <Typography variant="body2" color="primary" fontWeight="bold">
-                          $ {item.itemSellingPrice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                        </Typography>
-                        <Typography variant="caption" display="block" gutterBottom>
-                          
-                        </Typography>
+                        
+                        
+                        
                         <Button
                           variant="contained"
                           size="small"
