@@ -24,6 +24,7 @@ import SidebarDashE2 from './SidebarDashE2';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Close from '@mui/icons-material/Close';
 import SideMaintenance from './SideMaintenance';
+import SideMaintenanceMenu from './SideMaintenanceMenu';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
@@ -200,17 +201,11 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             </ListItemIcon>
             <ListItemText primary="Purchases Request" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceViewAdmin" onClick={handleNavClick} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(6)}>
+              <ListItemIcon sx={{ color: 'gray' }} >
                 <EngineeringIcon />
               </ListItemIcon>
               <ListItemText primary="Maintenance" />
-            </ListItemButton>
-            <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceOrderInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceOrderAdmin" onClick={handleNavClick} style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-                <EngineeringIcon />
-              </ListItemIcon>
-              <ListItemText primary="Maintenance Order" />
             </ListItemButton>
 
 
@@ -308,6 +303,23 @@ function SidebarDash({ onView2, onView3, onView4 }) {
           : null
       }
 
+          {
+        show1 === 6 ?
+          <div>
+            <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(1)}>
+              <ListItemIcon sx={{ color: 'gray' }} >
+                <Close />
+              </ListItemIcon>
+              <ListItemText primary="Close" />
+            </ListItemButton>
+            <Divider />
+            <ListSubheader component="div" inset>
+              Maintenance Menu
+            </ListSubheader>
+            <SideMaintenanceMenu onView={view} />
+          </div>
+          : null
+      }
     </>
   )
 }

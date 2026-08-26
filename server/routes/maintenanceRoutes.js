@@ -102,6 +102,44 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
   }
 );
 
+
+Route.route('/technician-maintenance-Information').get(async (req, res) => {
+  try {
+    const { page = 1, limit = 100, search = '', technician } = req.query;
+    const skip = (Number(page) - 1) * Number(limit);
+
+    // Filter strictly by the technician's name
+    const query = { technicianAssign: technician };
+    
+    if (search) {
+      const escapedSearch = search.trim().replace(/[.*+?^${()|[\]\]/g, '\Route.route("/maintenance-Information").get');
+      const regex = new RegExp(escapedSearch, 'i');
+      query.$or = [
+        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
+        { serviceName: regex },
+        { status: regex },
+        { brand: regex },
+        { model: regex },
+        { serialNo: regex },
+        { note: regex },
+        { actionTaken: regex },
+        { defectDescription: regex },
+        { 'customerName.customerName': regex },
+        { 'customerName.customerPhone': regex },
+      ].filter(condition => condition !== null);
+    }
+    
+    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
+    const totalItem = await maintenanceSchema.countDocuments(query);
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+  } catch (error) {
+    console.error('Error fetching technician-maintenance-Information:', error);
+    res.status(500).json({ message: error.message });
+  }
+});
+
+
 Route.route("/maintenance-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;

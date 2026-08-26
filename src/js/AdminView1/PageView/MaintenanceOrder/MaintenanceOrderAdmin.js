@@ -161,10 +161,10 @@ function MaintenanceOrderAdmin() {
     fetchNumber()
   }, [user])
 
-  const MaintenanceInfoC = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.createM === true);
-  const MaintenanceInfoV = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.viewM === true);
-  const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.editM === true);
-  const MaintenanceInfoD = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.deleteM === true);
+  const MaintenanceInfoC = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.createM === true);
+  const MaintenanceInfoV = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
+  const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
+  const MaintenanceInfoD = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.deleteM === true);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -184,7 +184,7 @@ function MaintenanceOrderAdmin() {
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const res = await axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?technician=${encodeURIComponent(user?.data?.userName || '')}&page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
@@ -501,7 +501,7 @@ function MaintenanceOrderAdmin() {
         <ViewTooltip title="View">
           <span>
             <IconButton disabled={MaintenanceInfoV.length === 0}>
-              <NavLink to={`/MaintenanceViewInformation/${params.row._id}`} className='LinkName'>
+              <NavLink to={`/MaintenanceOrderUpdate/${params.row._id}`} className='LinkName'>
                 <VisibilityIcon style={{ color: '#202a5a' }} />
               </NavLink>
             </IconButton>
@@ -512,14 +512,15 @@ function MaintenanceOrderAdmin() {
     },
     {
       field: 'edit', headerName: 'Edit', width: 40, renderCell: (params) => (
-        <EditTooltip title="Edit">
+        <EditTooltip title="Edit Order">
           <span>
-            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status === 'Converted' && MaintenanceInfoU.length === 0}>
-              <EditIcon style={{ color: 'gray' }} />
+            <IconButton disabled={params.row.status === 'Converted' || params.row.status === 'Close'}>
+              <NavLink to={`/MaintenanceOrderUpdate/${params.row._id}`} className='LinkName'>
+                <EditIcon style={{ color: (params.row.status === 'Converted' || params.row.status === 'Close') ? 'lightgray' : 'gray' }} />
+              </NavLink>
             </IconButton>
           </span>
         </EditTooltip>
-
       )
     },
     {
