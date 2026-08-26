@@ -1215,11 +1215,7 @@ function MaintenanceOrderUpdate() {
                                                                 <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                               </IconButton>
                                                             </BlackTooltip>
-                                                            {
-                                                              Item.itemName._id && (
-                                                                
-                                                              )
-                                                            }
+                                                            
 
                                                           </div>
                                                         </div>)
