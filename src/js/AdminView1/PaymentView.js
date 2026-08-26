@@ -368,7 +368,7 @@ function PaymentView() {
   {/** search start */}
 const [searchInvoice, setSearchInvoice] = useState("");
 useState(()=>{
-  const storedValue = 
+  const storedValue = localStorage.getItem('QuickFilterInvoicePayment');
   if (storedValue) {
     setSearchInvoice(storedValue)
   }
@@ -404,7 +404,7 @@ const [filterModel, setFilterModel] = React.useState({
   {/** Payment Received start */}
 const [searchPayment, setPaymentInfo] = useState("");
 useState(()=>{
-  const storedValue = 
+  const storedValue = localStorage.getItem('QuickFilterPaymentInfo');
   if (storedValue) {
     setPaymentInfo(storedValue)
   }
@@ -426,7 +426,7 @@ const [filterModelPayment, setFilterModelPayment] = React.useState({
 
   }
    useEffect(()=>{
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPaymentInfoTst'));
     if (storedQuick) {
       setFilterModelPayment(storedQuick)
     }
