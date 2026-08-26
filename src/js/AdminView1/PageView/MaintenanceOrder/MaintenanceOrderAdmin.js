@@ -640,19 +640,7 @@ function MaintenanceOrderAdmin() {
                   
 
                   
-  <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
-    <ViewTooltip>
-      <span>
-        <IconButton disabled={MaintenanceInfoC.length === 0}>
-          <NavLink to={'/MaintenanceFormView'} className='LinkName'>
-            <span className='btnCustomerAdding'>
-              <Add />
-            </span>
-          </NavLink>
-        </IconButton>
-      </span>
-    </ViewTooltip>
-  </section>
+  
   <Box sx={{ height: 600, width: '100%' }}>
 
                     <DataGrid
