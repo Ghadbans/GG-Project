@@ -173,6 +173,7 @@ function GrantAccessFormView() {
     { id: 23, moduleName: 'Fleet Management', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
     { id: 24, moduleName: 'Layout-Print', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
     { id: 25, moduleName: 'Supplier', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+      { id: 26, moduleName: 'Maintenance-Order', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
   ])
   const [branches, setBranches] = useState([]);
   const [costVisibility, setCostVisibility] = useState(false);

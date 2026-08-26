@@ -119,6 +119,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
   const ProjectInfo = grantAccess.filter((row) => row.moduleName === "Project" && row.access.readM === true);
   const PurchaseInfo = grantAccess.filter((row) => row.moduleName === "Purchase" && row.access.readM === true);
   const MaintenanceInfo = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.readM === true);
+    const MaintenanceOrderInfo = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
   const ReportsInfo = grantAccess.filter((row) => row.moduleName === "Reports" && row.access.readM === true);
   const PRollInfo = grantAccess.filter((row) => row.moduleName === "Pay-Roll" && row.access.readM === true);
   const BlockFactoryInfo = grantAccess.filter((row) => row.moduleName === "Block-Factory" && row.access.readM === true);
@@ -200,11 +201,17 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             <ListItemText primary="Purchases Request" />
           </ListItemButton>
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceViewAdmin" onClick={handleNavClick} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-            <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
-              <EngineeringIcon />
-            </ListItemIcon>
-            <ListItemText primary="Maintenance" />
-          </ListItemButton>
+              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+                <EngineeringIcon />
+              </ListItemIcon>
+              <ListItemText primary="Maintenance" />
+            </ListItemButton>
+            <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceOrderInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceOrderAdmin" onClick={handleNavClick} style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+                <EngineeringIcon />
+              </ListItemIcon>
+              <ListItemText primary="Maintenance Order" />
+            </ListItemButton>
 
 
 

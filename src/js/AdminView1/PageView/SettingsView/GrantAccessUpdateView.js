@@ -248,7 +248,13 @@ function GrantAccessUpdateView() {
         }
 
         // Apply sequential IDs so unnumbered older records get an ID for rendering
-        fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
+                if (!fetchedModules.find(m => m.moduleName === 'Maintenance-Order')) {
+          fetchedModules.push({
+            moduleName: 'Maintenance-Order',
+            access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false }
+          });
+        }
+fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
 
         setModules(fetchedModules);
       } catch (error) {

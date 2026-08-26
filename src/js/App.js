@@ -21,6 +21,9 @@ const ItemOutViewAdmin = React.lazy(() => import('./AdminView1/ItemOutViewAdmin'
 const ItemReturnAdminView = React.lazy(() => import('./AdminView1/ItemReturnAdminView'))
 const PurchaseOrderViewAdmin = React.lazy(() => import('./AdminView1/PurchaseOrderViewAdmin'))
 const MaintenanceViewAdmin = React.lazy(() => import('./AdminView1/MaintenanceViewAdmin'))
+const MaintenanceOrderAdmin = React.lazy(() => import('./AdminView1/PageView/MaintenanceOrder/MaintenanceOrderAdmin'))
+const MaintenanceOrderUpdate = React.lazy(() => import('./AdminView1/PageView/MaintenanceOrder/MaintenanceOrderUpdate'))
+const TechnicianStoreCatalog = React.lazy(() => import('./AdminView1/PageView/MaintenanceOrder/TechnicianStoreCatalog'))
 const FleetViewAdmin = React.lazy(() => import('./AdminView1/FleetViewAdmin'))
 const ProjectViewAdmin = React.lazy(() => import('./AdminView1/ProjectViewAdmin'))
 const EmployeeViewAdminAll = React.lazy(() => import('./AdminView1/PageView/EmployeeView/EmployeeViewAdminAll'))
@@ -307,6 +310,9 @@ function App() {
 
             {/**Maintenance */}
             <Route path='MaintenanceViewAdmin' element={<MaintenanceViewAdmin />}></Route>
+              <Route path='MaintenanceOrderAdmin' element={<MaintenanceOrderAdmin />}></Route>
+              <Route path='MaintenanceOrderUpdate/:id' element={<MaintenanceOrderUpdate />}></Route>
+              <Route path='TechnicianStoreCatalog' element={<TechnicianStoreCatalog />}></Route>
             <Route path='MaintenanceUpdateView/:id' element={<MaintenanceUpdateView />}></Route>
             <Route path='MaintenanceViewInformation/:id' element={<MaintenanceViewInformation />}></Route>
             <Route path='MaintenanceFormView' element={<MaintenanceFormView />}></Route>
