@@ -270,7 +270,7 @@ function PurchaseOrderViewAdmin() {
 
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPurchaseOrderTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

@@ -380,7 +380,7 @@ function PurchasesViewAdmin() {
   {/** search start */ }
   const [searchPurchase, setSearchPurchase] = useState("");
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterPurchase');
     if (storedValue) {
       setSearchPurchase(storedValue)
     }
@@ -412,7 +412,7 @@ function PurchasesViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPurchaseTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

@@ -181,7 +181,7 @@ function PayRollViewAdmin() {
   const [selectedRows, setSelectedRows] = useState([]);
   const [reason, setReason] = useState("");
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterPayRoll');
     if (storedValue) {
       setSearchCustomer(storedValue)
     }
@@ -452,7 +452,7 @@ function PayRollViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterPayRollTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

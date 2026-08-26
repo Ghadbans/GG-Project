@@ -390,7 +390,7 @@ const [filterModel, setFilterModel] = React.useState({
 
   }
    useEffect(()=>{
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoicePaymentTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

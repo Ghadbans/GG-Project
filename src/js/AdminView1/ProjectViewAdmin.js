@@ -349,7 +349,7 @@ function ProjectViewAdmin() {
     }
   };
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterProjectTst'));
     if (storedQuick) {
       setFilterModel(storedQuick);
     }

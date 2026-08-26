@@ -495,7 +495,7 @@ function EstimateViewAdmin() {
   {/** hide End */ }
   const [searchEstimate, setSearchEstimate] = useState("");
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterEstimate');
     if (storedValue) {
       setSearchEstimate(storedValue)
     }
@@ -528,7 +528,7 @@ function EstimateViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterEstimateTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

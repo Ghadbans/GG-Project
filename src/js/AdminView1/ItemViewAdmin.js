@@ -400,7 +400,7 @@ function ItemViewAdmin() {
   const [searchItem, setSearchItem] = useState("");
 
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterItem');
     if (storedValue) {
       setSearchItem(storedValue);
     }
@@ -418,7 +418,7 @@ function ItemViewAdmin() {
   };
 
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemTst'));
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

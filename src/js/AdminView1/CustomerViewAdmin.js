@@ -191,7 +191,7 @@ function CustomerViewAdmin() {
   const [reason, setReason] = useState("");
 
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterCustomer');
     if (storedValue) {
       setSearchCustomer(storedValue)
     }
@@ -386,7 +386,7 @@ function CustomerViewAdmin() {
     }
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterCustomerTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

@@ -528,7 +528,7 @@ function SellShopInvoiceView() {
   {/** search start */ }
   const [searchInvoice, setSearchInvoice] = useState("");
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterInvoice');
     if (storedValue) {
       setSearchInvoice(storedValue)
     }
@@ -549,7 +549,7 @@ function SellShopInvoiceView() {
 
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'));
     if (storedQuick) {
       setFilterModel(storedQuick)
     }

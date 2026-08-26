@@ -420,7 +420,7 @@ function MaintenanceViewAdmin() {
   {/** search start */ }
   const [searchMaintenance, setSearchMaintenance] = useState("");
   useState(() => {
-    const storedValue = 
+    const storedValue = localStorage.getItem('QuickFilterMaintenance');
     if (storedValue) {
       setSearchMaintenance(storedValue)
     }
@@ -444,7 +444,7 @@ function MaintenanceViewAdmin() {
 
   }
   useEffect(() => {
-    const storedQuick = 
+    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterMaintenanceTst'));
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);

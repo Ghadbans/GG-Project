@@ -146,7 +146,7 @@ useEffect(()=> {
   {/** search start */}
 const [searchInvExpenses, setSearchInvExpenses] = useState("");
 useState(()=>{
-  const storedValue = 
+  const storedValue = localStorage.getItem('QuickFilterInvExpenses');
   if (storedValue) {
     setSearchInvExpenses(storedValue)
   }
