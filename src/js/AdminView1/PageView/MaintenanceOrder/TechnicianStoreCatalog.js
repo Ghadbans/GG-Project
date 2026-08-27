@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import '../../view.css';
-import SideMaintenance from '../../../component/SideMaintenance';
+import SideMaintenanceMenu from '../../../component/SideMaintenanceMenu';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import '../Chartview.css'
@@ -306,7 +306,7 @@ function PointOfSale() {
               <MenuIcon />
             </IconButton>
             <Typography component="h1" variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-                  Store Item Display
+                  Technician Store
                 </Typography>
             
             <NotificationVIewInfo />
@@ -317,7 +317,7 @@ function PointOfSale() {
 
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -332,7 +332,7 @@ function PointOfSale() {
           </Toolbar>
           <Divider />
           <List sx={{ height: '700px' }}>
-            <SideMaintenance />
+            <SideMaintenanceMenu onView={6} />
           </List>
         </Drawer>
         <Box

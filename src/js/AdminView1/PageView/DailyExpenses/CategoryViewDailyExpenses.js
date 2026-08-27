@@ -329,7 +329,7 @@ function CategoryViewDailyExpenses() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar}>
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={sideBar}>
           <Toolbar
             sx={{
               display: 'flex',

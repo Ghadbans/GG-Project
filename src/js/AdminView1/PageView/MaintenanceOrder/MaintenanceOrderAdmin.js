@@ -135,7 +135,7 @@ function MaintenanceOrderAdmin() {
       if (storesUserId) {
         try {
           const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
-          const Name = res.data.data.filter(row => row.technicianAssign === storesUserId || row.technicianAssign === user?.data?.userName).employeeName;
+          const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
           dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
         } catch (error) {
@@ -514,18 +514,13 @@ function MaintenanceOrderAdmin() {
     },
     {
       field: 'edit', headerName: 'Edit', width: 40, renderCell: (params) => (
-        <EditTooltip title="Edit Order">
+        <EditTooltip title="Edit Status">
           <span>
-            <IconButton disabled={params.row.status === 'Converted' || params.row.status === 'Close'}>
-              
-  { (user?.data?.userName === params.row.technicianAssign) ? (
-    <NavLink to={`/MaintenanceOrderUpdate/${params.row._id}`} className='LinkName'>
-                <EditIcon style={{ color: (params.row.status === 'Converted' || params.row.status === 'Close') ? 'lightgray' : 'gray' }} />
-              </NavLink>
-  ) : (
-    <IconButton disabled><Edit style={{ color: '#d3d3d3' }} /></IconButton>
-  )}
-
+            <IconButton
+              disabled={params.row.status === 'Converted' || params.row.status === 'Close'}
+              onClick={() => handleOpenUpdate(params.row._id)}
+            >
+              <EditIcon style={{ color: (params.row.status === 'Converted' || params.row.status === 'Close') ? 'lightgray' : 'gray' }} />
             </IconButton>
           </span>
         </EditTooltip>
@@ -533,12 +528,15 @@ function MaintenanceOrderAdmin() {
     },
     {
       field: 'Delete', headerName: 'Delete', width: 40, renderCell: (params) => (
-        <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={MaintenanceInfoD.length === 0}>
-            <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
-          </IconButton>
-          </span>
-        </DeleteTooltip>
+        user.data.role === 'User' ? <span></span> : (
+          <DeleteTooltip title="Delete">
+            <span>
+              <IconButton onClick={handleOpenAll} disabled={MaintenanceInfoD.length === 0}>
+                <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
+              </IconButton>
+            </span>
+          </DeleteTooltip>
+        )
       )
     },
   ]
@@ -581,7 +579,7 @@ function MaintenanceOrderAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -649,7 +647,7 @@ function MaintenanceOrderAdmin() {
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
-                      rows={maintenance}
+                      rows={user.data.role === 'User' ? maintenance.filter(r => r.technicianAssign === user.data.userName && r.status !== 'Converted') : maintenance}
                       columns={columns}
                       slots={{ toolbar: GridToolbar }}
                       onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
@@ -756,7 +754,7 @@ function MaintenanceOrderAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Update Estimate Status
+            Update Maintenance Status
           </Typography>
           <form onSubmit={handleSubmitUpdateStatus}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
@@ -773,10 +771,10 @@ function MaintenanceOrderAdmin() {
                     defaultValue="Open"
                   >
                     <MenuItem value="Open">Open</MenuItem>
-                    <MenuItem value="Reschedule">Reschedule</MenuItem>
+                    {user.data.role !== 'User' ? <MenuItem value="Reschedule">Reschedule</MenuItem> : null}
                     <MenuItem value="Pending">Pending</MenuItem>
-                    <MenuItem value="Cancel">Cancel</MenuItem>
-                    <MenuItem disabled={action === undefined || action === 'Carry-In'} value="Close">Close</MenuItem>
+                    {user.data.role !== 'User' ? <MenuItem value="Cancel">Cancel</MenuItem> : null}
+                    <MenuItem value="Close">Close</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>

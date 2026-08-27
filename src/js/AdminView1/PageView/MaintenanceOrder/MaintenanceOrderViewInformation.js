@@ -213,13 +213,14 @@ function MaintenanceOrderViewInformation() {
     const fetchData = async () => {
       try {
         const [resM, resI, resSingle, resEstimate] = await Promise.all([
-          axios.get(`${ENDPOINT_URL}/maintenance?summary=true`),
+          // Dynamically fetch technician filtered list for sidebar
+          axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?summary=true&limit=1000&technician=${encodeURIComponent(user?.data?.userName || '')}&isOffice=${user?.data?.grantAccess?.some(r => r.moduleName === "Maintenance" && r.access.readM) || grantAccess?.some(r => r.moduleName === "Maintenance" && r.access.readM) || user?.data?.role === 'CEO'}`),
           axios.get(`${ENDPOINT_URL}/item`),
           axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`),
           axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
         ]);
 
-        const allMaintenance = resM.data.data;
+        const allMaintenance = resM.data.itemI || resM.data.data;
         setMaintenance(allMaintenance.sort((a,b) => b.serviceNumber - a.serviceNumber));
         SetItems(resI.data.data);
 
@@ -807,7 +808,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
             >
               Maintenance Information
             </Typography>
-            <IconButton onClick={() => navigate(-1)}>
+            <IconButton onClick={() => navigate('/MaintenanceOrderAdmin')}>
               <ArrowBack style={{ color: 'white' }} />
             </IconButton>
             <NotificationVIewInfo />
@@ -818,7 +819,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -1012,27 +1013,21 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                           TransitionComponent={Fade}
                                         >
                                           <MenuItem disabled={row.status === 'Converted' && MaintenanceInfoU.length === 0}>
-                                            <NavLink to={`/MaintenanceUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                            <NavLink to={`/MaintenanceOrderUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                               <EditIcon />
                                               <Typography>Edit</Typography>
                                             </NavLink>
                                           </MenuItem>
                                           <Divider />
                                           <MenuItem>
-                                            <NavLink to={`/MaintenanceFormClone/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
-                                              <FileCopy />
-                                              <Typography>Clone</Typography>
-                                            </NavLink>
+                                            
                                           </MenuItem>
                                           <Divider />
                                           <MenuItem onClick={handleOpenPrint} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                             <LocalPrintshopIcon />
                                             <span>Print</span>
                                           </MenuItem>
-                                          <MenuItem onClick={exportToExcel} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
-                                            <Explicit />
-                                            <span>Export to Excel</span>
-                                          </MenuItem>
+                                          
                                           <Divider />
                                           <MenuItem onClick={() => handleShow(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
                                           <MenuItem onClick={() => handleShow(3)}> <span style={{ color: 'gray' }}>History</span></MenuItem>
@@ -1313,16 +1308,14 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                           <table style={{ width: '100%', borderCollapse: 'collapse', height: '130px', marginBottom: '5px' }}>
                                             <thead>
                                               <tr>
-                                                <th style={{ width: '100%', textAlign: 'center', border: '1px solid black' }} colSpan={6}>Finance</th>
+                                                <th style={{ width: '100%', textAlign: 'center', border: '1px solid black' }} colSpan={4}>Items Used</th>
                                               </tr>
                                               <tr>
                                                 <th style={{ textAlign: 'left', border: '1px solid black', width: '120px' }}>Parts/s Model</th>
                                                 <th style={{ textAlign: 'left', border: '1px solid black', width: '150px' }}>Description</th>
                                                 <th style={{ textAlign: 'left', border: '1px solid black' }}>Brand</th>
                                                 <th style={{ textAlign: 'left', border: '1px solid black' }}>Qty</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black' }}>Price</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black', width: '50px' }}>Discount</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black', width: '100px' }}>Total</th>
+                                                
                                               </tr>
                                             </thead>
                                             <tbody>
@@ -1335,7 +1328,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                         Item.newDescription !== undefined ?
                                                           (
                                                             <>
-                                                              <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
+                                                              <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={4}>{Item.newDescription}</td>
                                                             </>
                                                           )
                                                           :
@@ -1345,9 +1338,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                               <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
                                                               <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
                                                               <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
-                                                              <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
-                                                              <td style={{ border: '1px solid black' }}> <span data-prefix>% </span>{Item.itemDiscount}</td>
-                                                              <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                              
                                                             </>
                                                           )
                                                       }
@@ -1356,22 +1347,12 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                 }
                                                 )
                                               }
-                                              <tr>
+                                              <tr style={{ display: 'none' }}>
                                                 <td style={{ border: '1px solid black' }} colSpan={3}>Labor Fees</td>
-                                                <td style={{ border: '1px solid black' }} >{row.laborQty !== undefined ? row.laborQty : 0}</td>
-                                                <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.adjustmentNumber}</td>
-                                                <td style={{ border: '1px solid black' }} ><span data-prefix>% </span>{row.laborDiscount !== undefined ? row.laborDiscount : 0}</td>
-                                                <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale : 0}</td>
+                                                <td style={{ border: '1px solid black' }}>{row.laborQty !== undefined ? row.laborQty : 0}</td>
                                               </tr>
-                                              {
-                                                user.data.role === 'CEO' ?
-                                                  <Row2 totalAmountPlaning={totalAmountPlaning} totalAmount2={totalAmount2} /> :
-                                                  <tr></tr>
-                                              }
-                                              <tr>
-                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={5}>Grand Total</td>
-                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{Number(row.totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                              </tr>
+                                              <tr style={{ display: 'none' }}></tr>
+                                              
                                             </tbody>
                                           </table>
                                           <br />
@@ -1448,7 +1429,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                       Item.newDescription !== undefined ?
                                                         (
                                                           <>
-                                                            <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
+                                                            <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={4}>{Item.newDescription}</td>
                                                           </>
                                                         )
                                                         :

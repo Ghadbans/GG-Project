@@ -149,7 +149,7 @@ const style2 = {
 
 function MaintenanceOrderUpdate() {
   const { id } = useParams();
-  const { isLocked, lockConfig, lockError } = useDocumentLock(id, 'maintenance');
+  const { isLocked, lockConfig, lockError, forceRelease } = useDocumentLock(id, 'maintenance');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -691,7 +691,7 @@ function MaintenanceOrderUpdate() {
     }, 500)
   }
   const handleClose = () => {
-    navigate('/MaintenanceOrderAdmin');
+    navigate(user.data.role === 'User' ? `/MaintenanceOrderViewInformation/${id}` : '/MaintenanceOrderAdmin');
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -741,24 +741,12 @@ function MaintenanceOrderUpdate() {
       serviceNumber,
       serviceName,
       serialNo,
-      status: statusInfo || "Open", action,
+      status: statusInfo || 'Open', action,
       items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false
     };
-
     try {
-      // Fetch fresh state from server
-      const currentRes = await axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`);
-      const currentMaintenance = currentRes.data.data;
-
-      // Merge local changes with server state
-      const updatedData = {
-        ...currentMaintenance,
-        ...data,
-        updateS: false
-      };
-
-      const res = await axios.put(`${ENDPOINT_URL}/technician-update-maintenance/${id}`, updatedData);
+      const res = await axios.put(`${ENDPOINT_URL}/update-maintenance/${id}`, data);
       if (res) {
         handleCreateComment();
         handleOpen();
@@ -787,6 +775,11 @@ function MaintenanceOrderUpdate() {
     return (
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
         <h2>{lockError || 'This document is currently being edited by another user.'}</h2>
+            {(user.data.role === 'Admin' || user.data.role === 'CEO') && (
+              <button onClick={forceRelease} style={{ marginTop: '20px', padding: '10px 24px', backgroundColor: '#d32f2f', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>
+                Force Open (Admin)
+              </button>
+            )}
         <p>Please wait until they are finished.</p>
         <Button variant="contained" color="primary" onClick={() => navigate('/MaintenanceOrderAdmin')} sx={{ mt: 3 }}>Go Back</Button>
       </div>
@@ -839,7 +832,7 @@ function MaintenanceOrderUpdate() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',
@@ -1125,11 +1118,10 @@ function MaintenanceOrderUpdate() {
                             <tr>
                               <th>#</th>
                               <th>Item</th>
-                              
+                              <th style={{ display: 'none' }}>Stock-A</th>
                               <th>Quantity</th>
-                              
-                              
-                              
+                              <th style={{ display: 'none' }}>Rate</th>
+                              <th style={{ display: 'none' }}>Discount</th>
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -1233,7 +1225,7 @@ function MaintenanceOrderUpdate() {
                                                             <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                                               {children}
                                                               <div>
-                                                                <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                <button onClick={(e) => handleOpenOpenAutocomplete2(e)} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                   ADD NEW Item
                                                                 </button>
                                                               </div>
@@ -1250,7 +1242,7 @@ function MaintenanceOrderUpdate() {
                                                     )
                                                   }
                                                 </td>
-                                                <td style={{ display: "none" }}>
+                                                <td style={{ display: 'none' }}>
 <TextField name="stock" id='stock'
                                                     value={Item.stock}
 
@@ -1269,7 +1261,7 @@ function MaintenanceOrderUpdate() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </td>
-                                                <td style={{ display: "none" }}>
+                                                <td style={{ display: 'none' }}>
 <TextField name="itemRate" id='itemRate'
                                                     value={Item.itemRate}
 
@@ -1279,7 +1271,7 @@ function MaintenanceOrderUpdate() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </td>
-                                                <td style={{ display: "none" }}>
+                                                <td style={{ display: 'none' }}>
 <TextField name="itemDiscount" id='itemDiscount'
                                                     value={Item.itemDiscount}
                                                     onChange={(e) => handleChange(e, Item.idRow)}
@@ -1360,7 +1352,7 @@ function MaintenanceOrderUpdate() {
                                   sx={{ width: '150px', backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td style={{ display: "none" }}>
+                              <td style={{ display: 'none' }}>
 <TextField id="adjustmentNumber"
                                   disabled={action === undefined || action === 'Carry-In'}
                                   size="small"
@@ -1371,7 +1363,7 @@ function MaintenanceOrderUpdate() {
                                   sx={{ width: '150px', backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td style={{ display: "none" }}>
+                              <td style={{ display: 'none' }}>
 <TextField name="laborDiscount" id='laborDiscount'
                                   size="small"
                                   value={laborDiscount}
@@ -1380,14 +1372,14 @@ function MaintenanceOrderUpdate() {
                                   sx={{ backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td style={{ display: "none" }}></td>
+                              <td style={{ display: 'none' }}></td>
                             </tr>
                             <tr>
                               <td></td>
                               <td></td>
                               <td></td>
-                              <td colSpan={3} style={{ display: "none" }}>Total Generale</td>
-                              <td style={{ display: "none" }}><span>$</span><span>{totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              <td colSpan={3} style={{ display: 'none' }}>Total Generale</td>
+                              <td style={{ display: 'none' }}><span>$</span><span>{totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                             </tr>
                           </tbody>
                         </table>

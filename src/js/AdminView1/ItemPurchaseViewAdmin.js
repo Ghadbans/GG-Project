@@ -820,7 +820,7 @@ function ItemPurchaseViewAdmin() {
             <IconButton color="inherit" onClick={handleLogout}><Logout style={{ color: 'white' }} /></IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', px: [1] }}><IconButton onClick={toggleDrawer}><ChevronLeftIcon /></IconButton></Toolbar>
           <Divider />
           <List sx={{ height: '700px' }}><SideMaintenance /></List>

@@ -224,8 +224,7 @@ function BranchManagement() {
     <Box sx={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
       <ToastContainer />
       <Box sx={{ flexShrink: 0 }}>
-        <Drawer
-          variant="permanent"
+        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'}
           sx={{
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',
