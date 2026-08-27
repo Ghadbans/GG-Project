@@ -14,9 +14,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { json, useNavigate } from 'react-router-dom';
 import { API_BASE_URL, ENDPOINT_URL } from '../apiConfig';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import SidebarDashE3 from '../../component/SidebarDashE3';
 import BranchSwitcher from '../component/BranchSwitcher';
-import { clearNotification } from '../../features/NotificationSlice';
 
 
 function NotificationVIewInfo() {
