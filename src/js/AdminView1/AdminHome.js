@@ -1263,7 +1263,7 @@ function AdminHome() {
                 {/* ─────────────────────────────────────────────────── */}
               </Toolbar>
             </AppBar>
-            <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={open} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+            <Drawer variant="permanent" open={open} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
               <Toolbar
                 sx={{
                   display: 'flex',

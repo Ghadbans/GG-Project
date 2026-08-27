@@ -650,7 +650,7 @@ function ItemOutViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={open1}>
+        <Drawer variant="permanent" open={open1}>
           <Toolbar
             sx={{
               display: 'flex',

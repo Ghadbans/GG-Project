@@ -485,7 +485,7 @@ function CustomerViewAdmin() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
+        <Drawer variant="permanent" open={open1} onMouseEnter={() => setOpen1(true)} onMouseLeave={() => setOpen1(false)}>
           <Toolbar
             sx={{
               display: 'flex',

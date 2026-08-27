@@ -104,7 +104,7 @@ function CompanyProfile() {
   return (
     <Box sx={{ display: 'flex', width: '100%', height: '100vh', overflow: 'hidden' }}>
       <Box sx={{ flexShrink: 0 }}>
-        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'}
+        <Drawer variant="permanent"
           sx={{
             '& .MuiDrawer-paper': {
               boxSizing: 'border-box',

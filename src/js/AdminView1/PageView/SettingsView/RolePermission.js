@@ -360,7 +360,7 @@ function RolePermission() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
+        <Drawer variant="permanent" open={sideBar} onMouseEnter={() => setSideBar(true)} onMouseLeave={() => setSideBar(false)}>
           <Toolbar
             sx={{
               display: 'flex',

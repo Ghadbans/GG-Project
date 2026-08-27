@@ -394,7 +394,7 @@ function ItemFormClone() {
             </IconButton>
           </Toolbar>
         </AppBar>
-        <Drawer variant={window.innerWidth < 768 ? 'temporary' : 'permanent'} open={sideBar}>
+        <Drawer variant="permanent" open={sideBar}>
           <Toolbar
             sx={{
               display: 'flex',
