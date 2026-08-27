@@ -44,7 +44,7 @@ function BranchSwitcher() {
           const accessRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
           const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === userId);
           if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
-            const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));
+            const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchName) || myAccess.branches.includes(b.branchId));
             finalBranches = myBranches.length > 0 ? myBranches : [{ branchId: 'HQ', branchName: 'HeadQuarters' }];
           } else {
             finalBranches = [{ branchId: 'HQ', branchName: 'HeadQuarters' }];

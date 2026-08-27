@@ -14,7 +14,9 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { json, useNavigate } from 'react-router-dom';
 import { API_BASE_URL, ENDPOINT_URL } from '../apiConfig';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
-import BranchSelector from '../component/BranchSelector';
+import SidebarDashE3 from '../../component/SidebarDashE3';
+import BranchSwitcher from '../component/BranchSwitcher';
+import { clearNotification } from '../../features/NotificationSlice';
 
 
 function NotificationVIewInfo() {
@@ -159,7 +161,7 @@ function NotificationVIewInfo() {
 
   return (
     <>
-      <BranchSelector />
+      <BranchSwitcher />
       <IconButton aria-describedby={id} variant="contained" onClick={handleClick}>
         <Badge badgeContent={badgeNumber} color="secondary">
           <NotificationsIcon sx={{ color: 'white' }} />
