@@ -1116,7 +1116,7 @@ function ItemReturnUpdateForm() {
                             (
                               <Autocomplete
                                 options={invoice || []}
-                                getOptionLabel={(option) => option.invoiceNumber ? 'INV-' + String(option.invoiceNumber).padStart(6, '0') : ''}
+                                getOptionLabel={(option) => option.invoiceNumber ? (option.customerName?.customerName || '') + '/INV-' + String(option.invoiceNumber).padStart(6, '0') : ''}
                                 renderOption={(props, option) => (<Box {...props}>{option.customerName?.customerName || 'N/A'}/INV-{String(option.invoiceNumber).padStart(6, '0')}
                                 </Box>)}
                                 renderInput={(params) => <TextField {...params} label="Invoice" />}

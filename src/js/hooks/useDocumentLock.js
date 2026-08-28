@@ -93,5 +93,25 @@ export const useDocumentLock = (documentId, collectionName) => {
         }
     };
 
-    return { isLocked, lockError, lockConfig, lockedBy };
+    const forceRelease = async () => {
+        if (lockTimeouts[documentId]) {
+            clearInterval(lockTimeouts[documentId]);
+            delete lockTimeouts[documentId];
+        }
+        try {
+            await axios.post(`${ENDPOINT_URL.replace('/endpoint', '')}/api/locks/release`, {
+                documentId,
+                collectionName,
+                lockedBy: 'force',
+                force: true
+            });
+            setIsLocked(false);
+            setLockError(null);
+            await acquireLock();
+        } catch (error) {
+            console.error('Error force releasing lock', error);
+        }
+    };
+
+    return { isLocked, lockError, lockConfig, lockedBy, forceRelease };
 };

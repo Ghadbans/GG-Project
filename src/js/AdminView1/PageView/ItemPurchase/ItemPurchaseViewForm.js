@@ -1480,7 +1480,7 @@ const handleSearch2 = (e) => {
                 reason === 'Invoice' && (
                   <Autocomplete       
                   options={invoice}
-                  getOptionLabel={(option) => 'INV-' + String(option.invoiceNumber).padStart(6, '0')}
+                  getOptionLabel={(option) => (option.customerName?.customerName || '') + '/INV-' + String(option.invoiceNumber).padStart(6, '0')}
                   renderOption={(props,option)=> (<Box {...props}>{option.customerName.customerName}/INV-{String(option.invoiceNumber).padStart(6, '0')}
                     </Box>)}
                   renderInput={(params) => <TextField {...params} label="Invoice"/>}

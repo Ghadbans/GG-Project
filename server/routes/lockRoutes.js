@@ -81,11 +81,27 @@ Route.route("/heartbeat").post(cors(corsOptionsDelegate), async (req, res) => {
 
 // Release a lock
 Route.route("/release").post(cors(corsOptionsDelegate), async (req, res) => {
-    const { documentId, collectionName, lockedBy } = req.body;
+    const { documentId, collectionName, lockedBy, force } = req.body;
 
     try {
+        if (force === true) {
+            // Force release: Admin clears any lock on this document regardless of who holds it
+            await lockSchema.findOneAndDelete({ documentId, collectionName });
+            return res.status(200).json({ msg: "Lock force released" });
+        }
         await lockSchema.findOneAndDelete({ documentId, collectionName, lockedBy });
         res.status(200).json({ msg: "Lock released" });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Force-release any lock on a document (Admin only - no auth check here, frontend controls access)
+Route.route("/force-release").post(cors(corsOptionsDelegate), async (req, res) => {
+    const { documentId, collectionName } = req.body;
+    try {
+        await lockSchema.deleteMany({ documentId, collectionName });
+        res.status(200).json({ msg: "All locks force released" });
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

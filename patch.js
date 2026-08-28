@@ -1,25 +1,35 @@
+
 const fs = require('fs');
-let file = 'src/js/AdminView1/PageView/ItemOutView/ItemOutViewForm.js';
-let content = fs.readFileSync(file, 'utf8');
 
-// The block to replace
-const regex1 = /const numericValue = parseInt\(value, 10\);\s*if \(numericValue <= \(relatedItemQty\?\.itemQuantity \|\| 0\)\) \{\s*handleChange\(Item\.idRow, 'newItemOut', value\)\s*\} else \{\s*handleChange\(Item\.idRow, 'newItemOut', 0\)\s*\}/g;
+const loginadmin = fs.readFileSync('src/js/Loginadmin.js', 'utf8');
+const target = \\t\t\t\t\tif (myAccess && myAccess.branches && myAccess.branches.length > 0) {
+\t\t\t\t\t\tconst myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));
+\t\t\t\t\t\tsetAvailableBranches(myBranches.length > 0 ? myBranches : [{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
+\t\t\t\t\t\tif (myBranches.length > 0) setSelectedBranch(myBranches[0].branchId);
+\t\t\t\t\t} else {
+\t\t\t\t\t\tsetAvailableBranches([{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
+\t\t\t\t\t\tsetSelectedBranch('HQ');
+\t\t\t\t\t}\;
+const replacement = \\t\t\t\t\tif (myAccess && myAccess.branches && myAccess.branches.length > 0) {
+\t\t\t\t\t\tconst myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchName) || myAccess.branches.includes(b.branchId));
+\t\t\t\t\t\tif (myBranches.length > 0) {
+\t\t\t\t\t\t\tsetAvailableBranches(myBranches);
+\t\t\t\t\t\t\tsetSelectedBranch(myBranches[0].branchId);
+\t\t\t\t\t\t} else {
+\t\t\t\t\t\t\tsetIsErrorLoading(true);
+\t\t\t\t\t\t\tsetErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
+\t\t\t\t\t\t\treturn;
+\t\t\t\t\t\t}
+\t\t\t\t\t} else {
+\t\t\t\t\t\tsetIsErrorLoading(true);
+\t\t\t\t\t\tsetErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
+\t\t\t\t\t\treturn;
+\t\t\t\t\t}\;
 
-const replacement1 = `const numericValue = parseInt(value, 10);
-                            const maxStock = relatedItemQty?.itemQuantity || 0;
-                            const maxNeeded = (related?.itemQty !== undefined) ? (related.itemQty - (related.itemOut || 0)) : Infinity;
-                            const maxAllowed = Math.min(maxStock, maxNeeded);
-                            if (numericValue <= maxAllowed) {
-                              handleChange(Item.idRow, 'newItemOut', value)
-                            } else {
-                              handleChange(Item.idRow, 'newItemOut', '')
-                            }`;
+fs.writeFileSync('src/js/Loginadmin.js', loginadmin.replace(target, replacement));
+console.log('Loginadmin.js done');
 
-let matches = content.match(regex1);
-if (matches) {
-    console.log("Matched " + matches.length + " times in " + file);
-    // Note: The second tableRows2 logic shouldn't have maxNeeded constraint because it's manual without 'related'. 
-    // We only want to apply this constraint when 'related' exists, BUT wait, if 'related' doesn't exist, maxNeeded is Infinity!
-    // So we can safely apply this logic to both! Wait, does 'related' exist in the scope of tableRows2?
-    // In tableRows2, 'related' is NOT defined! It will throw an error: 'related is not defined'.
-}
+const loginemployee = fs.readFileSync('src/js/Loginemployee.js', 'utf8');
+fs.writeFileSync('src/js/Loginemployee.js', loginemployee.replace(target, replacement));
+console.log('Loginemployee.js done');
+
