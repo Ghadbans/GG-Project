@@ -235,3 +235,8 @@
 - **Live Branch Revocation Eviction**: Patched a flaw in BranchSwitcher.js where users could retain their localStorage 'HQ' branch status if an administrator revoked their branches while they were actively logged in. If BranchSwitcher.js detects   branches assigned for a non-GG user, it now actively executes localStorage.clear() and forcefully kicks the user back to the login screen.
 - **Web Version Synchronization**: Executed the dedicated web bundler (\
 pm run build:web\) and pushed the \dist_web\ payload to GitHub to ensure Cloudflare Pages properly synchronizes the new 3.4.39 branch security patches. Re-enforced that web deployments require manual compilation of the web package prior to pushing.
+
+## v3.4.40 - Invoice Dropdown Search & Modal Shadowing Patches
+- **Invoice Autocomplete Patch**: Rewrote the \getOptionLabel\ handlers for Invoice dropdowns in Item Purchase, Item Out, Item Return, and Purchase Order. The search filter now correctly parses and matches the \customerName\, and gracefully displays the combined name instead of just the invoice number. 
+- **React Router Navigation Patch**: Resolved a critical variable shadowing bug (\TypeError: e is not a function\) that crashed 42 different update and creation forms when clicking 'Go Back' on the Success modal. The function argument was identically named \
+avigate\, thereby shadowing the react-router-dom hook.
