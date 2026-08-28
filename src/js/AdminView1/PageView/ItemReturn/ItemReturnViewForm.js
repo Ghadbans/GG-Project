@@ -593,11 +593,11 @@ function ItemReturnViewForm() {
   const handleCloseError = () => {
     setErrorOpenModal(false);
   }
-  const handleDecision = (navigate) => {
+  const handleDecision = (decision) => {
     //Navigate Based on th Decision
-    if (navigate === 'previous') {
+    if (decision === 'previous') {
       window.history.back();
-    } else if (navigate === 'stay') {
+    } else if (decision === 'stay') {
       handleClose();
     }
   }
