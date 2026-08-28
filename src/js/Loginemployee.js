@@ -66,12 +66,19 @@ function Loginemployee() {
 					const accessRes = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
 					const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === user.userId);
 					if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
-						const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchId));
-						setAvailableBranches(myBranches.length > 0 ? myBranches : [{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
-						if (myBranches.length > 0) setSelectedBranch(myBranches[0].branchId);
+						const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchName) || myAccess.branches.includes(b.branchId));
+						if (myBranches.length > 0) {
+							setAvailableBranches(myBranches);
+							setSelectedBranch(myBranches[0].branchId);
+						} else {
+							setIsErrorLoading(true);
+							setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
+							return;
+						}
 					} else {
-						setAvailableBranches([{ branchId: 'HQ', branchName: 'HeadQuarters' }]);
-						setSelectedBranch('HQ');
+						setIsErrorLoading(true);
+						setErrorMsg('Your account has not been assigned to any branch. Please contact your administrator.');
+						return;
 					}
 				}
 			} catch (err) {

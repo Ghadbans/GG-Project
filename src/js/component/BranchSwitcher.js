@@ -45,12 +45,19 @@ function BranchSwitcher() {
           const myAccess = accessRes.data.data.slice().reverse().find(a => a.userID === userId);
           if (myAccess && myAccess.branches && myAccess.branches.length > 0) {
             const myBranches = allBranches.filter(b => myAccess.branches.includes(b.branchName) || myAccess.branches.includes(b.branchId));
-            finalBranches = myBranches.length > 0 ? myBranches : [{ branchId: 'HQ', branchName: 'HeadQuarters' }];
+            finalBranches = myBranches.length > 0 ? myBranches : [];
           } else {
-            finalBranches = [{ branchId: 'HQ', branchName: 'HeadQuarters' }];
+            finalBranches = [];
           }
         }
         
+        // Active Eviction: if a regular user has 0 branches assigned (e.g. revoked), force logout
+        if (finalBranches.length === 0 && (!empName || empName.trim().toUpperCase() !== 'GG')) {
+            localStorage.clear();
+            window.location.href = '/';
+            return;
+        }
+
         setAvailableBranches(finalBranches);
         
         // Enforce branch validity in localStorage
