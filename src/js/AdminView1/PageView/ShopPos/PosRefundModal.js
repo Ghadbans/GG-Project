@@ -151,6 +151,19 @@ export default function PosRefundModal({ open, handleClose, posId }) {
     }));
 
     const refundFC = totalRefundFC;
+    const newSubTotal = Math.max(0, parseFloat(posData.subTotal || 0) - refundFC);
+    const newTotalInvoice = Math.max(0, parseFloat(posData.totalInvoice || 0) - refundFC);
+
+    // Check if fully refunded
+    const totalQtyPurchased = newItems.reduce((sum, i) => sum + (parseFloat(i.itemQty) || 0), 0);
+    const totalQtyRefunded = newItems.reduce((sum, i) => sum + (parseFloat(i.refundedQty) || 0), 0);
+
+    let newStatus = posData.status;
+    if (totalQtyRefunded >= totalQtyPurchased) {
+      newStatus = 'Refunded';
+    } else if (totalQtyRefunded > 0) {
+      newStatus = 'Partially-Refunded';
+    }
 
     // Keep original sale cash received intact so sales row stays positive
     const origTotalFC = parseFloat(posData.totalFC || 0) < 0 
