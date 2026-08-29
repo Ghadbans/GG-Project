@@ -217,7 +217,7 @@ The GLOBAL GATE Team`;
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-estimation/${id}`)
         setCustomerName(res.data.data.customerName);
-        setEstimateDate(res.data.data.estimateDate);
+        setEstimateDate(res.data.data.estimateDate || new Date());
         setEstimateSubject(res.data.data.estimateSubject);
         SetItems(res.data.data.items);
         setSubTotal(res.data.data.subTotal);
