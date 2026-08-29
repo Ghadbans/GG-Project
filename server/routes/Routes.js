@@ -1207,6 +1207,8 @@ Route.route("/create-pos").post(async (req, res, next) => {
       if (req.body.totalInvoice !== undefined) posDoc.totalInvoice = req.body.totalInvoice;
       if (req.body.refundedAmountFC !== undefined) posDoc.refundedAmountFC = req.body.refundedAmountFC;
       if (req.body.refundedAmountUSD !== undefined) posDoc.refundedAmountUSD = req.body.refundedAmountUSD;
+      if (req.body.refundedCashFC !== undefined) posDoc.refundedCashFC = req.body.refundedCashFC;
+      if (req.body.refundedCashUSD !== undefined) posDoc.refundedCashUSD = req.body.refundedCashUSD;
       
       await posDoc.save(); // Triggers the stock hook
 

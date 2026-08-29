@@ -79,6 +79,14 @@ const posSchema= new Schema(
         type: Number,
         default: 0
       },
+      refundedCashFC: {
+        type: Number,
+        default: 0
+      },
+      refundedCashUSD: {
+        type: Number,
+        default: 0
+      },
       branchId: { type: String, default: 'HQ' } },
     {
       collection:"pos"
