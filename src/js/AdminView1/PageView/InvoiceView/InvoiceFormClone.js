@@ -679,6 +679,7 @@ function InvoiceFormClone() {
     const handleSubmit =async (e)=>{
       e.preventDefault();
     setSaving('true');
+      const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
       const data = {customerName,invoiceNumber,invoiceDate,invoiceDueDate,invoiceSubject,invoicePurchase,invoiceDefect,
         status,items: itemsWithoutData, subTotal, noteInfo, actionTaken, total, balanceDue, totalW,
         invoiceName,note,shipping,adjustment,adjustmentNumber,totalInvoice,terms,synced: false
