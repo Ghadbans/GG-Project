@@ -19,7 +19,8 @@
 10. **Never Fetch Entire Collections for Per-Item Detail Views**: The Item Information view (and any similar detail/view page) MUST use server-side `itemId` filtering when loading transaction summaries (IN/OUT/RETURN/POS). NEVER call `/itemOut`, `/itemPurchase`, `/pos`, or `/itemReturn` without a `?itemId=xxx` query parameter from a detail page. Downloading entire collections and filtering client-side causes load times of 60+ seconds as data grows. Always use `Promise.all()` for parallel fetches instead of sequential `await`. Also: after a PUT/PATCH that updates a value (e.g., stock sync), ALWAYS update local React state immediately using `setState(prev => prev.map(...))` so the UI reflects the change without requiring a full page reload.
 
 ## Current Progress Log
-- **React DOM Thrashing & UI Freezing (Ver 3.3.93)**: Fixed jarring white flashes during module navigation by replacing hard-coded eturn null and raw <Loader /> components with layout-preserving <Skeleton /> loaders across all 26 AdminView layout wrappers. Modified SidebarDash and SidebarDashE2 to track loadingAccess state, which prevents the sidebar nav links from temporarily disabling and turning gray while permissions load. Solved Issue #4.
+- **React DOM Thrashing & UI Freezing (Ver 3.3.93)**: Fixed jarring white flashes during module navigation by replacing hard-coded 
+eturn null and raw <Loader /> components with layout-preserving <Skeleton /> loaders across all 26 AdminView layout wrappers. Modified SidebarDash and SidebarDashE2 to track loadingAccess state, which prevents the sidebar nav links from temporarily disabling and turning gray while permissions load. Solved Issue #4.
 
 - **Frontend Overfetching & API Pagination (Ver 3.3.92)**: Analyzed the Customer, Supplier, and Project Detail Views and found they were downloading hundreds of thousands of records (all estimates, all invoices, all purchases, all pos history) sequentially across the network just to filter them client-side by customerId or projectId. Refactored backend routes (invoiceRoutes.js, purchaseRoutes.js, estimationRoutes.js, maintenanceRoutes.js, etc.) to accept customerId, supplierId, and projectId directly in the MongoDB query. Modified the frontend modules to append these query parameters. Load times for these modules have dropped from 60+ seconds to milliseconds. Solved Issue #3.
 
@@ -264,6 +265,10 @@ pm run build:web\ to ensure \dist_web\ has the identical patched payloads. The Q
 
 
 ### POS Refund & Stock Update (v3.4.43)
-- **Backend:** Added \Refunded\ and \Partially-Refunded\ to \posSchema\ status enum. Implemented \/refund-pos/:id\ endpoint to dynamically deduct refunded money and update item refund quantities. Patched \stockUtils.js\ to correctly subtract \efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoices to plug a historical stock leak.
+- **Backend:** Added \Refunded\ and \Partially-Refunded\ to \posSchema\ status enum. Implemented \/refund-pos/:id\ endpoint to dynamically deduct refunded money and update item refund quantities. Patched \stockUtils.js\ to correctly subtract \
+efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoices to plug a historical stock leak.
 - **Frontend:** Integrated \PosRefundModal.js\ to precisely control item refund volumes per invoice directly from the POS table, featuring exact remaining stock caps and live refund financial totals. Styled the status chips to reflect the new states.
 
+
+
+- **Cloudflare Pages & Web Build Fix (Ver 3.4.48)**: Discovered that .gitignore had a generic uild/ pattern which silently prevented dist_web/build/ from ever being pushed to GitHub, causing Cloudflare Pages to fail deployments. Fixed .gitignore to only ignore /build/ and tracked dist_web/build/. Also resolved a React MUI Modal nesting error where <PosRefundModal> was placed inside the delete <Modal>, throwing TypeError: Cannot read properties of undefined (reading 'hasOwnProperty').
