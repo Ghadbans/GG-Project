@@ -272,3 +272,6 @@ efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoic
 
 
 - **Cloudflare Pages & Web Build Fix (Ver 3.4.48)**: Discovered that .gitignore had a generic uild/ pattern which silently prevented dist_web/build/ from ever being pushed to GitHub, causing Cloudflare Pages to fail deployments. Fixed .gitignore to only ignore /build/ and tracked dist_web/build/. Also resolved a React MUI Modal nesting error where <PosRefundModal> was placed inside the delete <Modal>, throwing TypeError: Cannot read properties of undefined (reading 'hasOwnProperty').
+
+
+- **POS Dual-Currency Cash Refund Breakdown (Ver 3.4.50)**: Enhanced PosRefundModal with separate inputs for cash returned in USD and FC, with live validation, quick helper buttons ([All in FC], [All in USD], [Proportional]), and exact deductions from pos.totalUSD and pos.totalFC. This ensures 100% financial accuracy across physical cash drawers, the POS Report, and the Daily Expenses Summary.
