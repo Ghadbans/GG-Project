@@ -12,6 +12,27 @@ import Loader from './component/Loader'
 import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/ReactToastify.css";
 import useLayoutConfig from './hooks/useLayoutConfig';
+import { Capacitor } from '@capacitor/core';
+import MobileLayout from './component/MobileLayout';
+
+function AppLayoutWrapper({ children }) {
+  const [isMobile, setIsMobile] = useState(() => {
+    return Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900);
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900));
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  if (isMobile) {
+    return <MobileLayout>{children}</MobileLayout>;
+  }
+  return <>{children}</>;
+}
 
 // --- CORE ADMIN VIEWS ---
 const CustomerViewAdmin = React.lazy(() => import('./AdminView1/CustomerViewAdmin'))
@@ -220,7 +241,9 @@ function App() {
   return (
     <>
       <Router>
-        <Suspense fallback={<Loader />}><Routes>
+        <AppLayoutWrapper>
+          <Suspense fallback={<Loader />}>
+            <Routes>
           <Route path='Loginadmin' element={<Loginadmin />}></Route>
           <Route path='Loginemployee' element={<Loginemployee />}></Route>
           <Route path='/' element={<Home />}></Route>
@@ -409,7 +432,9 @@ function App() {
             </Route>
           </Route>
 
-        </Routes></Suspense>
+            </Routes>
+          </Suspense>
+        </AppLayoutWrapper>
       </Router>
       <ToastContainer
         position="bottom-right"

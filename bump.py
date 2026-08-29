@@ -1,8 +1,15 @@
-import json
-with open('package.json', 'r') as f:
-    data = json.load(f)
-if 'directories' not in data['build']:
-    data['build']['directories'] = {}
-data['build']['directories']['output'] = 'dist2'
-with open('package.json', 'w') as f:
-    json.dump(data, f, indent=2)
+import re
+
+with open('package.json', 'r', encoding='utf-8') as f:
+    content = f.read()
+
+content = re.sub(r'"version": "3.4.42"', '"version": "3.4.43"', content)
+with open('package.json', 'w', encoding='utf-8') as f:
+    f.write(content)
+
+with open('src/js/App.js', 'r', encoding='utf-8') as f:
+    app = f.read()
+
+app = re.sub(r'3\.4\.42', '3.4.43', app)
+with open('src/js/App.js', 'w', encoding='utf-8') as f:
+    f.write(app)

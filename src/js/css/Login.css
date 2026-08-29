@@ -200,4 +200,70 @@
     line-height: 1.5;
     color: #666666;
   }
+
+@media screen and (max-width: 899px) {
+  .limiter {
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding: 16px 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .container-login100 {
+    width: 100% !important;
+    min-height: 100vh !important;
+    padding: 16px 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  .wrap-login100 {
+    width: 92% !important;
+    max-width: 420px !important;
+    height: auto !important;
+    min-height: auto !important;
+    padding: 24px 18px !important;
+    margin: auto !important;
+    border-radius: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .login100-pic {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    margin-bottom: 16px !important;
+  }
+
+  .login100-pic img {
+    height: 48px !important;
+    width: auto !important;
+    object-fit: contain !important;
+  }
+
+  .login100-form {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .login100-form-title {
+    padding-bottom: 20px !important;
+    font-size: 20px !important;
+  }
+
+  .container-login100-form-btn {
+    width: 100% !important;
+  }
+
+  .btnBack {
+    position: absolute !important;
+    top: 16px !important;
+    right: 16px !important;
+    margin-left: 0 !important;
+  }
+}
   

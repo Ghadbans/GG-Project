@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https: capacitor: ionic:; connect-src 'self' https://gg-project-production.up.railway.app wss://gg-project-production.up.railway.app https: wss: http: blob: data: capacitor: http://localhost https://localhost; img-src 'self' data: blob: https: http:; font-src 'self' data: https:;">
+    <title>GLOBAL GATE</title>
+  </head>
+  <body>
+    <div id="root">
+    </div>
+  </body>
+  <script>window.global = window;</script>
+  <script src="./build/js/app.js?v=1787988686926"></script>
+</html>

@@ -1,0 +1,29 @@
+{
+	"appId": "com.globalgate.app",
+	"appName": "Global Gate",
+	"webDir": "dist_web",
+	"bundledWebRuntime": false,
+	"server": {
+		"androidScheme": "https",
+		"cleartext": true
+	},
+	"plugins": {
+		"SplashScreen": {
+			"launchAutoHide": true,
+			"launchShowDuration": 2000,
+			"backgroundColor": "#0f172a"
+		},
+		"StatusBar": {
+			"style": "DARK",
+			"backgroundColor": "#0f172a"
+		},
+		"Keyboard": {
+			"resize": "body"
+		}
+	},
+	"packageClassList": [
+		"KeyboardPlugin",
+		"SplashScreenPlugin",
+		"StatusBarPlugin"
+	]
+}

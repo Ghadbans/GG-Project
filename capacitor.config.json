@@ -1,0 +1,21 @@
+{
+  "appId": "com.globalgate.app",
+  "appName": "Global Gate",
+  "webDir": "dist_web",
+  "bundledWebRuntime": false,
+  "server": {
+    "cleartext": true,
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "backgroundColor": "#30368a",
+      "showSpinner": false
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#30368a"
+    }
+  }
+}

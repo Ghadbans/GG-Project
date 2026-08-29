@@ -35,3 +35,28 @@
     line-height: 1.5;
     color: white;
   }
+
+@media screen and (max-width: 899px) {
+    .homepanel1 {
+        position: relative !important;
+        width: 100% !important;
+        min-height: 100vh !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        padding: 16px 8px !important;
+        box-sizing: border-box !important;
+    }
+    .homepanel1content {
+        position: relative !important;
+        width: 92% !important;
+        max-width: 420px !important;
+        height: auto !important;
+        min-height: 420px !important;
+        top: 0 !important;
+        margin: auto !important;
+        padding: 24px 16px !important;
+        box-sizing: border-box !important;
+        border-radius: 16px !important;
+    }
+}
