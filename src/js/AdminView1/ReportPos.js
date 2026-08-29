@@ -218,6 +218,8 @@ function ReportPos() {
           time: dayjs(item.time).format('HH:mm'),
           amountTotalFc: item.totalFC - item.creditFC,
           amountTotalUsd: item.totalUSD - item.creditUsd,
+          refundFC: parseFloat(item.refundedCashFC) || 0,
+          refundUSD: parseFloat(item.refundedCashUSD) || 0,
           infoSell: Math.round((((item.totalInvoice || item.TotalAmountPaid || 0) - (item.tax || 0)) / (item.rate || 1)) * 100) / 100,
           infoSellFC: item.totalInvoice || item.TotalAmountPaid || 0,
           TaxUSd: Math.round(((item.tax || 0) / (item.rate || 1)) * 100) / 100,
@@ -253,14 +255,19 @@ function ReportPos() {
     setPosFiltered(totalExpenses)
   }, [startDate, invoice])
 
-  const totalPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + parseFloat(row.amountTotalFc), 0) : 0
-  const totalPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + parseFloat(row.amountTotalUsd), 0) : 0
+  const totalGrossPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalFc) || 0), 0) : 0;
+  const totalGrossPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalUsd) || 0), 0) : 0;
+  const totalRefundPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.refundFC) || 0), 0) : 0;
+  const totalRefundPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.refundUSD) || 0), 0) : 0;
 
-  const totalCashFC = cashFiltered.length > 0 ? cashFiltered.reduce((acc, row) => { return acc + row.amount.filter((rows) => rows.note?.toLowerCase() === "pos").reduce((sum, item) => sum + parseFloat(item.amountFC), 0) }, 0) : 0
-  const totalCashUSD = cashFiltered.length > 0 ? cashFiltered.reduce((acc, row) => { return acc + row.amount.filter((rows) => rows.note?.toLowerCase() === "pos").reduce((sum, item) => sum + parseFloat(item.amountUsd), 0) }, 0) : 0
+  const totalPosFC = totalGrossPosFC - totalRefundPosFC;
+  const totalPosUSD = totalGrossPosUSD - totalRefundPosUSD;
 
-  const returnFC = Number(totalCashFC) + Number(totalPosFC)
-  const returnUSD = Number(totalCashUSD) + Number(totalPosUSD)
+  const totalCashFC = cashFiltered.length > 0 ? cashFiltered.reduce((acc, row) => { return acc + row.amount.filter((rows) => rows.note?.toLowerCase() === "pos").reduce((sum, item) => sum + parseFloat(item.amountFC), 0) }, 0) : 0;
+  const totalCashUSD = cashFiltered.length > 0 ? cashFiltered.reduce((acc, row) => { return acc + row.amount.filter((rows) => rows.note?.toLowerCase() === "pos").reduce((sum, item) => sum + parseFloat(item.amountUsd), 0) }, 0) : 0;
+
+  const returnFC = Number(totalCashFC) + Number(totalPosFC);
+  const returnUSD = Number(totalCashUSD) + Number(totalPosUSD);
 
 
   const invoiceFilteredByYear = invoice ? invoice.filter(item => dayjs(item.invoiceDate).format('YYYY') === dayjs(date).format('YYYY')) : [];
@@ -543,6 +550,11 @@ function ReportPos() {
                                         </TableCell>
                                         <TableCell style={{ border: '1px solid gray' }}>
                                           {item.customerName !== undefined ? item.customerName.customerName : ''}
+                                          {(item.status === 'Refunded' || (item.refundFC > 0 || item.refundUSD > 0)) && (
+                                            <span style={{ color: '#d32f2f', fontSize: '11px', marginLeft: '6px', fontWeight: 'bold' }}>
+                                              ({item.status === 'Refunded' ? 'Refunded' : 'Partially-Refunded'})
+                                            </span>
+                                          )}
                                         </TableCell>
                                         <TableCell style={{ border: '1px solid gray' }}>
                                           <span>FC </span>{item.amountTotalFc?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -553,15 +565,25 @@ function ReportPos() {
                                       </TableRow>
                                     )
                                   }
-                                  <TableRow>
-                                    <TableCell style={{ border: '1px solid gray' }} colSpan={3}>POS Received Total</TableCell>
-                                    <TableCell style={{ border: '1px solid gray', width: '200px', textAlign: 'left' }} ><span>FC </span><span >{isNaN(totalPosFC) ? 0 : totalPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
-                                    <TableCell style={{ border: '1px solid gray', width: '200px' }}><span>$ </span><span >{isNaN(totalPosUSD) ? 0 : totalPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                  <TableRow sx={{ backgroundColor: '#fcfcfc' }}>
+                                    <TableCell style={{ border: '1px solid gray', fontWeight: 'bold' }} colSpan={3}>POS Gross Sales Total</TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', textAlign: 'left', fontWeight: 'bold' }}><span>FC </span><span>{isNaN(totalGrossPosFC) ? '0.00' : totalGrossPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', fontWeight: 'bold' }}><span>$ </span><span>{isNaN(totalGrossPosUSD) ? '0.00' : totalGrossPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                  </TableRow>
+                                  <TableRow sx={{ backgroundColor: '#fff5f5' }}>
+                                    <TableCell style={{ border: '1px solid gray', color: '#d32f2f', fontWeight: 'bold' }} colSpan={3}>POS Refund Total (Cash Returned)</TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', textAlign: 'left', color: '#d32f2f', fontWeight: 'bold' }}><span>-FC </span><span>{isNaN(totalRefundPosFC) ? '0.00' : totalRefundPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', color: '#d32f2f', fontWeight: 'bold' }}><span>-$ </span><span>{isNaN(totalRefundPosUSD) ? '0.00' : totalRefundPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                  </TableRow>
+                                  <TableRow sx={{ backgroundColor: '#f0f7ff' }}>
+                                    <TableCell style={{ border: '1px solid gray', fontWeight: 'bold' }} colSpan={3}>POS Received Total (Net Cash in Hand)</TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', textAlign: 'left', fontWeight: 'bold', color: '#1565c0' }} ><span>FC </span><span>{isNaN(totalPosFC) ? '0.00' : totalPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', fontWeight: 'bold', color: '#1565c0' }}><span>$ </span><span>{isNaN(totalPosUSD) ? '0.00' : totalPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
                                   </TableRow>
                                   <TableRow>
                                     <TableCell style={{ border: '1px solid gray' }} colSpan={3}>POS Cash Out Total</TableCell>
-                                    <TableCell style={{ border: '1px solid gray', width: '200px', textAlign: 'left' }} ><span>FC </span><span >{isNaN(returnFC) ? 0 : returnFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
-                                    <TableCell style={{ border: '1px solid gray', width: '200px' }}><span>$ </span><span >{isNaN(returnUSD) ? 0 : returnUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px', textAlign: 'left' }} ><span>FC </span><span >{isNaN(returnFC) ? '0.00' : returnFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
+                                    <TableCell style={{ border: '1px solid gray', width: '200px' }}><span>$ </span><span >{isNaN(returnUSD) ? '0.00' : returnUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></TableCell>
                                   </TableRow>
                                 </TableBody>
                               </Table>

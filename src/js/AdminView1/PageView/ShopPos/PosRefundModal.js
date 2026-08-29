@@ -152,33 +152,23 @@ export default function PosRefundModal({ open, handleClose, posId }) {
 
     const refundFC = totalRefundFC;
 
-    // Deduct exact cash given back in USD and in FC from the POS record
-    const newTotalUSD = (parseFloat(posData.totalUSD || 0) - givenCashUSD);
-    const newTotalFC = (parseFloat(posData.totalFC || 0) - givenCashFC);
-    const newTotalPaid = Math.max(0, (newTotalUSD * rate) + newTotalFC);
-    const newSubTotal = Math.max(0, parseFloat(posData.subTotal || 0) - refundFC);
-    const newTotalInvoice = Math.max(0, parseFloat(posData.totalInvoice || 0) - refundFC);
-
-    // Check if fully refunded
-    const totalQtyPurchased = newItems.reduce((sum, i) => sum + (parseFloat(i.itemQty) || 0), 0);
-    const totalQtyRefunded = newItems.reduce((sum, i) => sum + (parseFloat(i.refundedQty) || 0), 0);
-
-    let newStatus = posData.status;
-    if (totalQtyRefunded >= totalQtyPurchased) {
-      newStatus = 'Refunded';
-    } else if (totalQtyRefunded > 0) {
-      newStatus = 'Partially-Refunded';
-    }
+    // Keep original sale cash received intact so sales row stays positive
+    const origTotalFC = parseFloat(posData.totalFC || 0) < 0 
+      ? (parseFloat(posData.totalFC || 0) + (parseFloat(posData.refundedCashFC || 0)) + givenCashFC)
+      : parseFloat(posData.totalFC || 0);
+    const origTotalUSD = parseFloat(posData.totalUSD || 0) < 0 
+      ? (parseFloat(posData.totalUSD || 0) + (parseFloat(posData.refundedCashUSD || 0)) + givenCashUSD)
+      : parseFloat(posData.totalUSD || 0);
 
     const payload = {
       items: newItems.map(({ refundInput, ...rest }) => rest),
-      TotalAmountPaid: newTotalPaid,
+      TotalAmountPaid: Math.max(0, parseFloat(posData.TotalAmountPaid || 0) - refundFC),
       subTotal: newSubTotal,
       totalInvoice: newTotalInvoice,
-      totalFC: newTotalFC,
-      totalUSD: newTotalUSD,
-      remaining: Math.max(0, newTotalFC - newTotalPaid),
-      balanceDue: Math.max(0, newTotalFC - newTotalPaid),
+      totalFC: origTotalFC,
+      totalUSD: origTotalUSD,
+      remaining: 0,
+      balanceDue: 0,
       status: newStatus,
       tax: posData.tax,
       refundedAmountFC: (parseFloat(posData.refundedAmountFC) || 0) + refundFC,

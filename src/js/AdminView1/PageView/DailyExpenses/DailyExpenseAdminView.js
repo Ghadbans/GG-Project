@@ -221,7 +221,13 @@ function DailyExpenseAdminView() {
         const resPayRoll = await cachedGet(`${ENDPOINT_URL}/payRoll`)
         setPayRoll(resPayRoll.data?.data?.filter((row) => row.status !== undefined ? row.status === 'Paid' : null))
         const resPos = await cachedGet(`${ENDPOINT_URL}/pos`)
-        setPos(resPos.data.data.map((row) => ({ ...row, amountTotalFc: row.totalFC - row.creditFC, amountTotalUsd: row.totalUSD - row.creditUsd })))
+        setPos(resPos.data.data.map((row) => ({
+          ...row,
+          amountTotalFc: row.totalFC - row.creditFC,
+          amountTotalUsd: row.totalUSD - row.creditUsd,
+          refundFC: parseFloat(row.refundedCashFC) || 0,
+          refundUSD: parseFloat(row.refundedCashUSD) || 0
+        })))
       } catch (error) {
         console.error('Error fetching static data:', error);
       }
@@ -537,8 +543,13 @@ function DailyExpenseAdminView() {
   const totalPaymentUSD1 = totalPaymentUSD0 + totalPaymentUSD15
   const totalPaymentUSDTotal = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + parseFloat(row.amount), 0) : 0
 
-  const totalPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + parseFloat(row.amountTotalFc), 0) : 0
-  const totalPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + parseFloat(row.amountTotalUsd), 0) : 0
+  const totalGrossPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalFc) || 0), 0) : 0
+  const totalGrossPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalUsd) || 0), 0) : 0
+  const totalRefundPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.refundFC) || 0), 0) : 0
+  const totalRefundPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.refundUSD) || 0), 0) : 0
+
+  const totalPosFC = totalGrossPosFC - totalRefundPosFC
+  const totalPosUSD = totalGrossPosUSD - totalRefundPosUSD
 
   const totalPaymentFC = totalPaymentFC1 + totalPosFC
   const totalPaymentUSD = totalPaymentUSD1 + totalPosUSD
@@ -1015,6 +1026,11 @@ function DailyExpenseAdminView() {
                                       </td>
                                       <td style={{ border: '1px solid gray' }} colSpan={4}>
                                         {item.customerName !== undefined ? item.customerName.customerName : ''}
+                                        {(item.status === 'Refunded' || (item.refundFC > 0 || item.refundUSD > 0)) && (
+                                          <span style={{ color: '#d32f2f', fontSize: '11px', marginLeft: '6px', fontWeight: 'bold' }}>
+                                            ({item.status === 'Refunded' ? 'Refunded' : 'Partially-Refunded'})
+                                          </span>
+                                        )}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
                                         <span>FC </span>{item.amountTotalFc !== undefined ? item.amountTotalFc.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
@@ -1029,10 +1045,20 @@ function DailyExpenseAdminView() {
                               </tr>
                             )
                           }
-                          <tr>
-                            <td style={{ border: '1px solid gray' }} colSpan={4}>POS Received Total</td>
-                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center' }} colSpan={2}><span>FC </span><span >{isNaN(totalPosFC) ? 0 : totalPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                            <td style={{ border: '1px solid gray', width: '100px' }}><span>$ </span><span >{isNaN(totalPosUSD) ? 0 : totalPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          <tr style={{ backgroundColor: '#fcfcfc' }}>
+                            <td style={{ border: '1px solid gray', fontWeight: 'bold' }} colSpan={5}>POS Gross Sales Total</td>
+                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center', fontWeight: 'bold' }}><span>FC </span><span>{isNaN(totalGrossPosFC) ? '0.00' : totalGrossPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            <td style={{ border: '1px solid gray', width: '100px', fontWeight: 'bold' }}><span>$ </span><span>{isNaN(totalGrossPosUSD) ? '0.00' : totalGrossPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          </tr>
+                          <tr style={{ backgroundColor: '#fff5f5' }}>
+                            <td style={{ border: '1px solid gray', color: '#d32f2f', fontWeight: 'bold' }} colSpan={5}>POS Refund Total (Cash Returned)</td>
+                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center', color: '#d32f2f', fontWeight: 'bold' }}><span>-FC </span><span>{isNaN(totalRefundPosFC) ? '0.00' : totalRefundPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            <td style={{ border: '1px solid gray', width: '100px', color: '#d32f2f', fontWeight: 'bold' }}><span>-$ </span><span>{isNaN(totalRefundPosUSD) ? '0.00' : totalRefundPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          </tr>
+                          <tr style={{ backgroundColor: '#f0f7ff' }}>
+                            <td style={{ border: '1px solid gray', fontWeight: 'bold' }} colSpan={5}>POS Received Total (Net Cash in Hand)</td>
+                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center', fontWeight: 'bold', color: '#1565c0' }}><span>FC </span><span>{isNaN(totalPosFC) ? '0.00' : totalPosFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            <td style={{ border: '1px solid gray', width: '100px', fontWeight: 'bold', color: '#1565c0' }}><span>$ </span><span>{isNaN(totalPosUSD) ? '0.00' : totalPosUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                           </tr>
                         </tbody>
                       )
