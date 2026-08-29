@@ -263,7 +263,7 @@ function MaintenanceFormClone() {
       billingCity: ''
     });
   }
-  const Create = dayjs(Date.now()).format('DD/MM/YYYY') + " " + user.data.userName + ' Created ' + "M-00"
+  const Create = dayjs(Date.now()).format('DD/MM/YYYY') + " " + (user?.data?.userName || '') + ' Created ' + "M-00"
   useEffect(() => {
     const fetchCustomer = async () => {
       try {
@@ -540,7 +540,7 @@ function MaintenanceFormClone() {
   const handleCreateNotification = async (ReferenceInfo, ReferenceInfoNumber) => {
     const data = {
       idInfo: ReferenceInfo,
-      person: user.data.userName + ' Created ',
+      person: (user?.data?.userName || '') + ' Created ',
       reason: 'M-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
       dateNotification: new Date()
     }
@@ -552,6 +552,7 @@ function MaintenanceFormClone() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     let status = ''
     if (adjustmentNumber > 0) {
       status = 'Close'
@@ -561,7 +562,7 @@ function MaintenanceFormClone() {
     const data = {
       customerName, serviceNumber, serviceDate, actionTaken, visitDate, itemDescriptionInfo,
       warranty, defectDescription, technicianAssign, brand, model, serviceName, action,
-      serialNo, status, items, adjustmentNumber, adjustment, totalInvoice, subTotal,
+      serialNo, status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale
     };
     try {
@@ -602,7 +603,7 @@ function MaintenanceFormClone() {
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: { xs: '4px', sm: '24px' },
                 ...(sideBar && { display: 'none' }),
               }}
             >
@@ -621,9 +622,9 @@ function MaintenanceFormClone() {
               <ArrowBack style={{ color: 'white' }} />
             </IconButton>
             <NotificationVIewInfo />
-            <MessageAdminView name={user.data.userName} role={user.data.role} />
-            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
-            <IconButton color="inherit" onClick={handleLogout}>
+            <MessageAdminView name={user?.data?.userName || ''} role={user?.data?.role || ''} />
+            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user?.data?.userName || ''}</Typography>
+            <IconButton color="inherit" size="small" sx={{ p: { xs: "3px", sm: "8px" } }} onClick={handleLogout}>
               <Logout style={{ color: 'white' }} />
             </IconButton>
           </Toolbar>
@@ -713,7 +714,7 @@ function MaintenanceFormClone() {
                               <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                 {children}
                                 <div>
-                                  <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                  <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                     ADD NEW CUSTOMER
                                   </button>
                                 </div>
@@ -1012,7 +1013,7 @@ function MaintenanceFormClone() {
                                                           <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                                             {children}
                                                             <div>
-                                                              <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                              <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                 ADD NEW Item
                                                               </button>
                                                             </div>
@@ -1056,7 +1057,7 @@ function MaintenanceFormClone() {
                                                   name='itemRate' id='itemRate'
                                                   value={Item.itemRate}
 
-                                                  disabled={user.data.role !== 'CEO'}
+                                                  disabled={user?.data?.role || '' !== 'CEO'}
                                                   onChange={(e) => handleChange(e, i)}
                                                   size="small"
                                                   sx={{ width: '100px', backgroundColor: 'white' }}

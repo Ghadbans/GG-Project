@@ -540,7 +540,7 @@ The GLOBAL GATE Team`;
   const handleCreateNotification = async (ReferenceInfo, ReferenceInfoNumber) => {
     const data = {
       idInfo: ReferenceInfo,
-      person: user.data.userName + ' Created ',
+      person: (user?.data?.userName || '') + ' Created ',
       reason: 'QUO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
       dateNotification: dateComment
     }
@@ -552,6 +552,7 @@ The GLOBAL GATE Team`;
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       _id: v4(),
       customerName,
@@ -560,7 +561,7 @@ The GLOBAL GATE Team`;
       estimateDefect,
       estimateSubject,
       status,
-      items,
+      items: itemsWithoutData,
       subTotal,
       total,
       totalW,
@@ -612,7 +613,7 @@ The GLOBAL GATE Team`;
               aria-label="open drawer"
               onClick={toggleDrawer}
               sx={{
-                marginRight: '36px',
+                marginRight: { xs: '4px', sm: '24px' },
                 ...(sideBar && { display: 'none' }),
               }}
             >
@@ -631,9 +632,9 @@ The GLOBAL GATE Team`;
               <ArrowBack style={{ color: 'white' }} />
             </IconButton>
             <NotificationVIewInfo />
-            <MessageAdminView name={user.data.userName} role={user.data.role} />
-            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user.data.userName}</Typography>
-            <IconButton color="inherit" onClick={handleLogout}>
+            <MessageAdminView name={user?.data?.userName || ''} role={user?.data?.role || ''} />
+            <Typography sx={{ marginLeft: '10px', marginRight: '10px' }}>{user?.data?.userName || ''}</Typography>
+            <IconButton color="inherit" size="small" sx={{ p: { xs: "3px", sm: "8px" } }} onClick={handleLogout}>
               <Logout style={{ color: 'white' }} />
             </IconButton>
           </Toolbar>
@@ -704,7 +705,7 @@ The GLOBAL GATE Team`;
                               <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                 {children}
                                 <div>
-                                  <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                  <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                     ADD NEW CUSTOMER
                                   </button>
                                 </div>
@@ -796,7 +797,7 @@ The GLOBAL GATE Team`;
 
                     </div>
                     {
-                      user.data.role === 'CEO' ?
+                      user?.data?.role || '' === 'CEO' ?
                         (
                           <div>
                             <DragDropContext onDragEnd={handleDragEnd}>
@@ -919,7 +920,7 @@ The GLOBAL GATE Team`;
                                                                 <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                                                   {children}
                                                                   <div>
-                                                                    <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                    <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                       ADD NEW Item
                                                                     </button>
                                                                   </div>
@@ -1042,7 +1043,7 @@ The GLOBAL GATE Team`;
                                                     value={Item.newDescription}
                                                     onChange={(e) => handleChange(e, i)}
                                                     size="small"
-                                                    disabled={user.data.role === 'User'}
+                                                    disabled={user?.data?.role || '' === 'User'}
                                                     sx={{ width: '100%', backgroundColor: 'white', fontSize: 12 }}
                                                   /></td>
                                                   <td >
@@ -1126,7 +1127,7 @@ The GLOBAL GATE Team`;
                                                               <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                                                 {children}
                                                                 <div>
-                                                                  <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                  <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                     ADD NEW Item
                                                                   </button>
                                                                 </div>

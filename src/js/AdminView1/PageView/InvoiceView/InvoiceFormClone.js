@@ -657,7 +657,7 @@ function InvoiceFormClone() {
     const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber) => {
       const data = {
         idInfo: ReferenceInfo,
-        person:user.data.userName + ' Created ',
+        person:(user?.data?.userName || '') + ' Created ',
         reason:  `INV-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName.customerName}`,
         dateNotification:dateComment
       }
@@ -680,7 +680,7 @@ function InvoiceFormClone() {
       e.preventDefault();
     setSaving('true');
       const data = {customerName,invoiceNumber,invoiceDate,invoiceDueDate,invoiceSubject,invoicePurchase,invoiceDefect,
-        status,items, subTotal, noteInfo, actionTaken, total, balanceDue, totalW,
+        status,items: itemsWithoutData, subTotal, noteInfo, actionTaken, total, balanceDue, totalW,
         invoiceName,note,shipping,adjustment,adjustmentNumber,totalInvoice,terms,synced: false
       }
     if (navigator.onLine) {
@@ -724,7 +724,7 @@ function InvoiceFormClone() {
                 aria-label="open drawer"
                 onClick={toggleDrawer}
                 sx={{
-                  marginRight: '36px',
+                  marginRight: { xs: '4px', sm: '24px' },
                   ...(sideBar && { display: 'none' }),
                 }}
               >
@@ -743,9 +743,9 @@ function InvoiceFormClone() {
             <ArrowBack style={{color:'white'}} />
             </IconButton>
               <NotificationVIewInfo/>
-              <MessageAdminView name={user.data.userName} role={user.data.role}/>
-              <Typography sx={{marginLeft:'10px',marginRight:'10px'}}>{user.data.userName}</Typography>
-              <IconButton color="inherit" onClick={handleLogout}>
+              <MessageAdminView name={user?.data?.userName || ''} role={user?.data?.role || ''}/>
+              <Typography sx={{marginLeft:'10px',marginRight:'10px'}}>{user?.data?.userName || ''}</Typography>
+              <IconButton color="inherit" size="small" sx={{ p: { xs: "3px", sm: "8px" } }} onClick={handleLogout}>
               <Logout style={{color:'white'}} /> 
               </IconButton>
             </Toolbar>
@@ -816,7 +816,7 @@ function InvoiceFormClone() {
                          <Box {...other} sx={{backgroundColor:'white', left:'0',marginTop:'10px'}}>
                              {children}
                              <div>
-                                 <button onClick={(e)=>handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
+                                 <button onClick={(e)=>handleOpenOpenAutocomplete1(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
                                ADD NEW CUSTOMER
                              </button>
                              </div>
@@ -923,7 +923,7 @@ function InvoiceFormClone() {
              
             </div>
             {
-              user.data.role === 'CEO'?
+              user?.data?.role || '' === 'CEO'?
            (   <div>
                         <DragDropContext onDragEnd={handleDragEnd}>  
                           <table className='tableInfo10' style={{marginLeft:'-20px'}}>
@@ -1040,7 +1040,7 @@ function InvoiceFormClone() {
                             <Box {...other} sx={{backgroundColor:'white', left:'0',marginTop:'10px'}}>
                                 {children}
                                 <div>
-                                <button onClick={(e)=>handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
+                                <button onClick={(e)=>handleOpenOpenAutocomplete2(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
                                   ADD NEW Item
                                 </button>
                                 </div>
@@ -1174,7 +1174,7 @@ function InvoiceFormClone() {
                   value={Item.newDescription}
                   onChange={(e) => handleChange(e,i)}
                   size="small"
-                  disabled={user.data.role === 'User'}
+                  disabled={user?.data?.role || '' === 'User'}
                   sx={{ width: '100%', backgroundColor:'white', fontSize:12}}       
         /></td>
            <td >
@@ -1254,7 +1254,7 @@ function InvoiceFormClone() {
                             <Box {...other} sx={{backgroundColor:'white', left:'0',marginTop:'10px'}}>
                                 {children}
                                 <div>
-                                <button onClick={(e)=>handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
+                                <button onClick={(e)=>handleOpenOpenAutocomplete2(e)} disabled={user?.data?.role || '' === 'User'} onMouseDown={(e)=>e.preventDefault()} className='btnCustomer7' style={{width:'100%'}}>
                                   ADD NEW Item
                                 </button>
                                 </div>
