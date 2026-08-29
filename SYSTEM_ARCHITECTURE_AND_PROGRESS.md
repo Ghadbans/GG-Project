@@ -240,3 +240,6 @@ pm run build:web\) and pushed the \dist_web\ payload to GitHub to ensure Cloudfl
 - **Invoice Autocomplete Patch**: Rewrote the \getOptionLabel\ handlers for Invoice dropdowns in Item Purchase, Item Out, Item Return, and Purchase Order. The search filter now correctly parses and matches the \customerName\, and gracefully displays the combined name instead of just the invoice number. 
 - **React Router Navigation Patch**: Resolved a critical variable shadowing bug (\TypeError: e is not a function\) that crashed 42 different update and creation forms when clicking 'Go Back' on the Success modal. The function argument was identically named \
 avigate\, thereby shadowing the react-router-dom hook.
+
+## v3.4.41 - Clone Payload Fixes
+- **Base64 Payload Stripping**: Added \itemsWithoutData\ filter to EstimateFormClone, InvoiceFormClone, and MaintenanceFormClone. Previously, cloning a record would transmit the raw base64 thumbnail image data inside the items array to the backend, causing a \500 Internal Server Error\ (Payload Too Large or Mongoose Validation failure). The items array is now properly sanitized before transmission.
