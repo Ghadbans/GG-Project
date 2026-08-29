@@ -253,3 +253,12 @@ avigate\, thereby shadowing the react-router-dom hook.
 - **Root Cause 2:** A previous patch stripped base64 data using `itemsWithoutData` but failed to declare the variable in Invoice/Maintenance forms due to a regex mismatch.
 - **Fix:** Safely fallback to `new Date()` when cloning records with missing dates across Estimate, Invoice, and Maintenance forms. Fixed the reference errors by properly declaring `itemsWithoutData` using updated regex scripts.
 
+
+### v3.4.43 (Hotfix Build Process)
+- **Issue:** The initial 3.4.43 Desktop .exe failed to include the Invoice ReferenceError fix because the Electron packager bundled the stale \uild/js\ folder from an earlier compilation.
+- **Fix:** Properly ran \
+pm run build\ to ensure the React production payload was compiled with the \itemsWithoutData\ declaration fix, then reran \
+pm run make:win\ to package the new executable.
+- **Web Version:** Re-ran \
+pm run build:web\ to ensure \dist_web\ has the identical patched payloads. The Quotation, Invoice, and Maintenance clones are now fully stable.
+
