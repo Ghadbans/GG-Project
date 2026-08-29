@@ -11,7 +11,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '80%',
+  width: '85%',
+  maxWidth: '900px',
   maxHeight: '90vh',
   overflowY: 'auto',
   bgcolor: 'background.paper',
@@ -20,7 +21,7 @@ const style = {
   borderRadius: '8px'
 };
 
-export default function PosRefundModal({ open, handleClose, posId, rate }) {
+export default function PosRefundModal({ open, handleClose, posId }) {
   const [items, setItems] = useState([]);
   const [posData, setPosData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -39,9 +40,10 @@ export default function PosRefundModal({ open, handleClose, posId, rate }) {
         setPosData(res.data.data);
         const fetchedItems = res.data.data.items.map(item => ({
           ...item,
-          refundInput: 0, // State for the current refund action
+          refundInput: 0,
           refundedQty: parseFloat(item.refundedQty) || 0,
-          itemQty: parseFloat(item.itemQty) || 0
+          itemQty: parseFloat(item.itemQty) || 0,
+          itemRate: parseFloat(item.itemRate) || (parseFloat(item.itemAmount) / (parseFloat(item.itemQty) || 1)) || 0
         }));
         setItems(fetchedItems);
       }
@@ -66,23 +68,18 @@ export default function PosRefundModal({ open, handleClose, posId, rate }) {
     setItems(newItems);
   };
 
-  const calculateTotalRefundAmount = () => {
-    return items.reduce((total, item) => {
-      const price = parseFloat(item.itemAmount) || 0;
-      return total + (price * (parseFloat(item.refundInput) || 0));
-    }, 0);
+  const getItemName = (item) => {
+    if (item.itemName && typeof item.itemName === 'object') {
+      return item.itemName.itemName || item.itemName.itemDescription || 'Item';
+    }
+    return item.itemName || item.itemDescription || 'Item';
   };
 
-  const calculateNewSubTotal = () => {
-    if (!posData) return 0;
-    const refundSub = items.reduce((total, item) => {
-      const price = parseFloat(item.itemAmount) || 0;
-      const totalRefundedQty = (parseFloat(item.refundedQty) || 0) + (parseFloat(item.refundInput) || 0);
-      return total + (price * totalRefundedQty);
+  const calculateTotalRefundAmountFC = () => {
+    return items.reduce((total, item) => {
+      const unitPrice = parseFloat(item.itemRate) || 0;
+      return total + (unitPrice * (parseFloat(item.refundInput) || 0));
     }, 0);
-    // Original total WITHOUT any refunds is simply summing (itemAmount * itemQty)
-    const originalSub = items.reduce((tot, item) => tot + ((parseFloat(item.itemAmount) || 0) * (parseFloat(item.itemQty) || 0)), 0);
-    return originalSub - refundSub;
   };
 
   const handleSubmit = async () => {
@@ -100,23 +97,20 @@ export default function PosRefundModal({ open, handleClose, posId, rate }) {
       refundedQty: (parseFloat(item.refundedQty) || 0) + (parseFloat(item.refundInput) || 0)
     }));
 
-    // Calculate new financial totals
-    const originalSub = items.reduce((tot, item) => tot + ((parseFloat(item.itemAmount) || 0) * (parseFloat(item.itemQty) || 0)), 0);
-    const newSubTotal = calculateNewSubTotal();
-    
-    // Tax is usually included in totalFC based on CheckTvA if applied, but for simplicity we assume tax applies proportionally or we just calculate based on POS rate
-    // Actually, in GG POS, totalInvoice = subTotal + tax + etc. We will simply deduct the refunded amount from the total
-    const refundFC = calculateTotalRefundAmount();
-    // Assuming refund is taken proportionally from TotalAmountPaid
-    
-    const newTotalPaid = Math.max(0, parseFloat(posData.TotalAmountPaid) - refundFC);
-    const newTotalFC = Math.max(0, parseFloat(posData.totalFC) - refundFC);
-    const newTotalUSD = parseFloat((newTotalFC / (posData.rate || rate || 1)).toFixed(2));
-    
+    const refundFC = calculateTotalRefundAmountFC();
+    const rate = parseFloat(posData.rate) || 1;
+    const refundUSD = parseFloat((refundFC / rate).toFixed(2));
+
+    const newTotalPaid = Math.max(0, parseFloat(posData.TotalAmountPaid || 0) - refundFC);
+    const newTotalFC = Math.max(0, parseFloat(posData.totalFC || 0) - refundFC);
+    const newTotalUSD = Math.max(0, parseFloat(posData.totalUSD || 0) - refundUSD);
+    const newSubTotal = Math.max(0, parseFloat(posData.subTotal || 0) - refundFC);
+    const newTotalInvoice = Math.max(0, parseFloat(posData.totalInvoice || 0) - refundFC);
+
     // Check if fully refunded
     const totalQtyPurchased = newItems.reduce((sum, i) => sum + (parseFloat(i.itemQty) || 0), 0);
     const totalQtyRefunded = newItems.reduce((sum, i) => sum + (parseFloat(i.refundedQty) || 0), 0);
-    
+
     let newStatus = posData.status;
     if (totalQtyRefunded >= totalQtyPurchased) {
       newStatus = 'Refunded';
@@ -125,22 +119,25 @@ export default function PosRefundModal({ open, handleClose, posId, rate }) {
     }
 
     const payload = {
-      items: newItems.map(({ refundInput, ...rest }) => rest), // remove temporary input field
+      items: newItems.map(({ refundInput, ...rest }) => rest),
       TotalAmountPaid: newTotalPaid,
       subTotal: newSubTotal,
+      totalInvoice: newTotalInvoice,
       totalFC: newTotalFC,
       totalUSD: newTotalUSD,
       remaining: Math.max(0, newTotalFC - newTotalPaid),
-      balanceDue: Math.max(0, newTotalFC - newTotalPaid), // Sync balanceDue with remaining
+      balanceDue: Math.max(0, newTotalFC - newTotalPaid),
       status: newStatus,
-      tax: posData.tax // Keeping original tax unless we strictly need to recalculate it
+      tax: posData.tax,
+      refundedAmountFC: (parseFloat(posData.refundedAmountFC) || 0) + refundFC,
+      refundedAmountUSD: (parseFloat(posData.refundedAmountUSD) || 0) + refundUSD
     };
 
     try {
       await axios.post(`${ENDPOINT_URL}/refund-pos/${posId}`, payload);
       toast.success('Refund processed successfully!');
       invalidateCache('/pos');
-      handleClose(true); // pass true to indicate success
+      handleClose(true);
     } catch (error) {
       console.error(error);
       toast.error('Failed to process refund');
@@ -148,60 +145,84 @@ export default function PosRefundModal({ open, handleClose, posId, rate }) {
     setLoading(false);
   };
 
+  const totalRefundFC = calculateTotalRefundAmountFC();
+  const rate = posData ? (parseFloat(posData.rate) || 1) : 1;
+  const totalRefundUSD = (totalRefundFC / rate).toFixed(2);
+
   return (
     <Modal open={open} onClose={() => handleClose(false)}>
       <Box sx={style}>
         <IconButton onClick={() => handleClose(false)} sx={{ position: 'absolute', right: 8, top: 8 }}>
           <CloseIcon />
         </IconButton>
-        <Typography variant="h6" sx={{ mb: 2 }}>
+        <Typography variant="h6" sx={{ mb: 1, fontWeight: 'bold' }}>
           Process Refund (POS Invoice #{posData?.factureNumber})
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 2, color: 'text.secondary' }}>
+          Customer: <strong>{posData?.customerName?.customerName || 'Walk-in'}</strong> | Rate: <strong>1 USD = {rate.toLocaleString()} FC</strong>
         </Typography>
 
         <TableContainer component={Paper} sx={{ mb: 3 }}>
           <Table size="small">
             <TableHead>
-              <TableRow>
-                <TableCell>Item</TableCell>
-                <TableCell>Price (FC)</TableCell>
-                <TableCell>Qty Bought</TableCell>
-                <TableCell>Already Refunded</TableCell>
-                <TableCell>Refund Qty</TableCell>
-                <TableCell>Refund Value (FC)</TableCell>
+              <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                <TableCell><strong>Item</strong></TableCell>
+                <TableCell><strong>Unit Price (FC)</strong></TableCell>
+                <TableCell align="center"><strong>Qty Bought</strong></TableCell>
+                <TableCell align="center"><strong>Already Refunded</strong></TableCell>
+                <TableCell align="center"><strong>Refund Qty</strong></TableCell>
+                <TableCell align="right"><strong>Refund Value (FC)</strong></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {items.map((item, index) => (
-                <TableRow key={index}>
-                  <TableCell>{item.itemName?.itemDescription || 'Unknown'}</TableCell>
-                  <TableCell>{parseFloat(item.itemAmount || 0).toLocaleString()}</TableCell>
-                  <TableCell>{item.itemQty}</TableCell>
-                  <TableCell>{item.refundedQty}</TableCell>
-                  <TableCell>
-                    <TextField
-                      type="number"
-                      size="small"
-                      value={item.refundInput}
-                      onChange={(e) => handleRefundInputChange(index, e.target.value)}
-                      inputProps={{ min: 0, max: item.itemQty - item.refundedQty }}
-                      sx={{ width: '80px' }}
-                      disabled={loading || (item.itemQty - item.refundedQty <= 0)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {((parseFloat(item.itemAmount) || 0) * (item.refundInput || 0)).toLocaleString()}
-                  </TableCell>
-                </TableRow>
-              ))}
+              {items.map((item, index) => {
+                const unitPrice = parseFloat(item.itemRate) || 0;
+                const maxAllowed = item.itemQty - item.refundedQty;
+                const refundValue = unitPrice * (parseFloat(item.refundInput) || 0);
+
+                return (
+                  <TableRow key={index}>
+                    <TableCell>{getItemName(item)}</TableCell>
+                    <TableCell>FC {unitPrice.toLocaleString()}</TableCell>
+                    <TableCell align="center">{item.itemQty} {item.unit || ''}</TableCell>
+                    <TableCell align="center">{item.refundedQty} {item.unit || ''}</TableCell>
+                    <TableCell align="center">
+                      <TextField
+                        type="number"
+                        size="small"
+                        value={item.refundInput}
+                        onChange={(e) => handleRefundInputChange(index, e.target.value)}
+                        inputProps={{ min: 0, max: maxAllowed, step: 'any' }}
+                        sx={{ width: '85px' }}
+                        disabled={loading || maxAllowed <= 0}
+                      />
+                    </TableCell>
+                    <TableCell align="right">
+                      FC {refundValue.toLocaleString()}
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Typography variant="h6" color="error">
-            Total Refund: FC {calculateTotalRefundAmount().toLocaleString()}
-          </Typography>
-          <Button variant="contained" color="error" onClick={handleSubmit} disabled={loading}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', p: 1, backgroundColor: '#fff3e0', borderRadius: '6px' }}>
+          <Box>
+            <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#d32f2f' }}>
+              Total Refund: FC {totalRefundFC.toLocaleString()} ()
+            </Typography>
+            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+              This cash amount will be returned to the customer and physical inventory restored.
+            </Typography>
+          </Box>
+          <Button 
+            variant="contained" 
+            color="error" 
+            onClick={handleSubmit} 
+            disabled={loading || totalRefundFC <= 0}
+            sx={{ px: 3, py: 1 }}
+          >
             {loading ? 'Processing...' : 'Confirm Refund'}
           </Button>
         </Box>

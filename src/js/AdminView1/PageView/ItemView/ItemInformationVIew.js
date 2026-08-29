@@ -189,16 +189,40 @@ function ItemInformationVIew() {
         // POS out
         const formatDate3 = resPosOut.data.data.map((row) => ({
           ...row,
-          items: row.items.filter((Item) => Item.itemName._id === id && parseFloat(Item.itemQty) >= 0)
+          items: row.items.filter((Item) => (Item.itemName?._id === id || Item.itemName === id) && parseFloat(Item.itemQty) >= 0)
         })).filter(row => row.items.length > 0);
         setPosOut(formatDate3.reverse());
 
-        // itemReturn
-        const formatDate2 = resIReturn.data.data.map((row) => ({
+        // itemReturn - Include standard returns PLUS Shop POS refunds
+        const standardReturns = resIReturn.data.data.map((row) => ({
           ...row,
-          itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
+          itemsQtyArray: (row.itemsQtyArray || []).filter((Item) => (Item.itemName?._id === id || Item.itemName === id) && parseFloat(Item.newItemOut) > 0)
         })).filter(row => row.itemsQtyArray.length > 0);
-        setItemReturn(formatDate2);
+
+        const posRefundReturns = [];
+        resPosOut.data.data.forEach(pos => {
+          (pos.items || []).forEach(it => {
+            const itemId = it.itemName?._id || it.itemName;
+            const refQty = parseFloat(it.refundedQty) || 0;
+            if (itemId === id && refQty > 0) {
+              posRefundReturns.push({
+                _id: `${pos._id}_refund_${it._id || it.idRow || '0'}`,
+                outNumber: 'S-' + String(pos.factureNumber).padStart(6, '0'),
+                itemOutDate: pos.invoiceDate || pos.time,
+                reason: 'Shop Refund',
+                reference: {
+                  referenceName: pos.customerName?.customerName || 'Walk-in Customer'
+                },
+                itemsQtyArray: [{
+                  itemName: it.itemName,
+                  newItemOut: refQty
+                }]
+              });
+            }
+          });
+        });
+
+        setItemReturn([...standardReturns, ...posRefundReturns]);
 
         setProjectsList(resProj.data.data);
         setLoadingData2(true);
@@ -598,10 +622,10 @@ function ItemInformationVIew() {
     (row.reason?.toString() || "").toLowerCase().includes(debouncedSearch3.toLowerCase()) ||
     (row.outNumber?.toString() || "").toLowerCase().includes(debouncedSearch3.toLowerCase()) ||
     (row.reference && row.reference.referenceName && row.reference.referenceName.toLowerCase().includes(debouncedSearch3.toLowerCase())) ||
-    row.itemsQtyArray.some((Item) => Item.itemName.itemName.toLowerCase().includes(debouncedSearch3.toLowerCase())) ||
-    row.itemsQtyArray.some((Item) => Item.itemDescription.toLowerCase().includes(debouncedSearch3.toLowerCase())) ||
+    (row.itemsQtyArray || []).some((Item) => ((Item.itemName?.itemName || Item.itemName || "").toString().toLowerCase().includes(debouncedSearch3.toLowerCase()))) ||
+    (row.itemsQtyArray || []).some((Item) => ((Item.itemDescription || "").toLowerCase().includes(debouncedSearch3.toLowerCase()))) ||
     dayjs(row.itemOutDate).format('DD/MM/YYYY').includes(debouncedSearch3)
-  ) : itemReturn).sort((a,b) => parseDate(b.itemReturnDate || b.date) - parseDate(a.itemReturnDate || a.date))
+  ) : itemReturn).sort((a,b) => parseDate(b.itemReturnDate || b.itemOutDate || b.date) - parseDate(a.itemReturnDate || a.itemOutDate || a.date))
   const totalReturnTotal = newArray3.length > 0 ? newArray3.reduce((acc, row) => { return acc + row.itemsQtyArray.reduce((sum, item) => sum + parseFloat(item.newItemOut), 0) }, 0) : 0
   const [openView, setOpenView] = useState(false);
   const [idView, setIdView] = useState(null);

@@ -1074,6 +1074,12 @@ function SellShopInvoiceView() {
                         KOLWEZI LUALABA <br />
                         DR CONGO <br />
                         <span style={{ fontWeight: 'bold' }}>Invoice</span>
+                        {posInvoice?.status === 'Refunded' && (
+                          <div style={{ color: 'red', fontWeight: 'bold', fontSize: '13px', marginTop: '3px' }}>*** REFUNDED ***</div>
+                        )}
+                        {posInvoice?.status === 'Partially-Refunded' && (
+                          <div style={{ color: 'orange', fontWeight: 'bold', fontSize: '13px', marginTop: '3px' }}>*** PARTIALLY REFUNDED ***</div>
+                        )}
                       </th>
                     </tr>
                     <tr>
@@ -1102,12 +1108,19 @@ function SellShopInvoiceView() {
                       <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>Total</th>
                     </tr>
                     {posInvoice?.items?.map((row, i) => (
-                      <tr key={row.idRow}>
+                      <tr key={row.idRow || i}>
                         <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>{i + 1}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>{row.itemName.itemName.toUpperCase()}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>
+                          {(row.itemName?.itemName || row.itemName?.itemDescription || (typeof row.itemName === 'string' ? row.itemName : 'Item')).toUpperCase()}
+                          {row.refundedQty > 0 && (
+                            <div style={{ color: 'red', fontSize: '10px', fontStyle: 'italic' }}>
+                              (Refunded: {row.refundedQty} {row.unit || ''})
+                            </div>
+                          )}
+                        </td>
                         <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>{row.itemQty} {row.unit}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>FC{parseFloat(row.itemRate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>FC{row.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>FC{parseFloat(row.itemRate || (row.itemAmount / (row.itemQty || 1)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>FC{parseFloat(row.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                       </tr>
                     ))}
                     <tr>
@@ -1133,6 +1146,18 @@ function SellShopInvoiceView() {
                       <td colSpan={2} style={{ textAlign: 'right' }}>Total General</td>
                       <th colSpan={3} style={{ borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{posInvoice?.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (${(posInvoice.totalInvoice !== undefined ? (posInvoice.totalInvoice / posInvoice?.rate) : 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</th>
                     </tr>
+                    {(posInvoice.status === 'Refunded' || posInvoice.status === 'Partially-Refunded' || (posInvoice.refundedAmountFC > 0)) && (
+                      <tr>
+                        <td colSpan={2} style={{ textAlign: 'right', color: 'red' }}>Total Refunded</td>
+                        <th colSpan={3} style={{ borderBottom: '1px solid #DDD', textAlign: 'right', color: 'red' }}>
+                          {(() => {
+                            const refFC = parseFloat(posInvoice.refundedAmountFC) || (posInvoice.items || []).reduce((acc, it) => acc + ((parseFloat(it.itemRate) || (parseFloat(it.itemAmount)/(parseFloat(it.itemQty)||1)) || 0) * (parseFloat(it.refundedQty) || 0)), 0);
+                            const refUSD = (refFC / (posInvoice.rate || 1)).toFixed(2);
+                            return `FC ${refFC.toFixed(2).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')} ($ ${refUSD.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')})`;
+                          })()}
+                        </th>
+                      </tr>
+                    )}
                     {(posInvoice.totalFC > 0 || posInvoice.totalUSD > 0) && (
                       <tr>
                         <td colSpan={2} style={{ textAlign: 'right' }}>Amount Received</td>

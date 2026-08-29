@@ -71,7 +71,15 @@ const posSchema= new Schema(
       Create: {
         type: String,
         trim: true },
-        branchId: { type: String, default: 'HQ' } },
+      refundedAmountFC: {
+        type: Number,
+        default: 0
+      },
+      refundedAmountUSD: {
+        type: Number,
+        default: 0
+      },
+      branchId: { type: String, default: 'HQ' } },
     {
       collection:"pos"
     }
