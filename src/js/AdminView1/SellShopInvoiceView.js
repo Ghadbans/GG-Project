@@ -1206,7 +1206,7 @@ function SellShopInvoiceView() {
           open={openRefundModal} 
           handleClose={handleCloseRefund} 
           posId={refundPosId} 
-          rate={Rate}
+          
         />
       </Modal>
     </div>
