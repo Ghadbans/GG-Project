@@ -31,6 +31,8 @@ import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Print } fro
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import SettingsBackupRestoreIcon from '@mui/icons-material/SettingsBackupRestore';
+import PosRefundModal from './PageView/ShopPos/PosRefundModal';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Logout from '../component/NetworkLogoutIcon';
@@ -40,6 +42,18 @@ import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 
 import { useReactToPrint } from 'react-to-print';
+
+
+const RefundTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: 'orange',
+    color: 'white',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}));
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -176,7 +190,24 @@ function SellShopInvoiceView() {
 
   {/** Get Invoice */ }
   const [invoice, setInvoice] = useState([]);
-  const [hiddenRow, setHiddenRow] = useState([]);
+  const [hiddenRow, setHiddenRow] = useState([])
+
+  const [openRefundModal, setOpenRefundModal] = useState(false);
+  const [refundPosId, setRefundPosId] = useState(null);
+
+  const handleOpenRefund = (id) => {
+    setRefundPosId(id);
+    setOpenRefundModal(true);
+  };
+
+  const handleCloseRefund = (success) => {
+    setOpenRefundModal(false);
+    setRefundPosId(null);
+    if (success) {
+      fetchData(); // refresh table
+    }
+  };
+;
   const [hidden, setHidden] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
@@ -568,7 +599,7 @@ function SellShopInvoiceView() {
     { field: 'factureNumber', headerName: 'Invoice#', width: 100, renderCell: (params) => (<div> <span>S-00</span><span>{params.row.factureNumber}</span> </div>) },
     { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 300, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
     {
-      field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
+            field: 'status', headerName: 'Status', width: sideBar ? 100 : 150, renderCell: (params) => (
         <Typography
           color={
             params.row.status === "Draft"
@@ -581,7 +612,13 @@ function SellShopInvoiceView() {
                     params.row.status === "Paid"
                       ? "#4caf50" :
                       params.row.status === "Partially-Paid"
-                        ? "#fb8c00" : "black"
+                        ? "#fb8c00" :
+                        params.row.status === "Refunded"
+                          ? "#795548" :
+                          params.row.status === "Partially-Refunded"
+                            ? "#ff9800" :
+                            params.row.status === "Void"
+                              ? "red" : "black"
           }
         >
           {params.row.status}

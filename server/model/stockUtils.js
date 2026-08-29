@@ -139,12 +139,16 @@ const calculateQuantity = async (branchId = null, specificItemIds = null) => {
       });
     });
 
-    posOutInfo.forEach(transactions => {
+        posOutInfo.forEach(transactions => {
       if (!transactions.items) return;
+      if (transactions.status === 'Void') return; // Skip Void invoices entirely
+
       transactions.items.forEach(entry => {
         const itemId = entry.itemName && entry.itemName._id ? entry.itemName._id.toString() : (entry.itemName ? entry.itemName.toString() : null);
         if (itemId && itemQuantities[itemId]) {
-          itemQuantities[itemId].posOut += parseFloat(entry.itemQty) || 0;
+          const qty = parseFloat(entry.itemQty) || 0;
+          const refQty = parseFloat(entry.refundedQty) || 0;
+          itemQuantities[itemId].posOut += Math.max(0, qty - refQty);
         }
       });
     });

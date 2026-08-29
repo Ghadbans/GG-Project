@@ -262,3 +262,8 @@ pm run make:win\ to package the new executable.
 - **Web Version:** Re-ran \
 pm run build:web\ to ensure \dist_web\ has the identical patched payloads. The Quotation, Invoice, and Maintenance clones are now fully stable.
 
+
+### POS Refund & Stock Update (v3.4.43)
+- **Backend:** Added \Refunded\ and \Partially-Refunded\ to \posSchema\ status enum. Implemented \/refund-pos/:id\ endpoint to dynamically deduct refunded money and update item refund quantities. Patched \stockUtils.js\ to correctly subtract \efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoices to plug a historical stock leak.
+- **Frontend:** Integrated \PosRefundModal.js\ to precisely control item refund volumes per invoice directly from the POS table, featuring exact remaining stock caps and live refund financial totals. Styled the status chips to reflect the new states.
+

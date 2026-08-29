@@ -19,7 +19,7 @@ const posSchema= new Schema(
       status: {
         type: String,
         trim: true,
-        enum: ['Draft', 'Sent', 'Decline','Pending','Paid','Partially-Paid','Void','Free of Charge'],
+        enum: ['Draft', 'Sent', 'Decline','Pending','Paid','Partially-Paid','Void','Free of Charge','Refunded','Partially-Refunded'],
         default: 'Draft'
       },
       items:[  ], 

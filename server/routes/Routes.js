@@ -1181,7 +1181,43 @@ Route.route("/create-pos").post(async (req, res, next) => {
 });
 
 
-// Get single pos
+
+  // Refund POS
+  Route.route("/refund-pos/:id").post(async (req, res, next) => {
+    try {
+      const posId = req.params.id;
+      const { items, TotalAmountPaid, remaining, status, subTotal, totalFC, totalUSD, tax, balanceDue } = req.body;
+      
+      const posSchema = require('../model/posSchema');
+      const posDoc = await posSchema.findById(posId);
+      
+      if (!posDoc) {
+        return res.status(404).json({ message: "POS Invoice not found" });
+      }
+
+      posDoc.items = items;
+      posDoc.TotalAmountPaid = TotalAmountPaid;
+      posDoc.remaining = remaining;
+      posDoc.status = status;
+      posDoc.subTotal = subTotal;
+      posDoc.totalFC = totalFC;
+      posDoc.totalUSD = totalUSD;
+      posDoc.tax = tax;
+      posDoc.balanceDue = balanceDue;
+      
+      await posDoc.save(); // Triggers the stock hook
+
+      res.status(200).json({
+        data: posDoc,
+        message: "Refund processed successfully.",
+        status: 200
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  // Get single pos
 
 Route.route("/get-pos/:id").get(async (req, res, next) => {
   await posSchema
