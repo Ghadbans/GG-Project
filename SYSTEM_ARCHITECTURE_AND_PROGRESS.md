@@ -243,3 +243,6 @@ avigate\, thereby shadowing the react-router-dom hook.
 
 ## v3.4.41 - Clone Payload Fixes
 - **Base64 Payload Stripping**: Added \itemsWithoutData\ filter to EstimateFormClone, InvoiceFormClone, and MaintenanceFormClone. Previously, cloning a record would transmit the raw base64 thumbnail image data inside the items array to the backend, causing a \500 Internal Server Error\ (Payload Too Large or Mongoose Validation failure). The items array is now properly sanitized before transmission.
+
+## v3.4.42 - Strict Desktop UX Restoration
+- **UI Rollback**: Performed a hard reset to wipe 120+ uncommitted rogue mobile-responsive modifications that a background script had injected into the local working directory. This successfully restores the original desktop login illustration, branding, Dashboard container dimensions, and KPI styling. Strict platform isolation enforced for desktop users.
