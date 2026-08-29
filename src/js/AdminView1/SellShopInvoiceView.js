@@ -1201,14 +1201,13 @@ function SellShopInvoiceView() {
           </form>
 
         </Box>
-        {/* Refund Modal */}
-        <PosRefundModal 
-          open={openRefundModal} 
-          handleClose={handleCloseRefund} 
-          posId={refundPosId} 
-          
-        />
       </Modal>
+      {/* Refund Modal */}
+      <PosRefundModal 
+        open={openRefundModal} 
+        handleClose={handleCloseRefund} 
+        posId={refundPosId} 
+      />
     </div>
   )
 }

@@ -1,6 +1,10 @@
 node_modules/
-dist/
-build/
+/dist/
+/build/
+/extracted-right-version/
+/ios/App/App/public/build/
+/www/build/
+!dist_web/
 .env
 *.log
 GG Backup 08Feb26/

@@ -1,0 +1,2 @@
+"use strict";(this.webpackChunkgg_management=this.webpackChunkgg_management||[]).push([[4237],{44237(e,a,t){t.r(a);var n=t(96540),u=t(47767),g=t(13561),s=t(32005);t.d(a,["default",0,()=>((0,g.d4)(s.xu),n.createElement(u.sv,null))])}}]);
+//# sourceMappingURL=4237.app.js.map
