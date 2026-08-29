@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.4.42",
+  "version": "3.4.43",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -13,6 +13,7 @@
     "cap:build": "npm run build:web && npx cap sync",
     "cap:build:android": "npm run build:web && npx cap sync android",
     "cap:build:ios": "npm run build:web && npx cap sync ios",
+    "build:apk": "powershell -ExecutionPolicy Bypass -File scripts/build-apk.ps1",
     "cap:open:android": "npx cap open android",
     "cap:open:ios": "npx cap open ios",
     "pack": "electron-builder --dir",

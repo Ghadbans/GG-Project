@@ -246,3 +246,10 @@ avigate\, thereby shadowing the react-router-dom hook.
 
 ## v3.4.42 - Strict Desktop UX Restoration
 - **UI Rollback**: Performed a hard reset to wipe 120+ uncommitted rogue mobile-responsive modifications that a background script had injected into the local working directory. This successfully restores the original desktop login illustration, branding, Dashboard container dimensions, and KPI styling. Strict platform isolation enforced for desktop users.
+
+### v3.4.43: Critical Fixes for Quotation & Invoice Cloning Bugs
+- **Issue:** Cloning an old Quotation sometimes threw a 500 Server Error, and Invoice clones threw a ReferenceError in the UI.
+- **Root Cause 1:** Some older Quotations in the MongoDB database (e.g., QUO-001682) lacked an `estimateDate`. When cloned, the UI attempted to submit an undefined date, triggering a Mongoose ValidationError (500).
+- **Root Cause 2:** A previous patch stripped base64 data using `itemsWithoutData` but failed to declare the variable in Invoice/Maintenance forms due to a regex mismatch.
+- **Fix:** Safely fallback to `new Date()` when cloning records with missing dates across Estimate, Invoice, and Maintenance forms. Fixed the reference errors by properly declaring `itemsWithoutData` using updated regex scripts.
+
