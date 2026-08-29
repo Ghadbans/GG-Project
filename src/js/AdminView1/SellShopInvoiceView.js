@@ -654,7 +654,22 @@ function SellShopInvoiceView() {
 
       )
     },
-    {
+    
+      {
+        field: 'Refund', headerName: 'Refund', width: 60, renderCell: (params) => (
+          <RefundTooltip title="Refund">
+            <span>
+              <IconButton 
+                onClick={() => handleOpenRefund(params.row._id)} 
+                disabled={params.row.status === 'Draft' || params.row.status === 'Void' || params.row.status === 'Refunded'}
+              >
+                <SettingsBackupRestoreIcon style={{ cursor: 'pointer', color: (params.row.status === 'Draft' || params.row.status === 'Void' || params.row.status === 'Refunded') ? 'lightgray' : 'orange' }} />
+              </IconButton>
+            </span>
+          </RefundTooltip>
+        )
+      },
+      {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>                                <IconButton onClick={() => handleOpen(params.row._id)} disabled={InvoiceInfoD.length === 0}>
