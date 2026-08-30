@@ -11,11 +11,11 @@ function Sidebar() {
         <div className='nav1Item'>
           <ul className='nav-menu '>
             <li className='menu-item1'>
-              <div style={{ display: 'flex', alignItems: 'center', fontSize: '50px', gap: "10px" }}>
-                <Link to="/" className='LinkName'>
-                  <img  src={Image} style={{ width: '100px', height: '50px' }} />
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 'clamp(22px, 3.8vw, 46px)', gap: "12px", whiteSpace: 'nowrap', flexWrap: 'nowrap' }}>
+                <Link to="/" className='LinkName' style={{ flexShrink: 0 }}>
+                  <img src={Image} style={{ width: 'clamp(48px, 6vw, 90px)', height: 'auto', maxHeight: '48px', objectFit: 'contain' }} alt="Logo" />
                 </Link>
-                <span> GLOBAL GATE</span>
+                <span style={{ whiteSpace: 'nowrap', fontWeight: 'bold', letterSpacing: '1px', flexShrink: 0 }}>GLOBAL GATE</span>
               </div>
             </li>
           </ul>

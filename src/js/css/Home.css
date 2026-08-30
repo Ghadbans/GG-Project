@@ -15,8 +15,8 @@
 .homepanel1content{
     position: relative;
     margin: auto;
-    width: 50%;
-    width: 900px;
+    width: 90%;
+    max-width: 900px;
     height: 480px;
     border: 1px solid rgba(243, 237, 237, 0.25);
     border-radius: 20px;
@@ -26,7 +26,7 @@
     backdrop-filter: blur(15px);
     color: black;
     border-radius: 10px;
-    top: 20%;
+    top: 15%;
 
     padding: auto;
 }
