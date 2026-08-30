@@ -275,3 +275,6 @@ efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoic
 
 
 - **POS Dual-Currency Cash Refund Breakdown (Ver 3.4.50)**: Enhanced PosRefundModal with separate inputs for cash returned in USD and FC, with live validation, quick helper buttons ([All in FC], [All in USD], [Proportional]), and exact deductions from pos.totalUSD and pos.totalFC. This ensures 100% financial accuracy across physical cash drawers, the POS Report, and the Daily Expenses Summary.
+
+
+- **Grant Access Authorization for POS Refund (Ver 3.4.53)**: Tied the Refund capability directly to the Point-Of-Sell -> Edit permission in the Grant Access module. Users without this permission see the Refund button disabled/grayed out with a 'No Permission to Refund' tooltip, ensuring secure access control.
