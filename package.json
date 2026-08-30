@@ -7,7 +7,7 @@
   "scripts": {
     "start": "electron .",
     "watch": "webpack --config webpack.common.js --watch",
-    "build": "webpack --config webpack.prod.js",
+    "build": "webpack --config webpack.prod.js && webpack --config webpack.web.prod.js && node scripts/copy-web.js",
     "build:web": "webpack --config webpack.web.prod.js && node scripts/copy-web.js",
     "cap:sync": "npx cap sync",
     "cap:build": "npm run build:web && npx cap sync",
