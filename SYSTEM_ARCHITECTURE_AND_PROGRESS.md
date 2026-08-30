@@ -288,3 +288,6 @@ efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoic
 
 - **Cloudflare Pages CI Lockfile Fix (Ver 3.4.54)**: Fixed Cloudflare Pages deployment failure caused by 
 pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unused capacitor dependencies, fully synchronized package-lock.json, and added .npmrc / .nvmrc to ensure reliable automated web builds on Cloudflare.
+
+
+- **POS Print Slip Cash Refund Breakdown (Ver 3.4.55)**: Added Cash Refunded row to the POS invoice print slip in SellShopInvoiceView.js. It displays the exact physical cash handed back to the client in FC and/or USD (e.g. FC 294,637.50 or FC 100,000.00 & $ 50.00) alongside the total refunded value.
