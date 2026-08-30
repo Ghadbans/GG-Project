@@ -18,6 +18,9 @@
 9. **Event Handler Naming Consistency**: When adding new event handlers to existing components (e.g., adding `handleClickMenu` to a file that already uses `handleClick`), ALWAYS verify the exact function name defined in the component's scope and use that name consistently on all JSX elements. Mismatched handler names (e.g., calling `onClick={handleClickMenu}` when only `handleClick` is defined) cause a `ReferenceError` crash that appears only at runtime, not at build time.
 10. **Never Fetch Entire Collections for Per-Item Detail Views**: The Item Information view (and any similar detail/view page) MUST use server-side `itemId` filtering when loading transaction summaries (IN/OUT/RETURN/POS). NEVER call `/itemOut`, `/itemPurchase`, `/pos`, or `/itemReturn` without a `?itemId=xxx` query parameter from a detail page. Downloading entire collections and filtering client-side causes load times of 60+ seconds as data grows. Always use `Promise.all()` for parallel fetches instead of sequential `await`. Also: after a PUT/PATCH that updates a value (e.g., stock sync), ALWAYS update local React state immediately using `setState(prev => prev.map(...))` so the UI reflects the change without requiring a full page reload.
 
+
+11. **Strict Role & Grant Access Architecture**: Roles (CEO, ADMIN, USER) are display titles and dashboard layout switchers only. Every user regardless of role title (including CEO and Admin) MUST have explicit permissions granted in the **Grant Access** module to perform actions (View, Create, Edit, Delete, Refund, etc.) in any module. The ONLY exception is username GG (the Creator/Founder of the system), who has universal access without requiring Grant Access configuration.
+
 ## Current Progress Log
 - **React DOM Thrashing & UI Freezing (Ver 3.3.93)**: Fixed jarring white flashes during module navigation by replacing hard-coded 
 eturn null and raw <Loader /> components with layout-preserving <Skeleton /> loaders across all 26 AdminView layout wrappers. Modified SidebarDash and SidebarDashE2 to track loadingAccess state, which prevents the sidebar nav links from temporarily disabling and turning gray while permissions load. Solved Issue #4.
@@ -278,3 +281,6 @@ efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoic
 
 
 - **Grant Access Authorization for POS Refund (Ver 3.4.53)**: Tied the Refund capability directly to the Point-Of-Sell -> Edit permission in the Grant Access module. Users without this permission see the Refund button disabled/grayed out with a 'No Permission to Refund' tooltip, ensuring secure access control.
+
+
+- **Universal Grant Access Enforcement (Ver 3.4.54)**: Enforced strict Grant Access permission checking for POS refunds across all roles (CEO, Admin, User). Verified that all users require explicit Point-Of-Sell -> Edit permission to process refunds, with universal bypass reserved exclusively for username GG.

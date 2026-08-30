@@ -657,7 +657,8 @@ function SellShopInvoiceView() {
     
       {
         field: 'Refund', headerName: 'Refund', width: 60, renderCell: (params) => {
-          const isNotAllowed = InvoiceInfoU.length === 0 && user?.data?.role !== 'CEO';
+          const isGG = user?.data?.userName === 'GG' || user?.userName === 'GG';
+          const isNotAllowed = InvoiceInfoU.length === 0 && !isGG;
           const isInvalidStatus = params.row.status === 'Draft' || params.row.status === 'Void' || params.row.status === 'Refunded';
           const isDisabled = isNotAllowed || isInvalidStatus;
 
