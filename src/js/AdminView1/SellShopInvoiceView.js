@@ -1160,8 +1160,16 @@ function SellShopInvoiceView() {
                           {(() => {
                             const refFC = parseFloat(posInvoice.refundedAmountFC) || (posInvoice.items || []).reduce((acc, it) => acc + ((parseFloat(it.itemRate) || (parseFloat(it.itemAmount)/(parseFloat(it.itemQty)||1)) || 0) * (parseFloat(it.refundedQty) || 0)), 0);
                             const refUSD = (refFC / (posInvoice.rate || 1)).toFixed(2);
-                            return `FC ${refFC.toFixed(2).replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')} ($ ${refUSD.replace(/\\B(?=(\\d{3})+(?!\\d))/g, ',')})`;
+                            return `FC ${refFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ($ ${refUSD.replace(/\B(?=(\d{3})+(?!\d))/g, ',')})`;
                           })()}
+                        </th>
+                      </tr>
+                    )}
+                    {(posInvoice.refundedCashFC > 0 || posInvoice.refundedCashUSD > 0) && (
+                      <tr>
+                        <td colSpan={2} style={{ textAlign: 'right', color: 'red' }}>Cash Refunded</td>
+                        <th colSpan={3} style={{ borderBottom: '1px solid #DDD', textAlign: 'right', color: 'red' }}>
+                          {(posInvoice.refundedCashFC > 0 ? ('FC ' + posInvoice.refundedCashFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : '')} {posInvoice.refundedCashFC > 0 && posInvoice.refundedCashUSD > 0 ? ' & ' : ''} {posInvoice.refundedCashUSD > 0 ? '$ ' + posInvoice.refundedCashUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}
                         </th>
                       </tr>
                     )}
