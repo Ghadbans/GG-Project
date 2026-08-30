@@ -291,3 +291,6 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 
 
 - **POS Print Slip Cash Refund Breakdown (Ver 3.4.55)**: Added Cash Refunded row to the POS invoice print slip in SellShopInvoiceView.js. It displays the exact physical cash handed back to the client in FC and/or USD (e.g. FC 294,637.50 or FC 100,000.00 & $ 50.00) alongside the total refunded value.
+
+
+- **Responsive Home/Login Single-Line Branding (Ver 3.4.56)**: Resolved text wrapping on the home screen where resizing/minimizing the window caused 'GLOBAL GATE' to break into two stacked lines. Enforced whiteSpace: 'nowrap' with clamp() font and logo scaling, and upgraded the panel to width: 90%; max-width: 900px for smooth scaling across any window dimensions.
