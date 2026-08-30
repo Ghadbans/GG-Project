@@ -656,18 +656,24 @@ function SellShopInvoiceView() {
     },
     
       {
-        field: 'Refund', headerName: 'Refund', width: 60, renderCell: (params) => (
-          <RefundTooltip title="Refund">
-            <span>
-              <IconButton 
-                onClick={() => handleOpenRefund(params.row._id)} 
-                disabled={params.row.status === 'Draft' || params.row.status === 'Void' || params.row.status === 'Refunded'}
-              >
-                <SettingsBackupRestoreIcon style={{ cursor: 'pointer', color: (params.row.status === 'Draft' || params.row.status === 'Void' || params.row.status === 'Refunded') ? 'lightgray' : 'orange' }} />
-              </IconButton>
-            </span>
-          </RefundTooltip>
-        )
+        field: 'Refund', headerName: 'Refund', width: 60, renderCell: (params) => {
+          const isNotAllowed = InvoiceInfoU.length === 0 && user?.data?.role !== 'CEO';
+          const isInvalidStatus = params.row.status === 'Draft' || params.row.status === 'Void' || params.row.status === 'Refunded';
+          const isDisabled = isNotAllowed || isInvalidStatus;
+
+          return (
+            <RefundTooltip title={isNotAllowed ? "No Permission to Refund" : "Refund"}>
+              <span>
+                <IconButton 
+                  onClick={() => handleOpenRefund(params.row._id)} 
+                  disabled={isDisabled}
+                >
+                  <SettingsBackupRestoreIcon style={{ cursor: isDisabled ? 'default' : 'pointer', color: isDisabled ? 'lightgray' : 'orange' }} />
+                </IconButton>
+              </span>
+            </RefundTooltip>
+          );
+        }
       },
       {
       field: 'Delete', headerName: 'Delete', width: 50, renderCell: (params) => (
