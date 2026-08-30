@@ -284,3 +284,7 @@ efundedQty\ from POS Out stock, completely bypassing deduction for \Void\ invoic
 
 
 - **Universal Grant Access Enforcement (Ver 3.4.54)**: Enforced strict Grant Access permission checking for POS refunds across all roles (CEO, Admin, User). Verified that all users require explicit Point-Of-Sell -> Edit permission to process refunds, with universal bypass reserved exclusively for username GG.
+
+
+- **Cloudflare Pages CI Lockfile Fix (Ver 3.4.54)**: Fixed Cloudflare Pages deployment failure caused by 
+pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unused capacitor dependencies, fully synchronized package-lock.json, and added .npmrc / .nvmrc to ensure reliable automated web builds on Cloudflare.
