@@ -159,10 +159,15 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
     <React.Fragment>
       <tr key={Item.idRow || i}>
         <td 
-          style={{ width: '10px', border: '1px solid #DDD', cursor: matchingMovements.length > 0 ? 'pointer' : 'default' }} 
-          onClick={() => matchingMovements.length > 0 && setOpen(!open)}
+          style={{ 
+            width: '10px', 
+            textAlign: 'center', 
+            border: '1px solid #DDD', 
+            cursor: 'pointer' 
+          }} 
+          onClick={() => setOpen(!open)}
         >
-          {matchingMovements.length > 0 ? (open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />) : <span>{i + 1}</span>}
+          <span>{i + 1}</span>
         </td>
         <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
           <span hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'}>

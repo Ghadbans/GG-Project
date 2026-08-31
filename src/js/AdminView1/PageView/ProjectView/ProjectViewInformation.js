@@ -1050,7 +1050,9 @@ function ProjectViewInformation() {
               :
               (
                 <>
-                  <td style={{ width: '10px', border: '1px solid #DDD', cursor: 'pointer' }} onClick={() => setOpen(!open)}>{open ? <KeyboardArrowUpIcon /> : <span>{index + 1}</span>}</td>
+                  <td style={{ width: '10px', textAlign: 'center', border: '1px solid #DDD', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+                    <span>{index + 1}</span>
+                  </td>
                   <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
                     <span hidden={row.itemName ? row.itemName.itemName === 'empty' : ''}>{row.itemName.itemName ? row.itemName.itemName : ''}</span>
                     <br />
