@@ -4,7 +4,7 @@ $root = "D:\GG\GG-Managment2026\ancient-kepler Pro"
 $androidDir = "$root\android"
 
 # Set environment paths
-$env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr"
+$env:JAVA_HOME = "C:\Users\GG\.jdks\jbr-21.0.11"
 $env:ANDROID_HOME = "C:\Users\GG\AppData\Local\Android\Sdk"
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 

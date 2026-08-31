@@ -17,6 +17,8 @@ https://github.com/nodeca/pako/blob/main/LICENSE
  * @license  MIT
  */
 
+/*! Capacitor: https://capacitorjs.com/ - MIT License */
+
 /*! ExcelJS 19-10-2023 */
 
 /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */

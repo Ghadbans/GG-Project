@@ -47,6 +47,7 @@ import Email from '@mui/icons-material/Email';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 
@@ -139,6 +140,99 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
+  const [open, setOpen] = React.useState(false);
+  const matchingMovements = formatDate2?.filter((row1) => 
+    row1.itemsQtyArray?.some((it) => String(it.itemName?._id || it.itemName) === String(Item.itemName?._id || Item.itemName))
+  ) || [];
+
+  if (Item.newDescription !== undefined) {
+    return (
+      <tr key={Item.idRow || i}>
+        <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
+        <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={8}>{Item.newDescription}</td>
+      </tr>
+    );
+  }
+
+  return (
+    <React.Fragment>
+      <tr key={Item.idRow || i}>
+        <td 
+          style={{ width: '10px', border: '1px solid #DDD', cursor: matchingMovements.length > 0 ? 'pointer' : 'default' }} 
+          onClick={() => matchingMovements.length > 0 && setOpen(!open)}
+        >
+          {matchingMovements.length > 0 ? (open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />) : <span>{i + 1}</span>}
+        </td>
+        <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
+          <span hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'}>
+            {typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}
+          </span>
+          <br />
+          <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
+        </td>
+        <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
+        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemCost}</td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemBuy}</td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>{Item.itemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+      </tr>
+      {matchingMovements.length > 0 && (
+        <tr>
+          <td style={{ textAlign: 'left', border: '1px solid #DDD', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box sx={{ margin: 1 }}>
+                <Typography gutterBottom component="div" sx={{ fontWeight: 'bold', fontSize: '13px', color: '#202a5a' }}>
+                  Item Movement Info (Out & Return)
+                </Typography>
+                <table className="secondTable">
+                  <thead>
+                    <tr>
+                      <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
+                      <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
+                      <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Type</th>
+                      <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Qty</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {matchingMovements.map((row1, index1) => {
+                      const matchingItem = row1.itemsQtyArray.find((Item1) => String(Item1.itemName?._id || Item1.itemName) === String(Item.itemName?._id || Item.itemName));
+                      const isReturn = (row1.type || '').toLowerCase().includes('return');
+                      return (
+                        <tr key={index1}>
+                          <td style={{ border: '1px solid #DDD' }}>{row1.outNumber}</td>
+                          <td style={{ border: '1px solid #DDD' }}>{dayjs(row1.itemOutDate || row1.date).format('DD/MM/YYYY-HH:mm')}</td>
+                          <td style={{ border: '1px solid #DDD' }}>
+                            <span style={{ 
+                              padding: '2px 8px', 
+                              borderRadius: '4px', 
+                              fontSize: '11px', 
+                              fontWeight: 'bold', 
+                              backgroundColor: isReturn ? '#ffebee' : '#e3f2fd', 
+                              color: isReturn ? '#c62828' : '#1565c0' 
+                            }}>
+                              {isReturn ? 'Item Return' : 'Item Out'}
+                            </span>
+                          </td>
+                          <td style={{ border: '1px solid #DDD', fontWeight: 'bold', color: isReturn ? '#c62828' : '#1565c0' }}>
+                            <span>{isReturn ? `-${matchingItem?.newItemOut || 0}` : `+${matchingItem?.newItemOut || 0}`}</span>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </Box>
+            </Collapse>
+          </td>
+        </tr>
+      )}
+    </React.Fragment>
+  );
+}
+
 function PurchasesViewAdminAll() {
   let { id } = useParams();
   const navigate = useNavigate();
@@ -209,30 +303,57 @@ function PurchasesViewAdminAll() {
   const [items, setItems] = useState([]);
   const [purchaseAmount1, setPurchaseAmount1] = useState(0);
   const [purchaseAmount2, setPurchaseAmount2] = useState(0);
+  const [itemOut, setItemOut] = useState([]);
+  const [itemReturn, setItemReturn] = useState([]);
+
+  const newOutR = [...itemOut, ...itemReturn];
+  const formatDate2 = newOutR.map((row) => ({
+    ...row,
+    itemsQtyArray: (row.itemsQtyArray || []).filter((Item) => parseFloat(Item.newItemOut) > 0)
+  })).filter(row => row.itemsQtyArray.length > 0);
+
   useEffect(() => {
     const fetchDataRelated = async () => {
       try {
-        const resEstimate = await axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
-        const filteredEstimate = resEstimate.data?.data?.filter((row) => row.ReferenceName === id)
+        const [resEstimate, resInvoice, resOut, resReturn] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/estimation?summary=true`),
+          axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
+          axios.get(`${ENDPOINT_URL}/itemOut`),
+          axios.get(`${ENDPOINT_URL}/itemReturn`)
+        ]);
+        const filteredEstimate = resEstimate.data?.data?.filter((row) => row.ReferenceName === id);
         setEstimate(filteredEstimate);
-        const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
-        const filteredInvoice = resInvoice.data?.data?.filter((row) => row.ReferenceName2 === id)
+        const filteredInvoice = resInvoice.data?.data?.filter((row) => row.ReferenceName2 === id);
         setInvoice(filteredInvoice);
 
-        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
+        const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`);
         const currentPurchase = res.data.data;
         
-        setItems(currentPurchase.items);
+        setItems(currentPurchase.items || []);
 
-        setCustomerName(currentPurchase.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
+        setCustomerName(currentPurchase.customerName?.customerName ? currentPurchase.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, '') : '');
         setPurchaseNumber(Number(currentPurchase.purchaseNumber || 0));
         
         // Store amounts from the full fetch — the summary list may omit these fields
         setPurchaseAmount1(parseFloat(currentPurchase.purchaseAmount1 || 0));
         setPurchaseAmount2(parseFloat(currentPurchase.purchaseAmount2 || 0));
+
+        const projectIdStr = String(currentPurchase.projectName?._id || currentPurchase.projectName || '');
+        const matchedOut = (resOut.data?.data || []).filter(row => 
+          (projectIdStr && String(row.reference?._id || row.reference) === projectIdStr) ||
+          String(row.reference?._id || row.reference) === String(id)
+        ).map(row => ({ ...row, outNumber: "O-" + String(row.outNumber).padStart(6, '0'), type: 'Item Out' }));
+
+        const matchedReturn = (resReturn.data?.data || []).filter(row => 
+          (projectIdStr && String(row.reference?._id || row.reference) === projectIdStr) ||
+          String(row.reference?._id || row.reference) === String(id)
+        ).map(row => ({ ...row, outNumber: "R-" + String(row.outNumber).padStart(6, '0'), type: 'Item return' }));
+
+        setItemOut(matchedOut);
+        setItemReturn(matchedReturn);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData(false)
+        setLoadingData(false);
       }
     }
     fetchDataRelated()
@@ -910,7 +1031,7 @@ function PurchasesViewAdminAll() {
                                                       (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
                                                       (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()));
                                                     }) : filteredPurchase)?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
+                                                      const relatedUnit = item.find((Item1) => String(Item1._id) === String(Item.itemName?._id || Item.itemName));
                                                       return (
                                                         <tr key={Item.idRow || i}>
                                                           {
@@ -1000,18 +1121,18 @@ function PurchasesViewAdminAll() {
                                             </span>
                                           </p>
                                         </address>
-                                        <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
-                                          <tbody>
-                                            <tr>
-                                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Pur #</span></th>
-                                              <td style={{ backgroundColor: 'white', border: 'none' }}><span >PUR-{String(row.purchaseNumber).padStart(6, '0')}</span></td>
-                                            </tr>
-                                            <tr>
-                                              <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
-                                              <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</span></td>
-                                            </tr>
-                                          </tbody>
-                                        </table>
+                                         <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
+                                            <tbody>
+                                              <tr>
+                                                <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Pur #</span></th>
+                                                <td style={{ backgroundColor: 'white', border: 'none' }}><span >PUR-{String(row.purchaseNumber).padStart(6, '0')}</span></td>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Date</span></th>
+                                                <td style={{ backgroundColor: 'white', border: 'none' }}><span >{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</span></td>
+                                              </tr>
+                                            </tbody>
+                                          </table>
                                       </section>
                                       <section style={{ position: 'relative', float: 'right', padding: '10px', marginTop: '-60px' }}>
                                         <TextField
@@ -1037,48 +1158,24 @@ function PurchasesViewAdminAll() {
                                           </tr>
                                         </thead>
                                         <tbody>
-                                          {(search2 !== '' ? filteredPurchase.filter((Item) => {
-                                            const nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName || '';
-                                            return nameToCheck.toLowerCase().includes(search2.toLowerCase()) ||
-                                            (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
-                                            (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()));
-                                          }) : filteredPurchase)?.map((Item, i) => {
-                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
-                                            return (
-                                              <tr key={Item.idRow || i}>
-                                                {
-                                                  Item.newDescription !== undefined ?
-                                                    (
-                                                      <>
-                                                        <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
-                                                        <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={6}>{Item.newDescription}</td>
-                                                      </>
-                                                    )
-                                                    :
-                                                    (
-                                                      <>
-                                                        <td style={{ width: '10px', border: '1px solid #DDD' }} >{i + 1}</td>
-                                                        <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
-                                                            <span hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'}>
-                                                              {typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}
-                                                            </span>
-                                                          <br />
-                                                          <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
-                                                        </td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemCost}</td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemBuy}</td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                        <td style={{ border: '1px solid #DDD' }} align="left"><span>{Item.itemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
-                                                      </>
-                                                    )
-                                                }
-                                              </tr>
-                                            )
-                                          })}
-                                        </tbody>
+                                           {(search2 !== '' ? filteredPurchase.filter((Item) => {
+                                             const nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName || '';
+                                             return nameToCheck.toLowerCase().includes(search2.toLowerCase()) ||
+                                             (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
+                                             (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()));
+                                           }) : filteredPurchase)?.map((Item, i) => {
+                                             const relatedUnit = item.find((Item1) => String(Item1._id) === String(Item.itemName?._id || Item.itemName));
+                                             return (
+                                               <PurchaseItemRow
+                                                 key={Item.idRow || i}
+                                                 Item={Item}
+                                                 i={i}
+                                                 relatedUnit={relatedUnit}
+                                                 formatDate2={formatDate2}
+                                               />
+                                             );
+                                           })}
+                                         </tbody>
                                         <tbody>
                                           <tr>
                                             <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>

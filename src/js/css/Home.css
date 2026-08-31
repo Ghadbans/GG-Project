@@ -42,21 +42,29 @@
         width: 100% !important;
         min-height: 100vh !important;
         display: flex !important;
-        justify-content: center !important;
+        flex-direction: column !important;
         align-items: center !important;
-        padding: 16px 8px !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 16px 12px !important;
         box-sizing: border-box !important;
+        margin: 0 auto !important;
     }
     .homepanel1content {
         position: relative !important;
         width: 92% !important;
-        max-width: 420px !important;
+        max-width: 340px !important;
         height: auto !important;
-        min-height: 420px !important;
+        min-height: auto !important;
         top: 0 !important;
-        margin: auto !important;
-        padding: 24px 16px !important;
+        margin: 0 auto !important;
+        padding: 32px 16px !important;
         box-sizing: border-box !important;
-        border-radius: 16px !important;
+        border-radius: 20px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
     }
 }

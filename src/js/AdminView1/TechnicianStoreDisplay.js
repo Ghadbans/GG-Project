@@ -32,10 +32,11 @@ import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Logout from '../component/NetworkLogoutIcon';
-import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../component/MobileCardList';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
@@ -354,7 +355,9 @@ function PointOfSale() {
               loadingData ?
                 <div style={{ position: 'relative', top: '120px' }}>
                   <Loader />
-                </div> :
+                </div> : (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                  <MobileCardList type="tech_store" data={item} />
+                ) : (
                 <div>
                   <Grid container spacing={2} component={Paper} sx={{ marginTop: '10px' }}>
                     <Grid item xs={12}>
@@ -408,6 +411,7 @@ function PointOfSale() {
                     </Grid>
                   </Grid>
                 </div>
+              )
             }
 
 

@@ -36,6 +36,8 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../component/MobileCardList';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -539,52 +541,57 @@ function CustomerViewAdmin() {
                         </span>
                       </ViewTooltip>
                     </section>
-                    <Box sx={{ height: 600, width: '100%' }}>
-                        {customer.length > 0 ? (
-                          <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                            {
-                              selectedRows.length > 1 && selectedRows.length < customer.length && (
-                                <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                              )
-                            }
-
-                            {
-                              selectedRows.length === customer.length ? (
-                                <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                              ) : ''
-                            }
-                          </section>
-                        )
-                          : ''}
-                        <DataGrid
-                          rows={customer}
-                          columns={columns}
-                          checkboxSelection
-                          disableDensitySelector
-                          paginationMode="server"
-                          filterMode="server"
-                          rowCount={totalItemCount}
-                          paginationModel={{ page: page, pageSize: limit }}
-                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
-                          onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                          slots={{ toolbar: GridToolbar }}
-                          slotProps={{
-                            toolbar: {
-                              showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                              printOptions: {
-                                disableToolbarButton: true
+                    <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 600, width: '100%' }}>
+                      {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                        <MobileCardList type="customers" data={customer} />
+                      ) : (
+                        <>
+                          {customer.length > 0 ? (
+                            <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
+                              {
+                                selectedRows.length > 1 && selectedRows.length < customer.length && (
+                                  <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                                )
                               }
-                            },
-                          }}
-                          rowSelectionModel={selectedRows}
-                          filterModel={filterModel}
-                          onFilterModelChange={(newModel) => handleFilter(newModel)}
-                          columnVisibilityModel={columnVisibilityModel}
-                          onColumnVisibilityModelChange={handelHiddenColumn}
-                          sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                        />
-                      </Box>
+
+                              {
+                                selectedRows.length === customer.length ? (
+                                  <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                                ) : ''
+                              }
+                            </section>
+                          ) : ''}
+                          <DataGrid
+                            rows={customer}
+                            columns={columns}
+                            checkboxSelection
+                            disableDensitySelector
+                            paginationMode="server"
+                            filterMode="server"
+                            rowCount={totalItemCount}
+                            paginationModel={{ page: page, pageSize: limit }}
+                            onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
+                            onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+                            slots={{ toolbar: GridToolbar }}
+                            slotProps={{
+                              toolbar: {
+                                showQuickFilter: true,
+                            quickFilterProps: { debounceMs: 500 },
+                                printOptions: {
+                                  disableToolbarButton: true
+                                }
+                              },
+                            }}
+                            rowSelectionModel={selectedRows}
+                            filterModel={filterModel}
+                            onFilterModelChange={(newModel) => handleFilter(newModel)}
+                            columnVisibilityModel={columnVisibilityModel}
+                            onColumnVisibilityModelChange={handelHiddenColumn}
+                            sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                          />
+                        </>
+                      )}
+                    </Box>
                   </div>
                 </div>)
             }

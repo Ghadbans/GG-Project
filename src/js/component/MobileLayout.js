@@ -29,6 +29,7 @@ import BranchSwitcher from './BranchSwitcher';
 import NotificationVIewInfo from '../AdminView1/NotificationVIewInfo';
 import MessageAdminView from '../AdminView1/MessageAdminView';
 import SidebarDash from './SidebarDash';
+import MobileDrawer from './MobileDrawer';
 
 function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
@@ -84,6 +85,7 @@ function MobileLayout({ children }) {
     <Box sx={{ width: '100vw', minHeight: '100vh', backgroundColor: '#F8FAFC', position: 'relative', overflowX: 'hidden' }}>
       {/* ── 1. NATIVE TOP BAR (Fixed 52px) ── */}
       <AppBar
+        className="MobileLayout-appBar"
         position="fixed"
         sx={{
           top: 0,
@@ -232,35 +234,8 @@ function MobileLayout({ children }) {
         </Box>
       </Box>
 
-      {/* ── 4. ALL MODULES BOTTOM SHEET DRAWER ── */}
-      <Drawer
-        anchor="bottom"
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        PaperProps={{
-          sx: {
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-            maxHeight: '85vh',
-            height: '85vh',
-            backgroundColor: '#ffffff',
-            pb: 4,
-            boxShadow: '0 -4px 24px rgba(0,0,0,0.15)'
-          }
-        }}
-      >
-        <Box sx={{ p: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid #e2e8f0' }}>
-          <Typography variant="h6" sx={{ fontWeight: 800, color: '#30368a', fontSize: '1.1rem' }}>
-            All System Modules
-          </Typography>
-          <IconButton onClick={() => setDrawerOpen(false)} size="small">
-            <CloseIcon />
-          </IconButton>
-        </Box>
-        <Box sx={{ overflowY: 'auto', p: 1 }} onClick={() => setDrawerOpen(false)}>
-          <SidebarDash />
-        </Box>
-      </Drawer>
+      {/* ── 4. ZOHO EXPANDABLE MODULE TREE DRAWER ── */}
+      <MobileDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} />
     </Box>
   );
 }

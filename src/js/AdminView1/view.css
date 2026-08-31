@@ -673,6 +673,10 @@
     }
 
     /* 1. Global Navigation Bar Collision Fix */
+    .MuiBox-root > .MuiAppBar-root:not(.MobileLayout-appBar) {
+        display: none !important;
+    }
+
     .MuiAppBar-root {
         width: 100% !important;
         left: 0 !important;

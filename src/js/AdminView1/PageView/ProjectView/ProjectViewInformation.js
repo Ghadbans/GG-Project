@@ -304,9 +304,9 @@ function ProjectViewInformation() {
         axios.get(`${ENDPOINT_URL}/itemReturn`),
         axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true`)
       ]);
-      setItemOut(resOut.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: "O-" + String(row.outNumber).padStart(6, '0'), type: 'Item Out' })));
-      setItemReturn(resReturn.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: "R-" + String(row.outNumber).padStart(6, '0'), type: 'Item return' })));
-      setItemPurchase(resPrec.data?.data?.filter((row) => row.projectName && row.projectName._id === id));
+      setItemOut((resOut.data?.data || []).filter((row) => String(row.reference?._id || row.reference) === String(id)).map((row) => ({ ...row, outNumber: "O-" + String(row.outNumber).padStart(6, '0'), type: 'Item Out' })));
+      setItemReturn((resReturn.data?.data || []).filter((row) => String(row.reference?._id || row.reference) === String(id)).map((row) => ({ ...row, outNumber: "R-" + String(row.outNumber).padStart(6, '0'), type: 'Item return' })));
+      setItemPurchase((resPrec.data?.data || []).filter((row) => row.projectName && String(row.projectName._id || row.projectName) === String(id)));
     } catch (error) { console.error('Error fetching Item Movement:', error); }
   };
 
@@ -493,31 +493,31 @@ function ProjectViewInformation() {
 
 
   const related = itemOut.length > 0 ? itemOut.reduce((acc, row) => {
-    row.itemsQtyArray.filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
-      const ItemName = item.itemName.itemName;
-      const Id = item.itemName._id;
-      if (!acc[ItemName]) {
-        acc[ItemName] = { ItemName, Id, total: 0 }
+    (row.itemsQtyArray || []).filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
+      const ItemName = item.itemName?.itemName || item.itemName;
+      const Id = String(item.itemName?._id || item.itemName || '');
+      if (!acc[Id]) {
+        acc[Id] = { ItemName, Id, total: 0 }
       }
-      acc[ItemName].total += parseFloat(item.newItemOut)
+      acc[Id].total += parseFloat(item.newItemOut)
     });
     return acc
   }, {}) : null
 
   const relatedReturn = itemReturn.length > 0 ? itemReturn.reduce((acc, row) => {
-    row.itemsQtyArray.filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
-      const ItemName1 = item.itemName.itemName;
-      const Id1 = item.itemName._id;
-      if (!acc[ItemName1]) {
-        acc[ItemName1] = { ItemName1, Id1, total1: 0 }
+    (row.itemsQtyArray || []).filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
+      const ItemName1 = item.itemName?.itemName || item.itemName;
+      const Id1 = String(item.itemName?._id || item.itemName || '');
+      if (!acc[Id1]) {
+        acc[Id1] = { ItemName1, Id1, total1: 0 }
       }
-      acc[ItemName1].total1 += parseFloat(item.newItemOut)
+      acc[Id1].total1 += parseFloat(item.newItemOut)
     });
     return acc
   }, {}) : null
 
   const newAllOutReturn = related !== null ? Object.values(related).map(({ ItemName, Id, total }) => {
-    const related1 = relatedReturn !== null ? Object.values(relatedReturn).find(({ ItemName1, Id1, total1 }) => Id1 === Id) : null
+    const related1 = relatedReturn !== null ? Object.values(relatedReturn).find(({ Id1 }) => String(Id1) === String(Id)) : null
     return ({
       ItemName,
       Id,
@@ -527,11 +527,12 @@ function ProjectViewInformation() {
 
   const relatedPurchase = purchase.map((row) => ({
     ...row,
-    items: row.items.map((Item) => {
-      const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName?._id) : null
+    items: (row.items || []).map((Item) => {
+      const itemIdStr = String(Item.itemName?._id || Item.itemName || '');
+      const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => String(Item1.Id) === itemIdStr) : null
       return ({
         ...Item,
-        itemOut: newAllOutReturnInfo ? newAllOutReturnInfo.total : 0
+        itemOut: newAllOutReturnInfo ? newAllOutReturnInfo.total : (Item.itemOut || 0)
       })
     })
   }))
@@ -1070,8 +1071,8 @@ function ProjectViewInformation() {
           <td style={{ textAlign: 'left', border: '1px solid #DDD', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
-                <Typography gutterBottom component="div">
-                  Item Out Info
+                <Typography gutterBottom component="div" sx={{ fontWeight: 'bold', fontSize: '13px', color: '#202a5a' }}>
+                  Item Movement Info (Out & Return)
                 </Typography>
                 <table className="secondTable">
                   <thead>
@@ -1084,20 +1085,31 @@ function ProjectViewInformation() {
                   </thead>
                   <tbody>
                     {
-                      formatDate2?.filter((row1) => row1.itemsQtyArray.some((Item) => Item.itemName._id === row.itemName?._id)).map((row1, index1) => (
-                        <tr key={index1}>
-                          <td style={{ border: '1px solid #DDD' }}>{row1.outNumber}</td>
-                          <td style={{ border: '1px solid #DDD' }}>{dayjs(row1.itemOutDate).format('DD/MM/YYYY-HH:mm')}</td>
-                          <td style={{ border: '1px solid #DDD' }}>{row1.type}</td>
-                          <td style={{ border: '1px solid #DDD' }}>
-                            {row1.itemsQtyArray.filter((Item1) => Item1.itemName._id === row.itemName?._id).map((Item1, i) => (
-                              <p key={i}>
-                                <span>{Item1.newItemOut}</span>
-                              </p>
-                            ))}
-                          </td>
-                        </tr>
-                      ))
+                      formatDate2?.filter((row1) => row1.itemsQtyArray.some((Item) => String(Item.itemName?._id || Item.itemName) === String(row.itemName?._id || row.itemName))).map((row1, index1) => {
+                        const matchingItem = row1.itemsQtyArray.find((Item1) => String(Item1.itemName?._id || Item1.itemName) === String(row.itemName?._id || row.itemName));
+                        const isReturn = (row1.type || '').toLowerCase().includes('return');
+                        return (
+                          <tr key={index1}>
+                            <td style={{ border: '1px solid #DDD' }}>{row1.outNumber}</td>
+                            <td style={{ border: '1px solid #DDD' }}>{dayjs(row1.itemOutDate || row1.date).format('DD/MM/YYYY-HH:mm')}</td>
+                            <td style={{ border: '1px solid #DDD' }}>
+                              <span style={{ 
+                                padding: '2px 8px', 
+                                borderRadius: '4px', 
+                                fontSize: '11px', 
+                                fontWeight: 'bold', 
+                                backgroundColor: isReturn ? '#ffebee' : '#e3f2fd', 
+                                color: isReturn ? '#c62828' : '#1565c0' 
+                              }}>
+                                {isReturn ? 'Item Return' : 'Item Out'}
+                              </span>
+                            </td>
+                            <td style={{ border: '1px solid #DDD', fontWeight: 'bold', color: isReturn ? '#c62828' : '#1565c0' }}>
+                              <span>{isReturn ? `-${matchingItem?.newItemOut || 0}` : `+${matchingItem?.newItemOut || 0}`}</span>
+                            </td>
+                          </tr>
+                        );
+                      })
                     }
                   </tbody>
                 </table>

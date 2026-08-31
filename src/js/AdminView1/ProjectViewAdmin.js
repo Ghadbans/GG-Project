@@ -36,6 +36,8 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../component/MobileCardList';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -643,22 +645,28 @@ function ProjectViewAdmin() {
                     </section>
                   )
                     : ''}
-                  <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
-                    <ViewTooltip>
-                      <span>
-                        <IconButton disabled={ProjectInfoC.length === 0}>
-                          <NavLink to={'/ProjectFormView'} className='LinkName'>
-                            <span className='btnCustomerAdding'>
-                              <Add />
-                            </span>
-                          </NavLink>
-                        </IconButton>
-                      </span>
-                    </ViewTooltip>
-                  </section>
-                  <Box sx={{ height: 600, width: '100%' }}>
-                      {
-                        user.data.role === 'CEO' ? (
+                  {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                    <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
+                      <ViewTooltip>
+                        <span>
+                          <IconButton disabled={ProjectInfoC.length === 0}>
+                            <NavLink to={'/ProjectFormView'} className='LinkName'>
+                              <span className='btnCustomerAdding'>
+                                <Add />
+                              </span>
+                            </NavLink>
+                          </IconButton>
+                        </span>
+                      </ViewTooltip>
+                    </section>
+                  )}
+                  <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 600, width: '100%' }}>
+                    {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                      <MobileCardList type="projects" data={project} />
+                    ) : (
+                      <>
+                        {
+                          user.data.role === 'CEO' ? (
                           <DataGrid
                           paginationMode="server"
                           filterMode="server"
@@ -720,6 +728,8 @@ function ProjectViewAdmin() {
                           />
                         )
                       }
+                      </>
+                    )}
                     </Box>
                 </div>)
             }</Container>

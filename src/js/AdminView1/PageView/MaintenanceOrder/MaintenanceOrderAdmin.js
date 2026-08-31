@@ -37,6 +37,8 @@ import Image from '../../../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../../../component/MobileCardList';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -639,41 +641,45 @@ function MaintenanceOrderAdmin() {
 
                   
   
-  <Box sx={{ height: 600, width: '100%' }}>
-
-                    <DataGrid
+                  <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 600, width: '100%' }}>
+                    {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                      <MobileCardList type="maintenance_orders" data={maintenance} />
+                    ) : (
+                      <>
+                        <DataGrid
                           paginationMode="server"
                           filterMode="server"
                           rowCount={totalItemCount}
                           paginationModel={{ page: page, pageSize: limit }}
                           onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
-                      rows={user.data.role === 'User' ? maintenance.filter(r => r.technicianAssign === user.data.userName && r.status !== 'Converted') : maintenance}
-                      columns={columns}
-                      slots={{ toolbar: GridToolbar }}
-                      onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-                      slotProps={{
-                        toolbar: {
-                          showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                          printOptions: {
-                            disableToolbarButton: true
-                          },
-                        },
-                      }}
-                      getRowClassName={(params) => {
-                        return newPurchase.includes(params.row._id) ? 'new-Purchase' : ''
-                      }}
-                      checkboxSelection
-                      disableDensitySelector
-                      rowSelectionModel={selectedRows}
-                      filterModel={filterModel}
-                      onFilterModelChange={(newModel) => handleFilter(newModel)}
-                      columnVisibilityModel={columnVisibilityModel}
-                      onColumnVisibilityModelChange={handelHiddenColumn}
-                      sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                    />
-                    <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-52px', display: 'flex', justifyContent: 'center', width: 'fit-content', margin: '0 auto' }} />
-
+                          rows={user.data.role === 'User' ? maintenance.filter(r => r.technicianAssign === user.data.userName && r.status !== 'Converted') : maintenance}
+                          columns={columns}
+                          slots={{ toolbar: GridToolbar }}
+                          onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+                          slotProps={{
+                            toolbar: {
+                              showQuickFilter: true,
+                              quickFilterProps: { debounceMs: 500 },
+                              printOptions: {
+                                disableToolbarButton: true
+                              },
+                            },
+                          }}
+                          getRowClassName={(params) => {
+                            return newPurchase.includes(params.row._id) ? 'new-Purchase' : ''
+                          }}
+                          checkboxSelection
+                          disableDensitySelector
+                          rowSelectionModel={selectedRows}
+                          filterModel={filterModel}
+                          onFilterModelChange={(newModel) => handleFilter(newModel)}
+                          columnVisibilityModel={columnVisibilityModel}
+                          onColumnVisibilityModelChange={handelHiddenColumn}
+                          sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                        />
+                        <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" sx={{ position: 'relative', top: '-52px', display: 'flex', justifyContent: 'center', width: 'fit-content', margin: '0 auto' }} />
+                      </>
+                    )}
                   </Box>
 
                 </div>)

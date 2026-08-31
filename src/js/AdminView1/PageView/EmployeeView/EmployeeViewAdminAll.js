@@ -47,8 +47,9 @@ import NotificationVIewInfo from '../../NotificationVIewInfo';
 
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from '../../../img/images.png';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../../../component/MobileCardList';
 import Phone from '@mui/icons-material/Phone';
 import WebIcon from '@mui/icons-material/Web';
 import Email from '@mui/icons-material/Email';
@@ -859,7 +860,9 @@ function EmployeeViewAdminAll() {
                 <div style={{ position: 'relative', top: '120px' }}>
                   <Loader />
                 </div>
-              </div> : (
+              </div> : (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                <MobileCardList type="employees" data={employee} />
+              ) : (
                 <div >
                   <Grid container spacing={2}>
 

@@ -294,3 +294,8 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 
 
 - **Responsive Home/Login Single-Line Branding (Ver 3.4.56)**: Resolved text wrapping on the home screen where resizing/minimizing the window caused 'GLOBAL GATE' to break into two stacked lines. Enforced whiteSpace: 'nowrap' with clamp() font and logo scaling, and upgraded the panel to width: 90%; max-width: 900px for smooth scaling across any window dimensions.
+
+- **Item Movement (Out & Return) Audit & Cross-Module Linking Fix (Ver 3.4.57)**:
+  - **Audit & Invariant Validation:** Conducted deep database and logic scan across MongoDB collections (`itemOut`, `itemReturn`, `purchase`, `project`, `invoice`, `item`). Verified that `item` stock calculations and Net Out quantities strictly follow $\text{Net Out} = \sum \text{Qty Out} - \sum \text{Qty Return}$ and that costing formulas preserve 100% integrity.
+  - **Project Item Movement Visibility:** Fixed string vs ObjectId comparison in `ProjectViewInformation.js` (`related`, `relatedReturn`, `newAllOutReturn`, `relatedPurchase`, `Row3`) so returned items are correctly recognized. Upgraded the collapsible details table in `Row3` to `Item Movement Info (Out & Return)` with clear color-coded badges (`Item Out` in blue with `+qty`, `Item Return` in red with `-qty`).
+  - **Purchase Request Movement Breakdown:** Added expandable movement breakdown in `PurchasesViewAdminAll.js` (`PurchaseItemRow`) with live `itemOut` and `itemReturn` fetching matching either the linked Project reference ID or Purchase ID. Allows direct on-screen inspection of item departures and returns from within the Purchase Request module.

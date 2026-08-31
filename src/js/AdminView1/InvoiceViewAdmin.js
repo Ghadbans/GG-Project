@@ -37,6 +37,8 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../component/MobileCardList';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -802,10 +804,11 @@ function InvoiceViewAdmin() {
                           ) : ''
                         }
                       </section>
-                    )
-                      : ''}
+                    ) : ''}
                     {
-                      user.data.role === 'CEO' ? (
+                      (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                        <MobileCardList type="invoices" data={invoice} />
+                      ) : user.data.role === 'CEO' ? (
                         <>
                           <DataGrid
                           paginationMode="server"

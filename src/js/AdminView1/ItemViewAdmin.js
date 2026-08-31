@@ -29,6 +29,8 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { Close } from '@mui/icons-material';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../component/MobileCardList';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import ExcelJS from 'exceljs';
@@ -762,125 +764,137 @@ function ItemViewAdmin() {
 
                   <TabContext value={value3}>
                     <Box>
-                      <TabList
-                        onChange={handleChange3}
-                        aria-label="lab API tabs example"
-                        sx={{
-                          '& .MuiTabs-indicator': {
-                            backgroundColor: 'white',
-                            height: '0px'
-                          }
-                        }}
-                      >
-                        <Tab label="Item"
-                          value="1"
+                      {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                        <TabList
+                          onChange={handleChange3}
+                          aria-label="lab API tabs example"
                           sx={{
-                            '&.Mui-selected': {
-                              color: 'white',
-                              backgroundColor: 'gray',
-                              borderRadius: '5px'
-                            }, '&:hover': {
-                              color: 'gray',
-                              bgcolor: 'white',
-                              border: '1px solid gray',
-                              borderRadius: '5px'
+                            '& .MuiTabs-indicator': {
+                              backgroundColor: 'white',
+                              height: '0px'
                             }
-                          }} />
-                        {
-                          user.data.role === 'CEO' && (
-                            <Tab
-                              label="Low Margin Item"
-                              value="2"
-                              onClick={handleLoadMargin}
-                              icon={<Badge color="secondary" badgeContent={lowMargin.length} style={{ marginTop: '-20px' }} />}
-                              iconPosition='end'
-                              sx={{
-                                '&.Mui-selected': {
-                                  color: 'white',
-                                  backgroundColor: 'gray',
-                                  borderRadius: '5px'
-                                }, '&:hover': {
-                                  color: 'gray',
-                                  bgcolor: 'white',
-                                  border: '1px solid gray',
-                                  borderRadius: '5px'
-                                }
-                              }} />
-                          )
-                        }
-                      </TabList>
+                          }}
+                        >
+                          <Tab label="Item"
+                            value="1"
+                            sx={{
+                              '&.Mui-selected': {
+                                color: 'white',
+                                backgroundColor: 'gray',
+                                borderRadius: '5px'
+                              }, '&:hover': {
+                                color: 'gray',
+                                bgcolor: 'white',
+                                border: '1px solid gray',
+                                borderRadius: '5px'
+                              }
+                            }} />
+                          {
+                            user.data.role === 'CEO' && (
+                              <Tab
+                                label="Low Margin Item"
+                                value="2"
+                                onClick={handleLoadMargin}
+                                icon={<Badge color="secondary" badgeContent={lowMargin.length} style={{ marginTop: '-20px' }} />}
+                                iconPosition='end'
+                                sx={{
+                                  '&.Mui-selected': {
+                                    color: 'white',
+                                    backgroundColor: 'gray',
+                                    borderRadius: '5px'
+                                  }, '&:hover': {
+                                    color: 'gray',
+                                    bgcolor: 'white',
+                                    border: '1px solid gray',
+                                    borderRadius: '5px'
+                                  }
+                                }} />
+                            )
+                          }
+                        </TabList>
+                      )}
                     </Box>
                     <TabPanel value='1'>
                       <Box>
-                        <Box sx={{ height: 580, width: '100%', marginTop: '-50px' }}>
-                          {item.length > 0 ? (
-                            <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                              {
-                                selectedRows.length > 1 && selectedRows.length < item.length && (
-                                  <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                                )
-                              }
-                              {
-                                selectedRows.length === item.length ? (
-                                  <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                                ) : ''
-                              }
-                            </section>
-                          )
-                            : ''}
-                          <div>
-                          </div>
-                          <section style={{ position: 'relative', float: 'right', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
-                            <button onClick={handleExportToExcel} className='btnCustomer'>Export to Excel</button>
-                            <ViewTooltip>
-                              <span>
-                                  <IconButton component={NavLink} to={'/ItemForm'} className='LinkName' disabled={ItemInfoC.length === 0}>
-                                      <span className='btnCustomerAdding'>
-                                        <Add />
-                                      </span>
-                                  </IconButton>
-                              </span>
-                            </ViewTooltip>
-                            <button onClick={handleRefreshSearch} className='btnCustomer2'>Refresh Search</button>
-                          </section>
-                          <br />
-                          <br />
-                          <DataGrid
-                          filterMode="server"
-                          paginationMode="server"
-                          rowCount={totalItemCount}
-                          paginationModel={{ page: page, pageSize: limit }}
-                          onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
-                            rows={item}
-                            columns={columns}
-                            slots={{ toolbar: GridToolbar }}
-                            slotProps={{
-                              toolbar: {
-                                showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                                printOptions: {
-                                  disableToolbarButton: true
-                                },
-                              },
-                            }}
-                            getRowClassName={(params) => {
-                              return newPurchase.includes(params.row._id) ? 'new-Purchase' : ''
-                            }}
-                            onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
-
-                            checkboxSelection
-                            disableColumnFilter
-                            disableDensitySelector
-                            rowSelectionModel={selectedRows}
-                            filterModel={filterModel}
-                            onFilterModelChange={handleFilterModelChange}
-                            columnVisibilityModel={columnVisibilityModel}
-                            onColumnVisibilityModelChange={handelHiddenColumn}
-                            sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                          />
-
+                        <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 580, width: '100%', marginTop: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? '0' : '-50px' }}>
+                          {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                            <>
+                              {item.length > 0 ? (
+                                <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
+                                  {
+                                    selectedRows.length > 1 && selectedRows.length < item.length && (
+                                      <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                                    )
+                                  }
+                                  {
+                                    selectedRows.length === item.length ? (
+                                      <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                                    ) : ''
+                                  }
+                                </section>
+                              )
+                                : ''}
+                              <div>
+                              </div>
+                              <section style={{ position: 'relative', float: 'right', display: 'flex', alignItems: 'center', justifyContent: 'space-evenly' }}>
+                                <button onClick={handleExportToExcel} className='btnCustomer'>Export to Excel</button>
+                                <ViewTooltip>
+                                  <span>
+                                      <IconButton component={NavLink} to={'/ItemForm'} className='LinkName' disabled={ItemInfoC.length === 0}>
+                                          <span className='btnCustomerAdding'>
+                                            <Add />
+                                          </span>
+                                      </IconButton>
+                                  </span>
+                                </ViewTooltip>
+                                <button onClick={handleRefreshSearch} className='btnCustomer2'>Refresh Search</button>
+                              </section>
+                              <br />
+                              <br />
+                            </>
+                          )}
+                          {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                            <MobileCardList type="items" data={item} />
+                          ) : (
+                            <>
+                              <DataGrid
+                                filterMode="server"
+                                paginationMode="server"
+                                rowCount={totalItemCount}
+                                paginationModel={{ page: page, pageSize: limit }}
+                                onPaginationModelChange={(newModel) => handlePageChange(newModel.page)}
+                                rows={item}
+                                columns={columns}
+                                slots={{ toolbar: GridToolbar }}
+                                slotProps={{
+                                  toolbar: {
+                                    showQuickFilter: true,
+                                    quickFilterProps: { debounceMs: 500 },
+                                    printOptions: {
+                                      disableToolbarButton: true
+                                    },
+                                  },
+                                }}
+                                getRowClassName={(params) => {
+                                  return newPurchase.includes(params.row._id) ? 'new-Purchase' : ''
+                                }}
+                                onRowSelectionModelChange={(newSelection) => setSelectedRows(newSelection)}
+                                checkboxSelection
+                                disableColumnFilter
+                                disableDensitySelector
+                                rowSelectionModel={selectedRows}
+                                filterModel={filterModel}
+                                onFilterModelChange={handleFilterModelChange}
+                                columnVisibilityModel={columnVisibilityModel}
+                                onColumnVisibilityModelChange={handelHiddenColumn}
+                                sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                              />
+                            </>
+                          )}
                         </Box>
-                        <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" />
+                        {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                          <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" />
+                        )}
                       </Box>
                     </TabPanel>
                     <TabPanel value="2">

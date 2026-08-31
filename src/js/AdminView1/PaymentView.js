@@ -39,6 +39,8 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import db from '../dexieDb';
 import { ENDPOINT_URL } from '../apiConfig';
+import { Capacitor } from '@capacitor/core';
+import MobileCardList from '../component/MobileCardList';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -924,61 +926,61 @@ const toggleDrawer = () => {
            </span>
       </ViewTooltip>
           </section>
-           {invoicePaymentRow.length > 0 ? (
-    <Box sx={{ height: 560, width: '100%' }}>
-       {
-                      user.data.role === 'CEO'?(
-                           <DataGrid
-                           rows={invoicePaymentRow}
-                           columns={columns}
-                           slots={{toolbar: GridToolbar}}
-                           slotProps={{
-                            toolbar: {
-                              showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                              printOptions:{
-                               disableToolbarButton: true
-                             },
-                            },
-                          }}
-                           checkboxSelection
-                           disableDensitySelector
-                           filterModel={filterModel}
-                           onFilterModelChange={(newModel) => handleFilter(newModel)}
-                           columnVisibilityModel = {columnVisibilityModel}
-                           onColumnVisibilityModelChange={handelHiddenColumn}
-                           sx={{width:'100%',backgroundColor:'white', padding:'10px'}}
-                   />
-                      ):(
-                        <DataGrid
-                        rows={filteredRows}
-                        columns={columns}
-                        slots={{toolbar: GridToolbar}}
-                        slotProps={{
-                         toolbar: {
-                           showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                           printOptions:{
-                            disableToolbarButton: true
-                          },
-                         },
-                       }}
-                       checkboxSelection
-                       disableDensitySelector
-                       filterModel={filterModel}
-                       onFilterModelChange={(newModel) => handleFilter(newModel)}
-                       columnVisibilityModel = {columnVisibilityModel}
-                       onColumnVisibilityModelChange={handelHiddenColumn}
-                        sx={{width:'100%',backgroundColor:'white', padding:'10px'}}
-                />
-                   )
-                    }
-    </Box> 
-   ) : 
-   <div>
-   <img  src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'35%',top:'40px', width:'50%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
-   </div>
-   }
+            <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 560, width: '100%' }}>
+              {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                <MobileCardList type="payments" data={invoicePaymentRow} />
+              ) : invoicePaymentRow.length > 0 ? (
+                user.data.role === 'CEO' ? (
+                  <DataGrid
+                    rows={invoicePaymentRow}
+                    columns={columns}
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                      toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
+                        printOptions: {
+                          disableToolbarButton: true
+                        },
+                      },
+                    }}
+                    checkboxSelection
+                    disableDensitySelector
+                    filterModel={filterModel}
+                    onFilterModelChange={(newModel) => handleFilter(newModel)}
+                    columnVisibilityModel={columnVisibilityModel}
+                    onColumnVisibilityModelChange={handelHiddenColumn}
+                    sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                  />
+                ) : (
+                  <DataGrid
+                    rows={filteredRows}
+                    columns={columns}
+                    slots={{ toolbar: GridToolbar }}
+                    slotProps={{
+                      toolbar: {
+                        showQuickFilter: true,
+                        quickFilterProps: { debounceMs: 500 },
+                        printOptions: {
+                          disableToolbarButton: true
+                        },
+                      },
+                    }}
+                    checkboxSelection
+                    disableDensitySelector
+                    filterModel={filterModel}
+                    onFilterModelChange={(newModel) => handleFilter(newModel)}
+                    columnVisibilityModel={columnVisibilityModel}
+                    onColumnVisibilityModelChange={handelHiddenColumn}
+                    sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                  />
+                )
+              ) : (
+                <div>
+                  <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '35%', top: '40px', width: '50%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
+                </div>
+              )}
+            </Box>
         </div>
         </TabPanel>
         <TabPanel value="2">

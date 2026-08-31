@@ -174,3 +174,140 @@
     color: #202a5a;
     border: 1px solid #202a5a;
 }
+
+@media screen and (max-width: 899px) {
+  .nav1, .nav1Item {
+    width: 100% !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
+  }
+  .nav-menu {
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 0 32px 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    list-style: none !important;
+    text-align: center !important;
+  }
+  .menu-item1 {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+  .nav-menu1 {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 280px !important;
+    box-sizing: border-box !important;
+  }
+  .cardNav {
+    width: 100% !important;
+    max-width: 280px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25) !important;
+    overflow: hidden !important;
+    padding: 28px 20px !important;
+  }
+  .cardNav .face {
+    width: 100% !important;
+    height: auto !important;
+    transform: none !important;
+    position: static !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .cardNav .face.face1 {
+    transform: none !important;
+    background: transparent !important;
+    margin-bottom: 20px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .cardNav .face.face1 .cardNavIcon {
+    position: static !important;
+    width: 80px !important;
+    height: 80px !important;
+    border-radius: 50% !important;
+    background: #30368a !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 12px rgba(48, 54, 138, 0.3) !important;
+  }
+  .cardNav .face.face1 .cardNavIcon span,
+  .cardNav .face.face1 .cardNavIcon .cardNavIcon1 {
+    position: static !important;
+    transform: none !important;
+    font-size: 46px !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  .cardNav .face.face2 {
+    transform: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    width: 100% !important;
+  }
+  .cardNav .face.face2 .cardNavContent {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .cardNav .face.face2 .cardNavContent .LinkName {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+  .cardNav .face.face2 .cardNavContent .btnLoginAs {
+    width: 100% !important;
+    max-width: 240px !important;
+    margin: 0 auto !important;
+    padding: 12px 24px !important;
+    background: #30368a !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 15px !important;
+    letter-spacing: 1px !important;
+    border-radius: 25px !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(48, 54, 138, 0.4) !important;
+    cursor: pointer !important;
+    display: block !important;
+    text-align: center !important;
+  }
+}
