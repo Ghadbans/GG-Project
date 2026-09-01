@@ -20,7 +20,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../../../apiConfig';
-import { Add, ArrowUpwardOutlined, ExitToApp } from '@mui/icons-material';
+import { Add, ArrowUpwardOutlined, ExitToApp, LocalPrintshop, RestartAlt } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -28,6 +28,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import ArrowBack from '@mui/icons-material/ArrowBack';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -40,10 +42,16 @@ import CurrencyExchange from '@mui/icons-material/CurrencyExchange';
 import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import { DataGrid } from '@mui/x-data-grid';
 import CategoryChart from './CategoryChart';
+import CategoryPrintStatement from './CategoryPrintStatement';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import EditIcon from '@mui/icons-material/Edit';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { useReactToPrint } from 'react-to-print';
+import { Button, Chip } from '@mui/material';
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -170,118 +178,176 @@ function CategoryViewDailyExpenses() {
     dispatch(logOut());
     navigate('/')
   }
+  const printStatementRef = useRef();
+  const handlePrintStatement = useReactToPrint({
+    content: () => printStatementRef.current,
+    documentTitle: `Category_Expenses_Statement_${newCategory || 'Category'}`,
+  });
+
   const [categories, setCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [expensesId, setExpensesID] = useState('');
+
+  // Date Filters
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [selectedMonthLabel, setSelectedMonthLabel] = useState('');
+
   useEffect(() => {
     const result = localStorage.getItem('CategoryTabId');
     if (result) {
-      setExpensesID(result)
+      setExpensesID(result);
     }
-  })
+  }, []);
+
   const [loadingData, setLoadingData] = useState(true);
+
   useEffect(() => {
     const fetchCategory = async () => {
       try {
         const [expenseResponse, categoryResponse] = await Promise.all([
           axios.get(`${ENDPOINT_URL}/expense?summary=true`),
           axios.get(`${ENDPOINT_URL}/expensesCategory`)
-        ])
-        setExpenses(expenseResponse.data.data.reverse());
-        setCategories(categoryResponse.data.data);
-        setLoadingData(false)
+        ]);
+        setExpenses((expenseResponse.data?.data || []).reverse());
+        const cats = categoryResponse.data?.data || [];
+        setCategories(cats);
+
+        if (!expensesId && cats.length > 0) {
+          const savedId = localStorage.getItem('CategoryTabId') || cats[0]._id;
+          setExpensesID(savedId);
+        }
+        setLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData(false)
+        setLoadingData(false);
       }
-    }
-    fetchCategory()
+    };
+    fetchCategory();
   }, []);
-  const expensesFiltered = expenses.filter((row) => row.expenseCategory._id === expensesId)
-  const newCategory = categories.filter((row) => row._id === expensesId)
-    .map((row) => (
-      row.expensesCategory
-    ))
-  const [totalAmount, setTotalAmount] = useState(0)
+
+  const currentCategoryObj = categories.find((row) => row._id === expensesId);
+  const newCategory = currentCategoryObj ? currentCategoryObj.expensesCategory : '';
+
+  const expensesFiltered = expenses.filter((row) => row.expenseCategory?._id === expensesId);
+
+  const [totalAmount, setTotalAmount] = useState(0);
   useEffect(() => {
-    const totalAmount1 = expensesFiltered ? expensesFiltered.reduce((sum, row) => sum + parseFloat(row.total), 0) : 0
-    const result = Math.round(totalAmount1 * 100) / 100
-    setTotalAmount(result)
-  })
+    const totalAmount1 = expensesFiltered ? expensesFiltered.reduce((sum, row) => sum + parseFloat(row.total || 0), 0) : 0;
+    const result = Math.round(totalAmount1 * 100) / 100;
+    setTotalAmount(result);
+  }, [expensesFiltered]);
+
   const [show3, setShow3] = useState(1);
   const handleShow3 = (e) => {
     setShow3(e);
-  }
+  };
 
   const [value, setValue] = useState(() => {
-    const result = localStorage.getItem('CategoryTab')
+    const result = localStorage.getItem('CategoryTab');
     return result !== null ? parseInt(result) : 0;
   });
   const [value2, setValue2] = useState(0);
+
   const handleChange = (e, newValue) => {
-    setValue(newValue)
-  }
+    setValue(newValue);
+  };
   const handleChange2 = (e, newValue) => {
-    setValue2(newValue)
-  }
+    setValue2(newValue);
+  };
+
   const handleChangeIdIndex = (index, id) => {
-    const newIndex = index;
-    const newIndexId = id;
-    setValue(newIndex);
-    setExpensesID(id)
-    localStorage.setItem('CategoryTab', newIndex)
-    localStorage.setItem('CategoryTabId', newIndexId)
-  }
+    setValue(index);
+    setExpensesID(id);
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedMonthLabel('');
+    localStorage.setItem('CategoryTab', index);
+    localStorage.setItem('CategoryTabId', id);
+  };
+
   const handleChangeIdIndex2 = (index, id) => {
-    const newIndex = index;
-    const newIndexId = id;
-    const result = categories.findIndex((row) => row._id === id)
-    setValue(result);
-    setValue2(newIndex);
-    setExpensesID(id)
-    localStorage.setItem('CategoryTab', result)
-    localStorage.setItem('CategoryTabId', newIndexId)
-  }
+    const catIndex = categories.findIndex((row) => row._id === id);
+    setValue(catIndex >= 0 ? catIndex : 0);
+    setValue2(index);
+    setExpensesID(id);
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedMonthLabel('');
+    localStorage.setItem('CategoryTab', catIndex >= 0 ? catIndex : 0);
+    localStorage.setItem('CategoryTabId', id);
+  };
+
   const [search2, setSearch2] = useState('');
   const handleSearch2 = (e) => {
-    const value = e.target.value
-    setSearch2(value)
-  }
+    const val = e.target.value;
+    setSearch2(val);
+  };
+
   const newArray2 = search2 !== '' ? categories.filter((Item) =>
     Item.expensesCategory && Item.expensesCategory.toLowerCase().includes(search2.toLowerCase())
-  ) : categories
+  ) : categories;
 
-  const [search, setSearch] = useState('')
-  const newArray = search !== '' ? expensesFiltered.filter((row) =>
-    row.accountName.toLowerCase().includes(search.toLowerCase()) ||
-    row.accountNameInfo && row.accountNameInfo.name.toLowerCase().includes(search.toLowerCase()) ||
-    dayjs(row.expenseDate).format('DD/MM/YYYY').includes(search) ||
-    (row.employeeName && row.employeeName.some((Item) =>
-      Item.employee.toLowerCase().includes(search.toLowerCase())
-    ))
-  ) : expensesFiltered
-  const [newTotal, setNewTotal] = useState(0)
+  const [search, setSearch] = useState('');
+
+  // Comprehensive Filter: Search + Date Range
+  const newArray = expensesFiltered.filter((row) => {
+    const searchLower = search.toLowerCase();
+    const expNumStr = `D-0${row.expenseNumber || ''} D-${String(row.expenseNumber || '').padStart(6, '0')}`;
+    const matchesSearch = !search ? true : (
+      (row.accountName && row.accountName.toLowerCase().includes(searchLower)) ||
+      (row.accountNameInfo?.name && row.accountNameInfo.name.toLowerCase().includes(searchLower)) ||
+      (row.description && row.description.toLowerCase().includes(searchLower)) ||
+      expNumStr.toLowerCase().includes(searchLower) ||
+      dayjs(row.expenseDate).format('DD/MM/YYYY').includes(search) ||
+      (Array.isArray(row.employeeName) && row.employeeName.some((Item) =>
+        Item.employee && Item.employee.toLowerCase().includes(searchLower)
+      ))
+    );
+
+    const rowDate = dayjs(row.expenseDate);
+    const matchesStartDate = !startDate ? true : (rowDate.isAfter(dayjs(startDate).startOf('day')) || rowDate.isSame(dayjs(startDate).startOf('day'), 'day'));
+    const matchesEndDate = !endDate ? true : (rowDate.isBefore(dayjs(endDate).endOf('day')) || rowDate.isSame(dayjs(endDate).endOf('day'), 'day'));
+
+    return matchesSearch && matchesStartDate && matchesEndDate;
+  });
+
+  const [newTotal, setNewTotal] = useState(0);
   useEffect(() => {
-    let total = 0
+    let total = 0;
     newArray.forEach((item) => {
       if (item.total) {
-        total += parseFloat(item.total)
+        total += parseFloat(item.total);
       }
-    })
-    setNewTotal(total)
-  }, [newArray])
+    });
+    setNewTotal(Math.round(total * 100) / 100);
+  }, [newArray]);
 
-  const [value3, setValue3] = React.useState('1');
-  useEffect(() => {
-    const result = localStorage.getItem('TabCategoryValue')
-    if (result) {
-      setValue3(result)
-    }
-  })
+  const [value3, setValue3] = React.useState(() => {
+    return localStorage.getItem('TabCategoryValue') || '1';
+  });
+
   const handleChange3 = (event, newValue) => {
-    const changeValue = newValue
-    setValue3(changeValue);
-    localStorage.setItem('TabCategoryValue', changeValue)
+    setValue3(newValue);
+    localStorage.setItem('TabCategoryValue', newValue);
+  };
+
+  // Callback when a user clicks a Month card in Overview
+  const handleSelectMonth = (year, monthIndex, monthName) => {
+    const start = dayjs(`${year}-${String(monthIndex + 1).padStart(2, '0')}-01`).startOf('month');
+    const end = dayjs(`${year}-${String(monthIndex + 1).padStart(2, '0')}-01`).endOf('month');
+    setStartDate(start);
+    setEndDate(end);
+    setSelectedMonthLabel(`${monthName} ${year}`);
+    setValue3('2'); // Switch to E-Table
+    localStorage.setItem('TabCategoryValue', '2');
+  };
+
+  const handleClearFilters = () => {
+    setStartDate(null);
+    setEndDate(null);
+    setSelectedMonthLabel('');
+    setSearch('');
   };
   const [sideBar, setSideBar] = React.useState(true);
   const toggleDrawer = () => {
@@ -465,22 +531,32 @@ function CategoryViewDailyExpenses() {
                     </Grid>
                     <Grid item xs={9}>
                       <div className='itemInfoContainer2'>
-                        <div style={{ width: '100%', background: 'white' }}>
-
-                          <div >
-
+                        <div style={{ width: '100%', background: 'white', borderRadius: '8px' }}>
+                          <div>
                             <div className='itemInfoContainer2Head'>
-                              <div>
-                                <Typography variant='h5'>{newCategory ? newCategory : 'Choose Category'}</Typography>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+                                <Typography variant='h5' sx={{ fontWeight: 'bold', color: '#30368a' }}>
+                                  {newCategory ? newCategory : 'Choose Category'}
+                                </Typography>
+                                {selectedMonthLabel && (
+                                  <Chip
+                                    label={`Filter: ${selectedMonthLabel}`}
+                                    onDelete={handleClearFilters}
+                                    color="primary"
+                                    size="small"
+                                    sx={{ backgroundColor: '#30368a', fontWeight: 'bold' }}
+                                  />
+                                )}
                               </div>
                             </div>
                             <br />
+
                             <Box sx={{ width: '100%' }}>
                               <TabContext value={value3}>
                                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
                                   <TabList
                                     onChange={handleChange3}
-                                    aria-label="lab API tabs example"
+                                    aria-label="Category tabs"
                                     sx={{
                                       '& .MuiTabs-indicator': {
                                         backgroundColor: 'white',
@@ -494,138 +570,282 @@ function CategoryViewDailyExpenses() {
                                       sx={{
                                         '&.Mui-selected': {
                                           color: 'white',
-                                          backgroundColor: 'gray',
+                                          backgroundColor: '#30368a',
                                           borderRadius: '10px'
-                                        }, '&:hover': {
-                                          color: 'gray',
+                                        },
+                                        '&:hover': {
+                                          color: '#30368a',
                                           bgcolor: 'white',
-                                          border: '1px solid gray',
+                                          border: '1px solid #30368a',
                                           borderRadius: '10px'
                                         }
                                       }}
                                     />
-                                    <Tab label="E-Table" value="2"
+                                    <Tab
+                                      label={`E-Table (${newArray.length})`}
+                                      value="2"
                                       sx={{
                                         '&.Mui-selected': {
                                           color: 'white',
-                                          backgroundColor: 'gray',
+                                          backgroundColor: '#30368a',
                                           borderRadius: '10px'
                                         },
                                         '&:hover': {
-                                          color: 'gray',
+                                          color: '#30368a',
                                           bgcolor: 'white',
-                                          border: '1px solid gray',
+                                          border: '1px solid #30368a',
                                           borderRadius: '10px'
                                         }
                                       }}
                                     />
                                   </TabList>
                                 </Box>
-                                <TabPanel value="1" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+
+                                {/* Tab 1: Overview */}
+                                <TabPanel value="1" sx={{ height: 'calc(100vh - 200px)', overflow: 'hidden', overflowY: 'auto' }}>
                                   <div>
                                     {expensesId ? (
                                       <div>
-                                        <div style={{ padding: '20px' }}>
-                                          <Card sx={{ backgroundColor: '#30368a', color: 'white' }}>
-                                            <CardContent sx={{ display: "flex", justifyContent: 'space-around' }}>
-                                              <h2>{newCategory}</h2>
-                                              <h2>Total</h2>
-                                              <h2><span>$</span> {totalAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</h2>
+                                        <div style={{ padding: '10px 0' }}>
+                                          <Card sx={{ backgroundColor: '#30368a', color: 'white', borderRadius: '12px' }}>
+                                            <CardContent sx={{ display: "flex", justifyContent: 'space-around', alignItems: 'center', py: 2 }}>
+                                              <div>
+                                                <Typography variant="body2" sx={{ opacity: 0.8 }}>CATEGORY</Typography>
+                                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{newCategory}</Typography>
+                                              </div>
+                                              <div>
+                                                <Typography variant="body2" sx={{ opacity: 0.8 }}>ALL-TIME TRANSACTIONS</Typography>
+                                                <Typography variant="h5" sx={{ fontWeight: 'bold' }}>{expensesFiltered.length}</Typography>
+                                              </div>
+                                              <div>
+                                                <Typography variant="body2" sx={{ opacity: 0.8 }}>ALL-TIME TOTAL</Typography>
+                                                <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+                                                  <span>$</span> {totalAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                </Typography>
+                                              </div>
                                             </CardContent>
                                           </Card>
                                           <br />
                                         </div>
-                                        <Card>
+
+                                        <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}>
                                           <CardContent>
-                                            <CategoryChart onChangeId={expensesId} />
+                                            <CategoryChart onChangeId={expensesId} onSelectMonth={handleSelectMonth} />
                                           </CardContent>
                                         </Card>
                                       </div>
                                     ) : ''}
                                   </div>
                                 </TabPanel>
-                                <TabPanel value="2" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
-                                  <div style={{ position: 'relative', top: '5px' }}>
-                                    {expensesId ? (
-                                      <Box >
-                                        <Typography sx={{ padding: '20px', fontSize: '20px' }}>Total : <span>$ {newTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></Typography>
-                                        <section style={{ position: 'relative', float: 'right', padding: '10px' }}>
-                                          <TextField
-                                            label='search'
-                                            id='search'
-                                            value={search}
-                                            variant="standard"
-                                            onChange={(e) => setSearch(e.target.value)}
-                                          />
-                                        </section>
-                                        <Table aria-label="collapsible table" stickyHeader>
-                                          <TableHead>
-                                            <TableRow>
-                                              <TableCell>#</TableCell>
-                                              <TableCell>Date</TableCell>
-                                              <TableCell>Account</TableCell>
-                                              <TableCell>Account Name</TableCell>
-                                              <TableCell>Total</TableCell>
-                                              <TableCell>Action</TableCell>
-                                            </TableRow>
-                                          </TableHead>
-                                          <TableBody>
-                                            {
-                                              newArray.map((row) => (
-                                                <TableRow key={row._id}>
-                                                  <TableCell>
-                                                    D-0{row.expenseNumber}
-                                                  </TableCell>
-                                                  <TableCell>
-                                                    {dayjs(row.expenseDate).format('DD/MM/YYYY')}
-                                                  </TableCell>
-                                                  <TableCell>
-                                                    {row.accountName}
-                                                  </TableCell>
-                                                  <TableCell>
-                                                    {
-                                                      row.accountName === 'Office' && (
-                                                        row.description
-                                                      )
-                                                    }
-                                                    {
-                                                      row.accountName === 'Project' && (
-                                                        row.accountNameInfo.name
-                                                      )
-                                                    }
-                                                    {
-                                                      row.accountName === 'Employee' && (
-                                                        <section>
-                                                          {
-                                                            row.employeeName.map((Item, i) => (
-                                                              <p key={i} > {Item.employee} / FC {Item.amount} / $ {Item.total}
-                                                              </p>
-                                                            ))
-                                                          }
-                                                        </section>
 
-                                                      )
-                                                    }
-                                                  </TableCell>
-                                                  <TableCell>
-                                                    {row.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                                  </TableCell>
-                                                  <TableCell>
-                                                    <EditTooltip title="Edit">
-                                                      <span>
-                                                        <IconButton>
-                                                          <NavLink to={`/DailyExpenseUpdate/${row._id}`} className='LinkName'>
-                                                            <EditIcon style={{ color: 'gray' }} />
-                                                          </NavLink>
-                                                        </IconButton>
-                                                      </span>
-                                                    </EditTooltip>
+                                {/* Tab 2: E-Table */}
+                                <TabPanel value="2" sx={{ height: 'calc(100vh - 200px)', overflow: 'hidden', overflowY: 'auto', p: 1 }}>
+                                  <div>
+                                    {expensesId ? (
+                                      <Box>
+                                        {/* Filter Bar & Controls */}
+                                        <Paper elevation={0} sx={{ p: 2, mb: 2, border: '1px solid #e2e8f0', borderRadius: '10px', backgroundColor: '#f8fafc' }}>
+                                          <Grid container spacing={2} alignItems="center">
+                                            {/* Date Pickers */}
+                                            <Grid item xs={12} sm={3}>
+                                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                  label='From Date'
+                                                  value={startDate}
+                                                  onChange={(date) => {
+                                                    setStartDate(date);
+                                                    setSelectedMonthLabel('');
+                                                  }}
+                                                  format='DD/MM/YYYY'
+                                                  slotProps={{ textField: { size: 'small', fullWidth: true, sx: { backgroundColor: 'white' } } }}
+                                                />
+                                              </LocalizationProvider>
+                                            </Grid>
+
+                                            <Grid item xs={12} sm={3}>
+                                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                  label='To Date'
+                                                  value={endDate}
+                                                  onChange={(date) => {
+                                                    setEndDate(date);
+                                                    setSelectedMonthLabel('');
+                                                  }}
+                                                  format='DD/MM/YYYY'
+                                                  slotProps={{ textField: { size: 'small', fullWidth: true, sx: { backgroundColor: 'white' } } }}
+                                                />
+                                              </LocalizationProvider>
+                                            </Grid>
+
+                                            {/* Text Search */}
+                                            <Grid item xs={12} sm={3}>
+                                              <TextField
+                                                label='Search text, description, account...'
+                                                size='small'
+                                                value={search}
+                                                onChange={(e) => setSearch(e.target.value)}
+                                                fullWidth
+                                                sx={{ backgroundColor: 'white' }}
+                                              />
+                                            </Grid>
+
+                                            {/* Action Buttons */}
+                                            <Grid item xs={12} sm={3} sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+                                              {(startDate || endDate || search || selectedMonthLabel) && (
+                                                <Button
+                                                  variant="outlined"
+                                                  color="inherit"
+                                                  size="small"
+                                                  onClick={handleClearFilters}
+                                                  startIcon={<RestartAlt />}
+                                                  sx={{ textTransform: 'none', height: 40 }}
+                                                >
+                                                  Reset
+                                                </Button>
+                                              )}
+                                              <Button
+                                                variant="contained"
+                                                size="small"
+                                                onClick={handlePrintStatement}
+                                                startIcon={<LocalPrintshop />}
+                                                sx={{
+                                                  backgroundColor: '#30368a',
+                                                  '&:hover': { backgroundColor: '#202a5a' },
+                                                  textTransform: 'none',
+                                                  fontWeight: 'bold',
+                                                  height: 40,
+                                                  px: 2
+                                                }}
+                                              >
+                                                Print Statement
+                                              </Button>
+                                            </Grid>
+                                          </Grid>
+                                        </Paper>
+
+                                        {/* Total Summary Banner */}
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5, px: 1 }}>
+                                          <Typography sx={{ fontSize: '18px', fontWeight: 'bold', color: '#1e293b' }}>
+                                            Filtered Total : <span style={{ color: '#30368a' }}>$ {newTotal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                                          </Typography>
+                                          <Typography variant="body2" sx={{ color: '#64748b' }}>
+                                            Showing {newArray.length} transaction{newArray.length === 1 ? '' : 's'}
+                                          </Typography>
+                                        </Box>
+
+                                        {/* E-Table */}
+                                        <TableContainer component={Paper} sx={{ borderRadius: '10px', border: '1px solid #e2e8f0', boxShadow: 'none' }}>
+                                          <Table aria-label="expenses statement table" stickyHeader size="small">
+                                            <TableHead>
+                                              <TableRow>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold' }}>#</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold' }}>Date</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold' }}>Account</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold' }}>Description / Account Name</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold', textAlign: 'right' }}>Amount (FC)</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Rate</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold', textAlign: 'right' }}>Total ($)</TableCell>
+                                                <TableCell sx={{ backgroundColor: '#30368a', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Action</TableCell>
+                                              </TableRow>
+                                            </TableHead>
+                                            <TableBody>
+                                              {newArray && newArray.length > 0 ? (
+                                                newArray.map((row) => (
+                                                  <TableRow key={row._id} hover sx={{ '&:nth-of-type(even)': { backgroundColor: '#f8fafc' } }}>
+                                                    <TableCell sx={{ fontWeight: 'bold' }}>
+                                                      D-{String(row.expenseNumber || 0).padStart(6, '0')}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                      {dayjs(row.expenseDate).format('DD/MM/YYYY')}
+                                                    </TableCell>
+                                                    <TableCell>
+                                                      <Chip
+                                                        size="small"
+                                                        label={row.accountName || 'N/A'}
+                                                        variant="outlined"
+                                                        sx={{
+                                                          fontSize: '11px',
+                                                          borderColor: row.accountName === 'Project' ? '#0284c7' : row.accountName === 'Employee' ? '#16a34a' : '#64748b',
+                                                          color: row.accountName === 'Project' ? '#0284c7' : row.accountName === 'Employee' ? '#16a34a' : '#64748b'
+                                                        }}
+                                                      />
+                                                    </TableCell>
+                                                    <TableCell>
+                                                      {row.accountName === 'Office' && (row.description || '-')}
+                                                      {row.accountName === 'Receivables' && (row.description || '-')}
+                                                      {row.accountName === 'Home' && (row.description || '-')}
+                                                      {row.accountName === 'Project' && (
+                                                        <div>
+                                                          <Typography variant="body2" sx={{ fontWeight: '500' }}>
+                                                            {row.accountNameInfo?.name || '-'}
+                                                          </Typography>
+                                                          {row.description && (
+                                                            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                                              {row.description}
+                                                            </Typography>
+                                                          )}
+                                                        </div>
+                                                      )}
+                                                      {row.accountName === 'Employee' && (
+                                                        <div>
+                                                          {Array.isArray(row.employeeName) && row.employeeName.map((Item, i) => (
+                                                            <Typography key={i} variant="body2" sx={{ fontSize: '12px' }}>
+                                                              <strong>{Item.employee}</strong> &bull; FC {(Item.amount || 0).toLocaleString()} &bull; $ {(Item.total || 0).toFixed(2)}
+                                                            </Typography>
+                                                          ))}
+                                                          {row.description && (
+                                                            <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                                                              {row.description}
+                                                            </Typography>
+                                                          )}
+                                                        </div>
+                                                      )}
+                                                    </TableCell>
+                                                    <TableCell sx={{ textAlign: 'right' }}>
+                                                      {row.amount ? `FC ${Number(row.amount).toLocaleString()}` : '-'}
+                                                    </TableCell>
+                                                    <TableCell sx={{ textAlign: 'center' }}>
+                                                      {row.rate || '-'}
+                                                    </TableCell>
+                                                    <TableCell sx={{ textAlign: 'right', fontWeight: 'bold', color: '#0f172a' }}>
+                                                      $ {Number(row.total || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                    </TableCell>
+                                                    <TableCell sx={{ textAlign: 'center' }}>
+                                                      <EditTooltip title="Edit Expense">
+                                                        <span>
+                                                          <IconButton size="small">
+                                                            <NavLink to={`/DailyExpenseUpdate/${row._id}`} className='LinkName'>
+                                                              <EditIcon fontSize="small" style={{ color: 'gray' }} />
+                                                            </NavLink>
+                                                          </IconButton>
+                                                        </span>
+                                                      </EditTooltip>
+                                                    </TableCell>
+                                                  </TableRow>
+                                                ))
+                                              ) : (
+                                                <TableRow>
+                                                  <TableCell colSpan={8} align="center" sx={{ py: 3, color: '#64748b' }}>
+                                                    No transactions match the selected date range or search criteria.
                                                   </TableCell>
                                                 </TableRow>
-                                              ))
-                                            }
-                                          </TableBody>
-                                        </Table>
+                                              )}
+                                            </TableBody>
+                                          </Table>
+                                        </TableContainer>
+
+                                        {/* Hidden Printable Statement */}
+                                        <div style={{ display: 'none' }}>
+                                          <CategoryPrintStatement
+                                            ref={printStatementRef}
+                                            categoryName={newCategory}
+                                            startDate={startDate}
+                                            endDate={endDate}
+                                            expensesList={newArray}
+                                            totalUSD={newTotal}
+                                            branchId="HQ"
+                                          />
+                                        </div>
                                       </Box>
                                     ) : ''}
                                   </div>
@@ -634,7 +854,6 @@ function CategoryViewDailyExpenses() {
                             </Box>
                           </div>
                         </div>
-
                       </div>
                     </Grid>
                   </Grid>

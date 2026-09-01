@@ -326,3 +326,8 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Account Dropdown Update:** Updated Account Name dropdown in `DailyExpenseForm.js` and `DailyExpenseUpdate.js` from `Home` to `Receivables`.
   - **Comprehensive Data Migration:** Added server boot migration and endpoint `/migrate-home-to-receivables` updating all historical documents across `expenseSchema`, `expensesCategory`, and `dailyExpense` collections from `Home`/`HOME` to `Receivables`.
   - **Zero Disruption:** Preserved identical accounting and ledger mechanics across all financial dashboards, reports, and modules.
+
+- **Expenses Category Information: Date Range Filter, Monthly Statements & Printout (Ver 3.4.64)**:
+  - **E-Table Date Filtering:** Added `From Date` and `To Date` pickers alongside multi-column text search, allowing dynamic date-window filtering and real-time total sum recalculation in `CategoryViewDailyExpenses.js`.
+  - **Printable Category Statement:** Created dedicated `CategoryPrintStatement.js` supporting high-definition printing (`useReactToPrint`) with Global Gate corporate branding, period ranges, transaction counts, account classifications, and grand totals.
+  - **Interactive Monthly Statement Navigation:** Enhanced `CategoryChart.js` with monthly breakdown cards for the selected year. Clicking any month automatically sets the date range to that month, switches to the E-Table tab, and displays the exact itemized monthly statement ready for one-click printing.
