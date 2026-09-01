@@ -646,7 +646,8 @@ function PurchaseFormUpdate() {
     }, 500)
   }
   const handleClose = () => {
-    navigate(-1);
+    setLoadingOpenModal(false);
+    navigate(`/PurchasesViewAdminAll/${id}`);
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -688,9 +689,7 @@ function PurchaseFormUpdate() {
     try {
       const response = await axios.put(`${ENDPOINT_URL}/update-purchase/${id}`, data, lockConfig)
       if (response) {
-        handleCreateComment()
-        // const resLocal = await db.purchaseSchema.get({ _id: id })
-        // await db.purchaseSchema.update(resLocal.purchaseNumber, { ...data, updateS: true })
+        await handleCreateComment()
         handleOpen()
       }
     } catch (error) {
@@ -1276,7 +1275,7 @@ function PurchaseFormUpdate() {
               <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
               <h2> Data Saved successfully</h2>
               <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={handleClose} className='btnCustomer'>
+                <button type='button' onClick={handleClose} className='btnCustomer'>
                   Close
                 </button>
               </div>

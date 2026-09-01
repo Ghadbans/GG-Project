@@ -303,3 +303,7 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 - **Persistent Row Numbering with Click-to-Expand (Ver 3.4.58)**:
   - Preserved continuous sequential row numbering (`1, 2, 3, 4, ...`) in the `N` column across both **Purchase Request** (`PurchasesViewAdminAll.js`) and **Project Information** (`ProjectViewInformation.js`).
   - Removed arrow icons from replacing numbers; clicking directly on the row number smoothly toggles open/closed the `Item Movement Info (Out & Return)` breakdown table.
+
+- **Purchase Request Edit Modal Instant Close & Fast Navigation (Ver 3.4.59)**:
+  - Fixed modal closing delay in `PurchaseFormUpdate.js` by explicitly clearing modal open state (`setLoadingOpenModal(false)`) and setting `type="button"` on the Close button to prevent frozen UI states.
+  - Directly routes back to `/PurchasesViewAdminAll/:id` upon closing the success dialog and leverages `cachedGet` in `PurchasesViewAdminAll.js` for instant rendering without blocking on heavy network queries.

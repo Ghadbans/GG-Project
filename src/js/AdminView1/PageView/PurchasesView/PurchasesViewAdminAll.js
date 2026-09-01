@@ -289,14 +289,14 @@ function PurchasesViewAdminAll() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(apiUrl)
+        const res = await cachedGet(apiUrl);
         setPurchase(res.data.data);
-        const resItem = await axios.get(`${ENDPOINT_URL}/item`)
-        SetItems(resItem.data.data)
-        setLoadingData(false)
+        const resItem = await cachedGet(`${ENDPOINT_URL}/item`);
+        SetItems(resItem.data.data);
+        setLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData(false)
+        setLoadingData(false);
       }
     }
     fetchData()
