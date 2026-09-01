@@ -317,3 +317,7 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - Fixed modal freeze across **Invoice Update** (`InvoiceFormUpdate.js`), **Estimate Update** (`EstimateInvoiceFormUpdate.js`), **Maintenance Update**, **Project Update**, **POS**, **Payment**, and all 35 update modules.
   - Systematically ensured `setLoadingOpenModal(false)` runs immediately when clicking `[Close]`, avoiding backdrop freezing or unresponsive modals during form save navigation.
   - Added explicit `type="button"` attributes across all modal dismiss buttons to prevent inadvertent form submission.
+
+- **Desktop Window Resize Blank Screen Permanent Resolution (Ver 3.4.62)**:
+  - **Scoped Mobile CSS:** Eliminated unscoped `@media screen and (max-width: 899px)` block in `view.css` that was hiding `MuiAppBar-root` and `MuiDrawer-root` on desktop window resize. Scoped all mobile-specific styles under `body.is-mobile-app`.
+  - **Dynamic Class Management:** Configured `AppLayoutWrapper` in `App.js` to only apply `is-mobile-app` class when `isNativeMobile()` is true (Capacitor iOS/Android or explicit `?mobile=true`), ensuring Desktop Electron (.exe) and standard web desktop preserve complete layouts and never turn into a white/blank screen upon resizing, snapping, or unmaximizing.

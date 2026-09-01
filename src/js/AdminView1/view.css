@@ -665,20 +665,19 @@
 /* ==========================================================================
    MOBILE RESPONSIVE OVERHAUL (< 900px) - ZOHO MOBILE APP UI STANDARD
    ========================================================================== */
-@media screen and (max-width: 899px) {
-    :root {
-        --sidebar-width: 0px !important;
+body.is-mobile-app {
+--sidebar-width: 0px !important;
         --sidebar-collapsed-width: 0px !important;
         --content-padding: 8px !important;
-    }
+}
 
-    /* 1. Global Navigation Bar Collision Fix */
-    .MuiBox-root > .MuiAppBar-root:not(.MobileLayout-appBar) {
-        display: none !important;
-    }
+/* 1. Global Navigation Bar Collision Fix */
+body.is-mobile-app .MuiBox-root > .MuiAppBar-root:not(.MobileLayout-appBar) {
+display: none !important;
+}
 
-    .MuiAppBar-root {
-        width: 100% !important;
+body.is-mobile-app .MuiAppBar-root {
+width: 100% !important;
         left: 0 !important;
         right: 0 !important;
         margin-left: 0 !important;
@@ -687,10 +686,10 @@
         position: fixed !important;
         top: 0 !important;
         z-index: 1200 !important;
-    }
+}
 
-    .MuiToolbar-root {
-        display: flex !important;
+body.is-mobile-app .MuiToolbar-root {
+display: flex !important;
         justify-content: space-between !important;
         align-items: center !important;
         width: 100% !important;
@@ -700,20 +699,20 @@
         padding-right: 6px !important;
         box-sizing: border-box !important;
         gap: 4px !important;
-    }
+}
 
-    /* Left Section: Hamburger & Title */
-    .MuiToolbar-root > .MuiIconButton-root:first-of-type,
-    .MuiToolbar-root > button:first-of-type {
-        padding: 4px !important;
+/* Left Section: Hamburger & Title */
+body.is-mobile-app .MuiToolbar-root > .MuiIconButton-root:first-of-type,
+body.is-mobile-app .MuiToolbar-root > button:first-of-type {
+padding: 4px !important;
         margin-right: 4px !important;
         flex-shrink: 0 !important;
-    }
+}
 
-    .MuiToolbar-root .MuiTypography-root,
-    .MuiToolbar-root h1,
-    .MuiToolbar-root h6 {
-        white-space: nowrap !important;
+body.is-mobile-app .MuiToolbar-root .MuiTypography-root,
+body.is-mobile-app .MuiToolbar-root h1,
+body.is-mobile-app .MuiToolbar-root h6 {
+white-space: nowrap !important;
         text-overflow: ellipsis !important;
         overflow: hidden !important;
         max-width: 115px !important;
@@ -721,62 +720,64 @@
         font-weight: 700 !important;
         margin: 0 !important;
         flex-shrink: 1 !important;
-    }
+}
 
-    /* Right Section Icons & Controls */
-    .MuiToolbar-root .MuiIconButton-root {
-        padding: 3px !important;
+/* Right Section Icons & Controls */
+body.is-mobile-app .MuiToolbar-root .MuiIconButton-root {
+padding: 3px !important;
         margin: 0 !important;
-    }
+}
 
-    .MuiToolbar-root .MuiSvgIcon-root {
-        font-size: 20px !important;
-    }
+body.is-mobile-app .MuiToolbar-root .MuiSvgIcon-root {
+font-size: 20px !important;
+}
 
-    /* 2. Hard Hide Desktop Sidebar on Mobile (Zero mini-rail) */
-    .MuiDrawer-docked,
-    .MuiDrawer-root.MuiDrawer-docked,
-    .MuiDrawer-paperAnchorDockedLeft {
-        width: 0px !important;
+/* 2. Hard Hide Desktop Sidebar on Mobile (Zero mini-rail) */
+body.is-mobile-app .MuiDrawer-docked,
+body.is-mobile-app .MuiDrawer-root.MuiDrawer-docked,
+body.is-mobile-app .MuiDrawer-paperAnchorDockedLeft {
+width: 0px !important;
         min-width: 0px !important;
         display: none !important;
         visibility: hidden !important;
         flex-shrink: 1 !important;
-    }
+}
 
-    .MuiDrawer-root:not(.MuiDrawer-modal) .MuiDrawer-paper {
-        display: none !important;
+body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal) .MuiDrawer-paper {
+display: none !important;
         width: 0px !important;
         min-width: 0px !important;
         border: none !important;
         visibility: hidden !important;
-    }
+}
 
-    /* 3. Universal Auto-Fit Wrapper & Zoho Canvas Background */
-    html, body, #root {
-        width: 100% !important;
+/* 3. Universal Auto-Fit Wrapper & Zoho Canvas Background */
+body.is-mobile-app,
+body.is-mobile-app,
+body.is-mobile-app #root {
+width: 100% !important;
         max-width: 100vw !important;
         overflow-x: hidden !important;
         background-color: #F8FAFC !important;
-    }
+}
 
-    .MuiContainer-root,
-    .Homeemployee,
-    .container-fluid,
-    .featured,
-    .header,
-    .Chart1,
-    .tableemploye,
-    .fomrCustomer,
-    .invoice,
-    .employeecard,
-    .projectSection1,
-    .projectSectionAdminView,
-    .invoicedetails,
-    .downTabledetailstotal,
-    .table-responsive,
-    main {
-        width: 100% !important;
+body.is-mobile-app .MuiContainer-root,
+body.is-mobile-app .Homeemployee,
+body.is-mobile-app .container-fluid,
+body.is-mobile-app .featured,
+body.is-mobile-app .header,
+body.is-mobile-app .Chart1,
+body.is-mobile-app .tableemploye,
+body.is-mobile-app .fomrCustomer,
+body.is-mobile-app .invoice,
+body.is-mobile-app .employeecard,
+body.is-mobile-app .projectSection1,
+body.is-mobile-app .projectSectionAdminView,
+body.is-mobile-app .invoicedetails,
+body.is-mobile-app .downTabledetailstotal,
+body.is-mobile-app .table-responsive,
+body.is-mobile-app main {
+width: 100% !important;
         max-width: 100vw !important;
         box-sizing: border-box !important;
         padding: 8px !important;
@@ -785,20 +786,23 @@
         margin-right: 0 !important;
         overflow-x: hidden !important;
         background-color: #F8FAFC !important;
-    }
+}
 
-    /* Reset desktop sidebar offsets */
-    .header, .featured, .Homeemployee, main {
-        margin-left: 0 !important;
+/* Reset desktop sidebar offsets */
+body.is-mobile-app .header,
+body.is-mobile-app .featured,
+body.is-mobile-app .Homeemployee,
+body.is-mobile-app main {
+margin-left: 0 !important;
         margin-right: 0 !important;
         width: 100% !important;
-    }
+}
 
-    /* 4. Responsive Tables & DataGrids */
-    .MuiDataGrid-root,
-    .MuiTableContainer-root,
-    .table-container {
-        width: 100% !important;
+/* 4. Responsive Tables & DataGrids */
+body.is-mobile-app .MuiDataGrid-root,
+body.is-mobile-app .MuiTableContainer-root,
+body.is-mobile-app .table-container {
+width: 100% !important;
         min-width: 0 !important;
         max-width: 100% !important;
         overflow-x: auto !important;
@@ -808,40 +812,40 @@
         background-color: #FFFFFF !important;
         border-radius: 14px !important;
         box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
-    }
+}
 
-    .MuiDataGrid-main {
-        min-width: 0 !important;
+body.is-mobile-app .MuiDataGrid-main {
+min-width: 0 !important;
         width: 100% !important;
         overflow-x: auto !important;
-    }
+}
 
-    .MuiDataGrid-toolbarContainer,
-    .MuiDataGrid-toolbar {
-        display: flex !important;
+body.is-mobile-app .MuiDataGrid-toolbarContainer,
+body.is-mobile-app .MuiDataGrid-toolbar {
+display: flex !important;
         flex-wrap: wrap !important;
         gap: 6px !important;
         width: 100% !important;
         padding: 6px !important;
         box-sizing: border-box !important;
-    }
+}
 
-    .MuiDataGrid-toolbarContainer button,
-    .MuiDataGrid-toolbarContainer .MuiButton-root {
-        font-size: 11px !important;
+body.is-mobile-app .MuiDataGrid-toolbarContainer button,
+body.is-mobile-app .MuiDataGrid-toolbarContainer .MuiButton-root {
+font-size: 11px !important;
         padding: 3px 6px !important;
         min-width: auto !important;
-    }
+}
 
-    .MuiDataGrid-toolbarContainer .MuiTextField-root {
-        width: 100% !important;
+body.is-mobile-app .MuiDataGrid-toolbarContainer .MuiTextField-root {
+width: 100% !important;
         margin-top: 4px !important;
-    }
+}
 
-    /* Floating Action Button (FAB +) on mobile */
-    .btnCustomerAdding,
-    .Customerbuttonadd1 .MuiIconButton-root {
-        position: fixed !important;
+/* Floating Action Button (FAB +) on mobile */
+body.is-mobile-app .btnCustomerAdding,
+body.is-mobile-app .Customerbuttonadd1 .MuiIconButton-root {
+position: fixed !important;
         bottom: 75px !important;
         right: 18px !important;
         z-index: 1200 !important;
@@ -854,16 +858,16 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-    }
+}
 
-    /* Action Toolbars & Filter Button Sections */
-    .Customerbuttonadd1,
-    .buttonHolder,
-    .btnHolder,
-    .topActions,
-    .filterSection,
-    .filterCustomer {
-        display: flex !important;
+/* Action Toolbars & Filter Button Sections */
+body.is-mobile-app .Customerbuttonadd1,
+body.is-mobile-app .buttonHolder,
+body.is-mobile-app .btnHolder,
+body.is-mobile-app .topActions,
+body.is-mobile-app .filterSection,
+body.is-mobile-app .filterCustomer {
+display: flex !important;
         flex-wrap: wrap !important;
         gap: 8px !important;
         width: 100% !important;
@@ -871,42 +875,42 @@
         margin-right: 0 !important;
         justify-content: flex-start !important;
         box-sizing: border-box !important;
-    }
+}
 
-    .Customerbuttonadd1 button,
-    .btnCustomer,
-    .btnCustomer2,
-    .btnCustomer3,
-    .btnCustomer4,
-    .btnCustomer5 {
-        font-size: 12px !important;
+body.is-mobile-app .Customerbuttonadd1 button,
+body.is-mobile-app .btnCustomer,
+body.is-mobile-app .btnCustomer2,
+body.is-mobile-app .btnCustomer3,
+body.is-mobile-app .btnCustomer4,
+body.is-mobile-app .btnCustomer5 {
+font-size: 12px !important;
         padding: 6px 12px !important;
         max-width: 100% !important;
         margin: 2px !important;
-    }
+}
 
-    /* 5. Dedicated Full-Screen Detail Views (Hide left split-list on mobile) */
-    .itemInfoContainer,
-    .GridListRecord,
-    [class*="itemInfoContainer"] {
-        display: none !important;
-    }
+/* 5. Dedicated Full-Screen Detail Views (Hide left split-list on mobile) */
+body.is-mobile-app .itemInfoContainer,
+body.is-mobile-app .GridListRecord,
+body.is-mobile-app [class*="itemInfoContainer"] {
+display: none !important;
+}
 
-    .MuiGrid-root.MuiGrid-item {
-        width: 100% !important;
+body.is-mobile-app .MuiGrid-root.MuiGrid-item {
+width: 100% !important;
         max-width: 100% !important;
         flex-basis: 100% !important;
         padding-left: 0 !important;
         margin-left: 0 !important;
-    }
+}
 
-    /* 6. Form Fields & Action Controls (Zoho Enterprise Mobile Form Standard) */
-    div[style*="position: 'fixed'"][style*="right: '-5px'"],
-    div[style*="position: fixed"][style*="right: -5px"],
-    div[style*="top: 400px"],
-    div[style*="top: 350px"],
-    div[style*="top: '400px'"] {
-        position: static !important;
+/* 6. Form Fields & Action Controls (Zoho Enterprise Mobile Form Standard) */
+body.is-mobile-app div[style*="position: 'fixed'"][style*="right: '-5px'"],
+body.is-mobile-app div[style*="position: fixed"][style*="right: -5px"],
+body.is-mobile-app div[style*="top: 400px"],
+body.is-mobile-app div[style*="top: 350px"],
+body.is-mobile-app div[style*="top: '400px'"] {
+position: static !important;
         display: flex !important;
         flex-direction: row !important;
         justify-content: flex-end !important;
@@ -914,38 +918,35 @@
         width: 100% !important;
         margin: 10px 0 !important;
         float: none !important;
-    }
+}
 
-    .MuiTextField-root,
-    .MuiFormControl-root,
-    .MuiAutocomplete-root,
-    .MuiInputBase-root {
-        width: 100% !important;
+body.is-mobile-app .MuiTextField-root,
+body.is-mobile-app .MuiFormControl-root,
+body.is-mobile-app .MuiAutocomplete-root,
+body.is-mobile-app .MuiInputBase-root {
+width: 100% !important;
         min-height: 48px !important;
         box-sizing: border-box !important;
-    }
+}
 
-    .MuiInputBase-input {
-        min-height: 24px !important;
+body.is-mobile-app .MuiInputBase-input {
+min-height: 24px !important;
         font-size: 15px !important;
-    }
+}
 
-    /* Modal / Popups on mobile */
-    .MuiDialog-paper,
-    .MuiModal-root .MuiBox-root,
-    .modalView,
-    .modalView1,
-    .modalView4,
-    .modalView5,
-    .Modal0,
-    .Modal1,
-    .Modal10,
-    .Modal15 {
-        width: 95% !important;
+/* Modal / Popups on mobile */
+body.is-mobile-app .MuiDialog-paper,
+body.is-mobile-app .MuiModal-root .MuiBox-root,
+body.is-mobile-app .modalView,
+body.is-mobile-app .modalView1,
+body.is-mobile-app .modalView4,
+body.is-mobile-app .modalView5,
+body.is-mobile-app .Modal0,
+body.is-mobile-app .Modal1,
+body.is-mobile-app .Modal10,
+body.is-mobile-app .Modal15 {
+width: 95% !important;
         max-width: 95vw !important;
         box-sizing: border-box !important;
         border-radius: 14px !important;
-    }
 }
-
-

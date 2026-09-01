@@ -19,6 +19,16 @@ import { isNativeMobile } from './utils/isMobile';
 function AppLayoutWrapper({ children }) {
   const isMobile = isNativeMobile();
 
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      if (isMobile) {
+        document.body.classList.add('is-mobile-app');
+      } else {
+        document.body.classList.remove('is-mobile-app');
+      }
+    }
+  }, [isMobile]);
+
   if (isMobile) {
     return <MobileLayout>{children}</MobileLayout>;
   }
