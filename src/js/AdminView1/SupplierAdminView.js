@@ -306,6 +306,7 @@ function SupplierAdminView() {
   };
 
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
     setSelectedRows([])
   };

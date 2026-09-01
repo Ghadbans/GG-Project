@@ -232,6 +232,7 @@ function ItemUpdateView2({ id, onClose }) {
     }, 500)
   }
   const handleClose = () => {
+    setLoadingOpenModal(false);
     navigate(-1);
   }
   const handleCloseError = () => {

@@ -187,6 +187,7 @@ function EmployeePlaningView({ user }) {
     setDeleteId(id)
   };
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
   };
   const [openReasonDelete, setOpenReasonDelete] = useState(false);

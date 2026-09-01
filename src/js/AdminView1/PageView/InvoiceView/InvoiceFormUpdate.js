@@ -713,11 +713,12 @@ function InvoiceFormUpdate() {
     setOpen2(false);
     setTimeout(() => {
       setLoading(false);
-    }, 500)
-  }
+    }, 500);
+  };
   const handleClose = () => {
-    navigate(-1);
-  }
+    setLoadingOpenModal(false);
+    navigate(`/InvoiceViewAdminAll/${id}`);
+  };
   const handleCloseUpdateItem = () => {
     setLoadingUpdateItemOpenModal(false);
     setItemNewQty(0)
@@ -1754,7 +1755,7 @@ function InvoiceFormUpdate() {
               <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
               <h2> Data Saved successfully</h2>
               <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={handleClose} className='btnCustomer'>
+                <button type='button' onClick={handleClose} className='btnCustomer'>
                   Close
                 </button>
               </div>

@@ -307,6 +307,7 @@ function PurchasesViewAdmin() {
   };
 
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
   };
   const handleCloseModal = () => {

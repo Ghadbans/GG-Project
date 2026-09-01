@@ -326,6 +326,7 @@ function SellShopInvoiceView() {
     setDeleteId(id)
   };
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
   };
   const [open1, setOpen1] = useState(false);
@@ -874,7 +875,7 @@ function SellShopInvoiceView() {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <button onClick={handleClose} className='btnCustomer' style={{ width: '100%' }}>Cancel</button>
+              <button type='button' onClick={handleClose} className='btnCustomer' style={{ width: '100%' }}>Cancel</button>
             </Grid>
             <Grid item xs={6}>
               <button onClick={handleDelete} className='btnCustomer2' style={{ width: '100%' }}>Delete</button>

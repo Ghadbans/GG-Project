@@ -275,6 +275,7 @@ function MaintenanceViewAdmin() {
     setDeleteId(id)
   };
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
   };
   const [open1, setOpen1] = useState(false);

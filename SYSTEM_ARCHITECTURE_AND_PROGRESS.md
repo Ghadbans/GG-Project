@@ -312,3 +312,8 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Desktop Window Resize Isolation:** Removed all responsive `window.innerWidth < 900` fallback checks across the desktop app. Resizing or snapping the desktop (.exe) window now strictly preserves full desktop views and never switches into the mobile layout.
   - **Safe Native Mobile Detection:** Created clean [`src/js/utils/isMobile.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/utils/isMobile.js) utility using global `window.Capacitor?.isNativePlatform?.()`, eliminating `@capacitor/core` module resolution errors on Cloudflare Pages.
   - **Mobile Dashboard Expense Metric Normalization:** Fixed currency summation bug in `MobileDashboard.js` that was reading raw Franc amounts (`exp.amount`) instead of normalized USD totals (`exp.total`), restoring accurate revenue and expense totals.
+
+- **System-Wide Update Forms Modal Close & Freeze Prevention (Ver 3.4.61)**:
+  - Fixed modal freeze across **Invoice Update** (`InvoiceFormUpdate.js`), **Estimate Update** (`EstimateInvoiceFormUpdate.js`), **Maintenance Update**, **Project Update**, **POS**, **Payment**, and all 35 update modules.
+  - Systematically ensured `setLoadingOpenModal(false)` runs immediately when clicking `[Close]`, avoiding backdrop freezing or unresponsive modals during form save navigation.
+  - Added explicit `type="button"` attributes across all modal dismiss buttons to prevent inadvertent form submission.

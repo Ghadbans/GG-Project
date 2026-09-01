@@ -529,6 +529,7 @@ function EstimateViewConvertToInvoice() {
   }
 
   const handleClose = () => {
+    setLoadingOpenModal(false);
     navigate(-1);
   }
   const handleCloseError = () => {

@@ -1381,7 +1381,7 @@ function ItemInformationVIew() {
               <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
               <h2> Data Saved successfully</h2>
               <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={handleClose} className='btnCustomer'>
+                <button type='button' onClick={handleClose} className='btnCustomer'>
                   Close
                 </button>
               </div>

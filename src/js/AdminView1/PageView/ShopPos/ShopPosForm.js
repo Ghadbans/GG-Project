@@ -659,6 +659,7 @@ function ShopPosForm() {
   }
 
   const handleClose = () => {
+    setLoadingOpenModal(false);
     resetForm();
     window.location.reload(); // Removed hard reload
   }

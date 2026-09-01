@@ -51,6 +51,7 @@ function MessageAdminView({ name, role }) {
   };
 
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setAnchorEl(null);
   };
 

@@ -691,6 +691,7 @@ function ProjectViewInformation() {
     }, 500)
   }
   const handleClose = () => {
+    setLoadingOpenModal(false);
     window.location.reload();
   }
   const handleCloseError = () => {
@@ -2079,7 +2080,7 @@ function ProjectViewInformation() {
               <p><CheckCircleIcon style={{ color: 'green', height: '40px', width: '40px' }} /></p>
               {synchro === 'true' ? <h2> Item Out Sync successfully</h2> : <h2> Data Saved successfully</h2>}
               <div style={{ display: 'flex', gap: '60px', justifyContent: 'center' }}>
-                <button onClick={handleClose} className='btnCustomer'>
+                <button type='button' onClick={handleClose} className='btnCustomer'>
                   Close
                 </button>
               </div>

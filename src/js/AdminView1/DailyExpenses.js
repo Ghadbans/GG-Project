@@ -404,6 +404,7 @@ function DailyExpenses() {
     setErrorOpenModal(false);
   }
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
   };
   const handleCloseModal = () => {

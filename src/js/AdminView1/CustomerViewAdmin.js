@@ -299,6 +299,7 @@ function CustomerViewAdmin() {
   };
 
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
     setSelectedRows([])
   };

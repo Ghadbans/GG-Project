@@ -307,6 +307,7 @@ function ItemOutViewAdmin() {
     setDeleteId(id)
   };
   const handleClose = () => {
+    setLoadingOpenModal(false);
     setOpen(false);
   };
   const [openReasonDelete, setOpenReasonDelete] = useState(false);
@@ -759,7 +760,7 @@ function ItemOutViewAdmin() {
               </Typography>
             </Grid>
             <Grid item xs={6}>
-              <button onClick={handleClose} className='btnCustomer' style={{ width: '100%' }}>Cancel</button>
+              <button type='button' onClick={handleClose} className='btnCustomer' style={{ width: '100%' }}>Cancel</button>
             </Grid>
             <Grid item xs={6}>
               <button onClick={handleOpenReasonDelete} className='btnCustomer2' style={{ width: '100%' }}>Delete</button>
