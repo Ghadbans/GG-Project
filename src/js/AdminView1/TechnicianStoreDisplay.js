@@ -35,7 +35,7 @@ import Logout from '../component/NetworkLogoutIcon';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -355,7 +355,7 @@ function PointOfSale() {
               loadingData ?
                 <div style={{ position: 'relative', top: '120px' }}>
                   <Loader />
-                </div> : (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                </div> : isNativeMobile() ? (
                   <MobileCardList type="tech_store" data={item} />
                 ) : (
                 <div>

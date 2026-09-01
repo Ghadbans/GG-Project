@@ -29,7 +29,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { Close } from '@mui/icons-material';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
@@ -764,7 +764,7 @@ function ItemViewAdmin() {
 
                   <TabContext value={value3}>
                     <Box>
-                      {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                      {!isNativeMobile() && (
                         <TabList
                           onChange={handleChange3}
                           aria-label="lab API tabs example"
@@ -816,8 +816,8 @@ function ItemViewAdmin() {
                     </Box>
                     <TabPanel value='1'>
                       <Box>
-                        <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 580, width: '100%', marginTop: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? '0' : '-50px' }}>
-                          {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                        <Box sx={{ height: isNativeMobile() ? 'auto' : 580, width: '100%', marginTop: isNativeMobile() ? '0' : '-50px' }}>
+                          {!isNativeMobile() && (
                             <>
                               {item.length > 0 ? (
                                 <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
@@ -853,7 +853,7 @@ function ItemViewAdmin() {
                               <br />
                             </>
                           )}
-                          {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                          {isNativeMobile() ? (
                             <MobileCardList type="items" data={item} />
                           ) : (
                             <>
@@ -892,7 +892,7 @@ function ItemViewAdmin() {
                             </>
                           )}
                         </Box>
-                        {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                        {!isNativeMobile() && (
                           <Pagination count={totalPage} page={page + 1} onChange={(e, value) => setPage(value - 1)} color="primary" />
                         )}
                       </Box>

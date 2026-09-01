@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.4.59",
+  "version": "3.4.60",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -9,6 +9,7 @@
     "watch": "webpack --config webpack.common.js --watch",
     "build": "webpack --config webpack.prod.js && webpack --config webpack.web.prod.js && node scripts/copy-web.js",
     "build:web": "webpack --config webpack.web.prod.js && node scripts/copy-web.js",
+    "build:electron": "webpack --config webpack.prod.js",
     "cap:sync": "npx cap sync",
     "cap:build": "npm run build:web && npx cap sync",
     "cap:build:android": "npm run build:web && npx cap sync android",
@@ -58,7 +59,7 @@
           "y": 220
         },
         {
-          "x": 430,
+          "x": 410,
           "y": 220,
           "type": "link",
           "path": "/Applications"
@@ -67,6 +68,7 @@
     }
   },
   "devDependencies": {
+    "@capacitor/cli": "^6.0.0",
     "electron": "^26.6.1",
     "electron-builder": "^24.9.1",
     "electron-reloader": "^1.2.3",
@@ -76,6 +78,7 @@
     "@babel/core": "^7.22.17",
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-react": "^7.22.15",
+    "@capacitor/core": "^6.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.9",

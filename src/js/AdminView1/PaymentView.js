@@ -39,7 +39,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import db from '../dexieDb';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -926,8 +926,8 @@ const toggleDrawer = () => {
            </span>
       </ViewTooltip>
           </section>
-            <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 560, width: '100%' }}>
-              {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+            <Box sx={{ height: isNativeMobile() ? 'auto' : 560, width: '100%' }}>
+              {isNativeMobile() ? (
                 <MobileCardList type="payments" data={invoicePaymentRow} />
               ) : invoicePaymentRow.length > 0 ? (
                 user.data.role === 'CEO' ? (

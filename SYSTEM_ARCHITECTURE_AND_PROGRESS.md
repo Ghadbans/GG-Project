@@ -307,3 +307,8 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 - **Purchase Request Edit Modal Instant Close & Fast Navigation (Ver 3.4.59)**:
   - Fixed modal closing delay in `PurchaseFormUpdate.js` by explicitly clearing modal open state (`setLoadingOpenModal(false)`) and setting `type="button"` on the Close button to prevent frozen UI states.
   - Directly routes back to `/PurchasesViewAdminAll/:id` upon closing the success dialog and leverages `cachedGet` in `PurchasesViewAdminAll.js` for instant rendering without blocking on heavy network queries.
+
+- **Desktop Window Isolation & Cloudflare Web Build Fix (Ver 3.4.60)**:
+  - **Desktop Window Resize Isolation:** Removed all responsive `window.innerWidth < 900` fallback checks across the desktop app. Resizing or snapping the desktop (.exe) window now strictly preserves full desktop views and never switches into the mobile layout.
+  - **Safe Native Mobile Detection:** Created clean [`src/js/utils/isMobile.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/utils/isMobile.js) utility using global `window.Capacitor?.isNativePlatform?.()`, eliminating `@capacitor/core` module resolution errors on Cloudflare Pages.
+  - **Mobile Dashboard Expense Metric Normalization:** Fixed currency summation bug in `MobileDashboard.js` that was reading raw Franc amounts (`exp.amount`) instead of normalized USD totals (`exp.total`), restoring accurate revenue and expense totals.

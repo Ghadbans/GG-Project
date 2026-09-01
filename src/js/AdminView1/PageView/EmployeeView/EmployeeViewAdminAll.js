@@ -48,7 +48,7 @@ import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import Image from '../../../img/images.png';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../../../utils/isMobile';
 import MobileCardList from '../../../component/MobileCardList';
 import Phone from '@mui/icons-material/Phone';
 import WebIcon from '@mui/icons-material/Web';
@@ -860,7 +860,7 @@ function EmployeeViewAdminAll() {
                 <div style={{ position: 'relative', top: '120px' }}>
                   <Loader />
                 </div>
-              </div> : (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+              </div> : isNativeMobile() ? (
                 <MobileCardList type="employees" data={employee} />
               ) : (
                 <div >

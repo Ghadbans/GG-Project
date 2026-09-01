@@ -37,7 +37,7 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 
@@ -806,7 +806,7 @@ function InvoiceViewAdmin() {
                       </section>
                     ) : ''}
                     {
-                      (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                      isNativeMobile() ? (
                         <MobileCardList type="invoices" data={invoice} />
                       ) : user.data.role === 'CEO' ? (
                         <>

@@ -42,7 +42,7 @@ import { v4 } from 'uuid';
 import CancelIcon from '@mui/icons-material/Cancel';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 
@@ -780,8 +780,8 @@ function DailyExpenses() {
                   </div>
                   <br />
 
-                  <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 600, width: '100%' }} >
-                    {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                  <Box sx={{ height: isNativeMobile() ? 'auto' : 600, width: '100%' }} >
+                    {isNativeMobile() ? (
                       <MobileCardList type="expenses" data={expenses} />
                     ) : (
                       <>

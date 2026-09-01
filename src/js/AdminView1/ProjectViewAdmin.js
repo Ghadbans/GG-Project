@@ -36,7 +36,7 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 
@@ -645,7 +645,7 @@ function ProjectViewAdmin() {
                     </section>
                   )
                     : ''}
-                  {!(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) && (
+                  {!isNativeMobile() && (
                     <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
                       <ViewTooltip>
                         <span>
@@ -660,8 +660,8 @@ function ProjectViewAdmin() {
                       </ViewTooltip>
                     </section>
                   )}
-                  <Box sx={{ height: (Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? 'auto' : 600, width: '100%' }}>
-                    {(Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900)) ? (
+                  <Box sx={{ height: isNativeMobile() ? 'auto' : 600, width: '100%' }}>
+                    {isNativeMobile() ? (
                       <MobileCardList type="projects" data={project} />
                     ) : (
                       <>

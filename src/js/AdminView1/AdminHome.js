@@ -21,7 +21,7 @@ import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import Loader from '../component/Loader';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { Capacitor } from '@capacitor/core';
+import { isNativeMobile } from '../utils/isMobile';
 import MobileDashboard from '../component/MobileDashboard';
 import Logout from '../component/NetworkLogoutIcon';
 import { AccountBalance, AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Sell, ShoppingBagOutlined, ShoppingCart, Square } from '@mui/icons-material';
@@ -1106,7 +1106,7 @@ function AdminHome() {
     setMetricType(type)
   }
 
-  const isMobile = Capacitor.isNativePlatform() || (typeof window !== 'undefined' && window.innerWidth < 900);
+  const isMobile = isNativeMobile();
   if (isMobile) {
     return <MobileDashboard />;
   }

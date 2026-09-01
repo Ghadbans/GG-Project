@@ -171,7 +171,10 @@ function MobileDashboardContent() {
         let totalExp = 0;
         expenses.forEach((exp) => {
           if (!exp) return;
-          totalExp += Number(exp.amount || exp.total || 0);
+          const expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' 
+            ? Number(exp.total) 
+            : (exp.rate && exp.amount ? Number(exp.amount) / Number(exp.rate) : Number(exp.amount || 0));
+          totalExp += (isNaN(expTotal) ? 0 : expTotal);
         });
 
         let totalPaid = 0;
