@@ -417,6 +417,44 @@ Route.route("/expensesCategory", cors(corsOptionsDelegate)).get(
   }
 );
 
+Route.route("/migrate-home-to-receivables").all(async (req, res, next) => {
+  try {
+    const db = mongoose.connection.db;
+    const r1 = await db.collection("expenseSchema").updateMany(
+      { accountName: /^home$/i },
+      { $set: { accountName: "Receivables" } }
+    );
+    const r2 = await db.collection("expenseSchema").updateMany(
+      { "expenseCategory.expensesCategory": /^home$/i },
+      { $set: { "expenseCategory.expensesCategory": "Receivables" } }
+    );
+    const r3 = await db.collection("expensesCategory").updateMany(
+      { expensesCategory: /^home$/i },
+      { $set: { expensesCategory: "Receivables" } }
+    );
+    const r4 = await db.collection("dailyExpense").updateMany(
+      { expenseCategory: /^home$/i },
+      { $set: { expenseCategory: "Receivables" } }
+    );
+    const r5 = await db.collection("dailyExpense").updateMany(
+      { expenseOption: /^home$/i },
+      { $set: { expenseOption: "Receivables" } }
+    );
+    res.json({
+      status: 200,
+      message: "Migration completed successfully!",
+      results: {
+        expenseAccountNameUpdated: r1.modifiedCount,
+        expenseCategoryUpdated: r2.modifiedCount,
+        expensesCategoryCollectionUpdated: r3.modifiedCount,
+        dailyExpenseUpdated: (r4.modifiedCount || 0) + (r5.modifiedCount || 0)
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ status: 500, error: err.message });
+  }
+});
+
 Route.route("/create-expensesCategory").post(async (req, res, next) => {
   await dailyExpensesCategorySchema
     .create(req.body)

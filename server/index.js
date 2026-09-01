@@ -80,6 +80,36 @@ mongoDbConnection().then(async () => {
     } catch (err) {
       console.log("estimateName_1 drop result:", err.message);
     }
+
+    // Automatic migration: rename Home -> Receivables across collections
+    try {
+      const db = mongoose.connection.db;
+      const r1 = await db.collection("expenseSchema").updateMany(
+        { accountName: /^home$/i },
+        { $set: { accountName: "Receivables" } }
+      );
+      const r2 = await db.collection("expenseSchema").updateMany(
+        { "expenseCategory.expensesCategory": /^home$/i },
+        { $set: { "expenseCategory.expensesCategory": "Receivables" } }
+      );
+      const r3 = await db.collection("expensesCategory").updateMany(
+        { expensesCategory: /^home$/i },
+        { $set: { expensesCategory: "Receivables" } }
+      );
+      const r4 = await db.collection("dailyExpense").updateMany(
+        { expenseCategory: /^home$/i },
+        { $set: { expenseCategory: "Receivables" } }
+      );
+      const r5 = await db.collection("dailyExpense").updateMany(
+        { expenseOption: /^home$/i },
+        { $set: { expenseOption: "Receivables" } }
+      );
+      if (r1.modifiedCount > 0 || r2.modifiedCount > 0 || r3.modifiedCount > 0) {
+        console.log(`Migrated Home -> Receivables: expenseSchema(acc:${r1.modifiedCount}, cat:${r2.modifiedCount}), expensesCategory(${r3.modifiedCount})`);
+      }
+    } catch (err) {
+      console.log("Migration Home -> Receivables check note:", err.message);
+    }
 }),
   (error) => {
     console.log("Could not connect to database : " + err);

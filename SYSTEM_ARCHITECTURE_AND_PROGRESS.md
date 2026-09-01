@@ -321,3 +321,8 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 - **Desktop Window Resize Blank Screen Permanent Resolution (Ver 3.4.62)**:
   - **Scoped Mobile CSS:** Eliminated unscoped `@media screen and (max-width: 899px)` block in `view.css` that was hiding `MuiAppBar-root` and `MuiDrawer-root` on desktop window resize. Scoped all mobile-specific styles under `body.is-mobile-app`.
   - **Dynamic Class Management:** Configured `AppLayoutWrapper` in `App.js` to only apply `is-mobile-app` class when `isNativeMobile()` is true (Capacitor iOS/Android or explicit `?mobile=true`), ensuring Desktop Electron (.exe) and standard web desktop preserve complete layouts and never turn into a white/blank screen upon resizing, snapping, or unmaximizing.
+
+- **Rename 'Home' to 'Receivables' & Full Historical Data Migration (Ver 3.4.63)**:
+  - **Account Dropdown Update:** Updated Account Name dropdown in `DailyExpenseForm.js` and `DailyExpenseUpdate.js` from `Home` to `Receivables`.
+  - **Comprehensive Data Migration:** Added server boot migration and endpoint `/migrate-home-to-receivables` updating all historical documents across `expenseSchema`, `expensesCategory`, and `dailyExpense` collections from `Home`/`HOME` to `Receivables`.
+  - **Zero Disruption:** Preserved identical accounting and ledger mechanics across all financial dashboards, reports, and modules.

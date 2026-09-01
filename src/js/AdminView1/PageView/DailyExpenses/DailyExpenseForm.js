@@ -634,7 +634,7 @@ function DailyExpenseForm() {
                         <MenuItem value="Office">Office</MenuItem>
                         <MenuItem value="Project">Project</MenuItem>
                         <MenuItem value="Employee">Employee</MenuItem>
-                        <MenuItem value="Home">Home</MenuItem>
+                        <MenuItem value="Receivables">Receivables</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
