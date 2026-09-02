@@ -339,3 +339,7 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Expandable Itemized Expenses:** Clicking row `#2 | Maintenance Expenses` expands into a detailed sub-table displaying `#` (`D-XXXXXX`), Date, Category, Description, Amount (FC), Rate, and Total ($) for all expenses linked to that maintenance order.
   - **Dynamic Costing:** Automatically includes `totalMaintenanceExpenses` into the maintenance `totalCost` calculation (`Item Parts Cost + Employee Payroll Cost + Maintenance Expenses`) in the financial Summary tab.
   - **Backend Support:** Updated `GET /get-maintenance-related-info/:id` in `maintenanceRoutes.js` and added `maintenanceId` filter parameter in `expenseRoutes.js`.
+
+- **Fix Maintenance Information Blank/White Screen (Ver 3.4.66)**:
+  - **Root Cause:** In `MaintenanceViewInformation.js`, `setMaintenance` and `SetItems` were inadvertently omitted in `fetchData`, leaving `maintenance` and inventory `item` state empty (`[]`). Consequently, `{maintenance?.filter(row => row._id === id)?.map(...)}` rendered nothing (white screen) and the left sidebar listed no services.
+  - **Resolution:** Restored `setMaintenance` and `SetItems` in `MaintenanceViewInformation.js` with fallback appending of `resSingle.data.data` if the single record is not in the overview list, restoring full service list navigation and all details panels immediately.

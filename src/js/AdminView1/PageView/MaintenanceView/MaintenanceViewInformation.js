@@ -221,8 +221,15 @@ function MaintenanceViewInformation() {
           axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
         ]);
 
-        const allMaintenance = resM.data.data;
-        const currentMaintenance = allMaintenance.find((row) => row._id === id);
+        const allMaintenance = Array.isArray(resM.data?.data) ? resM.data.data : [];
+        setMaintenance([...allMaintenance].sort((a, b) => (b.serviceNumber || 0) - (a.serviceNumber || 0)));
+        SetItems(resI.data?.data || []);
+
+        let currentMaintenance = allMaintenance.find((row) => row._id === id);
+        if (!currentMaintenance && resSingle.data?.data) {
+          currentMaintenance = resSingle.data.data;
+          setMaintenance(prev => [currentMaintenance, ...prev]);
+        }
         
         let refName = '';
         if (currentMaintenance) {
