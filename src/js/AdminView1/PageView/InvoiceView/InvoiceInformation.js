@@ -103,21 +103,35 @@ function InvoiceInformation({ onId }) {
   };
 
   const newArray = search !== '' ? invoice.filter((row) =>
-    row.invoiceName.toLowerCase().includes(search.toLowerCase()) ||
-    row.invoiceSubject.toLowerCase().includes(search.toLowerCase()) ||
-    row.invoiceDefect && row.invoiceDefect.toLowerCase().includes(search.toLowerCase()) ||
-    row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) ||
-    row.items && row.items.some((Item) => Item.itemName && Item.itemName.itemName.toLowerCase().includes(search.toLowerCase())) ||
-    row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase()))
+    (row.invoiceName && row.invoiceName.toLowerCase().includes(search.toLowerCase())) ||
+    (row.invoiceNumber && String(row.invoiceNumber).includes(search)) ||
+    (row.invoiceSubject && row.invoiceSubject.toLowerCase().includes(search.toLowerCase())) ||
+    (row.invoiceDefect && row.invoiceDefect.toLowerCase().includes(search.toLowerCase())) ||
+    (row.defect && row.defect.toLowerCase().includes(search.toLowerCase())) ||
+    (row.actionTaken && row.actionTaken.toLowerCase().includes(search.toLowerCase())) ||
+    (row.actionTaking && row.actionTaking.toLowerCase().includes(search.toLowerCase())) ||
+    (row.note && row.note.toLowerCase().includes(search.toLowerCase())) ||
+    (row.noteInfo && row.noteInfo.toLowerCase().includes(search.toLowerCase())) ||
+    (row.terms && row.terms.toLowerCase().includes(search.toLowerCase())) ||
+    (row.customerName?.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())) ||
+    (row.items && row.items.some((Item) => Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(search.toLowerCase()))) ||
+    (row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase())))
   ) : invoice
 
   const newArray2 = search !== '' ? filteredRows.filter((row) =>
-    row.invoiceName.toLowerCase().includes(search.toLowerCase()) ||
-    row.invoiceSubject && row.invoiceSubject.toLowerCase().includes(search.toLowerCase()) ||
-    row.invoiceDefect && row.invoiceDefect.toLowerCase().includes(search.toLowerCase()) ||
-    row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) ||
-    row.items && row.items.some((Item) => Item.itemName && Item.itemName.itemName.toLowerCase().includes(search.toLowerCase())) ||
-    row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase()))
+    (row.invoiceName && row.invoiceName.toLowerCase().includes(search.toLowerCase())) ||
+    (row.invoiceNumber && String(row.invoiceNumber).includes(search)) ||
+    (row.invoiceSubject && row.invoiceSubject.toLowerCase().includes(search.toLowerCase())) ||
+    (row.invoiceDefect && row.invoiceDefect.toLowerCase().includes(search.toLowerCase())) ||
+    (row.defect && row.defect.toLowerCase().includes(search.toLowerCase())) ||
+    (row.actionTaken && row.actionTaken.toLowerCase().includes(search.toLowerCase())) ||
+    (row.actionTaking && row.actionTaking.toLowerCase().includes(search.toLowerCase())) ||
+    (row.note && row.note.toLowerCase().includes(search.toLowerCase())) ||
+    (row.noteInfo && row.noteInfo.toLowerCase().includes(search.toLowerCase())) ||
+    (row.terms && row.terms.toLowerCase().includes(search.toLowerCase())) ||
+    (row.customerName?.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())) ||
+    (row.items && row.items.some((Item) => Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(search.toLowerCase()))) ||
+    (row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase())))
   ) : filteredRows
 
 

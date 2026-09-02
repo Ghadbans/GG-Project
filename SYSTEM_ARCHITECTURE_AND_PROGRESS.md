@@ -345,3 +345,14 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 - **Fix Maintenance Information Blank/White Screen (Ver 3.4.66)**:
   - **Root Cause:** During the data-fetching refactor in `MaintenanceViewInformation.js`, `setMaintenance(allMaintenance...)` and `SetItems(resI.data.data)` were inadvertently omitted in `fetchData`. This left `maintenance` and inventory `item` state as empty arrays (`[]`). As a result, the left sidebar rendered zero service items, and the main container `{maintenance?.filter(row => row._id === id)?.map(...)}` found no matching elements, producing a blank white screen with zero console errors.
   - **Resolution:** Restored `setMaintenance` and `SetItems` in `MaintenanceViewInformation.js`. Added a fallback condition: if the active maintenance record returned by `resSingle` (`GET /get-maintenance/:id`) is not in the overview array (due to pagination or limit), it is automatically prepended to the `maintenance` state (`setMaintenance(prev => [currentMaintenance, ...prev])`), guaranteeing the left sidebar and main details panel always render immediately. Bumped version to `3.4.66` and built installer `dist/Global Gate Setup 3.4.66.exe`.
+
+- **Comprehensive Invoice Search: Defect, Action Taken, Notes, Items & Terms (Ver 3.4.67)**:
+  - **Comprehensive Backend Search (`/invoice-Information`):** Expanded the search query in `server/routes/invoiceRoutes.js` to encompass all invoice fields. Searching in the Invoice module now dynamically checks:
+    - **Defect:** `invoiceDefect`, `defect`, `defectDescription`
+    - **Action Taken:** `actionTaken`, `actionTaking`, `action`
+    - **Notes & Terms:** `note`, `noteInfo`, `invoiceNote`, `terms`
+    - **Items & Descriptions:** `items.itemDescription`, `items.itemName`, `items.itemName.itemName`, `items.itemBrand`
+    - **Customer & Phone:** `customerName.customerName`, `customerName.customerEmail`, `customerName.customerPhone`, `customerName.phone`, `customerName.companyName`, `customerName.billingAddress`
+    - **Identification & References:** `invoiceName` (`INV-XXXXXX`), numeric `invoiceNumber`, `invoiceSubject`, `subject`, `status`, `ReferenceName`, `ReferenceName2`, `Ref.projectName`, `Position`
+  - **Safe Branch Filtering Integration:** Refactored query construction using `$and` when both branch filtering (`branchId === 'HQ'`) and search criteria are present, preventing search conditions from overwriting branch filters.
+  - **Invoice Information Sidebar Search:** Updated `InvoiceInformation.js` local sidebar search (`newArray` & `newArray2`) to filter across `actionTaken`, `actionTaking`, `note`, `noteInfo`, `terms`, and `defect`.

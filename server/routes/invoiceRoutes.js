@@ -127,9 +127,10 @@ Route.route("/invoice-Information").get(async (req, res) => {
 
     // Build the query object dynamically based on the filters
     const query = branchFilter(req);
+    let branchCondition = null;
     if (branchId && branchId !== 'ALL') {
       if (branchId === 'HQ') {
-        query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
+        branchCondition = { $or: [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }] };
       } else {
         query.branchId = branchId;
       }
@@ -137,19 +138,45 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
+      const searchOr = [
         ...(!isNaN(Number(search)) ? [{ invoiceNumber: Number(search) }] : []),
         { invoiceName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
         { invoiceSubject: regex },
         { subject: regex },
-        { status: regex },
-        { noteInfo: regex },
+        { invoiceDefect: regex },
+        { defect: regex },
+        { defectDescription: regex },
+        { actionTaken: regex },
+        { actionTaking: regex },
+        { action: regex },
         { note: regex },
+        { noteInfo: regex },
+        { invoiceNote: regex },
+        { terms: regex },
+        { status: regex },
+        { 'items.itemDescription': regex },
+        { 'items.itemName': regex },
+        { 'items.itemName.itemName': regex },
+        { 'items.itemBrand': regex },
         { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex }
-      ].filter(condition => condition !== null);
+        { 'customerName.customerEmail': regex },
+        { 'customerName.customerPhone': regex },
+        { 'customerName.phone': regex },
+        { 'customerName.companyName': regex },
+        { 'customerName.billingAddress': regex },
+        { 'Ref.projectName': regex },
+        { Position: regex }
+      ];
+
+      if (branchCondition) {
+        query.$and = [branchCondition, { $or: searchOr }];
+      } else {
+        query.$or = searchOr;
+      }
+    } else if (branchCondition) {
+      query.$or = branchCondition.$or;
     }
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
