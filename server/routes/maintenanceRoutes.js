@@ -402,13 +402,15 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
     const objectId = mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : null;
     const refQuery = objectId ? { $or: [{ "reference._id": id }, { "reference._id": objectId }] } : { "reference._id": id };
     const projectQuery = objectId ? { $or: [{ "projectName._id": id }, { "projectName._id": objectId }] } : { "projectName._id": id };
-    const [itemOuts, itemReturns, planings, invoices, comments, notifications] = await Promise.all([
+    const expenseQuery = objectId ? { $or: [{ "accountNameInfo._id": id }, { "accountNameInfo._id": objectId }] } : { "accountNameInfo._id": id };
+    const [itemOuts, itemReturns, planings, invoices, comments, notifications, expenses] = await Promise.all([
       itemOutSchema.find(refQuery),
       itemReturnSchema.find(refQuery),
       planingSchema.find(projectQuery),
       refName ? invoiceSchema.find({ $or: [{ invoiceName: refName }, { ReferenceName: id }] }) : invoiceSchema.find({ ReferenceName: id }),
       commentSchema.find({ "CommentInfo.idInfo": id }),
-      notificationSchema.find({ idInfo: id })
+      notificationSchema.find({ idInfo: id }),
+      expenseSchema.find(expenseQuery)
     ]);
     res.json({
       data: {
@@ -417,7 +419,8 @@ Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
         planings,
         invoices,
         comments,
-        notifications
+        notifications,
+        expenses
       },
       message: "Data successfully retrieved.",
       status: 200,

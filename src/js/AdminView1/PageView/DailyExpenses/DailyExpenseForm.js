@@ -166,6 +166,8 @@ function DailyExpenseForm() {
   const [employee, setEmployee] = useState([]);
   const [project, setProject] = useState([]);
   const [project2, setProject2] = useState([]);
+  const [maintenance, setMaintenance] = useState([]);
+  const [inputValueMaintenance, setInputValueMaintenance] = React.useState('');
   const [PayRate, setPayRate] = useState(0);
   const [expenseCategory, setExpenseCategory] = useState({});
   const [employeeName, setEmployeeName] = useState([]);
@@ -200,13 +202,17 @@ function DailyExpenseForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const projectResponse = await axios.get(`${ENDPOINT_URL}/projects`)
-        const categoryResponse = await axios.get(`${ENDPOINT_URL}/expensesCategory`)
-        const employeeResponse = await axios.get(`${ENDPOINT_URL}/employee`)
-        setProject(projectResponse.data.data);
-        setProject2(projectResponse.data?.data?.filter((row) => row.status === "On-Going"));
-        setCategories(categoryResponse.data.data);
-        setEmployee(employeeResponse.data.data);
+        const [projectResponse, categoryResponse, employeeResponse, maintenanceResponse] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/projects`),
+          axios.get(`${ENDPOINT_URL}/expensesCategory`),
+          axios.get(`${ENDPOINT_URL}/employee`),
+          axios.get(`${ENDPOINT_URL}/maintenance`)
+        ]);
+        setProject(projectResponse.data.data || []);
+        setProject2(projectResponse.data?.data?.filter((row) => row.status === "On-Going") || []);
+        setCategories(categoryResponse.data.data || []);
+        setEmployee(employeeResponse.data.data || []);
+        setMaintenance(maintenanceResponse.data?.data || []);
       } catch (error) {
         console.log(error)
       }
@@ -370,6 +376,20 @@ function DailyExpenseForm() {
       name: selectedOptions?.projectName
     });
   }
+  const handleChangeMaintenance = (newValue) => {
+    const selectedOptions = maintenance.find((option) => option === newValue);
+    if (selectedOptions) {
+      setAccountNameInfo({
+        _id: selectedOptions._id,
+        name: `M-${String(selectedOptions.serviceNumber || 0).padStart(6, '0')} - ${selectedOptions.customerName?.customerName || ''}`
+      });
+    } else {
+      setAccountNameInfo({
+        _id: "",
+        name: ""
+      });
+    }
+  };
   const handleClearAccountName = () => {
     setAccountNameInfo({
       _id: "",
@@ -418,6 +438,7 @@ function DailyExpenseForm() {
     setAccountNameInfo({ _id: "", name: "" });
     setExpenseCategory({});
     setInputValueProject('');
+    setInputValueMaintenance('');
     setDescription("");
     setExpenseDate(new Date());
     setAmount(0);
@@ -633,6 +654,7 @@ function DailyExpenseForm() {
                       >
                         <MenuItem value="Office">Office</MenuItem>
                         <MenuItem value="Project">Project</MenuItem>
+                        <MenuItem value="Maintenance">Maintenance</MenuItem>
                         <MenuItem value="Employee">Employee</MenuItem>
                         <MenuItem value="Receivables">Receivables</MenuItem>
                       </Select>
@@ -683,6 +705,7 @@ function DailyExpenseForm() {
                             >
                               <MenuItem value="Office">Office</MenuItem>
                               <MenuItem value="Project">Project</MenuItem>
+                              <MenuItem value="Maintenance">Maintenance</MenuItem>
                               <MenuItem value="None">None</MenuItem>
                             </Select>
                           </FormControl>
@@ -764,6 +787,54 @@ function DailyExpenseForm() {
                                     }
                                   </div>
 
+                              }
+                            </Grid> : null
+                        }
+                        {
+                          reason === "Maintenance" ?
+                            <Grid item xs={12}>
+                              {
+                                accountNameInfo.name !== "" ?
+                                  <div style={{ display: 'flex', gap: '75px' }}>
+                                    <TextField
+                                      label='Maintenance'
+                                      value={accountNameInfo.name}
+                                      sx={{ width: '100%', backgroundColor: 'white' }}
+                                    />
+                                    <BlackTooltip title="Clear" placement='right'>
+                                      <IconButton onClick={handleClearAccountName} style={{ position: 'relative', float: 'right' }}>
+                                        <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                      </IconButton>
+                                    </BlackTooltip>
+                                  </div>
+                                  :
+                                  <div>
+                                    <Autocomplete
+                                      options={maintenance}
+                                      getOptionLabel={(option) => `M-${String(option.serviceNumber || 0).padStart(6, '0')} - ${option.customerName?.customerName || ''}`}
+                                      renderOption={(props, option) => (
+                                        <Box {...props}>
+                                          {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.model || option.itemDescriptionInfo || ''}
+                                        </Box>
+                                      )}
+                                      onChange={(e, newValue) => handleChangeMaintenance(newValue ? newValue : '')}
+                                      inputValue={inputValueMaintenance}
+                                      onInputChange={(event, newInputValue) => {
+                                        setInputValueMaintenance(newInputValue);
+                                      }}
+                                      filterOptions={(options, { inputValue }) => {
+                                        return options.filter(
+                                          (option) =>
+                                            (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                                            (`M-${String(option.serviceNumber || 0).padStart(6, '0')}`).toLowerCase().includes(inputValue.toLowerCase()) ||
+                                            (option.model && option.model.toLowerCase().includes(inputValue.toLowerCase())) ||
+                                            (option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase()))
+                                        );
+                                      }}
+                                      renderInput={(params) => <TextField {...params} label="Maintenance Order" />}
+                                      sx={{ width: '100%', backgroundColor: 'white' }}
+                                    />
+                                  </div>
                               }
                             </Grid> : null
                         }
@@ -930,72 +1001,122 @@ function DailyExpenseForm() {
                       </>
                       : (
                         <>
-                          <Grid item xs={12}>
-                            {
-                              accountNameInfo.name !== "" ?
-                                <div style={{ display: 'flex', gap: '75px' }}>
-                                  <TextField
-                                    label='Project'
-                                    value={accountNameInfo.name}
-                                    sx={{ width: '100%', backgroundColor: 'white' }}
-                                  />
-                                  <BlackTooltip title="Clear" placement='right'>
-                                    <IconButton onClick={handleClearAccountName} style={{ position: 'relative', float: 'right' }}>
-                                      <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                                    </IconButton>
-                                  </BlackTooltip>
-                                </div>
-                                :
-                                <div>
-                                  {
-                                    user.data.role === 'CEO' ?
-                                      (<Autocomplete
-                                        options={project}
-                                        disabled={accountName !== 'Project'}
-                                        getOptionLabel={(option) => option.projectName.toUpperCase()}
-                                        renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-                                        onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
-                                        inputValue={inputValueProject}
+                          {
+                            accountName === 'Project' ? (
+                              <Grid item xs={12}>
+                                {
+                                  accountNameInfo.name !== "" ?
+                                    <div style={{ display: 'flex', gap: '75px' }}>
+                                      <TextField
+                                        label='Project'
+                                        value={accountNameInfo.name}
+                                        sx={{ width: '100%', backgroundColor: 'white' }}
+                                      />
+                                      <BlackTooltip title="Clear" placement='right'>
+                                        <IconButton onClick={handleClearAccountName} style={{ position: 'relative', float: 'right' }}>
+                                          <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                        </IconButton>
+                                      </BlackTooltip>
+                                    </div>
+                                    :
+                                    <div>
+                                      {
+                                        user.data.role === 'CEO' ?
+                                          (<Autocomplete
+                                            options={project}
+                                            getOptionLabel={(option) => option.projectName.toUpperCase()}
+                                            renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                            onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                            inputValue={inputValueProject}
+                                            onInputChange={(event, newInputValue) => {
+                                              setInputValueProject(newInputValue);
+                                            }}
+                                            filterOptions={(options, { inputValue }) => {
+                                              return options.filter(
+                                                (option) =>
+                                                  option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                  option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                  option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                              )
+                                            }}
+                                            renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                            sx={{ width: '100%', backgroundColor: 'white' }}
+                                          />)
+                                          : (<Autocomplete
+                                            options={project2}
+                                            getOptionLabel={(option) => option.projectName.toUpperCase()}
+                                            renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                            renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                            onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                            inputValue={inputValueProject}
+                                            onInputChange={(event, newInputValue) => {
+                                              setInputValueProject(newInputValue);
+                                            }}
+                                            filterOptions={(options, { inputValue }) => {
+                                              return options.filter(
+                                                (option) =>
+                                                  option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                  option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                  option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                              )
+                                            }}
+                                            sx={{ width: '100%', backgroundColor: 'white' }}
+                                          />)
+                                      }
+                                    </div>
+                                }
+                              </Grid>
+                            ) : null
+                          }
+                          {
+                            accountName === 'Maintenance' ? (
+                              <Grid item xs={12}>
+                                {
+                                  accountNameInfo.name !== "" ?
+                                    <div style={{ display: 'flex', gap: '75px' }}>
+                                      <TextField
+                                        label='Maintenance'
+                                        value={accountNameInfo.name}
+                                        sx={{ width: '100%', backgroundColor: 'white' }}
+                                      />
+                                      <BlackTooltip title="Clear" placement='right'>
+                                        <IconButton onClick={handleClearAccountName} style={{ position: 'relative', float: 'right' }}>
+                                          <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                                        </IconButton>
+                                      </BlackTooltip>
+                                    </div>
+                                    :
+                                    <div>
+                                      <Autocomplete
+                                        options={maintenance}
+                                        getOptionLabel={(option) => `M-${String(option.serviceNumber || 0).padStart(6, '0')} - ${option.customerName?.customerName || ''}`}
+                                        renderOption={(props, option) => (
+                                          <Box {...props}>
+                                            {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.model || option.itemDescriptionInfo || ''}
+                                          </Box>
+                                        )}
+                                        onChange={(e, newValue) => handleChangeMaintenance(newValue ? newValue : '')}
+                                        inputValue={inputValueMaintenance}
                                         onInputChange={(event, newInputValue) => {
-                                          setInputValueProject(newInputValue);
+                                          setInputValueMaintenance(newInputValue);
                                         }}
                                         filterOptions={(options, { inputValue }) => {
                                           return options.filter(
                                             (option) =>
-                                              option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                              option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                              option.description.toLowerCase().includes(inputValue.toLowerCase())
-                                          )
+                                              (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                                              (`M-${String(option.serviceNumber || 0).padStart(6, '0')}`).toLowerCase().includes(inputValue.toLowerCase()) ||
+                                              (option.model && option.model.toLowerCase().includes(inputValue.toLowerCase())) ||
+                                              (option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase()))
+                                          );
                                         }}
-                                        renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                        renderInput={(params) => <TextField {...params} label="Maintenance Order" />}
                                         sx={{ width: '100%', backgroundColor: 'white' }}
-                                      />)
-                                      : (<Autocomplete
-                                        options={project2}
-                                        disabled={accountName !== 'Project'}
-                                        getOptionLabel={(option) => option.projectName.toUpperCase()}
-                                        renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-                                        renderInput={(params) => <TextField {...params} label="Project Name" />}
-                                        onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
-                                        inputValue={inputValueProject}
-                                        onInputChange={(event, newInputValue) => {
-                                          setInputValueProject(newInputValue);
-                                        }}
-                                        filterOptions={(options, { inputValue }) => {
-                                          return options.filter(
-                                            (option) =>
-                                              option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                              option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                              option.description.toLowerCase().includes(inputValue.toLowerCase())
-                                          )
-                                        }}
-                                        sx={{ width: '100%', backgroundColor: 'white' }}
-                                      />)
-                                  }
-                                </div>
-
-                            }
-                          </Grid>
+                                      />
+                                    </div>
+                                }
+                              </Grid>
+                            ) : null
+                          }
                           <Grid item xs={12}>
                             <TextField
                               required

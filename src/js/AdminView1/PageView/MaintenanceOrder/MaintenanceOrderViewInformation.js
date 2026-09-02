@@ -209,6 +209,8 @@ function MaintenanceOrderViewInformation() {
   const [itemOut, setItemOut] = useState([]);
   const [itemReturn, setItemReturn] = useState([]);
   const [planingInfo, setPlaningInfo] = useState([]);
+  const [maintenanceExpenses, setMaintenanceExpenses] = useState([]);
+  const [totalMaintenanceExpenses, setTotalMaintenanceExpenses] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -262,15 +264,17 @@ function MaintenanceOrderViewInformation() {
 
           setComments(relatedData.comments.reverse());
           setNotification(relatedData.notifications);
+          setMaintenanceExpenses(relatedData.expenses || []);
         } catch(fallbackError) {
           // Fallback to old massive data fetch if endpoint not found yet
-          const [resIO, resIR, resP, resInvoice, resComment, resNotification] = await Promise.all([
+          const [resIO, resIR, resP, resInvoice, resComment, resNotification, resExp] = await Promise.all([
             axios.get(`${ENDPOINT_URL}/itemOut`),
             axios.get(`${ENDPOINT_URL}/itemReturn`),
             axios.get(`${ENDPOINT_URL}/planing`),
             axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
             axios.get(`${ENDPOINT_URL}/comment`),
-            axios.get(`${ENDPOINT_URL}/notification`)
+            axios.get(`${ENDPOINT_URL}/notification`),
+            axios.get(`${ENDPOINT_URL}/expense?summary=true`)
           ]);
 
           setItemOut(resIO.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: `O-${String(row.outNumber).padStart(6, '0')}`, type: 'Item Out' })));
@@ -292,6 +296,7 @@ function MaintenanceOrderViewInformation() {
           const filteredComments = resComment.data?.data?.filter((row) => row.CommentInfo.idInfo === id);
           setComments(filteredComments.reverse());
           setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id));
+          setMaintenanceExpenses(resExp.data?.data?.filter((row) => row.accountNameInfo?._id === id) || []);
         }
 
         setLoadingData(false);
@@ -334,18 +339,23 @@ function MaintenanceOrderViewInformation() {
   {/** planing end */ }
 
   useEffect(() => {
+    const totalExp = (maintenanceExpenses || []).reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0);
+    setTotalMaintenanceExpenses(totalExp);
+  }, [maintenanceExpenses]);
+
+  useEffect(() => {
     if (items.length > 0) {
       const totalInfo = items.map((row) => ({
         total: parseFloat(row.itemOut || 0) * parseFloat(row.itemCost || 0)
       }));
 
       const costInfo = totalInfo.reduce((sum, row) => sum + row.total, 0);
-      const totalCostInfo = Number(totalAmountPlaning || 0) + Number(costInfo);
+      const totalCostInfo = Number(totalAmountPlaning || 0) + Number(costInfo) + Number(totalMaintenanceExpenses || 0);
       setTotalCost(totalCostInfo.toFixed(2));
     } else {
-      setTotalCost(Number(totalAmountPlaning || 0).toFixed(2));
+      setTotalCost((Number(totalAmountPlaning || 0) + Number(totalMaintenanceExpenses || 0)).toFixed(2));
     }
-  }, [items, totalAmountPlaning]);
+  }, [items, totalAmountPlaning, totalMaintenanceExpenses]);
 
   {/** Item out sync start */ }
   const itemMap = useMemo(() => {

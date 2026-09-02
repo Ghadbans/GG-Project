@@ -868,8 +868,8 @@ function DailyExpenseAdminView() {
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
                                     {
-                                      item.accountName === 'Project' && (
-                                        item.accountNameInfo.name
+                                      (item.accountName === 'Project' || item.accountName === 'Maintenance') && (
+                                        item.accountNameInfo?.name
                                       )
                                     }
                                     {

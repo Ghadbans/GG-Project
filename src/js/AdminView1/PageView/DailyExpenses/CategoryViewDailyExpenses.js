@@ -765,8 +765,8 @@ function CategoryViewDailyExpenses() {
                                                         variant="outlined"
                                                         sx={{
                                                           fontSize: '11px',
-                                                          borderColor: row.accountName === 'Project' ? '#0284c7' : row.accountName === 'Employee' ? '#16a34a' : '#64748b',
-                                                          color: row.accountName === 'Project' ? '#0284c7' : row.accountName === 'Employee' ? '#16a34a' : '#64748b'
+                                                          borderColor: row.accountName === 'Project' ? '#0284c7' : row.accountName === 'Maintenance' ? '#ea580c' : row.accountName === 'Employee' ? '#16a34a' : '#64748b',
+                                                          color: row.accountName === 'Project' ? '#0284c7' : row.accountName === 'Maintenance' ? '#ea580c' : row.accountName === 'Employee' ? '#16a34a' : '#64748b'
                                                         }}
                                                       />
                                                     </TableCell>
@@ -774,6 +774,18 @@ function CategoryViewDailyExpenses() {
                                                       {row.accountName === 'Office' && (row.description || '-')}
                                                       {row.accountName === 'Receivables' && (row.description || '-')}
                                                       {row.accountName === 'Home' && (row.description || '-')}
+                                                      {row.accountName === 'Maintenance' && (
+                                                        <div>
+                                                          <Typography variant="body2" sx={{ fontWeight: '500' }}>
+                                                            {row.accountNameInfo?.name || '-'}
+                                                          </Typography>
+                                                          {row.description && (
+                                                            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
+                                                              {row.description}
+                                                            </Typography>
+                                                          )}
+                                                        </div>
+                                                      )}
                                                       {row.accountName === 'Project' && (
                                                         <div>
                                                           <Typography variant="body2" sx={{ fontWeight: '500' }}>

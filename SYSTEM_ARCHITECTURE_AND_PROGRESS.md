@@ -331,3 +331,11 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **E-Table Date Filtering:** Added `From Date` and `To Date` pickers alongside multi-column text search, allowing dynamic date-window filtering and real-time total sum recalculation in `CategoryViewDailyExpenses.js`.
   - **Printable Category Statement:** Created dedicated `CategoryPrintStatement.js` supporting high-definition printing (`useReactToPrint`) with Global Gate corporate branding, period ranges, transaction counts, account classifications, and grand totals.
   - **Interactive Monthly Statement Navigation:** Enhanced `CategoryChart.js` with monthly breakdown cards for the selected year. Clicking any month automatically sets the date range to that month, switches to the E-Table tab, and displays the exact itemized monthly statement ready for one-click printing.
+
+- **Maintenance Account in Daily Expenses & Maintenance Information Expense Breakdown (Ver 3.4.65)**:
+  - **Daily Expenses Maintenance Account:** Added `Maintenance` option to Account Name dropdowns in `DailyExpenseForm.js` and `DailyExpenseUpdate.js`, as well as under Employee reason dropdown.
+  - **Maintenance Order Autocomplete:** When `Maintenance` is selected, an autocomplete dropdown allows selecting the target maintenance order (formatted as `Customer | M-XXXXXX | Model/Description`), saving `accountName: "Maintenance"` and `accountNameInfo: { _id, name }`.
+  - **Maintenance Information Finance Breakdown:** In `MaintenanceViewInformation.js` (and `MaintenanceOrderViewInformation.js`), added a new collapsible row `RowMaintenanceExpenses` directly beneath the Employee cost line in the Finance overview table.
+  - **Expandable Itemized Expenses:** Clicking row `#2 | Maintenance Expenses` expands into a detailed sub-table displaying `#` (`D-XXXXXX`), Date, Category, Description, Amount (FC), Rate, and Total ($) for all expenses linked to that maintenance order.
+  - **Dynamic Costing:** Automatically includes `totalMaintenanceExpenses` into the maintenance `totalCost` calculation (`Item Parts Cost + Employee Payroll Cost + Maintenance Expenses`) in the financial Summary tab.
+  - **Backend Support:** Updated `GET /get-maintenance-related-info/:id` in `maintenanceRoutes.js` and added `maintenanceId` filter parameter in `expenseRoutes.js`.

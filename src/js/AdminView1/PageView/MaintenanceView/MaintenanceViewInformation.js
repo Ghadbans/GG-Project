@@ -209,6 +209,8 @@ function MaintenanceViewInformation() {
   const [itemOut, setItemOut] = useState([]);
   const [itemReturn, setItemReturn] = useState([]);
   const [planingInfo, setPlaningInfo] = useState([]);
+  const [maintenanceExpenses, setMaintenanceExpenses] = useState([]);
+  const [totalMaintenanceExpenses, setTotalMaintenanceExpenses] = useState(0);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -220,13 +222,23 @@ function MaintenanceViewInformation() {
         ]);
 
         const allMaintenance = resM.data.data;
-        setMaintenance(allMaintenance.sort((a,b) => b.serviceNumber - a.serviceNumber));
-        SetItems(resI.data.data);
-
-        // Process single maintenance record data
-        const maintenanceData = resSingle.data.data;
+        const currentMaintenance = allMaintenance.find((row) => row._id === id);
+        
         let refName = '';
-        if (maintenanceData) {
+        if (currentMaintenance) {
+          refName = currentMaintenance.ReferenceName || '';
+          setReferenceName(refName);
+          setCustomerName1(currentMaintenance.customerName?.customerName?.replace(/\s+/g, '_').replace(/\./g, '') || "");
+          setServiceNumber(currentMaintenance.serviceNumber || 0);
+          setItem(currentMaintenance.items || []);
+
+          const sellTotal = parseFloat(currentMaintenance.subTotal || 0).toFixed(2);
+          setTotalSell(sellTotal);
+          
+          const allEstimations = resEstimate.data?.data || [];
+          setQuotation(allEstimations.filter(row => row._id === refName || row.ReferenceName === currentMaintenance._id));
+        } else if (resSingle.data?.data) {
+          const maintenanceData = resSingle.data.data;
           refName = maintenanceData.ReferenceName || '';
           setReferenceName(refName);
           setCustomerName1(maintenanceData.customerName?.customerName?.replace(/\s+/g, '_').replace(/\./g, '') || "");
@@ -261,15 +273,17 @@ function MaintenanceViewInformation() {
 
           setComments(relatedData.comments.reverse());
           setNotification(relatedData.notifications);
+          setMaintenanceExpenses(relatedData.expenses || []);
         } catch(fallbackError) {
           // Fallback to old massive data fetch if endpoint not found yet
-          const [resIO, resIR, resP, resInvoice, resComment, resNotification] = await Promise.all([
+          const [resIO, resIR, resP, resInvoice, resComment, resNotification, resExp] = await Promise.all([
             axios.get(`${ENDPOINT_URL}/itemOut`),
             axios.get(`${ENDPOINT_URL}/itemReturn`),
             axios.get(`${ENDPOINT_URL}/planing`),
             axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
             axios.get(`${ENDPOINT_URL}/comment`),
-            axios.get(`${ENDPOINT_URL}/notification`)
+            axios.get(`${ENDPOINT_URL}/notification`),
+            axios.get(`${ENDPOINT_URL}/expense?summary=true`)
           ]);
 
           setItemOut(resIO.data?.data?.filter((row) => row.reference?._id === id).map((row) => ({ ...row, outNumber: `O-${String(row.outNumber).padStart(6, '0')}`, type: 'Item Out' })));
@@ -291,6 +305,7 @@ function MaintenanceViewInformation() {
           const filteredComments = resComment.data?.data?.filter((row) => row.CommentInfo.idInfo === id);
           setComments(filteredComments.reverse());
           setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id));
+          setMaintenanceExpenses(resExp.data?.data?.filter((row) => row.accountNameInfo?._id === id) || []);
         }
 
         setLoadingData(false);
@@ -333,18 +348,23 @@ function MaintenanceViewInformation() {
   {/** planing end */ }
 
   useEffect(() => {
+    const totalExp = (maintenanceExpenses || []).reduce((sum, row) => sum + (parseFloat(row.total) || 0), 0);
+    setTotalMaintenanceExpenses(totalExp);
+  }, [maintenanceExpenses]);
+
+  useEffect(() => {
     if (items.length > 0) {
       const totalInfo = items.map((row) => ({
         total: parseFloat(row.itemOut || 0) * parseFloat(row.itemCost || 0)
       }));
 
       const costInfo = totalInfo.reduce((sum, row) => sum + row.total, 0);
-      const totalCostInfo = Number(totalAmountPlaning || 0) + Number(costInfo);
+      const totalCostInfo = Number(totalAmountPlaning || 0) + Number(costInfo) + Number(totalMaintenanceExpenses || 0);
       setTotalCost(totalCostInfo.toFixed(2));
     } else {
-      setTotalCost(Number(totalAmountPlaning || 0).toFixed(2));
+      setTotalCost((Number(totalAmountPlaning || 0) + Number(totalMaintenanceExpenses || 0)).toFixed(2));
     }
-  }, [items, totalAmountPlaning]);
+  }, [items, totalAmountPlaning, totalMaintenanceExpenses]);
 
   {/** Item out sync start */ }
   const itemMap = useMemo(() => {
@@ -765,6 +785,82 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                         <td style={{ border: '1px solid black' }} align="left"><span>$</span><span>{row.total?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                       </tr>
                     ))
+                  }
+                </tbody>
+              </table>
+            </Box>
+          </Collapse>
+        </td>
+      </tr>
+    </React.Fragment>
+  );
+};
+
+const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses }) => {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <React.Fragment>
+      <tr style={{ '& > *': { borderBottom: 'unset' } }}>
+        <td style={{ textAlign: 'left', border: '1px solid black', cursor: 'pointer' }} onClick={() => setOpen(!open)}>
+          {open ? <KeyboardArrowUp /> : <span>2</span>}
+        </td>
+        <td colSpan={4} align="left" style={{ textAlign: 'left', border: '1px solid black' }}>Maintenance Expenses</td>
+        <td colSpan={4} style={{ border: '1px solid black' }} align="left"><span>$</span><span>{Number(totalMaintenanceExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+      </tr>
+      <tr>
+        <td style={{ textAlign: 'left', border: '1px solid black', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography gutterBottom component="div" sx={{ fontWeight: 'bold' }}>
+                Maintenance Expenses
+              </Typography>
+              <table style={{ marginBottom: '5px', width: '100%', borderCollapse: 'collapse' }}>
+                <thead>
+                  <tr style={{ backgroundColor: '#f1f5f9' }}>
+                    <th style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>#</th>
+                    <th style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>Date</th>
+                    <th style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>Category</th>
+                    <th style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>Description</th>
+                    <th style={{ textAlign: 'right', border: '1px solid black', padding: '4px 8px' }}>Amount (FC)</th>
+                    <th style={{ textAlign: 'center', border: '1px solid black', padding: '4px 8px' }}>Rate</th>
+                    <th style={{ textAlign: 'right', border: '1px solid black', padding: '4px 8px' }}>Total ($)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {
+                    maintenanceExpenses && maintenanceExpenses.length > 0 ? (
+                      maintenanceExpenses.map((exp, i) => (
+                        <tr key={exp._id || i}>
+                          <td style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>
+                            D-{String(exp.expenseNumber || 0).padStart(6, '0')}
+                          </td>
+                          <td style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>
+                            {dayjs(exp.expenseDate).format('DD/MM/YYYY')}
+                          </td>
+                          <td style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>
+                            {exp.expenseCategory?.expensesCategory || '-'}
+                          </td>
+                          <td style={{ textAlign: 'left', border: '1px solid black', padding: '4px 8px' }}>
+                            {exp.description || '-'}
+                          </td>
+                          <td style={{ textAlign: 'right', border: '1px solid black', padding: '4px 8px' }}>
+                            {exp.amount ? `FC ${Number(exp.amount).toLocaleString()}` : '-'}
+                          </td>
+                          <td style={{ textAlign: 'center', border: '1px solid black', padding: '4px 8px' }}>
+                            {exp.rate || '-'}
+                          </td>
+                          <td style={{ textAlign: 'right', border: '1px solid black', padding: '4px 8px' }}>
+                            $ {Number(exp.total || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                      <tr>
+                        <td colSpan={7} style={{ textAlign: 'center', border: '1px solid black', padding: '8px', color: 'gray' }}>
+                          No maintenance expenses recorded
+                        </td>
+                      </tr>
+                    )
                   }
                 </tbody>
               </table>
@@ -1365,7 +1461,10 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                               </tr>
                                               {
                                                 user.data.role === 'CEO' ?
-                                                  <Row2 totalAmountPlaning={totalAmountPlaning} totalAmount2={totalAmount2} /> :
+                                                  <>
+                                                    <Row2 totalAmountPlaning={totalAmountPlaning} totalAmount2={totalAmount2} />
+                                                    <RowMaintenanceExpenses maintenanceExpenses={maintenanceExpenses} totalMaintenanceExpenses={totalMaintenanceExpenses} />
+                                                  </> :
                                                   <tr></tr>
                                               }
                                               <tr>
