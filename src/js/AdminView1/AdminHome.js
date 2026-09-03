@@ -772,7 +772,7 @@ function AdminHome() {
   const vatPaid = vatPaidExpenses + vatPaidPurchases;
   const netVat = vatCollected - vatPaid;
 
-  // Credit Accounts Calculations (monthly new credit entered in the selected year)
+  // Credit Accounts Calculations (monthly net credit activity in the selected year)
   const monthlyCreditChanges = monthsOfYear.reduce((acc, month) => {
     acc[month] = 0;
     return acc;
@@ -794,10 +794,10 @@ function AdminHome() {
   // Monthly credit accounts for each month of the selected year:
   const sortArrayByMonthCreditAccounts = monthsOfYear.map(month => {
     const val = monthlyCreditChanges[month] || 0;
-    return { month, total: parseFloat((val > 0 ? val : 0).toFixed(2)) };
+    return { month, total: parseFloat(val.toFixed(2)) };
   });
 
-  const totalCreditAccounts = sortArrayByMonthCreditAccounts.reduce((sum, row) => sum + row.total, 0);
+  const totalCreditAccounts = Object.values(monthlyCreditChanges).reduce((sum, val) => sum + val, 0);
 
   // --- Synchronized Financial Metrics (Phase 74) ---
 

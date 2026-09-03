@@ -358,6 +358,42 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
       })
     })
   }
+
+  if (type === 'Credit Accounts') {
+    filterMonthPayment?.forEach(row => {
+      if (row.status === 'Voided') return;
+      const custName = row.customerName?.customerName || row.clientName || 'Customer';
+      if (row.modes === 'Credit' || (row.modes === 'Cash' && parseFloat(row.remaining || 0) > 0) || (row.modes === 'Bank Transfer' && parseFloat(row.remaining || 0) > 0)) {
+        if (parseFloat(row.remaining || 0) > 0) {
+          monthArray.push({
+            type: 'New Credit Issued',
+            date: row.paymentDate,
+            number: row.paymentNumber,
+            customerName: custName,
+            description: `Credit extended to ${custName} (Ref PAY-${String(row.paymentNumber).padStart(5, '0')})`,
+            amount: parseFloat(row.remaining || 0),
+            payment: 0,
+            status: row.status || 'Active',
+            transactionType: 'Credit'
+          });
+        }
+      } else if (row.modes === 'Credit-Account') {
+        if (parseFloat(row.amount || 0) > 0) {
+          monthArray.push({
+            type: 'Credit Settled',
+            date: row.paymentDate,
+            number: row.paymentNumber,
+            customerName: custName,
+            description: `Credit payment settled by ${custName} (Ref PAY-${String(row.paymentNumber).padStart(5, '0')})`,
+            amount: 0,
+            payment: parseFloat(row.amount || 0),
+            status: row.status || 'Cleared',
+            transactionType: 'Credit-Settled'
+          });
+        }
+      }
+    });
+  }
   const [TotalExpenses, setTotalExpenses] = useState(0);
   const [TotalDExpenses, setTotalDExpenses] = useState(0);
   const [TotalItemPurchase, setTotalItemPurchase] = useState(0);
@@ -505,7 +541,13 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
   };
   let amount3 = 0;
   const Revenue = monthArray?.sort((a, b) => new Date(a.date) - new Date(b.date)).map((row) => {
-    if (row.type === 'Payment' || row.type === 'Direct Invoice' || row.type === 'POS Invoice') {
+    if (type === 'Credit Accounts') {
+      if (row.type === 'New Credit Issued') {
+        amount3 += parseFloat(row.amount || 0);
+      } else if (row.type === 'Credit Settled') {
+        amount3 -= parseFloat(row.payment || 0);
+      }
+    } else if (row.type === 'Payment' || row.type === 'Direct Invoice' || row.type === 'POS Invoice') {
       if (row.status !== 'Voided') {
         const val = (type === 'Revenue' || type === 'Net Income' || type === 'All' || !type) ? parseFloat(row.amount || 0) : parseFloat(row.payment || 0);
         amount3 += (isNaN(val) ? 0 : (row.transactionType === 'Refund' ? -val : val))
@@ -515,7 +557,7 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
       amount3 -= (isNaN(val) ? 0 : val);
     }
     let displayPayment = 0;
-    if (['Payment', 'Direct Invoice', 'POS Invoice'].includes(row.type)) {
+    if (['Payment', 'Direct Invoice', 'POS Invoice', 'Credit Settled'].includes(row.type)) {
       if (row.type === 'Payment' && (row.numberArray?.length === 0 && (row.credit || 0) > 0)) {
         displayPayment = 0;
       } else {
@@ -528,8 +570,8 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
       date: dayjs(row.date).format('DD/MM/YYYY'),
       Details: getTransactionDetail(row),
       balance: `$${(isNaN(amount3) ? 0 : amount3).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
-      amount: !['Payment'].includes(row.type) ? `$${parseFloat(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
-      payment: ['Payment', 'Direct Invoice', 'POS Invoice'].includes(row.type) ? `$${displayPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
+      amount: ['Direct Invoice', 'POS Invoice', 'Item Purchase', 'Item Purchase Payment', 'Expenses', 'Pay Slip', 'New Credit Issued'].includes(row.type) ? `$${parseFloat(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
+      payment: ['Payment', 'Direct Invoice', 'POS Invoice', 'Credit Settled'].includes(row.type) ? `$${displayPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
     })
   });
 
@@ -556,7 +598,13 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
   let amount2 = 0;
 
   const allStandingRow = monthArray?.sort((a, b) => new Date(a.date) - new Date(b.date)).map((row, i) => {
-    if (row.type === 'Payment' || row.type === 'Direct Invoice' || row.type === 'POS Invoice') {
+    if (type === 'Credit Accounts') {
+      if (row.type === 'New Credit Issued') {
+        amount2 += parseFloat(row.amount || 0);
+      } else if (row.type === 'Credit Settled') {
+        amount2 -= parseFloat(row.payment || 0);
+      }
+    } else if (row.type === 'Payment' || row.type === 'Direct Invoice' || row.type === 'POS Invoice') {
       if (row.status !== 'Voided') {
         let val = 0;
         const isAdvancedPayment = row.type === 'Payment' && (row.numberArray?.length === 0 && (row.credit || 0) > 0);
@@ -580,7 +628,7 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
     if (!isFinite(amount2)) amount2 = 0;
 
     let displayPaymentValue = 0;
-    if (['Payment', 'Direct Invoice', 'POS Invoice'].includes(row.type)) {
+    if (['Payment', 'Direct Invoice', 'POS Invoice', 'Credit Settled'].includes(row.type)) {
       if (row.type === 'Payment' && (row.numberArray?.length === 0 && (row.credit || 0) > 0)) {
         displayPaymentValue = 0;
       } else {
@@ -599,8 +647,8 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
             borderRadius: '6px',
             fontSize: '11px',
             fontWeight: 600,
-            backgroundColor: ['Direct Invoice', 'POS Invoice'].includes(row.type) ? '#dcfce7' : (row.type === 'Payment' ? '#e0e7ff' : (row.type === 'Expenses' ? '#fee2e2' : '#f1f5f9')),
-            color: ['Direct Invoice', 'POS Invoice'].includes(row.type) ? '#15803d' : (row.type === 'Payment' ? '#4338ca' : (row.type === 'Expenses' ? '#b91c1c' : '#334155'))
+            backgroundColor: row.type === 'New Credit Issued' ? '#e0f2fe' : (row.type === 'Credit Settled' ? '#dcfce7' : (['Direct Invoice', 'POS Invoice'].includes(row.type) ? '#dcfce7' : (row.type === 'Payment' ? '#e0e7ff' : (row.type === 'Expenses' ? '#fee2e2' : '#f1f5f9')))),
+            color: row.type === 'New Credit Issued' ? '#0369a1' : (row.type === 'Credit Settled' ? '#15803d' : (['Direct Invoice', 'POS Invoice'].includes(row.type) ? '#15803d' : (row.type === 'Payment' ? '#4338ca' : (row.type === 'Expenses' ? '#b91c1c' : '#334155'))))
           }}>
             {typeLabel}
           </span>
@@ -987,15 +1035,15 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
               series={[
                 {
                   paddingAngle: 4,
-                  innerRadius: 55,
-                  outerRadius: 85,
+                  innerRadius: 50,
+                  outerRadius: 75,
                   data,
                 },
               ]}
               colors={palette}
-              margin={{ right: 5 }}
-              width={260}
-              height={200}
+              margin={{ top: 5, bottom: 5, left: 5, right: 5 }}
+              width={240}
+              height={180}
               legend={{ hidden: true }}
             />
           </div>
@@ -1011,10 +1059,10 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
               <tr style={{ backgroundColor: '#0f172a', color: '#ffffff' }}>
                 <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>Date</th>
                 <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>Transaction Type</th>
-                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>Transaction Details</th>
-                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>Amount</th>
-                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>Payments</th>
-                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>Running Balance</th>
+                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>{type === 'Credit Accounts' ? 'Client & Credit Details' : 'Transaction Details'}</th>
+                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>{type === 'Credit Accounts' ? 'New Credit' : 'Amount'}</th>
+                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>{type === 'Credit Accounts' ? 'Credit Settled' : 'Payments'}</th>
+                <th style={{ padding: '12px 14px', textAlign: 'left', fontWeight: '600' }}>{type === 'Credit Accounts' ? 'Net Credit Balance' : 'Running Balance'}</th>
               </tr>
             </thead>
             <tbody>
