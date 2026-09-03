@@ -772,7 +772,7 @@ function AdminHome() {
   const vatPaid = vatPaidExpenses + vatPaidPurchases;
   const netVat = vatCollected - vatPaid;
 
-  // Credit Accounts Calculations (cumulative changes during the selected year)
+  // Credit Accounts Calculations (monthly new credit entered in the selected year)
   const monthlyCreditChanges = monthsOfYear.reduce((acc, month) => {
     acc[month] = 0;
     return acc;
@@ -781,6 +781,7 @@ function AdminHome() {
   if (payment) {
     payment.forEach(item => {
       if (item.status === 'Voided') return;
+      if (dayjs(item.paymentDate).format('YYYY') !== dayjs(date).format('YYYY')) return; // Filter by selected year
       const monthName = dayjs(item.paymentDate).format('MMMM');
       if (item.modes === 'Credit' || (item.modes === 'Cash' && parseFloat(item.remaining || 0) > 0) || (item.modes === 'Bank Transfer' && parseFloat(item.remaining || 0) > 0)) {
         monthlyCreditChanges[monthName] += parseFloat(item.remaining || 0);
@@ -790,14 +791,13 @@ function AdminHome() {
     });
   }
 
-  let runningCredit = 0;
+  // Monthly credit accounts for each month of the selected year:
   const sortArrayByMonthCreditAccounts = monthsOfYear.map(month => {
-    runningCredit += monthlyCreditChanges[month];
-    if (runningCredit < 0) runningCredit = 0;
-    return { month, total: parseFloat(runningCredit.toFixed(2)) };
+    const val = monthlyCreditChanges[month] || 0;
+    return { month, total: parseFloat((val > 0 ? val : 0).toFixed(2)) };
   });
 
-  const totalCreditAccounts = customer1.reduce((sum, c) => sum + (parseFloat(c.credit) || 0), 0);
+  const totalCreditAccounts = sortArrayByMonthCreditAccounts.reduce((sum, row) => sum + row.total, 0);
 
   // --- Synchronized Financial Metrics (Phase 74) ---
 

@@ -23,6 +23,13 @@
 12. **Preserve Master-Detail State Initialization in Information Views**: In master-detail views (such as Maintenance Information, Item Information, Customer Information, Project Information), the left sidebar lists the overall collection while the main container filters by the active ID (e.g. `maintenance.filter(row => row._id === id)`). Never omit or drop the collection state setters (`setMaintenance`, `setItems`, etc.) when refactoring data fetches, as an empty collection state causes both the sidebar and the main details view to render blank/white without throwing any JavaScript console errors.
 
 ## Current Progress Log
+- **Dashboard & Statement of Accounts Mathematical Alignment & Design Overhaul (Ver 3.4.69)**:
+  - **Fixed Cash In Double Counting**: Separated `filterMonthPayment` into Direct Invoice Collections vs POS Cash Collections. Eliminated duplicate counting of POS receipts in the summary box ($1,034.80 total accurately reflects both the summary box and the ledger table).
+  - **Corrected Gross Cash Flow Formula**: Fixed summary card to strictly compute `Total Cash In - Total Cash Out` (-$2,410.29) rather than Accrual Revenue minus Accrual Expenses (-$713.84).
+  - **Scoped Monthly Credit Accounts**: Updated `AdminHome.js` and `RevenueExpensesAll.js` so `Credit Accounts` calculations and drilldown ledger reflect the monthly new credit issued and settled in the active month of the selected year instead of an accumulated lifetime sum.
+  - **Professional UI Modernization**: Completely redesigned `RevenueExpensesAll.js` with modern corporate KPI cards (Gross Revenue, Expenses, Cash In, Cash Out, Net Income, Gross Cash Flow), sleek badge pills, zebra-striped data table, and responsive executive card structure.
+  - **Release & Distribution**: Bumped version to `3.4.69`, built Webpack assets, and packaged `dist/Global Gate Setup 3.4.69.exe`.
+
 - **Dashboard Upgrade, KPI Harmonization & Statement of Accounts Synchronization (Ver 3.4.68)**:
   - **Fixed Double-Rate Division Bug**: Eliminated erroneous second rate division `(row.total / (row.rate || 1))` in `DailyExpensesReportInfo.js` that reduced USD totals by ~2800 (turning August $25,712.46 into $11.53).
   - **Harmonized 4 Overview KPI Cards**: Renamed and aligned the 4 quick overview cards in `AdminHome.js` (`Cash In Overview`, `Daily Expenses`, `Item Purchases`, `Payroll Expenses`) with accurate metrics, charts, and drill-downs matching the top charts.
