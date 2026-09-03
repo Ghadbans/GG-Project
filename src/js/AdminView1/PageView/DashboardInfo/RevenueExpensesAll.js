@@ -748,7 +748,7 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
       </section>
       <br />
       <Box hidden>
-        <h2 style={{ fontSize: '25px', color: '#30368a', textAlign: 'center' }}>Statement of Accounts - {type || 'All'} [V2.8.17-FIX]</h2>
+        <h2 style={{ fontSize: '25px', color: '#30368a', textAlign: 'center' }}>Statement of Accounts{type && type !== 'All' ? ` - ${type}` : ''}</h2>
         <table ref={componentRef} className='invoicedetails'>
           <thead>
             <tr>
@@ -796,12 +796,12 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                               }
                               {
                                 selectOptions === 'All' && (<span>
-                                  All Transaction
+                                  All Transactions
                                 </span>)
                               }
                               {
                                 selectOptions === 'Month' && (<span>
-                                  For {month}
+                                  For {month} {dayjs(startDate).format('YYYY')}
                                 </span>)
                               }
                             </td>
@@ -818,57 +818,134 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                             </tr>
                           </tbody>
                         )}
-                        {(!type || type === 'All' || type === 'Cash In' || type === 'Cash Out' || type === 'Revenue' || type === 'Net Income') && (
+                        {type === 'Revenue' && (
+                          <tbody>
+                            <tr>
+                              <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Revenue Summary</td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >POS Sale</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Direct Invoices</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalInvoices.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Gross Revenue</span></td>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${(TotalInvoices + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                          </tbody>
+                        )}
+                        {type === 'Expenses' && (
+                          <tbody>
+                            <tr>
+                              <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Item Purchase</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Expenses</span></td>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                          </tbody>
+                        )}
+                        {type === 'Cash In' && (
+                          <tbody>
+                            <tr>
+                              <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Cash In Summary</td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Invoice Collections</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >POS Cash Sales</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Cash In</span></td>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${(TotalPayment + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                          </tbody>
+                        )}
+                        {type === 'Cash Out' && (
+                          <tbody>
+                            <tr>
+                              <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Cash Out Summary</td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Item Purchase Payments</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Cash Out</span></td>
+                              <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                          </tbody>
+                        )}
+                        {(!type || type === 'All' || type === 'Net Income' || type === 'Gross Cash Flow') && (
                           <tbody>
                             <tr>
                               <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Transaction Summary</td>
                             </tr>
-                            {(type === 'All' || type === 'Cash Out' || type === 'Net Income') && (
-                              <>
-                                <tr>
-                                  <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
-                                  <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                                </tr>
-                                <tr>
-                                  <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Item Purchase</span></td>
-                                  <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                                </tr>
-                                <tr>
-                                  <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
-                                  <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                                </tr>
-                                <tr>
-                                  <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}><span >Total Expenses</span></td>
-                                  <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                                </tr>
-                              </>
-                            )}
-                            {(!type || type === 'All' || type === 'Cash In' || type === 'Gross Cash Flow') && (
-                              <tr>
-                                <td style={{ backgroundColor: 'white', borderBottom: 'none', textAlign: 'left' }}><span >Total Payment</span></td>
-                                <td style={{ backgroundColor: 'white', borderBottom: 'none', textAlign: 'right' }}><span >{`$${TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                              </tr>
-                            )}
-                            {(!type || type === 'All' || type === 'Net Income' || type === 'Revenue') && (
-                              <>
-                              <tr>
-                                <td style={{ backgroundColor: 'white', borderBottom: 'none', textAlign: 'left' }}><span >POS Sale</span></td>
-                                <td style={{ backgroundColor: 'white', borderBottom: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                              </tr>
-                              <tr>
-                                <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}><span >Total Invoices</span></td>
-                                <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}><span >{`$${TotalInvoices.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                              </tr>
-                              </>
-                            )}
                             <tr>
-                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >
-                                {type === 'Net Income' ? 'Net Income (Accrual)' : 
-                                 (type === 'Revenue' ? 'Revenue' : 
-                                 (type === 'Cash In' ? 'Balance Total' : 
-                                 (type === 'Cash Out' ? 'Total Expenses' : 'Revenue')))}
-                              </span></td>
-                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >POS Sale</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Direct Invoices</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalInvoices.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Total Gross Revenue</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${(TotalInvoices + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Item Purchase</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                              <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Expenses</span></td>
+                              <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            </tr>
+                            <tr>
+                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}>
+                                <span style={{ color: ((TotalInvoices + TotalPOS) - TotalExpenses) >= 0 ? 'green' : 'red' }}>
+                                  {type === 'Gross Cash Flow' ? 'Gross Cash Flow' : 'Net Income (Accrual)'}
+                                </span>
+                              </td>
+                              <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'right' }}>
+                                <span style={{ color: ((TotalInvoices + TotalPOS) - TotalExpenses) >= 0 ? 'green' : 'red' }}>
+                                  {`$${((TotalInvoices + TotalPOS) - TotalExpenses).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                                </span>
+                              </td>
                             </tr>
                           </tbody>
                         )}
@@ -914,8 +991,15 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                             {allStandingRow}
                             <tr>
                               <td colSpan={3}></td>
-                              <td colSpan={2}>{type === 'Net Income' ? 'Net Income' : (type === 'Cash Out' ? 'Cash Out' : (type === 'Cash In' ? 'Cash In' : (type === 'Gross Cash Flow' ? 'Gross Cash Flow' : (type === 'Expenses' ? 'Expenses' : 'Revenue'))))}</td>
-                              <td>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+                              <td colSpan={2} style={{ fontWeight: 'bold', textAlign: 'right' }}>
+                                {type === 'Net Income' ? 'Net Income (Accrual)' : 
+                                 (type === 'Cash Out' ? 'Total Cash Out' : 
+                                 (type === 'Cash In' ? 'Total Cash In' : 
+                                 (type === 'Gross Cash Flow' ? 'Gross Cash Flow' : 
+                                 (type === 'Expenses' ? 'Total Expenses' : 
+                                 (type === 'Revenue' ? 'Total Revenue' : 'Net Operating Balance')))))}
+                              </td>
+                              <td style={{ fontWeight: 'bold' }}>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
                             </tr>
                           </tbody>
                         </table>
@@ -941,13 +1025,13 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
           </tfoot>
         </table>
       </Box>
-      <Box sx={{ padding: '20px' }} component={Paper}>
+      <Box sx={{ padding: '25px', maxWidth: '1300px', margin: '0 auto' }} component={Paper} elevation={3}>
         <div style={{ padding: '20px' }}>
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>
             <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
-              <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
+              <address style={{ position: 'relative', lineHeight: 1.35, width: '40%' }}>
                 {(!type || type === 'All') && (
                   <PieChart
                     series={[
@@ -987,18 +1071,18 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                       }
                       {
                         selectOptions === 'All' && (<span>
-                          All Transaction
+                          All Transactions
                         </span>)
                       }
                       {
-                          selectOptions === 'Month' && (<span>
-                            For {month}
-                          </span>)
-                        }
-                      </td>
-                    </tr>
-                  </tbody>
-                  {type === 'Credit Accounts' && (
+                        selectOptions === 'Month' && (<span>
+                          For {month} {dayjs(startDate).format('YYYY')}
+                        </span>)
+                      }
+                    </td>
+                  </tr>
+                </tbody>
+                {type === 'Credit Accounts' && (
                   <tbody>
                     <tr>
                       <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Credit Summary</td>
@@ -1009,10 +1093,29 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                     </tr>
                   </tbody>
                 )}
-                {(!type || type === 'All') && (
+                {type === 'Revenue' && (
                   <tbody>
                     <tr>
-                      <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Transaction Summary</td>
+                      <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Revenue Summary</td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >POS Sale</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Direct Invoices</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalInvoices.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Gross Revenue</span></td>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${(TotalInvoices + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                  </tbody>
+                )}
+                {type === 'Expenses' && (
+                  <tbody>
+                    <tr>
+                      <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
                     </tr>
                     <tr>
                       <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
@@ -1023,34 +1126,101 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                       <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                     </tr>
                     <tr>
-                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
-                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                     </tr>
-                    {(!type || type === 'All' || type === 'Cash In' || type === 'Gross Cash Flow') && (
                     <tr>
-                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Payment</span></td>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Expenses</span></td>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                  </tbody>
+                )}
+                {type === 'Cash In' && (
+                  <tbody>
+                    <tr>
+                      <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Cash In Summary</td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Invoice Collections</span></td>
                       <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                     </tr>
-                    )}
-                    {(!type || type === 'All' || type === 'Net Income' || type === 'Revenue') && (
-                    <>
                     <tr>
-                      <td style={{ backgroundColor: 'white', borderBottom: 'none', textAlign: 'left' }}><span >POS Sale</span></td>
-                      <td style={{ backgroundColor: 'white', borderBottom: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >POS Cash Sales</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                     </tr>
                     <tr>
-                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}><span >Total Invoices</span></td>
-                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}><span >{`$${TotalInvoices.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Cash In</span></td>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${(TotalPayment + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                     </tr>
-                    </>
-                    )}
+                  </tbody>
+                )}
+                {type === 'Cash Out' && (
+                  <tbody>
                     <tr>
-                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}><span >Total Expenses</span></td>
-                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                      <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Cash Out Summary</td>
                     </tr>
                     <tr>
-                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >{type === 'Net Income' ? 'Net Income' : 'Revenue'}</span></td>
-                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Item Purchase Payments</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Cash Out</span></td>
+                      <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                  </tbody>
+                )}
+                {(!type || type === 'All' || type === 'Net Income' || type === 'Gross Cash Flow') && (
+                  <tbody>
+                    <tr>
+                      <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Transaction Summary</td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >POS Sale</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPOS.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Direct Invoices</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalInvoices.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}><span >Total Gross Revenue</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${(TotalInvoices + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Item Purchase</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                      <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Expenses</span></td>
+                      <td style={{ backgroundColor: 'white', borderBottom: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    </tr>
+                    <tr>
+                      <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'left' }}>
+                        <span style={{ color: ((TotalInvoices + TotalPOS) - TotalExpenses) >= 0 ? 'green' : 'red' }}>
+                          {type === 'Gross Cash Flow' ? 'Gross Cash Flow' : 'Net Income (Accrual)'}
+                        </span>
+                      </td>
+                      <td style={{ backgroundColor: 'white', border: 'none', fontWeight: 'bold', textAlign: 'right' }}>
+                        <span style={{ color: ((TotalInvoices + TotalPOS) - TotalExpenses) >= 0 ? 'green' : 'red' }}>
+                          {`$${((TotalInvoices + TotalPOS) - TotalExpenses).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}
+                        </span>
+                      </td>
                     </tr>
                   </tbody>
                 )}
@@ -1095,8 +1265,15 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
                   {allStandingRow}
                   <tr>
                     <td colSpan={3}></td>
-                    <td colSpan={2}>{type === 'Net Income' ? 'Net Income' : (type === 'Cash Out' ? 'Cash Out' : (type === 'Cash In' ? 'Cash In' : (type === 'Gross Cash Flow' ? 'Gross Cash Flow' : (type === 'Expenses' ? 'Expenses' : 'Revenue'))))}</td>
-                    <td>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
+                    <td colSpan={2} style={{ fontWeight: 'bold', textAlign: 'right' }}>
+                      {type === 'Net Income' ? 'Net Income (Accrual)' : 
+                       (type === 'Cash Out' ? 'Total Cash Out' : 
+                       (type === 'Cash In' ? 'Total Cash In' : 
+                       (type === 'Gross Cash Flow' ? 'Gross Cash Flow' : 
+                       (type === 'Expenses' ? 'Total Expenses' : 
+                       (type === 'Revenue' ? 'Total Revenue' : 'Net Operating Balance')))))}
+                    </td>
+                    <td style={{ fontWeight: 'bold' }}>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
                   </tr>
                 </tbody>
               </table>

@@ -71,12 +71,11 @@ const PrintTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function ItemPurchaseReportInfo({ onMonth, onItemPurChase }) {
+function ItemPurchaseReportInfo({ onMonth, onItemPurChase, selectedYear }) {
   const [month, setMonth] = useState('');
   const [selectOptions, setSelectOptions] = useState('');
   const [startDate, setStartDate] = useState(() => {
-    const date = new Date()
-    return date
+    return new Date()
   });
   const transactionYears = new Date(startDate).getFullYear()
   const [fromDate, setFromDate] = useState(() => {
@@ -91,16 +90,21 @@ function ItemPurchaseReportInfo({ onMonth, onItemPurChase }) {
     if (onMonth) {
       setMonth(onMonth);
       setSelectOptions('Month');
+      if (selectedYear) setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
+    } else if (selectedYear) {
+      setMonth('');
+      setSelectOptions('Year');
+      setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
     } else {
       setMonth('');
       setSelectOptions('All');
     }
-  }, [onMonth]);
+  }, [onMonth, selectedYear]);
 
   {/** All Start */ }
   const payment = [];
   const payRoll = [];
-  const itemPurchase = onItemPurChase;
+  const itemPurchase = onItemPurChase || [];
   const expenses = [];
   {/** All End */ }
   {/** Month Filter Start */ }
@@ -123,29 +127,23 @@ function ItemPurchaseReportInfo({ onMonth, onItemPurChase }) {
 
   useEffect(() => {
     if (selectOptions === 'Month') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('MMMM') === month))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('MMMM') === month))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('MMMM') === month))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('MMMM') === month))
+      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('MMMM') === month && dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     } else if (selectOptions === 'Year') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('YYYY') === dayjs(startDate).format('YYYY')))
       setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     }
     else if (selectOptions === 'Custom') {
-      setFilterMonthPayment(payment?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.paymentDate).format('DD/MM/YYYY'))))
-      setFilterMonthPayRoll(payRoll?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.month).format('DD/MM/YYYY'))))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.itemPurchaseDate).format('DD/MM/YYYY'))))
-      setFilterMonthExpenses(expenses?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.expenseDate).format('DD/MM/YYYY'))))
+      const start = dayjs(fromDate).startOf('day');
+      const end = dayjs(endDate).endOf('day');
+      const isBetween = (date) => {
+        const d = dayjs(date);
+        return (d.isAfter(start) || d.isSame(start)) && (d.isBefore(end) || d.isSame(end));
+      };
+      setFilterMonthItemPurchase(itemPurchase?.filter((row) => isBetween(row.itemPurchaseDate)))
     }
     else if (selectOptions === 'All') {
-      setFilterMonthPayment(payment)
-      setFilterMonthPayRoll(payRoll)
       setFilterMonthItemPurchase(itemPurchase)
-      setFilterMonthExpenses(expenses)
     }
-  }, [selectOptions, month, startDate, filteredData])
+  }, [selectOptions, month, startDate, fromDate, endDate, itemPurchase])
   {/** Month Filter End */ }
 
 

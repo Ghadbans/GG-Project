@@ -72,12 +72,11 @@ const PrintTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function DailyExpensesReportInfo({ onMonth, onExpenses }) {
+function DailyExpensesReportInfo({ onMonth, onExpenses, selectedYear }) {
   const [month, setMonth] = useState('');
   const [selectOptions, setSelectOptions] = useState('');
   const [startDate, setStartDate] = useState(() => {
-    const date = new Date()
-    return date
+    return new Date()
   });
   const transactionYears = new Date(startDate).getFullYear()
   const [fromDate, setFromDate] = useState(() => {
@@ -92,39 +91,23 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
     if (onMonth) {
       setMonth(onMonth);
       setSelectOptions('Month');
+      if (selectedYear) setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
+    } else if (selectedYear) {
+      setMonth('');
+      setSelectOptions('Year');
+      setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
     } else {
       setMonth('');
       setSelectOptions('All');
     }
-  }, [onMonth]);
+  }, [onMonth, selectedYear]);
 
   {/** All Start */ }
-  const payment = [];
-  const payRoll = [];
-  const itemPurchase = [];
-  const expenses = onExpenses;
+  const expenses = onExpenses || [];
   {/** All End */ }
   {/** Month Filter Start */ }
-  const [filterMonthPayment, setFilterMonthPayment] = useState([]);
-  const [filterMonthPayRoll, setFilterMonthPayRoll] = useState([]);
-  const [filterMonthItemPurchase, setFilterMonthItemPurchase] = useState([]);
   const [filterMonthExpenses, setFilterMonthExpenses] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  const [systemRate, setSystemRate] = useState(1);
-
-  useEffect(() => {
-    const fetchRate = async () => {
-      try {
-        const res = await axios.get(`${axios.defaults.baseURL || ''}/rate`);
-        if (Array.isArray(res?.data?.data) && res.data.data.length > 0) {
-          setSystemRate(parseFloat(res.data?.data?.[0]?.rate || 1));
-        }
-      } catch (error) {
-        console.error('Error fetching system rate:', error);
-      }
-    };
-    fetchRate();
-  }, []);
 
   useEffect(() => {
     const headers = [];
@@ -136,17 +119,10 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
     setFilteredData(headers)
   }, [fromDate, endDate])
 
-
   useEffect(() => {
     if (selectOptions === 'Month') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('MMMM') === month))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('MMMM') === month))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('MMMM') === month))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('MMMM') === month))
+      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('MMMM') === month && dayjs(row.expenseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     } else if (selectOptions === 'Year') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
       setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     }
     else if (selectOptions === 'Custom') {
@@ -156,55 +132,16 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
         const d = dayjs(date);
         return (d.isAfter(start) || d.isSame(start)) && (d.isBefore(end) || d.isSame(end));
       };
-      setFilterMonthPayment(payment?.filter((row) => isBetween(row.paymentDate)))
-      setFilterMonthPayRoll(payRoll?.filter((row) => isBetween(row.month)))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => isBetween(row.itemPurchaseDate)))
       setFilterMonthExpenses(expenses?.filter((row) => isBetween(row.expenseDate)))
     }
     else if (selectOptions === 'All') {
-      setFilterMonthPayment(payment)
-      setFilterMonthPayRoll(payRoll)
-      setFilterMonthItemPurchase(itemPurchase)
       setFilterMonthExpenses(expenses)
     }
-  }, [selectOptions, month, startDate, fromDate, endDate, payment, payRoll, itemPurchase, expenses])
+  }, [selectOptions, month, startDate, fromDate, endDate, expenses])
   {/** Month Filter End */ }
-
 
   const monthArray = []
 
-  filterMonthPayment.forEach(row => {
-    monthArray.push({
-      type: 'Payment',
-      date: row.paymentDate,
-      number: row.paymentNumber,
-      numberArray: row.TotalAmount !== null ? row.TotalAmount : [],
-      defect: row.modes,
-      payment: row.amount,
-      status: '',
-      credit: row.remaining
-    })
-  })
-  filterMonthPayRoll.forEach(row => {
-    monthArray.push({
-      type: 'Pay Slip',
-      month: row.month,
-      date: row.payDate,
-      number: row.payNumber,
-      description: 'Net Payable',
-      amount: row.totalPaidDollars,
-    })
-  })
-  filterMonthItemPurchase.forEach(row => {
-    monthArray.push({
-      type: 'Item Purchase',
-      date: row.itemPurchaseDate,
-      number: row.itemPurchaseNumber,
-      reason: row.reason,
-      description: row.projectName !== undefined ? row.projectName : row.description,
-      amount: row.amount,
-    })
-  })
   filterMonthExpenses.forEach(row => {
     monthArray.push({
       type: 'Expenses',
@@ -215,12 +152,7 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
       amount: Number(row.total || 0),
     })
   })
-  const [TotalExpenses, setTotalExpenses] = useState(0);
   const [TotalDExpenses, setTotalDExpenses] = useState(0);
-  const [TotalItemPurchase, setTotalItemPurchase] = useState(0);
-  const [TotalPayRoll, setTotalPayRoll] = useState(0);
-  const [TotalPayment, setTotalPayment] = useState(0);
-  const [TotalRevenue, setTotalRevenue] = useState(0);
 
   const handleChangeSelected = (e) => {
     setSelectOptions(e.target.value)
@@ -228,18 +160,9 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
   }
 
   useEffect(() => {
-    const TPayment = filterMonthPayment.length > 0 ? filterMonthPayment.reduce((sum, row) => sum + Number(row.amount || 0), 0) : 0
-    const TPayRoll = filterMonthPayRoll.length > 0 ? filterMonthPayRoll.reduce((sum, row) => sum + Number(row.totalPaidDollars || 0), 0) : 0
-    const TPayExpenses = filterMonthExpenses.length > 0 ? filterMonthExpenses.reduce((sum, row) => sum + Number(row.totalUSD !== undefined ? row.totalUSD : ((row.total || 0) / (row.rate || systemRate || 1))), 0) : 0
-    const TPayItemPurchase = filterMonthItemPurchase.length > 0 ? filterMonthItemPurchase.reduce((sum, row) => sum + Number(row.totalUSD !== undefined ? row.totalUSD : ((row.amount || 0) / (row.rate || systemRate || 1))), 0) : 0
-    const Gain = TPayment - (Number(TPayRoll) + Number(TPayExpenses) + Number(TPayItemPurchase))
-    setTotalPayment(TPayment);
+    const TPayExpenses = filterMonthExpenses.length > 0 ? filterMonthExpenses.reduce((sum, row) => sum + Number(row.total || 0), 0) : 0;
     setTotalDExpenses(TPayExpenses);
-    setTotalPayRoll(TPayRoll);
-    setTotalItemPurchase(TPayItemPurchase);
-    setTotalExpenses(Number(TPayRoll) + Number(TPayExpenses) + Number(TPayItemPurchase))
-    setTotalRevenue(Gain)
-  }, [filterMonthPayment, filterMonthPayRoll, filterMonthExpenses, filterMonthItemPurchase]);
+  }, [filterMonthExpenses]);
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
@@ -248,11 +171,8 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
 
   const data = [
     { label: 'Total DailyExpenses', value: TotalDExpenses },
-    { label: 'Total ItemPurchase', value: TotalItemPurchase },
-    { label: 'Total PayRol', value: TotalPayRoll },
-    { label: 'Total Payment', value: TotalPayment },
   ];
-  const palette = ['red', '#643047', 'orange', 'blue'];
+  const palette = ['#C1121F'];
   let amount3 = 0;
   const Expenses = monthArray?.sort((a, b) => new Date(a.date) - new Date(b.date)).map((row) => {
     if (row.type === 'Expenses') {
@@ -457,7 +377,7 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
                       <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
                         <thead>
                           <tr>
-                            <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts</th>
+                            <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts - Daily Expenses</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -475,12 +395,12 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
                               }
                               {
                                 selectOptions === 'All' && (<span>
-                                  All Transaction
+                                  All Transactions
                                 </span>)
                               }
                               {
                                 selectOptions === 'Month' && (<span>
-                                  For {month}
+                                  For {month} {dayjs(startDate).format('YYYY')}
                                 </span>)
                               }
                             </td>
@@ -488,19 +408,15 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
                         </tbody>
                         <tbody>
                           <tr>
-                            <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
+                            <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Daily Expenses Summary</td>
                           </tr>
                           <tr>
-                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
-                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Transactions</span></td>
+                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{filterMonthExpenses.length} Records</span></td>
                           </tr>
                           <tr>
-                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Item Purchase</span></td>
-                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                          </tr>
-                          <tr>
-                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
-                            <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                            <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                            <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                           </tr>
                         </tbody>
                       </table>
@@ -559,7 +475,7 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
               <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
                 <thead>
                   <tr>
-                    <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts</th>
+                    <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts - Daily Expenses</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -577,12 +493,12 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
                       }
                       {
                         selectOptions === 'All' && (<span>
-                          All Transaction
+                          All Transactions
                         </span>)
                       }
                       {
                         selectOptions === 'Month' && (<span>
-                          For {month}
+                          For {month} {dayjs(startDate).format('YYYY')}
                         </span>)
                       }
                     </td>
@@ -590,19 +506,15 @@ function DailyExpensesReportInfo({ onMonth, onExpenses }) {
                 </tbody>
                 <tbody>
                   <tr>
-                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
+                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Daily Expenses Summary</td>
                   </tr>
                   <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total PayRoll</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Transactions</span></td>
+                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{filterMonthExpenses.length} Records</span></td>
                   </tr>
                   <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Item Purchase</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
-                  </tr>
-                  <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
+                    <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'left' }}><span >Total Daily Expenses</span></td>
+                    <td style={{ backgroundColor: 'white', borderTop: '1px solid black', fontWeight: 'bold', textAlign: 'right' }}><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></td>
                   </tr>
                 </tbody>
               </table>

@@ -70,13 +70,12 @@ const PrintTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function PayRollReportInfo({ onMonth, onPayRoll }) {
+function PayRollReportInfo({ onMonth, onPayRoll, selectedYear }) {
   const [month, setMonth] = useState('');
   const [selectOptions, setSelectOptions] = useState('');
   const [statusInfos, setStatusInfos] = useState('');
   const [startDate, setStartDate] = useState(() => {
-    const date = new Date()
-    return date
+    return new Date()
   });
   const transactionYears = new Date(startDate).getFullYear()
   const [fromDate, setFromDate] = useState(() => {
@@ -91,16 +90,21 @@ function PayRollReportInfo({ onMonth, onPayRoll }) {
     if (onMonth) {
       setMonth(onMonth);
       setSelectOptions('Month');
+      if (selectedYear) setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
+    } else if (selectedYear) {
+      setMonth('');
+      setSelectOptions('Year');
+      setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
     } else {
       setMonth('');
       setSelectOptions('All');
     }
-  }, [onMonth]);
+  }, [onMonth, selectedYear]);
 
   {/** All Start */ }
   const payment = [];
 
-  const payRoll = onPayRoll.filter((row) => {
+  const payRoll = (onPayRoll || []).filter((row) => {
     if (statusInfos === '') return true;
     if (statusInfos === 'Paid') return row.status === 'Paid';
     if (statusInfos === 'UnPaid') return row.status === 'UnPaid';
@@ -130,29 +134,23 @@ function PayRollReportInfo({ onMonth, onPayRoll }) {
 
   useEffect(() => {
     if (selectOptions === 'Month') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('MMMM') === month))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('MMMM') === month))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('MMMM') === month))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('MMMM') === month))
+      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('MMMM') === month && dayjs(row.month).format('YYYY') === dayjs(startDate).format('YYYY')))
     } else if (selectOptions === 'Year') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('YYYY') === dayjs(startDate).format('YYYY')))
       setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     }
     else if (selectOptions === 'Custom') {
-      setFilterMonthPayment(payment?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.paymentDate).format('DD/MM/YYYY'))))
-      setFilterMonthPayRoll(payRoll?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.month).format('DD/MM/YYYY'))))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.itemPurchaseDate).format('DD/MM/YYYY'))))
-      setFilterMonthExpenses(expenses?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.expenseDate).format('DD/MM/YYYY'))))
+      const start = dayjs(fromDate).startOf('day');
+      const end = dayjs(endDate).endOf('day');
+      const isBetween = (date) => {
+        const d = dayjs(date);
+        return (d.isAfter(start) || d.isSame(start)) && (d.isBefore(end) || d.isSame(end));
+      };
+      setFilterMonthPayRoll(payRoll?.filter((row) => isBetween(row.month)))
     }
     else if (selectOptions === 'All') {
-      setFilterMonthPayment(payment)
       setFilterMonthPayRoll(payRoll)
-      setFilterMonthItemPurchase(itemPurchase)
-      setFilterMonthExpenses(expenses)
     }
-  }, [selectOptions, month, startDate, filteredData, payRoll])
+  }, [selectOptions, month, startDate, fromDate, endDate, payRoll])
   {/** Month Filter End */ }
 
 

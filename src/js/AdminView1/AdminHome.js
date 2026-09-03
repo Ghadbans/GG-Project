@@ -1410,12 +1410,12 @@ function AdminHome() {
                                     <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
                                       <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#357a38', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Income Overview</Typography>
+                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Cash In Overview</Typography>
                                         </CardContent>
                                       </Card>
                                     </section>
                                     <section style={{ marginLeft: '-150px' }}>
-                                      <p style={{ color: '#357a38', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
+                                      <p style={{ color: '#357a38', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalCashIn?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
                                       <Card sx={{ width: '100%', height: '200px', backgroundColor: '#357a38', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
                                           <LineChart
@@ -1463,7 +1463,7 @@ function AdminHome() {
                                     <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
                                       <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#C1121F', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Expenses Overview</Typography>
+                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Daily Expenses</Typography>
                                         </CardContent>
                                       </Card>
                                     </section>
@@ -1518,7 +1518,7 @@ function AdminHome() {
                                     <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
                                       <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#643047', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> I-Purchase Overview</Typography>
+                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Item Purchases</Typography>
                                         </CardContent>
                                       </Card>
                                     </section>
@@ -1569,7 +1569,7 @@ function AdminHome() {
                                     <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
                                       <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#003049', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
                                         <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Pay-Roll Overview</Typography>
+                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Payroll Expenses</Typography>
                                         </CardContent>
                                       </Card>
                                     </section>
@@ -2337,6 +2337,7 @@ function AdminHome() {
                             <PaymentReportInf
                               onMonth={monthAllRevenueExpenses}
                               onPayment={payment}
+                              selectedYear={date}
                             />
                           </div>
                           : ''
@@ -2350,6 +2351,7 @@ function AdminHome() {
                             <DailyExpensesReportInfo
                               onMonth={monthAllRevenueExpenses}
                               onExpenses={expenses}
+                              selectedYear={date}
                             />
                           </div>
                           : ''
@@ -2363,6 +2365,7 @@ function AdminHome() {
                             <ItemPurchaseReportInfo
                               onMonth={monthAllRevenueExpenses}
                               onItemPurChase={itemPurchase}
+                              selectedYear={date}
                             />
                           </div>
                           : ''
@@ -2376,6 +2379,7 @@ function AdminHome() {
                             <PayRollReportInfo
                               onMonth={monthAllRevenueExpenses}
                               onPayRoll={payRoll}
+                              selectedYear={date}
                             />
                           </div>
                           : ''

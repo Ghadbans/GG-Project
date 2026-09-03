@@ -70,13 +70,12 @@ const PrintTooltip = styled(({ className, ...props }) => (
   },
 }));
 
-function PaymentReportInf({ onMonth, onPayment }) {
+function PaymentReportInf({ onMonth, onPayment, selectedYear }) {
 
   const [month, setMonth] = useState('');
   const [selectOptions, setSelectOptions] = useState('');
   const [startDate, setStartDate] = useState(() => {
-    const date = new Date()
-    return date
+    return new Date()
   });
   const transactionYears = new Date(startDate).getFullYear()
   const [fromDate, setFromDate] = useState(() => {
@@ -91,14 +90,19 @@ function PaymentReportInf({ onMonth, onPayment }) {
     if (onMonth) {
       setMonth(onMonth);
       setSelectOptions('Month');
+      if (selectedYear) setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
+    } else if (selectedYear) {
+      setMonth('');
+      setSelectOptions('Year');
+      setStartDate(new Date(dayjs(selectedYear).format('YYYY'), 0, 1));
     } else {
       setMonth('');
       setSelectOptions('All');
     }
-  }, [onMonth]);
+  }, [onMonth, selectedYear]);
 
   {/** All Start */ }
-  const payment = onPayment;
+  const payment = onPayment || [];
   const payRoll = [];
   const itemPurchase = [];
   const expenses = [];
@@ -120,47 +124,51 @@ function PaymentReportInf({ onMonth, onPayment }) {
     setFilteredData(headers)
   }, [fromDate, endDate])
 
-
   useEffect(() => {
     if (selectOptions === 'Month') {
-      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('MMMM') === month))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('MMMM') === month))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('MMMM') === month))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('MMMM') === month))
+      setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('MMMM') === month && dayjs(row.paymentDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     } else if (selectOptions === 'Year') {
       setFilterMonthPayment(payment?.filter((row) => dayjs(row.paymentDate).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthPayRoll(payRoll?.filter((row) => dayjs(row.month).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => dayjs(row.itemPurchaseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
-      setFilterMonthExpenses(expenses?.filter((row) => dayjs(row.expenseDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     }
     else if (selectOptions === 'Custom') {
-      setFilterMonthPayment(payment?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.paymentDate).format('DD/MM/YYYY'))))
-      setFilterMonthPayRoll(payRoll?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.month).format('DD/MM/YYYY'))))
-      setFilterMonthItemPurchase(itemPurchase?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.itemPurchaseDate).format('DD/MM/YYYY'))))
-      setFilterMonthExpenses(expenses?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.expenseDate).format('DD/MM/YYYY'))))
+      const start = dayjs(fromDate).startOf('day');
+      const end = dayjs(endDate).endOf('day');
+      const isBetween = (date) => {
+        const d = dayjs(date);
+        return (d.isAfter(start) || d.isSame(start)) && (d.isBefore(end) || d.isSame(end));
+      };
+      setFilterMonthPayment(payment?.filter((row) => isBetween(row.paymentDate)))
     }
     else if (selectOptions === 'All') {
       setFilterMonthPayment(payment)
-      setFilterMonthPayRoll(payRoll)
-      setFilterMonthItemPurchase(itemPurchase)
-      setFilterMonthExpenses(expenses)
     }
-  }, [selectOptions, month, startDate, filteredData])
+  }, [selectOptions, month, startDate, fromDate, endDate, payment])
   {/** Month Filter End */ }
-
 
   const monthArray = []
 
   filterMonthPayment.forEach(row => {
+    if (row.status === 'Voided') return;
+
+    // Advanced Payment (Credit) rule
+    const isAdvancedPayment = (row.transactionType !== 'POS') && (row.TotalAmount?.length === 0 || !row.TotalAmount) && (parseFloat(row.remaining || row.credit || 0) > 0);
+    if (isAdvancedPayment) return;
+
+    const appliedTotal = (row.TotalAmount?.length > 0)
+      ? row.TotalAmount.reduce((s, it) => s + parseFloat(it.total || it.amount || 0), 0)
+      : parseFloat(row.amount || 0);
+
+    const val = isFinite(appliedTotal) ? appliedTotal : 0;
+
     monthArray.push({
       type: 'Payment',
       date: row.paymentDate,
       number: row.paymentNumber,
       numberArray: row.TotalAmount !== null ? row.TotalAmount : [],
       defect: row.modes,
-      payment: row.transactionType === 'Refund' ? -row.amount : row.amount,
+      payment: row.transactionType === 'Refund' ? -val : val,
       status: row.status || 'Cleared',
-      credit: row.remaining,
+      credit: parseFloat(row.remaining || 0),
       transactionType: row.transactionType || 'Payment'
     })
   })
