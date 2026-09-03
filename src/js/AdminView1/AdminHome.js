@@ -1369,13 +1369,14 @@ function AdminHome() {
                                       series={[
                                         {
                                           paddingAngle: 4,
-                                          innerRadius: 55,
-                                          outerRadius: 75,
+                                          innerRadius: 42,
+                                          outerRadius: 68,
                                           data,
                                         },
                                       ]}
                                       colors={palette}
-                                      width={220}
+                                      margin={{ top: 5, bottom: 5, left: 5, right: 5 }}
+                                      width={200}
                                       height={160}
                                       legend={{ hidden: true }}
                                     />
@@ -1745,10 +1746,11 @@ function AdminHome() {
                               >
                                 <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Maintenance Breakdown</Typography>
                                 <PieChart
-                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data2 }]}
+                                  series={[{ paddingAngle: 4, innerRadius: 42, outerRadius: 68, data: data2 }]}
                                   colors={palette2}
-                                  width={220}
-                                  height={180}
+                                  margin={{ top: 5, bottom: 5, left: 5, right: 5 }}
+                                  width={200}
+                                  height={160}
                                   legend={{ hidden: true }}
                                 />
                               </Card>
@@ -1818,10 +1820,11 @@ function AdminHome() {
                               >
                                 <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Projects Performance</Typography>
                                 <PieChart
-                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data3 }]}
+                                  series={[{ paddingAngle: 4, innerRadius: 42, outerRadius: 68, data: data3 }]}
                                   colors={palette3}
-                                  width={220}
-                                  height={180}
+                                  margin={{ top: 5, bottom: 5, left: 5, right: 5 }}
+                                  width={200}
+                                  height={160}
                                   legend={{ hidden: true }}
                                 />
                               </Card>
@@ -1891,10 +1894,11 @@ function AdminHome() {
                               >
                                 <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Invoices Overview</Typography>
                                 <PieChart
-                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data4 }]}
+                                  series={[{ paddingAngle: 4, innerRadius: 42, outerRadius: 68, data: data4 }]}
                                   colors={palette}
-                                  width={220}
-                                  height={180}
+                                  margin={{ top: 5, bottom: 5, left: 5, right: 5 }}
+                                  width={200}
+                                  height={160}
                                   legend={{ hidden: true }}
                                 />
                               </Card>
@@ -1958,10 +1962,11 @@ function AdminHome() {
                               >
                                 <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>POS Overview</Typography>
                                 <PieChart
-                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data5 }]}
+                                  series={[{ paddingAngle: 4, innerRadius: 42, outerRadius: 68, data: data5 }]}
                                   colors={palette}
-                                  width={220}
-                                  height={180}
+                                  margin={{ top: 5, bottom: 5, left: 5, right: 5 }}
+                                  width={200}
+                                  height={160}
                                   legend={{ hidden: true }}
                                 />
                               </Card>

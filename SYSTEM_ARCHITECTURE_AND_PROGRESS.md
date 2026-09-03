@@ -23,6 +23,10 @@
 12. **Preserve Master-Detail State Initialization in Information Views**: In master-detail views (such as Maintenance Information, Item Information, Customer Information, Project Information), the left sidebar lists the overall collection while the main container filters by the active ID (e.g. `maintenance.filter(row => row._id === id)`). Never omit or drop the collection state setters (`setMaintenance`, `setItems`, etc.) when refactoring data fetches, as an empty collection state causes both the sidebar and the main details view to render blank/white without throwing any JavaScript console errors.
 
 ## Current Progress Log
+- **Donut Chart Full-Circle & Margin Alignment Fix (Ver 3.4.71)**:
+  - **Resolved Circle Side Clipping**: Injected explicit `margin={{ top: 5, bottom: 5, left: 5, right: 5 }}` and balanced radii (`innerRadius: 42, outerRadius: 68`) across all 5 Donut PieCharts (Executive Summary, Maintenance, Projects, Commercial Invoices, and POS Shop). This eliminates default legend margin reservation shifts that previously pushed the circle center to the left and caused the left edge to be clipped by the SVG boundary.
+  - **Release & Distribution**: Bumped version to `3.4.71`, compiled Webpack assets, and packaged `dist/Global Gate Setup 3.4.71.exe`.
+
 - **Main Dashboard Executive UI & Layout Overhaul (Ver 3.4.70)**:
   - **Financial Overview Card Modernization**: Eliminated rigid legacy navy `#202a5a` background boxes, hacky -90deg rotated tabs, and overlapping margins. Created a sleek executive card with clean title headers, active year badges, and full-width responsive LineChart.
   - **Executive Summary & Donut Panel**: Redesigned right-side panel with compact year date picker, centered donut chart, and 7 interactive KPI metric rows with colored pill badges, bold formatted values, and smooth hover feedback linking directly to Statement of Accounts drilldowns.
