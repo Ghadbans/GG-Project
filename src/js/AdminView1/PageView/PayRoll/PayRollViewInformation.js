@@ -642,7 +642,7 @@ function PayRollViewInformation() {
                                     </div>
                                   </header>
                                   <hr />
-                                  <Box style={{ height: '550px', overflow: 'hidden', overflowY: 'scroll', width: '100%', background: 'white' }}>
+                                  <Box style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: 'white' }}>
                                     <div ref={componentRef} className="print-container">
                                       <style type="text/css" media="print">
                                         {`

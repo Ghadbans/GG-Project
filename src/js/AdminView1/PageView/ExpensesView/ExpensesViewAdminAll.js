@@ -350,7 +350,7 @@ function ExpensesViewAdminAll() {
                           </Grid>
                         </Grid>
 
-                        <div style={{ height: '565px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                        <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'auto', width: '100%' }}>
                           {expensesFiltered?.map((row) => (
                             <div className='itemInfoContainerContent1' key={row._id}>
                               <div style={{ display: 'flex', lineHeight: '2px', fontSize: '1rem', width: '100%' }} >

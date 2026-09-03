@@ -474,7 +474,7 @@ function PaymentInformationView() {
                                   </div>
                                 </header>
                                 <hr />
-                                <div style={{ height: '560px', overflow: 'hidden', overflowY: 'scroll', width: '100%', background: 'white' }}>
+                                <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: 'white' }}>
                                   <div hidden>
                                     <table ref={componentRef} className='invoicedetails' style={{ position: 'relative', marginLeft: '40px' }}>
                                       <thead>

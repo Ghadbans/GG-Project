@@ -905,7 +905,7 @@ function EstimateViewAdminAll() {
                               </header>
                               <hr />
                               {/*Start Invoice details */}
-                              <div style={{ height: '500px', overflow: 'hidden', overflowY: 'scroll', width: '100%', background: 'white' }}>
+                              <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: 'white' }}>
                                 <Box hidden>
                                   <table ref={componentRef} className='invoicedetails'>
                                     <thead>

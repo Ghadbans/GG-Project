@@ -1405,7 +1405,7 @@ function DailyExpenseAdminView() {
                       onChange={(e) => setSearch2(e.target.value)}
                     />
                   </section>
-                  <div style={{ width: '100%', marginTop: '10px', height: '520px', overflow: 'hidden', overflowY: "scroll" }}>
+                  <div style={{ width: '100%', marginTop: '10px', height: 'calc(100vh - 270px)', overflow: 'hidden', overflowY: "auto" }}>
                     <Table aria-label="collapsible table">
                       <TableHead>
                         <TableRow>
@@ -1472,8 +1472,8 @@ function DailyExpenseAdminView() {
                     <div>
                     </div>
                   </div>
-                  <Box sx={{ height: '540px', width: '100%', overflow: 'hidden' }}>
-                    <TableContainer sx={{ maxHeight: '540px' }} >
+                  <Box sx={{ height: 'calc(100vh - 270px)', width: '100%', overflow: 'hidden' }}>
+                    <TableContainer sx={{ maxHeight: 'calc(100vh - 270px)' }} >
                       {
                         filteredData.length > 0 ? (
                           <Table aria-label="collapsible table">

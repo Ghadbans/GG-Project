@@ -461,7 +461,7 @@ function RolePermission() {
                         </Grid>
                       </Grid>
 
-                      <div style={{ height: '565px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                      <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'auto', width: '100%' }}>
                         <Tabs
                           value={value2}
                           onChange={handleChange2}

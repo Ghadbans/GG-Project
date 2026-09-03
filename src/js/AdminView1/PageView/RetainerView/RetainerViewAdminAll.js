@@ -72,7 +72,7 @@ function RetainerViewAdminAll() {
           <Grid item xs={9}>
             <div className='itemInfoContainer4'>
               <div style={{ width: '100%', background: '#f2f2f2' }}>
-                <div style={{ height: '580px', overflow: 'hidden', overflowY: 'scroll', width: '100%', background: '#f2f2f2', margin: '10px' }}>
+                <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: '#f2f2f2', margin: '10px' }}>
 
                   {retainer?.filter(row => row._id === id)?.map((row) => (
                     <div key={row._id}>

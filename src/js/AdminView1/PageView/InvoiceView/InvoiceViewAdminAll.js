@@ -1528,7 +1528,7 @@ function InvoiceViewAdminAll() {
                                       )
                                     }
                                   </Box>
-                                  <TabPanel value="1" sx={{ height: '470px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <Box hidden>
                                       <table ref={componentRef} className='invoicedetails'>
                                         <thead>
@@ -2061,7 +2061,7 @@ function InvoiceViewAdminAll() {
                                       </span>
                                     </div>
                                   </TabPanel>
-                                  <TabPanel value="2" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <Card>
                                       <CardContent>
                                         <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD' }}>
@@ -2123,7 +2123,7 @@ function InvoiceViewAdminAll() {
                                       </CardContent>
                                     </Card>
                                   </TabPanel>
-                                  <TabPanel value="3" sx={{ height: '470px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="3" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     {
                                       row.ReferenceName2 === undefined ? (
                                         <div>

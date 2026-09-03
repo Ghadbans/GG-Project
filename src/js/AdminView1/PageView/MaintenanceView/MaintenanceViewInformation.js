@@ -1313,7 +1313,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                       }
                                     </TabList>
                                   </Box>
-                                  <TabPanel value="1" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <div ref={componentRef}>
                                       <Box style={{ backgroundColor: 'white', width: '100%', padding: '10px', fontSize: '90%', color: 'black' }}>
                                         <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
@@ -1485,7 +1485,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                       </Box>
                                     </div>
                                   </TabPanel>
-                                  <TabPanel value="2" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll', padding: '20px' }}>
+                                  <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', padding: '20px' }}>
                                     <Card sx={{ marginBottom: '15px' }}>
                                       <CardContent>
                                         <Typography sx={{ textAlign: 'center', color: 'gray' }}>Summary</Typography>

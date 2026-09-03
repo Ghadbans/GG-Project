@@ -1406,7 +1406,7 @@ function ProjectViewInformation() {
                               />
                             </TabList>
                           </Box>
-                          <TabPanel value="1" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                             {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
                             <div>
                               <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
@@ -1526,7 +1526,7 @@ function ProjectViewInformation() {
                               </Grid>
                             </div>
                           </TabPanel>
-                          <TabPanel value="2" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                             {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
                             <div>
                               {invoice ?
@@ -1716,7 +1716,7 @@ function ProjectViewInformation() {
                               }
                             </div>
                           </TabPanel>
-                          <TabPanel value="3" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="3" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                             {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
                             <div >
                               {purchaseInfo?.map((row) => (
@@ -1911,7 +1911,7 @@ function ProjectViewInformation() {
                               ))}
                             </div>
                           </TabPanel>
-                          <TabPanel value="4" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                          <TabPanel value="4" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                             {loadingTab && <LinearProgress sx={{ position: 'sticky', top: 0, zIndex: 1 }} />}
                             <div style={{ padding: '20px', backgroundColor: 'white' }}>
                               <Typography variant="h6" gutterBottom>Project Advances / Payments</Typography>

@@ -192,10 +192,11 @@
 .itemInfoContainer,
 .itemInfoContainer2 {
     width: 100%;
-    min-height: calc(100vh - 120px);
+    min-height: calc(100vh - 90px);
     background-color: white;
     padding: 15px;
     border-radius: 15px;
+    box-sizing: border-box;
 }
 
 .itemInfoContainerContent1 {
@@ -212,9 +213,11 @@
 .itemInfoContainer3,
 .itemInfoContainer4 {
     width: 100%;
+    min-height: calc(100vh - 90px);
     background-color: #f2f2f2;
     border-radius: 15px;
     padding: 20px;
+    box-sizing: border-box;
 }
 
 .itemInfoContainer2Head {

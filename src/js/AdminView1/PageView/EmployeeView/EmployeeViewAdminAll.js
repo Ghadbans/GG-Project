@@ -880,7 +880,7 @@ function EmployeeViewAdminAll() {
                                   <p className='btnCustomer1' onClick={() => handleShow2(2)}>Filter</p>
                                 </div>
                               </div>
-                              <div style={{ height: '555px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                              <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'auto', width: '100%' }}>
                                 <Tabs
                                   value={value}
                                   onChange={handleChange3}
@@ -934,7 +934,7 @@ function EmployeeViewAdminAll() {
                                 </Grid>
                               </Grid>
 
-                              <div style={{ height: '580px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                              <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'auto', width: '100%' }}>
                                 <Tabs
                                   value={value2}
                                   onChange={handleChange2}
@@ -1142,7 +1142,7 @@ function EmployeeViewAdminAll() {
                                     />
                                   </TabList>
                                 </Box>
-                                <TabPanel value="1" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
 
                                   <Card sx={{ width: '100%', fontSize: '20px' }}>
                                     <CardContent>
@@ -1259,7 +1259,7 @@ function EmployeeViewAdminAll() {
                                     </CardContent>
                                   </Card>
                                 </TabPanel>
-                                <TabPanel value="2" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                   <Card sx={{ width: '100%', fontSize: '20px' }}>
                                     <CardContent>
                                       <table >
@@ -1341,7 +1341,7 @@ function EmployeeViewAdminAll() {
                                     </CardContent>
                                   </Card>
                                 </TabPanel>
-                                <TabPanel value="5" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                <TabPanel value="5" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                   <TableContainer>
                                     <TableContainer component={Paper}>
                                       <Table aria-label="collapsible table">
@@ -1365,7 +1365,7 @@ function EmployeeViewAdminAll() {
                                     </TableContainer>
                                   </TableContainer>
                                 </TabPanel>
-                                <TabPanel value="3" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                <TabPanel value="3" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                   <TableContainer>
                                     <TableContainer component={Paper}>
                                       <Table aria-label="collapsible table">
@@ -1386,7 +1386,7 @@ function EmployeeViewAdminAll() {
                                     </TableContainer>
                                   </TableContainer>
                                 </TabPanel>
-                                <TabPanel value="4" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                <TabPanel value="4" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                   <div style={{ marginBottom: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0px' }}>
                                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                                       <DemoContainer components={['DatePicker', 'DatePicker']}>
@@ -1481,7 +1481,7 @@ function EmployeeViewAdminAll() {
                                     </div>
                                   </Box>
                                 </TabPanel>
-                                <TabPanel value="6" sx={{ height: '520px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                <TabPanel value="6" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                   <Card>
                                     <CardContent>
                                       <section style={{ position: 'relative', float: 'right', padding: '10px' }}>

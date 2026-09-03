@@ -917,7 +917,7 @@ function CustomerInformationView() {
                                   <p className='btnCustomer1' onClick={() => handleShow2(2)}>Filter</p>
                                 </div>
                               </div>
-                              <div style={{ height: '555px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                              <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'auto', width: '100%' }}>
                                 <Tabs
                                   value={value}
                                   onChange={handleChange3}
@@ -971,7 +971,7 @@ function CustomerInformationView() {
                                 </Grid>
                               </Grid>
 
-                              <div style={{ height: '580px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
+                              <div style={{ height: 'calc(100vh - 170px)', overflow: 'hidden', overflowY: 'auto', width: '100%' }}>
                                 <Tabs
                                   value={value2}
                                   onChange={handleChange2}
@@ -1145,7 +1145,7 @@ function CustomerInformationView() {
                                       <Tab label="POS History" value="6" />
                                     </TabList>
                                   </Box>
-                                  <TabPanel value="1" sx={{ height: '550px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <Card>
                                       <CardContent>
                                         <table>
@@ -1213,7 +1213,7 @@ function CustomerInformationView() {
                                       </CardContent>
                                     </Card>
                                   </TabPanel>
-                                  <TabPanel value="2" sx={{ height: '550px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')} style={{ width: '100%' }}>
                                       <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
@@ -1511,7 +1511,7 @@ function CustomerInformationView() {
                                       </AccordionDetails>
                                     </Accordion>
                                   </TabPanel>
-                                  <TabPanel value="3" sx={{ height: '550px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="3" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <Box hidden>
                                       <table ref={componentRef1} className='invoicedetails'>
                                         <thead>
@@ -1695,7 +1695,7 @@ function CustomerInformationView() {
                                       </CardContent>
                                     </Card>
                                   </TabPanel>
-                                  <TabPanel value="5" sx={{ height: '550px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                  <TabPanel value="5" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                     <div style={{ marginBottom: '5px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0px' }}>
                                       <FormControl>
                                         <InputLabel id="select">select</InputLabel>

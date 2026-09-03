@@ -808,7 +808,7 @@ function SupplierViewInformation() {
                                         />
                                       </TabList>
                                     </Box>
-                                    <TabPanel value="1" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                    <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                       <div>
 
                                         <Card sx={{ marginBottom: '20px' }}>
@@ -852,7 +852,7 @@ function SupplierViewInformation() {
 
                                       </div>
                                     </TabPanel>
-                                    <TabPanel value="2" sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                    <TabPanel value="2" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                       <Card>
                                         <CardContent>
                                           <section style={{ position: 'relative', float: 'left', padding: '10px', display: 'flex', gap: '10px' }}>
@@ -897,7 +897,7 @@ function SupplierViewInformation() {
                                         </CardContent>
                                       </Card>
                                     </TabPanel>
-                                    <TabPanel value='3' sx={{ height: '500px', overflow: 'hidden', overflowY: 'scroll' }}>
+                                    <TabPanel value='3' sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
                                       <Card>
                                         <CardContent>
                                           <section style={{ position: 'relative', float: 'right', padding: '10px' }}>
