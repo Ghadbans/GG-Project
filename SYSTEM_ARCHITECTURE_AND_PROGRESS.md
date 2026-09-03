@@ -23,6 +23,13 @@
 12. **Preserve Master-Detail State Initialization in Information Views**: In master-detail views (such as Maintenance Information, Item Information, Customer Information, Project Information), the left sidebar lists the overall collection while the main container filters by the active ID (e.g. `maintenance.filter(row => row._id === id)`). Never omit or drop the collection state setters (`setMaintenance`, `setItems`, etc.) when refactoring data fetches, as an empty collection state causes both the sidebar and the main details view to render blank/white without throwing any JavaScript console errors.
 
 ## Current Progress Log
+- **Main Dashboard Executive UI & Layout Overhaul (Ver 3.4.70)**:
+  - **Financial Overview Card Modernization**: Eliminated rigid legacy navy `#202a5a` background boxes, hacky -90deg rotated tabs, and overlapping margins. Created a sleek executive card with clean title headers, active year badges, and full-width responsive LineChart.
+  - **Executive Summary & Donut Panel**: Redesigned right-side panel with compact year date picker, centered donut chart, and 7 interactive KPI metric rows with colored pill badges, bold formatted values, and smooth hover feedback linking directly to Statement of Accounts drilldowns.
+  - **Overhauled 4 Quick Overview KPI Cards**: Restyled Cash In Collections, Daily Expenses, Item Purchases, and Payroll Expenses with clean elevation cards, bold totals, colored icon badges, and smooth sparkline mini-charts.
+  - **Standardized Operational Module Sections**: Re-engineered all lower dashboard modules (Accounting & Taxes VAT, Inventory & Customers, Maintenance Operations, Project Management, Commercial Invoices, Point of Sale, and Human Resources) with unified modern typography, pill badges, and clean rounded DataGrid card wrappers.
+  - **Release & Distribution**: Bumped version to `3.4.70`, built Webpack assets, and packaged `dist/Global Gate Setup 3.4.70.exe`.
+
 - **Dashboard & Statement of Accounts Mathematical Alignment & Design Overhaul (Ver 3.4.69)**:
   - **Fixed Cash In Double Counting**: Separated `filterMonthPayment` into Direct Invoice Collections vs POS Cash Collections. Eliminated duplicate counting of POS receipts in the summary box ($1,034.80 total accurately reflects both the summary box and the ledger table).
   - **Corrected Gross Cash Flow Formula**: Fixed summary card to strictly compute `Total Cash In - Total Cash Out` (-$2,410.29) rather than Accrual Revenue minus Accrual Expenses (-$713.84).

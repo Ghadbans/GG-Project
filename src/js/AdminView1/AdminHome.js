@@ -24,7 +24,7 @@ import { useNavigate, NavLink } from 'react-router-dom';
 import { isNativeMobile } from '../utils/isMobile';
 import MobileDashboard from '../component/MobileDashboard';
 import Logout from '../component/NetworkLogoutIcon';
-import { AccountBalance, AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Sell, ShoppingBagOutlined, ShoppingCart, Square } from '@mui/icons-material';
+import { AccountBalance, AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Receipt, Sell, ShoppingBagOutlined, ShoppingCart, Square, Storefront } from '@mui/icons-material';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 
@@ -1309,1002 +1309,795 @@ function AdminHome() {
                     <div style={{ width: '100%' }}>
                       {
                         showInfo === 1 ?
-                          <Grid container spacing={4}>
-                            <Grid item xs={8}>
-                              <Typography sx={{ fontSize: '2rem', marginBottom: '15px' }}>Overview</Typography>
-                              <Card sx={{ width: '100%', height: '400px', padding: '20px', backgroundColor: '#202a5a' }}>
-                                <CardContent>
-                                  <div style={{ width: '100%', display: 'flex', alignItems: 'center', marginTop: '0px' }}>
-                                    <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
-                                      <Card sx={{ width: '330px', marginBottom: '300px', height: '40px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', color: '#202a5a', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Expenses & Income </Typography>
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                    <section style={{ marginLeft: '-250px', width: '800px' }}>
-                                      <Card sx={{ width: '100%', height: '300px', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <LineChart
-                                            width={open ? 600 : 700}
-                                            height={300}
-                                            series={[
-                                              { data: normalizeSortArrayByMonthRevenue.map((row) => row.total), label: 'Revenue', id: 'revId', color: 'green' },
-                                              { data: normalizeSortArrayByMonthTotalExpensesAllChart.map((row) => row.total), label: 'Expenses', id: 'expId', color: 'red' },
-                                              { data: normalizeSortArrayByMonthRevenue.map((row, i) => row.total - normalizeSortArrayByMonthTotalExpensesAllChart[i].total), label: 'Net Income', id: 'netId', color: 'blue' },
-                                              { data: normalizeSortArrayByMonthCashInChart.map((row) => row.total), label: 'Cash In', id: 'cashInId', color: 'lightgreen' },
-                                              { data: normalizeSortArrayByMonthCashOutChart.map((row) => row.total), label: 'Cash Out', id: 'cashOutId', color: 'lightcoral' },
-                                              { data: normalizeSortArrayByMonthCashInChart.map((row, i) => row.total - normalizeSortArrayByMonthCashOutChart[i].total), label: 'Gross Cash Flow', id: 'grossId', color: 'orange' },
-                                              { data: sortArrayByMonthCreditAccounts.map((row) => row.total), label: 'Credit Accounts', id: 'creditAccId', color: '#0d47a1' },
-                                            ]}
-                                            xAxis={[{ scaleType: 'point', data: monthsOfYear, stroke: '#fff' }]}
-                                            colors={palette1}
-                                            onAxisClick={(e, monthsOfYear) => handleClick(2, monthsOfYear)}
-                                          />
-                                        </CardContent>
-                                      </Card>
-                                    </section>
+                          <Grid container spacing={3}>
+                            {/* Top Section: Main Multi-Line Financial Chart */}
+                            <Grid item xs={12} lg={8}>
+                              <Card sx={{ width: '100%', borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2.5, backgroundColor: '#ffffff' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Financial Performance & Cash Flow</Typography>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b' }}>Monthly accrual revenue, operating expenses, cash collections, and net flow</Typography>
                                   </div>
-                                </CardContent>
+                                  <span style={{ padding: '6px 14px', borderRadius: '20px', fontSize: '12px', fontWeight: 'bold', backgroundColor: '#e0e7ff', color: '#3730a3' }}>
+                                    Year {dayjs(date).format('YYYY')}
+                                  </span>
+                                </div>
+                                <div style={{ width: '100%', overflowX: 'auto' }}>
+                                  <LineChart
+                                    width={open ? 680 : 820}
+                                    height={330}
+                                    series={[
+                                      { data: normalizeSortArrayByMonthRevenue.map((row) => row.total), label: 'Revenue', id: 'revId', color: '#16a34a' },
+                                      { data: normalizeSortArrayByMonthTotalExpensesAllChart.map((row) => row.total), label: 'Expenses', id: 'expId', color: '#dc2626' },
+                                      { data: normalizeSortArrayByMonthRevenue.map((row, i) => row.total - normalizeSortArrayByMonthTotalExpensesAllChart[i].total), label: 'Net Income', id: 'netId', color: '#2563eb' },
+                                      { data: normalizeSortArrayByMonthCashInChart.map((row) => row.total), label: 'Cash In', id: 'cashInId', color: '#10b981' },
+                                      { data: normalizeSortArrayByMonthCashOutChart.map((row) => row.total), label: 'Cash Out', id: 'cashOutId', color: '#f87171' },
+                                      { data: normalizeSortArrayByMonthCashInChart.map((row, i) => row.total - normalizeSortArrayByMonthCashOutChart[i].total), label: 'Gross Cash Flow', id: 'grossId', color: '#d97706' },
+                                      { data: sortArrayByMonthCreditAccounts.map((row) => row.total), label: 'Credit Accounts', id: 'creditAccId', color: '#0d47a1' },
+                                    ]}
+                                    xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
+                                    colors={palette1}
+                                    onAxisClick={(e, monthsOfYear) => handleClick(2, monthsOfYear)}
+                                  />
+                                </div>
                               </Card>
                             </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', backgroundColor: '#202a5a', height: '520px', padding: '5px' }}>
-                                <CardContent>
-                                  <Card>
-                                    <CardContent>
-                                      <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                        <DemoContainer components={['DatePicker', 'DatePicker']}>
-                                          <DatePicker
-                                            required
-                                            name='date'
-                                            value={dayjs(date)}
-                                            onChange={(date) => setDate(date)}
-                                            format='YYYY'
-                                            label={'"year"'} views={['year']}
-                                          />
-                                        </DemoContainer>
-                                      </LocalizationProvider>
-                                      <section style={{ position: 'relative', left: open ? '20%' : '25%' }}>
-                                        <PieChart
-                                          series={[
-                                            {
-                                              paddingAngle: 5,
-                                              innerRadius: 60,
-                                              outerRadius: 80,
-                                              data,
-                                            },
-                                          ]}
-                                          colors={palette}
-                                          margin={{ right: 5 }}
-                                          width={200}
-                                          height={200}
-                                          legend={{ hidden: true }}
+
+                            {/* Top Section: Financial Health Donut & Interactive Metrics List */}
+                            <Grid item xs={12} lg={4}>
+                              <Card sx={{ width: '100%', height: '100%', minHeight: '430px', borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2.5, backgroundColor: '#ffffff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                                <div>
+                                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#0f172a' }}>Executive Summary</Typography>
+                                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                      <DemoContainer components={['DatePicker']}>
+                                        <DatePicker
+                                          required
+                                          name='date'
+                                          value={dayjs(date)}
+                                          onChange={(date) => setDate(date)}
+                                          format='YYYY'
+                                          label='Select Year'
+                                          views={['year']}
+                                          slotProps={{ textField: { size: 'small' } }}
                                         />
-                                      </section>
-                                      <Divider />
-                                      <section style={{ width: '100%', justifyContent: 'center' }}>
-                                        <ul style={{ listStyleType: 'none', padding: 0 }}>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Revenue')}> <span><Square style={{ color: 'green' }} /></span> <span style={{ color: 'green' }}>Revenue: $ {totalRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Expenses')}> <span><Square style={{ color: 'red' }} /></span> <span style={{ color: 'red' }}>Expenses: $ {totalExpenses?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Net Income')}> <span><Square style={{ color: 'blue' }} /></span> <span style={{ color: 'blue' }}>Net Income: $ {netIncome?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Cash In')}> <span><Square style={{ color: 'lightgreen' }} /></span> <span style={{ color: 'lightgreen' }}>Cash In: $ {totalCashIn?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Cash Out')}> <span><Square style={{ color: 'lightcoral' }} /></span> <span style={{ color: 'lightcoral' }}>Cash Out: $ {totalCashOut?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Gross Cash Flow')}> <span><Square style={{ color: 'orange' }} /></span> <span style={{ color: 'orange' }}>Gross Cash Flow: $ {grossCashFlow?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                          <li style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer' }} onClick={() => handleClick(2, '', 'Credit Accounts')}> <span><Square style={{ color: '#0d47a1' }} /></span> <span style={{ color: '#0d47a1' }}>Credit Accounts: $ {totalCreditAccounts?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></li>
-                                        </ul>
-                                      </section>
-                                    </CardContent>
-                                  </Card>
-
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Card sx={{ width: '100%', height: '300px' }}>
-                                <CardContent>
-                                  <div className='iconmo2'>
-                                    <MonetizationOn style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
+                                      </DemoContainer>
+                                    </LocalizationProvider>
                                   </div>
-                                  <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                    <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
-                                      <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#357a38', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Cash In Overview</Typography>
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                    <section style={{ marginLeft: '-150px' }}>
-                                      <p style={{ color: '#357a38', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalCashIn?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
-                                      <Card sx={{ width: '100%', height: '200px', backgroundColor: '#357a38', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <LineChart
-                                            dataset={normalizeSortArrayByMonthCashInChart}
-                                            xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
-                                            series={[{ dataKey: 'total', area: false }]}
-                                            onAxisClick={(e, monthsOfYear) => handleClick(3, monthsOfYear)}
-                                            sx={{
-                                              [`& .${lineElementClasses.root}`]: {
-                                                stroke: '#fff',
-                                                strokeWidth: 2,
-                                              },
-                                              [`& .${markElementClasses.root}`]: {
-                                                stroke: '#fff',
-                                                scale: '0.6',
-                                                fill: '#8884d8',
-                                                strokeWidth: 2,
-                                              },
-                                              [`.${axisClasses.root}`]: {
-                                                [`.${axisClasses.tick}, .${axisClasses.line}`]: {
-                                                  display: 'none'
-                                                },
-                                                [`.${axisClasses.tickLabel}`]: {
-                                                  display: 'none'
-                                                },
-                                              },
-                                            }}
-                                            width={open ? 400 : 500}
-                                            height={200}
-                                          />
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Card sx={{ width: '100%', height: '300px' }}>
-                                <CardContent>
-                                  <div className='iconmo3'>
-                                    <ShoppingBagOutlined style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                  </div>
-                                  <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                    <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
-                                      <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#C1121F', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Daily Expenses</Typography>
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                    <section style={{ marginLeft: '-150px' }}>
-                                      <p style={{ color: '#C1121F', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalDailyExpenses?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
-                                      <Card sx={{ width: '100%', height: '200px', backgroundColor: '#C1121F', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-
-                                          <LineChart
-                                            dataset={normalizeSortArrayByMonthDailyExpensesChart}
-                                            xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
-                                            onAxisClick={(e, monthsOfYear) => handleClick(4, monthsOfYear)}
-                                            series={[{ dataKey: 'total', area: false }]}
-                                            sx={{
-                                              [`& .${lineElementClasses.root}`]: {
-                                                stroke: '#fff',
-                                                strokeWidth: 2,
-                                              },
-                                              [`& .${markElementClasses.root}`]: {
-                                                stroke: '#fff',
-                                                scale: '0.6',
-                                                fill: '#8884d8',
-                                                strokeWidth: 2,
-                                              },
-                                              [`.${axisClasses.root}`]: {
-                                                [`.${axisClasses.tick}, .${axisClasses.line}`]: {
-                                                  display: 'none'
-                                                },
-                                                [`.${axisClasses.tickLabel}`]: {
-                                                  display: 'none'
-                                                },
-                                              },
-                                            }}
-                                            width={open ? 400 : 500}
-                                            height={200}
-                                          />
-
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Card sx={{ width: '100%', height: '300px' }}>
-                                <CardContent>
-                                  <div className='iconmo5'>
-                                    <ShoppingCart style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                  </div>
-                                  <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                    <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
-                                      <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#643047', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Item Purchases</Typography>
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                    <section style={{ marginLeft: '-150px' }}>
-                                      <p style={{ color: '#643047', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalItemPurchase?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
-                                      <Card sx={{ width: '100%', height: '200px', backgroundColor: '#643047', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <LineChart
-                                          dataset={normalizeSortArrayByMonthItemPurchaseChart}
-                                          xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
-                                          onAxisClick={(e, monthsOfYear) => handleClick(5, monthsOfYear)}
-                                          series={[{ dataKey: 'total', area: false }]}
-                                          sx={{
-                                            [`& .${lineElementClasses.root}`]: {
-                                              stroke: '#fff',
-                                              strokeWidth: 2,
-                                            },
-                                            [`& .${markElementClasses.root}`]: {
-                                              stroke: '#fff',
-                                              scale: '0.6',
-                                              fill: '#8884d8',
-                                              strokeWidth: 2,
-                                            },
-                                            [`.${axisClasses.root}`]: {
-                                              [`.${axisClasses.tick}, .${axisClasses.line}`]: {
-                                                display: 'none'
-                                              },
-                                              [`.${axisClasses.tickLabel}`]: {
-                                                display: 'none'
-                                              },
-                                            },
-                                          }}
-                                          width={open ? 400 : 500}
-                                          height={200}
-                                        />
-                                      </Card>
-                                    </section>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Card sx={{ width: '100%', height: '300px' }}>
-                                <CardContent>
-                                  <div className='iconmo4'>
-                                    <Payment style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                  </div>
-                                  <div style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
-                                    <section style={{ position: 'relative', left: '0px', transform: 'rotate(-90deg)' }}>
-                                      <Card sx={{ width: '250px', marginBottom: '180px', height: '40px', backgroundColor: '#003049', textAlign: 'center', justifyContent: 'center', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <Typography sx={{ position: 'relative', fontSize: '1rem', top: '-8px' }}> Payroll Expenses</Typography>
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                    <section style={{ marginLeft: '-150px' }}>
-                                      <p style={{ color: '#003049', fontSize: '15px', alignItems: 'center' }}><MonetizationOn /><span>{totalPayRoll?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></p>
-                                      <Card sx={{ width: '100%', height: '200px', backgroundColor: '#003049', color: 'white', boxShadow: '1px 1px 2rem rgba(0, 0, 0, 0.3)' }}>
-                                        <CardContent >
-                                          <LineChart
-                                            dataset={normalizeSortArrayByMonthPayRollChart}
-                                            xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
-                                            onAxisClick={(e, monthsOfYear) => handleClick(6, monthsOfYear)}
-                                            series={[{ dataKey: 'total', area: false }]}
-                                            sx={{
-                                              [`& .${lineElementClasses.root}`]: {
-                                                stroke: '#fff',
-                                                strokeWidth: 2,
-                                              },
-                                              [`& .${markElementClasses.root}`]: {
-                                                stroke: '#fff',
-                                                scale: '0.6',
-                                                fill: '#8884d8',
-                                                strokeWidth: 2,
-                                              },
-                                              [`.${axisClasses.root}`]: {
-                                                [`.${axisClasses.tick}, .${axisClasses.line}`]: {
-                                                  display: 'none'
-                                                },
-                                                [`.${axisClasses.tickLabel}`]: {
-                                                  display: 'none'
-                                                },
-                                              },
-                                            }}
-                                            width={open ? 400 : 500}
-                                            height={200}
-                                          />
-                                        </CardContent>
-                                      </Card>
-                                    </section>
-                                  </div>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>Accounting & Taxes</Typography>
-                            </Grid>
-                            <Grid item xs={6}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                onClick={(e) => handleClick(15, 'All')}
-                              >
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo7' style={{ backgroundColor: '#202a5a' }}>
-                                      <AccountBalance style={{ fontSize: '30px', position: 'relative', top: '10px', color: 'white' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px', fontWeight: 'bold' }}>VAT Statement Account</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', fontWeight: 'bold', color: netVat >= 0 ? '#3b82f6' : '#ef4444' }}>
-                                      ${Math.abs(netVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {netVat >= 0 ? '(Due)' : '(Credit)'}
-                                    </Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>ITem & Customer</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                onClick={(e) => handleClick(10, 'Category')}>
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo7'>
-                                      <Store style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px' }}> Store</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', color: '#669BBC' }}>{totalItem.length} Item</Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                onClick={(e) => handleClick(10, 'Out of Stock')}>
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo7'>
-                                      <ProductionQuantityLimitsIcon style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Item Out of Store</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', color: 'red' }}>{totalOut.length}</Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center' }}>
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo7'>
-                                      <Person2Sharp style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px' }}> Customer</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', color: '#669BBC' }}>{customer1.length}</Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <Card sx={{ width: '100%', height: '450px', backgroundColor: '#643047', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                {
-                                  itemsValue.length > 0 ? <CardContent >
-                                    <TableContainer sx={{ height: '400px', width: '100%', borderRadius: '5px' }}>
-                                      <DataGrid
-                                        rows={itemsValue}
-                                        columns={columnsItemOut}
-                                        sx={{ borderRadius: '5px', backgroundColor: '#fff' }}
-                                      />
-                                    </TableContainer>
-                                  </CardContent> : <Button onClick={fetchValue}>Item Value</Button>
-                                }
-
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '450px', backgroundColor: '#643047', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent >
-                                  <TableContainer sx={{ height: '400px', width: '100%', borderRadius: '5px' }}>
-                                    <DataGrid
-                                      rows={customer}
-                                      columns={columnCustomer}
-                                      sx={{ borderRadius: '5px', backgroundColor: '#fff' }}
-                                    />
-                                  </TableContainer>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>Maintenance</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '273px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <Card sx={{ width: '100%', height: '220px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                    onClick={(e) => handleClick(7, 'All')}
-                                  >
-                                    <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                                      <PieChart
-                                        series={[
-                                          {
-                                            paddingAngle: 5,
-                                            innerRadius: 60,
-                                            outerRadius: 80,
-                                            data: data2,
-                                          },
-                                        ]}
-                                        colors={palette2}
-                                        margin={{ right: 5 }}
-                                        width={200}
-                                        height={200}
-                                        legend={{ hidden: true }}
-                                      />
-                                      <section>
-
-                                      </section>
-                                    </CardContent>
-                                  </Card>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <div style={{ width: '100%' }}>
-                                <Grid container spacing={4}>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(7, 'Sell')}
-                                    >
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'blue' }}>
-                                            <Sell style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Sell</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'blue' }}>${totalMaintenanceRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(7, 'Cost')}
-                                    >
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'red' }}>
-                                            <ShoppingBagOutlined style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Cost</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'red' }}>${totalMaintenanceCost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(7, 'Labor')}
-                                    >
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'orange' }}>
-                                            <PriceChange style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Labor Fees</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'orange' }}>${totalMaintenanceLaborFees?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(7, 'Revenue')}
-                                    >
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'green' }}>
-                                            <AddCard style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Revenue</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'green' }}>${(totalMaintenanceRevenue - totalMaintenanceCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                </Grid>
-                              </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Card sx={{ width: '100%', height: '500px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <TableContainer sx={{ height: '450px', width: '100%', borderRadius: '5px' }}>
-                                    <DataGrid
-                                      rows={maintenance}
-                                      columns={columnMaintenance}
-                                      sx={{ borderRadius: '5px', backgroundColor: '#fff' }}
-                                    />
-                                  </TableContainer>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>Project</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '273px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <Card sx={{ width: '100%', height: '220px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                    onClick={(e) => handleClick(8, 'Revenue')}>
-                                    <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                                      <PieChart
-                                        series={[
-                                          {
-                                            paddingAngle: 5,
-                                            innerRadius: 60,
-                                            outerRadius: 80,
-                                            data: data3,
-                                          },
-                                        ]}
-                                        colors={palette3}
-                                        margin={{ right: 5 }}
-                                        width={200}
-                                        height={200}
-                                        legend={{ hidden: true }}
-                                      />
-                                      <section>
-
-                                      </section>
-                                    </CardContent>
-                                  </Card>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <div style={{ width: '100%' }}>
-                                <Grid container spacing={4}>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(8, 'Sell')}
-                                    >
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'blue' }}>
-                                            <Sell style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Sell</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'blue' }}>${projectSellInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(8, 'Expenses')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'red' }}>
-                                            <ShoppingBagOutlined style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Expenses Cost</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'red' }}>${projectExpensesInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(8, 'Item Cost')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: '#643047' }}>
-                                            <ShoppingCart style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Item Cost</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: '#643047' }}>${projectCostInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(8, 'Revenue')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'green' }}>
-                                            <AddCard style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Revenue</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'green' }}>${projectRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                </Grid>
-                              </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Card sx={{ width: '100%', height: '500px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <TableContainer sx={{ height: '450px', width: '100%', borderRadius: '5px' }}>
-                                    <DataGrid
-                                      rows={projectWithAll}
-                                      columns={columnProject}
-                                      sx={{ borderRadius: '5px', backgroundColor: '#fff' }}
-                                    />
-                                  </TableContainer>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>Invoice</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '273px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <Card sx={{ width: '100%', height: '220px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                    onClick={(e) => handleClick(9, 'Revenue')}>
-                                    <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                                      <PieChart
-                                        series={[
-                                          {
-                                            paddingAngle: 5,
-                                            innerRadius: 60,
-                                            outerRadius: 80,
-                                            data: data4,
-                                          },
-                                        ]}
-                                        colors={palette}
-                                        margin={{ right: 5 }}
-                                        width={200}
-                                        height={200}
-                                        legend={{ hidden: true }}
-                                      />
-                                      <section>
-
-                                      </section>
-                                    </CardContent>
-                                  </Card>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <div style={{ width: '100%' }}>
-                                <Grid container spacing={4}>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(9, 'Sell')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'blue' }}>
-                                            <Sell style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Sell</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'blue' }}>${totalSellInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(9, 'Cost')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'red' }}>
-                                            <ShoppingBagOutlined style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Cost</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'red' }}>${totalCostInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(9, 'Revenue')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'green' }}>
-                                            <AddCard style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Revenue</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'green' }}>${invoiceRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                </Grid>
-                              </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Card sx={{ width: '100%', height: '500px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <TableContainer sx={{ height: '450px', width: '100%', borderRadius: '5px' }}>
-                                    <DataGrid
-                                      rows={filterInvoice}
-                                      columns={columnInvoice}
-                                      sx={{ borderRadius: '5px', backgroundColor: '#fff' }}
-                                    />
-                                  </TableContainer>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>Shop</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '273px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <Card sx={{ width: '100%', height: '220px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                    onClick={(e) => handleClick(11, 'All')}>
-                                    <CardContent sx={{ display: 'flex', alignItems: 'center' }}>
-                                      <PieChart
-                                        series={[
-                                          {
-                                            paddingAngle: 5,
-                                            innerRadius: 60,
-                                            outerRadius: 80,
-                                            data: data5,
-                                          },
-                                        ]}
-                                        colors={palette}
-                                        margin={{ right: 5 }}
-                                        width={200}
-                                        height={200}
-                                        legend={{ hidden: true }}
-                                      />
-                                      <section>
-
-                                      </section>
-                                    </CardContent>
-                                  </Card>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <div style={{ width: '100%' }}>
-                                <Grid container spacing={4}>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(11, 'Sell')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'blue' }}>
-                                            <Sell style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Sell</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'blue' }}>${totalPOSSellInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(11, 'Cost')}>
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'red' }}>
-                                            <ShoppingBagOutlined style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Total Cost</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'red' }}>${totalPOSCostInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                  <Grid item xs={6}>
-                                    <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center', cursor: 'pointer' }}
-                                      onClick={(e) => handleClick(11, 'Revenue')} >
-                                      <CardContent >
-                                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                          <section className='iconmo7' style={{ backgroundColor: 'green' }}>
-                                            <AddCard style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                          </section>
-                                          <section>
-                                            <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Revenue</Typography>
-                                          </section>
-                                        </div>
-                                        <section>
-                                          <Typography sx={{ float: 'right', color: 'green' }}>${invoicePOSRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
-                                        </section>
-                                      </CardContent>
-                                    </Card>
-                                  </Grid>
-                                </Grid>
-                              </div>
-                            </Grid>
-                            <Grid item xs={12}>
-                              <Card sx={{ width: '100%', height: '500px', backgroundColor: '#202a5a', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <TableContainer sx={{ height: '450px', width: '100%', borderRadius: '5px' }}>
-                                    <DataGrid
-                                      rows={posInvoice}
-                                      columns={columnPOSInvoice}
-                                      sx={{ borderRadius: '5px', backgroundColor: '#fff' }}
-                                    />
-                                  </TableContainer>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-
-                            <Grid item xs={12}>
-                              <Typography sx={{ fontSize: '2rem' }}>Employee</Typography>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center' }}>
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo8'>
-                                      <GroupOutlined style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px' }}> Employee</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', color: '#669BBC' }}>{Employed && Employed.length}</Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center' }}>
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo8'>
-                                      <PersonAddDisabled style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Resigned Employee</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', color: 'red' }}>{EmployedResign && EmployedResign.length}</Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '120px', backgroundColor: '#fff', textAlign: 'center', justifyContent: 'center' }}>
-                                <CardContent >
-                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <section className='iconmo8'>
-                                      <GroupRemove style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                    </section>
-                                    <section>
-                                      <Typography sx={{ textAlign: 'left', fontSize: '20px' }}>Fired Employed</Typography>
-                                    </section>
-                                  </div>
-                                  <section>
-                                    <Typography sx={{ float: 'right', color: 'red' }}>{EmployedFired && EmployedFired.length}</Typography>
-                                  </section>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={4}>
-                              <Card sx={{ width: '100%', height: '450px', backgroundColor: '#003049', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent >
-                                  <Box sx={{ borderRadius: '5px', backgroundColor: '#fff', maxHeight: '400px', padding: '10px' }} component={Paper}>
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                      <section>
-                                        <Typography>Notification</Typography>
-                                      </section>
-                                      <section className='iconmo8'>
-                                        <NotificationAdd style={{ fontSize: '30px', position: 'relative', top: '10px' }} />
-                                      </section>
-                                    </div>
-                                    <Divider />
-                                    <div style={{ position: 'relative', textAlign: 'left', width: '100%', height: '330px', overflow: 'hidden', overflowY: 'scroll', justifyContent: 'left' }}>
-                                      {
-                                        notification?.map((row) => (
-                                          <Timeline key={row._id}
-                                            sx={{
-                                              [`& .${timelineItemClasses.root}:before`]: {
-                                                flex: 0,
-                                                padding: 0,
-                                              },
-
-                                            }}
-                                          >
-                                            <TimelineItem>
-                                              <TimelineSeparator>
-                                                <TimelineDot />
-                                                <TimelineConnector />
-                                              </TimelineSeparator>
-                                              <TimelineContent>
-                                                <Typography className="txt2">{row.person}</Typography>
-                                                <Typography className="txt1">{row.reason}</Typography>
-                                              </TimelineContent>
-                                            </TimelineItem>
-                                          </Timeline>
-                                        ))
-                                      }
-                                    </div>
-                                  </Box>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                            <Grid item xs={8}>
-                              <Card sx={{ width: '100%', height: '450px', backgroundColor: '#003049', textAlign: 'center', justifyContent: 'center', padding: '10px' }}>
-                                <CardContent>
-                                  <TableContainer sx={{ borderRadius: '5px', backgroundColor: '#fff', height: '400px' }}>
-                                    <Table >
-                                      <TableBody>
+                                  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', my: 1 }}>
+                                    <PieChart
+                                      series={[
                                         {
-                                          employeeAttendance?.map((row, i) => (
-                                            <TableRow key={row._id}>
-                                              <TableCell>{i + 1}</TableCell>
-                                              <TableCell>{row.name}</TableCell>
-                                              <TableCell>{dayjs(row.timeIn).format('HH:mm')} AM</TableCell>
-                                              <TableCell>{row.observation}</TableCell>
-                                            </TableRow>
-                                          ))
-                                        }
-                                      </TableBody>
-                                    </Table>
-                                  </TableContainer>
-                                </CardContent>
+                                          paddingAngle: 4,
+                                          innerRadius: 55,
+                                          outerRadius: 75,
+                                          data,
+                                        },
+                                      ]}
+                                      colors={palette}
+                                      width={220}
+                                      height={160}
+                                      legend={{ hidden: true }}
+                                    />
+                                  </div>
+                                  <Divider sx={{ my: 1.5 }} />
+                                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                                    {[
+                                      { label: 'Revenue', value: totalRevenue, color: '#16a34a', bg: '#dcfce7', type: 'Revenue' },
+                                      { label: 'Expenses', value: totalExpenses, color: '#dc2626', bg: '#fee2e2', type: 'Expenses' },
+                                      { label: 'Net Income', value: netIncome, color: '#2563eb', bg: '#dbeafe', type: 'Net Income' },
+                                      { label: 'Cash In', value: totalCashIn, color: '#059669', bg: '#d1fae5', type: 'Cash In' },
+                                      { label: 'Cash Out', value: totalCashOut, color: '#e11d48', bg: '#ffe4e6', type: 'Cash Out' },
+                                      { label: 'Gross Cash Flow', value: grossCashFlow, color: '#d97706', bg: '#fef3c7', type: 'Gross Cash Flow' },
+                                      { label: 'Credit Accounts', value: totalCreditAccounts, color: '#0d47a1', bg: '#e0e7ff', type: 'Credit Accounts' },
+                                    ].map((item) => (
+                                      <div
+                                        key={item.label}
+                                        onClick={() => handleClick(2, '', item.type)}
+                                        style={{
+                                          display: 'flex',
+                                          alignItems: 'center',
+                                          justifyContent: 'space-between',
+                                          padding: '6px 10px',
+                                          borderRadius: '8px',
+                                          cursor: 'pointer',
+                                          transition: 'all 0.2s',
+                                          backgroundColor: '#f8fafc',
+                                        }}
+                                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = item.bg}
+                                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#f8fafc'}
+                                      >
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                          <span style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: item.color }} />
+                                          <span style={{ fontSize: '13px', fontWeight: '500', color: '#334155' }}>{item.label}</span>
+                                        </div>
+                                        <span style={{ fontSize: '13px', fontWeight: 'bold', color: item.color }}>
+                                          ${item.value?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        </span>
+                                      </div>
+                                    ))}
+                                  </div>
+                                </div>
                               </Card>
-                              <br />
+                            </Grid>
+
+                            {/* 4 Quick Overview KPI Cards */}
+                            <Grid item xs={12} sm={6} lg={3}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2,
+                                  cursor: 'pointer',
+                                  transition: 'transform 0.2s, box-shadow 0.2s',
+                                  '&:hover': { transform: 'translateY(-3px)', boxShadow: '0 8px 25px -4px rgba(16, 185, 129, 0.2)' }
+                                }}
+                                onClick={() => handleClick(3, '')}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Cash In Collections</Typography>
+                                    <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#059669', mt: 0.5 }}>
+                                      ${totalCashIn?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </Typography>
+                                  </div>
+                                  <div style={{ width: '42px', height: '42px', borderRadius: '12px', backgroundColor: '#d1fae5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <MonetizationOn sx={{ color: '#059669', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                                <LineChart
+                                  dataset={normalizeSortArrayByMonthCashInChart}
+                                  xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
+                                  series={[{ dataKey: 'total', area: false, color: '#059669' }]}
+                                  width={240}
+                                  height={110}
+                                  sx={{
+                                    [`& .${lineElementClasses.root}`]: { stroke: '#059669', strokeWidth: 2 },
+                                    [`& .${markElementClasses.root}`]: { display: 'none' },
+                                    [`.${axisClasses.root}`]: { [`.${axisClasses.tick}, .${axisClasses.line}, .${axisClasses.tickLabel}`]: { display: 'none' } },
+                                  }}
+                                />
+                              </Card>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6} lg={3}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2,
+                                  cursor: 'pointer',
+                                  transition: 'transform 0.2s, box-shadow 0.2s',
+                                  '&:hover': { transform: 'translateY(-3px)', boxShadow: '0 8px 25px -4px rgba(239, 68, 68, 0.2)' }
+                                }}
+                                onClick={() => handleClick(4, '')}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Daily Expenses</Typography>
+                                    <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#dc2626', mt: 0.5 }}>
+                                      ${totalDailyExpenses?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </Typography>
+                                  </div>
+                                  <div style={{ width: '42px', height: '42px', borderRadius: '12px', backgroundColor: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <ShoppingBagOutlined sx={{ color: '#dc2626', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                                <LineChart
+                                  dataset={normalizeSortArrayByMonthDailyExpensesChart}
+                                  xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
+                                  series={[{ dataKey: 'total', area: false, color: '#dc2626' }]}
+                                  width={240}
+                                  height={110}
+                                  sx={{
+                                    [`& .${lineElementClasses.root}`]: { stroke: '#dc2626', strokeWidth: 2 },
+                                    [`& .${markElementClasses.root}`]: { display: 'none' },
+                                    [`.${axisClasses.root}`]: { [`.${axisClasses.tick}, .${axisClasses.line}, .${axisClasses.tickLabel}`]: { display: 'none' } },
+                                  }}
+                                />
+                              </Card>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6} lg={3}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2,
+                                  cursor: 'pointer',
+                                  transition: 'transform 0.2s, box-shadow 0.2s',
+                                  '&:hover': { transform: 'translateY(-3px)', boxShadow: '0 8px 25px -4px rgba(124, 58, 237, 0.2)' }
+                                }}
+                                onClick={() => handleClick(5, '')}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Item Purchases</Typography>
+                                    <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#7c3aed', mt: 0.5 }}>
+                                      ${totalItemPurchase?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </Typography>
+                                  </div>
+                                  <div style={{ width: '42px', height: '42px', borderRadius: '12px', backgroundColor: '#f3e8ff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <ShoppingCart sx={{ color: '#7c3aed', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                                <LineChart
+                                  dataset={normalizeSortArrayByMonthItemPurchaseChart}
+                                  xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
+                                  series={[{ dataKey: 'total', area: false, color: '#7c3aed' }]}
+                                  width={240}
+                                  height={110}
+                                  sx={{
+                                    [`& .${lineElementClasses.root}`]: { stroke: '#7c3aed', strokeWidth: 2 },
+                                    [`& .${markElementClasses.root}`]: { display: 'none' },
+                                    [`.${axisClasses.root}`]: { [`.${axisClasses.tick}, .${axisClasses.line}, .${axisClasses.tickLabel}`]: { display: 'none' } },
+                                  }}
+                                />
+                              </Card>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6} lg={3}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2,
+                                  cursor: 'pointer',
+                                  transition: 'transform 0.2s, box-shadow 0.2s',
+                                  '&:hover': { transform: 'translateY(-3px)', boxShadow: '0 8px 25px -4px rgba(37, 99, 235, 0.2)' }
+                                }}
+                                onClick={() => handleClick(6, '')}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.8rem', fontWeight: 600, color: '#64748b', textTransform: 'uppercase' }}>Payroll Expenses</Typography>
+                                    <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#2563eb', mt: 0.5 }}>
+                                      ${totalPayRoll?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    </Typography>
+                                  </div>
+                                  <div style={{ width: '42px', height: '42px', borderRadius: '12px', backgroundColor: '#dbeafe', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Payment sx={{ color: '#2563eb', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                                <LineChart
+                                  dataset={normalizeSortArrayByMonthPayRollChart}
+                                  xAxis={[{ scaleType: 'point', data: monthsOfYear }]}
+                                  series={[{ dataKey: 'total', area: false, color: '#2563eb' }]}
+                                  width={240}
+                                  height={110}
+                                  sx={{
+                                    [`& .${lineElementClasses.root}`]: { stroke: '#2563eb', strokeWidth: 2 },
+                                    [`& .${markElementClasses.root}`]: { display: 'none' },
+                                    [`.${axisClasses.root}`]: { [`.${axisClasses.tick}, .${axisClasses.line}, .${axisClasses.tickLabel}`]: { display: 'none' } },
+                                  }}
+                                />
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Accounting & Taxes */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <AccountBalance sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Accounting & Taxes</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} md={6}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  cursor: 'pointer',
+                                  transition: 'all 0.2s',
+                                  '&:hover': { transform: 'translateY(-2px)', boxShadow: '0 8px 20px -2px rgba(0,0,0,0.1)' }
+                                }}
+                                onClick={() => handleClick(15, 'All')}
+                              >
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                                    <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#0f172a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                      <AccountBalance sx={{ color: '#ffffff', fontSize: '26px' }} />
+                                    </div>
+                                    <div>
+                                      <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a' }}>VAT Statement Account</Typography>
+                                      <Typography sx={{ fontSize: '0.85rem', color: '#64748b' }}>Collected vs Paid Tax Reconciliation</Typography>
+                                    </div>
+                                  </div>
+                                  <div style={{ textAlign: 'right' }}>
+                                    <span style={{
+                                      display: 'inline-block',
+                                      padding: '6px 14px',
+                                      borderRadius: '20px',
+                                      fontWeight: 'bold',
+                                      fontSize: '14px',
+                                      backgroundColor: netVat >= 0 ? '#dbeafe' : '#fee2e2',
+                                      color: netVat >= 0 ? '#1d4ed8' : '#b91c1c'
+                                    }}>
+                                      ${Math.abs(netVat).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} {netVat >= 0 ? '(Due)' : '(Credit)'}
+                                    </span>
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Inventory & Customers */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <Store sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Inventory & Customers</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  cursor: 'pointer',
+                                  '&:hover': { transform: 'translateY(-2px)' }
+                                }}
+                                onClick={() => handleClick(10, 'Category')}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>Active Store Inventory</Typography>
+                                    <Typography sx={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#0284c7', mt: 0.5 }}>{totalItem.length} Items</Typography>
+                                  </div>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Store sx={{ color: '#0284c7', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  cursor: 'pointer',
+                                  '&:hover': { transform: 'translateY(-2px)' }
+                                }}
+                                onClick={() => handleClick(10, 'Out of Stock')}
+                              >
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>Out of Stock</Typography>
+                                    <Typography sx={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#dc2626', mt: 0.5 }}>{totalOut.length} Items</Typography>
+                                  </div>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <ProductionQuantityLimitsIcon sx={{ color: '#dc2626', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 15px -2px rgba(0,0,0,0.05)', border: '1px solid #e2e8f0', p: 2.5 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>Customer Directory</Typography>
+                                    <Typography sx={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#059669', mt: 0.5 }}>{customer1.length} Accounts</Typography>
+                                  </div>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#d1fae5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Person2Sharp sx={{ color: '#059669', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+
+                            <Grid item xs={12} lg={8}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2, backgroundColor: '#ffffff' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                                  <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a' }}>Inventory Valuation Overview</Typography>
+                                  {itemsValue.length === 0 && <Button variant="outlined" size="small" onClick={fetchValue}>Load Values</Button>}
+                                </div>
+                                <TableContainer sx={{ height: '380px', width: '100%', borderRadius: '8px' }}>
+                                  <DataGrid
+                                    rows={itemsValue}
+                                    columns={columnsItemOut}
+                                    sx={{ border: 'none', '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', fontWeight: 'bold' } }}
+                                  />
+                                </TableContainer>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2, backgroundColor: '#ffffff' }}>
+                                <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1.5 }}>Customer Balances</Typography>
+                                <TableContainer sx={{ height: '380px', width: '100%', borderRadius: '8px' }}>
+                                  <DataGrid
+                                    rows={customer}
+                                    columns={columnCustomer}
+                                    sx={{ border: 'none', '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', fontWeight: 'bold' } }}
+                                  />
+                                </TableContainer>
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Maintenance */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <PriceChange sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Maintenance Operations</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  height: '100%',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  cursor: 'pointer'
+                                }}
+                                onClick={() => handleClick(7, 'All')}
+                              >
+                                <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Maintenance Breakdown</Typography>
+                                <PieChart
+                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data2 }]}
+                                  colors={palette2}
+                                  width={220}
+                                  height={180}
+                                  legend={{ hidden: true }}
+                                />
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} lg={8}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(7, 'Sell')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Sell</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#2563eb' }}>${totalMaintenanceRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(7, 'Cost')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Cost</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#dc2626' }}>${totalMaintenanceCost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(7, 'Labor')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Labor Fees</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#d97706' }}>${totalMaintenanceLaborFees?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(7, 'Revenue')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Operating Gain</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#059669' }}>${(totalMaintenanceRevenue - totalMaintenanceCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2, backgroundColor: '#ffffff' }}>
+                                <TableContainer sx={{ height: '400px', width: '100%', borderRadius: '8px' }}>
+                                  <DataGrid
+                                    rows={maintenance}
+                                    columns={columnMaintenance}
+                                    sx={{ border: 'none', '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', fontWeight: 'bold' } }}
+                                  />
+                                </TableContainer>
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Project */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <Sell sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Project Management</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  height: '100%',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  cursor: 'pointer'
+                                }}
+                                onClick={() => handleClick(8, 'Revenue')}
+                              >
+                                <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Projects Performance</Typography>
+                                <PieChart
+                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data3 }]}
+                                  colors={palette3}
+                                  width={220}
+                                  height={180}
+                                  legend={{ hidden: true }}
+                                />
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} lg={8}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(8, 'Sell')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Sell</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#2563eb' }}>${projectSellInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(8, 'Expenses')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Project Expenses</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#dc2626' }}>${projectExpensesInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(8, 'Item Cost')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Direct Item Cost</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#7c3aed' }}>${projectCostInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={6}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(8, 'Revenue')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Net Project Profit</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#059669' }}>${projectRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2, backgroundColor: '#ffffff' }}>
+                                <TableContainer sx={{ height: '400px', width: '100%', borderRadius: '8px' }}>
+                                  <DataGrid
+                                    rows={projectWithAll}
+                                    columns={columnProject}
+                                    sx={{ border: 'none', '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', fontWeight: 'bold' } }}
+                                  />
+                                </TableContainer>
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Invoices */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <Receipt sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Commercial Invoices</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  height: '100%',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  cursor: 'pointer'
+                                }}
+                                onClick={() => handleClick(9, 'Revenue')}
+                              >
+                                <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Invoices Overview</Typography>
+                                <PieChart
+                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data4 }]}
+                                  colors={palette}
+                                  width={220}
+                                  height={180}
+                                  legend={{ hidden: true }}
+                                />
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} lg={8}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={4}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(9, 'Sell')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Sell</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#2563eb' }}>${totalSellInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(9, 'Cost')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Cost</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#dc2626' }}>${totalCostInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(9, 'Revenue')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Net Invoice Margin</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#059669' }}>${invoiceRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2, backgroundColor: '#ffffff' }}>
+                                <TableContainer sx={{ height: '400px', width: '100%', borderRadius: '8px' }}>
+                                  <DataGrid
+                                    rows={filterInvoice}
+                                    columns={columnInvoice}
+                                    sx={{ border: 'none', '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', fontWeight: 'bold' } }}
+                                  />
+                                </TableContainer>
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Point of Sale (Shop) */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <Storefront sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Point of Sale (Shop)</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} lg={4}>
+                              <Card
+                                sx={{
+                                  borderRadius: '16px',
+                                  boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)',
+                                  border: '1px solid #e2e8f0',
+                                  p: 2.5,
+                                  height: '100%',
+                                  display: 'flex',
+                                  flexDirection: 'column',
+                                  justifyContent: 'center',
+                                  alignItems: 'center',
+                                  cursor: 'pointer'
+                                }}
+                                onClick={() => handleClick(11, 'All')}
+                              >
+                                <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>POS Overview</Typography>
+                                <PieChart
+                                  series={[{ paddingAngle: 4, innerRadius: 55, outerRadius: 75, data: data5 }]}
+                                  colors={palette}
+                                  width={220}
+                                  height={180}
+                                  legend={{ hidden: true }}
+                                />
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} lg={8}>
+                              <Grid container spacing={2}>
+                                <Grid item xs={4}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(11, 'Sell')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Sell</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#2563eb' }}>${totalPOSSellInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(11, 'Cost')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Total Cost</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#dc2626' }}>${totalPOSCostInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                                <Grid item xs={4}>
+                                  <Card sx={{ borderRadius: '12px', border: '1px solid #e2e8f0', p: 2, cursor: 'pointer' }} onClick={() => handleClick(11, 'Revenue')}>
+                                    <Typography sx={{ fontSize: '0.8rem', color: '#64748b' }}>Net POS Margin</Typography>
+                                    <Typography sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#059669' }}>${invoicePOSRevenue?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</Typography>
+                                  </Card>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Card sx={{ borderRadius: '16px', boxShadow: '0 4px 20px -2px rgba(0,0,0,0.06)', border: '1px solid #e2e8f0', p: 2, backgroundColor: '#ffffff' }}>
+                                <TableContainer sx={{ height: '400px', width: '100%', borderRadius: '8px' }}>
+                                  <DataGrid
+                                    rows={posInvoice}
+                                    columns={columnPOSInvoice}
+                                    sx={{ border: 'none', '& .MuiDataGrid-columnHeaders': { backgroundColor: '#f8fafc', fontWeight: 'bold' } }}
+                                  />
+                                </TableContainer>
+                              </Card>
+                            </Grid>
+
+                            {/* Section: Human Resources (Employee) */}
+                            <Grid item xs={12}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '16px', marginBottom: '8px' }}>
+                                <GroupOutlined sx={{ color: '#0f172a', fontSize: '26px' }} />
+                                <Typography sx={{ fontSize: '1.4rem', fontWeight: 'bold', color: '#0f172a' }}>Human Resources</Typography>
+                              </div>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <Card sx={{ borderRadius: '16px', border: '1px solid #e2e8f0', p: 2.5 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>Active Personnel</Typography>
+                                    <Typography sx={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#0284c7', mt: 0.5 }}>{Employed && Employed.length} Active</Typography>
+                                  </div>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <GroupOutlined sx={{ color: '#0284c7', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <Card sx={{ borderRadius: '16px', border: '1px solid #e2e8f0', p: 2.5 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>Resigned Staff</Typography>
+                                    <Typography sx={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#d97706', mt: 0.5 }}>{EmployedResign && EmployedResign.length}</Typography>
+                                  </div>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <PersonAddDisabled sx={{ color: '#d97706', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                              <Card sx={{ borderRadius: '16px', border: '1px solid #e2e8f0', p: 2.5 }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                  <div>
+                                    <Typography sx={{ fontSize: '0.85rem', color: '#64748b', fontWeight: 600 }}>Dismissed / Fired</Typography>
+                                    <Typography sx={{ fontSize: '1.6rem', fontWeight: 'bold', color: '#dc2626', mt: 0.5 }}>{EmployedFired && EmployedFired.length}</Typography>
+                                  </div>
+                                  <div style={{ width: '44px', height: '44px', borderRadius: '12px', backgroundColor: '#fee2e2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <GroupRemove sx={{ color: '#dc2626', fontSize: '24px' }} />
+                                  </div>
+                                </div>
+                              </Card>
+                            </Grid>
+
+                            <Grid item xs={12} lg={4}>
+                              <Card sx={{ borderRadius: '16px', border: '1px solid #e2e8f0', p: 2, height: '400px', backgroundColor: '#ffffff' }}>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                                  <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a' }}>HR Announcements</Typography>
+                                  <NotificationAdd sx={{ color: '#2563eb' }} />
+                                </div>
+                                <Divider sx={{ my: 1 }} />
+                                <div style={{ height: '320px', overflowY: 'auto', paddingRight: '6px' }}>
+                                  {notification?.map((row) => (
+                                    <Timeline key={row._id} sx={{ [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 } }}>
+                                      <TimelineItem>
+                                        <TimelineSeparator>
+                                          <TimelineDot color="primary" />
+                                          <TimelineConnector />
+                                        </TimelineSeparator>
+                                        <TimelineContent>
+                                          <Typography sx={{ fontSize: '13px', fontWeight: 'bold', color: '#0f172a' }}>{row.person}</Typography>
+                                          <Typography sx={{ fontSize: '12px', color: '#64748b' }}>{row.reason}</Typography>
+                                        </TimelineContent>
+                                      </TimelineItem>
+                                    </Timeline>
+                                  ))}
+                                </div>
+                              </Card>
+                            </Grid>
+                            <Grid item xs={12} lg={8}>
+                              <Card sx={{ borderRadius: '16px', border: '1px solid #e2e8f0', p: 2, height: '400px', backgroundColor: '#ffffff' }}>
+                                <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', mb: 1 }}>Today's Employee Attendance</Typography>
+                                <TableContainer sx={{ height: '320px', width: '100%', borderRadius: '8px' }}>
+                                  <Table size="small">
+                                    <TableHead>
+                                      <TableRow sx={{ backgroundColor: '#f8fafc' }}>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>#</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Staff Name</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Check-In Time</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Remarks / Observation</TableCell>
+                                      </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                      {employeeAttendance?.map((row, i) => (
+                                        <TableRow key={row._id} hover>
+                                          <TableCell>{i + 1}</TableCell>
+                                          <TableCell sx={{ fontWeight: 600 }}>{row.name}</TableCell>
+                                          <TableCell>{dayjs(row.timeIn).format('HH:mm')} AM</TableCell>
+                                          <TableCell>{row.observation}</TableCell>
+                                        </TableRow>
+                                      ))}
+                                    </TableBody>
+                                  </Table>
+                                </TableContainer>
+                              </Card>
                             </Grid>
                           </Grid> : ''
                       }
