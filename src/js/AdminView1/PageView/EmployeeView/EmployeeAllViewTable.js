@@ -16,7 +16,6 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import Loader from '../../../component/Loader';
-import Image from '../../../img/no-data.png';
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
@@ -148,7 +147,6 @@ const handleDelete = async () => {
                                       </IconButton>
                                       </span>
                                </ViewTooltip>
-                               {employee.length > 0 ? (
                 <TableContainer component={Paper}>
   <Table style={{backgroundColor:'white'}}>
   <TableHead >
@@ -163,7 +161,8 @@ const handleDelete = async () => {
     </TableRow>
   </TableHead>
   <TableBody>
-    {employee?.map((row) => (
+    {employee && employee.length > 0 ? (
+      employee.map((row) => (
       <TableRow
         key={row._id}  >
         <TableCell align="center">{dayjs(row.joinDate).format('DD/MM/YYYY')}</TableCell>
@@ -202,14 +201,17 @@ const handleDelete = async () => {
               </span>
           </TableCell>
       </TableRow>
-    ))}
+    ))) : (
+      <TableRow>
+        <TableCell colSpan={7} align="center" sx={{ py: 3, color: '#888' }}>
+          No employees found
+        </TableCell>
+      </TableRow>
+    )}
   </TableBody>
       
   </Table>
     </TableContainer>
-   ) : <div>
-   <img  src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'35%',top:'40px', width:'50%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
-   </div>}
   </div>
   <ConfirmDeleteModal open={open} handleClose={handleClose} handleDelete={handleDelete} itemName={employee.find(e => e._id === DeleteId)?.employeeName || "this employee"} />
     <Modal

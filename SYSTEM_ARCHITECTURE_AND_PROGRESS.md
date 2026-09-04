@@ -24,6 +24,13 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Payment View & DataGrid Loading Balloon Graphic Removal (Ver 3.4.78)**:
+  - **Eliminated Flash of Balloon "Saved Events" Graphic**:
+    - Identified that `PaymentView.js` (along with `ExpensesViewAdmin.js`, `SellShopInvoiceView.js`, and `EmployeeAllViewTable.js`) conditionally rendered a legacy balloon illustration (`no-data.png` with text *"Saved events will show up here, so you can easily view them here later."*) whenever the table rows array had length 0.
+    - Because data is loaded asynchronously from the server, the empty initial state (`[]`) caused the balloon image to flash on screen before the DataGrid popped in once records arrived.
+    - Removed the balloon fallback across `PaymentView.js` (TabPanels 1, 2, 3), `ExpensesViewAdmin.js`, `SellShopInvoiceView.js`, and `EmployeeAllViewTable.js`, rendering DataGrid / Table directly so that the layout remains stable, fast, and uses standard DataGrid empty state handling.
+  - **Release & Distribution**: Bumped version to `3.4.78`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.78.exe`, and pushed commit to GitHub.
+
 - **Supplier Statement & IN-SUMMARY Reference Numbers & Project Number Display (Ver 3.4.77)**:
   - **Reference Number Visibility in Statement Details & IN-SUMMARY**:
     - Enhanced Supplier Statement of Accounts (`SupplierViewInformation.js`) to display the user-entered Reference number (stored in `manufacturerNumber`) in the **Details** column alongside the linked reason/client (e.g. `INV-002375 / GLOBAL PVA (Ref: 09)` or `P-000123 / GG CONCRETE BLOCK FACTORY (Ref: 15)`).

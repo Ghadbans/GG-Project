@@ -36,7 +36,6 @@ import PosRefundModal from './PageView/ShopPos/PosRefundModal';
 import { useDispatch, useSelector } from "react-redux"
 import { logOut, selectCurrentUser, setUser } from '../features/auth/authSlice';
 import Logout from '../component/NetworkLogoutIcon';
-import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
@@ -779,7 +778,6 @@ function SellShopInvoiceView() {
                       </span>
                     </ViewTooltip>
                   </section>
-                  {invoice.length > 0 ? (
                     <Box sx={{ height: 600, width: '100%' }}>
                       {invoice.length > 0 ? (
                         <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
@@ -851,9 +849,6 @@ function SellShopInvoiceView() {
                         )
                       }
                     </Box>
-                  ) : <div>
-                    <img  src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '40%', top: '40px', width: '55%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                  </div>}
 
                 </div>)
             }

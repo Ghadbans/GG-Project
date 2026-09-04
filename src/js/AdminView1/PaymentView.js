@@ -32,7 +32,6 @@ import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Logout from '../component/NetworkLogoutIcon';
 import dayjs from 'dayjs';
-import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
@@ -930,63 +929,34 @@ const toggleDrawer = () => {
             <Box sx={{ height: isNativeMobile() ? 'auto' : 560, width: '100%' }}>
               {isNativeMobile() ? (
                 <MobileCardList type="payments" data={invoicePaymentRow} />
-              ) : invoicePaymentRow.length > 0 ? (
-                user.data.role === 'CEO' ? (
-                  <DataGrid
-                    rows={invoicePaymentRow}
-                    columns={columns}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                      toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                        printOptions: {
-                          disableToolbarButton: true
-                        },
-                      },
-                    }}
-                    checkboxSelection
-                    disableDensitySelector
-                    filterModel={filterModel}
-                    onFilterModelChange={(newModel) => handleFilter(newModel)}
-                    columnVisibilityModel={columnVisibilityModel}
-                    onColumnVisibilityModelChange={handelHiddenColumn}
-                    sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                  />
-                ) : (
-                  <DataGrid
-                    rows={filteredRows}
-                    columns={columns}
-                    slots={{ toolbar: GridToolbar }}
-                    slotProps={{
-                      toolbar: {
-                        showQuickFilter: true,
-                        quickFilterProps: { debounceMs: 500 },
-                        printOptions: {
-                          disableToolbarButton: true
-                        },
-                      },
-                    }}
-                    checkboxSelection
-                    disableDensitySelector
-                    filterModel={filterModel}
-                    onFilterModelChange={(newModel) => handleFilter(newModel)}
-                    columnVisibilityModel={columnVisibilityModel}
-                    onColumnVisibilityModelChange={handelHiddenColumn}
-                    sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
-                  />
-                )
               ) : (
-                <div>
-                  <img src={Image} style={{ position: 'relative', marginLeft: '19%', padding: '25px', height: '35%', top: '40px', width: '50%', boxShadow: '0 5px 10px rgba(0, 0, 0, 0.3)' }} />
-                </div>
+                <DataGrid
+                  rows={user.data.role === 'CEO' ? invoicePaymentRow : filteredRows}
+                  columns={columns}
+                  slots={{ toolbar: GridToolbar }}
+                  slotProps={{
+                    toolbar: {
+                      showQuickFilter: true,
+                      quickFilterProps: { debounceMs: 500 },
+                      printOptions: {
+                        disableToolbarButton: true
+                      },
+                    },
+                  }}
+                  checkboxSelection
+                  disableDensitySelector
+                  filterModel={filterModel}
+                  onFilterModelChange={(newModel) => handleFilter(newModel)}
+                  columnVisibilityModel={columnVisibilityModel}
+                  onColumnVisibilityModelChange={handelHiddenColumn}
+                  sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                />
               )}
             </Box>
         </div>
         </TabPanel>
         <TabPanel value="2">
         <div >
-          {payment.length > 0 ? (
           <Box sx={{ height: 630, width: '100%',marginTop:'-40px' }}>
          <br/>
           <DataGrid
@@ -1011,14 +981,10 @@ const toggleDrawer = () => {
                   sx={{width:'100%',backgroundColor:'white', padding:'10px'}}
           />
           </Box> 
-          ) : <div>
-         <img  src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'35%',top:'40px', width:'50%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
-         </div>}
       </div>
         </TabPanel>
         <TabPanel value="3">
         <div >
-          {payment.length > 0 ? (
           <Box sx={{ height: 630, width: '100%',marginTop:'-40px' }}>
          <br/>
         <DataGrid
@@ -1027,9 +993,6 @@ const toggleDrawer = () => {
                              sx={{borderRadius:'5px',backgroundColor:'#fff'}}
                            />
           </Box> 
-          ) : <div>
-         <img  src={Image} style={{position:'relative',marginLeft:'19%',padding:'25px', height:'35%',top:'40px', width:'50%', boxShadow:'0 5px 10px rgba(0, 0, 0, 0.3)'}}/>
-         </div>}
       </div>
         </TabPanel>
       </TabContext>)
