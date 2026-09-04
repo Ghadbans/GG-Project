@@ -51,7 +51,6 @@ let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
 
 const { object } = require("joi");
-const { default: mongoose } = require("mongoose");
 
 // const nodemailer = require('nodemailer');
 // const crypto = require('crypto');
