@@ -262,6 +262,56 @@ function SupplierViewInformation() {
   };
 
   const [itemPurchase, setItemPurchase] = useState([]);
+  const [projectsList, setProjectsList] = useState([]);
+
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/projects?summary=true`);
+        if (res.data && Array.isArray(res.data.data)) {
+          setProjectsList(res.data.data);
+        }
+      } catch (err) {
+        console.error('Error fetching projects:', err);
+      }
+    };
+    fetchProjects();
+  }, []);
+
+  const formatPurchaseReason = (p) => {
+    if (!p) return 'Item Purchase';
+    const rawReason = p.reason || '';
+    let nameStr = p.projectName?.name || p.description || rawReason || 'Item Purchase';
+
+    // If reason is Project, ensure Project Number (P-000xxx) is included
+    if (rawReason === 'Project' || (!nameStr.startsWith('P-') && !nameStr.startsWith('INV-') && !nameStr.startsWith('M-') && !nameStr.startsWith('PUR-') && p.projectName?._id)) {
+      const foundProject = projectsList.find(proj => 
+        proj._id === p.projectName?._id || 
+        (proj.projectName && nameStr.toLowerCase().includes(proj.projectName.toLowerCase())) ||
+        (proj.customerName?.customerName && nameStr.toLowerCase().includes(proj.customerName.customerName.toLowerCase()))
+      );
+      if (foundProject && foundProject.projectNumber !== undefined) {
+        const pNum = `P-${String(foundProject.projectNumber).padStart(6, '0')}`;
+        if (!nameStr.includes(pNum)) {
+          const client = foundProject.customerName?.customerName;
+          const pTitle = foundProject.projectName;
+          nameStr = client && pTitle ? `${pNum} / ${client} - ${pTitle}` : `${pNum} / ${pTitle || client || nameStr}`;
+        }
+      }
+    }
+    return nameStr;
+  };
+
+  const formatStatementDetails = (p) => {
+    if (!p) return '';
+    const reasonStr = formatPurchaseReason(p);
+    const ref = (p.manufacturerNumber || '').trim();
+    if (ref) {
+      return `${reasonStr} (Ref: ${ref})`;
+    }
+    return reasonStr;
+  };
+
   useEffect(() => {
     const handleFetch = async () => {
       if (!item || item.length === 0) return;
@@ -537,10 +587,15 @@ function SupplierViewInformation() {
             {open ? <KeyboardArrowUp /> : <span>{index + 1}</span>}
           </td>
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{dayjs(row.itemPurchaseDate).format('DD/MM/YYYY')}</td>
-          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.itemPurchaseNumber}</td>
+          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD', fontWeight: 'bold', color: '#30368a' }}>
+            IP-{String(row.itemPurchaseNumber).padStart(6, '0')}
+          </td>
+          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>
+            {row.manufacturerNumber || '-'}
+          </td>
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.status}</td>
-          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.projectName !== undefined ? row.projectName.name : row.description}</td>
-          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{displayTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{formatPurchaseReason(row)}</td>
+          <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>${displayTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>            <ViewTooltip title="View">
             <span>
               <IconButton onClick={() => handleOpenView(row._id)}>
@@ -550,7 +605,7 @@ function SupplierViewInformation() {
           </ViewTooltip></td>
         </tr>
         <tr>
-          <td style={{ textAlign: 'left', border: '1px solid #DDD', paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
+          <td style={{ textAlign: 'left', border: '1px solid #DDD', paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
             <Collapse in={open} timeout="auto" unmountOnExit>
 
               <Box sx={{ margin: 1 }}>
@@ -748,7 +803,7 @@ function SupplierViewInformation() {
       date: p.itemPurchaseDate,
       itemPurchaseNumber: p.itemPurchaseNumber,
       transaction: `IP-${String(p.itemPurchaseNumber).padStart(6, '0')}`,
-      details: p.projectName?.name || p.description || p.reason || 'Item Purchase',
+      details: formatStatementDetails(p),
       purchaseAmount: pTotal,
       paidAmount: pPaid,
       balance: currentRunningBalance,
@@ -1063,9 +1118,10 @@ function SupplierViewInformation() {
                                               <tr>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>IP #</th>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reference</th>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Status</th>
-                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reason</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reason / Project</th>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Total</th>
                                                 <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Action</th>
                                               </tr>

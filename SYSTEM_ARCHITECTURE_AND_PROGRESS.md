@@ -25,6 +25,18 @@
 14. **Information Detail Views Full-Viewport Container Heights**: Detail/preview containers in information views (Invoices, Quotations, Purchases, Customers, Maintenance, Projects, Employees, Payroll, Payments, etc.) must NEVER have rigid, hardcoded fixed heights (e.g. `height: '450px'`, `height: '500px'`, `height: '520px'`, or `max-height: 600px'`). Instead, outer card containers `.itemInfoContainer` / `.itemInfoContainer2` must use `min-height: calc(100vh - 90px); box-sizing: border-box;`, inner left sidebars must use `height: calc(100vh - 170px); overflow-y: auto;`, and inner TabPanels / document containers must use `height: calc(100vh - 230px); overflow-y: auto;`. This eliminates dead gray bottom gaps across all screen sizes and resolutions.
 
 ## Current Progress Log
+- **Supplier Statement & IN-SUMMARY Reference Numbers & Project Number Display (Ver 3.4.77)**:
+  - **Reference Number Visibility in Statement Details & IN-SUMMARY**:
+    - Enhanced Supplier Statement of Accounts (`SupplierViewInformation.js`) to display the user-entered Reference number (stored in `manufacturerNumber`) in the **Details** column alongside the linked reason/client (e.g. `INV-002375 / GLOBAL PVA (Ref: 09)` or `P-000123 / GG CONCRETE BLOCK FACTORY (Ref: 15)`).
+    - Updated IN-SUMMARY table in Supplier Information to display the true Reference string (`manufacturerNumber`) in the **Reference** column, while adding a dedicated **IP #** column (`IP-003375`).
+  - **Project Number Synchronization on Item Purchases**:
+    - Resolved issue where project-linked purchases only showed the project name without the project number (e.g. `GG CONCRETE BLOCK FACTORY` instead of `P-000123 / GG CONCRETE BLOCK FACTORY`).
+    - Implemented `formatPurchaseReason()` in `SupplierViewInformation.js` with dynamic lookup against `projectsList` to resolve and prepend `P-000xxx` whenever missing.
+    - Updated `ItemPurchaseViewForm.js` `handleChangeProject()` to automatically format `projectName.name` with `P-000xxx` upon selection.
+  - **Safe Navigation & New Window Freeze Elimination**:
+    - Fixed `handleDecision('previous')`, `handleClose()`, and `handleOpenBack()` in `ItemPurchaseUpdateForm.js` and `ItemOutViewUpdate.js` to prevent modals from getting stuck when opened in standalone windows or tabs with `history.length <= 1`.
+  - **Release & Distribution**: Bumped version to `3.4.77`, compiled Webpack electron and web bundles, and packaged `dist/Global Gate Setup 3.4.77.exe`.
+
 - **Document Concurrency Lock Synchronization & Unknown User Race Condition Elimination (Ver 3.4.76)**:
   - **Root Cause Resolution for "Unknown User (XXXX)" Lockout**:
     - Identified a race condition where edit forms (Item Purchase, Item Out, Invoice, Quotation, Purchase Order, Maintenance, Project, etc.) mounted and invoked `useDocumentLock` before asynchronous user profile fetching (`fetchUser()`) had populated the Redux state with `user.data.userName`.

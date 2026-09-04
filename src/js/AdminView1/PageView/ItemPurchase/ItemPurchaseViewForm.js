@@ -391,12 +391,21 @@ function ItemPurchaseViewForm() {
         setItems([])
        }
        const handleChangeProject = (newValue) => {
-        const selectedOptions = projects.find((option)=> option === newValue)
+        const selectedOptions = projects.find((option)=> option === newValue);
+        const projNum = selectedOptions?.projectNumber !== undefined ? 'P-' + String(selectedOptions.projectNumber).padStart(6, '0') : '';
+        const clientName = selectedOptions?.customerName?.customerName || '';
+        const pName = selectedOptions?.projectName || '';
+        let formattedName = pName;
+        if (projNum) {
+          formattedName = clientName ? `${projNum} / ${clientName} - ${pName}` : `${projNum} / ${pName}`;
+        } else if (clientName) {
+          formattedName = `${clientName} / ${pName}`;
+        }
         setProjectName({
           _id: selectedOptions?._id,
-          name: selectedOptions?.projectName
+          name: formattedName
         });
-        setItems([])
+        setItems([]);
       }
        const handleChangeSupplier = (newValue) => {
         const selectedOptions = supplier.find((option)=> option === newValue)

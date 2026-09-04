@@ -658,22 +658,38 @@ function ItemOutViewUpdate() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
-  }
+    if (window.opener && window.history.length <= 1) {
+      window.close();
+      return;
+    }
+    if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate('/ItemOutAdmin');
+    }
+  };
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
-  }
+  };
   const handleCloseError = () => {
     setErrorOpenModal(false);
-  }
+  };
   const handleDecision = (decision) => {
-    //Navigate Based on th Decision
+    setLoadingOpenModal(false);
     if (decision === 'previous') {
-      navigate(-1);
+      if (window.opener && window.history.length <= 1) {
+        window.close();
+        return;
+      }
+      if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+        navigate(-1);
+      } else {
+        navigate('/ItemOutAdmin');
+      }
     } else if (decision === 'stay') {
-      handleClose();
+      setLoadingOpenModal(false);
     }
-  }
+  };
 
   const [hideBack, setHideBack] = useState('');
   const handleCreateComment = async () => {

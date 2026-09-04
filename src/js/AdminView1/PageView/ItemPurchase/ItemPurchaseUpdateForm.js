@@ -958,22 +958,38 @@ function ItemPurchaseUpdateForm() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1); // Navigate back instead of hard reload
-  }
+    if (window.opener && window.history.length <= 1) {
+      window.close();
+      return;
+    }
+    if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+      navigate(-1);
+    } else {
+      navigate('/ItemPurchaseAdmin');
+    }
+  };
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
-  }
+  };
   const handleCloseError = () => {
     setErrorOpenModal(false);
-  }
+  };
   const handleDecision = (decision) => {
-    //Navigate Based on th Decision
+    setLoadingOpenModal(false);
     if (decision === 'previous') {
-      navigate(-1);
+      if (window.opener && window.history.length <= 1) {
+        window.close();
+        return;
+      }
+      if (window.history.length > 1 && window.history.state && window.history.state.idx > 0) {
+        navigate(-1);
+      } else {
+        navigate('/ItemPurchaseAdmin');
+      }
     } else if (decision === 'stay') {
-      handleClose();
+      setLoadingOpenModal(false);
     }
-  }
+  };
   {/** loading End */ }
   const [hideBack, setHideBack] = useState('');
   const handleCreateComment = async () => {
