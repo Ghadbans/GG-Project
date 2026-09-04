@@ -24,6 +24,15 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Financial Performance & Statement of Accounts Metric Alignment (Ver 3.4.79)**:
+  - **Identified Cause of Variance Between Dashboard & Statement Summary**:
+    - Discovered that the Dashboard chart aggregates for the **entire month of September 2026** (30 days), whereas the Statement of Accounts was filtered to **Custom Range (`01/09/2026` to `04/09/2026`)**.
+    - In the database, 5 expense entries (totaling **$1,527.66**) were dated after September 4th (on `06/09/2026` and `13/09/2026`: D-015550, D-015389, D-014917, D-014735, D-014475), causing the Dashboard to include them ($5,190.81 daily expenses) while the Custom Range 01/09-04/09 excluded them ($3,663.15 daily expenses).
+    - Switching Statement of Accounts to `Month -> September` or extending the Custom Range encompasses the full month and aligns both views to the exact same numbers ($10,289.87 Expenses, $5,343.37 Cash Out, $1,191.72 Gross Cash Flow).
+  - **Dynamic KPI Card Labeling in Statement of Accounts**:
+    - Updated `RevenueExpensesAll.js` to dynamically label the red KPI card as `Total Cash Out (Disbursements)` when viewing `Cash Out` or `Gross Cash Flow`, and `Total Expenses (Accrual)` when viewing `Expenses` or `Net Income`, preventing confusion between Cash Out and Accrual Expenses.
+  - **Release & Distribution**: Bumped version to `3.4.79`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.79.exe`, and pushed commit to GitHub.
+
 - **Payment View & DataGrid Loading Balloon Graphic Removal (Ver 3.4.78)**:
   - **Eliminated Flash of Balloon "Saved Events" Graphic**:
     - Identified that `PaymentView.js` (along with `ExpensesViewAdmin.js`, `SellShopInvoiceView.js`, and `EmployeeAllViewTable.js`) conditionally rendered a legacy balloon illustration (`no-data.png` with text *"Saved events will show up here, so you can easily view them here later."*) whenever the table rows array had length 0.

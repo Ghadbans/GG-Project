@@ -481,8 +481,8 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
     setTotalRevenue(grossAccrualRevenue);
     setTotalPayRoll(TPayRoll);
     setTotalDExpenses(TPayExpenses);
-    setTotalItemPurchase(type === 'Cash Out' || type === 'Gross Cash Flow' ? TPayItemPurchaseCash : TPayItemPurchaseAccrual);
-    setTotalExpenses(type === 'Cash Out' || type === 'Gross Cash Flow' ? totCashOut : totAccrualExpenses);
+    setTotalItemPurchase(TPayItemPurchaseAccrual);
+    setTotalExpenses(totAccrualExpenses);
     setTotalNewCredit(newCredit);
     setTotalCreditSettled(settledCredit);
     setNetCreditActivity(newCredit - settledCredit);
@@ -1015,8 +1015,8 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
             <h3 style={{ margin: '4px 0 0 0', fontSize: '22px', fontWeight: 'bold' }}>${(TotalInvoices + TotalPOS).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</h3>
           </div>
           <div style={{ padding: '16px', borderRadius: '12px', background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)', color: 'white', boxShadow: '0 4px 6px -1px rgba(239, 68, 68, 0.2)' }}>
-            <span style={{ fontSize: '12px', opacity: 0.9, fontWeight: '500' }}>Total Expenses (Accrual)</span>
-            <h3 style={{ margin: '4px 0 0 0', fontSize: '22px', fontWeight: 'bold' }}>${TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</h3>
+            <span style={{ fontSize: '12px', opacity: 0.9, fontWeight: '500' }}>{type === 'Cash Out' || type === 'Gross Cash Flow' ? 'Total Cash Out (Disbursements)' : 'Total Expenses (Accrual)'}</span>
+            <h3 style={{ margin: '4px 0 0 0', fontSize: '22px', fontWeight: 'bold' }}>${(type === 'Cash Out' || type === 'Gross Cash Flow' ? totalCashOut : TotalExpenses).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</h3>
           </div>
           <div style={{ padding: '16px', borderRadius: '12px', background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)', color: 'white', boxShadow: '0 4px 6px -1px rgba(59, 130, 246, 0.2)' }}>
             <span style={{ fontSize: '12px', opacity: 0.9, fontWeight: '500' }}>Cash In (Collections)</span>
