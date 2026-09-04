@@ -814,6 +814,20 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
             conditions.push({ manufacturer: new RegExp(escapedShort, 'i') });
           }
           filter['$or'] = conditions;
+
+          // Lazy reconciliation: if a valid supplierName is passed, ensure matching itemPurchase records carry the latest storeName and ID
+          if (req.query.supplierName && req.query.supplierName !== 'undefined' && req.query.supplierName.trim()) {
+            const targetStoreName = req.query.supplierName.trim();
+            itemPurchaseSchema.updateMany(
+              {
+                $and: [
+                  { $or: conditions },
+                  { $or: [{ manufacturer: { $ne: targetStoreName } }, { manufacturerID: { $ne: String(req.query.supplierId) } }] }
+                ]
+              },
+              { $set: { manufacturer: targetStoreName, manufacturerID: String(req.query.supplierId) } }
+            ).catch(err => console.error("Auto sync supplier purchase error:", err));
+          }
         }
 
 

@@ -125,20 +125,122 @@ Route.route("/get-Supplier/:id").get(async (req, res, next) => {
     });
 });
 
-Route.route("/update-Supplier/:id").put(async (req, res, next) => {
-  await SupplierSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+// Helper to cascade update supplier storeName & ID to related itemPurchase and purchaseOrder records
+async function cascadeSupplierUpdate(supplierId, oldSupplier, newSupplierData) {
+  try {
+    const newStoreName = newSupplierData.storeName || oldSupplier?.storeName;
+    const newSupplierName = newSupplierData.supplierName || oldSupplier?.supplierName;
+    const newPhone = newSupplierData.customerPhone1 || oldSupplier?.customerPhone1 || "";
+    const oldStoreName = oldSupplier?.storeName;
+    const oldSupplierName = oldSupplier?.supplierName;
+
+    if (!newStoreName) return;
+
+    let orConditions = [
+      { manufacturerID: supplierId },
+      { manufacturerID: String(supplierId) }
+    ];
+    try {
+      if (mongoose.Types.ObjectId.isValid(supplierId)) {
+        orConditions.push({ manufacturerID: new mongoose.Types.ObjectId(supplierId) });
+      }
+    } catch (e) {}
+
+    const addNameConditions = (name) => {
+      if (!name || !name.trim()) return;
+      const raw = name.trim();
+      const escaped = raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      orConditions.push({ manufacturer: raw });
+      orConditions.push({ manufacturer: new RegExp('^' + escaped + '$', 'i') });
+      orConditions.push({ manufacturer: new RegExp('^' + escaped + '(\\b|[\\s\\.\\,\\-\\_\\/])', 'i') });
+      orConditions.push({ manufacturer: new RegExp(escaped, 'i') });
+    };
+
+    addNameConditions(oldStoreName);
+    addNameConditions(oldSupplierName);
+    addNameConditions(newStoreName);
+    addNameConditions(newSupplierName);
+
+    // Update itemPurchase documents
+    const updateItemPurchase = {
+      manufacturer: newStoreName,
+      manufacturerID: String(supplierId)
+    };
+    if (newPhone) {
+      updateItemPurchase.manufacturerNumber = newPhone;
+    }
+
+    await itemPurchaseSchema.updateMany(
+      { $or: orConditions },
+      { $set: updateItemPurchase }
+    );
+
+    // Update purchaseOrder documents
+    await purchaseOrderSchema.updateMany(
+      { $or: orConditions },
+      { $set: { manufacturer: newStoreName, manufacturerID: String(supplierId), ...(newPhone ? { manufacturerNumber: newPhone } : {}) } }
+    );
+
+    // Update itemSchema if any item was tagged with this manufacturer name
+    if (oldStoreName || oldSupplierName) {
+      const itemConditions = [];
+      if (oldStoreName) {
+        itemConditions.push({ itemManufacturer: oldStoreName });
+        itemConditions.push({ itemManufacturer: new RegExp('^' + oldStoreName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$', 'i') });
+      }
+      if (oldSupplierName) {
+        itemConditions.push({ itemManufacturer: oldSupplierName });
+        itemConditions.push({ itemManufacturer: new RegExp('^' + oldSupplierName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '$', 'i') });
+      }
+      if (itemConditions.length > 0) {
+        await itemSchema.updateMany(
+          { $or: itemConditions },
+          { $set: { itemManufacturer: newStoreName } }
+        );
+      }
+    }
+  } catch (err) {
+    console.error("Error cascading supplier update:", err);
+  }
+}
+
+Route.route("/sync-all-supplier-purchases").get(async (req, res, next) => {
+  try {
+    const allSuppliers = await SupplierSchema.find({}).lean();
+    let updatedCount = 0;
+    for (const sup of allSuppliers) {
+      if (sup && sup.storeName) {
+        await cascadeSupplierUpdate(sup._id, sup, sup);
+        updatedCount++;
+      }
+    }
+    res.json({
+      message: `Successfully synchronized ${updatedCount} suppliers with their item purchases and purchase orders.`,
+      status: 200,
     });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+Route.route("/update-Supplier/:id").put(async (req, res, next) => {
+  try {
+    const oldSupplier = await SupplierSchema.findById(req.params.id);
+    const result = await SupplierSchema.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    }, { new: true });
+
+    if (result) {
+      await cascadeSupplierUpdate(req.params.id, oldSupplier, req.body);
+    }
+
+    res.json({
+      data: result,
+      msg: "Data successfully updated.",
+    });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.route("/delete-Supplier/:id").delete(async (req, res) => {

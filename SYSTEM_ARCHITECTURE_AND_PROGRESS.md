@@ -25,6 +25,14 @@
 14. **Information Detail Views Full-Viewport Container Heights**: Detail/preview containers in information views (Invoices, Quotations, Purchases, Customers, Maintenance, Projects, Employees, Payroll, Payments, etc.) must NEVER have rigid, hardcoded fixed heights (e.g. `height: '450px'`, `height: '500px'`, `height: '520px'`, or `max-height: 600px'`). Instead, outer card containers `.itemInfoContainer` / `.itemInfoContainer2` must use `min-height: calc(100vh - 90px); box-sizing: border-box;`, inner left sidebars must use `height: calc(100vh - 170px); overflow-y: auto;`, and inner TabPanels / document containers must use `height: calc(100vh - 230px); overflow-y: auto;`. This eliminates dead gray bottom gaps across all screen sizes and resolutions.
 
 ## Current Progress Log
+- **Supplier Store Name Cascade & Historical Item Purchases Synchronization (Ver 3.4.75)**:
+  - **Cascade Supplier Updates to Item Purchases & Purchase Orders**:
+    - Resolved the issue where changing a supplier's store name or supplier name in Supplier Information left existing/historical item purchases displaying the old store name.
+    - Implemented `cascadeSupplierUpdate()` in `server/routes/supplierRoutes.js` inside `/update-Supplier/:id` to automatically find and update all related `itemPurchase`, `purchaseOrder`, and `item` records when a supplier's `storeName`, `supplierName`, or phone number is updated.
+    - Added `/sync-all-supplier-purchases` endpoint to mass-reconcile all existing supplier records with their associated purchases.
+    - Implemented lazy reconciliation in `server/routes/itemRoutes.js` on `/itemPurchase` queries so that any legacy unlinked or mismatched purchase records are automatically updated to the supplier's latest store name and ID.
+    - Updated `SupplierFormUpdate.js` to invalidate client-side caches upon supplier edits.
+  - **Release & Distribution**: Bumped version to `3.4.75`, compiled Webpack electron and web bundles, and packaged `dist/Global Gate Setup 3.4.75.exe`.
 - **Supplier Item Purchases Synchronization & Supplier Statement Module (Ver 3.4.74)**:
   - **Resolved Item Purchase Discrepancy in Supplier Information**:
     - Identified root cause where suppliers with abbreviated or variant names (e.g., `supplierName: "TME"` vs `storeName: "TME. TSHILEMB MANUFACTURE & EXTRACTION"`) had purchases saved under the short name or with missing `manufacturerID`, causing strict equality filters to omit records (showing 9 instead of all 15 purchases).

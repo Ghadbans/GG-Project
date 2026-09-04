@@ -19,6 +19,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios'
+import { invalidateCache } from '../../../utils/apiCache';
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, RemoveCircleOutline } from '@mui/icons-material';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { v4 } from 'uuid';
@@ -277,6 +278,10 @@ function SupplierFormUpdate() {
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-Supplier/${id}`, data)
       if (res) {
+        invalidateCache('/itemPurchase');
+        invalidateCache('/itemPurchase-Information');
+        invalidateCache('/Supplier');
+        invalidateCache('/purchaseOrder');
         handleCreateComment();
         handleOpen();
       }
