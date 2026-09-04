@@ -151,7 +151,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 function EstimateInvoiceFormUpdate() {
   const { id } = useParams();
-  const { isLocked, lockConfig, lockError } = useDocumentLock(id, 'estimation');
+  const { isLocked, lockConfig, lockError, forceRelease } = useDocumentLock(id, 'estimation');
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -776,10 +776,13 @@ The GLOBAL GATE Team`;
 
   if (isLocked) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
-        <h2>{lockError || 'This document is currently being edited by another user.'}</h2>
-        <p>Please wait until they are finished.</p>
-        <Button variant="contained" color="primary" onClick={() => navigate(-1)} sx={{ mt: 3 }}>Go Back</Button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.85)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
+        <h2 style={{ marginBottom: '10px' }}>{lockError || 'This document is currently being edited by another user.'}</h2>
+        <p style={{ color: '#ccc', marginBottom: '20px' }}>Please wait until they are finished, or force unlock if you need immediate access.</p>
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <Button variant="contained" color="primary" onClick={() => navigate(-1)}>Go Back</Button>
+          <Button variant="outlined" color="error" onClick={forceRelease} sx={{ borderColor: '#ef4444', color: '#ef4444', '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.1)', borderColor: '#dc2626' } }}>Force Unlock / Take Over</Button>
+        </div>
       </div>
     );
   }

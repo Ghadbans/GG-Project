@@ -774,15 +774,13 @@ function MaintenanceOrderUpdate() {
 
   if (isLocked) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.8)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
-        <h2>{lockError || 'This document is currently being edited by another user.'}</h2>
-            {(user.data.role === 'Admin' || user.data.role === 'CEO') && (
-              <button onClick={forceRelease} style={{ marginTop: '20px', padding: '10px 24px', backgroundColor: '#d32f2f', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '14px' }}>
-                Force Open (Admin)
-              </button>
-            )}
-        <p>Please wait until they are finished.</p>
-        <Button variant="contained" color="primary" onClick={() => navigate('/MaintenanceOrderAdmin')} sx={{ mt: 3 }}>Go Back</Button>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', backgroundColor: 'rgba(0,0,0,0.85)', color: 'white', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 9999 }}>
+        <h2 style={{ marginBottom: '10px' }}>{lockError || 'This document is currently being edited by another user.'}</h2>
+        <p style={{ color: '#ccc', marginBottom: '20px' }}>Please wait until they are finished, or force unlock if you need immediate access.</p>
+        <div style={{ display: 'flex', gap: '15px' }}>
+          <Button variant="contained" color="primary" onClick={() => navigate('/MaintenanceOrderAdmin')}>Go Back</Button>
+          <Button variant="outlined" color="error" onClick={forceRelease} sx={{ borderColor: '#ef4444', color: '#ef4444', '&:hover': { bgcolor: 'rgba(239, 68, 68, 0.1)', borderColor: '#dc2626' } }}>Force Unlock / Take Over</Button>
+        </div>
       </div>
     );
   }

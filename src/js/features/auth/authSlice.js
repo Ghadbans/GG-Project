@@ -13,7 +13,10 @@ const userSlice = createSlice({
     reducers: {
         setUser: (state, action) => {
             state.data = action.payload;
-            state.loading= false; 
+            state.loading = false;
+            if (action.payload && action.payload.userName) {
+                try { localStorage.setItem('currentUserName', action.payload.userName); } catch (e) {}
+            }
         },
         setBranch: (state, action) => {
             if (state.data) {
@@ -25,8 +28,9 @@ const userSlice = createSlice({
                 userName: '',
                 role: '',
                 selectedBranch: null
-            }
-            state.loading= true;
+            };
+            state.loading = true;
+            try { localStorage.removeItem('currentUserName'); } catch (e) {}
         }
     },
 })
