@@ -798,7 +798,21 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
           try { objectId = new mongoose.Types.ObjectId(req.query.supplierId); } catch (e) {}
           let conditions = [{ manufacturerID: req.query.supplierId }];
           if (objectId) conditions.push({ manufacturerID: objectId });
-          if (req.query.supplierName && req.query.supplierName !== 'undefined') conditions.push({ manufacturer: req.query.supplierName });
+          if (req.query.supplierName && req.query.supplierName !== 'undefined' && req.query.supplierName.trim()) {
+            const rawName = req.query.supplierName.trim();
+            const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            conditions.push({ manufacturer: rawName });
+            conditions.push({ manufacturer: new RegExp('^' + escapedName + '$', 'i') });
+            conditions.push({ manufacturer: new RegExp(escapedName, 'i') });
+          }
+          if (req.query.shortName && req.query.shortName !== 'undefined' && req.query.shortName.trim()) {
+            const rawShort = req.query.shortName.trim();
+            const escapedShort = rawShort.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            conditions.push({ manufacturer: rawShort });
+            conditions.push({ manufacturer: new RegExp('^' + escapedShort + '$', 'i') });
+            conditions.push({ manufacturer: new RegExp('^' + escapedShort + '(\\b|[\\s\\.\\,\\-\\_\\/])', 'i') });
+            conditions.push({ manufacturer: new RegExp(escapedShort, 'i') });
+          }
           filter['$or'] = conditions;
         }
 

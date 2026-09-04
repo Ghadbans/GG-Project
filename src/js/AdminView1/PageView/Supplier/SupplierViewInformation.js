@@ -53,6 +53,8 @@ import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import ItemThumbnail from '../../../component/ItemThumbnail';
 import ReactToPrint, { useReactToPrint } from 'react-to-print';
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
+import PrintHeader from '../../../component/PrintHeader';
+import PrintFooter from '../../../component/PrintFooter';
 
 const palette = ['blue', 'red', 'orange'];
 const EditTooltip = styled(({ className, ...props }) => (
@@ -226,22 +228,59 @@ function SupplierViewInformation() {
     fetchItem()
   }, [id])
 
+  const isMatchingSupplier = (ip) => {
+    if (!ip) return false;
+    const currentSupplier = item && item.length > 0 ? item[0] : null;
+    if (!currentSupplier) {
+      if (ip.manufacturerID && String(ip.manufacturerID) === String(id)) return true;
+      return false;
+    }
+    // 1. Direct ID match
+    if (ip.manufacturerID && (String(ip.manufacturerID) === String(id) || String(ip.manufacturerID) === String(currentSupplier._id))) {
+      return true;
+    }
+
+    const mName = (ip.manufacturer || '').trim().toLowerCase();
+    if (!mName) return false;
+
+    const sStore = (currentSupplier.storeName || '').trim().toLowerCase();
+    const sName = (currentSupplier.supplierName || '').trim().toLowerCase();
+
+    // 2. Direct string equality or inclusions
+    if (sStore && (mName === sStore || mName.includes(sStore) || sStore.includes(mName))) return true;
+    if (sName && (mName === sName || mName.startsWith(sName) || mName.includes(sName))) return true;
+
+    // 3. Cleaned alphanumeric match (removes punctuation, dots, dashes, spaces)
+    const cleanM = mName.replace(/[^a-z0-9]/g, '');
+    const cleanStore = sStore.replace(/[^a-z0-9]/g, '');
+    const cleanName = sName.replace(/[^a-z0-9]/g, '');
+
+    if (cleanStore && (cleanM === cleanStore || cleanM.includes(cleanStore) || cleanStore.includes(cleanM))) return true;
+    if (cleanName && (cleanM === cleanName || cleanM.startsWith(cleanName) || cleanM.includes(cleanName))) return true;
+
+    return false;
+  };
+
   const [itemPurchase, setItemPurchase] = useState([]);
   useEffect(() => {
     const handleFetch = async () => {
+      if (!item || item.length === 0) return;
+      const currentSupplier = item[0];
+      const supplierStore = currentSupplier?.storeName || StoreName || '';
+      const supplierShort = currentSupplier?.supplierName || '';
       try {
-        const resItemPurchase = await axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${StoreName}`)
-        const formatDate = resItemPurchase.data.data
-        const filteredData = formatDate.filter(data =>
-          item.some(i => data.manufacturerID === i._id || i.storeName === data.manufacturer)
+        const resItemPurchase = await axios.get(
+          `${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${encodeURIComponent(supplierStore)}&shortName=${encodeURIComponent(supplierShort)}`
         );
-        setItemPurchase(filteredData.reverse())
+        const formatDate = Array.isArray(resItemPurchase.data?.data) ? resItemPurchase.data.data : [];
+        const filteredData = formatDate.filter(data => isMatchingSupplier(data));
+        setItemPurchase(filteredData.reverse());
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
-    handleFetch()
-  }, [item])
+    };
+    handleFetch();
+  }, [item, id]);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -465,7 +504,7 @@ function SupplierViewInformation() {
     return acc
   }, {}) : null
   const relatedItemPurchases2 = []
-  itemPurchase.filter((Item) => Item.manufacturerID === id || item.find((row2) => row2.storeName === Item.manufacturer)).map((Item) => Item.items.filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
+  itemPurchase.filter((Item) => isMatchingSupplier(Item)).map((Item) => Item.items.filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
 
   const newArray2 = search4 !== '' ? relatedItemPurchases2.filter((row) =>
     (row.itemName?.itemName && row.itemName.itemName.toString().includes(search4)) ||
@@ -581,7 +620,7 @@ function SupplierViewInformation() {
     return true;
   });
 
-  const payFc = filteredArray1.filter((row1) => row1.manufacturerID === id || row1.manufacturer === StoreName).reduce((acc, row) => {
+  const payFc = filteredArray1.filter((row1) => isMatchingSupplier(row1)).reduce((acc, row) => {
     const totalVal = row.totalUSD !== undefined ? row.totalUSD : row.total || 0;
     if (row.status?.toLowerCase() === 'partially-paid') {
       const paidVal = (row.payments || []).reduce((sum, p) => sum + (p.totalUSD || (parseFloat(p.amount || 0) + (parseFloat(p.amountFC || 0) / parseFloat(p.rate || 1)))), 0);
@@ -593,6 +632,130 @@ function SupplierViewInformation() {
     }
     return acc + totalVal;
   }, 0)
+
+  // --- Supplier Statement States & Calculations ---
+  const [selectOptions, setSelectOptions] = useState('Year');
+  const [startDate, setStartDate] = useState(() => {
+    const stored = localStorage.getItem('StartDateSupplierStatement');
+    return stored ? new Date(JSON.parse(stored)) : new Date();
+  });
+  const [fromDate, setFromDate] = useState(() => {
+    const stored = localStorage.getItem('FromDateSupplierStatement');
+    return stored ? new Date(JSON.parse(stored)) : new Date(new Date().getFullYear(), 0, 1);
+  });
+  const [endDate, setEndDate] = useState(() => {
+    const stored = localStorage.getItem('EndDateSupplierStatement');
+    return stored ? new Date(JSON.parse(stored)) : new Date();
+  });
+
+  const handleChangeDate = (date) => {
+    setStartDate(date);
+    localStorage.setItem('StartDateSupplierStatement', JSON.stringify(date));
+  };
+  const handleChangeDateFrom = (date) => {
+    setFromDate(date);
+    localStorage.setItem('FromDateSupplierStatement', JSON.stringify(date));
+  };
+  const handleChangeDateEnd = (date) => {
+    setEndDate(date);
+    localStorage.setItem('EndDateSupplierStatement', JSON.stringify(date));
+  };
+
+  const statementPrintRef = useRef(null);
+  const handlePrintStatement = useReactToPrint({
+    content: () => statementPrintRef.current,
+    documentTitle: `Statement - ${StoreName || 'Supplier'}`,
+  });
+
+  const transactionYears = new Date(startDate).getFullYear();
+  const sortedPurchases = [...itemPurchase]
+    .filter((p) => isMatchingSupplier(p))
+    .sort((a, b) => new Date(a.itemPurchaseDate) - new Date(b.itemPurchaseDate));
+
+  let openingBalanceTotal = 0;
+  let periodPurchases = [];
+
+  if (selectOptions === 'Year') {
+    openingBalanceTotal = sortedPurchases
+      .filter((p) => new Date(p.itemPurchaseDate).getFullYear() < transactionYears)
+      .reduce((acc, p) => {
+        const pTotal = parseFloat(p.totalUSD !== undefined ? p.totalUSD : p.total || 0);
+        const pPaid = (p.payments || []).reduce((sum, pay) => sum + (pay.totalUSD || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || 0) / parseFloat(pay.rate || 1)))), 0) || ((p.status || '').toLowerCase() === 'paid' ? pTotal : 0);
+        return acc + Math.max(0, pTotal - pPaid);
+      }, 0);
+
+    periodPurchases = sortedPurchases.filter((p) => new Date(p.itemPurchaseDate).getFullYear() === transactionYears);
+  } else if (selectOptions === 'Custom') {
+    const startCustom = dayjs(fromDate).startOf('day');
+    const endCustom = dayjs(endDate).endOf('day');
+
+    openingBalanceTotal = sortedPurchases
+      .filter((p) => dayjs(p.itemPurchaseDate).isBefore(startCustom))
+      .reduce((acc, p) => {
+        const pTotal = parseFloat(p.totalUSD !== undefined ? p.totalUSD : p.total || 0);
+        const pPaid = (p.payments || []).reduce((sum, pay) => sum + (pay.totalUSD || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || 0) / parseFloat(pay.rate || 1)))), 0) || ((p.status || '').toLowerCase() === 'paid' ? pTotal : 0);
+        return acc + Math.max(0, pTotal - pPaid);
+      }, 0);
+
+    periodPurchases = sortedPurchases.filter((p) => {
+      const d = dayjs(p.itemPurchaseDate);
+      return (d.isAfter(startCustom) || d.isSame(startCustom, 'day')) && (d.isBefore(endCustom) || d.isSame(endCustom, 'day'));
+    });
+  } else if (selectOptions === 'All Outstanding') {
+    openingBalanceTotal = 0;
+    periodPurchases = sortedPurchases.filter((p) => {
+      const pTotal = parseFloat(p.totalUSD !== undefined ? p.totalUSD : p.total || 0);
+      const pPaid = (p.payments || []).reduce((sum, pay) => sum + (pay.totalUSD || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || 0) / parseFloat(pay.rate || 1)))), 0) || ((p.status || '').toLowerCase() === 'paid' ? pTotal : 0);
+      return (pTotal - pPaid) > 0.01;
+    });
+  } else {
+    // All
+    openingBalanceTotal = 0;
+    periodPurchases = sortedPurchases;
+  }
+
+  const invoicePurchasedTotal = periodPurchases.reduce((sum, p) => sum + parseFloat(p.totalUSD !== undefined ? p.totalUSD : p.total || 0), 0);
+  const paymentPaidTotal = periodPurchases.reduce((sum, p) => {
+    const pTotal = parseFloat(p.totalUSD !== undefined ? p.totalUSD : p.total || 0);
+    const pPaid = (p.payments || []).reduce((s, pay) => s + (pay.totalUSD || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || 0) / parseFloat(pay.rate || 1)))), 0) || ((p.status || '').toLowerCase() === 'paid' ? pTotal : 0);
+    return sum + pPaid;
+  }, 0);
+  const totalBalanceDue = (openingBalanceTotal + invoicePurchasedTotal) - paymentPaidTotal;
+
+  let currentRunningBalance = openingBalanceTotal;
+  const statementRows = [];
+
+  if (openingBalanceTotal > 0 && (selectOptions === 'Year' || selectOptions === 'Custom')) {
+    statementRows.push({
+      isOpening: true,
+      date: selectOptions === 'Year' ? new Date(transactionYears, 0, 1) : fromDate,
+      transaction: '*** Opening Balance ***',
+      details: 'Balance brought forward',
+      purchaseAmount: openingBalanceTotal,
+      paidAmount: 0,
+      balance: openingBalanceTotal,
+    });
+  }
+
+  periodPurchases.forEach((p) => {
+    const pTotal = parseFloat(p.totalUSD !== undefined ? p.totalUSD : p.total || 0);
+    const pPaid = (p.payments || []).reduce((s, pay) => s + (pay.totalUSD || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || 0) / parseFloat(pay.rate || 1)))), 0) || ((p.status || '').toLowerCase() === 'paid' ? pTotal : 0);
+    currentRunningBalance = currentRunningBalance + pTotal - pPaid;
+
+    statementRows.push({
+      _id: p._id,
+      isOpening: false,
+      date: p.itemPurchaseDate,
+      itemPurchaseNumber: p.itemPurchaseNumber,
+      transaction: `IP-${String(p.itemPurchaseNumber).padStart(6, '0')}`,
+      details: p.projectName?.name || p.description || p.reason || 'Item Purchase',
+      purchaseAmount: pTotal,
+      paidAmount: pPaid,
+      balance: currentRunningBalance,
+      status: p.status,
+      payments: p.payments,
+    });
+  });
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>
@@ -806,6 +969,22 @@ function SupplierViewInformation() {
                                             }
                                           }}
                                         />
+                                        <Tab
+                                          label="Statement"
+                                          value="4"
+                                          sx={{
+                                            '&.Mui-selected': {
+                                              color: 'white',
+                                              backgroundColor: 'gray',
+                                              borderRadius: '10px'
+                                            }, '&:hover': {
+                                              color: 'gray',
+                                              bgcolor: 'white',
+                                              border: '1px solid gray',
+                                              borderRadius: '10px'
+                                            }
+                                          }}
+                                        />
                                       </TabList>
                                     </Box>
                                     <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
@@ -872,6 +1051,12 @@ function SupplierViewInformation() {
                                             <Button onClick={() => handleFilterChange('all')}>All</Button>
                                             <Button onClick={() => handleFilterChange('paid')}>Paid</Button>
                                             <Button onClick={() => handleFilterChange('unpaid')}>Unpaid</Button>
+                                            <Button
+                                              onClick={() => { setValue3('4'); localStorage.setItem('TabSupplierView', '4'); }}
+                                              sx={{ ml: 1, backgroundColor: '#30368a', color: 'white', '&:hover': { backgroundColor: '#202a5a' } }}
+                                            >
+                                              Supplier Statement
+                                            </Button>
                                           </section>
                                           <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
                                             <thead>
@@ -887,7 +1072,7 @@ function SupplierViewInformation() {
                                             </thead>
                                             <tbody>
                                               {
-                                                filteredArray1.filter((row1) => row1.manufacturerID === id || row1.manufacturer === row.storeName).map((row1, i) => (
+                                                filteredArray1.filter((row1) => isMatchingSupplier(row1)).map((row1, i) => (
 
                                                   <Row key={row1._id} row={row1} index={i} filterPaid={filterPaid} />
                                                 ))
@@ -963,13 +1148,309 @@ function SupplierViewInformation() {
                                         </CardContent>
                                       </Card>
                                     </TabPanel>
+                                    <TabPanel value="4" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
+                                      <Card sx={{ p: 2 }}>
+                                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                          <Box sx={{ display: 'flex', gap: 2, alignItems: 'center' }}>
+                                            <FormControl size="small" sx={{ minWidth: 160 }}>
+                                              <InputLabel id="selectOptions-label">Filter</InputLabel>
+                                              <Select
+                                                labelId="selectOptions-label"
+                                                id="selectOptions"
+                                                value={selectOptions}
+                                                label="Filter"
+                                                onChange={(e) => setSelectOptions(e.target.value)}
+                                              >
+                                                <MenuItem value="Year">Year</MenuItem>
+                                                <MenuItem value="Custom">Custom</MenuItem>
+                                                <MenuItem value="All Outstanding">All Outstanding</MenuItem>
+                                                <MenuItem value="All">All</MenuItem>
+                                              </Select>
+                                            </FormControl>
+
+                                            {selectOptions === 'Year' && (
+                                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <DatePicker
+                                                  views={['year']}
+                                                  label="Year"
+                                                  value={dayjs(startDate)}
+                                                  onChange={(date) => handleChangeDate(date)}
+                                                  slotProps={{ textField: { size: 'small' } }}
+                                                />
+                                              </LocalizationProvider>
+                                            )}
+
+                                            {selectOptions === 'Custom' && (
+                                              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                                <Box sx={{ display: 'flex', gap: 1 }}>
+                                                  <DatePicker
+                                                    label="From Date"
+                                                    value={dayjs(fromDate)}
+                                                    onChange={(date) => handleChangeDateFrom(date)}
+                                                    format="DD/MM/YYYY"
+                                                    slotProps={{ textField: { size: 'small' } }}
+                                                  />
+                                                  <DatePicker
+                                                    label="To Date"
+                                                    value={dayjs(endDate)}
+                                                    onChange={(date) => handleChangeDateEnd(date)}
+                                                    format="DD/MM/YYYY"
+                                                    slotProps={{ textField: { size: 'small' } }}
+                                                  />
+                                                </Box>
+                                              </LocalizationProvider>
+                                            )}
+                                          </Box>
+
+                                          <Button
+                                            variant="contained"
+                                            startIcon={<LocalPrintshop />}
+                                            onClick={handlePrintStatement}
+                                            sx={{ bgcolor: '#30368a', '&:hover': { bgcolor: '#202a5a' } }}
+                                          >
+                                            Print Statement
+                                          </Button>
+                                        </Box>
+
+                                        {/* Statement Screen View */}
+                                        <Box sx={{ p: 2, bgcolor: 'white', borderRadius: 1 }}>
+                                          <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '15px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
+                                            <thead>
+                                              <tr>
+                                                <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', textAlign: 'left', padding: '10px' }}>
+                                                  <address style={{ fontStyle: 'normal', lineHeight: 1.4 }}>
+                                                    <span style={{ fontWeight: 'bold', fontSize: '11px', color: '#666' }}>TO SUPPLIER:</span><br />
+                                                    <span style={{ fontWeight: 'bold', fontSize: '16px', color: '#202a5a' }}>{row.storeName.toUpperCase()}</span><br />
+                                                    <span style={{ fontSize: '13px', color: '#444' }}>{row.supplierName.toUpperCase()}</span><br />
+                                                    <span style={{ fontSize: '12px', color: 'gray' }}>{row.address ? row.address.toUpperCase() : ''}</span><br />
+                                                    <span style={{ fontSize: '12px', color: 'gray' }}>{row.customerPhone1 || ''}</span>
+                                                  </address>
+                                                </th>
+                                                <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', padding: '10px' }}>
+                                                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px', border: '1px solid #ddd' }}>
+                                                    <thead>
+                                                      <tr>
+                                                        <th colSpan={2} style={{ backgroundColor: '#202a5a', color: 'white', padding: '6px 10px', textAlign: 'left' }}>Supplier Statement of Accounts</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td colSpan={2} style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', textAlign: 'right', fontWeight: 'bold', color: '#555' }}>
+                                                          {selectOptions === 'Year' && `${dayjs(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY')} To ${dayjs(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')}`}
+                                                          {selectOptions === 'Custom' && `${dayjs(fromDate).format('DD/MM/YYYY')} To ${dayjs(endDate).format('DD/MM/YYYY')}`}
+                                                          {selectOptions === 'All' && 'All Transactions'}
+                                                          {selectOptions === 'All Outstanding' && 'All Outstanding Purchases'}
+                                                        </td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', backgroundColor: '#f9f9f9' }}>Opening Balance</td>
+                                                        <td style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>${openingBalanceTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', backgroundColor: '#f9f9f9' }}>Purchased Amount</td>
+                                                        <td style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>${invoicePurchasedTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                      </tr>
+                                                      <tr>
+                                                        <td style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', backgroundColor: '#f9f9f9' }}>Amount Paid</td>
+                                                        <td style={{ padding: '6px 10px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>${paymentPaidTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                      </tr>
+                                                      <tr style={{ fontWeight: 'bold' }}>
+                                                        <td style={{ padding: '6px 10px', backgroundColor: '#e8f7fe' }}>Balance Due</td>
+                                                        <td style={{ padding: '6px 10px', textAlign: 'right', backgroundColor: '#e8f7fe', color: totalBalanceDue > 0 ? '#c62828' : '#2e7d32' }}>${totalBalanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                </th>
+                                              </tr>
+                                              <tr>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe', width: '110px' }}>Date</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe', width: '130px' }} align="left">Transaction</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">Details</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe', width: '120px' }} align="right">Amount ($)</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe', width: '120px' }} align="right">Payments ($)</th>
+                                                <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe', width: '130px' }} align="right">Balance ($)</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              {statementRows.map((sRow, idx) => (
+                                                <tr key={idx} style={sRow.isOpening ? { backgroundColor: '#fffde7', fontStyle: 'italic', fontWeight: 'bold' } : {}}>
+                                                  <td style={{ padding: '8px 10px', border: '1px solid #DDD', textAlign: 'center' }}>
+                                                    {dayjs(sRow.date).format('DD/MM/YYYY')}
+                                                  </td>
+                                                  <td style={{ padding: '8px 10px', border: '1px solid #DDD' }}>
+                                                    {!sRow.isOpening ? (
+                                                      <span
+                                                        onClick={() => handleOpenView(sRow._id)}
+                                                        style={{ color: '#30368a', fontWeight: 'bold', cursor: 'pointer', textDecoration: 'underline' }}
+                                                      >
+                                                        {sRow.transaction}
+                                                      </span>
+                                                    ) : (
+                                                      <span>{sRow.transaction}</span>
+                                                    )}
+                                                  </td>
+                                                  <td style={{ padding: '8px 10px', border: '1px solid #DDD' }}>
+                                                    {sRow.details}
+                                                  </td>
+                                                  <td style={{ padding: '8px 10px', border: '1px solid #DDD', textAlign: 'right' }}>
+                                                    {sRow.purchaseAmount > 0 ? `$${sRow.purchaseAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '-'}
+                                                  </td>
+                                                  <td style={{ padding: '8px 10px', border: '1px solid #DDD', textAlign: 'right' }}>
+                                                    {sRow.paidAmount > 0 ? `$${sRow.paidAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '-'}
+                                                  </td>
+                                                  <td style={{ padding: '8px 10px', border: '1px solid #DDD', textAlign: 'right', fontWeight: 'bold' }}>
+                                                    ${sRow.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                  </td>
+                                                </tr>
+                                              ))}
+                                              {statementRows.length === 0 && (
+                                                <tr>
+                                                  <td colSpan={6} style={{ textAlign: 'center', padding: '20px', color: 'gray' }}>
+                                                    No statement transactions found for this period.
+                                                  </td>
+                                                </tr>
+                                              )}
+                                            </tbody>
+                                            <tfoot>
+                                              <tr style={{ fontWeight: 'bold', backgroundColor: '#f0f4f8' }}>
+                                                <td colSpan={3} style={{ padding: '10px', border: '1px solid #DDD', textAlign: 'right' }}>Totals:</td>
+                                                <td style={{ padding: '10px', border: '1px solid #DDD', textAlign: 'right' }}>${invoicePurchasedTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                <td style={{ padding: '10px', border: '1px solid #DDD', textAlign: 'right' }}>${paymentPaidTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                <td style={{ padding: '10px', border: '1px solid #DDD', textAlign: 'right', color: totalBalanceDue > 0 ? '#c62828' : '#2e7d32' }}>${totalBalanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              </tr>
+                                            </tfoot>
+                                          </table>
+                                        </Box>
+
+                                        {/* Printable Hidden Section */}
+                                        <Box hidden>
+                                          <table ref={statementPrintRef} className="invoicedetails" style={{ width: '100%', padding: '20px' }}>
+                                            <thead>
+                                              <tr>
+                                                <th style={{ borderBottom: '1px solid black' }}>
+                                                  <div className="invoiceTest">
+                                                    <PrintHeader branchId={row?.branchId || ""} />
+                                                  </div>
+                                                </th>
+                                              </tr>
+                                            </thead>
+                                            <tbody>
+                                              <tr>
+                                                <td>
+                                                  <div className="content" style={{ marginTop: '15px', marginBottom: '20px' }}>
+                                                    <table className="secondTable" style={{ width: '100%', fontSize: '11px', border: '1px solid #DDD', borderCollapse: 'collapse' }}>
+                                                      <thead>
+                                                        <tr>
+                                                          <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', textAlign: 'left', padding: '10px' }}>
+                                                            <address style={{ fontStyle: 'normal', lineHeight: 1.4 }}>
+                                                              <span style={{ fontWeight: 'bold', fontSize: '11px', color: '#666' }}>TO SUPPLIER:</span><br />
+                                                              <span style={{ fontWeight: 'bold', fontSize: '15px', color: '#000' }}>{row.storeName.toUpperCase()}</span><br />
+                                                              <span style={{ fontSize: '12px', color: '#333' }}>{row.supplierName.toUpperCase()}</span><br />
+                                                              <span style={{ fontSize: '11px', color: 'gray' }}>{row.address ? row.address.toUpperCase() : ''}</span><br />
+                                                              <span style={{ fontSize: '11px', color: 'gray' }}>{row.customerPhone1 || ''}</span>
+                                                            </address>
+                                                          </th>
+                                                          <th colSpan={3} style={{ border: 'none', backgroundColor: 'white', verticalAlign: 'top', padding: '10px' }}>
+                                                            <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '11px', border: '1px solid #000' }}>
+                                                              <thead>
+                                                                <tr>
+                                                                  <th colSpan={2} style={{ backgroundColor: '#202a5a', color: 'white', padding: '5px 8px', textAlign: 'left' }}>Supplier Statement of Accounts</th>
+                                                                </tr>
+                                                              </thead>
+                                                              <tbody>
+                                                                <tr>
+                                                                  <td colSpan={2} style={{ padding: '5px 8px', borderBottom: '1px solid #000', textAlign: 'right', fontWeight: 'bold' }}>
+                                                                    {selectOptions === 'Year' && `${dayjs(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY')} To ${dayjs(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')}`}
+                                                                    {selectOptions === 'Custom' && `${dayjs(fromDate).format('DD/MM/YYYY')} To ${dayjs(endDate).format('DD/MM/YYYY')}`}
+                                                                    {selectOptions === 'All' && 'All Transactions'}
+                                                                    {selectOptions === 'All Outstanding' && 'All Outstanding Purchases'}
+                                                                  </td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td style={{ padding: '4px 8px', borderBottom: '1px solid #ddd' }}>Opening Balance</td>
+                                                                  <td style={{ padding: '4px 8px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>${openingBalanceTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td style={{ padding: '4px 8px', borderBottom: '1px solid #ddd' }}>Purchased Amount</td>
+                                                                  <td style={{ padding: '4px 8px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>${invoicePurchasedTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                  <td style={{ padding: '4px 8px', borderBottom: '1px solid #ddd' }}>Amount Paid</td>
+                                                                  <td style={{ padding: '4px 8px', borderBottom: '1px solid #ddd', textAlign: 'right' }}>${paymentPaidTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                                </tr>
+                                                                <tr style={{ fontWeight: 'bold' }}>
+                                                                  <td style={{ padding: '5px 8px', backgroundColor: '#e8f7fe' }}>Balance Due</td>
+                                                                  <td style={{ padding: '5px 8px', textAlign: 'right', backgroundColor: '#e8f7fe' }}>${totalBalanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                                </tr>
+                                                              </tbody>
+                                                            </table>
+                                                          </th>
+                                                        </tr>
+                                                        <tr>
+                                                          <th style={{ padding: '8px', border: '1px solid #000', backgroundColor: '#e8f7fe', width: '90px' }}>Date</th>
+                                                          <th style={{ padding: '8px', border: '1px solid #000', backgroundColor: '#e8f7fe', width: '120px' }} align="left">Transaction</th>
+                                                          <th style={{ padding: '8px', border: '1px solid #000', backgroundColor: '#e8f7fe' }} align="left">Details</th>
+                                                          <th style={{ padding: '8px', border: '1px solid #000', backgroundColor: '#e8f7fe', width: '100px' }} align="right">Amount ($)</th>
+                                                          <th style={{ padding: '8px', border: '1px solid #000', backgroundColor: '#e8f7fe', width: '100px' }} align="right">Payments ($)</th>
+                                                          <th style={{ padding: '8px', border: '1px solid #000', backgroundColor: '#e8f7fe', width: '110px' }} align="right">Balance ($)</th>
+                                                        </tr>
+                                                      </thead>
+                                                      <tbody>
+                                                        {statementRows.map((sRow, idx) => (
+                                                          <tr key={idx} style={sRow.isOpening ? { backgroundColor: '#fffde7', fontStyle: 'italic', fontWeight: 'bold' } : {}}>
+                                                            <td style={{ padding: '6px 8px', border: '1px solid #000', textAlign: 'center' }}>
+                                                              {dayjs(sRow.date).format('DD/MM/YYYY')}
+                                                            </td>
+                                                            <td style={{ padding: '6px 8px', border: '1px solid #000' }}>
+                                                              {sRow.transaction}
+                                                            </td>
+                                                            <td style={{ padding: '6px 8px', border: '1px solid #000' }}>
+                                                              {sRow.details}
+                                                            </td>
+                                                            <td style={{ padding: '6px 8px', border: '1px solid #000', textAlign: 'right' }}>
+                                                              {sRow.purchaseAmount > 0 ? `$${sRow.purchaseAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '-'}
+                                                            </td>
+                                                            <td style={{ padding: '6px 8px', border: '1px solid #000', textAlign: 'right' }}>
+                                                              {sRow.paidAmount > 0 ? `$${sRow.paidAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '-'}
+                                                            </td>
+                                                            <td style={{ padding: '6px 8px', border: '1px solid #000', textAlign: 'right', fontWeight: 'bold' }}>
+                                                              ${sRow.balance.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                            </td>
+                                                          </tr>
+                                                        ))}
+                                                      </tbody>
+                                                      <tfoot>
+                                                        <tr style={{ fontWeight: 'bold', backgroundColor: '#f0f4f8' }}>
+                                                          <td colSpan={3} style={{ padding: '8px', border: '1px solid #000', textAlign: 'right' }}>Balance Due:</td>
+                                                          <td style={{ padding: '8px', border: '1px solid #000', textAlign: 'right' }}>${invoicePurchasedTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                          <td style={{ padding: '8px', border: '1px solid #000', textAlign: 'right' }}>${paymentPaidTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                          <td style={{ padding: '8px', border: '1px solid #000', textAlign: 'right' }}>${totalBalanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                        </tr>
+                                                      </tfoot>
+                                                    </table>
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            </tbody>
+                                            <tfoot>
+                                              <tr>
+                                                <td>
+                                                  <div style={{ marginTop: '20px' }}>
+                                                    <PrintFooter branchId={row?.branchId || ""} />
+                                                  </div>
+                                                </td>
+                                              </tr>
+                                            </tfoot>
+                                          </table>
+                                        </Box>
+                                      </Card>
+                                    </TabPanel>
                                   </TabContext>
                                 </Box>
 
 
                               </div>
-                            )
-                            )
+                            ))
                             }
                             <div />
                           </div>

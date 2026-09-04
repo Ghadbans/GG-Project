@@ -25,6 +25,17 @@
 14. **Information Detail Views Full-Viewport Container Heights**: Detail/preview containers in information views (Invoices, Quotations, Purchases, Customers, Maintenance, Projects, Employees, Payroll, Payments, etc.) must NEVER have rigid, hardcoded fixed heights (e.g. `height: '450px'`, `height: '500px'`, `height: '520px'`, or `max-height: 600px'`). Instead, outer card containers `.itemInfoContainer` / `.itemInfoContainer2` must use `min-height: calc(100vh - 90px); box-sizing: border-box;`, inner left sidebars must use `height: calc(100vh - 170px); overflow-y: auto;`, and inner TabPanels / document containers must use `height: calc(100vh - 230px); overflow-y: auto;`. This eliminates dead gray bottom gaps across all screen sizes and resolutions.
 
 ## Current Progress Log
+- **Supplier Item Purchases Synchronization & Supplier Statement Module (Ver 3.4.74)**:
+  - **Resolved Item Purchase Discrepancy in Supplier Information**:
+    - Identified root cause where suppliers with abbreviated or variant names (e.g., `supplierName: "TME"` vs `storeName: "TME. TSHILEMB MANUFACTURE & EXTRACTION"`) had purchases saved under the short name or with missing `manufacturerID`, causing strict equality filters to omit records (showing 9 instead of all 15 purchases).
+    - Updated backend route (`server/routes/itemRoutes.js`) to support multi-identifier and regex matching on `supplierId`, `supplierName`, and `shortName` with case-insensitive and prefix regex matching.
+    - Implemented `isMatchingSupplier()` helper in `SupplierViewInformation.js` with comprehensive matching: ID match, exact/substring name match, cleaned alphanumeric match, and prefix matching.
+  - **Added Supplier Statement of Accounts Feature**:
+    - Added dedicated **"Statement"** Tab (value 4) in `<TabList>` and a quick-access **"Supplier Statement"** button in TabPanel 2 (IN-SUMMARY).
+    - Implemented dynamic filter options (`Year`, `Custom` date range, `All Outstanding`, `All`).
+    - Added Account Summary calculation (Opening Balance, Invoiced/Purchased Amount, Amount Paid, Balance Due) and chronological running balances.
+    - Included printable layout with `PrintHeader`, `PrintFooter`, supplier TO details, statement metadata, account summary, transaction rows, and print styling using `useReactToPrint`.
+  - **Release & Distribution**: Bumped version to `3.4.74`, compiled Webpack electron and web bundles, and packaged `dist/Global Gate Setup 3.4.74.exe`.
 - **Eliminated Bottom Gray Edges & Dynamic Full-Viewport Expansion (Ver 3.4.73)**:
   - **Resolved Root Cause Container Height Constraints**:
     - Updated `src/js/AdminView1/view.css`: Changed `.itemInfoContainer`, `.itemInfoContainer2`, `.itemInfoContainer3`, `.itemInfoContainer4` from `min-height: calc(100vh - 120px)` to `min-height: calc(100vh - 90px); box-sizing: border-box;`.
