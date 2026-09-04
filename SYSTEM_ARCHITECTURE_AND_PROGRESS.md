@@ -24,6 +24,17 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Rate Module Category Renaming & Cascade to All Daily Expenses + Crash Fix (Ver 3.4.80)**:
+  - **Category Renaming & Creation in Rate Module**:
+    - Enhanced the **All Category** section in `RateViewAdmin.js` with an **Action column** containing an Edit icon on each category row and hooked the `+` button in the card header to open an Add Category modal.
+    - Added responsive dialog for creating new categories and editing existing category names with form validation and local storage cache invalidation (`localStorage.removeItem('Category')`).
+  - **Automated Backend Cascade to Historical Daily Expenses**:
+    - Updated `PUT /update-expensesCategory/:id` in `server/routes/expenseRoutes.js` to automatically cascade category name changes across all historical documents in `expenseSchema` (both object-based `{ expenseCategory: { _id, expensesCategory } }` and string-based records) as well as the `dailyExpense` collection using case-insensitive regex queries and ObjectId matching.
+    - Renaming a category (e.g. changing "Fuel" to "Diesel") immediately updates all past and present Daily Expenses records tied to that category without data loss.
+  - **Category Drill-down & Statement Export Crash Fix**:
+    - Fixed `TypeError: (Item.total || 0).toFixed is not a function` in `CategoryViewDailyExpenses.js` and `CategoryPrintStatement.js` by ensuring `Item.amount` and `Item.total` are safely cast with `Number(...)` before formatting with `.toFixed(2)` and `.toLocaleString()`.
+  - **Release & Distribution**: Bumped version to `3.4.80`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.80.exe`, and pushed commit to GitHub for Railway deployment.
+
 - **Financial Performance & Statement of Accounts Metric Alignment (Ver 3.4.79)**:
   - **Identified Cause of Variance Between Dashboard & Statement Summary**:
     - Discovered that the Dashboard chart aggregates for the **entire month of September 2026** (30 days), whereas the Statement of Accounts was filtered to **Custom Range (`01/09/2026` to `04/09/2026`)**.

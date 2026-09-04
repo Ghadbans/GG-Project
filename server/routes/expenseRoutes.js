@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Route = express.Router();
 
 function branchFilter(req) {
@@ -495,19 +496,70 @@ Route.route("/get-expensesCategory/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-expensesCategory/:id").put(async (req, res, next) => {
-  await dailyExpensesCategorySchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const categoryId = req.params.id;
+    const newName = (req.body.expensesCategory || '').trim();
+
+    if (!newName) {
+      return res.status(400).json({ error: "Category name is required" });
+    }
+
+    // 1. Fetch current category to get the old name
+    const existingCategory = await dailyExpensesCategorySchema.findById(categoryId);
+    const oldName = existingCategory ? existingCategory.expensesCategory : null;
+
+    // 2. Update category document
+    const updatedCategory = await dailyExpensesCategorySchema.findByIdAndUpdate(
+      categoryId,
+      { $set: { expensesCategory: newName } },
+      { new: true }
+    );
+
+    let cascadedExpenseCount = 0;
+    let cascadedDailyExpenseCount = 0;
+
+    // 3. Cascade update to expense records if oldName exists or by category ID
+    const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const orConditions = [
+      { "expenseCategory._id": categoryId },
+      { "expenseCategory._id": new mongoose.Types.ObjectId(categoryId) }
+    ];
+    if (oldName) {
+      const oldRegex = new RegExp(`^${escapeRegex(oldName)}$`, 'i');
+      orConditions.push({ "expenseCategory.expensesCategory": oldRegex });
+      orConditions.push({ "expenseCategory": oldRegex });
+    }
+
+    const r1 = await expenseSchema.updateMany(
+      { $or: orConditions },
+      {
+        $set: {
+          "expenseCategory.expensesCategory": newName,
+          "expenseCategory._id": categoryId
+        }
+      }
+    );
+    cascadedExpenseCount = r1.modifiedCount || 0;
+
+    if (oldName) {
+      const oldRegex = new RegExp(`^${escapeRegex(oldName)}$`, 'i');
+      const r2 = await dailyExpenseSchema.updateMany(
+        { expenseCategory: oldRegex },
+        { $set: { expenseCategory: newName } }
+      );
+      cascadedDailyExpenseCount = r2.modifiedCount || 0;
+    }
+
+    res.json({
+      data: updatedCategory,
+      msg: "Category updated and cascaded successfully.",
+      cascadedExpenseCount,
+      cascadedDailyExpenseCount
     });
+  } catch (err) {
+    console.error("Error updating category with cascade:", err);
+    return next(err);
+  }
 });
 
 Route.route("/delete-expensesCategory/:id").delete(async (req, res) => {

@@ -802,7 +802,7 @@ function CategoryViewDailyExpenses() {
                                                         <div>
                                                           {Array.isArray(row.employeeName) && row.employeeName.map((Item, i) => (
                                                             <Typography key={i} variant="body2" sx={{ fontSize: '12px' }}>
-                                                              <strong>{Item.employee}</strong> &bull; FC {(Item.amount || 0).toLocaleString()} &bull; $ {(Item.total || 0).toFixed(2)}
+                                                              <strong>{Item.employee}</strong> &bull; FC {Number(Item.amount || 0).toLocaleString()} &bull; $ {Number(Item.total || 0).toFixed(2)}
                                                             </Typography>
                                                           ))}
                                                           {row.description && (

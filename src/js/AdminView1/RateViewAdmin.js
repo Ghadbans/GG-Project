@@ -250,12 +250,73 @@ function RateViewAdmin() {
   };
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
+
+  // Category Modal State
+  const [openCategoryModal, setOpenCategoryModal] = useState(false);
+  const [isEditCategory, setIsEditCategory] = useState(false);
+  const [categoryEditId, setCategoryEditId] = useState(null);
+  const [categoryInputName, setCategoryInputName] = useState("");
+
+  const handleOpenCategoryModal = (row = null) => {
+    if (row) {
+      setIsEditCategory(true);
+      setCategoryEditId(row._id || row.id);
+      setCategoryInputName(row.expensesCategory || "");
+    } else {
+      setIsEditCategory(false);
+      setCategoryEditId(null);
+      setCategoryInputName("");
+    }
+    setOpenCategoryModal(true);
+  };
+
+  const handleCloseCategoryModal = () => {
+    setOpenCategoryModal(false);
+    setIsEditCategory(false);
+    setCategoryEditId(null);
+    setCategoryInputName("");
+  };
+
+  const handleSubmitCategory = async (e) => {
+    e.preventDefault();
+    const trimmed = (categoryInputName || "").trim();
+    if (!trimmed) {
+      toast.error('Category name is required.');
+      return;
+    }
+    try {
+      if (isEditCategory && categoryEditId) {
+        const res = await axios.put(`${ENDPOINT_URL}/update-expensesCategory/${categoryEditId}`, {
+          expensesCategory: trimmed
+        });
+        if (res) {
+          localStorage.removeItem('Category');
+          handleCloseCategoryModal();
+          handleOpenLoading();
+        }
+      } else {
+        const res = await axios.post(`${ENDPOINT_URL}/create-expensesCategory`, {
+          expensesCategory: trimmed
+        });
+        if (res) {
+          localStorage.removeItem('Category');
+          handleCloseCategoryModal();
+          handleOpenLoading();
+        }
+      }
+    } catch (error) {
+      console.error('Error saving category:', error);
+      toast.error(error.response?.data?.error || 'Failed to save category.');
+    }
+  };
+
   {/** Loading Update View Start */ }
   const handleOpenLoading = () => {
     setLoadingOpenModal(true);
     setLoading(true);
     handleCloseUpdate();
     handleCloseUpdatePayment();
+    handleCloseUpdateReturn();
     setTimeout(() => {
       setLoading(false);
     }, 500)
@@ -357,8 +418,27 @@ function RateViewAdmin() {
   }
   /** End of Updating All Rate */
   const columns = [
-    { field: 'number', headerName: '#', width: 150 },
-    { field: 'expensesCategory', headerName: 'Category', width: 250 }
+    { field: 'number', headerName: '#', width: 70 },
+    { field: 'expensesCategory', headerName: 'Category', flex: 1, minWidth: 150 },
+    {
+      field: 'action',
+      headerName: 'Action',
+      width: 90,
+      sortable: false,
+      renderCell: (params) => (
+        <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+          <EditTooltip title="Edit Category">
+            <IconButton
+              size="small"
+              onClick={() => handleOpenCategoryModal(params.row)}
+              sx={{ color: '#202a5a' }}
+            >
+              <EditIcon fontSize="small" />
+            </IconButton>
+          </EditTooltip>
+        </Box>
+      )
+    }
   ]
   const columns1 = [
     { field: 'cashNumber', headerName: '#', width: 80 },
@@ -530,7 +610,15 @@ function RateViewAdmin() {
                       <Typography variant='h6'>All Category</Typography>
                     </Grid>
                     <Grid item xs={6} sx={{ textAlign: 'right' }}>
-                      <Add className='btnCustomer' style={{ fontSize: '40px' }} />
+                      <EditTooltip title="Add New Category">
+                        <span>
+                          <Add
+                            className='btnCustomer'
+                            style={{ fontSize: '36px', cursor: 'pointer' }}
+                            onClick={() => handleOpenCategoryModal(null)}
+                          />
+                        </span>
+                      </EditTooltip>
                     </Grid>
                     <Grid item xs={12}>
                       <Box sx={{ height: 450, width: '100%' }}>
@@ -657,6 +745,45 @@ function RateViewAdmin() {
               <br />
               <Grid item xs={12}>
                 <button className='btnCustomer' style={{ width: '100%' }}>Update</button>
+              </Grid>
+            </Grid>
+          </form>
+        </Box>
+      </Modal>
+      <Modal
+        open={openCategoryModal}
+        onClose={handleCloseCategoryModal}
+        aria-labelledby="modal-category-title"
+        aria-describedby="modal-category-description"
+      >
+        <Box sx={{ ...style, width: 500 }}>
+          <ViewTooltip title="Close" placement='left'>
+            <IconButton onClick={handleCloseCategoryModal} style={{ position: 'relative', float: 'right' }}>
+              <Close style={{ color: '#202a5a' }} />
+            </IconButton>
+          </ViewTooltip>
+          <Typography id="modal-category-title" variant="h6" component="h2" sx={{ mb: 2, fontWeight: 'bold', color: '#202a5a' }}>
+            {isEditCategory ? 'Edit Category' : 'Add New Category'}
+          </Typography>
+          <form onSubmit={handleSubmitCategory}>
+            <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  value={categoryInputName}
+                  name='categoryInputName'
+                  onChange={(e) => setCategoryInputName(e.target.value)}
+                  label='Category Name'
+                  required
+                  fullWidth
+                  autoFocus
+                  sx={{ backgroundColor: 'white' }}
+                />
+              </Grid>
+              <br />
+              <Grid item xs={12}>
+                <button type='submit' className='btnCustomer' style={{ width: '100%' }}>
+                  {isEditCategory ? 'Update Category' : 'Save Category'}
+                </button>
               </Grid>
             </Grid>
           </form>
