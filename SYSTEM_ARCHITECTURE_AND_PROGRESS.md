@@ -24,6 +24,32 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Notification Center Display-Only Security & Access Permission Enforcement (Ver 3.4.85)**:
+  - **Removed Direct Navigation Handlers**:
+    - Completely eliminated `handleNavigate`, `useNavigate`, and all `onClick` routing events from `NotificationVIewInfo.js` across both the **New** and **All** tabs.
+    - Removed hover-scaling, transition effects, and pointer cursors from notification cards.
+  - **Permission Enforcement & Grant Access Protection**:
+    - The Notification Center is now strictly informational/display-only. Users with restricted roles can no longer click notification cards to bypass **Grant Access** permissions and view unauthorized maintenance orders, commercial invoices, or project files.
+  - **Release & Distribution**: Bumped version to `3.4.85`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.85.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
+- **Asset Control Report Date of Visit Typing & State Atomic Update Fix (Ver 3.4.84)**:
+  - **Fixed Input Typing Freeze on Date of Visit**:
+    - Identified that `onChange` in `AssetControlReportSection.js` was firing dual state updates using a closed-over `units` array, causing the second update to overwrite the typed character with the previous empty string `''`.
+    - Refactored `handleUnitChange`, `handleAddUnit`, `handleAddMultipleUnits`, `handleDeleteUnit`, and `handleFieldChange` to utilize atomic functional state updates (`prev => ...`), synchronizing `dateOfVisit` and `dateOfPurchase` simultaneously within a single state update.
+  - **Release & Distribution**: Bumped version to `3.4.84`, compiled Webpack assets, packaged `dist/Global Gate Setup 3.4.84.exe`, and pushed to GitHub.
+
+- **Asset Control Report Column Renaming & Blank Field Initialization (Ver 3.4.83 / Ver 3.4.82)**:
+  - **Renamed "Purchase Date" to "Date of Visit"**:
+    - Renamed column header and input placeholders across `AssetControlReportSection.js`, `MaintenanceViewInformation.js`, and `MaintenanceOrderViewInformation.js` (on-screen tables, printable A4 schedule sheets, and Excel exports) from "Purchase Date" / "Install/Purchase" / "PURCHASE" to **"Date of Visit"** (`DD/MM/YYYY`).
+    - Maintained backward compatibility reading `unit.dateOfVisit || unit.dateOfPurchase || ''`.
+  - **Clean Empty Defaults for New Equipment Rows**:
+    - Updated `createDefaultAssetUnit` so all new rows start with completely blank strings (`''`) for Date of Visit, Location, Repair History, Brand, Model No, and Serial No, eliminating the need for technicians to manually erase default text like `N/A` or `HQ`.
+  - **Schedule Metadata & KPI Adjustments**:
+    - Removed redundant `Branch` and `Branch Manager` fields from the schedule header.
+    - Automatically mapped `Prepared By` to the client name and `Ref No` to the Maintenance order number.
+    - Simplified KPI badges to display raw unit counts (Total Units, Deep Cleaning Units, Soft Cleaning Units, Corrective Maintenance Units, Reactive Maintenance Units) without pricing multipliers.
+  - **Release & Distribution**: Bumped versions to `3.4.82` and `3.4.83`, compiled Webpack assets, packaged Windows installers, and pushed to GitHub.
+
 - **Maintenance Module ASSET CONTROL REPORT & Equipment Schedule System (Ver 3.4.81)**:
   - **Expandable Asset Control Section in Maintenance Forms**:
     - Implemented `AssetControlReportSection.js` as an expandable section across **Add Maintenance** (`MaintenanceFormView.js`), **Edit Maintenance** (`MaintenanceUpdateView.js`), and **Clone Maintenance** (`MaintenanceFormClone.js`), styled similarly to the Quotation Cover Letter.
