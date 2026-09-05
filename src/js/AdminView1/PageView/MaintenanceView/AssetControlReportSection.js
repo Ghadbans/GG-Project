@@ -104,65 +104,91 @@ function AssetControlReportSection({
 
   const handleFieldChange = (field, value) => {
     setAssetControlReport(prev => ({
-      ...prev,
+      ...(prev || DEFAULT_ASSET_CONTROL_REPORT),
       [field]: value
     }));
   };
 
   const handleRateChange = (field, value) => {
     setAssetControlReport(prev => ({
-      ...prev,
+      ...(prev || DEFAULT_ASSET_CONTROL_REPORT),
       pricingRates: {
-        ...(prev.pricingRates || DEFAULT_ASSET_CONTROL_REPORT.pricingRates),
+        ...((prev && prev.pricingRates) || DEFAULT_ASSET_CONTROL_REPORT.pricingRates),
         [field]: Number(value) || 0
       }
     }));
   };
 
   const handleUnitChange = (index, field, value) => {
-    const updated = [...units];
-    updated[index] = {
-      ...updated[index],
-      [field]: value
-    };
-    setAssetControlReport(prev => ({
-      ...prev,
-      units: updated
-    }));
+    setAssetControlReport(prev => {
+      const prevReport = prev || DEFAULT_ASSET_CONTROL_REPORT;
+      const prevUnits = Array.isArray(prevReport.units) && prevReport.units.length > 0
+        ? [...prevReport.units]
+        : [createDefaultAssetUnit(1)];
+      
+      const updatedUnits = [...prevUnits];
+      const targetUnit = { ...(updatedUnits[index] || createDefaultAssetUnit(index + 1)) };
+      targetUnit[field] = value;
+      if (field === 'dateOfVisit') {
+        targetUnit.dateOfPurchase = value;
+      } else if (field === 'dateOfPurchase') {
+        targetUnit.dateOfVisit = value;
+      }
+      updatedUnits[index] = targetUnit;
+      return {
+        ...prevReport,
+        units: updatedUnits
+      };
+    });
   };
 
   const handleAddUnit = () => {
-    const newUnit = createDefaultAssetUnit(units.length + 1);
-    setAssetControlReport(prev => ({
-      ...prev,
-      units: [...units, newUnit]
-    }));
+    setAssetControlReport(prev => {
+      const prevReport = prev || DEFAULT_ASSET_CONTROL_REPORT;
+      const prevUnits = Array.isArray(prevReport.units) && prevReport.units.length > 0
+        ? [...prevReport.units]
+        : [createDefaultAssetUnit(1)];
+      return {
+        ...prevReport,
+        units: [...prevUnits, createDefaultAssetUnit(prevUnits.length + 1)]
+      };
+    });
   };
 
   const handleAddMultipleUnits = (count = 5) => {
-    const newUnits = [];
-    for (let i = 0; i < count; i++) {
-      newUnits.push(createDefaultAssetUnit(units.length + i + 1));
-    }
-    setAssetControlReport(prev => ({
-      ...prev,
-      units: [...units, ...newUnits]
-    }));
+    setAssetControlReport(prev => {
+      const prevReport = prev || DEFAULT_ASSET_CONTROL_REPORT;
+      const prevUnits = Array.isArray(prevReport.units) && prevReport.units.length > 0
+        ? [...prevReport.units]
+        : [createDefaultAssetUnit(1)];
+      const newUnits = [];
+      for (let i = 0; i < count; i++) {
+        newUnits.push(createDefaultAssetUnit(prevUnits.length + i + 1));
+      }
+      return {
+        ...prevReport,
+        units: [...prevUnits, ...newUnits]
+      };
+    });
   };
 
   const handleDeleteUnit = (index) => {
-    if (units.length <= 1) {
-      setAssetControlReport(prev => ({
-        ...prev,
-        units: [createDefaultAssetUnit(1)]
-      }));
-      return;
-    }
-    const filtered = units.filter((_, i) => i !== index);
-    setAssetControlReport(prev => ({
-      ...prev,
-      units: filtered
-    }));
+    setAssetControlReport(prev => {
+      const prevReport = prev || DEFAULT_ASSET_CONTROL_REPORT;
+      const prevUnits = Array.isArray(prevReport.units) && prevReport.units.length > 0
+        ? [...prevReport.units]
+        : [createDefaultAssetUnit(1)];
+      if (prevUnits.length <= 1) {
+        return {
+          ...prevReport,
+          units: [createDefaultAssetUnit(1)]
+        };
+      }
+      return {
+        ...prevReport,
+        units: prevUnits.filter((_, i) => i !== index)
+      };
+    });
   };
 
   // Calculations
@@ -172,10 +198,10 @@ function AssetControlReportSection({
   const correctiveCount = units.filter(u => u.correctiveMaintenance).length;
   const reactiveCount = units.filter(u => u.reactiveMaintenance).length;
 
-  const currentPreparedBy = report.preparedBy !== undefined && report.preparedBy !== '' ? report.preparedBy : defaultCustomerName;
-  const currentRefNo = report.refNo !== undefined && report.refNo !== '' ? report.refNo : defaultRefNo;
-  const currentTechnician = report.technicianName !== undefined && report.technicianName !== '' ? report.technicianName : defaultTechnician;
-  const currentSubject = report.subject !== undefined && report.subject !== '' ? report.subject : 'Assets Report';
+  const currentPreparedBy = report.preparedBy !== undefined ? report.preparedBy : defaultCustomerName;
+  const currentRefNo = report.refNo !== undefined ? report.refNo : defaultRefNo;
+  const currentTechnician = report.technicianName !== undefined ? report.technicianName : defaultTechnician;
+  const currentSubject = report.subject !== undefined ? report.subject : 'Assets Report';
 
   return (
     <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -372,11 +398,8 @@ function AssetControlReportSection({
                           size="small"
                           variant="standard"
                           fullWidth
-                          value={unit.dateOfVisit !== undefined ? unit.dateOfVisit : (unit.dateOfPurchase !== undefined ? unit.dateOfPurchase : '')}
-                          onChange={(e) => {
-                            handleUnitChange(index, 'dateOfVisit', e.target.value);
-                            handleUnitChange(index, 'dateOfPurchase', e.target.value);
-                          }}
+                          value={unit.dateOfVisit !== undefined && unit.dateOfVisit !== null ? unit.dateOfVisit : (unit.dateOfPurchase || '')}
+                          onChange={(e) => handleUnitChange(index, 'dateOfVisit', e.target.value)}
                           placeholder="DD/MM/YYYY"
                         />
                       </td>
