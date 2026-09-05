@@ -44,6 +44,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import ItemThumbnail from '../../../component/ItemThumbnail';
+import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './AssetControlReportSection';
 
 
 
@@ -211,6 +212,8 @@ function MaintenanceUpdateView() {
   const [customer, setCustomer] = useState([]);
   const [reason, setReason] = useState("");
   const [converted, setConverted] = useState("");
+  const [includeAssetControl, setIncludeAssetControl] = useState(false);
+  const [assetControlReport, setAssetControlReport] = useState(DEFAULT_ASSET_CONTROL_REPORT);
 
   // Side Shop State
   const [sideShopOpen, setSideShopOpen] = useState(false);
@@ -253,6 +256,8 @@ function MaintenanceUpdateView() {
           setStatusInfo(mData.status || "");
           setLaborQty(mData.laborQty || 0);
           setAction(mData.action || "");
+          setIncludeAssetControl(mData.includeAssetControl || false);
+          setAssetControlReport(mData.assetControlReport || DEFAULT_ASSET_CONTROL_REPORT);
         }
 
         setItemInformation((resItem.data.data || []).reverse());
@@ -758,7 +763,8 @@ function MaintenanceUpdateView() {
       serialNo,
       status, action,
       items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
-      note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false
+      note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false,
+      includeAssetControl, assetControlReport
     };
 
     try {
@@ -1437,6 +1443,14 @@ function MaintenanceUpdateView() {
                       </DragDropContext>
                     </div>
                   </Grid>
+                  <AssetControlReportSection
+                    includeAssetControl={includeAssetControl}
+                    setIncludeAssetControl={setIncludeAssetControl}
+                    assetControlReport={assetControlReport}
+                    setAssetControlReport={setAssetControlReport}
+                    defaultCustomerName={customerName?.customerName || ''}
+                    defaultTechnician={technicianAssign || ''}
+                  />
                   <Grid item xs={12}>
                     <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button>
                   </Grid>

@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Route = express.Router();
 
 function branchFilter(req) {
@@ -14,50 +15,7 @@ let dailyReportSchema = require("../model/dailyReportSchema");
 let employeeAttendanceShema = require("../model/employeeAttendanceSchema");
 let employeeSchema = require("../model/employeeSchema");
 let employeeUserSchema = require("../model/employeeUserSchema");
-let invoiceSchema = require("../model/invoiceSchema");
-let itemSchema = require("../model/itemSchema");
-let paymentSchema = require("../model/paymentSchema");
-let purchaseSchema = require("../model/purchaseSchema");
-let recurringInvoiceSchema = require("../model/recurringInvoiceSchema");
-let retainerInvoiceSchema = require("../model/retainerInvoiceSchema");
-let companyProfileSchema = require("../model/companyProfileSchema");
-let estimationSchema = require("../model/estimationSchema");
-let projectSchema = require("../model/projectSchema");
-let expenseSchema = require("../model/ExpenseSchema");
-let dailyExpensesMonthlyTotalSchema = require("../model/dailyExpensesMonthlyTotalSchema");
 let maintenanceSchema = require("../model/maintenanceSchema");
-let dailyExpensesCategorySchema = require("../model/dailyExpensesCategorySchema");
-let rateSchema = require("../model/rateSchema");
-let itemCodeSchema = require("../model/itemCodeSchema");
-let itemOutSchema = require("../model/itemOutSchema");
-let commentSchema = require("../model/commentSchema");
-let hiddenSchema = require("../model/hiddenSchema");
-let imageSchema = require("../model/imageSchema");
-let cashSchema = require("../model/cashSchema");
-let itemPurchaseSchema = require("../model/itemPurchaseSchema");
-let itemUnitSchema = require("../model/itemUnitSchema");
-let itemReturnSchema = require("../model/itemReturnSchema");
-let payRollSchema = require("../model/payRollSchema");
-let paymentRateSchema = require("../model/paymentRateSchema");
-let grantAccessSchema = require("../model/grantAccessSchema");
-let messageSchema = require("../model/messageSchema");
-let notificationSchema = require("../model/notificationSchema");
-let purchaseOrderSchema = require("../model/purchaseOrderSchema");
-let planingSchema = require("../model/planingSchema");
-let posSchema = require("../model/posSchema");
-let departmentSchema = require("../model/departmentSchema");
-let SupplierSchema = require("../model/suppliersSchema");
-let RateReturnSchema = require("../model/rateReturnSchema");
-
-const { object } = require("joi");
-const { default: mongoose } = require("mongoose");
-
-// const nodemailer = require('nodemailer');
-// const crypto = require('crypto');
-// const bcrypt = require('bcrypt');
-// const employeeUserSchema = require('path/to/employeeUserSchema'); // Replace with your user schema
-// const transporter = nodemailer.createTransport(/* Your email configuration */); // Setup your transporter
-
 
 // CORS OPTIONS
 var whitelist = ["http://localhost:8080", "http://localhost:4000"];
@@ -74,10 +32,6 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions);
 };
 
-
-
-// --- DELETE BRANCH ---
-
 Route.route("/maintenance", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
@@ -86,7 +40,7 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       if (req.query.customerId) {
         let objectId = null;
-        try { objectId = new require('mongoose').Types.ObjectId(req.query.customerId); } catch (e) {}
+        try { objectId = new mongoose.Types.ObjectId(req.query.customerId); } catch (e) {}
         if (objectId) {
           filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
         } else {
@@ -198,11 +152,12 @@ Route.route("/get-last-saved-maintenance").get(async(req,res, next)=>{
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const query = branchId && branchId !== 'ALL' ? { branchId } : {};
     const last = await maintenanceSchema.findOne(query).sort({ serviceDate: -1 }).exec();
-    res.json(last)
+    res.json(last);
   } catch (error) {
     next(error);
   }
-})
+});
+
 // Create maintenance
 Route.route("/create-maintenance").post(async (req, res, next) => {
   const { customerName,serviceNumber,action,
@@ -210,25 +165,23 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
     technicianAssign,note,totalLaborFees,laborPercentage,totalDiscount,laborDiscount,
     visitDate,status,items,itemDescriptionInfo,brand,actionTaken,model,
     warranty,serialNo,defectDescription,adjustment,adjustmentNumber,
-    totalInvoice,subTotal,Create,Converted,ReferenceName} = req.body;
+    totalInvoice,subTotal,Create,Converted,ReferenceName,
+    includeAssetControl, assetControlReport} = req.body;
   try {
     const branchId = req.body.branchId || req.query.branchId;
     const matchStage = branchId ? { branchId } : {};
 
-    // Use $max aggregation â€” works on any collection size without RAM or sort limits
+    // Use $max aggregation
     const aggResult = await maintenanceSchema.aggregate([
       { $match: matchStage },
       { $group: { _id: null, maxNum: { $max: '$serviceNumber' } } }
     ]);
     const maxServiceNumber = aggResult.length > 0 ? (aggResult[0].maxNum || 0) : 0;
 
-    // If the frontend sent the same number as the current max, auto-increment
     const finalServiceNumber = (serviceNumber && serviceNumber > maxServiceNumber)
       ? serviceNumber
       : maxServiceNumber + 1;
 
-    // ALWAYS generate serviceName from finalServiceNumber to avoid E11000 duplicate key errors.
-    // Never trust the frontend-sent serviceName (it may already exist in the DB).
     const digits = String(finalServiceNumber).padStart(6, '0');
     const finalServiceName = 'M-' + digits;
 
@@ -238,7 +191,10 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
       technicianAssign, note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount,
       visitDate, status, items, itemDescriptionInfo, brand, actionTaken, model,
       warranty, serialNo, defectDescription, adjustment, adjustmentNumber,
-      totalInvoice, subTotal, Create, Converted, ReferenceName, branchId
+      totalInvoice, subTotal, Create, Converted, ReferenceName,
+      includeAssetControl: !!includeAssetControl,
+      assetControlReport: assetControlReport || {},
+      branchId
     });
     res.json({ data: result, message: "Data successfully added.", status: 200 });
   } catch (error) {
@@ -248,7 +204,7 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
 
 Route.route("/get-maintenance/:id").get(async (req, res, next) => {
   await maintenanceSchema
-    .findById(req.params.id, req.body)
+    .findById(req.params.id)
     .then((result) => {
       res.json({
         data: result,

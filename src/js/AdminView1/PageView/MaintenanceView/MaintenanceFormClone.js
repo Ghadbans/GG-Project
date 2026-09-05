@@ -42,6 +42,7 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './AssetControlReportSection';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -208,6 +209,8 @@ function MaintenanceFormClone() {
   const [serviceNumber, setServiceNumber] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [customerName, setCustomerName] = useState({});
+  const [includeAssetControl, setIncludeAssetControl] = useState(false);
+  const [assetControlReport, setAssetControlReport] = useState(DEFAULT_ASSET_CONTROL_REPORT);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -224,6 +227,8 @@ function MaintenanceFormClone() {
         SetItems(res.data.data.items.map((row) => ({ ...row, itemOut: 0 })));
         setNote(res.data.data.note)
         setAction(res.data.data.action)
+        setIncludeAssetControl(res.data.data.includeAssetControl || false);
+        setAssetControlReport(res.data.data.assetControlReport || DEFAULT_ASSET_CONTROL_REPORT);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -563,7 +568,8 @@ function MaintenanceFormClone() {
       customerName, serviceNumber, serviceDate, actionTaken, visitDate, itemDescriptionInfo,
       warranty, defectDescription, technicianAssign, brand, model, serviceName, action,
       serialNo, status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
-      note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale
+      note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale,
+      includeAssetControl, assetControlReport
     };
     try {
       const res = await axios.post(apiUrl, data);
@@ -1152,6 +1158,14 @@ function MaintenanceFormClone() {
                       </DragDropContext>
                     </div>
                   </Grid>
+                  <AssetControlReportSection
+                    includeAssetControl={includeAssetControl}
+                    setIncludeAssetControl={setIncludeAssetControl}
+                    assetControlReport={assetControlReport}
+                    setAssetControlReport={setAssetControlReport}
+                    defaultCustomerName={customerName?.customerName || ''}
+                    defaultTechnician={technicianAssign || ''}
+                  />
                   <Grid item xs={12}>
                     <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button>
                   </Grid>

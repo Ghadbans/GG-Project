@@ -44,6 +44,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import ItemThumbnail from '../../../component/ItemThumbnail';
+import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './AssetControlReportSection';
 
 
 
@@ -212,6 +213,8 @@ function MaintenanceFormView() {
   const [customerName, setCustomerName] = useState({});
   const [ItemInformation, setItemInformation] = useState([]);
   const [technicianAssign, setTechnicianAssign] = useState('');
+  const [includeAssetControl, setIncludeAssetControl] = useState(false);
+  const [assetControlReport, setAssetControlReport] = useState(DEFAULT_ASSET_CONTROL_REPORT);
   const serviceName = `M-${String(serviceNumber).padStart(6, '0')}`;
   const [inputValue, setInputValue] = React.useState('');
 
@@ -685,11 +688,12 @@ function MaintenanceFormView() {
     }
     const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
-      _id: v4(),
-      customerName, serviceNumber, serviceDate, actionTaken, visitDate, itemDescriptionInfo,
-      warranty, defectDescription, technicianAssign, brand, model, serviceName, action,
-      serialNo, status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
-      note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, synced: false
+       _id: v4(),
+       customerName, serviceNumber, serviceDate, actionTaken, visitDate, itemDescriptionInfo,
+       warranty, defectDescription, technicianAssign, brand, model, serviceName, action,
+       serialNo, status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
+       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, synced: false,
+       includeAssetControl, assetControlReport
     };
     try {
       const res = await axios.post(apiUrl, data);
@@ -1285,6 +1289,14 @@ function MaintenanceFormView() {
                       </DragDropContext>
                     </div>
                   </Grid>
+                  <AssetControlReportSection
+                    includeAssetControl={includeAssetControl}
+                    setIncludeAssetControl={setIncludeAssetControl}
+                    assetControlReport={assetControlReport}
+                    setAssetControlReport={setAssetControlReport}
+                    defaultCustomerName={customerName?.customerName || ''}
+                    defaultTechnician={technicianAssign || ''}
+                  />
                   <Grid item xs={12}>
                     {
                       saving !== 'true' ? <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button> : <p className='btnCustomer6' style={{ width: '100%', textAlign: 'center' }}>Saving...</p>

@@ -24,6 +24,22 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Maintenance Module ASSET CONTROL REPORT & Equipment Schedule System (Ver 3.4.81)**:
+  - **Expandable Asset Control Section in Maintenance Forms**:
+    - Implemented `AssetControlReportSection.js` as an expandable section across **Add Maintenance** (`MaintenanceFormView.js`), **Edit Maintenance** (`MaintenanceUpdateView.js`), and **Clone Maintenance** (`MaintenanceFormClone.js`), styled similarly to the Quotation Cover Letter.
+    - Toggle checkbox: `Attach Asset Control Report to this Maintenance (Yearly Schedule & Equipment Units Audit)`.
+    - Interactive equipment units table allowing technicians/office to add, clone, and remove units (e.g. 5, 23, or more devices) with full fields: `Device Type` (Split A/C, Cassette, Chiller, Refrigerator, etc. with Autocomplete), `Brand` (Samsung, LG, Sharp, etc.), `Model No`, `Serial No`, `Date of Purchase / Install`, `Location / Room` (HQ, ACM, Jovena, etc.), `Repair History`, `Deep Cleaning` checkbox, `Soft Cleaning` checkbox, `Corrective Maintenance` checkbox, `Reactive Maintenance` checkbox, and `Cleaning History / Notes`.
+    - Schedule header fields: `Prepared By`, `Ref No`, `Branch`, `Branch Manager`, `Subject`, `Technician Name`, and `General Notes & Recommendations`.
+    - Real-time KPI summary counters: Total Audited Units, Deep Cleaning count ($25 multiplier), Soft Cleaning count ($15 multiplier), Corrective Maintenance count ($20 multiplier), Reactive Maintenance count ($25 multiplier), and Estimated Contract Package Value.
+  - **Overview Document & Printable "GLOBAL GATE GENERAL SERVICES - ASSET CONTROL SCHEDULE"**:
+    - Integrated dedicated **"Asset Control Report"** tab (TabPanel 3) in `MaintenanceViewInformation.js` with KPI stat cards, schedule overview summary, and complete equipment units breakdown table.
+    - In `Overview` tab (TabPanel 1) and ReactToPrint template, automatically appends the formal **"GLOBAL GATE GENERAL SERVICES - ASSET CONTROL SCHEDULE"** page (PrintHeader, Metadata Matrix table, Multiplier Rates Bar, Units Schedule Table, Notes, and 3-column Signatures for Prepared By, Technician, and Client Representative) when `includeAssetControl` is enabled.
+    - Enhanced `exportToExcel` to dynamically create a dedicated `Asset Control Schedule` worksheet in exported Excel workbooks.
+  - **Backend Persistence**:
+    - Updated `server/model/maintenanceSchema.js` to store `includeAssetControl: { type: Boolean, default: false }` and `assetControlReport: { type: Object, default: {} }`.
+    - Updated `server/routes/maintenanceRoutes.js` (`/create-maintenance` and `/update-maintenance/:id`) to accept and persist all Asset Control Report metadata.
+  - **Release & Distribution**: Bumped version to `3.4.81`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.81.exe`, and pushed commit to GitHub for Railway deployment.
+
 - **Rate Module Category Renaming & Cascade to All Daily Expenses + Crash Fix (Ver 3.4.80)**:
   - **Category Renaming & Creation in Rate Module**:
     - Enhanced the **All Category** section in `RateViewAdmin.js` with an **Action column** containing an Edit icon on each category row and hooked the `+` button in the card header to open an Add Category modal.

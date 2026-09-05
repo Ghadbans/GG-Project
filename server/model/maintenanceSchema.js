@@ -122,6 +122,14 @@ const maintenanceSchema= new Schema(
         type: String,
         trim: true,
        },
+       includeAssetControl: {
+         type: Boolean,
+         default: false
+       },
+       assetControlReport: {
+         type: Object,
+         default: {}
+       },
         branchId: { type: String, default: 'HQ' },
 },
     {
