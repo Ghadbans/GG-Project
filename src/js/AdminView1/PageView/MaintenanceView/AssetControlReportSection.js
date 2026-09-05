@@ -69,9 +69,9 @@ export const createDefaultAssetUnit = (num = 1) => ({
   brand: '',
   modelNo: '',
   serialNo: '',
-  dateOfPurchase: 'N/A',
-  location: 'HQ',
-  repairHistory: 'N/A',
+  dateOfVisit: '',
+  location: '',
+  repairHistory: '',
   deepCleaning: false,
   softCleaning: false,
   correctiveMaintenance: false,
@@ -308,7 +308,7 @@ function AssetControlReportSection({
                     <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '110px', textAlign: 'left' }}>Brand</th>
                     <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '130px', textAlign: 'left' }}>Model No.</th>
                     <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '120px', textAlign: 'left' }}>Serial No.</th>
-                    <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '90px', textAlign: 'left' }}>Purchase Date</th>
+                    <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '100px', textAlign: 'left' }}>Date of Visit</th>
                     <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '100px', textAlign: 'left' }}>Location</th>
                     <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '90px', textAlign: 'left' }}>Repair History</th>
                     <th style={{ padding: '8px 4px', border: '1px solid #334155', width: '70px', textAlign: 'center' }}>Deep Clean</th>
@@ -372,8 +372,12 @@ function AssetControlReportSection({
                           size="small"
                           variant="standard"
                           fullWidth
-                          value={unit.dateOfPurchase || 'N/A'}
-                          onChange={(e) => handleUnitChange(index, 'dateOfPurchase', e.target.value)}
+                          value={unit.dateOfVisit !== undefined ? unit.dateOfVisit : (unit.dateOfPurchase !== undefined ? unit.dateOfPurchase : '')}
+                          onChange={(e) => {
+                            handleUnitChange(index, 'dateOfVisit', e.target.value);
+                            handleUnitChange(index, 'dateOfPurchase', e.target.value);
+                          }}
+                          placeholder="DD/MM/YYYY"
                         />
                       </td>
                       <td style={{ padding: '4px', border: '1px solid #cbd5e1' }}>
@@ -391,8 +395,9 @@ function AssetControlReportSection({
                           size="small"
                           variant="standard"
                           fullWidth
-                          value={unit.repairHistory || 'N/A'}
+                          value={unit.repairHistory || ''}
                           onChange={(e) => handleUnitChange(index, 'repairHistory', e.target.value)}
+                          placeholder="History / Notes"
                         />
                       </td>
                       <td style={{ padding: '4px', border: '1px solid #cbd5e1', textAlign: 'center' }}>

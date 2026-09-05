@@ -770,7 +770,7 @@ function MaintenanceViewInformation() {
         { header: "Brand", key: 'brand', width: 16 },
         { header: "Model No", key: 'modelNo', width: 18 },
         { header: "Serial No", key: 'serialNo', width: 18 },
-        { header: "Date of Purchase/Install", key: 'dateOfPurchase', width: 22 },
+        { header: "Date of Visit", key: 'dateOfVisit', width: 22 },
         { header: "Location / Room", key: 'location', width: 18 },
         { header: "Repair History", key: 'repairHistory', width: 20 },
         { header: "Deep Cleaning", key: 'deepCleaning', width: 15 },
@@ -788,7 +788,7 @@ function MaintenanceViewInformation() {
           u.brand || '',
           u.modelNo || '',
           u.serialNo || '',
-          u.dateOfPurchase || '',
+          u.dateOfVisit || u.dateOfPurchase || '',
           u.location || '',
           u.repairHistory || '',
           u.deepCleaning ? 'YES' : 'NO',
@@ -1605,7 +1605,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                       <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>BRAND</th>
                                                       <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>MODEL NO</th>
                                                       <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>SERIAL NO</th>
-                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '70px' }}>PURCHASE</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>DATE OF VISIT</th>
                                                       <th style={{ border: '1px solid black', padding: '5px 4px', width: '75px' }}>LOCATION</th>
                                                       <th style={{ border: '1px solid black', padding: '5px 4px', width: '75px' }}>REPAIR HIST.</th>
                                                       <th style={{ border: '1px solid black', padding: '5px 2px', width: '40px' }}>DEEP</th>
@@ -1623,7 +1623,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                         <td style={{ border: '1px solid black', padding: '4px' }}>{unit.brand || '-'}</td>
                                                         <td style={{ border: '1px solid black', padding: '4px' }}>{unit.modelNo || '-'}</td>
                                                         <td style={{ border: '1px solid black', padding: '4px', fontFamily: 'monospace' }}>{unit.serialNo || '-'}</td>
-                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px' }}>{unit.dateOfPurchase || 'N/A'}</td>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px' }}>{unit.dateOfVisit || unit.dateOfPurchase || '-'}</td>
                                                         <td style={{ border: '1px solid black', padding: '4px' }}>{unit.location || '-'}</td>
                                                         <td style={{ border: '1px solid black', padding: '4px' }}>{unit.repairHistory || 'N/A'}</td>
                                                         <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px', color: unit.deepCleaning ? '#166534' : '#94a3b8', fontWeight: 'bold' }}>
@@ -1932,7 +1932,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Brand</TableCell>
                                                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Model No</TableCell>
                                                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Serial No</TableCell>
-                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Install/Purchase</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Date of Visit</TableCell>
                                                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Location</TableCell>
                                                     <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Repair History</TableCell>
                                                     <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Deep Clean</TableCell>
@@ -1950,9 +1950,9 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                       <TableCell>{unit.brand || '-'}</TableCell>
                                                       <TableCell>{unit.modelNo || '-'}</TableCell>
                                                       <TableCell sx={{ fontFamily: 'monospace' }}>{unit.serialNo || '-'}</TableCell>
-                                                      <TableCell>{unit.dateOfPurchase || 'N/A'}</TableCell>
+                                                      <TableCell>{unit.dateOfVisit || unit.dateOfPurchase || '-'}</TableCell>
                                                       <TableCell>{unit.location || '-'}</TableCell>
-                                                      <TableCell>{unit.repairHistory || 'N/A'}</TableCell>
+                                                      <TableCell>{unit.repairHistory || '-'}</TableCell>
                                                       <TableCell sx={{ textAlign: 'center', color: unit.deepCleaning ? '#166534' : '#94a3b8', fontWeight: 'bold' }}>
                                                         {unit.deepCleaning ? '✓ YES' : '-'}
                                                       </TableCell>
