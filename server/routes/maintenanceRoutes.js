@@ -16,6 +16,13 @@ let employeeAttendanceShema = require("../model/employeeAttendanceSchema");
 let employeeSchema = require("../model/employeeSchema");
 let employeeUserSchema = require("../model/employeeUserSchema");
 let maintenanceSchema = require("../model/maintenanceSchema");
+let itemOutSchema = require("../model/itemOutSchema");
+let itemReturnSchema = require("../model/itemReturnSchema");
+let planingSchema = require("../model/planingSchema");
+let invoiceSchema = require("../model/invoiceSchema");
+let commentSchema = require("../model/commentSchema");
+let notificationSchema = require("../model/notificationSchema");
+let expenseSchema = require("../model/ExpenseSchema");
 
 // CORS OPTIONS
 var whitelist = ["http://localhost:8080", "http://localhost:4000"];
@@ -353,30 +360,36 @@ Route.route("/remove-maintenance").delete(async (req, res) => {
 Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {
   try {
     const id = req.params.id;
-    const maintenanceData = await maintenanceSchema.findById(id);
+    const maintenanceData = await maintenanceSchema.findOne({ _id: id }).lean();
     const refName = maintenanceData ? maintenanceData.ReferenceName : null;
-    const objectId = mongoose.Types.ObjectId.isValid(id) ? new mongoose.Types.ObjectId(id) : null;
+    let objectId = null;
+    try {
+      if (mongoose.Types.ObjectId.isValid(id)) {
+        objectId = new mongoose.Types.ObjectId(id);
+      }
+    } catch (e) {}
+
     const refQuery = objectId ? { $or: [{ "reference._id": id }, { "reference._id": objectId }] } : { "reference._id": id };
     const projectQuery = objectId ? { $or: [{ "projectName._id": id }, { "projectName._id": objectId }] } : { "projectName._id": id };
     const expenseQuery = objectId ? { $or: [{ "accountNameInfo._id": id }, { "accountNameInfo._id": objectId }] } : { "accountNameInfo._id": id };
     const [itemOuts, itemReturns, planings, invoices, comments, notifications, expenses] = await Promise.all([
-      itemOutSchema.find(refQuery),
-      itemReturnSchema.find(refQuery),
-      planingSchema.find(projectQuery),
-      refName ? invoiceSchema.find({ $or: [{ invoiceName: refName }, { ReferenceName: id }] }) : invoiceSchema.find({ ReferenceName: id }),
-      commentSchema.find({ "CommentInfo.idInfo": id }),
-      notificationSchema.find({ idInfo: id }),
-      expenseSchema.find(expenseQuery)
+      itemOutSchema.find(refQuery).lean(),
+      itemReturnSchema.find(refQuery).lean(),
+      planingSchema.find(projectQuery).lean(),
+      refName ? invoiceSchema.find({ $or: [{ invoiceName: refName }, { ReferenceName: id }] }).lean() : invoiceSchema.find({ ReferenceName: id }).lean(),
+      commentSchema.find({ "CommentInfo.idInfo": id }).lean(),
+      notificationSchema.find({ idInfo: id }).lean(),
+      expenseSchema.find(expenseQuery).lean()
     ]);
     res.json({
       data: {
-        itemOuts,
-        itemReturns,
-        planings,
-        invoices,
-        comments,
-        notifications,
-        expenses
+        itemOuts: itemOuts || [],
+        itemReturns: itemReturns || [],
+        planings: planings || [],
+        invoices: invoices || [],
+        comments: comments || [],
+        notifications: notifications || [],
+        expenses: expenses || []
       },
       message: "Data successfully retrieved.",
       status: 200,

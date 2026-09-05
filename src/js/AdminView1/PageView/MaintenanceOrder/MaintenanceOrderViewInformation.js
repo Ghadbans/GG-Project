@@ -735,6 +735,61 @@ function MaintenanceOrderViewInformation() {
       workSheet.addRow([item.no, item.no1, item.description, item.laborQty, item.adjustmentNumber, item.laborDiscount, item.totalInvoice])
     });
 
+    const currentMaintenance = maintenance.find(row => row._id === id);
+    if (currentMaintenance?.includeAssetControl && currentMaintenance?.assetControlReport) {
+      const assetSheet = workbook.addWorksheet('Asset Control Schedule');
+      const report = currentMaintenance.assetControlReport;
+      const units = Array.isArray(report.units) ? report.units : [];
+
+      assetSheet.addRow(['GLOBAL GATE GENERAL SERVICES - ASSET CONTROL SCHEDULE']);
+      assetSheet.addRow([]);
+      assetSheet.addRow(['Prepared By / Client', report.preparedBy || currentMaintenance.customerName?.customerName || '', 'Date of Visit', report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(currentMaintenance.visitDate || currentMaintenance.serviceDate).format('DD/MM/YYYY')]);
+      assetSheet.addRow(['Ref No', report.refNo || currentMaintenance.serviceName || `M-${String(currentMaintenance.serviceNumber).padStart(6, '0')}`, 'Subject', report.subject || 'Assets Report']);
+      assetSheet.addRow(['Technician', report.technicianName || currentMaintenance.technicianAssign || '']);
+      assetSheet.addRow([]);
+
+      const assetCols = [
+        { header: "#", key: 'no', width: 8 },
+        { header: "Device Type", key: 'itemType', width: 20 },
+        { header: "Brand", key: 'brand', width: 16 },
+        { header: "Model No", key: 'modelNo', width: 18 },
+        { header: "Serial No", key: 'serialNo', width: 18 },
+        { header: "Date of Purchase/Install", key: 'dateOfPurchase', width: 22 },
+        { header: "Location / Room", key: 'location', width: 18 },
+        { header: "Repair History", key: 'repairHistory', width: 20 },
+        { header: "Deep Cleaning", key: 'deepCleaning', width: 15 },
+        { header: "Soft Cleaning", key: 'softCleaning', width: 15 },
+        { header: "Corrective Maint.", key: 'correctiveMaintenance', width: 18 },
+        { header: "Reactive Maint.", key: 'reactiveMaintenance', width: 18 },
+        { header: "Cleaning History / Notes", key: 'cleaningHistory', width: 35 }
+      ];
+
+      assetSheet.addRow(assetCols.map(c => c.header));
+      units.forEach((u, i) => {
+        assetSheet.addRow([
+          i + 1,
+          u.itemType || '',
+          u.brand || '',
+          u.modelNo || '',
+          u.serialNo || '',
+          u.dateOfPurchase || '',
+          u.location || '',
+          u.repairHistory || '',
+          u.deepCleaning ? 'YES' : 'NO',
+          u.softCleaning ? 'YES' : 'NO',
+          u.correctiveMaintenance ? 'YES' : 'NO',
+          u.reactiveMaintenance ? 'YES' : 'NO',
+          u.cleaningHistory || ''
+        ]);
+      });
+
+      if (report.notes) {
+        assetSheet.addRow([]);
+        assetSheet.addRow(['General Notes:']);
+        assetSheet.addRow([report.notes]);
+      }
+    }
+
     const buffer = await workbook.xlsx.writeBuffer();
     const bold = new Blob([buffer], { type: 'application/octet-stream' });
     saveAs(bold, `M-${String(serviceNumber).padStart(6, '0')} for ${customerName1}.xlsx`)
@@ -1213,6 +1268,25 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                           />
                                         )
                                       }
+                                      {
+                                        row.includeAssetControl && (
+                                          <Tab label="Asset Control Report" value="3"
+                                            sx={{
+                                              '&.Mui-selected': {
+                                                color: 'white',
+                                                backgroundColor: 'gray',
+                                                borderRadius: '10px'
+                                              },
+                                              '&:hover': {
+                                                color: 'gray',
+                                                bgcolor: 'white',
+                                                border: '1px solid gray',
+                                                borderRadius: '10px'
+                                              }
+                                            }}
+                                          />
+                                        )
+                                      }
                                     </TabList>
                                   </Box>
                                   <TabPanel value="1" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto' }}>
@@ -1366,6 +1440,150 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                             </tbody>
                                           </table>
                                           <br />
+
+                                          {/* Printable ASSET CONTROL SCHEDULE */}
+                                          {row.includeAssetControl && row.assetControlReport && (() => {
+                                            const report = row.assetControlReport;
+                                            const units = Array.isArray(report.units) ? report.units : [];
+                                            const deepCount = units.filter(u => u.deepCleaning).length;
+                                            const softCount = units.filter(u => u.softCleaning).length;
+                                            const corrCount = units.filter(u => u.correctiveMaintenance).length;
+                                            const reactCount = units.filter(u => u.reactiveMaintenance).length;
+
+                                            return (
+                                              <div style={{ pageBreakBefore: 'always', breakBefore: 'page', marginTop: '30px', paddingTop: '20px', borderTop: '2px dashed #94a3b8' }}>
+                                                <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : ""} />
+                                                
+                                                <div style={{ backgroundColor: '#1e3a8a', color: 'white', padding: '10px 14px', textAlign: 'center', fontWeight: 'bold', fontSize: '15px', letterSpacing: '0.8px', borderRadius: '4px', margin: '15px 0' }}>
+                                                  GLOBAL GATE GENERAL SERVICES - ASSET CONTROL SCHEDULE
+                                                </div>
+
+                                                {/* Header Matrix */}
+                                                <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px', fontSize: '12px' }}>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px', width: '20%' }}>PREPARED BY / CLIENT:</td>
+                                                      <td style={{ border: '1px solid black', padding: '5px 8px', width: '30%' }}>{report.preparedBy || row.customerName?.customerName || '-'}</td>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px', width: '20%' }}>DATE OF VISIT:</td>
+                                                      <td style={{ border: '1px solid black', padding: '5px 8px', width: '30%' }}>{report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(row.visitDate || row.serviceDate).format('DD/MM/YYYY')}</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>REF NO:</td>
+                                                      <td style={{ border: '1px solid black', padding: '5px 8px' }}>{report.refNo || row.serviceName || `M-${String(row.serviceNumber).padStart(6, '0')}`}</td>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>SUBJECT:</td>
+                                                      <td style={{ border: '1px solid black', padding: '5px 8px' }}>{report.subject || 'Assets Report'}</td>
+                                                    </tr>
+                                                    <tr>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>TECHNICIAN:</td>
+                                                      <td colSpan={3} style={{ border: '1px solid black', padding: '5px 8px' }}>{report.technicianName || row.technicianAssign || '-'}</td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+
+                                                {/* Units Schedule Table */}
+                                                <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px', fontSize: '10px' }}>
+                                                  <thead>
+                                                    <tr style={{ backgroundColor: '#1e293b', color: 'white', textAlign: 'center' }}>
+                                                      <th style={{ border: '1px solid black', padding: '5px 2px', width: '25px' }}>#</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '90px' }}>ITEM TYPE</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>BRAND</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>MODEL NO</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '80px' }}>SERIAL NO</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '70px' }}>PURCHASE</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '75px' }}>LOCATION</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px', width: '75px' }}>REPAIR HIST.</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 2px', width: '40px' }}>DEEP</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 2px', width: '40px' }}>SOFT</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 2px', width: '40px' }}>CORR.</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 2px', width: '40px' }}>REACT.</th>
+                                                      <th style={{ border: '1px solid black', padding: '5px 4px' }}>CLEANING NOTES</th>
+                                                    </tr>
+                                                  </thead>
+                                                  <tbody>
+                                                    {units.map((unit, idx) => (
+                                                      <tr key={unit.idRow || idx} style={{ backgroundColor: idx % 2 === 0 ? 'white' : '#f8fafc' }}>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px 2px', fontWeight: 'bold' }}>{idx + 1}</td>
+                                                        <td style={{ border: '1px solid black', padding: '4px', fontWeight: '500' }}>{unit.itemType || '-'}</td>
+                                                        <td style={{ border: '1px solid black', padding: '4px' }}>{unit.brand || '-'}</td>
+                                                        <td style={{ border: '1px solid black', padding: '4px' }}>{unit.modelNo || '-'}</td>
+                                                        <td style={{ border: '1px solid black', padding: '4px', fontFamily: 'monospace' }}>{unit.serialNo || '-'}</td>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px' }}>{unit.dateOfPurchase || 'N/A'}</td>
+                                                        <td style={{ border: '1px solid black', padding: '4px' }}>{unit.location || '-'}</td>
+                                                        <td style={{ border: '1px solid black', padding: '4px' }}>{unit.repairHistory || 'N/A'}</td>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px', color: unit.deepCleaning ? '#166534' : '#94a3b8', fontWeight: 'bold' }}>
+                                                          {unit.deepCleaning ? '✓' : '-'}
+                                                        </td>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px', color: unit.softCleaning ? '#1e40af' : '#94a3b8', fontWeight: 'bold' }}>
+                                                          {unit.softCleaning ? '✓' : '-'}
+                                                        </td>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px', color: unit.correctiveMaintenance ? '#b45309' : '#94a3b8', fontWeight: 'bold' }}>
+                                                          {unit.correctiveMaintenance ? '✓' : '-'}
+                                                        </td>
+                                                        <td style={{ border: '1px solid black', textAlign: 'center', padding: '4px', color: unit.reactiveMaintenance ? '#b91c1c' : '#94a3b8', fontWeight: 'bold' }}>
+                                                          {unit.reactiveMaintenance ? '✓' : '-'}
+                                                        </td>
+                                                        <td style={{ border: '1px solid black', padding: '4px', fontSize: '9.5px' }}>{unit.cleaningHistory || '-'}</td>
+                                                      </tr>
+                                                    ))}
+                                                    {/* Summary Row */}
+                                                    <tr style={{ backgroundColor: '#f1f5f9', fontWeight: 'bold', borderTop: '2px solid black' }}>
+                                                      <td colSpan={8} style={{ border: '1px solid black', padding: '6px 8px', textAlign: 'right' }}>
+                                                        TOTAL UNITS AUDITED: {units.length}
+                                                      </td>
+                                                      <td style={{ border: '1px solid black', textAlign: 'center', padding: '6px 2px', color: '#166534' }}>{deepCount}</td>
+                                                      <td style={{ border: '1px solid black', textAlign: 'center', padding: '6px 2px', color: '#1e40af' }}>{softCount}</td>
+                                                      <td style={{ border: '1px solid black', textAlign: 'center', padding: '6px 2px', color: '#b45309' }}>{corrCount}</td>
+                                                      <td style={{ border: '1px solid black', textAlign: 'center', padding: '6px 2px', color: '#b91c1c' }}>{reactCount}</td>
+                                                      <td style={{ border: '1px solid black', padding: '6px 8px', fontSize: '9.5px' }}>
+                                                        Deep: {deepCount} | Soft: {softCount} | Corr: {corrCount} | React: {reactCount}
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+
+                                                {/* Notes */}
+                                                {report.notes && (
+                                                  <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '20px', fontSize: '11px' }}>
+                                                    <thead>
+                                                      <tr style={{ backgroundColor: '#f1f5f9' }}>
+                                                        <th style={{ border: '1px solid black', textAlign: 'left', padding: '5px 8px' }}>GENERAL NOTES & OBSERVATIONS</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                      <tr>
+                                                        <td style={{ border: '1px solid black', padding: '8px', minHeight: '40px', whiteSpace: 'pre-wrap' }}>
+                                                          {report.notes}
+                                                        </td>
+                                                      </tr>
+                                                    </tbody>
+                                                  </table>
+                                                )}
+
+                                                {/* Signatures */}
+                                                <table style={{ width: '100%', borderCollapse: 'collapse', marginTop: '30px', fontSize: '11px' }}>
+                                                  <tbody>
+                                                    <tr>
+                                                      <td style={{ width: '33%', textAlign: 'center', padding: '10px', verticalAlign: 'top' }}>
+                                                        <div style={{ borderBottom: '1px solid black', height: '40px', marginBottom: '5px' }}></div>
+                                                        <strong>PREPARED BY:</strong>
+                                                        <div>{report.preparedBy || 'Global Gate Admin'}</div>
+                                                      </td>
+                                                      <td style={{ width: '33%', textAlign: 'center', padding: '10px', verticalAlign: 'top' }}>
+                                                        <div style={{ borderBottom: '1px solid black', height: '40px', marginBottom: '5px' }}></div>
+                                                        <strong>TECHNICIAN SIGNATURE:</strong>
+                                                        <div>{report.technicianName || row.technicianAssign || 'Lead Technician'}</div>
+                                                      </td>
+                                                      <td style={{ width: '33%', textAlign: 'center', padding: '10px', verticalAlign: 'top' }}>
+                                                        <div style={{ borderBottom: '1px solid black', height: '40px', marginBottom: '5px' }}></div>
+                                                        <strong>CLIENT REPRESENTATIVE & STAMP:</strong>
+                                                        <div>{row.customerName?.customerName || 'Authorized Signatory'}</div>
+                                                      </td>
+                                                    </tr>
+                                                  </tbody>
+                                                </table>
+                                              </div>
+                                            );
+                                          })()}
                                         </div>
                                       </Box>
                                     </div>
@@ -1478,12 +1696,176 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                               <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.adjustmentNumber}</td>
                                               <td style={{ border: '1px solid black' }} ><span data-prefix>% </span>{row.laborDiscount !== undefined ? row.laborDiscount : 0}</td>
                                               <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.totalLaborFees !== undefined ? row.totalLaborFees : 0}</td>
-                                            </tr>
+                                             </tr>
                                           </tbody>
                                         </table>
                                       </CardContent>
                                     </Card>
                                   </TabPanel>
+                                  {/* TabPanel 3: Asset Control Report View */}
+                                  {row.includeAssetControl && row.assetControlReport && (
+                                    <TabPanel value="3" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', padding: '20px' }}>
+                                      {(() => {
+                                        const report = row.assetControlReport;
+                                        const units = Array.isArray(report.units) ? report.units : [];
+                                        const deepCount = units.filter(u => u.deepCleaning).length;
+                                        const softCount = units.filter(u => u.softCleaning).length;
+                                        const corrCount = units.filter(u => u.correctiveMaintenance).length;
+                                        const reactCount = units.filter(u => u.reactiveMaintenance).length;
+
+                                        return (
+                                          <Card sx={{ p: 2 }}>
+                                            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                                              <Typography variant="h6" sx={{ color: '#1e3a8a', fontWeight: 'bold' }}>
+                                                Asset Control Schedule - Equipment Audit
+                                              </Typography>
+                                              <Button
+                                                variant="contained"
+                                                size="small"
+                                                startIcon={<LocalPrintshopIcon />}
+                                                onClick={handleOpenPrint}
+                                                sx={{ backgroundColor: '#1e3a8a' }}
+                                              >
+                                                Print Schedule
+                                              </Button>
+                                            </Box>
+
+                                            {/* KPI Stats Cards */}
+                                            <Grid container spacing={2} sx={{ mb: 3 }}>
+                                              <Grid item xs={12} sm={6} md={2.4}>
+                                                <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#eff6ff', border: '1px solid #bfdbfe' }}>
+                                                  <Typography variant="caption" color="text.secondary">Total Units</Typography>
+                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#1e40af' }}>{units.length}</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#64748b' }}>Audited</Typography>
+                                                </Paper>
+                                              </Grid>
+                                              <Grid item xs={12} sm={6} md={2.4}>
+                                                <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
+                                                  <Typography variant="caption" color="text.secondary">Deep Cleaning</Typography>
+                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#166534' }}>{deepCount}</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#166534', fontWeight: 'bold' }}>{deepCount === 1 ? 'Unit' : 'Units'}</Typography>
+                                                </Paper>
+                                              </Grid>
+                                              <Grid item xs={12} sm={6} md={2.4}>
+                                                <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#f8fafc', border: '1px solid #cbd5e1' }}>
+                                                  <Typography variant="caption" color="text.secondary">Soft Cleaning</Typography>
+                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#334155' }}>{softCount}</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#334155', fontWeight: 'bold' }}>{softCount === 1 ? 'Unit' : 'Units'}</Typography>
+                                                </Paper>
+                                              </Grid>
+                                              <Grid item xs={12} sm={6} md={2.4}>
+                                                <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#fffbeb', border: '1px solid #fef3c7' }}>
+                                                  <Typography variant="caption" color="text.secondary">Corrective Maint.</Typography>
+                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#b45309' }}>{corrCount}</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#b45309', fontWeight: 'bold' }}>{corrCount === 1 ? 'Unit' : 'Units'}</Typography>
+                                                </Paper>
+                                              </Grid>
+                                              <Grid item xs={12} sm={6} md={2.4}>
+                                                <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#fef2f2', border: '1px solid #fecaca' }}>
+                                                  <Typography variant="caption" color="text.secondary">Reactive Maint.</Typography>
+                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#b91c1c' }}>{reactCount}</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#b91c1c', fontWeight: 'bold' }}>{reactCount === 1 ? 'Unit' : 'Units'}</Typography>
+                                                </Paper>
+                                              </Grid>
+                                            </Grid>
+
+                                            {/* Schedule Info Summary */}
+                                            <Paper sx={{ p: 2, mb: 3, backgroundColor: '#f8fafc' }}>
+                                              <Grid container spacing={2}>
+                                                <Grid item xs={6} md={3}>
+                                                  <Typography variant="caption" color="text.secondary">Prepared By / Client</Typography>
+                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.preparedBy || row.customerName?.customerName || '-'}</Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={3}>
+                                                  <Typography variant="caption" color="text.secondary">Ref No</Typography>
+                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.refNo || row.serviceName}</Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={3}>
+                                                  <Typography variant="caption" color="text.secondary">Subject</Typography>
+                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.subject || 'Assets Report'}</Typography>
+                                                </Grid>
+                                                <Grid item xs={6} md={3}>
+                                                  <Typography variant="caption" color="text.secondary">Technician</Typography>
+                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.technicianName || row.technicianAssign || '-'}</Typography>
+                                                </Grid>
+                                                <Grid item xs={12} md={6}>
+                                                  <Typography variant="caption" color="text.secondary">Date of Visit</Typography>
+                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                                                    {report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(row.visitDate || row.serviceDate).format('DD/MM/YYYY')}
+                                                  </Typography>
+                                                </Grid>
+                                              </Grid>
+                                            </Paper>
+
+                                            {/* Units Table */}
+                                            <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 1 }}>
+                                              Equipment Schedule List ({units.length} units)
+                                            </Typography>
+                                            <TableContainer component={Paper} sx={{ mb: 2 }}>
+                                              <Table size="small">
+                                                <TableHead sx={{ backgroundColor: '#1e293b' }}>
+                                                  <TableRow>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>#</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Item Type</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Brand</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Model No</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Serial No</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Install/Purchase</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Location</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Repair History</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Deep Clean</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Soft Clean</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Corrective</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold', textAlign: 'center' }}>Reactive</TableCell>
+                                                    <TableCell sx={{ color: 'white', fontWeight: 'bold' }}>Cleaning History / Notes</TableCell>
+                                                  </TableRow>
+                                                </TableHead>
+                                                <TableBody>
+                                                  {units.map((unit, index) => (
+                                                    <TableRow key={unit.idRow || index} sx={{ '&:nth-of-type(odd)': { backgroundColor: '#f8fafc' } }}>
+                                                      <TableCell sx={{ fontWeight: 'bold' }}>{index + 1}</TableCell>
+                                                      <TableCell sx={{ fontWeight: '600', color: '#1e40af' }}>{unit.itemType || '-'}</TableCell>
+                                                      <TableCell>{unit.brand || '-'}</TableCell>
+                                                      <TableCell>{unit.modelNo || '-'}</TableCell>
+                                                      <TableCell sx={{ fontFamily: 'monospace' }}>{unit.serialNo || '-'}</TableCell>
+                                                      <TableCell>{unit.dateOfPurchase || 'N/A'}</TableCell>
+                                                      <TableCell>{unit.location || '-'}</TableCell>
+                                                      <TableCell>{unit.repairHistory || 'N/A'}</TableCell>
+                                                      <TableCell sx={{ textAlign: 'center', color: unit.deepCleaning ? '#166534' : '#94a3b8', fontWeight: 'bold' }}>
+                                                        {unit.deepCleaning ? '✓' : '-'}
+                                                      </TableCell>
+                                                      <TableCell sx={{ textAlign: 'center', color: unit.softCleaning ? '#1e40af' : '#94a3b8', fontWeight: 'bold' }}>
+                                                        {unit.softCleaning ? '✓' : '-'}
+                                                      </TableCell>
+                                                      <TableCell sx={{ textAlign: 'center', color: unit.correctiveMaintenance ? '#b45309' : '#94a3b8', fontWeight: 'bold' }}>
+                                                        {unit.correctiveMaintenance ? '✓' : '-'}
+                                                      </TableCell>
+                                                      <TableCell sx={{ textAlign: 'center', color: unit.reactiveMaintenance ? '#b91c1c' : '#94a3b8', fontWeight: 'bold' }}>
+                                                        {unit.reactiveMaintenance ? '✓' : '-'}
+                                                      </TableCell>
+                                                      <TableCell sx={{ fontSize: '11px' }}>{unit.cleaningHistory || '-'}</TableCell>
+                                                    </TableRow>
+                                                  ))}
+                                                </TableBody>
+                                              </Table>
+                                            </TableContainer>
+
+                                            {/* Notes */}
+                                            {report.notes && (
+                                              <Paper sx={{ p: 2, backgroundColor: '#f8fafc' }}>
+                                                <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 0.5 }}>
+                                                  General Notes & Observations:
+                                                </Typography>
+                                                <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap' }}>
+                                                  {report.notes}
+                                                </Typography>
+                                              </Paper>
+                                            )}
+                                          </Card>
+                                        );
+                                      })()}
+                                    </TabPanel>
+                                  )}
                                 </TabContext>
                               </Box>
                             </div>

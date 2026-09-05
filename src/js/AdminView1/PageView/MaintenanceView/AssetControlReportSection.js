@@ -82,18 +82,9 @@ export const createDefaultAssetUnit = (num = 1) => ({
 export const DEFAULT_ASSET_CONTROL_REPORT = {
   preparedBy: '',
   refNo: '',
-  branchName: '',
-  branchManager: '',
   subject: 'Assets Report',
   technicianName: '',
   notes: '',
-  customerSignature: '',
-  pricingRates: {
-    deepCleaningRate: 25,
-    softCleaningRate: 15,
-    correctiveRate: 20,
-    reactiveRate: 25
-  },
   units: [createDefaultAssetUnit(1)]
 };
 
@@ -103,14 +94,13 @@ function AssetControlReportSection({
   assetControlReport,
   setAssetControlReport,
   defaultCustomerName = '',
+  defaultRefNo = '',
   defaultTechnician = ''
 }) {
   const report = assetControlReport || DEFAULT_ASSET_CONTROL_REPORT;
   const units = Array.isArray(report.units) && report.units.length > 0
     ? report.units
     : [createDefaultAssetUnit(1)];
-
-  const rates = report.pricingRates || DEFAULT_ASSET_CONTROL_REPORT.pricingRates;
 
   const handleFieldChange = (field, value) => {
     setAssetControlReport(prev => ({
@@ -182,11 +172,10 @@ function AssetControlReportSection({
   const correctiveCount = units.filter(u => u.correctiveMaintenance).length;
   const reactiveCount = units.filter(u => u.reactiveMaintenance).length;
 
-  const deepTotal = deepCleaningCount * (rates.deepCleaningRate || 25);
-  const softTotal = softCleaningCount * (rates.softCleaningRate || 15);
-  const correctiveTotal = correctiveCount * (rates.correctiveRate || 20);
-  const reactiveTotal = reactiveCount * (rates.reactiveRate || 25);
-  const totalContractEstimatedValue = deepTotal + softTotal + correctiveTotal + reactiveTotal;
+  const currentPreparedBy = report.preparedBy !== undefined && report.preparedBy !== '' ? report.preparedBy : defaultCustomerName;
+  const currentRefNo = report.refNo !== undefined && report.refNo !== '' ? report.refNo : defaultRefNo;
+  const currentTechnician = report.technicianName !== undefined && report.technicianName !== '' ? report.technicianName : defaultTechnician;
+  const currentSubject = report.subject !== undefined && report.subject !== '' ? report.subject : 'Assets Report';
 
   return (
     <Grid container spacing={2} sx={{ mt: 2 }}>
@@ -221,74 +210,52 @@ function AssetControlReportSection({
               Asset Control Schedule Information
             </Typography>
             <Grid container spacing={2} sx={{ mb: 2 }}>
-              <Grid item xs={12} sm={6} md={2}>
+              <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
                   size="small"
-                  label="Prepared By"
-                  value={report.preparedBy || ''}
+                  label="Prepared By / Client"
+                  value={currentPreparedBy}
                   onChange={(e) => handleFieldChange('preparedBy', e.target.value)}
                   sx={{ backgroundColor: 'white' }}
-                  placeholder="e.g. JULIA"
+                  placeholder="Client Name"
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={2}>
+              <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
                   size="small"
                   label="Ref. No"
-                  value={report.refNo || ''}
+                  value={currentRefNo}
                   onChange={(e) => handleFieldChange('refNo', e.target.value)}
                   sx={{ backgroundColor: 'white' }}
-                  placeholder="e.g. 1007022"
+                  placeholder="Maintenance Order #"
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={2}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Branch"
-                  value={report.branchName || ''}
-                  onChange={(e) => handleFieldChange('branchName', e.target.value)}
-                  sx={{ backgroundColor: 'white' }}
-                  placeholder="e.g. KOLWEZI"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={2}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Branch Manager"
-                  value={report.branchManager || ''}
-                  onChange={(e) => handleFieldChange('branchManager', e.target.value)}
-                  sx={{ backgroundColor: 'white' }}
-                  placeholder="e.g. MR. YATIM"
-                />
-              </Grid>
-              <Grid item xs={12} sm={6} md={2}>
+              <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
                   size="small"
                   label="Subject"
-                  value={report.subject || 'Assets Report'}
+                  value={currentSubject}
                   onChange={(e) => handleFieldChange('subject', e.target.value)}
                   sx={{ backgroundColor: 'white' }}
                 />
               </Grid>
-              <Grid item xs={12} sm={6} md={2}>
+              <Grid item xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
                   size="small"
                   label="Technician Name"
-                  value={report.technicianName || defaultTechnician || ''}
+                  value={currentTechnician}
                   onChange={(e) => handleFieldChange('technicianName', e.target.value)}
                   sx={{ backgroundColor: 'white' }}
-                  placeholder="e.g. ADNAN"
+                  placeholder="e.g. MOHAMAD AGHA"
                 />
               </Grid>
             </Grid>
 
-            {/* Summary KPI & Pricing Multipliers Bar */}
+            {/* Summary Unit Counters Bar */}
             <Box
               sx={{
                 display: 'flex',
@@ -298,46 +265,35 @@ function AssetControlReportSection({
                 mb: 2,
                 backgroundColor: '#e2e8f0',
                 borderRadius: '6px',
-                alignItems: 'center',
-                justifyContent: 'space-between'
+                alignItems: 'center'
               }}
             >
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-                <Box sx={{ p: 1, backgroundColor: '#1e293b', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '90px' }}>
-                  <Typography variant="caption" sx={{ display: 'block', fontSize: '10px' }}>TOTAL UNITS</Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{totalUnitsCount}</Typography>
-                </Box>
-                <Box sx={{ p: 1, backgroundColor: '#0284c7', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '120px' }}>
-                  <Typography variant="caption" sx={{ display: 'block', fontSize: '10px' }}>DEEP CLEANING</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    {deepCleaningCount} &times; ${rates.deepCleaningRate || 25} = ${deepTotal}
-                  </Typography>
-                </Box>
-                <Box sx={{ p: 1, backgroundColor: '#0d9488', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '120px' }}>
-                  <Typography variant="caption" sx={{ display: 'block', fontSize: '10px' }}>SOFT CLEANING</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    {softCleaningCount} &times; ${rates.softCleaningRate || 15} = ${softTotal}
-                  </Typography>
-                </Box>
-                <Box sx={{ p: 1, backgroundColor: '#d97706', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '130px' }}>
-                  <Typography variant="caption" sx={{ display: 'block', fontSize: '10px' }}>CORRECTIVE MAINT</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    {correctiveCount} &times; ${rates.correctiveRate || 20} = ${correctiveTotal}
-                  </Typography>
-                </Box>
-                <Box sx={{ p: 1, backgroundColor: '#dc2626', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '130px' }}>
-                  <Typography variant="caption" sx={{ display: 'block', fontSize: '10px' }}>REACTIVE MAINT</Typography>
-                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
-                    {reactiveCount} &times; ${rates.reactiveRate || 25} = ${reactiveTotal}
-                  </Typography>
-                </Box>
+              <Box sx={{ p: 1, px: 2, backgroundColor: '#1e293b', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '110px' }}>
+                <Typography variant="caption" sx={{ display: 'block', fontSize: '10px', letterSpacing: '0.5px' }}>TOTAL UNITS</Typography>
+                <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{totalUnitsCount}</Typography>
               </Box>
-              <Box sx={{ textAlign: 'right', pr: 1 }}>
-                <Typography variant="caption" sx={{ color: '#475569', fontWeight: 'bold', display: 'block' }}>
-                  ESTIMATED ASSET CONTRACT VALUE
+              <Box sx={{ p: 1, px: 2, backgroundColor: '#0284c7', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '130px' }}>
+                <Typography variant="caption" sx={{ display: 'block', fontSize: '10px', letterSpacing: '0.5px' }}>DEEP CLEANING</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                  {deepCleaningCount} {deepCleaningCount === 1 ? 'Unit' : 'Units'}
                 </Typography>
-                <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#0f172a' }}>
-                  ${totalContractEstimatedValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </Box>
+              <Box sx={{ p: 1, px: 2, backgroundColor: '#0d9488', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '130px' }}>
+                <Typography variant="caption" sx={{ display: 'block', fontSize: '10px', letterSpacing: '0.5px' }}>SOFT CLEANING</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                  {softCleaningCount} {softCleaningCount === 1 ? 'Unit' : 'Units'}
+                </Typography>
+              </Box>
+              <Box sx={{ p: 1, px: 2, backgroundColor: '#d97706', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '140px' }}>
+                <Typography variant="caption" sx={{ display: 'block', fontSize: '10px', letterSpacing: '0.5px' }}>CORRECTIVE MAINT</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                  {correctiveCount} {correctiveCount === 1 ? 'Unit' : 'Units'}
+                </Typography>
+              </Box>
+              <Box sx={{ p: 1, px: 2, backgroundColor: '#dc2626', color: 'white', borderRadius: '4px', textAlign: 'center', minWidth: '140px' }}>
+                <Typography variant="caption" sx={{ display: 'block', fontSize: '10px', letterSpacing: '0.5px' }}>REACTIVE MAINT</Typography>
+                <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
+                  {reactiveCount} {reactiveCount === 1 ? 'Unit' : 'Units'}
                 </Typography>
               </Box>
             </Box>

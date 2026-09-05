@@ -759,9 +759,8 @@ function MaintenanceViewInformation() {
 
       assetSheet.addRow(['GLOBAL GATE GENERAL SERVICES - ASSET CONTROL SCHEDULE']);
       assetSheet.addRow([]);
-      assetSheet.addRow(['Prepared By', report.preparedBy || '', 'Date of Visit', report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(currentMaintenance.visitDate || currentMaintenance.serviceDate).format('DD/MM/YYYY')]);
-      assetSheet.addRow(['Ref No', report.refNo || currentMaintenance.serviceName || `M-${String(currentMaintenance.serviceNumber).padStart(6, '0')}`, 'Branch', report.branchName || currentMaintenance.customerName?.customerName || '']);
-      assetSheet.addRow(['Subject', report.subject || 'Assets Report', 'Branch Manager', report.branchManager || '']);
+      assetSheet.addRow(['Prepared By / Client', report.preparedBy || currentMaintenance.customerName?.customerName || '', 'Date of Visit', report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(currentMaintenance.visitDate || currentMaintenance.serviceDate).format('DD/MM/YYYY')]);
+      assetSheet.addRow(['Ref No', report.refNo || currentMaintenance.serviceName || `M-${String(currentMaintenance.serviceNumber).padStart(6, '0')}`, 'Subject', report.subject || 'Assets Report']);
       assetSheet.addRow(['Technician', report.technicianName || currentMaintenance.technicianAssign || '']);
       assetSheet.addRow([]);
 
@@ -1562,21 +1561,10 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                           {row.includeAssetControl && row.assetControlReport && (() => {
                                             const report = row.assetControlReport;
                                             const units = Array.isArray(report.units) ? report.units : [];
-                                            const rates = report.pricingRates || {
-                                              deepCleaningRate: 25,
-                                              softCleaningRate: 15,
-                                              correctiveRate: 20,
-                                              reactiveRate: 25
-                                            };
                                             const deepCount = units.filter(u => u.deepCleaning).length;
                                             const softCount = units.filter(u => u.softCleaning).length;
                                             const corrCount = units.filter(u => u.correctiveMaintenance).length;
                                             const reactCount = units.filter(u => u.reactiveMaintenance).length;
-                                            const deepTotal = deepCount * (rates.deepCleaningRate || 25);
-                                            const softTotal = softCount * (rates.softCleaningRate || 15);
-                                            const corrTotal = corrCount * (rates.correctiveRate || 20);
-                                            const reactTotal = reactCount * (rates.reactiveRate || 25);
-                                            const contractEstimatedTotal = deepTotal + softTotal + corrTotal + reactTotal;
 
                                             return (
                                               <div style={{ pageBreakBefore: 'always', breakBefore: 'page', marginTop: '30px', paddingTop: '20px', borderTop: '2px dashed #94a3b8' }}>
@@ -1590,50 +1578,20 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                 <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px', fontSize: '12px' }}>
                                                   <tbody>
                                                     <tr>
-                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px', width: '15%' }}>PREPARED BY:</td>
-                                                      <td style={{ border: '1px solid black', padding: '5px 8px', width: '35%' }}>{report.preparedBy || '-'}</td>
-                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px', width: '15%' }}>DATE OF VISIT:</td>
-                                                      <td style={{ border: '1px solid black', padding: '5px 8px', width: '35%' }}>{report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(row.visitDate || row.serviceDate).format('DD/MM/YYYY')}</td>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px', width: '20%' }}>PREPARED BY / CLIENT:</td>
+                                                      <td style={{ border: '1px solid black', padding: '5px 8px', width: '30%' }}>{report.preparedBy || row.customerName?.customerName || '-'}</td>
+                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px', width: '20%' }}>DATE OF VISIT:</td>
+                                                      <td style={{ border: '1px solid black', padding: '5px 8px', width: '30%' }}>{report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(row.visitDate || row.serviceDate).format('DD/MM/YYYY')}</td>
                                                     </tr>
                                                     <tr>
                                                       <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>REF NO:</td>
                                                       <td style={{ border: '1px solid black', padding: '5px 8px' }}>{report.refNo || row.serviceName || `M-${String(row.serviceNumber).padStart(6, '0')}`}</td>
-                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>BRANCH:</td>
-                                                      <td style={{ border: '1px solid black', padding: '5px 8px' }}>{report.branchName || row.customerName?.customerName || '-'}</td>
-                                                    </tr>
-                                                    <tr>
                                                       <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>SUBJECT:</td>
                                                       <td style={{ border: '1px solid black', padding: '5px 8px' }}>{report.subject || 'Assets Report'}</td>
-                                                      <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>BRANCH MANAGER:</td>
-                                                      <td style={{ border: '1px solid black', padding: '5px 8px' }}>{report.branchManager || '-'}</td>
                                                     </tr>
                                                     <tr>
                                                       <td style={{ border: '1px solid black', backgroundColor: '#f1f5f9', fontWeight: 'bold', padding: '5px 8px' }}>TECHNICIAN:</td>
                                                       <td colSpan={3} style={{ border: '1px solid black', padding: '5px 8px' }}>{report.technicianName || row.technicianAssign || '-'}</td>
-                                                    </tr>
-                                                  </tbody>
-                                                </table>
-
-                                                {/* Contract Multiplier Rates Bar */}
-                                                <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '15px', fontSize: '11px', textAlign: 'center' }}>
-                                                  <thead>
-                                                    <tr style={{ backgroundColor: '#0f172a', color: 'white' }}>
-                                                      <th style={{ border: '1px solid black', padding: '4px' }}>Deep Cleaning Rate</th>
-                                                      <th style={{ border: '1px solid black', padding: '4px' }}>Soft Cleaning Rate</th>
-                                                      <th style={{ border: '1px solid black', padding: '4px' }}>Corrective Maint. Rate</th>
-                                                      <th style={{ border: '1px solid black', padding: '4px' }}>Reactive Maint. Rate</th>
-                                                      <th style={{ border: '1px solid black', padding: '4px', backgroundColor: '#1e3a8a' }}>Est. Contract Value</th>
-                                                    </tr>
-                                                  </thead>
-                                                  <tbody>
-                                                    <tr>
-                                                      <td style={{ border: '1px solid black', padding: '4px' }}>${rates.deepCleaningRate || 25} × {deepCount} = <strong>${deepTotal}</strong></td>
-                                                      <td style={{ border: '1px solid black', padding: '4px' }}>${rates.softCleaningRate || 15} × {softCount} = <strong>${softTotal}</strong></td>
-                                                      <td style={{ border: '1px solid black', padding: '4px' }}>${rates.correctiveRate || 20} × {corrCount} = <strong>${corrTotal}</strong></td>
-                                                      <td style={{ border: '1px solid black', padding: '4px' }}>${rates.reactiveRate || 25} × {reactCount} = <strong>${reactTotal}</strong></td>
-                                                      <td style={{ border: '1px solid black', padding: '4px', backgroundColor: '#f0fdf4', color: '#166534', fontWeight: 'bold', fontSize: '12px' }}>
-                                                        ${contractEstimatedTotal.toFixed(2)}
-                                                      </td>
                                                     </tr>
                                                   </tbody>
                                                 </table>
@@ -1734,7 +1692,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                       <td style={{ width: '33%', textAlign: 'center', padding: '10px', verticalAlign: 'top' }}>
                                                         <div style={{ borderBottom: '1px solid black', height: '40px', marginBottom: '5px' }}></div>
                                                         <strong>CLIENT REPRESENTATIVE & STAMP:</strong>
-                                                        <div>{report.branchManager || row.customerName?.customerName || 'Authorized Signatory'}</div>
+                                                        <div>{row.customerName?.customerName || 'Authorized Signatory'}</div>
                                                       </td>
                                                     </tr>
                                                   </tbody>
@@ -1876,11 +1834,6 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                         const softCount = units.filter(u => u.softCleaning).length;
                                         const corrCount = units.filter(u => u.correctiveMaintenance).length;
                                         const reactCount = units.filter(u => u.reactiveMaintenance).length;
-                                        const deepTotal = deepCount * (rates.deepCleaningRate || 25);
-                                        const softTotal = softCount * (rates.softCleaningRate || 15);
-                                        const corrTotal = corrCount * (rates.correctiveRate || 20);
-                                        const reactTotal = reactCount * (rates.reactiveRate || 25);
-                                        const contractEstimatedTotal = deepTotal + softTotal + corrTotal + reactTotal;
 
                                         return (
                                           <Card sx={{ p: 2 }}>
@@ -1912,28 +1865,28 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                 <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0' }}>
                                                   <Typography variant="caption" color="text.secondary">Deep Cleaning</Typography>
                                                   <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#166534' }}>{deepCount}</Typography>
-                                                  <Typography variant="caption" sx={{ color: '#166534', fontWeight: 'bold' }}>${deepTotal} (${rates.deepCleaningRate || 25}/ea)</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#166534', fontWeight: 'bold' }}>{deepCount === 1 ? 'Unit' : 'Units'}</Typography>
                                                 </Paper>
                                               </Grid>
                                               <Grid item xs={12} sm={6} md={2.4}>
                                                 <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#f8fafc', border: '1px solid #cbd5e1' }}>
                                                   <Typography variant="caption" color="text.secondary">Soft Cleaning</Typography>
                                                   <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#334155' }}>{softCount}</Typography>
-                                                  <Typography variant="caption" sx={{ color: '#334155', fontWeight: 'bold' }}>${softTotal} (${rates.softCleaningRate || 15}/ea)</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#334155', fontWeight: 'bold' }}>{softCount === 1 ? 'Unit' : 'Units'}</Typography>
                                                 </Paper>
                                               </Grid>
                                               <Grid item xs={12} sm={6} md={2.4}>
                                                 <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#fffbeb', border: '1px solid #fef3c7' }}>
                                                   <Typography variant="caption" color="text.secondary">Corrective Maint.</Typography>
                                                   <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#b45309' }}>{corrCount}</Typography>
-                                                  <Typography variant="caption" sx={{ color: '#b45309', fontWeight: 'bold' }}>${corrTotal} (${rates.correctiveRate || 20}/ea)</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#b45309', fontWeight: 'bold' }}>{corrCount === 1 ? 'Unit' : 'Units'}</Typography>
                                                 </Paper>
                                               </Grid>
                                               <Grid item xs={12} sm={6} md={2.4}>
                                                 <Paper sx={{ p: 2, textAlign: 'center', backgroundColor: '#fef2f2', border: '1px solid #fecaca' }}>
-                                                  <Typography variant="caption" color="text.secondary">Est. Contract Value</Typography>
-                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#b91c1c' }}>${contractEstimatedTotal.toFixed(2)}</Typography>
-                                                  <Typography variant="caption" sx={{ color: '#b91c1c' }}>Total Package</Typography>
+                                                  <Typography variant="caption" color="text.secondary">Reactive Maint.</Typography>
+                                                  <Typography variant="h5" sx={{ fontWeight: 'bold', color: '#b91c1c' }}>{reactCount}</Typography>
+                                                  <Typography variant="caption" sx={{ color: '#b91c1c', fontWeight: 'bold' }}>{reactCount === 1 ? 'Unit' : 'Units'}</Typography>
                                                 </Paper>
                                               </Grid>
                                             </Grid>
@@ -1942,20 +1895,12 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                             <Paper sx={{ p: 2, mb: 3, backgroundColor: '#f8fafc' }}>
                                               <Grid container spacing={2}>
                                                 <Grid item xs={6} md={3}>
-                                                  <Typography variant="caption" color="text.secondary">Prepared By</Typography>
-                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.preparedBy || '-'}</Typography>
+                                                  <Typography variant="caption" color="text.secondary">Prepared By / Client</Typography>
+                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.preparedBy || row.customerName?.customerName || '-'}</Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={3}>
                                                   <Typography variant="caption" color="text.secondary">Ref No</Typography>
                                                   <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.refNo || row.serviceName}</Typography>
-                                                </Grid>
-                                                <Grid item xs={6} md={3}>
-                                                  <Typography variant="caption" color="text.secondary">Branch</Typography>
-                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.branchName || row.customerName?.customerName || '-'}</Typography>
-                                                </Grid>
-                                                <Grid item xs={6} md={3}>
-                                                  <Typography variant="caption" color="text.secondary">Branch Manager</Typography>
-                                                  <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.branchManager || '-'}</Typography>
                                                 </Grid>
                                                 <Grid item xs={6} md={3}>
                                                   <Typography variant="caption" color="text.secondary">Subject</Typography>
@@ -1965,7 +1910,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                   <Typography variant="caption" color="text.secondary">Technician</Typography>
                                                   <Typography variant="body2" sx={{ fontWeight: 'bold' }}>{report.technicianName || row.technicianAssign || '-'}</Typography>
                                                 </Grid>
-                                                <Grid item xs={6} md={6}>
+                                                <Grid item xs={12} md={6}>
                                                   <Typography variant="caption" color="text.secondary">Date of Visit</Typography>
                                                   <Typography variant="body2" sx={{ fontWeight: 'bold' }}>
                                                     {report.dateOfVisit ? dayjs(report.dateOfVisit).format('DD/MM/YYYY') : dayjs(row.visitDate || row.serviceDate).format('DD/MM/YYYY')}

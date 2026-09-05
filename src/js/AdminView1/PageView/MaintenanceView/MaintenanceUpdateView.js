@@ -1449,6 +1449,7 @@ function MaintenanceUpdateView() {
                     assetControlReport={assetControlReport}
                     setAssetControlReport={setAssetControlReport}
                     defaultCustomerName={customerName?.customerName || ''}
+                    defaultRefNo={serviceName}
                     defaultTechnician={technicianAssign || ''}
                   />
                   <Grid item xs={12}>
