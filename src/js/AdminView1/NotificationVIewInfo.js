@@ -11,7 +11,6 @@ import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { json, useNavigate } from 'react-router-dom';
 import { API_BASE_URL, ENDPOINT_URL } from '../apiConfig';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import BranchSwitcher from '../component/BranchSwitcher';
@@ -24,7 +23,6 @@ function NotificationVIewInfo() {
   const [badgeNumber, setBadgeNumber] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [value3, setValue3] = React.useState('1');
-  const navigate = useNavigate();
 
   const handleChange3 = (event, newValue) => {
     const changeValue = newValue
@@ -39,56 +37,6 @@ function NotificationVIewInfo() {
     setBadgeNumber(0);
     localStorage.removeItem('ArrayNotification');
     localStorage.removeItem('badgeNotification');
-  };
-
-  const handleNavigate = (row) => {
-    if (!row.idInfo) {
-      toast.info("No direct link available for this notification.");
-      return;
-    }
-
-    const person = row.person || "";
-    const reason = row.reason || "";
-    const fullText = (person + " " + reason).toUpperCase();
-
-    // Mapping based on prefixes and keywords
-    if (fullText.includes("M-")) {
-      navigate(`/MaintenanceUpdateView/${row.idInfo}`);
-    } else if (fullText.includes("P-")) {
-      navigate(`/ProjectUpdateView/${row.idInfo}`);
-    } else if (fullText.includes("INV-") || fullText.includes("INVOICE")) {
-      navigate(`/InvoiceFormUpdate/${row.idInfo}`);
-    } else if (fullText.includes("D-") || fullText.includes("EXPENSE")) {
-      navigate(`/DailyExpenseUpdate/${row.idInfo}`);
-    } else if (fullText.includes("IP-") || fullText.includes("ITEM PURCHASE")) {
-      navigate(`/ItemPurchaseUpdateForm/${row.idInfo}`);
-    } else if (fullText.includes("EST-") || fullText.includes("Q-") || fullText.includes("QUO-") || fullText.includes("QUOTATION")) {
-      navigate(`/EstimateInvoiceFormUpdate/${row.idInfo}`);
-    } else if (fullText.includes("PO-") || fullText.includes("PURCHASE")) {
-      navigate(`/PurchaseUpdateOrder/${row.idInfo}`);
-    } else if (fullText.includes("PAY-") || fullText.includes("PAYMENT")) {
-      navigate(`/PaymentInformationUpdate/${row.idInfo}`);
-    } else if (fullText.includes("IO-") || fullText.includes("O-") || fullText.includes("ITEM OUT")) {
-      navigate(`/ItemOutViewUpdate/${row.idInfo}`);
-    } else if (fullText.includes("IR-") || fullText.includes("R-") || fullText.includes("ITEM RETURN")) {
-      navigate(`/ItemReturnUpdateForm/${row.idInfo}`);
-    } else if (fullText.includes("S-00") || fullText.includes("F-") || fullText.includes("POS") || fullText.includes("SELL")) {
-      navigate(`/ShopPosUpdateForm/${row.idInfo}`);
-    } else if (fullText.includes("S-") || fullText.includes("SUPPLIER")) {
-      navigate(`/SupplierFormUpdate/${row.idInfo}`);
-    } else if (fullText.includes("C-") || fullText.includes("CUSTOMER")) {
-      navigate(`/CustomerFormUpdate/${row.idInfo}`);
-    } else if (fullText.includes("EMP-") || fullText.includes("EMPLOYEE")) {
-      navigate(`/EmployeeUpdateView/${row.idInfo}`);
-    } else if (fullText.includes("PR-") || fullText.includes("PAYROLL")) {
-      navigate(`/PayRollUpdateFormView/${row.idInfo}`);
-    } else if (fullText.includes("ITEM")) {
-      navigate(`/ItemUpdateView2/${row.idInfo}`);
-    } else {
-      toast.info("Could not determine the exact page for this record.");
-    }
-    
-    handleClose(); // Close popover after navigation
   };
 
   useEffect(() => {
@@ -214,7 +162,7 @@ function NotificationVIewInfo() {
               <section>
                 {
                   notification.length > 0 ? notification.map((row) => (
-                    <div key={row._id} onClick={() => handleNavigate(row)} style={{ cursor: 'pointer' }}>
+                    <div key={row._id}>
                       <section className='btnCustomer8' style={{ 
                         padding: '12px', 
                         border: '1px solid #e0e0e0', 
@@ -222,12 +170,7 @@ function NotificationVIewInfo() {
                         margin: '10px', 
                         backgroundColor: '#30368a', 
                         color: 'white', 
-                        lineHeight: '1.4',
-                        transition: 'transform 0.2s, box-shadow 0.2s',
-                        '&:hover': {
-                          transform: 'scale(1.02)',
-                          boxShadow: '0 4px 8px rgba(0,0,0,0.2)'
-                        }
+                        lineHeight: '1.4'
                       }}>
                         <p className="txt2" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', marginBottom: '4px' }}>
                           {dayjs(row.dateNotification).format('DD/MM/YYYY - HH:mm')}
@@ -263,7 +206,7 @@ function NotificationVIewInfo() {
               </section>
               {
                 newArray2.length > 0 ? newArray2.map((row) => (
-                  <div key={row._id} onClick={() => handleNavigate(row)} style={{ cursor: 'pointer' }}>
+                  <div key={row._id}>
                     <section className='btnCustomer8' style={{ 
                       padding: '12px', 
                       border: '1px solid #e0e0e0', 
@@ -271,10 +214,7 @@ function NotificationVIewInfo() {
                       margin: '10px', 
                       backgroundColor: '#30368a', 
                       color: 'white', 
-                      lineHeight: '1.4',
-                      '&:hover': {
-                        backgroundColor: '#3f46a3'
-                      }
+                      lineHeight: '1.4'
                     }}>
                       <p className="txt2" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.75rem', marginBottom: '4px' }}>
                         {dayjs(row.dateNotification).format('DD/MM/YYYY - HH:mm')}
