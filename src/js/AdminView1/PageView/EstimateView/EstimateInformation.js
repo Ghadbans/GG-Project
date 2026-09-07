@@ -104,22 +104,33 @@ function EstimateInformation({ onId }) {
     const value = e.target.value
     setSearch(value)
   }
-  const newArray = search !== '' ? estimate.filter((row) =>
-    (row.estimateName || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.estimateSubject || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.estimateDefect || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.customerName?.customerName || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.items && row.items.some((Item) => Item.itemName && (Item.itemName.itemName || '').toLowerCase().includes(search.toLowerCase()))) ||
-    (row.items && row.items.some((Item) => Item.itemDescription && (Item.itemDescription || '').toLowerCase().includes(search.toLowerCase())))
-  ) : estimate
-  const newArray2 = search !== '' ? filteredRows.filter((row) =>
-    (row.estimateName || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.estimateSubject || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.estimateDefect || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.customerName?.customerName || '').toLowerCase().includes(search.toLowerCase()) ||
-    (row.items && row.items.some((Item) => Item.itemName && (Item.itemName.itemName || '').toLowerCase().includes(search.toLowerCase()))) ||
-    (row.items && row.items.some((Item) => Item.itemDescription && (Item.itemDescription || '').toLowerCase().includes(search.toLowerCase())))
-  ) : filteredRows
+  const matchEstimateSearch = (row, query) => {
+    if (!query) return true;
+    const s = query.toLowerCase().trim();
+    const estName = String(row.estimateName || '').toLowerCase();
+    const estSub = String(row.estimateSubject || '').toLowerCase();
+    const estDef = String(row.estimateDefect || '').toLowerCase();
+    const estNum = String(row.estimateNumber || '').toLowerCase();
+    const custName = String(row.customerName?.customerName || row.customerName?.companyName || (typeof row.customerName === 'string' ? row.customerName : '')).toLowerCase();
+
+    const matchesItem = Array.isArray(row.items) && row.items.some((Item) => {
+      if (!Item) return false;
+      const itName = typeof Item.itemName === 'string' ? Item.itemName : (Item.itemName?.itemName || Item.itemName?.itemDescription || '');
+      const itDesc = typeof Item.itemDescription === 'string' ? Item.itemDescription : (Item.itemDescription?.itemDescription || '');
+      return (typeof itName === 'string' && itName.toLowerCase().includes(s)) ||
+             (typeof itDesc === 'string' && itDesc.toLowerCase().includes(s));
+    });
+
+    return estName.includes(s) ||
+           estSub.includes(s) ||
+           estDef.includes(s) ||
+           estNum.includes(s) ||
+           custName.includes(s) ||
+           matchesItem;
+  };
+
+  const newArray = search !== '' ? estimate.filter((row) => matchEstimateSearch(row, search)) : estimate;
+  const newArray2 = search !== '' ? filteredRows.filter((row) => matchEstimateSearch(row, search)) : filteredRows;
 
   return (
     <div>

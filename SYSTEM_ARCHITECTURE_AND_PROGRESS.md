@@ -24,6 +24,13 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Invoice Information Item Search String Safety Fix (Ver 3.4.90)**:
+  - **Bulletproof Search Matching in Invoice & Quotation Information Views**:
+    - Fixed runtime TypeError crash `(e.itemName.itemName || e.itemName).toLowerCase is not a function` in `src/js/AdminView1/PageView/InvoiceView/InvoiceInformation.js`.
+    - Wrapped item name and description parsing with explicit type checks (`typeof Item.itemName === 'string' ? Item.itemName : (Item.itemName?.itemName || Item.itemName?.itemDescription || '')`) and safe lowercase string matching.
+    - Added matching safeguards to `src/js/AdminView1/PageView/EstimateView/EstimateInformation.js` for quotation searching.
+  - **Release & Distribution**: Bumped version to `3.4.90`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.90.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Universal Styled Badges for All Payment Modes (Ver 3.4.89)**:
   - **Unified & Distinct Payment Mode Pill Badges**:
     - Enhanced payment tables and receipt vouchers across `CustomerInformationView.js`, `PaymentView.js`, and `PaymentInformationView.js` with clear, color-coded status badges for all payment modes:

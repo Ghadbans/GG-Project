@@ -102,37 +102,45 @@ function InvoiceInformation({ onId }) {
     setSearch(value);
   };
 
-  const newArray = search !== '' ? invoice.filter((row) =>
-    (row.invoiceName && row.invoiceName.toLowerCase().includes(search.toLowerCase())) ||
-    (row.invoiceNumber && String(row.invoiceNumber).includes(search)) ||
-    (row.invoiceSubject && row.invoiceSubject.toLowerCase().includes(search.toLowerCase())) ||
-    (row.invoiceDefect && row.invoiceDefect.toLowerCase().includes(search.toLowerCase())) ||
-    (row.defect && row.defect.toLowerCase().includes(search.toLowerCase())) ||
-    (row.actionTaken && row.actionTaken.toLowerCase().includes(search.toLowerCase())) ||
-    (row.actionTaking && row.actionTaking.toLowerCase().includes(search.toLowerCase())) ||
-    (row.note && row.note.toLowerCase().includes(search.toLowerCase())) ||
-    (row.noteInfo && row.noteInfo.toLowerCase().includes(search.toLowerCase())) ||
-    (row.terms && row.terms.toLowerCase().includes(search.toLowerCase())) ||
-    (row.customerName?.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())) ||
-    (row.items && row.items.some((Item) => Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(search.toLowerCase()))) ||
-    (row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase())))
-  ) : invoice
+  const matchInvoiceSearch = (row, query) => {
+    if (!query) return true;
+    const s = query.toLowerCase().trim();
+    const invName = String(row.invoiceName || '').toLowerCase();
+    const invNum = String(row.invoiceNumber || '').toLowerCase();
+    const invSub = String(row.invoiceSubject || '').toLowerCase();
+    const invDef = String(row.invoiceDefect || '').toLowerCase();
+    const def = String(row.defect || '').toLowerCase();
+    const actTaken = String(row.actionTaken || '').toLowerCase();
+    const actTaking = String(row.actionTaking || '').toLowerCase();
+    const note = String(row.note || '').toLowerCase();
+    const noteInfo = String(row.noteInfo || '').toLowerCase();
+    const terms = String(row.terms || '').toLowerCase();
+    const custName = String(row.customerName?.customerName || row.customerName?.companyName || (typeof row.customerName === 'string' ? row.customerName : '')).toLowerCase();
 
-  const newArray2 = search !== '' ? filteredRows.filter((row) =>
-    (row.invoiceName && row.invoiceName.toLowerCase().includes(search.toLowerCase())) ||
-    (row.invoiceNumber && String(row.invoiceNumber).includes(search)) ||
-    (row.invoiceSubject && row.invoiceSubject.toLowerCase().includes(search.toLowerCase())) ||
-    (row.invoiceDefect && row.invoiceDefect.toLowerCase().includes(search.toLowerCase())) ||
-    (row.defect && row.defect.toLowerCase().includes(search.toLowerCase())) ||
-    (row.actionTaken && row.actionTaken.toLowerCase().includes(search.toLowerCase())) ||
-    (row.actionTaking && row.actionTaking.toLowerCase().includes(search.toLowerCase())) ||
-    (row.note && row.note.toLowerCase().includes(search.toLowerCase())) ||
-    (row.noteInfo && row.noteInfo.toLowerCase().includes(search.toLowerCase())) ||
-    (row.terms && row.terms.toLowerCase().includes(search.toLowerCase())) ||
-    (row.customerName?.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())) ||
-    (row.items && row.items.some((Item) => Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(search.toLowerCase()))) ||
-    (row.items && row.items.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase())))
-  ) : filteredRows
+    const matchesItem = Array.isArray(row.items) && row.items.some((Item) => {
+      if (!Item) return false;
+      const itName = typeof Item.itemName === 'string' ? Item.itemName : (Item.itemName?.itemName || Item.itemName?.itemDescription || '');
+      const itDesc = typeof Item.itemDescription === 'string' ? Item.itemDescription : (Item.itemDescription?.itemDescription || '');
+      return (typeof itName === 'string' && itName.toLowerCase().includes(s)) ||
+             (typeof itDesc === 'string' && itDesc.toLowerCase().includes(s));
+    });
+
+    return invName.includes(s) ||
+           invNum.includes(s) ||
+           invSub.includes(s) ||
+           invDef.includes(s) ||
+           def.includes(s) ||
+           actTaken.includes(s) ||
+           actTaking.includes(s) ||
+           note.includes(s) ||
+           noteInfo.includes(s) ||
+           terms.includes(s) ||
+           custName.includes(s) ||
+           matchesItem;
+  };
+
+  const newArray = search !== '' ? invoice.filter((row) => matchInvoiceSearch(row, search)) : invoice;
+  const newArray2 = search !== '' ? filteredRows.filter((row) => matchInvoiceSearch(row, search)) : filteredRows;
 
 
 
