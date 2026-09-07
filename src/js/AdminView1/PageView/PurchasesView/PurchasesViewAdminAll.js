@@ -140,10 +140,34 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
+const cleanStr = (str) => String(str || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+
+const isItemMatch = (item1, item2) => {
+  if (!item1 || !item2) return false;
+  
+  const id1 = String(item1.itemName?._id || (typeof item1.itemName === 'string' && item1.itemName !== 'empty' && item1.itemName.length === 24 ? item1.itemName : '') || '');
+  const id2 = String(item2.itemName?._id || (typeof item2.itemName === 'string' && item2.itemName !== 'empty' && item2.itemName.length === 24 ? item2.itemName : '') || '');
+  
+  if (id1 && id2 && id1 !== 'empty' && id2 !== 'empty') {
+    return id1 === id2;
+  }
+  
+  const desc1 = cleanStr(item1.itemDescription || (typeof item1.itemName === 'string' ? item1.itemName : item1.itemName?.itemName) || item1.newDescription || '');
+  const desc2 = cleanStr(item2.itemDescription || (typeof item2.itemName === 'string' ? item2.itemName : item2.itemName?.itemName) || item2.newDescription || '');
+  
+  if (desc1 && desc2) {
+    if (desc1 === desc2) return true;
+    if (desc1.length >= 5 && desc2.length >= 5) {
+      if (desc1.includes(desc2) || desc2.includes(desc1)) return true;
+    }
+  }
+  return false;
+};
+
+function PurchaseItemRow({ Item, i, relatedUnit, formatDate2, itemPurchase, itemOut, itemReturn }) {
   const [open, setOpen] = React.useState(false);
   const matchingMovements = formatDate2?.filter((row1) => 
-    row1.itemsQtyArray?.some((it) => String(it.itemName?._id || it.itemName) === String(Item.itemName?._id || Item.itemName))
+    row1.itemsQtyArray?.some((it) => isItemMatch(it, Item))
   ) || [];
 
   if (Item.newDescription !== undefined) {
@@ -154,6 +178,25 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
       </tr>
     );
   }
+
+  // Dynamic calculations for bought quantity and total cost
+  const matchedPurchases = (itemPurchase || []).flatMap(ip => 
+    (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
+      qty: parseFloat(it.newItemOut || it.itemQty || 0),
+      total: parseFloat(it.totalAmount || it.totalAmountUSD || (parseFloat(it.newItemOut || it.itemQty || 0) * (parseFloat(it.itemRate || it.cost || 0))) || 0)
+    }))
+  );
+  const totalBoughtQty = matchedPurchases.reduce((sum, p) => sum + p.qty, 0);
+  const totalBoughtCost = matchedPurchases.reduce((sum, p) => sum + p.total, 0);
+
+  const buyQty = totalBoughtQty > 0 ? totalBoughtQty : (parseFloat(Item.itemBuy) || 0);
+  const totalBuyCost = totalBoughtCost > 0 ? totalBoughtCost : (parseFloat(Item.totalGenerale) || (buyQty * (parseFloat(Item.itemCost) || 0)));
+
+  const matchedOutQty = (itemOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
+    .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
+  const matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
+    .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
+  const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
 
   return (
     <React.Fragment>
@@ -179,10 +222,10 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
         <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
         <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
         <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemCost}</td>
-        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemBuy}</td>
-        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-        <td style={{ border: '1px solid #DDD' }} align="left"><span>{Item.itemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || (parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+        <td style={{ border: '1px solid #DDD' }} align="left">{buyQty}</td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(totalBuyCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
       </tr>
       {matchingMovements.length > 0 && (
         <tr>
@@ -190,7 +233,7 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography gutterBottom component="div" sx={{ fontWeight: 'bold', fontSize: '13px', color: '#202a5a' }}>
-                  Item Movement Info (Out & Return)
+                  Item Movement Info (Purchase, Out & Return)
                 </Typography>
                 <table className="secondTable">
                   <thead>
@@ -203,8 +246,14 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
                   </thead>
                   <tbody>
                     {matchingMovements.map((row1, index1) => {
-                      const matchingItem = row1.itemsQtyArray.find((Item1) => String(Item1.itemName?._id || Item1.itemName) === String(Item.itemName?._id || Item.itemName));
+                      const matchingItem = row1.itemsQtyArray.find((Item1) => isItemMatch(Item1, Item));
                       const isReturn = (row1.type || '').toLowerCase().includes('return');
+                      const isPurchase = (row1.type || '').toLowerCase().includes('purchase') || (row1.type || '').toLowerCase().includes('buy');
+                      const badgeColor = isReturn ? { bg: '#ffebee', text: '#c62828', sign: '-' } 
+                        : isPurchase ? { bg: '#e8f5e9', text: '#2e7d32', sign: '+' } 
+                        : { bg: '#e3f2fd', text: '#1565c0', sign: '+' };
+                      const badgeLabel = isReturn ? 'Item Return' : isPurchase ? 'Item Purchase' : 'Item Out';
+
                       return (
                         <tr key={index1}>
                           <td style={{ border: '1px solid #DDD' }}>{row1.outNumber}</td>
@@ -215,14 +264,14 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2 }) {
                               borderRadius: '4px', 
                               fontSize: '11px', 
                               fontWeight: 'bold', 
-                              backgroundColor: isReturn ? '#ffebee' : '#e3f2fd', 
-                              color: isReturn ? '#c62828' : '#1565c0' 
+                              backgroundColor: badgeColor.bg, 
+                              color: badgeColor.text 
                             }}>
-                              {isReturn ? 'Item Return' : 'Item Out'}
+                              {badgeLabel}
                             </span>
                           </td>
-                          <td style={{ border: '1px solid #DDD', fontWeight: 'bold', color: isReturn ? '#c62828' : '#1565c0' }}>
-                            <span>{isReturn ? `-${matchingItem?.newItemOut || 0}` : `+${matchingItem?.newItemOut || 0}`}</span>
+                          <td style={{ border: '1px solid #DDD', fontWeight: 'bold', color: badgeColor.text }}>
+                            <span>{badgeColor.sign}{matchingItem?.newItemOut || 0}</span>
                           </td>
                         </tr>
                       );
@@ -310,9 +359,10 @@ function PurchasesViewAdminAll() {
   const [purchaseAmount2, setPurchaseAmount2] = useState(0);
   const [itemOut, setItemOut] = useState([]);
   const [itemReturn, setItemReturn] = useState([]);
+  const [itemPurchase, setItemPurchase] = useState([]);
 
-  const newOutR = [...itemOut, ...itemReturn];
-  const formatDate2 = newOutR.map((row) => ({
+  const newMovements = [...itemPurchase, ...itemOut, ...itemReturn];
+  const formatDate2 = newMovements.map((row) => ({
     ...row,
     itemsQtyArray: (row.itemsQtyArray || []).filter((Item) => parseFloat(Item.newItemOut) > 0)
   })).filter(row => row.itemsQtyArray.length > 0);
@@ -320,11 +370,12 @@ function PurchasesViewAdminAll() {
   useEffect(() => {
     const fetchDataRelated = async () => {
       try {
-        const [resEstimate, resInvoice, resOut, resReturn] = await Promise.all([
+        const [resEstimate, resInvoice, resOut, resReturn, resPrec] = await Promise.all([
           axios.get(`${ENDPOINT_URL}/estimation?summary=true`),
           axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
           axios.get(`${ENDPOINT_URL}/itemOut`),
-          axios.get(`${ENDPOINT_URL}/itemReturn`)
+          axios.get(`${ENDPOINT_URL}/itemReturn`),
+          axios.get(`${ENDPOINT_URL}/itemPurchase`)
         ]);
         const filteredEstimate = resEstimate.data?.data?.filter((row) => row.ReferenceName === id);
         setEstimate(filteredEstimate);
@@ -337,25 +388,65 @@ function PurchasesViewAdminAll() {
         setItems(currentPurchase.items || []);
 
         setCustomerName(currentPurchase.customerName?.customerName ? currentPurchase.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, '') : '');
-        setPurchaseNumber(Number(currentPurchase.purchaseNumber || 0));
+        const currentPurchaseNo = Number(currentPurchase.purchaseNumber || 0);
+        setPurchaseNumber(currentPurchaseNo);
         
         // Store amounts from the full fetch — the summary list may omit these fields
         setPurchaseAmount1(parseFloat(currentPurchase.purchaseAmount1 || 0));
         setPurchaseAmount2(parseFloat(currentPurchase.purchaseAmount2 || 0));
 
         const projectIdStr = String(currentPurchase.projectName?._id || currentPurchase.projectName || '');
-        const matchedOut = (resOut.data?.data || []).filter(row => 
-          (projectIdStr && String(row.reference?._id || row.reference) === projectIdStr) ||
-          String(row.reference?._id || row.reference) === String(id)
-        ).map(row => ({ ...row, outNumber: "O-" + String(row.outNumber).padStart(6, '0'), type: 'Item Out' }));
+        const projectNameStr = currentPurchase.projectName?.projectName || '';
 
-        const matchedReturn = (resReturn.data?.data || []).filter(row => 
-          (projectIdStr && String(row.reference?._id || row.reference) === projectIdStr) ||
-          String(row.reference?._id || row.reference) === String(id)
-        ).map(row => ({ ...row, outNumber: "R-" + String(row.outNumber).padStart(6, '0'), type: 'Item return' }));
+        const isMatchingProjectOrPurchase = (row) => {
+          if (!row) return false;
+          const refId = String(row.reference?._id || row.reference || row.POID || row.projectName?._id || row.projectName || '');
+          if (refId && String(id) && refId === String(id)) return true;
+          if (projectIdStr && refId && refId === projectIdStr) return true;
+          
+          const rowPOID = String(row.POID || '').trim();
+          if (currentPurchaseNo > 0) {
+            if (rowPOID === String(currentPurchaseNo) || 
+                rowPOID === `PUR-${String(currentPurchaseNo).padStart(6, '0')}` ||
+                rowPOID === `P-${String(currentPurchaseNo).padStart(6, '0')}` ||
+                rowPOID === `PUR-${currentPurchaseNo}` ||
+                rowPOID === `P-${currentPurchaseNo}`) {
+              return true;
+            }
+          }
+
+          const desc = cleanStr(row.description || (typeof row.projectName === 'string' ? row.projectName : row.projectName?.projectName) || '');
+          if (projectNameStr && cleanStr(projectNameStr).length >= 4 && desc.includes(cleanStr(projectNameStr))) {
+            return true;
+          }
+          if (currentPurchaseNo > 0 && (desc.includes(`pur${currentPurchaseNo}`) || desc.includes(`pur-${currentPurchaseNo}`))) {
+            return true;
+          }
+          return false;
+        };
+
+        const matchedOut = (resOut.data?.data || []).filter(isMatchingProjectOrPurchase)
+          .map(row => ({ ...row, outNumber: "O-" + String(row.outNumber).padStart(6, '0'), type: 'Item Out' }));
+
+        const matchedReturn = (resReturn.data?.data || []).filter(isMatchingProjectOrPurchase)
+          .map(row => ({ ...row, outNumber: "R-" + String(row.outNumber).padStart(6, '0'), type: 'Item return' }));
+
+        const matchedPurchase = (resPrec.data?.data || []).filter(isMatchingProjectOrPurchase)
+          .map(row => ({
+            ...row,
+            outNumber: "IP-" + String(row.itemPurchaseNumber || '').padStart(6, '0'),
+            type: 'Item Purchase',
+            itemOutDate: row.itemPurchaseDate,
+            itemsQtyArray: (row.items || []).map(it => ({
+              ...it,
+              newItemOut: parseFloat(it.itemQty || 0),
+              totalAmount: parseFloat(it.totalAmountUSD || it.totalAmount || (parseFloat(it.itemQty || 0) * (parseFloat(it.itemRate || it.cost || 0))))
+            }))
+          }));
 
         setItemOut(matchedOut);
         setItemReturn(matchedReturn);
+        setItemPurchase(matchedPurchase);
       } catch (error) {
         console.error('Error fetching data:', error);
         setLoadingData(false);
@@ -1029,7 +1120,7 @@ function PurchasesViewAdminAll() {
                                                       <th style={{ border: '1px solid #DDD', backgroundColor: '#e8f7fe' }} align="left">I-Out</th>
                                                     </tr>
                                                   </thead>
-                                                  <tbody>
+                                                   <tbody>
                                                     {(search2 !== '' ? filteredPurchase.filter((Item) => {
                                                       const nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName || '';
                                                       return nameToCheck.toLowerCase().includes(search2.toLowerCase()) ||
@@ -1037,6 +1128,23 @@ function PurchasesViewAdminAll() {
                                                       (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()));
                                                     }) : filteredPurchase)?.map((Item, i) => {
                                                       const relatedUnit = item.find((Item1) => String(Item1._id) === String(Item.itemName?._id || Item.itemName));
+                                                      const matchedPurchases = (itemPurchase || []).flatMap(ip => 
+                                                        (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
+                                                          qty: parseFloat(it.newItemOut || it.itemQty || 0),
+                                                          total: parseFloat(it.totalAmount || it.totalAmountUSD || (parseFloat(it.newItemOut || it.itemQty || 0) * (parseFloat(it.itemRate || it.cost || 0))) || 0)
+                                                        }))
+                                                      );
+                                                      const totalBoughtQty = matchedPurchases.reduce((sum, p) => sum + p.qty, 0);
+                                                      const totalBoughtCost = matchedPurchases.reduce((sum, p) => sum + p.total, 0);
+                                                      const buyQty = totalBoughtQty > 0 ? totalBoughtQty : (parseFloat(Item.itemBuy) || 0);
+                                                      const totalBuyCost = totalBoughtCost > 0 ? totalBoughtCost : (parseFloat(Item.totalGenerale) || (buyQty * (parseFloat(Item.itemCost) || 0)));
+
+                                                      const matchedOutQty = (itemOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
+                                                        .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
+                                                      const matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
+                                                        .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
+                                                      const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
+
                                                       return (
                                                         <tr key={Item.idRow || i}>
                                                           {
@@ -1059,10 +1167,10 @@ function PurchasesViewAdminAll() {
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemCost}</td>
-                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                  <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemBuy}</td>
-                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>{Item.itemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || (parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                                  <td style={{ border: '1px solid #DDD' }} align="left">{buyQty}</td>
+                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(totalBuyCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
                                                                 </>
                                                               )
                                                           }
@@ -1074,7 +1182,18 @@ function PurchasesViewAdminAll() {
                                                     <tr>
                                                       <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>
                                                       <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{purchaseAmount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                      <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{purchaseAmount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                      <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(
+                                                        items.reduce((sum, Item) => {
+                                                          const matchedPurchases = (itemPurchase || []).flatMap(ip => 
+                                                            (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
+                                                              total: parseFloat(it.totalAmount || it.totalAmountUSD || (parseFloat(it.newItemOut || it.itemQty || 0) * (parseFloat(it.itemRate || it.cost || 0))) || 0)
+                                                            }))
+                                                          );
+                                                          const totalBoughtCost = matchedPurchases.reduce((s, p) => s + p.total, 0);
+                                                          const buyQty = matchedPurchases.reduce((s, p) => s + (p.qty || 0), 0) || parseFloat(Item.itemBuy) || 0;
+                                                          return sum + (totalBoughtCost > 0 ? totalBoughtCost : (parseFloat(Item.totalGenerale) || (buyQty * (parseFloat(Item.itemCost) || 0))));
+                                                        }, 0) || purchaseAmount2
+                                                      ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                     </tr>
                                                   </tbody>
                                                 </table>
@@ -1177,6 +1296,9 @@ function PurchasesViewAdminAll() {
                                                  i={i}
                                                  relatedUnit={relatedUnit}
                                                  formatDate2={formatDate2}
+                                                 itemPurchase={itemPurchase}
+                                                 itemOut={itemOut}
+                                                 itemReturn={itemReturn}
                                                />
                                              );
                                            })}
@@ -1185,7 +1307,18 @@ function PurchasesViewAdminAll() {
                                           <tr>
                                             <td colSpan={3} style={{ border: '1px solid #DDD' }} align="left">SubTotal </td>
                                             <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{purchaseAmount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                            <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{purchaseAmount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            <td colSpan={2} style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(
+                                              items.reduce((sum, Item) => {
+                                                const matchedPurchases = (itemPurchase || []).flatMap(ip => 
+                                                  (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
+                                                    total: parseFloat(it.totalAmount || it.totalAmountUSD || (parseFloat(it.newItemOut || it.itemQty || 0) * (parseFloat(it.itemRate || it.cost || 0))) || 0)
+                                                  }))
+                                                );
+                                                const totalBoughtCost = matchedPurchases.reduce((s, p) => s + p.total, 0);
+                                                const buyQty = matchedPurchases.reduce((s, p) => s + (p.qty || 0), 0) || parseFloat(Item.itemBuy) || 0;
+                                                return sum + (totalBoughtCost > 0 ? totalBoughtCost : (parseFloat(Item.totalGenerale) || (buyQty * (parseFloat(Item.itemCost) || 0))));
+                                              }, 0) || purchaseAmount2
+                                            ).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                           </tr>
                                         </tbody>
                                       </table>

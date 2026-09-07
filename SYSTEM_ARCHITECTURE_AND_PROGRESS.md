@@ -24,6 +24,19 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Purchase & Project Information Item Movement Purchases & Dynamic Buy/Cost Calculations (Ver 3.4.86)**:
+  - **Item Purchase (`Item Buy`) Integrated into Item Movement Info Subtable**:
+    - Updated `PurchasesViewAdminAll.js` and `ProjectViewInformation.js` to fetch and integrate `/itemPurchase` documents directly alongside `/itemOut` and `/itemReturn`.
+    - Renamed collapsible section title in item rows to **"Item Movement Info (Purchase, Out & Return)"**.
+    - Configured movement rows for Item Purchases to display formatted movement numbers (e.g. `IP-003496`), transaction date/time, green badge (`Item Purchase`), and positive quantity pill (`+Qty`).
+  - **Dynamic `Buy`, `Total-Buy`, `I-Out`, and `Total-Cost` Calculation**:
+    - Implemented `isItemMatch()` and `isMatchingProjectOrPurchase()` matching algorithms supporting both catalog items (matched by MongoDB ObjectId) and manual/custom items (matched by item description or model number).
+    - Calculated `Buy` quantity and `Total-Buy` cost dynamically from linked `itemPurchase` records, resolving `$0.00` display issues when item purchases exist.
+    - Calculated `I-Out` as net outgoing quantity (`Math.max(0, Out - Return)`).
+    - Calculated `Total-Cost` / `TotalCostOut` dynamically using unit purchase costs or total bought amounts.
+    - Updated SubTotal and print templates across Purchase View and Project View TabPanel 3.
+  - **Release & Distribution**: Bumped version to `3.4.86`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.86.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Notification Center Display-Only Security & Access Permission Enforcement (Ver 3.4.85)**:
   - **Removed Direct Navigation Handlers**:
     - Completely eliminated `handleNavigate`, `useNavigate`, and all `onClick` routing events from `NotificationVIewInfo.js` across both the **New** and **All** tabs.
