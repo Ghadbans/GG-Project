@@ -24,6 +24,14 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Document Lock Force Unlock Action CEO-Only Restriction (Ver 3.4.87)**:
+  - **Restricted Force Unlock / Take Over Action to CEO Role**:
+    - Updated `src/js/hooks/useDocumentLock.js` to compute `isCEO = (resolvedRole || '').toUpperCase() === 'CEO' || (resolvedUserName || '').toUpperCase() === 'GG'` and expose it in the hook's return object.
+    - Updated the full-screen document locking overlay across all 9 document update forms (`EstimateInvoiceFormUpdate`, `ItemOutViewUpdate`, `InvoiceFormUpdate`, `ItemPurchaseUpdateForm`, `PurchaseFormUpdate`, `PurchaseUpdateOrder`, `ProjectUpdateView`, `MaintenanceUpdateView`, and `MaintenanceOrderUpdate`).
+    - The `Force Unlock / Take Over` button is now exclusively visible to and operable by users with `CEO` role or username `GG`.
+    - Non-CEO users (users with `ADMIN` or `USER` roles) see only the "Go Back" button with informational text stating: "Please wait until they are finished editing this document."
+  - **Release & Distribution**: Bumped version to `3.4.87`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.87.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Purchase & Project Information Item Movement Purchases & Dynamic Buy/Cost Calculations (Ver 3.4.86)**:
   - **Item Purchase (`Item Buy`) Integrated into Item Movement Info Subtable**:
     - Updated `PurchasesViewAdminAll.js` and `ProjectViewInformation.js` to fetch and integrate `/itemPurchase` documents directly alongside `/itemOut` and `/itemReturn`.

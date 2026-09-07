@@ -15,6 +15,8 @@ export const useDocumentLock = (documentId, collectionName) => {
     const resolvedUserName = user?.data?.userName || (function() {
         try { return localStorage.getItem('currentUserName') || ''; } catch (e) { return ''; }
     })();
+    const resolvedRole = user?.data?.role || '';
+    const isCEO = (resolvedRole || '').toUpperCase() === 'CEO' || (resolvedUserName || '').toUpperCase() === 'GG';
     const lockedBy = (resolvedUserName || 'Unknown User') + ' (' + sessionLockId + ')';
 
     const [isLocked, setIsLocked] = useState(false);
@@ -115,5 +117,5 @@ export const useDocumentLock = (documentId, collectionName) => {
         }
     };
 
-    return { isLocked, lockError, lockConfig, lockedBy, forceRelease };
+    return { isLocked, lockError, lockConfig, lockedBy, forceRelease, isCEO };
 };
