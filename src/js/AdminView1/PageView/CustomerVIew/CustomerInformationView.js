@@ -405,21 +405,20 @@ function CustomerInformationView() {
 
 
   let credit1 = 0
-  payment?.map((row, i) => {
+  payment?.forEach((row) => {
     if (row.modes === 'Credit' || (row.modes === 'Cash' && row.remaining > 0) || (row.modes === 'Bank Transfer' && row.remaining > 0)) {
-      credit1 += parseFloat(row.remaining)
+      credit1 += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
     } else if (row.modes === 'Credit-Account') {
-      credit1 -= parseFloat(row.amount)
+      credit1 -= parseFloat(row.amount || 0);
     }
-    return credit1 < 0 ? 0 : credit1
-  })
-  const credit2 = credit1.toFixed(2)
-  console.log(credit2)
+  });
+  credit1 = Math.max(0, credit1);
+  const credit2 = credit1.toFixed(2);
 
   const [isCredit, setIsCredit] = useState('')
 
   const handleUpdateCredit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     const data = {
       credit: credit2
     };
@@ -1639,7 +1638,7 @@ function CustomerInformationView() {
                                         <Card sx={{ position: 'relative', float: 'right', width: '170px', height: '55px', backgroundColor: '#202a5a', color: 'white', marginBottom: '10px', textAlign: 'center', width: '300px' }}>
                                           <CardContent sx={{ display: 'flex', gap: '40px' }}>
                                             <Cached sx={{ cursor: 'pointer' }} onClick={handleUpdateCredit} />
-                                            <Typography>Credit: ${i.credit !== undefined ? i.credit : 0}</Typography>
+                                            <Typography>Credit: ${credit2 !== undefined ? credit2 : (i.credit !== undefined ? i.credit : 0)}</Typography>
                                           </CardContent>
                                         </Card>
                                         <table className="secondTable" style={{ width: '100%', fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD'  }} >
@@ -1650,7 +1649,7 @@ function CustomerInformationView() {
                                               <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Mode</th>
                                               <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Amount Received</th>
                                               <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Amount Paid</th>
-                                              <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Credit</th>
+                                              <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Credit Balance</th>
                                               <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Action</th>
                                             </tr>
                                           </thead>
@@ -1662,19 +1661,47 @@ function CustomerInformationView() {
                                                   <tr key={row._id}>
                                                     <td style={{ textAlign: 'left', width: '50px' }}>PAY-{String(row.paymentNumber).padStart(6, '0')}</td>
                                                     <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</td>
-                                                    <td style={{ textAlign: 'left', width: '50px', borderLeft: '1px solid #DDD' }}>{row.modes.toUpperCase()}</td>
-                                                    <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                                    <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>
-                                                      {row.TotalAmount?.map((Item, i) => {
-                                                        const relatedInvoice = invoice?.find((row1) => row1._id === Item.id)
-                                                        return (
-                                                          <p key={i}>
-                                                            <span>{Item.prefix || (relatedInvoice?.ReferenceName2 || relatedInvoice?.invoicePurchase === 'Purchased' ? "P-" : (row.reason === "Project" ? "P-" : "INV-"))}{String(Item.Ref).padStart(6, '0')} / {relatedInvoice?.invoiceSubject?.toUpperCase()}:  ${Item.total}</span>
-                                                          </p>
-                                                        )
-                                                      })}
+                                                    <td style={{ textAlign: 'left', width: '70px', borderLeft: '1px solid #DDD' }}>
+                                                      {row.modes === 'Credit-Account' ? (
+                                                        <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold' }}>
+                                                          CREDIT APPLIED
+                                                        </span>
+                                                      ) : row.modes === 'Credit' ? (
+                                                        <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold' }}>
+                                                          CREDIT DEPOSIT
+                                                        </span>
+                                                      ) : (
+                                                        row.modes?.toUpperCase()
+                                                      )}
                                                     </td>
-                                                    <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                    <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>
+                                                      {row.modes === 'Credit-Account' ? (
+                                                        <span style={{ color: '#9ca3af', fontStyle: 'italic' }}>- (From Credit)</span>
+                                                      ) : (
+                                                        `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+                                                      )}
+                                                    </td>
+                                                    <td style={{ textAlign: 'left', width: '120px', borderLeft: '1px solid #DDD' }}>
+                                                      {row.modes === 'Credit' && (!row.TotalAmount || row.TotalAmount.length === 0) ? (
+                                                        <span style={{ color: '#9ca3af', fontStyle: 'italic' }}>- (Unallocated)</span>
+                                                      ) : (
+                                                        row.TotalAmount?.map((Item, i) => {
+                                                          const relatedInvoice = invoice?.find((row1) => row1._id === Item.id)
+                                                          return (
+                                                            <p key={i} style={{ margin: '2px 0' }}>
+                                                              <span>{Item.prefix || (relatedInvoice?.ReferenceName2 || relatedInvoice?.invoicePurchase === 'Purchased' ? "P-" : (row.reason === "Project" ? "P-" : "INV-"))}{String(Item.Ref).padStart(6, '0')} / {relatedInvoice?.invoiceSubject?.toUpperCase()}:  ${Item.total}</span>
+                                                            </p>
+                                                          )
+                                                        })
+                                                      )}
+                                                    </td>
+                                                    <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>
+                                                      {row.modes === 'Credit-Account' ? (
+                                                        '$0.00'
+                                                      ) : (
+                                                        `$${(row.remaining !== undefined && row.remaining !== null ? row.remaining : (row.modes === 'Credit' ? row.amount : 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`
+                                                      )}
+                                                    </td>
                                                     <td style={{ textAlign: 'left', width: '40px', borderLeft: '1px solid #DDD' }}>
                                                       <ViewTooltip title="View">
                                                         <span>

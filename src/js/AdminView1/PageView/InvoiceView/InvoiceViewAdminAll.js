@@ -219,6 +219,7 @@ function InvoiceViewAdminAll() {
   const [customerName, setCustomerName] = useState({});
   const [customerName1, setCustomerName1] = useState("");
   const [customerID, setCustomerID] = useState(null);
+  const [oldCredit, setOldCredit] = useState(0);
   const [invoiceInfo, setInvoiceInfo] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
   const [totalSell, setTotalSell] = useState(0);
@@ -240,6 +241,30 @@ function InvoiceViewAdminAll() {
     }
     fetchRate()
   }, [])
+
+  useEffect(() => {
+    const fetchCustomerCredit = async () => {
+      if (customerID) {
+        try {
+          const resPay = await axios.get(`${ENDPOINT_URL}/payment?customerId=${customerID}`);
+          const paymentsList = resPay.data?.data || [];
+          let calcCredit = 0;
+          paymentsList.forEach(row => {
+            if (row.modes === 'Credit' || (row.modes === 'Cash' && row.remaining > 0) || (row.modes === 'Bank Transfer' && row.remaining > 0)) {
+              calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
+            } else if (row.modes === 'Credit-Account') {
+              calcCredit -= parseFloat(row.amount || 0);
+            }
+          });
+          setOldCredit(Math.max(0, calcCredit));
+        } catch (error) {
+          console.error('Error fetching customer credit:', error);
+        }
+      }
+    };
+    fetchCustomerCredit();
+  }, [customerID]);
+
   //Invoice
   useEffect(() => {
     const fetchData = async () => {
@@ -248,6 +273,11 @@ function InvoiceViewAdminAll() {
         const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${id}`);
         const invoiceData = res.data?.data;
         if (!invoiceData) { setLoadingData(false); return; }
+
+        setCustomerID(invoiceData.customerName?._id || invoiceData.customerName);
+        setCustomerName(invoiceData.customerName || {});
+        setCustomerName1(invoiceData.customerName?.Customer || invoiceData.customerName?.customerName || '');
+        setInvoiceNumber(invoiceData.invoiceNumber || '');
 
         const invoices = [invoiceData];
         setInvoice(invoices);
@@ -399,21 +429,6 @@ function InvoiceViewAdminAll() {
   }, [items])
 
   const Gain = isNaN(totalSell - totalCost) ? 0 : parseFloat(totalSell - totalCost).toFixed(2)
-  const [oldCredit, setOldCredit] = useState(0)
-  useEffect(() => {
-    const fetchCustomer = async () => {
-
-      if (customerID !== null) {
-        try {
-          const res = await axios.get(`${ENDPOINT_URL}/get-customer/${customerID}`)
-          setOldCredit(res.data.data.credit)
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      }
-    }
-    fetchCustomer()
-  }, [customerID])
   const [estimate, setEstimate] = useState([]);
   const [estimate2, setEstimate2] = useState([]);
   const [purchase, setPurchase] = useState([]);
@@ -620,23 +635,26 @@ function InvoiceViewAdminAll() {
   const handleChangeCEO = (idRow, key, value) => {
     const list = [...invoiceInfo]
     const i = invoiceInfo.findIndex(Item => Item.id === idRow)
+    if (i === -1) return;
     list[i][key] = value;
     list[i]['totalConverted'] = Math.round((list[i]['amountPaidFC'] / list[i]['rateChange']) * 100) / 100;
-    list[i]['total'] = Math.round((parseFloat(list[i]['totalConverted']) + parseFloat(list[i]['amountPaidUSD'])) * 100) / 100;
-    if (list[i]['total'] > list[i]['balanceDue']) {
-      list[i]['amountPaidFC'] = 0
-      list[i]['amountPaidUSD'] = 0
-      list[i]['total'] = 0
+    const computedTotal = Math.round((parseFloat(list[i]['totalConverted'] || 0) + parseFloat(list[i]['amountPaidUSD'] || 0)) * 100) / 100;
+    if (computedTotal > list[i]['balanceDue'] || computedTotal > oldCredit) {
+      list[i]['amountPaidFC'] = 0;
+      list[i]['amountPaidUSD'] = 0;
+      list[i]['total'] = 0;
+    } else {
+      list[i]['total'] = computedTotal;
     }
     setInvoiceInfo(list)
   }
   const handlePayment = (e) => {
     e.preventDefault();
-    let remaining = oldCredit;
+    let remaining = Math.max(0, parseFloat(oldCredit || 0));
     const totalInvoiceExp = invoiceInfo.map((row) => {
       const amountPaidUSD = Math.min(remaining, row.balanceDue).toFixed(2);
-      remaining -= amountPaidUSD
-      return { ...row, amountPaidUSD, total: amountPaidUSD }
+      remaining = Math.max(0, remaining - parseFloat(amountPaidUSD));
+      return { ...row, amountPaidUSD, total: amountPaidUSD };
     })
     setInvoiceInfo(totalInvoiceExp)
   }
@@ -646,7 +664,7 @@ function InvoiceViewAdminAll() {
   const PaymentReceivedFC = invoiceInfo.length > 0 ? invoiceInfo.reduce((sum, row) => sum + parseFloat(row.amountPaidFC), 0) : 0
   const PaymentReceivedUSD = invoiceInfo.length > 0 ? invoiceInfo.reduce((sum, row) => sum + parseFloat(row.amountPaidUSD), 0) : 0
   const remainingInvoice = balanceDueInfo - PaymentInfo
-  const remaining = Math.round((parseFloat(oldCredit) - PaymentInfo) * 100) / 100
+  const remaining = Math.max(0, Math.round((parseFloat(oldCredit) - PaymentInfo) * 100) / 100)
 
   const [openPayment, setOpenPayment] = useState(false);
 
@@ -766,15 +784,23 @@ function InvoiceViewAdminAll() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (PaymentInfo > oldCredit) {
+      alert(`Cannot apply $${PaymentInfo.toFixed(2)}. Customer only has $${oldCredit.toFixed(2)} in available credit.`);
+      return;
+    }
+    if (PaymentInfo <= 0) {
+      alert("Please enter a valid payment amount to apply.");
+      return;
+    }
     const data = {
-      id: v4(),
+      _id: v4(),
       customerName,
       bankCharge: 0,
       amount: PaymentInfo,
       modes: 'Credit-Account',
       paymentDate,
-      PaymentReceivedFC,
-      PaymentReceivedUSD,
+      PaymentReceivedFC: 0,
+      PaymentReceivedUSD: 0,
       paymentNumber,
       referenceNumber,
       description,

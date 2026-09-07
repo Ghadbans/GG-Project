@@ -517,26 +517,38 @@ if (relatedInvoice.length > 0) {
   }
   fetchInvoice()
 },[relatedInvoice])
-const [oldCredit,setOldCredit] = useState(null)
+const [oldCredit,setOldCredit] = useState(0)
 useEffect(()=>{
   const fetchCustomer = async () => {
     if (relatedCustomerID) {
      if (navigator.onLine) {
        try {
-         const res = await axios.get(`${ENDPOINT_URL}/get-customer/${relatedCustomerID}`)
-         setOldCredit(res.data.data.credit !== null || res.data.data.credit !== undefined?res.data.data.credit: 0)
+         const [resCust, resPay] = await Promise.all([
+           axios.get(`${ENDPOINT_URL}/get-customer/${relatedCustomerID}`),
+           axios.get(`${ENDPOINT_URL}/payment?customerId=${relatedCustomerID}`)
+         ]);
+         const paymentsList = resPay.data?.data || [];
+         let calcCredit = 0;
+         paymentsList.forEach(row => {
+           if (row.modes === 'Credit' || (row.modes === 'Cash' && row.remaining > 0) || (row.modes === 'Bank Transfer' && row.remaining > 0)) {
+             calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
+           } else if (row.modes === 'Credit-Account') {
+             calcCredit -= parseFloat(row.amount || 0);
+           }
+         });
+         setOldCredit(Math.max(0, calcCredit));
        } catch (error) {
          console.error('Error fetching data:', error);
        }
      } else {
       const resLocal = await db.customerSchema.get({_id:relatedCustomerID})
-      setOldCredit(resLocal.credit !== null || resLocal.credit !== undefined?resLocal.credit: 0)
+      setOldCredit(resLocal.credit !== null && resLocal.credit !== undefined ? resLocal.credit : 0)
      }
     }
   }
   fetchCustomer()
 },[relatedCustomerID])
-const totalR = modes === 'Credit-Account' ?parseFloat(oldCredit + amount):parseFloat(oldCredit - relatedCredit)
+const totalR = modes === 'Credit-Account' ? Math.max(0, parseFloat(oldCredit + amount)) : Math.max(0, parseFloat(oldCredit - (relatedCredit || amount)))
 const updateInvoiceAmount = relatedInvoice ? 
 relatedInvoice.map((row)=>
    {

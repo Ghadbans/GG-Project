@@ -24,6 +24,19 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Payment System, Dynamic Customer Credit Ledger & Statement of Accounts Reconciliation (Ver 3.4.88)**:
+  - **Dynamic Live Customer Credit Ledger Calculation**:
+    - Replaced reliance on static or un-synced `customer.credit` fields by computing customer credit dynamically directly from the transaction ledger: `Available Credit = Total (Credit & Unallocated Deposits) - Total (Credit-Account Used)`.
+    - Customer credit is strictly bounded (`Math.max(0, credit)`) to guarantee non-negative balances across all operations.
+  - **Over-Allocation Prevention & Strict Credit Caps**:
+    - In `PaymentInformationForm.js`: Added live customer credit balance display, capped `handlePayment` to available credit when `modes === 'Credit-Account'`, added MenuItem option for `Credit-Account` (`Use Customer Credit ($X.XX Available)`), and added strict alert validation blocking submission if applied credit exceeds available credit.
+    - In `InvoiceViewAdminAll.js`: Dynamically resolved customer ID, fetched real-time credit ledger balance, and capped "Apply Credit" modal inputs and submissions so users can never apply more credit than the customer actually has.
+    - In `PaymentView.js`: Fixed payment deletion credit restoration to safely compute dynamic customer credit balances.
+  - **Customer View Payment Tab & Statement of Accounts Transparency**:
+    - In `CustomerInformationView.js`: Refactored TabPanel 4 (Payment Tab) table to distinguish **Amount Received (Cash Inflow)** vs **Credit Applied (Credit-Account)**. For `Credit-Account` rows, "Amount Received" clearly displays `- (From Credit)` with a `CREDIT APPLIED` badge, preventing misleading visual duplicate revenue.
+    - Reconciled Statement of Accounts calculations across All, Year, Custom, and All Outstanding modes so `Amount Paid` accurately reflects applied invoice payments and available unallocated credit.
+  - **Release & Distribution**: Bumped version to `3.4.88`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.88.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Document Lock Force Unlock Action CEO-Only Restriction (Ver 3.4.87)**:
   - **Restricted Force Unlock / Take Over Action to CEO Role**:
     - Updated `src/js/hooks/useDocumentLock.js` to compute `isCEO = (resolvedRole || '').toUpperCase() === 'CEO' || (resolvedUserName || '').toUpperCase() === 'GG'` and expose it in the hook's return object.

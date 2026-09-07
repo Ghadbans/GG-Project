@@ -296,13 +296,14 @@ function PaymentInformationForm() {
   }
   const handlePayment = (e) => {
     e.preventDefault();
-    let remaining = amount;
+    const effectiveMax = modes === 'Credit-Account' ? Math.min(parseFloat(amount || 0), parseFloat(oldCredit || 0)) : parseFloat(amount || 0);
+    let remaining = effectiveMax;
     const totalInvoiceExp = invoice.map((row) => {
       const total = Math.min(remaining, row.balanceDue).toFixed(2);
-      remaining -= total
-      return { ...row, total }
-    })
-    setInvoice(totalInvoiceExp)
+      remaining -= total;
+      return { ...row, total };
+    });
+    setInvoice(totalInvoiceExp);
   }
   const [PaymentReceivedFC, setPaymentReceivedFC] = useState(0)
   const [PaymentReceivedUSD, setPaymentReceivedUSD] = useState(0)
@@ -318,7 +319,11 @@ function PaymentInformationForm() {
   }, [invoice, modes])
 
   const handleChangeModes = (e) => {
-    setModes(e.target.value)
+    const selectedMode = e.target.value;
+    setModes(selectedMode);
+    if (selectedMode === 'Credit-Account') {
+      setAmount(oldCredit);
+    }
   }
 
   const totalConvertedFc = Math.round((PaymentReceivedFC / rate) * 100) / 100;
@@ -330,15 +335,28 @@ function PaymentInformationForm() {
     ? Math.round(remainingValue * 100) / 100
     : -Math.round(remainingValue * 100) / 100
 
-  const [oldCredit, setOldCredit] = useState(null)
+  const [oldCredit, setOldCredit] = useState(0)
   useEffect(() => {
     const fetchCustomer = async () => {
       if (customerId) {
         try {
-          const res = await axios.get(`${ENDPOINT_URL}/get-customer/${customerId}`)
-          setOldCredit(res.data.data.credit)
+          const [resCust, resPay] = await Promise.all([
+            axios.get(`${ENDPOINT_URL}/get-customer/${customerId}`),
+            axios.get(`${ENDPOINT_URL}/payment?customerId=${customerId}`)
+          ]);
+          const paymentsList = resPay.data?.data || [];
+          let calcCredit = 0;
+          paymentsList.forEach(row => {
+            if (row.modes === 'Credit' || (row.modes === 'Cash' && row.remaining > 0) || (row.modes === 'Bank Transfer' && row.remaining > 0)) {
+              calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
+            } else if (row.modes === 'Credit-Account') {
+              calcCredit -= parseFloat(row.amount || 0);
+            }
+          });
+          const validCredit = Math.max(0, calcCredit);
+          setOldCredit(validCredit);
         } catch (error) {
-          console.error('Error fetching data:', error);
+          console.error('Error fetching customer credit:', error);
         }
       }
     }
@@ -347,9 +365,16 @@ function PaymentInformationForm() {
 
   const [credit, setCredit] = useState(0)
   useEffect(() => {
-    const totalR = isNaN(remaining + oldCredit) ? 0 : parseFloat(Number(remaining) + Number(oldCredit))
-    setCredit(totalR)
-  }, [oldCredit, remaining])
+    let computedCredit = oldCredit;
+    if (modes === 'Credit') {
+      computedCredit = parseFloat(oldCredit || 0) + parseFloat(amount || 0);
+    } else if (modes === 'Credit-Account') {
+      computedCredit = Math.max(0, parseFloat(oldCredit || 0) - PaymentInfo);
+    } else if (remaining > 0) {
+      computedCredit = parseFloat(oldCredit || 0) + parseFloat(remaining || 0);
+    }
+    setCredit(Math.max(0, computedCredit));
+  }, [oldCredit, remaining, modes, amount, PaymentInfo])
 
   const TotalAmount = invoice.length > 0 ? invoice.filter((row) => parseFloat(row.total) !== 0) : null
 
@@ -468,6 +493,10 @@ function PaymentInformationForm() {
   const [saving, setSaving] = useState('')
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (modes === 'Credit-Account' && PaymentInfo > oldCredit) {
+      alert(`Cannot apply $${PaymentInfo.toFixed(2)}. Customer only has $${oldCredit.toFixed(2)} in available credit.`);
+      return;
+    }
     setSaving('true')
     // Calculate tax paid based on the proportion of the invoice being paid
     let totalTaxPaid = 0;
@@ -700,7 +729,8 @@ function PaymentInformationForm() {
                       >
                         <MenuItem value="Cash">Cash</MenuItem>
                         <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-                        {reason !== "Project" && <MenuItem value="Credit">Credit</MenuItem>}
+                        {reason !== "Project" && <MenuItem value="Credit">Credit (Deposit to Customer Credit)</MenuItem>}
+                        {reason !== "Project" && oldCredit > 0 && <MenuItem value="Credit-Account">Use Customer Credit (${oldCredit?.toFixed(2)} Available)</MenuItem>}
                       </Select>
                     </FormControl>
                   </Grid>
