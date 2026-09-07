@@ -1587,7 +1587,29 @@ function CustomerInformationView() {
                                                             <tr key={row._id}>
                                                               <td style={{ textAlign: 'left' }}>PAY-{String(row.paymentNumber).padStart(6, '0')}</td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</td>
-                                                              <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{row.modes.toUpperCase()}</td>
+                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>
+                                                                {row.modes === 'Credit-Account' ? (
+                                                                  <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                                    CREDIT APPLIED
+                                                                  </span>
+                                                                ) : row.modes === 'Credit' ? (
+                                                                  <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                                    CREDIT DEPOSIT
+                                                                  </span>
+                                                                ) : row.modes === 'Cash' ? (
+                                                                  <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                                    CASH
+                                                                  </span>
+                                                                ) : row.modes === 'Bank Transfer' ? (
+                                                                  <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                                    BANK TRANSFER
+                                                                  </span>
+                                                                ) : (
+                                                                  <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                                    {row.modes?.toUpperCase()}
+                                                                  </span>
+                                                                )}
+                                                              </td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>
                                                                 {row.TotalAmount?.map((Item, i) => {
@@ -1661,17 +1683,27 @@ function CustomerInformationView() {
                                                   <tr key={row._id}>
                                                     <td style={{ textAlign: 'left', width: '50px' }}>PAY-{String(row.paymentNumber).padStart(6, '0')}</td>
                                                     <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</td>
-                                                    <td style={{ textAlign: 'left', width: '70px', borderLeft: '1px solid #DDD' }}>
+                                                    <td style={{ textAlign: 'left', width: '90px', borderLeft: '1px solid #DDD' }}>
                                                       {row.modes === 'Credit-Account' ? (
-                                                        <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold' }}>
+                                                        <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
                                                           CREDIT APPLIED
                                                         </span>
                                                       ) : row.modes === 'Credit' ? (
-                                                        <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold' }}>
+                                                        <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
                                                           CREDIT DEPOSIT
                                                         </span>
+                                                      ) : row.modes === 'Cash' ? (
+                                                        <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                          CASH
+                                                        </span>
+                                                      ) : row.modes === 'Bank Transfer' ? (
+                                                        <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                          BANK TRANSFER
+                                                        </span>
                                                       ) : (
-                                                        row.modes?.toUpperCase()
+                                                        <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                                          {row.modes?.toUpperCase()}
+                                                        </span>
                                                       )}
                                                     </td>
                                                     <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>

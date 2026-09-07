@@ -24,6 +24,17 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Universal Styled Badges for All Payment Modes (Ver 3.4.89)**:
+  - **Unified & Distinct Payment Mode Pill Badges**:
+    - Enhanced payment tables and receipt vouchers across `CustomerInformationView.js`, `PaymentView.js`, and `PaymentInformationView.js` with clear, color-coded status badges for all payment modes:
+      - `CASH`: Warm amber/gold badge (`#fef3c7` bg, `#92400e` text, bold, no-wrap, rounded pill).
+      - `BANK TRANSFER`: Crisp sky blue badge (`#e0f2fe` bg, `#0369a1` text, bold, no-wrap, rounded pill).
+      - `CREDIT DEPOSIT`: Emerald green badge (`#dcfce7` bg, `#166534` text, bold, no-wrap, rounded pill).
+      - `CREDIT APPLIED`: Indigo badge (`#e0e7ff` bg, `#3730a3` text, bold, no-wrap, rounded pill).
+      - Fallback/Other: Clean slate badge (`#f1f5f9` bg, `#334155` text, bold, no-wrap, rounded pill).
+    - Added `display: inline-block; whiteSpace: nowrap;` and expanded column widths (`width: 140` / `width: 90px`) to prevent any wrapping across screen and printable views.
+  - **Release & Distribution**: Bumped version to `3.4.89`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.89.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Payment System, Dynamic Customer Credit Ledger & Statement of Accounts Reconciliation (Ver 3.4.88)**:
   - **Dynamic Live Customer Credit Ledger Calculation**:
     - Replaced reliance on static or un-synced `customer.credit` fields by computing customer credit dynamically directly from the transaction ledger: `Available Credit = Total (Credit & Unallocated Deposits) - Total (Credit-Account Used)`.

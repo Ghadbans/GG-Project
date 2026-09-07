@@ -511,7 +511,19 @@ function PaymentInformationView() {
                                                       <div style={{ textAlign: 'left' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</div>
                                                       
                                                       <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Mode</div>
-                                                      <div style={{ textAlign: 'left' }}>{row.modes.toUpperCase()}</div>
+                                                      <div style={{ textAlign: 'left' }}>
+                                                        {row.modes === 'Credit-Account' ? (
+                                                          <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT APPLIED</span>
+                                                        ) : row.modes === 'Credit' ? (
+                                                          <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT DEPOSIT</span>
+                                                        ) : row.modes === 'Cash' ? (
+                                                          <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CASH</span>
+                                                        ) : row.modes === 'Bank Transfer' ? (
+                                                          <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>BANK TRANSFER</span>
+                                                        ) : (
+                                                          <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>{row.modes?.toUpperCase()}</span>
+                                                        )}
+                                                      </div>
                                                       
                                                       <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Reason</div>
                                                       <div style={{ textAlign: 'left' }}>{row.reason || (row.TotalAmount?.[0]?.prefix === 'P-' ? 'Project' : 'Invoice')}</div>
@@ -688,7 +700,19 @@ function PaymentInformationView() {
                                             <div style={{ textAlign: 'left' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</div>
                                             
                                             <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Mode</div>
-                                            <div style={{ textAlign: 'left' }}>{row.modes.toUpperCase()}</div>
+                                            <div style={{ textAlign: 'left' }}>
+                                              {row.modes === 'Credit-Account' ? (
+                                                <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT APPLIED</span>
+                                              ) : row.modes === 'Credit' ? (
+                                                <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT DEPOSIT</span>
+                                              ) : row.modes === 'Cash' ? (
+                                                <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CASH</span>
+                                              ) : row.modes === 'Bank Transfer' ? (
+                                                <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>BANK TRANSFER</span>
+                                              ) : (
+                                                <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '2px 6px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>{row.modes?.toUpperCase()}</span>
+                                              )}
+                                            </div>
                                             
                                             <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Reason</div>
                                             <div style={{ textAlign: 'left' }}>{row.reason || (row.TotalAmount?.[0]?.prefix === 'P-' ? 'Project' : 'Invoice')}</div>

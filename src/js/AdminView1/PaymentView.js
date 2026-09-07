@@ -731,7 +731,22 @@ const toggleDrawer = () => {
                                     {field: 'customer', headerName: 'Customer Name', width:sideBar?360:460, valueGetter:(params)=> params.row.customerName.customerName !== undefined?params.row.customerName.customerName.toUpperCase():null},
                                     {field: 'description', headerName: 'Description', width:sideBar?200:250},
                                     {field: 'dateField', headerName: 'Date', width:140},
-                                      {field: 'modes', headerName: 'Mode', width:120, renderCell: (params)=> params.row.modes ? params.row.modes.toUpperCase() : ''},
+                                       {field: 'modes', headerName: 'Mode', width:140, renderCell: (params)=> {
+                                         const mode = params.row.modes || '';
+                                         if (mode === 'Credit-Account') {
+                                           return <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT APPLIED</span>;
+                                         }
+                                         if (mode === 'Credit') {
+                                           return <span style={{ backgroundColor: '#dcfce7', color: '#166534', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT DEPOSIT</span>;
+                                         }
+                                         if (mode === 'Cash') {
+                                           return <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CASH</span>;
+                                         }
+                                         if (mode === 'Bank Transfer') {
+                                           return <span style={{ backgroundColor: '#e0f2fe', color: '#0369a1', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>BANK TRANSFER</span>;
+                                         }
+                                         return <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>{mode.toUpperCase()}</span>;
+                                       }},
                                     {field: 'amount', headerName: 'A-Paid', width:130,renderCell: (params)=> `$${params.row.amount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}` },
                                     {field: 'view', headerName: 'View', width:50, renderCell:(params)=> (
                                       <ViewTooltip title="View">
