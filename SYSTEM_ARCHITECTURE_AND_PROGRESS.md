@@ -24,6 +24,12 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Employee Information Statement Tab DemoContainer Import Fix (Ver 3.4.91)**:
+  - **Added Missing DatePicker DemoContainer Import**:
+    - Fixed runtime ReferenceError `DemoContainer is not defined` in `src/js/AdminView1/PageView/EmployeeView/EmployeeViewAdminAll.js` at line 1392 (TabPanel 4 / Statement of Accounts tab).
+    - Imported `DemoContainer` from `@mui/x-date-pickers/internals/demo`.
+  - **Release & Distribution**: Bumped version to `3.4.91`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.91.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Invoice Information Item Search String Safety Fix (Ver 3.4.90)**:
   - **Bulletproof Search Matching in Invoice & Quotation Information Views**:
     - Fixed runtime TypeError crash `(e.itemName.itemName || e.itemName).toLowerCase is not a function` in `src/js/AdminView1/PageView/InvoiceView/InvoiceInformation.js`.
