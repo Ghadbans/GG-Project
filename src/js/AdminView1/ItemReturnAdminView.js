@@ -873,7 +873,7 @@ function ItemReturnAdminView() {
                                                           <td>{i + 1}</td>
                                                           <td>{row.itemName.itemName} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</td>
                                                           <td>{row.itemDescription}</td>
-                                                          <td>{row.newItemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                          <td>{row.newItemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                         </>
                                                     }
 
@@ -954,7 +954,7 @@ function ItemReturnAdminView() {
                                               <TableCell>{i + 1}</TableCell>
                                               <TableCell>{row.itemName.itemName} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</TableCell>
                                               <TableCell>{row.itemDescription}</TableCell>
-                                              <TableCell>{row.newItemOut} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</TableCell>
+                                              <TableCell>{row.newItemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
                                             </>
                                         }
 

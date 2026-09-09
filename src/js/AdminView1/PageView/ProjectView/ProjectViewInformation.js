@@ -1158,14 +1158,14 @@ const isItemMatch = (item1, item2) => {
           <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
             <span hidden={row.itemName ? row.itemName.itemName === 'empty' : ''}>{row.itemName?.itemName || (typeof row.itemName === 'string' && row.itemName !== 'empty' ? row.itemName : '')}</span>
             <br />
-            <span>{row.itemDescription} {relatedUnit !== undefined ? `( ${relatedUnit.itemBrand.toUpperCase()} )` : ''} </span>
+            <span>{row.itemDescription} {relatedUnit?.itemBrand ? `( ${String(relatedUnit.itemBrand).toUpperCase()} )` : ''} </span>
           </td>
-          <td style={{ border: '1px solid #DDD' }} align="left">{row.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+          <td style={{ border: '1px solid #DDD' }} align="left">{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
           <td style={{ border: '1px solid #DDD' }} align="left">{row.itemCost}</td>
           <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ Number(row.totalCost || (parseFloat(row.itemQty || 0) * parseFloat(row.itemCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
           <td style={{ border: '1px solid #DDD' }} align="left">{buyQty}</td>
           <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{ Number(totalBuy || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
-          <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+          <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
           <td style={{ border: '1px solid #DDD' }} align="left"><span>{ Number(totalCostOut || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') }</span></td>
         </tr>
         {matchingMovements.length > 0 && (
@@ -1695,13 +1695,13 @@ const isItemMatch = (item1, item2) => {
                                                 </tr>
                                               )
                                             }
-                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id || Item1._id === Item.itemName)
                                             return (
                                               <tr key={Item.idRow}>
                                                 <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
-                                                <td style={{ padding: '10px', border: '1px solid #DDD' }}><span>{Item.itemName.itemName}</span></td>
+                                                <td style={{ padding: '10px', border: '1px solid #DDD' }}><span>{Item.itemName?.itemName || (typeof Item.itemName === 'string' ? Item.itemName : '')}</span></td>
                                                 <td style={{ padding: '10px', textAlign: 'left', border: '1px solid #DDD' }}><span>{Item.itemDescription}</span></td>
-                                                <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                 <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                 <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>
                                                 <td style={{ padding: '10px', textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemAmount}</span></td>
@@ -1915,7 +1915,7 @@ const isItemMatch = (item1, item2) => {
                                       <article>
                                         <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
                                           <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                            <span style={{ fontWeight: 'bold' }}>{row.projectName.projectName.toUpperCase()}</span>
+                                            <span style={{ fontWeight: 'bold' }}>{String(row.projectName?.projectName || row.projectName?.name || (typeof row.projectName === "string" ? row.projectName : "") || "").toUpperCase()}</span>
                                           </address>
                                           <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
                                             <tbody>
@@ -2256,7 +2256,7 @@ const isItemMatch = (item1, item2) => {
                     <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
                       <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
                         <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                          <span style={{ fontWeight: 'bold' }}>{printData.projectName?.projectName?.toUpperCase()}</span>
+                          <span style={{ fontWeight: 'bold' }}>{String(printData.projectName?.projectName || printData.projectName?.name || (typeof printData.projectName === "string" ? printData.projectName : "") || "").toUpperCase()}</span>
                         </address>
                         <table className="firstTable" style={{ position: 'relative', fontSize: '80%', left: '83px' }}>
                           <tbody>

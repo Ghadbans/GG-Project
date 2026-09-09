@@ -762,7 +762,7 @@ function PurchaseOrderViewAdmin() {
                                                     <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
                                                     <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{row.itemName.itemName !== 'empty' ? row.itemName.itemName : ''}</td>
                                                     <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{row.itemDescription}</td>
-                                                    <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{row.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                    <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                     <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}></td>
                                                     <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}></td>
                                                     <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}></td>
@@ -874,8 +874,8 @@ function PurchaseOrderViewAdmin() {
                                               <TableCell>{i + 1}</TableCell>
                                               <TableCell>{row.itemName.itemName !== 'empty' ? row.itemName.itemName : ''}</TableCell>
                                               <TableCell>{row.itemDescription}</TableCell>
-                                              <TableCell>{row.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</TableCell>
-                                              <TableCell>{row.qtyBuy} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</TableCell>
+                                              <TableCell>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
+                                              <TableCell>{row.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
                                               <TableCell>{parseFloat(row.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
                                               <TableCell>FC{row.totalAmountFC !== undefined ? parseFloat(row.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
                                               <TableCell>{row.Taux !== undefined ? parseFloat(row.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>

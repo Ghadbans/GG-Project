@@ -87,7 +87,7 @@ Route.route("/item", cors(corsOptionsDelegate)).get(async (req, res, next) => {
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const filter = branchId && branchId !== 'ALL' ? { branchId } : {};
     const projection = req.query.summary === 'true' 
-      ? { itemName: 1, itemBrand: 1, itemUnit: 1, cost: 1, itemCost: 1, price: 1, category: 1, storeName: 1 } 
+      ? { itemName: 1, itemBrand: 1, unit: 1, itemUnit: 1, cost: 1, itemCost: 1, price: 1, category: 1, storeName: 1, itemSellingPrice: 1, itemCostPrice: 1, itemQuantity: 1, stock: 1 } 
       : { data: 0 };
     const result = await itemSchema.find(filter, projection).sort({ _id: -1 }).lean().exec();
     res.json({

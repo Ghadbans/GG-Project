@@ -1421,7 +1421,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                               <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                               <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
                                                               <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
-                                                              <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                              <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                               
                                                             </>
                                                           )
@@ -1665,11 +1665,11 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                           <>
                                                             <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                             <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
-                                                            <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                            <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                             <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                            <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                            <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
                                                             <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemOut !== undefined ? parseFloat(Item.itemOut * Item.itemCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
                                                           </>

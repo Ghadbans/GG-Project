@@ -640,7 +640,7 @@ function SupplierViewInformation() {
                                 <>
                                   <td style={{ border: '1px solid #DDD' }}>{row3.itemName?.itemName}</td>
                                   <td style={{ border: '1px solid #DDD' }}>{row3.itemDescription}</td>
-                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                   <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                   <td style={{ border: '1px solid #DDD' }}>FC{row3.totalAmountFC !== undefined ? parseFloat(row3.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                   <td style={{ border: '1px solid #DDD' }}>{row3.Taux !== undefined ? parseFloat(row3.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
@@ -1189,7 +1189,7 @@ function SupplierViewInformation() {
                                                         </Box>
                                                       </td>
                                                       <td style={{ border: '1px solid #DDD' }}>{dayjs(row3.date).format('DD/MM/YYYY')}</td>
-                                                      <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                      <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>FC{row3.totalAmountFC !== undefined ? parseFloat(row3.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>{row3.Taux !== undefined ? parseFloat(row3.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>

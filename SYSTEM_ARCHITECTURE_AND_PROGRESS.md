@@ -24,6 +24,13 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Safe Unit & String Access in Project Information & Across All Views (Ver 3.4.93)**:
+  - **TypeError: Cannot read properties of undefined (reading 'toUpperCase') Fix**:
+    - Fixed runtime TypeError in `src/js/AdminView1/PageView/ProjectView/ProjectViewInformation.js` when rendering the Invoices and Purchase tabs.
+    - Updated `server/routes/itemRoutes.js` `/item` route `summary=true` projection to explicitly include `unit: 1`, `itemSellingPrice: 1`, `itemCostPrice: 1`, `itemQuantity: 1`, and `stock: 1`.
+    - Applied safe optional chaining and string checks (`relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''`) across all 10 views where item units and brands are rendered (`ProjectViewInformation`, `InvoiceViewAdminAll`, `PurchasesViewAdminAll`, `PurchaseOrderInfoView`, `PurchaseOrderViewAdmin`, `ItemOutViewAdmin`, `ItemReturnAdminView`, `EstimateViewAdminAll`, `MaintenanceViewInformation`, `SupplierViewInformation`).
+  - **Release & Distribution**: Bumped version to `3.4.93`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.93.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Project Information Ultra-Fast Query Scoping & Performance Optimization (Ver 3.4.92)**:
   - **Server-Side Project Scoping & Projection**:
     - Identified massive overhead in `ProjectViewInformation.js` where full collections were fetched across the database without scoping (e.g., 80,960 notifications taking 39s, 6,754 itemOut taking 12s, 14,254 expenses taking 5.7s, 10,827 planning records taking 4.1s, items taking 2s).

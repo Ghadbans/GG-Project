@@ -746,7 +746,7 @@ function PurchaseOrderInfoView() {
                                                                 <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
                                                                 <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{Item.itemName.itemName !== 'empty' ? Item.itemName.itemName : ''}</td>
                                                                 <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{Item.itemDescription}</td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy}</td>
                                                               </>
                                                           }
@@ -874,8 +874,8 @@ function PurchaseOrderInfoView() {
                                                                 <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : ''}</span>
                                                                   <br />
                                                                   <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span></td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
-                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
+                                                                <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                 <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}>{Item.itemRate !== undefined ? parseFloat(Item.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                                 <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                                 <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>{Item.Taux !== undefined ? parseFloat(Item.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
@@ -1005,8 +1005,8 @@ function PurchaseOrderInfoView() {
                                                       <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>                <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : ''}</span>
                                                         <br />
                                                         <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</span></td>
-                                                      <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
-                                                      <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                      <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
+                                                      <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                       <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}>{Item.itemRate !== undefined ? parseFloat(Item.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                       <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>FC{Item.totalAmountFC !== undefined ? parseFloat(Item.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                       <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}>{Item.Taux !== undefined ? parseFloat(Item.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>

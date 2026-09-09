@@ -220,12 +220,12 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2, itemPurchase, item
           <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
         </td>
         <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
-        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+        <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
         <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemCost}</td>
         <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || (parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
         <td style={{ border: '1px solid #DDD' }} align="left">{buyQty}</td>
         <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(totalBuyCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-        <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+        <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
       </tr>
       {matchingMovements.length > 0 && (
         <tr>
@@ -1165,12 +1165,12 @@ function PurchasesViewAdminAll() {
                                                                     <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
                                                                   </td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
-                                                                  <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                                  <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemCost}</td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(Item.totalCost || (parseFloat(Item.itemQty || 0) * parseFloat(Item.itemCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{buyQty}</td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{Number(totalBuyCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                  <td style={{ border: '1px solid #DDD' }} align="left"><span>{netOutQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                 </>
                                                               )
                                                           }

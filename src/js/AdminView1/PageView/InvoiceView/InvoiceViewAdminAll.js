@@ -1673,7 +1673,7 @@ function InvoiceViewAdminAll() {
                                                                             <td style={{ textAlign: 'center', width: '30px' }}><span>{i + 1}</span></td>
                                                                             <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                             <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}><span>{Item.itemDescription.toUpperCase()}</span></td>
-                                                                            <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                            <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                             <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                                             {showDiscount && <td style={{ textAlign: 'right', borderLeft: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>}
                                                                             <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
@@ -1684,7 +1684,7 @@ function InvoiceViewAdminAll() {
                                                                 ) : <>
                                                                   <td style={{ textAlign: 'center', borderLeft: '1px solid #DDD' }}><span>{i + 1}</span></td>
                                                                   <td style={{ textAlign: 'left', border: '1px solid #DDD' }} colSpan={2}><span>{Item.itemDescription}</span></td>
-                                                                  <td style={{ textAlign: 'right', width: '30px', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                  <td style={{ textAlign: 'right', width: '30px', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                   <td style={{ textAlign: 'right', width: '80px', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                                   {showDiscount && <td style={{ textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>}
                                                                   <td style={{ textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
@@ -1911,7 +1911,7 @@ function InvoiceViewAdminAll() {
                                                                   <td style={{ textAlign: 'center', width: '30px' }}><span>{i + 1}</span></td>
                                                                   <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                   <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}><span>{Item.itemDescription.toUpperCase()}</span></td>
-                                                                  <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                  <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                   <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                                   {showDiscount && <td style={{ textAlign: 'right', borderLeft: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>}
                                                                   <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
@@ -1922,7 +1922,7 @@ function InvoiceViewAdminAll() {
                                                       ) : <>
                                                         <td style={{ textAlign: 'center', borderLeft: '1px solid #DDD' }}><span>{i + 1}</span></td>
                                                         <td style={{ textAlign: 'left', border: '1px solid #DDD' }} colSpan={2}><span>{Item.itemDescription}</span></td>
-                                                        <td style={{ textAlign: 'right', width: '30px', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                        <td style={{ textAlign: 'right', width: '30px', border: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                         <td style={{ textAlign: 'right', width: '80px', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                         {showDiscount && <td style={{ textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>}
                                                         <td style={{ textAlign: 'right', border: '1px solid #DDD' }}><span data-prefix>$</span><span>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
@@ -2228,11 +2228,11 @@ function InvoiceViewAdminAll() {
                                                                 <>
                                                                   <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                   <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
-                                                                  <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</td>
+                                                                  <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                   <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
                                                                   <td style={{ border: '1px solid black' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
                                                                   <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                                  <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                  <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                   <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
                                                                   <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemOut !== undefined ? parseFloat(Item.itemOut * Item.itemCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
                                                                 </>
@@ -2291,7 +2291,7 @@ function InvoiceViewAdminAll() {
                                                               <>
                                                                 <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                 <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
-                                                                <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemOut !== undefined ? parseFloat(Item.itemOut * Item.itemCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
@@ -2357,7 +2357,7 @@ function InvoiceViewAdminAll() {
                                                               <>
                                                                 <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                 <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
-                                                                <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit !== undefined ? relatedUnit.unit.toUpperCase() : ''}</span></td>
+                                                                <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemOut !== undefined ? parseFloat(Item.itemOut * Item.itemCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
@@ -2444,7 +2444,7 @@ function InvoiceViewAdminAll() {
                             <span>{Item.itemDescription?Item.itemDescription.toUpperCase():''}</span>
                           </td>
                         <td style={{border:'1px solid #DDD'}} align="left">{relatedUnit !==undefined? relatedUnit.itemBrand.toUpperCase():''}</td>
-                        <td style={{border:'1px solid #DDD'}} align="left"><span>{Item.itemOut} {relatedUnit !==undefined? relatedUnit.unit.toUpperCase():''}</span></td>
+                        <td style={{border:'1px solid #DDD'}} align="left"><span>{Item.itemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                         <td style={{border:'1px solid #DDD'}} ><span data-prefix>$ </span><span >{Item.itemCost}</span></td>
                         <td style={{border:'1px solid #DDD'}} ><span data-prefix>$ </span><span >{Item.itemOut !== undefined? parseFloat(Item.itemOut * Item.itemCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',') : 0}</span></td>
                  </>
