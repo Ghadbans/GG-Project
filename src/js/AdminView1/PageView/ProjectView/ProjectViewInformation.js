@@ -226,9 +226,9 @@ function ProjectViewInformation() {
   const fetchDetailedData = async () => {
     try {
       const [resAllItems] = await Promise.all([
-        axios.get(`${ENDPOINT_URL}/item`)
+        axios.get(`${ENDPOINT_URL}/item?summary=true`)
       ]);
-      SetItems(resAllItems.data.data);
+      SetItems(resAllItems.data?.data || []);
 
       await Promise.all([
         fetchInvoicesAndPurchases(),
@@ -245,18 +245,14 @@ function ProjectViewInformation() {
   // Tab-Specific Loaders
   const fetchInvoicesAndPurchases = async () => {
     try {
-      const [resPurchases, resInvoices] = await Promise.all([
-        axios.get(`${ENDPOINT_URL}/purchase?summary=true`),
-        axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
-      ]);
-
-      const relatedPurchases = resPurchases.data?.data?.filter((row) => row.projectName?._id === id);
+      const resPurchases = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&projectId=${id}`);
+      const relatedPurchases = resPurchases.data?.data || [];
       const projectPurchaseIds = relatedPurchases.map(p => p._id);
 
       // Filter Invoices: linked either via Purchase ID or directly via Project ID
-      const relatedInvoices = resInvoices.data?.data?.filter((inv) =>
-        projectPurchaseIds.includes(inv.ReferenceName2) || inv.ReferenceName2 === id
-      );
+      const pIdsQuery = projectPurchaseIds.length > 0 ? `&purchaseIds=${projectPurchaseIds.join(',')}` : '';
+      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&projectId=${id}${pIdsQuery}`);
+      const relatedInvoices = resInvoices.data?.data || [];
 
       const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({
         ...Item,
@@ -277,10 +273,10 @@ function ProjectViewInformation() {
     try {
       const [resExpCat, resExpenses] = await Promise.all([
         axios.get(`${ENDPOINT_URL}/expensesCategory`),
-        axios.get(`${ENDPOINT_URL}/expense?summary=true`)
+        axios.get(`${ENDPOINT_URL}/expense?summary=true&projectId=${id}`)
       ]);
-      setCategories(resExpCat.data.data);
-      setExpensesInfo(resExpenses.data?.data?.filter((row) => row.accountNameInfo?._id === id).map((row) => ({
+      setCategories(resExpCat.data?.data || []);
+      setExpensesInfo((resExpenses.data?.data || []).map((row) => ({
         _id: row._id,
         category: row.expenseCategory?.expensesCategory,
         total: row.total,
@@ -293,8 +289,8 @@ function ProjectViewInformation() {
 
   const fetchPayments = async () => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/payment`);
-      setAdvances(res.data?.data?.filter((pay) => pay.TotalAmount?.some((item) => item.id === id)));
+      const res = await axios.get(`${ENDPOINT_URL}/payment?projectId=${id}`);
+      setAdvances(res.data?.data || []);
     } catch (error) { console.error('Error fetching Payments:', error); }
   };
 
@@ -325,9 +321,9 @@ const isItemMatch = (item1, item2) => {
   const fetchItemsMovement = async () => {
     try {
       const [resOut, resReturn, resPrec] = await Promise.all([
-        axios.get(`${ENDPOINT_URL}/itemOut`),
-        axios.get(`${ENDPOINT_URL}/itemReturn`),
-        axios.get(`${ENDPOINT_URL}/itemPurchase`)
+        axios.get(`${ENDPOINT_URL}/itemOut?projectId=${id}`),
+        axios.get(`${ENDPOINT_URL}/itemReturn?projectId=${id}`),
+        axios.get(`${ENDPOINT_URL}/itemPurchase?projectId=${id}`)
       ]);
 
       const isMatchingProjectOrPurchase = (row) => {
@@ -375,11 +371,11 @@ const isItemMatch = (item1, item2) => {
   const fetchTimelineAndStaff = async () => {
     try {
       const [resNotif, resPlaning] = await Promise.all([
-        axios.get(`${ENDPOINT_URL}/notification`),
-        axios.get(`${ENDPOINT_URL}/planing`)
+        axios.get(`${ENDPOINT_URL}/notification?idInfo=${id}`),
+        axios.get(`${ENDPOINT_URL}/planing?projectId=${id}`)
       ]);
-      setNotification(resNotif.data?.data?.filter((row) => row.idInfo === id));
-      setPlaningInfo(resPlaning.data?.data?.filter((row) => row.projectName?._id === id).map((row) => ({
+      setNotification(resNotif.data?.data || []);
+      setPlaningInfo((resPlaning.data?.data || []).map((row) => ({
         ...row,
         totalWorkDay: parseFloat(Number(row.dayPayUSd || 0) * Number(row.workNumber || 0)).toFixed(2)
       })));
@@ -731,8 +727,8 @@ const isItemMatch = (item1, item2) => {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/comment`)
-        const resp = res.data?.data?.filter((row) => row.CommentInfo.idInfo === id)
+        const res = await axios.get(`${ENDPOINT_URL}/comment?idInfo=${id}`)
+        const resp = res.data?.data || []
         setComments(resp.reverse())
       } catch (error) {
         console.error('Error fetching data:', error);

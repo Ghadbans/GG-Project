@@ -82,21 +82,22 @@ var corsOptionsDelegate = function (req, callback) {
 // --- DELETE BRANCH ---
 
 Route.route("/item", cors(corsOptionsDelegate)).get(async (req, res, next) => {
-  const rawBranchId = req.query.branchId;
-  const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-  const filter = branchId && branchId !== 'ALL' ? { branchId } : {};
-  await itemSchema
-    .find(filter, {data:0})
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully fetched!",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const rawBranchId = req.query.branchId;
+    const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
+    const filter = branchId && branchId !== 'ALL' ? { branchId } : {};
+    const projection = req.query.summary === 'true' 
+      ? { itemName: 1, itemBrand: 1, itemUnit: 1, cost: 1, itemCost: 1, price: 1, category: 1, storeName: 1 } 
+      : { data: 0 };
+    const result = await itemSchema.find(filter, projection).sort({ _id: -1 }).lean().exec();
+    res.json({
+      data: result,
+      message: "Data successfully fetched!",
+      status: 200,
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.get('/item-usage', async (req, res) => {
@@ -544,7 +545,20 @@ Route.route("/itemOut", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await itemOutSchema.find(filter).sort({ _id: -1 });
+      if (req.query.projectId) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.projectId); } catch (e) {}
+        const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+        filter['$or'] = [
+          { 'reference._id': { $in: pIds } },
+          { 'reference': { $in: pIds } },
+          { 'POID': { $in: pIds } },
+          { 'projectName._id': { $in: pIds } },
+          { 'projectName': { $in: pIds } }
+        ];
+      }
+
+      const result = await itemOutSchema.find(filter).sort({ _id: -1 }).lean().exec();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);
@@ -652,7 +666,20 @@ Route.route("/itemReturn", cors(corsOptionsDelegate)).get(
         }
       }
 
-      const result = await itemReturnSchema.find(filter).sort({ _id: -1 });
+      if (req.query.projectId) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.projectId); } catch (e) {}
+        const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+        filter['$or'] = [
+          { 'reference._id': { $in: pIds } },
+          { 'reference': { $in: pIds } },
+          { 'POID': { $in: pIds } },
+          { 'projectName._id': { $in: pIds } },
+          { 'projectName': { $in: pIds } }
+        ];
+      }
+
+      const result = await itemReturnSchema.find(filter).sort({ _id: -1 }).lean().exec();
       res.json({ data: result, message: "Data successfully fetched!", status: 200 });
     } catch (err) {
       return next(err);

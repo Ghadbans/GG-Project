@@ -210,9 +210,9 @@ function ProjectUpdateView() {
   useEffect(() => {
     const handleFetch = async () => {
       try {
-        const resCustomer = await axios.get(`${ENDPOINT_URL}/customer`)
-        setCustomer(resCustomer.data.data.reverse());
-        const res = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
+        const resCustomer = await axios.get(`${ENDPOINT_URL}/customer?summary=true`)
+        setCustomer((resCustomer.data?.data || []).reverse());
+        const res = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&projectId=${id}`)
         res.data?.data?.filter((row) => row.projectName !== undefined && row.projectName._id === id)
           .map((row) => setPurchase(row._id))
       } catch (error) {

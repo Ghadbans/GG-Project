@@ -207,18 +207,28 @@ Route.route("/delete-message/:id").delete(async (req, res) => {
 
 Route.route("/notification", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await notificationSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          notification: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
+    try {
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      if (req.query.idInfo) {
+        filter.idInfo = req.query.idInfo;
+      } else if (req.query.projectId) {
+        filter.idInfo = req.query.projectId;
+      }
+
+      let query = notificationSchema.find(filter).sort({ _id: -1 });
+      if (!req.query.idInfo && !req.query.projectId && !req.query.all) {
+        query = query.limit(100);
+      }
+
+      const result = await query.lean().exec();
+      res.json({
+        data: result,
+        notification: "Data successfully fetched!",
+        status: 200,
       });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 
@@ -435,18 +445,26 @@ Route.route("/remove-dailyreport").delete(async (req, res) => {
 
 Route.route("/planing", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await planingSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
+    try {
+      const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+      if (req.query.projectId) {
+        let objectId = null;
+        try { objectId = new mongoose.Types.ObjectId(req.query.projectId); } catch (e) {}
+        const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+        filter['$or'] = [
+          { 'projectName._id': { $in: pIds } },
+          { 'projectName': { $in: pIds } }
+        ];
+      }
+      const result = await planingSchema.find(filter).sort({ _id: -1 }).lean().exec();
+      res.json({
+        data: result,
+        message: "Data successfully fetched!",
+        status: 200,
       });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 
@@ -640,29 +658,30 @@ Route.route("/remove-planing").delete(async (req, res) => {
 
 Route.route("/payment", cors(corsOptionsDelegate)).get(
     async (req, res, next) => {
-      const filter = {};
-      if (req.query.branchId && req.query.branchId !== 'ALL') filter.branchId = req.query.branchId;
-      if (req.query.customerId) {
-        try {
-          const mongoose = require('mongoose');
-          const objectId = new mongoose.Types.ObjectId(req.query.customerId);
-          filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
-        } catch(e) {
-          filter['customerName._id'] = req.query.customerId;
+      try {
+        const filter = {};
+        if (req.query.branchId && req.query.branchId !== 'ALL') filter.branchId = req.query.branchId;
+        if (req.query.customerId) {
+          try {
+            const mongoose = require('mongoose');
+            const objectId = new mongoose.Types.ObjectId(req.query.customerId);
+            filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
+          } catch(e) {
+            filter['customerName._id'] = req.query.customerId;
+          }
         }
-      }
-      await paymentSchema
-        .find(filter)
-        .then((result) => {
+        if (req.query.projectId) {
+          filter['TotalAmount.id'] = req.query.projectId;
+        }
+        const result = await paymentSchema.find(filter).sort({ _id: -1 }).lean().exec();
         res.json({
           data: result,
           message: "Data successfully fetched!",
           status: 200,
         });
-      })
-      .catch((err) => {
+      } catch (err) {
         return next(err);
-      });
+      }
   }
 );
 Route.route("/get-last-saved-payment").get(async(req,res, next)=>{
@@ -1803,8 +1822,13 @@ Route.route("/remove-grantAccess").delete(async (req, res) => {
 
 Route.route("/comment", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
+    const query = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
+    if (req.query.idInfo) {
+      query["CommentInfo.idInfo"] = req.query.idInfo;
+    }
     await commentSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
+      .find(query)
+      .lean()
       .then((result) => {
         res.json({
           data: result,

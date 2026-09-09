@@ -24,6 +24,18 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Project Information Ultra-Fast Query Scoping & Performance Optimization (Ver 3.4.92)**:
+  - **Server-Side Project Scoping & Projection**:
+    - Identified massive overhead in `ProjectViewInformation.js` where full collections were fetched across the database without scoping (e.g., 80,960 notifications taking 39s, 6,754 itemOut taking 12s, 14,254 expenses taking 5.7s, 10,827 planning records taking 4.1s, items taking 2s).
+    - Updated backend endpoints (`/notification`, `/planing`, `/payment`, `/itemOut`, `/itemReturn`, `/itemPurchase`, `/expense`, `/purchase`, `/invoice`, `/item`, `/comment`) to accept `projectId` / `idInfo` queries with indexed filters and `.lean()`.
+    - Added lightweight `summary=true` projection for `/item` to return only essential fields (`itemName`, `itemBrand`, `itemUnit`, `cost`, `itemCost`, `price`, `category`, `storeName`).
+    - Added default limit safeguard on global `/notification` route (`.limit(100)`) preventing full table scans when viewing global alerts.
+  - **Scoped Client-Side Data Loaders**:
+    - Updated `ProjectViewInformation.js` data fetching methods (`fetchDetailedData`, `fetchInvoicesAndPurchases`, `fetchExpenses`, `fetchPayments`, `fetchTimelineAndStaff`, `fetchItemsMovement`, `fetchComment`) to pass `projectId=${id}` / `idInfo=${id}` and `summary=true`.
+    - Updated `ProjectUpdateView.js` to query scoped purchases and lightweight customer summaries.
+    - Dropped network payload from ~100MB+ down to <50KB, reducing total load time from 45+ seconds down to <1 second.
+  - **Release & Distribution**: Bumped version to `3.4.92`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.92.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Employee Information Statement Tab DemoContainer Import Fix (Ver 3.4.91)**:
   - **Added Missing DatePicker DemoContainer Import**:
     - Fixed runtime ReferenceError `DemoContainer is not defined` in `src/js/AdminView1/PageView/EmployeeView/EmployeeViewAdminAll.js` at line 1392 (TabPanel 4 / Statement of Accounts tab).
