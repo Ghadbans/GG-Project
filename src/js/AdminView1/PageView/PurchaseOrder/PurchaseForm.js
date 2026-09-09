@@ -930,8 +930,13 @@ function PurchaseForm() {
                             (
                               <Autocomplete
                                 options={projects}
-                                getOptionLabel={(option) => option.projectName}
-                                renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                getOptionLabel={(option) => option?.projectName || ''}
+                                renderOption={(props, option) => {
+                                  const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                  const proj = option?.projectName || '';
+                                  const desc = option?.description || '';
+                                  return (<Box {...props}> {cust} | {proj} | {desc}</Box>);
+                                }}
                                 renderInput={(params) => <TextField {...params} label="Project Name" />}
                                 onChange={(e, newValue) => handleChangeProject(newValue ? newValue : 0)}
                                 inputValue={inputValueProject}
@@ -939,12 +944,13 @@ function PurchaseForm() {
                                   setInputValueProject(newInputValue);
                                 }}
                                 filterOptions={(options, { inputValue }) => {
-                                  return options.filter(
-                                    (option) =>
-                                      option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.description.toLowerCase().includes(inputValue.toLowerCase())
-                                  )
+                                  const q = (inputValue || '').toLowerCase();
+                                  return options.filter((option) => {
+                                    const cust = (option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                                    const proj = (option?.projectName || '').toLowerCase();
+                                    const desc = (option?.description || '').toLowerCase();
+                                    return cust.includes(q) || proj.includes(q) || desc.includes(q);
+                                  });
                                 }}
                                 sx={{ width: '100%', backgroundColor: 'white' }}
                               />
@@ -978,8 +984,12 @@ function PurchaseForm() {
                             (
                               <Autocomplete
                                 options={maintenance}
-                                getOptionLabel={(option) => option.serviceName}
-                                renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.serviceName}</Box>)}
+                                getOptionLabel={(option) => option?.serviceName || ''}
+                                renderOption={(props, option) => {
+                                  const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                  const serv = option?.serviceName || '';
+                                  return (<Box {...props}> {cust} | {serv}</Box>);
+                                }}
                                 renderInput={(params) => <TextField {...params} label="Maintenance Number" />}
                                 onChange={(e, newValue) => handleChangeService(newValue ? newValue : '')}
                                 inputValue={inputValue2}
@@ -987,11 +997,12 @@ function PurchaseForm() {
                                   setInputValue2(newInputValue);
                                 }}
                                 filterOptions={(options, { inputValue }) => {
-                                  return options.filter(
-                                    (option) =>
-                                      option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                      option.serviceName.toLowerCase().includes(inputValue.toLowerCase())
-                                  )
+                                  const q = (inputValue || '').toLowerCase();
+                                  return options.filter((option) => {
+                                    const cust = (option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                                    const serv = (option?.serviceName || '').toLowerCase();
+                                    return cust.includes(q) || serv.includes(q);
+                                  });
                                 }}
                                 sx={{ width: '100%', backgroundColor: 'white' }}
                               />
@@ -1025,9 +1036,20 @@ function PurchaseForm() {
                             (
                               <Autocomplete
                                 options={invoice}
-                                getOptionLabel={(option) => `INV-${String(option.invoiceNumber).padStart(6, '0')}`}
-                                renderOption={(props, option) => (<Box {...props}>{option.customerName.customerName}/INV-{String(option.invoiceNumber).padStart(6, '0')}
-                                </Box>)}
+                                getOptionLabel={(option) => {
+                                  const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                  const invNum = option?.invoiceNumber !== undefined ? String(option.invoiceNumber).padStart(6, '0') : '';
+                                  return (cust ? `${cust}/INV-${invNum}` : `INV-${invNum}`);
+                                }}
+                                renderOption={(props, option) => {
+                                  const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                  const invNum = option?.invoiceNumber !== undefined ? String(option.invoiceNumber).padStart(6, '0') : '';
+                                  return (
+                                    <Box {...props}>
+                                      {cust ? `${cust}/INV-${invNum}` : `INV-${invNum}`}
+                                    </Box>
+                                  );
+                                }}
                                 renderInput={(params) => <TextField {...params} label="Invoice" />}
                                 onChange={(e, newValue) => handleChangeInvoice(newValue ? newValue : '')}
                                 sx={{ width: '100%', backgroundColor: 'white' }}

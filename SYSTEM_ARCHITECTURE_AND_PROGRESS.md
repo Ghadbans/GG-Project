@@ -24,6 +24,13 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Autocomplete Safe String Extraction & Null Safety Fix Across Forms (Ver 3.4.95)**:
+  - **TypeError: Cannot read properties of undefined (reading 'toLowerCase') Fix**:
+    - Fixed runtime TypeError in `ItemOutViewForm.js` occurring when selecting "Maintenance" as Reason and clicking or typing in the Maintenance Number Autocomplete dropdown.
+    - Replaced unsafe direct nested property accesses (`option.customerName.customerName.toLowerCase()`, `option.projectName.toLowerCase()`, `option.serviceName.toLowerCase()`) with bulletproof safe extraction logic across `ItemOutViewForm.js`, `ItemPurchaseViewForm.js`, `PurchaseForm.js`, `PurchasesFormView.js`, and `PurchaseFormUpdate.js`.
+    - Ensured `getOptionLabel`, `renderOption`, and `filterOptions` gracefully handle missing objects, plain string representations, `null`, or `undefined` values without crashing.
+  - **Release & Distribution**: Bumped version to `3.4.95`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.95.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Maintenance Edit/Update Safe Numeric Parsing & toFixed Guard (Ver 3.4.94)**:
   - **TypeError: Cannot read properties of null (reading 'toFixed') Fix**:
     - Fixed runtime TypeError in `src/js/AdminView1/PageView/MaintenanceView/MaintenanceUpdateView.js` when opening existing maintenance records for editing (such as `SOFI BANQUE | M-001179`).

@@ -801,20 +801,26 @@ function PurchasesFormView() {
                     <Autocomplete
                       disableClearable
                       options={projects}
-                      getOptionLabel={(option) => option.projectName}
-                      renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                      getOptionLabel={(option) => option?.projectName || ''}
+                      renderOption={(props, option) => {
+                        const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                        const proj = option?.projectName || '';
+                        const desc = option?.description || '';
+                        return (<Box {...props}> {cust} | {proj} | {desc}</Box>);
+                      }}
                       onChange={(e, newValue) => { handleChangeProject(newValue) }}
                       inputValue={inputValue2}
                       onInputChange={(event, newInputValue) => {
                         setInputValue2(newInputValue);
                       }}
                       filterOptions={(options, { inputValue }) => {
-                        return options.filter(
-                          (option) =>
-                            option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                            option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                            option.description.toLowerCase().includes(inputValue.toLowerCase())
-                        )
+                        const q = (inputValue || '').toLowerCase();
+                        return options.filter((option) => {
+                          const cust = (option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                          const proj = (option?.projectName || '').toLowerCase();
+                          const desc = (option?.description || '').toLowerCase();
+                          return cust.includes(q) || proj.includes(q) || desc.includes(q);
+                        });
                       }}
                       renderInput={(params) => <TextField {...params} label="Project Name" required />}
                     />
