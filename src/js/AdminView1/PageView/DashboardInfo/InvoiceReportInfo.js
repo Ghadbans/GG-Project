@@ -199,7 +199,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
                                     <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>
                                 )
                             }
@@ -377,7 +377,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
                                     <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemOut} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemCost}</td>
                                     <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(Item.itemOut * Item.itemCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>

@@ -1392,7 +1392,7 @@ function MaintenanceOrderUpdate() {
                               <td></td>
                               <td></td>
                               <td colSpan={3} style={{ display: 'none' }}>Total Generale</td>
-                              <td style={{ display: 'none' }}><span>$</span><span>{totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              <td style={{ display: 'none' }}><span>$</span><span>{Number(totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                             </tr>
                           </tbody>
                         </table>

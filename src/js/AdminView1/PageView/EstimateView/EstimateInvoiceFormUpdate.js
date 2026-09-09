@@ -1202,7 +1202,7 @@ The GLOBAL GATE Team`;
                                                   />
                                                 </td>
                                                 <td id="amountTotalInvoice">
-                                                  {Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                  {Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                                 </td>
                                                 <td>
                                                   <LightTooltip title="Delete" sx={{}}>

@@ -1080,7 +1080,7 @@ function MaintenanceFormClone() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               <td >
                                                 <LightTooltip title="Delete" sx={{}}>
                                                   <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1143,7 +1143,7 @@ function MaintenanceFormClone() {
                                 />
                               </td>
                               <td>
-                                <span>$</span><span>{totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                <span>$</span><span>{Number(totalLaborFeesGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
                               </td>
                             </tr>
                             <tr>
@@ -1151,7 +1151,7 @@ function MaintenanceFormClone() {
                               <td></td>
                               <td></td>
                               <td colSpan={3}>Total Generale</td>
-                              <td><span>$</span><span>{totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              <td><span>$</span><span>{Number(totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                             </tr>
                           </tbody>
                         </table>

@@ -155,7 +155,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                                     <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>FC </span>{Item.itemRate}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>FC </span><span id='totalItemService'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>FC </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>
                                 )
                             }
@@ -335,7 +335,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                                     <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>FC </span>{Item.itemRate}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>FC </span><span id='totalItemService'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>FC </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>FC </span>{Item.itemCost}</td>
                                     <td style={{ border: '1px solid #DDD' }} ><span data-prefix>FC </span><span id='totalItemService'>{(Item.itemQty * Item.itemCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>

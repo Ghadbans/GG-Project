@@ -980,7 +980,7 @@ The GLOBAL GATE Team`;
                                                         sx={{ width: '100px', backgroundColor: 'white' }}
                                                       />
                                                     </td>
-                                                    <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                    <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                     <td >
                                                       <LightTooltip title="Delete" sx={{}}>
                                                         <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1188,7 +1188,7 @@ The GLOBAL GATE Team`;
                                                       sx={{ width: '100px', backgroundColor: 'white' }}
                                                     />
                                                   </td>
-                                                  <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                  <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                   <td >
                                                     <LightTooltip title="Delete" sx={{}}>
                                                       <IconButton onClick={() => deleteItem(Item.idRow)} >

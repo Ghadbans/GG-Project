@@ -247,8 +247,14 @@ function MaintenanceUpdateView() {
           setSerialNo(mData.serialNo || "");
           setServiceNumber(mData.serviceNumber || 0);
           setTechnicianAssign(mData.technicianAssign || '');
-          setCustomerName(mData.customerName || {});
-          SetItems(mData.items || []);
+          const sanitizedItems = (mData.items || []).map((item) => ({
+            ...item,
+            itemAmount: Number(item.itemAmount != null ? item.itemAmount : ((parseFloat(item.itemQty) || 0) * (parseFloat(item.itemRate) || 0))) || 0,
+            itemQty: item.itemQty != null ? item.itemQty : 0,
+            itemRate: item.itemRate != null ? item.itemRate : 0,
+            itemDiscount: item.itemDiscount != null ? item.itemDiscount : 0,
+          }));
+          SetItems(sanitizedItems);
           setConverted(mData.Converted || "");
           setAdjustmentNumber(mData.adjustmentNumber || 0);
           setNote(mData.note || "");
@@ -1340,7 +1346,7 @@ function MaintenanceUpdateView() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </td>
-                                                <td id='amountTotalInvoice'>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                 <td style={{ textAlign: 'center' }} >
                                                   <span style={{ display: 'flex' }}>
                                                     <LightTooltip title="Delete" placement='top'>
@@ -1435,7 +1441,7 @@ function MaintenanceUpdateView() {
                                 />
                               </td>
                               <td>
-                                <span>$</span><span>{totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                <span>$</span><span>{Number(totalLaborFeesGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
                               </td>
                             </tr>
                             <tr>
@@ -1443,7 +1449,7 @@ function MaintenanceUpdateView() {
                               <td></td>
                               <td></td>
                               <td colSpan={3}>Total Generale</td>
-                              <td><span>$</span><span>{totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              <td><span>$</span><span>{Number(totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                             </tr>
                           </tbody>
                         </table>

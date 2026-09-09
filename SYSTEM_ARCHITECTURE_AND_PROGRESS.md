@@ -24,6 +24,13 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Maintenance Edit/Update Safe Numeric Parsing & toFixed Guard (Ver 3.4.94)**:
+  - **TypeError: Cannot read properties of null (reading 'toFixed') Fix**:
+    - Fixed runtime TypeError in `src/js/AdminView1/PageView/MaintenanceView/MaintenanceUpdateView.js` when opening existing maintenance records for editing (such as `SOFI BANQUE | M-001179`).
+    - Added data sanitization in `fetchData` ensuring all loaded items have valid numeric `itemAmount`, `itemQty`, `itemRate`, and `itemDiscount` properties.
+    - Wrapped all `Item.itemAmount.toFixed()` calls and total computations with `Number(... || 0).toFixed(2)` across 16 forms and views (`MaintenanceUpdateView`, `MaintenanceFormView`, `MaintenanceFormClone`, `MaintenanceConvertToInvoice`, `EstimateConvertToMaintenance`, `EstimateInvoiceFormUpdate`, `ShopPosUpdateForm`, `InvoiceFormClone`, etc.).
+  - **Release & Distribution**: Bumped version to `3.4.94`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.94.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Safe Unit & String Access in Project Information & Across All Views (Ver 3.4.93)**:
   - **TypeError: Cannot read properties of undefined (reading 'toUpperCase') Fix**:
     - Fixed runtime TypeError in `src/js/AdminView1/PageView/ProjectView/ProjectViewInformation.js` when rendering the Invoices and Purchase tabs.

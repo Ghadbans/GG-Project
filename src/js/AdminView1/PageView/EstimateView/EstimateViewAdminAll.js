@@ -1013,7 +1013,7 @@ function EstimateViewAdminAll() {
                                                                         <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                         <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                                         {showDiscount && <td style={{ textAlign: 'right', borderLeft: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>}
-                                                                        <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                                        <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                                       </>
                                                                     )
                                                                 }
@@ -1297,7 +1297,7 @@ function EstimateViewAdminAll() {
                                                               <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                               <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
                                                               {showDiscount && <td style={{ textAlign: 'right', borderLeft: '1px solid #DDD' }}><span data-prefix>%</span><span>{Item.itemDiscount}</span></td>}
-                                                              <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                              <td style={{ textAlign: 'right', width: '100px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                             </>
                                                           )
                                                       }
