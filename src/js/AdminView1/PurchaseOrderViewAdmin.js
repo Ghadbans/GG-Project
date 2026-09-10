@@ -213,13 +213,15 @@ function PurchaseOrderViewAdmin() {
 
   const fetchItems = async (page, searchTerm, filterField, filterValue) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/purchaseOrder-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+      const branchParam = selectedBranch ? `&branchId=${encodeURIComponent(selectedBranch)}` : '';
+      const res = await axios.get(`${ENDPOINT_URL}/purchaseOrder-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}${branchParam}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
         dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
         referenceInfo: item.description !== undefined && item.description !== '' ? item.description : (item.reference !== undefined && item.reference !== null ? item.reference.referenceName : ''),
-        itemInfo: item.itemsQtyArray.map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
+        itemInfo: item.itemsQtyArray.map((row) => row.itemName !== undefined ? (row.itemName.itemName || row.itemName) : ''),
         itemDescriptionInfo: item.itemsQtyArray.map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));

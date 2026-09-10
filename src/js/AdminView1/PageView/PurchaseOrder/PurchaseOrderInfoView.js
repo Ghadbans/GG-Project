@@ -173,8 +173,11 @@ function PurchaseOrderInfoView() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/purchaseOrder`)
-        setPurchase(res.data.data);
+        const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+        const branchParam = selectedBranch ? `?branchId=${encodeURIComponent(selectedBranch)}` : '';
+        const res = await axios.get(`${ENDPOINT_URL}/purchaseOrder${branchParam}`)
+        const sortedList = (res.data?.data || []).sort((a, b) => (b.outNumber || 0) - (a.outNumber || 0));
+        setPurchase(sortedList);
         const resItem = await axios.get(`${ENDPOINT_URL}/item`)
         SetItems(resItem.data.data)
         setLoadingData(false)
@@ -392,19 +395,36 @@ function PurchaseOrderInfoView() {
     const value = e.target.value
     setSearch2(value)
   }
-  const newArray = search !== '' ? purchase.filter((row) =>
-    row.description && row.description.toLowerCase().includes(search.toLowerCase()) ||
-    row.reason.toLowerCase().includes(search.toLowerCase()) ||
-    row.reference && row.reference.referenceName.toLowerCase().includes(search.toLowerCase()) ||
-    row.itemsQtyArray && row.itemsQtyArray.some((Item) => Item.itemName && Item.itemName.itemName.toLowerCase().includes(search.toLowerCase())) ||
-    row.itemsQtyArray && row.itemsQtyArray.some((Item) => Item.itemDescription && Item.itemDescription.toLowerCase().includes(search.toLowerCase()))
-  ) : purchase
+  const newArray = search !== '' ? purchase.filter((row) => {
+    const q = search.toLowerCase();
+    const poStr = 'po-' + String(row.outNumber).padStart(6, '0').toLowerCase();
+    const poNum = String(row.outNumber || '');
+    return (
+      poStr.includes(q) ||
+      poNum.includes(q) ||
+      (row.manufacturer && row.manufacturer.toLowerCase().includes(q)) ||
+      (row.manufacturerNumber && String(row.manufacturerNumber).toLowerCase().includes(q)) ||
+      (row.description && row.description.toLowerCase().includes(q)) ||
+      (row.reason && row.reason.toLowerCase().includes(q)) ||
+      (row.reference && row.reference.referenceName && row.reference.referenceName.toLowerCase().includes(q)) ||
+      (row.itemsQtyArray && row.itemsQtyArray.some((Item) => 
+        (Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(q)) ||
+        (Item.itemBrand && Item.itemBrand.toLowerCase().includes(q)) ||
+        (Item.itemDescription && Item.itemDescription.toLowerCase().includes(q)) ||
+        (Item.newDescription && Item.newDescription.toLowerCase().includes(q))
+      ))
+    );
+  }) : purchase
 
-  const newArray2 = search2 !== '' ? filteredPurchase.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
-    Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
-  ) : filteredPurchase
+  const newArray2 = search2 !== '' ? filteredPurchase.filter((Item) => {
+    const q = search2.toLowerCase();
+    return (
+      (Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(q)) ||
+      (Item.itemBrand && Item.itemBrand.toLowerCase().includes(q)) ||
+      (Item.itemDescription && Item.itemDescription.toLowerCase().includes(q)) ||
+      (Item.newDescription && Item.newDescription.toLowerCase().includes(q))
+    );
+  }) : filteredPurchase
 
   return (
     <div>

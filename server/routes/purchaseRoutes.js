@@ -262,18 +262,20 @@ Route.route("/remove-purchase").delete(async (req, res) => {
 
 Route.route("/purchaseOrder", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
-    await purchaseOrderSchema
-      .find(req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {})
-      .then((result) => {
-        res.json({
-          data: result,
-          message: "Data successfully fetched!",
-          status: 200,
-        });
-      })
-      .catch((err) => {
-        return next(err);
+    try {
+      const query = branchFilter(req);
+      const result = await purchaseOrderSchema
+        .find(query)
+        .sort({ outNumber: -1, _id: -1 })
+        .lean();
+      res.json({
+        data: result,
+        message: "Data successfully fetched!",
+        status: 200,
       });
+    } catch (err) {
+      return next(err);
+    }
   }
 );
 
@@ -286,26 +288,48 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') query.branchId = branchId;
     if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const trimmedSearch = search.trim();
+      const escapedSearch = trimmedSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
+      
+      // Extract numeric part if user typed "PO-000724", "PO-724", etc.
+      const poNumMatch = trimmedSearch.match(/^(?:PO-?)?0*(\d+)$/i);
+      const numericVal = !isNaN(Number(trimmedSearch)) ? Number(trimmedSearch) : (poNumMatch ? Number(poNumMatch[1]) : null);
+
+      const isConvertedQuery = /converted/i.test(trimmedSearch);
+      const isOpenQuery = /^open$/i.test(trimmedSearch);
+
       query.$or = [
-        ...(!isNaN(Number(search)) ? [{ outNumber: Number(search) }] : []),
+        ...(numericVal !== null ? [{ outNumber: numericVal }] : []),
+        { description: regex },
         { reason: regex },
+        { manufacturer: regex },
+        { manufacturerNumber: regex },
+        { status: regex },
+        ...(isConvertedQuery ? [{ Converted: true }] : []),
+        ...(isOpenQuery ? [{ Converted: false }, { Converted: { $exists: false } }, { Converted: null }] : []),
+        { 'reference.referenceName': regex },
+        { 'reference.projectName': regex },
+        { 'reference.serviceName': regex },
+        { 'reference.invoiceName': regex },
+        { 'reference.customerName': regex },
+        { 'reference.customerName.customerName': regex },
         { 'itemsQtyArray.itemName': regex },
+        { 'itemsQtyArray.itemName.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
         { 'itemsQtyArray.itemDescription': regex },
-        { 'reference.referenceName': regex },
+        { 'itemsQtyArray.newDescription': regex },
       ].filter(condition => condition !== null);
     }
     if (filterField && filterValue) {
       query[`itemsQtyArray.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await purchaseOrderSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
+    const itemI = await purchaseOrderSchema.find(query).sort({ outNumber: -1, _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
     const totalItem = await purchaseOrderSchema.countDocuments(query);
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    console.error("Error fetching purchaseOrder-Information:", error);
     res.status(500).json({ message: error.message });
   }
 });

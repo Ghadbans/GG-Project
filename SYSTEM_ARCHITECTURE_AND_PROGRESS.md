@@ -24,6 +24,15 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Purchase Order Universal Search & Newest-to-Oldest Ordering (Ver 3.4.96)**:
+  - **Purchase Order Search Scope Expansion**:
+    - Enhanced `/purchaseOrder-Information` backend route in `server/routes/purchaseRoutes.js` with comprehensive `$or` search regex filters covering `description`, `manufacturer`, `manufacturerNumber`, `reason`, `status`, `Converted` (converted/open status queries), `reference.referenceName`, `reference.projectName`, `reference.serviceName`, `reference.customerName`, `itemsQtyArray.itemName`, `itemsQtyArray.itemBrand`, `itemsQtyArray.itemDescription`, `itemsQtyArray.newDescription`, and flexible PO numeric search (matching `PO-000724`, `PO-724`, or `724`).
+    - Added multi-branch scoping (`branchId` parameter) to `PurchaseOrderViewAdmin.js` and `PurchaseOrderInfoView.js`.
+  - **Newest-to-Oldest Ordering**:
+    - Configured server-side sorting (`{ outNumber: -1, _id: -1 }`) on both `/purchaseOrder` and `/purchaseOrder-Information` endpoints.
+    - Updated `PurchaseOrderInfoView.js` left sidebar to order records from newest to oldest (`outNumber` descending) and expanded its client filter to match PO numbers, manufacturers, references, descriptions, reasons, and items.
+  - **Release & Distribution**: Bumped version to `3.4.96`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.96.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Autocomplete Safe String Extraction & Null Safety Fix Across Forms (Ver 3.4.95)**:
   - **TypeError: Cannot read properties of undefined (reading 'toLowerCase') Fix**:
     - Fixed runtime TypeError in `ItemOutViewForm.js` occurring when selecting "Maintenance" as Reason and clicking or typing in the Maintenance Number Autocomplete dropdown.
