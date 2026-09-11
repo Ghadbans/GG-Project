@@ -24,6 +24,13 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **ISO YYYY-MM-DD Date Filter Normalization & Accurate Multi-Currency Reconciliation (Ver 3.5.01)**:
+  - **Date Comparison ISO Normalization**:
+    - Fixed alphabetical string comparison bug in `DailyExpenseAdminView.js` (`dayjs().format('DD/MM/YYYY')` -> `dayjs().format('YYYY-MM-DD')`) across Expenses, PayRoll, POS, Cash, and Payment filters.
+    - Previously, alphabetical comparison on `DD/MM/YYYY` erroneously included past records from other months (such as August 12-15) on day 11, causing extraneous payments ($75.00) and FC values to bleed into today's Total Payment Received and distort Summary numbers.
+    - With strict `YYYY-MM-DD` ISO filtering, only today's genuine transactions are included, ensuring physical cash counts perfectly match the register.
+  - **Release & Distribution**: Bumped version to `3.5.01`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.01.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Payment Received Cash Accounting Reconciliation & POS Multi-Tier Summary Matching (Ver 3.5.00)**:
   - **Payment Received 3-Tier Multi-Currency Table Structure**:
     - Aligned the **Payment Received** table in `DailyExpenseAdminView.js` to strictly follow the multi-tier accounting model used in Point of Sale (POS):

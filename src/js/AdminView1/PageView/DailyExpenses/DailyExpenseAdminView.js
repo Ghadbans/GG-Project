@@ -336,9 +336,11 @@ function DailyExpenseAdminView() {
   const [posFiltered, setPosFiltered] = useState([])
   // Expenses Filter
   useEffect(() => {
+    const sDate = dayjs(startDate).format('YYYY-MM-DD');
+    const eDate = dayjs(endDate).format('YYYY-MM-DD');
     const totalExpenses = expenses.filter((row) => {
-      const ExpensesDate = dayjs(row.expenseDate).format('DD/MM/YYYY')
-      return ExpensesDate >= dayjs(startDate).format('DD/MM/YYYY') && ExpensesDate <= dayjs(endDate).format('DD/MM/YYYY')
+      const ExpensesDate = dayjs(row.expenseDate).format('YYYY-MM-DD')
+      return ExpensesDate >= sDate && ExpensesDate <= eDate
     })
     setExpensesFiltered(totalExpenses)
   }, [startDate, endDate, expenses])
@@ -372,18 +374,22 @@ function DailyExpenseAdminView() {
   }, [startDate, itemPurchaseInfo]);
   // Pay Roll Filter
   useEffect(() => {
+    const sDate = dayjs(startDate).format('YYYY-MM-DD');
+    const eDate = dayjs(endDate).format('YYYY-MM-DD');
     const totalExpenses = payRoll.filter((row) => {
-      const ExpensesDate = dayjs(row.payDate).format('DD/MM/YYYY')
-      return ExpensesDate >= dayjs(startDate).format('DD/MM/YYYY') && ExpensesDate <= dayjs(endDate).format('DD/MM/YYYY')
+      const ExpensesDate = dayjs(row.payDate).format('YYYY-MM-DD')
+      return ExpensesDate >= sDate && ExpensesDate <= eDate
     })
     setPayRollFiltered(totalExpenses)
   }, [startDate, endDate, payRoll])
 
   // POS Filter
   useEffect(() => {
+    const sDate = dayjs(startDate).format('YYYY-MM-DD');
+    const eDate = dayjs(endDate).format('YYYY-MM-DD');
     const totalExpenses = posInfo.filter((row) => {
-      const ExpensesDate = dayjs(row.invoiceDate).format('DD/MM/YYYY')
-      return ExpensesDate >= dayjs(startDate).format('DD/MM/YYYY') && ExpensesDate <= dayjs(endDate).format('DD/MM/YYYY')
+      const ExpensesDate = dayjs(row.invoiceDate).format('YYYY-MM-DD')
+      return ExpensesDate >= sDate && ExpensesDate <= eDate
     })
     setPosFiltered(totalExpenses)
   }, [startDate, endDate, posInfo])
@@ -518,18 +524,22 @@ function DailyExpenseAdminView() {
   }
   const [filterTotal2, setFilterTotal2] = useState([])
   useEffect(() => {
+    const sDate = dayjs(startDate).format('YYYY-MM-DD');
+    const eDate = dayjs(endDate).format('YYYY-MM-DD');
     const totalExpenses = cash.filter((row) => {
-      const ExpensesDate = dayjs(row.cashDate).format('DD/MM/YYYY')
-      return ExpensesDate >= dayjs(startDate).format('DD/MM/YYYY') && ExpensesDate <= dayjs(endDate).format('DD/MM/YYYY')
+      const ExpensesDate = dayjs(row.cashDate).format('YYYY-MM-DD')
+      return ExpensesDate >= sDate && ExpensesDate <= eDate
     })
     setFilterTotal2(totalExpenses)
   }, [startDate, endDate, cash])
 
   const [filterTotalPayment, setFilterTotalPayment] = useState([])
   useEffect(() => {
+    const sDate = dayjs(startDate).format('YYYY-MM-DD');
+    const eDate = dayjs(endDate).format('YYYY-MM-DD');
     const totalExpenses = payment.filter((row) => {
-      const ExpensesDate = dayjs(row.paymentDate).format('DD/MM/YYYY')
-      return ExpensesDate >= dayjs(startDate).format('DD/MM/YYYY') && ExpensesDate <= dayjs(endDate).format('DD/MM/YYYY')
+      const ExpensesDate = dayjs(row.paymentDate).format('YYYY-MM-DD')
+      return ExpensesDate >= sDate && ExpensesDate <= eDate
     })
     setFilterTotalPayment(totalExpenses)
   }, [startDate, endDate, payment])
