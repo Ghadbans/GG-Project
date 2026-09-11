@@ -414,20 +414,26 @@ function ItemPurchaseViewForm() {
       }
       const handleChangeService = (newValue) => {
         const selectedOptions = maintenance.find((option) => option === newValue)
+        const clientName = selectedOptions?.customerName?.customerName || (typeof selectedOptions?.customerName === 'string' ? selectedOptions.customerName : '') || '';
+        const servName = 'M-' + String(selectedOptions?.serviceNumber || '').padStart(6, '0');
+        const formattedName = clientName ? `${servName} / ${clientName}` : servName;
         setProjectName({
           _id: selectedOptions?._id,
-          name: 'M-' + String(selectedOptions?.serviceNumber).padStart(6, '0') + ' / ' + selectedOptions?.customerName.customerName
+          name: formattedName
         });
-        setItemArray(selectedOptions.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== '')))
+        setItemArray(selectedOptions?.items ? selectedOptions.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== '')) : [])
         setItems([])
       }
       const handleChangeInvoice = (newValue) => {
         const selectedOptions = invoice.find((option) => option === newValue)
+        const clientName = selectedOptions?.customerName?.customerName || (typeof selectedOptions?.customerName === 'string' ? selectedOptions.customerName : '') || '';
+        const invNum = 'INV-' + String(selectedOptions?.invoiceNumber || '').padStart(6, '0');
+        const formattedName = clientName ? `${invNum} / ${clientName}` : invNum;
         setProjectName({
           _id: selectedOptions?._id,
-          name: 'INV-' + String(selectedOptions?.invoiceNumber).padStart(6, '0') + ' / ' + selectedOptions?.customerName.customerName
+          name: formattedName
         });
-        setItemArray(selectedOptions.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== '')))
+        setItemArray(selectedOptions?.items ? selectedOptions.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== '')) : [])
         setItems([])
       }
       useEffect(()=>{

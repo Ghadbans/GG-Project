@@ -115,24 +115,38 @@ Route.route("/get-last-saved-estimation").get(async(req,res, next)=>{
     next(error);
   }
 })
+function isValidCustomer(customerName) {
+  if (!customerName) return false;
+  if (typeof customerName === 'string') {
+    const trimmed = customerName.trim();
+    return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
+  }
+  if (typeof customerName === 'object') {
+    const name = customerName.customerName || customerName.name;
+    if (typeof name === 'string') {
+      const trimmed = name.trim();
+      return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
+    }
+  }
+  return false;
+}
+
 // Create estimation
 Route.route("/create-estimation").post(async (req, res, next) => {
-  if (!req.body.customerName || !req.body.customerName.customerName || req.body.customerName.customerName.includes("Unknown Customer")) {
+  if (!isValidCustomer(req.body.customerName)) {
     if (req.body.ReferenceName2) {
       try {
         const purchaseSchema = require('../model/purchaseSchema');
         const purchase = await purchaseSchema.findById(req.body.ReferenceName2);
-        if (purchase && purchase.customerName && purchase.customerName.customerName) {
+        if (purchase && isValidCustomer(purchase.customerName)) {
           req.body.customerName = purchase.customerName;
-        } else {
-          req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
         }
-      } catch(err) {
-        req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
-      }
-    } else {
-      req.body.customerName = { customerName: "Unknown Customer (Recovered)", billingAddress: "N/A", billingCity: "N/A" };
+      } catch(err) {}
     }
+  }
+
+  if (!isValidCustomer(req.body.customerName)) {
+    return res.status(400).json({ message: "Customer Name is required." });
   }
 
  // await estimationSchema
@@ -214,6 +228,9 @@ Route.route("/get-estimation/:id").get(async (req, res, next) => {
 
 Route.route("/update-estimation/:id").put(async (req, res, next) => {
     try {
+        if (req.body.customerName !== undefined && !isValidCustomer(req.body.customerName)) {
+            return res.status(400).json({ message: "Customer Name is required." });
+        }
         const est = await estimationSchema.findById(req.params.id);
         if (est && (est.ReferenceName || (est.Ref && est.Ref._id))) {
             req.body.status = 'Converted';

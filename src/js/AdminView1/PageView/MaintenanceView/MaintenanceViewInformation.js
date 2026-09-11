@@ -1551,7 +1551,15 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                               }
                                               <tr>
                                                 <td style={{ border: '1px solid black', width: '100px' }} colSpan={5}>Grand Total</td>
-                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{Number(row.totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{
+                                                  (() => {
+                                                    const liveItemsTotal = (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemAmount) || 0), 0);
+                                                    const liveLaborTotal = parseFloat(row.totalLaborFeesGenerale || 0);
+                                                    const liveExpensesTotal = user.data.role === 'CEO' ? (parseFloat(totalAmountPlaning || 0) + parseFloat(totalMaintenanceExpenses || 0)) : 0;
+                                                    const liveGrandTotal = liveItemsTotal + liveLaborTotal + liveExpensesTotal;
+                                                    return Number(liveGrandTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                                  })()
+                                                }</td>
                                               </tr>
                                             </tbody>
                                           </table>

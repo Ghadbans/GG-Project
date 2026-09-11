@@ -203,36 +203,64 @@ function ItemPurchaseUpdateForm() {
   const [note, setNote] = useState("");
   const [purchase, setPurchase] = useState([]);
   const [maintenance, setMaintenance] = useState([]);
+  const [maintenanceList, setMaintenanceList] = useState([]);
+  const [projects, setProjects] = useState([]);
   const [invoice, setInvoice] = useState([]);
+  const [invoiceList, setInvoiceList] = useState([]);
   const [projectName, setProjectName] = useState({});
   const [supplier, setSupplier] = useState([]);
   const [autocompleteOptions, setAutocompleteOptions] = useState([]);
   const [autocompleteLoading, setAutocompleteLoading] = useState(false);
   const [autocompleteSearch, setAutocompleteSearch] = useState('');
+  const [inputValue2, setInputValue2] = useState('');
   const [inputValue3, setInputValue3] = useState('');
+  const [inputValue4, setInputValue4] = useState('');
+  const [inputValueInvoice, setInputValueInvoice] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const resSupplier = await axios.get(`${ENDPOINT_URL}/Supplier`)
-        setSupplier(resSupplier.data.data.reverse())
-        const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`)
+        const [resSupplier, resItemPurchase, resProject, resMaintenance, resPurchase, resInvoice] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/Supplier`),
+          axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`),
+          axios.get(`${ENDPOINT_URL}/projects`),
+          axios.get(`${ENDPOINT_URL}/maintenance?summary=true`),
+          axios.get(`${ENDPOINT_URL}/purchase?summary=true`),
+          axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
+        ]);
+
+        setSupplier(Array.isArray(resSupplier?.data?.data) ? [...resSupplier.data.data].reverse() : []);
+        setProjects(Array.isArray(resProject?.data?.data) ? [...resProject.data.data].reverse() : []);
+        const maintAll = Array.isArray(resMaintenance?.data?.data) ? [...resMaintenance.data.data].reverse() : [];
+        setMaintenanceList(maintAll);
+
+        const purchaseData = Array.isArray(resPurchase?.data?.data) ? resPurchase.data.data : [];
+        const invoiceData = Array.isArray(resInvoice?.data?.data) ? resInvoice.data.data : [];
+        const filteredInvoices = invoiceData.filter((row) =>
+          !purchaseData.some((Item) => Item._id === row.ReferenceName2) &&
+          !maintAll.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName)
+        );
+        setInvoiceList(filteredInvoices);
+
         // get the response data here
-        setItemPurchaseDate(res.data.data.itemPurchaseDate);
-        setItemPurchaseNumber(Number(res.data?.data?.itemPurchaseNumber || res.data?.itemPurchaseNumber || 0));
-        setManufacturer(res.data.data.manufacturer);
-        setManufacturerNumber(res.data?.data?.manufacturerNumber || res.data?.manufacturerNumber || "");
-        setDescription(res.data.data.description);
-        setItems(res.data.data.items);
-        setManufacturerID(res.data.data.manufacturerID)
-        setReason(res.data.data.reason);
-        setProjectName(res.data.data.projectName);
-        setNote(res.data.data.note);
+        const ipData = resItemPurchase.data.data;
+        setItemPurchaseDate(ipData.itemPurchaseDate);
+        setItemPurchaseNumber(Number(ipData.itemPurchaseNumber || 0));
+        setManufacturer(ipData.manufacturer);
+        setManufacturerNumber(ipData.manufacturerNumber || "");
+        setDescription(ipData.description);
+        setItems(ipData.items || []);
+        setManufacturerID(ipData.manufacturerID);
+        setReason(ipData.reason);
+        setProjectName(ipData.projectName || {});
+        setNote(ipData.note);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, [id]);
+
   useEffect(() => {
     const fetchDataId = async () => {
       try {
@@ -251,9 +279,9 @@ function ItemPurchaseUpdateForm() {
       try {
         const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`)
         setItemInformation(Array.isArray(resItem?.data?.itemI) ? [...resItem.data.itemI].reverse() : [])
-        if (projectName) {
+        if (projectName && projectName._id) {
           const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
-          setPurchase(resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id));
+          setPurchase(resPurchase.data?.data?.filter((row) => row.projectName?._id === projectName._id));
           const resMaintenance = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`)
           setMaintenance(resMaintenance.data?.data?.filter((row) => row._id === projectName._id));
           const resInvoice = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
@@ -297,6 +325,54 @@ function ItemPurchaseUpdateForm() {
     setProjectName({})
     setDescription("")
   }
+
+  const handleChangeProject = (newValue) => {
+    if (!newValue) {
+      setProjectName({});
+      return;
+    }
+    const projNum = newValue?.projectNumber !== undefined ? 'P-' + String(newValue.projectNumber).padStart(6, '0') : '';
+    const clientName = newValue?.customerName?.customerName || (typeof newValue?.customerName === 'string' ? newValue.customerName : '') || '';
+    const pName = newValue?.projectName || newValue?.name || '';
+    let formattedName = pName;
+    if (projNum) {
+      formattedName = clientName ? `${projNum} / ${clientName} - ${pName}` : `${projNum} / ${pName}`;
+    } else if (clientName) {
+      formattedName = `${clientName} / ${pName}`;
+    }
+    setProjectName({
+      _id: newValue?._id,
+      name: formattedName
+    });
+  };
+
+  const handleChangeService = (newValue) => {
+    if (!newValue) {
+      setProjectName({});
+      return;
+    }
+    const clientName = newValue?.customerName?.customerName || (typeof newValue?.customerName === 'string' ? newValue.customerName : '') || '';
+    const servName = 'M-' + String(newValue?.serviceNumber || '').padStart(6, '0');
+    const formattedName = clientName ? `${servName} / ${clientName}` : servName;
+    setProjectName({
+      _id: newValue?._id,
+      name: formattedName
+    });
+  };
+
+  const handleChangeInvoice = (newValue) => {
+    if (!newValue) {
+      setProjectName({});
+      return;
+    }
+    const clientName = newValue?.customerName?.customerName || (typeof newValue?.customerName === 'string' ? newValue.customerName : '') || '';
+    const invNum = 'INV-' + String(newValue?.invoiceNumber || '').padStart(6, '0');
+    const formattedName = clientName ? `${invNum} / ${clientName}` : invNum;
+    setProjectName({
+      _id: newValue?._id,
+      name: formattedName
+    });
+  };
   const handleChangeItem = (idRow, newValue) => {
     const selectedOptions = newValue
     setItems(items => items.map((row) => row.idRow === idRow ? {
@@ -1560,7 +1636,121 @@ function ItemPurchaseUpdateForm() {
                   </Grid>
                   <Grid item xs={12}>
                     {
-                      reason === 'Other' ? (
+                      reason === 'Project' && (
+                        <Autocomplete
+                          options={projects}
+                          getOptionLabel={(option) => {
+                            if (!option) return '';
+                            if (typeof option === 'string') return option;
+                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                            const proj = option?.projectName || option?.name || '';
+                            const projNum = option?.projectNumber !== undefined ? 'P-' + String(option.projectNumber).padStart(6, '0') : '';
+                            if (projNum) return cust ? `${projNum} / ${cust} - ${proj}` : `${projNum} / ${proj}`;
+                            return cust ? `${cust} / ${proj}` : proj;
+                          }}
+                          value={projects.find(p => p._id === projectName?._id) || (projectName?.name ? { _id: projectName._id, projectName: projectName.name, name: projectName.name } : null)}
+                          isOptionEqualToValue={(option, value) => option?._id === value?._id || option?.projectName === value?.projectName}
+                          renderOption={(props, option) => {
+                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                            const proj = option?.projectName || '';
+                            const desc = option?.description || '';
+                            const projNum = option?.projectNumber !== undefined ? 'P-' + String(option.projectNumber).padStart(6, '0') : '';
+                            return (<Box {...props}> {projNum ? `${projNum} | ` : ''}{cust} | {proj} | {desc}</Box>);
+                          }}
+                          onChange={(e, newValue) => { handleChangeProject(newValue) }}
+                          inputValue={inputValue2}
+                          onInputChange={(event, newInputValue) => {
+                            setInputValue2(newInputValue);
+                          }}
+                          filterOptions={(options, { inputValue }) => {
+                            const q = (inputValue || '').toLowerCase();
+                            return options.filter((option) => {
+                              const cust = (option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                              const proj = (option?.projectName || '').toLowerCase();
+                              const desc = (option?.description || '').toLowerCase();
+                              const projNum = option?.projectNumber !== undefined ? ('p-' + String(option.projectNumber).padStart(6, '0')).toLowerCase() : '';
+                              return cust.includes(q) || proj.includes(q) || desc.includes(q) || projNum.includes(q);
+                            });
+                          }}
+                          renderInput={(params) => <TextField {...params} label="Project / Client" required />}
+                          sx={{ width: '100%', backgroundColor: 'white' }}
+                        />
+                      )
+                    }
+                    {
+                      reason === 'Maintenance' && (
+                        <Autocomplete
+                          options={maintenanceList}
+                          getOptionLabel={(option) => {
+                            if (!option) return '';
+                            if (typeof option === 'string') return option;
+                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                            const serv = option?.serviceName || option?.name || '';
+                            return cust ? `${serv} / ${cust}` : serv;
+                          }}
+                          value={maintenanceList.find(m => m._id === projectName?._id) || (projectName?.name ? { _id: projectName._id, serviceName: projectName.name, name: projectName.name } : null)}
+                          isOptionEqualToValue={(option, value) => option?._id === value?._id || option?.serviceName === value?.serviceName}
+                          renderOption={(props, option) => {
+                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                            const serv = option?.serviceName || '';
+                            return (<Box {...props}> {serv} | {cust}</Box>);
+                          }}
+                          renderInput={(params) => <TextField {...params} label="Maintenance / Customer" required />}
+                          onChange={(e, newValue) => handleChangeService(newValue)}
+                          inputValue={inputValue4}
+                          onInputChange={(event, newInputValue) => {
+                            setInputValue4(newInputValue);
+                          }}
+                          filterOptions={(options, { inputValue }) => {
+                            const q = (inputValue || '').toLowerCase();
+                            return options.filter((option) => {
+                              const cust = (option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                              const serv = (option?.serviceName || '').toLowerCase();
+                              return cust.includes(q) || serv.includes(q);
+                            });
+                          }}
+                          sx={{ width: '100%', backgroundColor: 'white' }}
+                        />
+                      )
+                    }
+                    {
+                      reason === 'Invoice' && (
+                        <Autocomplete
+                          options={invoiceList}
+                          getOptionLabel={(option) => {
+                            if (!option) return '';
+                            if (typeof option === 'string') return option;
+                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                            const invNum = option?.invoiceNumber !== undefined ? 'INV-' + String(option.invoiceNumber).padStart(6, '0') : (option?.invoiceName || option?.name || '');
+                            return cust ? `${cust} / ${invNum}` : invNum;
+                          }}
+                          value={invoiceList.find(inv => inv._id === projectName?._id) || (projectName?.name ? { _id: projectName._id, invoiceName: projectName.name, name: projectName.name } : null)}
+                          isOptionEqualToValue={(option, value) => option?._id === value?._id || option?.invoiceName === value?.invoiceName}
+                          renderOption={(props, option) => {
+                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                            const invNum = option?.invoiceNumber !== undefined ? 'INV-' + String(option.invoiceNumber).padStart(6, '0') : '';
+                            return (<Box {...props}> {invNum} | {cust}</Box>);
+                          }}
+                          renderInput={(params) => <TextField {...params} label="Invoice / Customer" required />}
+                          onChange={(e, newValue) => handleChangeInvoice(newValue)}
+                          inputValue={inputValueInvoice}
+                          onInputChange={(event, newInputValue) => {
+                            setInputValueInvoice(newInputValue);
+                          }}
+                          filterOptions={(options, { inputValue }) => {
+                            const q = (inputValue || '').toLowerCase();
+                            return options.filter((option) => {
+                              const cust = (option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                              const invNum = option?.invoiceNumber !== undefined ? ('inv-' + String(option.invoiceNumber).padStart(6, '0')).toLowerCase() : '';
+                              return cust.includes(q) || invNum.includes(q);
+                            });
+                          }}
+                          sx={{ width: '100%', backgroundColor: 'white' }}
+                        />
+                      )
+                    }
+                    {
+                      reason === 'Other' && (
                         <TextField
                           id='description'
                           name='description'
@@ -1569,12 +1759,6 @@ function ItemPurchaseUpdateForm() {
                           onChange={(e) => setDescription(e.target.value)}
                           sx={{ width: '100%', backgroundColor: 'white' }}
                         />
-                      ) : (
-                        <div>
-                          <div style={{ display: 'flex', gap: '80px' }}>
-                            <Typography>{projectName !== undefined ? projectName.name : ''}</Typography>
-                          </div>
-                        </div>
                       )
                     }
                   </Grid>

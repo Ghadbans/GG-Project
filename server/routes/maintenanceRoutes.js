@@ -165,6 +165,22 @@ Route.route("/get-last-saved-maintenance").get(async(req,res, next)=>{
   }
 });
 
+function isValidCustomer(customerName) {
+  if (!customerName) return false;
+  if (typeof customerName === 'string') {
+    const trimmed = customerName.trim();
+    return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
+  }
+  if (typeof customerName === 'object') {
+    const name = customerName.customerName || customerName.name;
+    if (typeof name === 'string') {
+      const trimmed = name.trim();
+      return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
+    }
+  }
+  return false;
+}
+
 // Create maintenance
 Route.route("/create-maintenance").post(async (req, res, next) => {
   const { customerName,serviceNumber,action,
@@ -174,6 +190,11 @@ Route.route("/create-maintenance").post(async (req, res, next) => {
     warranty,serialNo,defectDescription,adjustment,adjustmentNumber,
     totalInvoice,subTotal,Create,Converted,ReferenceName,
     includeAssetControl, assetControlReport} = req.body;
+
+  if (!isValidCustomer(customerName)) {
+    return res.status(400).json({ message: "Customer Name is required." });
+  }
+
   try {
     const branchId = req.body.branchId || req.query.branchId;
     const matchStage = branchId ? { branchId } : {};
@@ -303,8 +324,10 @@ Route.route('/technician-update-maintenance/:id').put(async (req, res, next) => 
   }
 });
 
-
 Route.route("/update-maintenance/:id").put(async (req, res, next) => {
+  if (req.body.customerName !== undefined && !isValidCustomer(req.body.customerName)) {
+    return res.status(400).json({ message: "Customer Name is required." });
+  }
   await maintenanceSchema
     .findByIdAndUpdate(req.params.id, {
       $set: req.body,
@@ -331,30 +354,17 @@ Route.route("/delete-maintenance/:id").delete(async (req, res) => {
     .catch((err) => {
       return next(err);
     });
-    const id = req.params.id
+    const id = req.params.id;
     try {
       const deleteInvoiceId = await invoiceSchema.find({ReferenceName:id});
-  if (deleteInvoiceId) {
-      await Promise.all (deleteInvoiceId.map(async (row)=>{
-        await invoiceSchema.findOneAndDelete({_id:row._id})
-      }))
-    }
+      if (deleteInvoiceId) {
+        await Promise.all (deleteInvoiceId.map(async (row)=>{
+          await invoiceSchema.findOneAndDelete({_id:row._id})
+        }))
+      }
     } catch (error) {
       
     }
-});
-
-Route.route("/remove-maintenance").delete(async (req, res) => {
-  await maintenanceSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
 });
 
 Route.route("/get-maintenance-related-info/:id").get(async (req, res, next) => {

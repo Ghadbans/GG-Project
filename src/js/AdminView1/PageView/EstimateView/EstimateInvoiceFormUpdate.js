@@ -46,6 +46,7 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { toast } from 'react-toastify';
 import ItemThumbnail from '../../../component/ItemThumbnail';
 
 
@@ -737,6 +738,11 @@ The GLOBAL GATE Team`;
 
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
+    const custName = customerName?.customerName || (typeof customerName === 'string' ? customerName : '');
+    if (!custName || custName.trim() === '' || custName === 'undefined' || custName === 'null') {
+      toast.error('Please select a valid Customer Name before saving.');
+      return;
+    }
     const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
     const data = {
       customerName,

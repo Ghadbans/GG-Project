@@ -24,7 +24,21 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
-- **Purchase Order Universal Search & Newest-to-Oldest Ordering (Ver 3.4.96)**:
+- **Strict Customer Name Enforcement, Item Purchase Re-assignment & Dynamic Maintenance Grand Total (Ver 3.4.97)**:
+  - **Strict Customer Name Enforcement Across All Modules**:
+    - Enforced mandatory Customer Name selection across **Maintenance**, **Invoices**, **Quotations/Estimates**, **Projects**, and **Point of Sale (POS)**.
+    - Frontend validation on form submission: blocked creation and editing when customer is empty, displaying toast error: `"Please select or enter a valid Customer Name"`.
+    - Backend validation on creation and update endpoints in `server/routes/maintenanceRoutes.js`, `server/routes/invoiceRoutes.js`, `server/routes/estimationRoutes.js`, `server/routes/projectRoutes.js`, and `server/routes/Routes.js`, rejecting empty customer payloads with HTTP 400.
+  - **Item Purchase Edit Client & Reference Re-assignment**:
+    - Enhanced `ItemPurchaseUpdateForm.js` to fetch live `projects`, `maintenanceList`, and `invoiceList` data on component mount.
+    - Replaced non-interactive static text fields with searchable MUI `<Autocomplete>` dropdowns for Project (`PR-...`), Maintenance (`M-...`), Invoice (`INV-...`), and Description/Other.
+    - Enabled users to freely modify or correct the assigned project, maintenance order, invoice, or client during item purchase edits.
+    - Formatted reference labels safely in `ItemPurchaseViewForm.js` to prevent `undefined` strings.
+  - **Maintenance Overview Dynamic Grand Total Calculation**:
+    - In `src/js/AdminView1/PageView/MaintenanceView/MaintenanceViewInformation.js`, replaced static `row.totalInvoice` in the finance summary overview with dynamic live summation:
+      `liveGrandTotal = liveItemsTotal + liveLaborTotal + (user.data.role === 'CEO' ? totalAmountPlaning + totalMaintenanceExpenses : 0)`.
+    - Resolved issue where previously deleted or modified project/daily expenses remained cached in `row.totalInvoice`, ensuring live expenses ($50.00 + $4.44 = $54.44) and current items/labor are calculated dynamically in real-time.
+  - **Release & Distribution**: Bumped version to `3.4.97`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.97.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
   - **Purchase Order Search Scope Expansion**:
     - Enhanced `/purchaseOrder-Information` backend route in `server/routes/purchaseRoutes.js` with comprehensive `$or` search regex filters covering `description`, `manufacturer`, `manufacturerNumber`, `reason`, `status`, `Converted` (converted/open status queries), `reference.referenceName`, `reference.projectName`, `reference.serviceName`, `reference.customerName`, `itemsQtyArray.itemName`, `itemsQtyArray.itemBrand`, `itemsQtyArray.itemDescription`, `itemsQtyArray.newDescription`, and flexible PO numeric search (matching `PO-000724`, `PO-724`, or `724`).
     - Added multi-branch scoping (`branchId` parameter) to `PurchaseOrderViewAdmin.js` and `PurchaseOrderInfoView.js`.

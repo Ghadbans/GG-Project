@@ -106,9 +106,28 @@ Route.route("/get-last-saved-project").get(async(req,res, next)=>{
     next(error);
   }
 })
+function isValidCustomer(customerName) {
+  if (!customerName) return false;
+  if (typeof customerName === 'string') {
+    const trimmed = customerName.trim();
+    return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
+  }
+  if (typeof customerName === 'object') {
+    const name = customerName.customerName || customerName.name;
+    if (typeof name === 'string') {
+      const trimmed = name.trim();
+      return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
+    }
+  }
+  return false;
+}
+
 // Create projects
 Route.route("/create-projects").post(async (req, res, next) => {
    const { customerName, projectName, status, phase, description, startDate, visitDate, projectNumber, Create } = req.body;
+   if (!isValidCustomer(customerName)) {
+     return res.status(400).json({ message: "Customer Name is required." });
+   }
    try {
     const branchId = req.body.branchId || req.query.branchId || 'HQ';
     const matchStage = branchId ? { branchId } : {};
@@ -146,7 +165,10 @@ Route.route("/get-projects/:id").get(async (req, res, next) => {
 
 Route.route("/update-projects/:id").put(async (req, res, next) => {
   const id = req.params.id
-  const {projectName,status,description} = req.body
+  const {projectName,status,description,customerName} = req.body
+  if (customerName !== undefined && !isValidCustomer(customerName)) {
+    return res.status(400).json({ message: "Customer Name is required." });
+  }
   try {
     await Promise.all([
       projectSchema.findByIdAndUpdate(req.params.id, {

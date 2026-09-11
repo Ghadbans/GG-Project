@@ -39,6 +39,7 @@ import Close from '@mui/icons-material/Close';
 import dayjs from 'dayjs';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { toast } from 'react-toastify';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -310,6 +311,12 @@ function ProjectFormView() {
   const [saving, setSaving] = useState('')
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const custName = customerName?.customerName || (typeof customerName === 'string' ? customerName : '');
+    if (!custName || custName.trim() === '' || custName === 'undefined' || custName === 'null') {
+      toast.error('Please select a valid Customer Name before saving.');
+      setSaving('');
+      return;
+    }
     setSaving('true')
     const data = {
       _id: v4(),

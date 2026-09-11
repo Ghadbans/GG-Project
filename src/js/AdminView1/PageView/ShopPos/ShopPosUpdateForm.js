@@ -43,6 +43,7 @@ import numberToWords from 'number-to-words'
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { toast } from 'react-toastify';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -574,6 +575,12 @@ function ShopPosUpdateForm() {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const custName = customerName?.customerName || (typeof customerName === 'string' ? customerName : '');
+    if (!custName || custName.trim() === '' || custName === 'undefined' || custName === 'null') {
+      toast.error('Please select a valid Customer Name before saving.');
+      setSaving('');
+      return;
+    }
     setSaving('true');
     const data = {
       customerName,
