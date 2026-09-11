@@ -123,18 +123,28 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     // Status filter
     if (status && status !== 'ALL') {
       const s = status.trim().toLowerCase();
-      if (s === 'open') {
-        query.status = { $regex: /^open$/i };
-      } else if (s === 'pending') {
-        query.status = { $regex: /^pending$/i };
+      if (s === 'converted') {
+        query.$or = [
+          { Converted: true },
+          { Converted: 'true' },
+          { status: { $regex: /^converted$/i } }
+        ];
       } else if (s === 'close' || s === 'closed') {
         query.status = { $regex: /^close(d)?$/i };
+        query.Converted = { $nin: [true, 'true'] };
+      } else if (s === 'open') {
+        query.status = { $regex: /^open$/i };
+        query.Converted = { $nin: [true, 'true'] };
+      } else if (s === 'pending') {
+        query.status = { $regex: /^pending$/i };
+        query.Converted = { $nin: [true, 'true'] };
       } else if (s === 'reschedule' || s === 'rescheduled') {
         query.status = { $regex: /^reschedule(d)?$/i };
+        query.Converted = { $nin: [true, 'true'] };
       } else if (s === 'cancel' || s === 'cancelled' || s === 'canceled') {
         query.status = { $regex: /^cancel(l?ed)?$/i };
       } else {
-        query.status = new RegExp(status.trim(), 'i');
+        query.status = new RegExp(`^${status.trim()}$`, 'i');
       }
     }
 
@@ -183,8 +193,26 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       maintenanceSchema.aggregate([
         { $match: baseBranchQuery },
         {
+          $project: {
+            isConverted: {
+              $or: [
+                { $eq: ["$Converted", true] },
+                { $eq: ["$Converted", "true"] },
+                { $eq: [{ $toLower: "$status" }, "converted"] }
+              ]
+            },
+            statusLower: { $toLower: "$status" }
+          }
+        },
+        {
           $group: {
-            _id: { $toLower: "$status" },
+            _id: {
+              $cond: [
+                "$isConverted",
+                "converted",
+                "$statusLower"
+              ]
+            },
             count: { $sum: 1 }
           }
         }
@@ -196,6 +224,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       open: 0,
       pending: 0,
       close: 0,
+      converted: 0,
       reschedule: 0,
       cancel: 0
     };
@@ -207,6 +236,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       if (key === 'open') statusCounts.open += cnt;
       else if (key === 'pending') statusCounts.pending += cnt;
       else if (key === 'close' || key === 'closed') statusCounts.close += cnt;
+      else if (key === 'converted') statusCounts.converted += cnt;
       else if (key === 'reschedule' || key === 'rescheduled') statusCounts.reschedule += cnt;
       else if (key === 'cancel' || key === 'cancelled' || key === 'canceled') statusCounts.cancel += cnt;
     });

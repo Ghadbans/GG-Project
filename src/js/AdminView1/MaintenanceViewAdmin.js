@@ -26,7 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline, Assignment as AssignmentIcon, Build as BuildIcon, HourglassEmpty as HourglassEmptyIcon, EventRepeat as EventRepeatIcon, Cancel as CancelIcon } from '@mui/icons-material';
+import { Add, Close, MailOutline, Assignment as AssignmentIcon, Build as BuildIcon, HourglassEmpty as HourglassEmptyIcon, EventRepeat as EventRepeatIcon, Cancel as CancelIcon, ReceiptLong as ReceiptIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -183,6 +183,7 @@ function MaintenanceViewAdmin() {
     open: 0,
     pending: 0,
     close: 0,
+    converted: 0,
     reschedule: 0,
     cancel: 0
   });
@@ -490,30 +491,39 @@ function MaintenanceViewAdmin() {
     { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 220, valueGetter: (params) => params.row.customerName.customerName },
     { field: 'brand', headerName: 'Item Brand', width: sideBar ? 100 : 140, },
     {
-      field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
-        <div>
-          {
-            params.row.status === 'Close' && params.row.Converted === true ? "Converted" :
-              <Typography
-                color={
-                  params.row.status === "Open"
-                    ? "blue" :
-                    params.row.status === "Pending"
-                      ? "#801313" :
-                      params.row.status === "Reschedule"
-                        ? "Orange" :
-                        params.row.status === "Cancel"
-                          ? "red" :
-                          params.row.status === "Close"
-                            ? "green" : "black"
-                }
-              >
-                {params.row.status}
-              </Typography>
-
-          }
-        </div>
-      )
+      field: 'status', headerName: 'Status', width: 100, renderCell: (params) => {
+        const isConverted = (params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true')) || params.row.status === 'Converted' || (params.row.Converted === true || params.row.Converted === 'true');
+        return (
+          <div>
+            {
+              isConverted ? (
+                <Typography sx={{ color: '#00838f', fontWeight: 600 }}>
+                  Converted
+                </Typography>
+              ) : (
+                <Typography
+                  sx={{
+                    fontWeight: 600,
+                    color:
+                      params.row.status === "Open"
+                        ? "blue" :
+                        params.row.status === "Pending"
+                          ? "#801313" :
+                          params.row.status === "Reschedule"
+                            ? "Orange" :
+                            params.row.status === "Cancel"
+                              ? "red" :
+                              params.row.status === "Close"
+                                ? "green" : "black"
+                  }}
+                >
+                  {params.row.status}
+                </Typography>
+              )
+            }
+          </div>
+        );
+      }
     },
     { field: 'defectDescription', headerName: 'Defect', width: sideBar ? 130 : 150 },
     { field: 'itemDescriptionInfo', headerName: 'I-Description', width: sideBar ? 130 : 150 },
@@ -636,7 +646,8 @@ function MaintenanceViewAdmin() {
                 gridTemplateColumns: {
                   xs: 'repeat(2, 1fr)',
                   sm: 'repeat(3, 1fr)',
-                  md: 'repeat(6, 1fr)',
+                  md: 'repeat(4, 1fr)',
+                  lg: 'repeat(7, 1fr)',
                 },
                 gap: 1.5,
                 mb: 1.5,
@@ -648,6 +659,7 @@ function MaintenanceViewAdmin() {
                 { key: 'Open', label: 'OPEN', count: statusCounts.open, color: '#1976d2', bgLight: '#e3f2fd', icon: <BuildIcon sx={{ fontSize: 20, color: '#1976d2' }} /> },
                 { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#ed6c02', bgLight: '#fff3e0', icon: <HourglassEmptyIcon sx={{ fontSize: 20, color: '#ed6c02' }} /> },
                 { key: 'Close', label: 'CLOSED', count: statusCounts.close, color: '#2e7d32', bgLight: '#e8f5e9', icon: <CheckCircleIcon sx={{ fontSize: 20, color: '#2e7d32' }} /> },
+                { key: 'Converted', label: 'CONVERTED', count: statusCounts.converted, color: '#00838f', bgLight: '#e0f7fa', icon: <ReceiptIcon sx={{ fontSize: 20, color: '#00838f' }} /> },
                 { key: 'Reschedule', label: 'RESCHEDULE', count: statusCounts.reschedule, color: '#9c27b0', bgLight: '#f3e5f5', icon: <EventRepeatIcon sx={{ fontSize: 20, color: '#9c27b0' }} /> },
                 { key: 'Cancel', label: 'CANCEL', count: statusCounts.cancel, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 20, color: '#d32f2f' }} /> },
               ].map((card) => {
