@@ -172,7 +172,7 @@ function isValidCustomer(customerName) {
     return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
   }
   if (typeof customerName === 'object') {
-    const name = customerName.customerName || customerName.name;
+    const name = customerName.customerName || customerName.Customer || customerName.name;
     if (typeof name === 'string') {
       const trimmed = name.trim();
       return trimmed.length > 0 && trimmed.toLowerCase() !== 'undefined' && trimmed.toLowerCase() !== 'null' && !trimmed.toLowerCase().includes('unknown customer');
@@ -325,22 +325,28 @@ Route.route('/technician-update-maintenance/:id').put(async (req, res, next) => 
 });
 
 Route.route("/update-maintenance/:id").put(async (req, res, next) => {
-  if (req.body.customerName !== undefined && !isValidCustomer(req.body.customerName)) {
-    return res.status(400).json({ message: "Customer Name is required." });
-  }
-  await maintenanceSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const updatePayload = { ...req.body };
+    
+    // If customerName is explicitly passed but invalid/empty/blank, do NOT wipe out existing customer in DB
+    if ('customerName' in updatePayload) {
+      if (!isValidCustomer(updatePayload.customerName)) {
+        delete updatePayload.customerName;
+      }
+    }
+
+    const result = await maintenanceSchema.findByIdAndUpdate(
+      req.params.id,
+      { $set: updatePayload },
+      { new: true }
+    );
+    res.json({
+      data: result,
+      msg: "Data successfully updated.",
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.route("/delete-maintenance/:id").delete(async (req, res) => {

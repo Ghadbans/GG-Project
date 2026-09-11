@@ -698,13 +698,13 @@ function MaintenanceFormClone() {
                   </Grid>
                   <Grid item xs={9}>
                     {
-                      customerName.customerName !== '' ?
+                      customerName && (customerName.customerName || customerName.Customer || customerName.name) ?
                         (
                           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                             <TextField
                               disabled
-                              name='CUstomer Name'
-                              value={customerName.customerName !== undefined ? customerName.customerName : ''}
+                              name='Customer Name'
+                              value={customerName.customerName || customerName.Customer || customerName.name || ''}
                               sx={{ width: '100%' }}
                             />
                             <BlackTooltip title="Clear" placement='top'>
@@ -717,7 +717,15 @@ function MaintenanceFormClone() {
                         : (
                           <Autocomplete
                             options={customer}
-                            getOptionLabel={(option) => option.Customer}
+                            getOptionLabel={(option) => option?.Customer || option?.customerName || ''}
+                            filterOptions={(options, { inputValue }) => {
+                              const term = (inputValue || '').toLowerCase();
+                              return options.filter((opt) => 
+                                ((opt?.Customer || opt?.customerName || '')).toLowerCase().includes(term) ||
+                                ((opt?.billingAddress || '')).toLowerCase().includes(term) ||
+                                ((opt?.customerCompanyPhone || '')).toLowerCase().includes(term)
+                              );
+                            }}
                             onChange={(e, newValue) => {
                               handleChangeCustomer(newValue);
                             }}

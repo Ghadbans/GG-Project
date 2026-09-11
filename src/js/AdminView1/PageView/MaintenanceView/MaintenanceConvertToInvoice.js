@@ -219,6 +219,7 @@ function MaintenanceConvertToInvoice() {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`)
         setCustomer(res.data.data.customerName);
+        setCustomerName(res.data.data.customerName);
         setServiceNumber(Number(res.data?.data?.serviceNumber || res.data?.serviceNumber || 0));
         setInvoiceDate(res.data.data.serviceDate);
         SetItems(res.data.data.items);

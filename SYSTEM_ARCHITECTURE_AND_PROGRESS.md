@@ -24,6 +24,17 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Maintenance Customer Retention & DB Overwrite Protection (Ver 3.4.98)**:
+  - **Maintenance Customer Name Loading & State Initialization**:
+    - Fixed missing `setCustomerName(mData.customerName || null)` in `MaintenanceUpdateView.js` `fetchData()`, ensuring existing client names are always loaded into state when opening maintenance records for editing.
+    - Updated `customerName` initial state from `{}` to `null` to avoid false truthy evaluations.
+    - Updated `MaintenanceFormClone.js` and `MaintenanceConvertToInvoice.js` to ensure `customerName` is correctly populated on mount.
+    - Rendered customer name with safe label extraction (`customerName.customerName || customerName.Customer || customerName.name`) and enhanced the Autocomplete with robust search filtering across name, address, and phone number.
+  - **Backend Customer Retention Guard**:
+    - Enhanced `/update-maintenance/:id`, `/update-invoice/:id`, `/update-estimation/:id`, and `/update-projects/:id` in backend routes to automatically delete invalid/empty `customerName` properties from update payloads.
+    - Guarantees that partial updates (e.g. inventory itemOut/itemPurchase synchronization) or empty payload objects can **never** overwrite or wipe out an existing customer in MongoDB.
+  - **Release & Distribution**: Bumped version to `3.4.98`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.98.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Strict Customer Name Enforcement, Item Purchase Re-assignment & Dynamic Maintenance Grand Total (Ver 3.4.97)**:
   - **Strict Customer Name Enforcement Across All Modules**:
     - Enforced mandatory Customer Name selection across **Maintenance**, **Invoices**, **Quotations/Estimates**, **Projects**, and **Point of Sale (POS)**.

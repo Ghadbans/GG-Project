@@ -164,27 +164,29 @@ Route.route("/get-projects/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-projects/:id").put(async (req, res, next) => {
-  const id = req.params.id
-  const {projectName,status,description,customerName} = req.body
-  if (customerName !== undefined && !isValidCustomer(customerName)) {
-    return res.status(400).json({ message: "Customer Name is required." });
+  const id = req.params.id;
+  const updatePayload = { ...req.body };
+  if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
+    delete updatePayload.customerName;
   }
+  const { projectName, status, description } = updatePayload;
   try {
+    const result = await projectSchema.findByIdAndUpdate(req.params.id, {
+      $set: updatePayload,
+    }, { new: true });
+    
     await Promise.all([
-      projectSchema.findByIdAndUpdate(req.params.id, {
-        $set: req.body,
-      }).then((result) => {res.json({ data: result,
-          msg: "Data successfully updated.",
-        });
-      }).catch((err) => {
-        return next(err);
-      }),
-      itemPurchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.name':projectName}}),
-      purchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.projectName':projectName,'statusInfo':status,'description':description}}),
-      itemOutSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}),
-      itemReturnSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}),
-      expenseSchema.updateMany({'accountNameInfo._id': id},{$set:{'accountNameInfo.name':projectName}}),
-    ])
+      projectName ? itemPurchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.name':projectName}}) : Promise.resolve(),
+      (projectName || status || description) ? purchaseSchema.updateMany({'projectName._id': id},{$set:{'projectName.projectName':projectName,'statusInfo':status,'description':description}}) : Promise.resolve(),
+      projectName ? itemOutSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}) : Promise.resolve(),
+      projectName ? itemReturnSchema.updateMany({'reference._id': id},{$set:{'reference.referenceName':projectName}}) : Promise.resolve(),
+      projectName ? expenseSchema.updateMany({'accountNameInfo._id': id},{$set:{'accountNameInfo.name':projectName}}) : Promise.resolve(),
+    ]);
+
+    res.json({
+      data: result,
+      msg: "Data successfully updated.",
+    });
   } catch (error) {
     return next(error);
   }

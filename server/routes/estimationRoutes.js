@@ -228,16 +228,17 @@ Route.route("/get-estimation/:id").get(async (req, res, next) => {
 
 Route.route("/update-estimation/:id").put(async (req, res, next) => {
     try {
-        if (req.body.customerName !== undefined && !isValidCustomer(req.body.customerName)) {
-            return res.status(400).json({ message: "Customer Name is required." });
+        const updatePayload = { ...req.body };
+        if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
+            delete updatePayload.customerName;
         }
         const est = await estimationSchema.findById(req.params.id);
         if (est && (est.ReferenceName || (est.Ref && est.Ref._id))) {
-            req.body.status = 'Converted';
+            updatePayload.status = 'Converted';
         }
         
         const result = await estimationSchema.findByIdAndUpdate(req.params.id, {
-            $set: req.body,
+            $set: updatePayload,
         }, { new: true });
         
         res.json({

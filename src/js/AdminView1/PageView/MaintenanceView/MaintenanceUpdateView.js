@@ -209,7 +209,7 @@ function MaintenanceUpdateView() {
   ]);
   const [note, setNote] = useState("");
   const [technicianAssign, setTechnicianAssign] = useState('');
-  const [customerName, setCustomerName] = useState({});
+  const [customerName, setCustomerName] = useState(null);
   const [customer, setCustomer] = useState([]);
   const [reason, setReason] = useState("");
   const [converted, setConverted] = useState("");
@@ -248,6 +248,7 @@ function MaintenanceUpdateView() {
           setSerialNo(mData.serialNo || "");
           setServiceNumber(mData.serviceNumber || 0);
           setTechnicianAssign(mData.technicianAssign || '');
+          setCustomerName(mData.customerName || null);
           const sanitizedItems = (mData.items || []).map((item) => ({
             ...item,
             itemAmount: Number(item.itemAmount != null ? item.itemAmount : ((parseFloat(item.itemQty) || 0) * (parseFloat(item.itemRate) || 0))) || 0,
@@ -946,9 +947,9 @@ function MaintenanceUpdateView() {
                   </Grid>
                   <Grid item xs={9}>
                     {
-                      customerName !== null ? (
+                      customerName && (customerName.customerName || customerName.Customer || customerName.name) ? (
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <p>{customerName.customerName}</p>
+                          <p style={{ fontWeight: '500' }}>{customerName.customerName || customerName.Customer || customerName.name}</p>
                           <BlackTooltip title="Clear" placement='top'>
                             <IconButton onClick={handleClearCustomer} style={{ position: 'relative', float: 'right' }}>
                               <RemoveCircleOutline style={{ color: '#202a5a' }} />
@@ -960,7 +961,15 @@ function MaintenanceUpdateView() {
                         <Autocomplete
                           disableClearable
                           options={customer}
-                          getOptionLabel={(option) => option.Customer}
+                          getOptionLabel={(option) => option?.Customer || option?.customerName || ''}
+                          filterOptions={(options, { inputValue }) => {
+                            const term = (inputValue || '').toLowerCase();
+                            return options.filter((opt) => 
+                              ((opt?.Customer || opt?.customerName || '')).toLowerCase().includes(term) ||
+                              ((opt?.billingAddress || '')).toLowerCase().includes(term) ||
+                              ((opt?.customerCompanyPhone || '')).toLowerCase().includes(term)
+                            );
+                          }}
                           onChange={(e, newValue) => {
                             handleChangeCustomer(newValue);
                           }}

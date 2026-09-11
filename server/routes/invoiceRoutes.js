@@ -351,22 +351,23 @@ Route.route("/get-invoice/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-invoice/:id").put(async (req, res, next) => {
-  if (req.body.customerName !== undefined && !isValidCustomer(req.body.customerName)) {
-    return res.status(400).json({ message: "Customer Name is required." });
-  }
-  await invoiceSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const updatePayload = { ...req.body };
+    if ('customerName' in updatePayload && !isValidCustomer(updatePayload.customerName)) {
+      delete updatePayload.customerName;
+    }
+    const result = await invoiceSchema.findByIdAndUpdate(
+      req.params.id,
+      { $set: updatePayload },
+      { new: true }
+    );
+    res.json({
+      data: result,
+      msg: "Data successfully updated.",
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.route("/delete-invoice/:id").delete(async (req, res, next) => {
