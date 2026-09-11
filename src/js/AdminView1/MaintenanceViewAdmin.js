@@ -186,11 +186,17 @@ function MaintenanceViewAdmin() {
     reschedule: 0,
     cancel: 0
   });
+  const limit = 100;
+  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
+  const [filterField, setFilterField] = useState(''); // Initialize filter field state
+  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
+  const [totalPage, SetTotalPage] = useState(0);
+  const [totalItemCount, setTotalItemCount] = useState(0);
 
   const fetchItems = async (page, searchTerm, filterField, filterValue, statusFilter) => {
     try {
       const statusParam = statusFilter && statusFilter !== 'ALL' ? `&status=${encodeURIComponent(statusFilter)}` : '';
-      const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}${statusParam}`);
+      const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent((searchTerm || '').trim())}&filterField=${encodeURIComponent((filterField || '').trim())}&filterValue=${encodeURIComponent((filterValue || '').trim())}${statusParam}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
