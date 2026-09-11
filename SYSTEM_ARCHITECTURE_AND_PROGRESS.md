@@ -24,6 +24,22 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Payment Received Cash Accounting Reconciliation & POS Multi-Tier Summary Matching (Ver 3.5.00)**:
+  - **Payment Received 3-Tier Multi-Currency Table Structure**:
+    - Aligned the **Payment Received** table in `DailyExpenseAdminView.js` to strictly follow the multi-tier accounting model used in Point of Sale (POS):
+      - **Gross Payment Display**: Each payment table row displays the gross cash received (`Total FC` and `Total $`), invoice reference, and `Credit` ($0 if surplus was returned in cash).
+      - **3-Row Table Footer**:
+        1. `Payment Received Gross Total` (`totalGrossPaymentFC` | `totalGrossPaymentUSD`)
+        2. `Payment Return Change Total (Cash Returned)` (`-FC totalReturnPaymentFC` | `-$ totalReturnPaymentUSD` in red `#d32f2f`)
+        3. `Daily Payment Received Total (Net Cash in Hand)` (`totalPaymentFC1` | `totalPaymentUSD1` in blue `#1565c0`)
+  - **Correct Physical Cash Drawer Accounting on Surplus Cash Return**:
+    - Fixed accounting formula when a customer pays excess cash (e.g. customer gives $200 cash for a $130 invoice with $50 USD return + FC 45,000 return):
+      - Gross Cash received is computed from the full Amount Received ($200 USD), not the invoice amount.
+      - Return cash ($50 USD and FC 45,000) is deducted from the gross cash received, resulting in exact physical cash in hand: +$150 USD net and -FC 45,000 net.
+      - Total Summary card and drawer closing cash (`Remaining FC` and `Remaining $`) perfectly balance physical drawer cash movements and expenses.
+      - Formatted negative amounts in Summary Cards cleanly with `-FC` and `-$`.
+  - **Release & Distribution**: Bumped version to `3.5.00`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.00.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Payment Ordering, Add Payment Cash Return (USD/FC) & Maintenance Expenses Invoice Conversion (Ver 3.4.99)**:
   - **Payment Received Newest-to-Oldest Ordering**:
     - Fixed sort order in `src/js/AdminView1/PaymentView.js` for both online and offline Dexie cache views by sorting strictly descending by `paymentNumber` (`[...formatDate].sort((a, b) => Number(b.paymentNumber || 0) - Number(a.paymentNumber || 0))`).

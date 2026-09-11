@@ -537,11 +537,67 @@ function DailyExpenseAdminView() {
   const totalDay = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) === 0).reduce((sum, row) => Math.round((sum + parseFloat(row.total)) * 100) / 100, 0) : 0
   const totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0
 
-  const totalPaymentFC1 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : Math.max(0, parseFloat(row.PaymentReceivedFC || 0) - parseFloat(row.returnFC || 0))), 0) : 0
-  const totalPaymentUSD0 = filterTotalPayment.length > 0 ? filterTotalPayment.filter((row) => (row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return') || (row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return')).reduce((acc, row) => acc + parseFloat(row.remaining), 0) : 0
-  const totalPaymentUSD15 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : Math.max(0, parseFloat(row.PaymentReceivedUSD || 0) - parseFloat(row.returnUSD || 0))), 0) : 0
-  const totalPaymentUSD1 = totalPaymentUSD0 + totalPaymentUSD15
-  const totalPaymentUSDTotal = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (parseFloat(row.amount) - parseFloat(row.returnUSD || 0)), 0) : 0
+  const getPaymentRowValues = (row) => {
+    if (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount)) {
+      return {
+        grossFC: 0,
+        grossUSD: 0,
+        returnFC: 0,
+        returnUSD: 0,
+        netFC: 0,
+        netUSD: 0,
+        credit: 0
+      };
+    }
+    const payFC = parseFloat(row.PaymentReceivedFC) || 0;
+    const payUSD = parseFloat(row.PaymentReceivedUSD) || 0;
+    const retFC = parseFloat(row.returnFC) || 0;
+    const retUSD = parseFloat(row.returnUSD) || 0;
+    const rem = parseFloat(row.remaining) || 0;
+
+    let grossUSD = payUSD;
+    let grossFC = payFC;
+    let credit = 0;
+
+    if (row.excessAction === 'Return') {
+      if (row.modes === 'Cash' && parseFloat(row.amount) > 0) {
+        grossUSD = Math.max(payUSD + retUSD, parseFloat(row.amount));
+        grossFC = payFC;
+      } else {
+        grossUSD = payUSD + retUSD;
+        grossFC = payFC + retFC;
+      }
+      credit = 0;
+    } else {
+      if ((row.modes === 'Cash' || row.modes === 'Bank Transfer') && rem > 0) {
+        grossUSD = payUSD + rem;
+      }
+      credit = rem;
+    }
+
+    const netFC = grossFC - retFC;
+    const netUSD = grossUSD - retUSD;
+
+    return {
+      grossFC,
+      grossUSD,
+      returnFC: retFC,
+      returnUSD: retUSD,
+      netFC,
+      netUSD,
+      credit
+    };
+  };
+
+  const totalGrossPaymentFC = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + getPaymentRowValues(row).grossFC, 0) : 0
+  const totalGrossPaymentUSD = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + getPaymentRowValues(row).grossUSD, 0) : 0
+
+  const totalReturnPaymentFC = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + getPaymentRowValues(row).returnFC, 0) : 0
+  const totalReturnPaymentUSD = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + getPaymentRowValues(row).returnUSD, 0) : 0
+
+  const totalPaymentFC1 = totalGrossPaymentFC - totalReturnPaymentFC
+  const totalPaymentUSD1 = totalGrossPaymentUSD - totalReturnPaymentUSD
+  const totalPaymentUSDTotal = totalPaymentUSD1
 
   const totalGrossPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalFc) || 0), 0) : 0
   const totalGrossPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalUsd) || 0), 0) : 0
@@ -1108,13 +1164,13 @@ function DailyExpenseAdminView() {
                                         ))}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>FC </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedFC !== undefined ? Math.max(0, item.PaymentReceivedFC - (item.returnFC || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)}
+                                        <span>FC </span>{getPaymentRowValues(item).grossFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedUSD !== undefined ? Math.max(0, item.PaymentReceivedUSD - (item.returnUSD || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : (item.amount - (item.returnUSD || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
+                                        <span>$ </span>{getPaymentRowValues(item).grossUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{item.excessAction === 'Return' ? (0).toFixed(2) : (item.remaining || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        <span>$ </span>{getPaymentRowValues(item).credit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                       </td>
                                     </>
                                   )
@@ -1123,10 +1179,20 @@ function DailyExpenseAdminView() {
                               </tr>
                             )
                           }
-                          <tr>
-                            <td style={{ border: '1px solid gray' }} colSpan={4}>Daily Payment Received Total</td>
-                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center' }}><span>FC </span><span >{isNaN(totalPaymentFC1) ? 0 : totalPaymentFC1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                            <td style={{ border: '1px solid gray', width: '100px' }} colSpan={2}><span>$ </span><span >{isNaN(totalPaymentUSD1) ? totalPaymentUSDTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : totalPaymentUSD1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          <tr style={{ backgroundColor: '#fcfcfc' }}>
+                            <td style={{ border: '1px solid gray', fontWeight: 'bold' }} colSpan={4}>Payment Received Gross Total</td>
+                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center', fontWeight: 'bold' }}><span>FC </span><span>{isNaN(totalGrossPaymentFC) ? '0.00' : totalGrossPaymentFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            <td style={{ border: '1px solid gray', width: '100px', fontWeight: 'bold' }} colSpan={2}><span>$ </span><span>{isNaN(totalGrossPaymentUSD) ? '0.00' : totalGrossPaymentUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          </tr>
+                          <tr style={{ backgroundColor: '#fff5f5' }}>
+                            <td style={{ border: '1px solid gray', color: '#d32f2f', fontWeight: 'bold' }} colSpan={4}>Payment Return Change Total (Cash Returned)</td>
+                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center', color: '#d32f2f', fontWeight: 'bold' }}><span>-FC </span><span>{isNaN(totalReturnPaymentFC) ? '0.00' : totalReturnPaymentFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            <td style={{ border: '1px solid gray', width: '100px', color: '#d32f2f', fontWeight: 'bold' }} colSpan={2}><span>-$ </span><span>{isNaN(totalReturnPaymentUSD) ? '0.00' : totalReturnPaymentUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          </tr>
+                          <tr style={{ backgroundColor: '#f0f7ff' }}>
+                            <td style={{ border: '1px solid gray', fontWeight: 'bold' }} colSpan={4}>Daily Payment Received Total (Net Cash in Hand)</td>
+                            <td style={{ border: '1px solid gray', width: '100px', textAlign: 'center', fontWeight: 'bold', color: '#1565c0' }}><span>{totalPaymentFC1 < 0 ? '-FC ' + Math.abs(totalPaymentFC1).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'FC ' + totalPaymentFC1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                            <td style={{ border: '1px solid gray', width: '100px', fontWeight: 'bold', color: '#1565c0' }} colSpan={2}><span>{totalPaymentUSD1 < 0 ? '-$ ' + Math.abs(totalPaymentUSD1).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '$ ' + totalPaymentUSD1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                           </tr>
                         </tbody>
                       )
@@ -1171,8 +1237,8 @@ function DailyExpenseAdminView() {
                                 </tr>
                                 <tr>
                                   <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Total Payment Received</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{totalEnterFc.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{totalEnter.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>{totalEnterFc < 0 ? '-FC ' + Math.abs(totalEnterFc).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'FC ' + totalEnterFc.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                  <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>{totalEnter < 0 ? '-$ ' + Math.abs(totalEnter).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '$ ' + totalEnter.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                 </tr>
                               </tbody>
                               {
@@ -1203,8 +1269,8 @@ function DailyExpenseAdminView() {
                                         :
                                         <tr>
                                           <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Remaining</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{RemainingFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{RemainingUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>{RemainingFC < 0 ? '-FC ' + Math.abs(RemainingFC).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'FC ' + RemainingFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>{RemainingUSD < 0 ? '-$ ' + Math.abs(RemainingUSD).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '$ ' + RemainingUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                         </tr>
                                     }
                                   </tbody>
@@ -1877,8 +1943,8 @@ function DailyExpenseAdminView() {
                         </tr>
                         <tr>
                           <td style={{ textAlign: 'left', fontSize: '20px' }}>Total Payment Received</td>
-                          <td style={{ textAlign: 'left', fontSize: '20px' }}><span>FC </span>{isNaN(totalPaymentFC) ? 0 : totalPaymentFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                          <td style={{ textAlign: 'left', fontSize: '20px' }}><span>$ </span>{isNaN(totalPaymentUSD) ? totalPaymentUSDTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : totalPaymentUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                          <td style={{ textAlign: 'left', fontSize: '20px' }}><span>{totalEnterFc < 0 ? '-FC ' + Math.abs(totalEnterFc).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'FC ' + totalEnterFc.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          <td style={{ textAlign: 'left', fontSize: '20px' }}><span>{totalEnter < 0 ? '-$ ' + Math.abs(totalEnter).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '$ ' + totalEnter.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                         </tr>
                         <tr>
                           <td style={{ textAlign: 'left', fontSize: '20px' }}>Amount To Return</td>
