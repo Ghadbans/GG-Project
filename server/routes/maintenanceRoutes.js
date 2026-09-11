@@ -104,10 +104,10 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
 
 Route.route("/maintenance-Information").get(async (req, res) => {
   try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
+    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId, status } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
-    // Build the query object dynamically based on the filters
+    // Build base query for branch scoping
     const query = branchFilter(req);
     if (branchId && branchId !== 'ALL') {
       if (branchId === 'HQ') {
@@ -116,10 +116,32 @@ Route.route("/maintenance-Information").get(async (req, res) => {
         query.branchId = branchId;
       }
     }
+
+    // Clone base query for counting all statuses across branch
+    const baseBranchQuery = { ...query };
+
+    // Status filter
+    if (status && status !== 'ALL') {
+      const s = status.trim().toLowerCase();
+      if (s === 'open') {
+        query.status = { $regex: /^open$/i };
+      } else if (s === 'pending') {
+        query.status = { $regex: /^pending$/i };
+      } else if (s === 'close' || s === 'closed') {
+        query.status = { $regex: /^close(d)?$/i };
+      } else if (s === 'reschedule' || s === 'rescheduled') {
+        query.status = { $regex: /^reschedule(d)?$/i };
+      } else if (s === 'cancel' || s === 'cancelled' || s === 'canceled') {
+        query.status = { $regex: /^cancel(l?ed)?$/i };
+      } else {
+        query.status = new RegExp(status.trim(), 'i');
+      }
+    }
+
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
+      const searchConditions = [
         ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
         { serviceName: regex },
         { technicianAssign: regex },
@@ -138,17 +160,65 @@ Route.route("/maintenance-Information").get(async (req, res) => {
         { 'customerName.customerEmail': regex },
         { 'customerName.customerPhone': regex },
         { 'customerName.billingAddress': regex }
-      ].filter(condition => condition !== null);
+      ];
+
+      if (query.$or) {
+        query.$and = [
+          { $or: query.$or },
+          { $or: searchConditions }
+        ];
+        delete query.$or;
+      } else {
+        query.$or = searchConditions;
+      }
     }
+
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
-    const totalItem = await maintenanceSchema.countDocuments(query);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+    const [itemI, totalItem, statusAggregation] = await Promise.all([
+      maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean(),
+      maintenanceSchema.countDocuments(query),
+      maintenanceSchema.aggregate([
+        { $match: baseBranchQuery },
+        {
+          $group: {
+            _id: { $toLower: "$status" },
+            count: { $sum: 1 }
+          }
+        }
+      ])
+    ]);
+
+    const statusCounts = {
+      all: 0,
+      open: 0,
+      pending: 0,
+      close: 0,
+      reschedule: 0,
+      cancel: 0
+    };
+
+    statusAggregation.forEach(item => {
+      const key = (item._id || '').trim().toLowerCase();
+      const cnt = item.count || 0;
+      statusCounts.all += cnt;
+      if (key === 'open') statusCounts.open += cnt;
+      else if (key === 'pending') statusCounts.pending += cnt;
+      else if (key === 'close' || key === 'closed') statusCounts.close += cnt;
+      else if (key === 'reschedule' || key === 'rescheduled') statusCounts.reschedule += cnt;
+      else if (key === 'cancel' || key === 'cancelled' || key === 'canceled') statusCounts.cancel += cnt;
+    });
+
+    res.status(200).json({
+      itemI,
+      totalItem,
+      totalPages: Math.ceil(totalItem / Number(limit)),
+      statusCounts
+    });
   } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    console.error("Error fetching maintenance-Information:", error);
     res.status(500).json({ message: error.message });
   }
 });

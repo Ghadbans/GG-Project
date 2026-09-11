@@ -25,6 +25,23 @@
 16. **Strict ISO YYYY-MM-DD Date Comparisons in Client Filters**: When filtering collections by date ranges in JavaScript (e.g. `Expenses`, `PayRoll`, `POS`, `Cash`, `Payment Received`), NEVER use `dayjs().format('DD/MM/YYYY')` in relational string comparisons (`>=` or `<=`). Because string comparison is alphabetical from left to right, comparing `DD/MM/YYYY` compares the day number first, which incorrectly includes records from past or future months (e.g. `"12/08/2026" >= "11/09/2026"` evaluates to `true`). Always format date strings as ISO `YYYY-MM-DD` (`dayjs(date).format('YYYY-MM-DD')`) so chronological order matches alphabetical order.
 
 ## Current Progress Log
+- **Maintenance Module Interactive Status Summary Filter Cards (Ver 3.5.02)**:
+  - **Status Summary Cards Grid**:
+    - Embedded a responsive 6-card interactive grid in `MaintenanceViewAdmin.js` positioned in the top area between the AppBar and the data table:
+      - **ALL ORDERS**: Dark Blue `#30368a` | `AssignmentIcon`
+      - **OPEN**: Primary Blue `#1976d2` | `BuildIcon`
+      - **PENDING**: Amber `#ed6c02` | `HourglassEmptyIcon`
+      - **CLOSED**: Emerald Green `#2e7d32` | `CheckCircleIcon`
+      - **RESCHEDULE**: Purple `#9c27b0` | `EventRepeatIcon`
+      - **CANCEL**: Danger Red `#d32f2f` | `CancelIcon`
+    - Each card displays category label, formatted real-time count, icon badge, hover animations, and an active top bar highlight with elevated shadow when selected.
+  - **1-Click Filter & Reset Integration**:
+    - Clicking any status card (e.g. `OPEN`) filters the maintenance orders table and pagination to display orders matching that status.
+    - Clicking `ALL` or re-clicking the active card clears the filter and reloads all records.
+  - **Server-Side Aggregation**:
+    - In `server/routes/maintenanceRoutes.js`, added MongoDB `$facet`/`$group` aggregation to `/maintenance-Information` to compute real-time status counts across the branch, returning `{ itemI, totalItem, totalPages, statusCounts }`.
+  - **Release & Distribution**: Bumped version to `3.5.02`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.2.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **ISO YYYY-MM-DD Date Filter Normalization & Accurate Multi-Currency Reconciliation (Ver 3.5.01)**:
   - **Date Comparison ISO Normalization**:
     - Fixed alphabetical string comparison bug in `DailyExpenseAdminView.js` (`dayjs().format('DD/MM/YYYY')` -> `dayjs().format('YYYY-MM-DD')`) across Expenses, PayRoll, POS, Cash, and Payment filters.

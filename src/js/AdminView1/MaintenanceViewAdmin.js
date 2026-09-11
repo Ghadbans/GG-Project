@@ -26,7 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline } from '@mui/icons-material';
+import { Add, Close, MailOutline, Assignment as AssignmentIcon, Build as BuildIcon, HourglassEmpty as HourglassEmptyIcon, EventRepeat as EventRepeatIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -177,16 +177,20 @@ function MaintenanceViewAdmin() {
   const [newPurchase, setNewPurchase] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
-  const limit = 100;
-  const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
-  const [filterField, setFilterField] = useState(''); // Initialize filter field state
-  const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
-  const [totalPage, SetTotalPage] = useState(0);
-  const [totalItemCount, setTotalItemCount] = useState(0);
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [statusCounts, setStatusCounts] = useState({
+    all: 0,
+    open: 0,
+    pending: 0,
+    close: 0,
+    reschedule: 0,
+    cancel: 0
+  });
 
-  const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+  const fetchItems = async (page, searchTerm, filterField, filterValue, statusFilter) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const statusParam = statusFilter && statusFilter !== 'ALL' ? `&status=${encodeURIComponent(statusFilter)}` : '';
+      const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}${statusParam}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
@@ -196,6 +200,9 @@ function MaintenanceViewAdmin() {
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
       setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
+      if (res.data.statusCounts) {
+        setStatusCounts(res.data.statusCounts);
+      }
       setMaintenance(formatDate);
       setLoadingData(false);
     } catch (error) {
@@ -204,13 +211,21 @@ function MaintenanceViewAdmin() {
     }
   };
   const handleRefreshSearch = () => {
-    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   };
 
-
   useEffect(() => {
-    fetchItems(page, searchTerm, filterField, filterValue);
-  }, [page, searchTerm, filterField, filterValue]);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  }, [page, searchTerm, filterField, filterValue, statusFilter]);
+
+  const handleStatusClick = (statusKey) => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+    setPage(0);
+  };
 
 
 
@@ -608,6 +623,111 @@ function MaintenanceViewAdmin() {
         >
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 1 }} >
+            {/* Status Summary Filter Cards Grid */}
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(3, 1fr)',
+                  md: 'repeat(6, 1fr)',
+                },
+                gap: 1.5,
+                mb: 1.5,
+                mt: 0.5,
+              }}
+            >
+              {[
+                { key: 'ALL', label: 'ALL ORDERS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 20, color: '#30368a' }} /> },
+                { key: 'Open', label: 'OPEN', count: statusCounts.open, color: '#1976d2', bgLight: '#e3f2fd', icon: <BuildIcon sx={{ fontSize: 20, color: '#1976d2' }} /> },
+                { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#ed6c02', bgLight: '#fff3e0', icon: <HourglassEmptyIcon sx={{ fontSize: 20, color: '#ed6c02' }} /> },
+                { key: 'Close', label: 'CLOSED', count: statusCounts.close, color: '#2e7d32', bgLight: '#e8f5e9', icon: <CheckCircleIcon sx={{ fontSize: 20, color: '#2e7d32' }} /> },
+                { key: 'Reschedule', label: 'RESCHEDULE', count: statusCounts.reschedule, color: '#9c27b0', bgLight: '#f3e5f5', icon: <EventRepeatIcon sx={{ fontSize: 20, color: '#9c27b0' }} /> },
+                { key: 'Cancel', label: 'CANCEL', count: statusCounts.cancel, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 20, color: '#d32f2f' }} /> },
+              ].map((card) => {
+                const isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+                return (
+                  <Box
+                    key={card.key}
+                    onClick={() => handleStatusClick(card.key)}
+                    sx={{
+                      backgroundColor: '#ffffff',
+                      borderRadius: '12px',
+                      p: 1.5,
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      border: isSelected ? `2px solid ${card.color}` : '1px solid #e2e8f0',
+                      boxShadow: isSelected
+                        ? `0 6px 16px -2px ${card.color}33, 0 2px 6px -1px rgba(0, 0, 0, 0.06)`
+                        : '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
+                      transform: isSelected ? 'translateY(-2px)' : 'none',
+                      transition: 'all 0.2s ease-in-out',
+                      '&:hover': {
+                        boxShadow: `0 6px 14px -2px ${card.color}25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
+                        transform: 'translateY(-2px)',
+                        borderColor: card.color,
+                      },
+                    }}
+                  >
+                    {/* Top Active Highlight Bar */}
+                    {isSelected && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '4px',
+                          backgroundColor: card.color,
+                        }}
+                      />
+                    )}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          letterSpacing: '0.5px',
+                          color: isSelected ? card.color : '#64748b',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {card.label}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 30,
+                          height: 30,
+                          borderRadius: '50%',
+                          backgroundColor: card.bgLight,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {card.icon}
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '22px',
+                          fontWeight: 800,
+                          color: isSelected ? card.color : '#1e293b',
+                          lineHeight: 1.2,
+                        }}
+                      >
+                        {(card.count || 0).toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
             {
               loadingData ? <div >
                 <div style={{ position: 'relative', top: '120px' }}>
