@@ -24,6 +24,25 @@
 15. **Modal Save & Window Navigation Safety**: When edit forms and modals (e.g., `ItemPurchaseUpdateForm`, `ItemOutViewUpdate`) provide navigation buttons such as "Go Back" after saving or closing, never assume `navigate(-1)` will always succeed. If a user opens the edit form in a new tab or window (`target='_blank'`), `window.history.length` is 1 and `window.history.state.idx` is 0. Attempting `navigate(-1)` in this scenario freezes the UI inside the modal. Always close the modal state immediately (`setLoadingOpenModal(false)`), check if `window.opener && window.history.length <= 1` to call `window.close()`, or fallback to the module's main list route (e.g. `navigate('/ItemPurchaseAdmin')`).
 
 ## Current Progress Log
+- **Payment Ordering, Add Payment Cash Return (USD/FC) & Maintenance Expenses Invoice Conversion (Ver 3.4.99)**:
+  - **Payment Received Newest-to-Oldest Ordering**:
+    - Fixed sort order in `src/js/AdminView1/PaymentView.js` for both online and offline Dexie cache views by sorting strictly descending by `paymentNumber` (`[...formatDate].sort((a, b) => Number(b.paymentNumber || 0) - Number(a.paymentNumber || 0))`).
+    - Configured server-side sorting `{ paymentNumber: -1, _id: -1 }` on the `/payment` endpoint in `server/routes/Routes.js`.
+  - **Add & Edit Payment Cash Return (Change) in USD / FC**:
+    - In `PaymentInformationForm.js` and `PaymentInformationUpdate.js`, added comprehensive surplus handling when a customer overpays (`remaining > 0`):
+      - **Deposit to Customer Credit**: Keeps existing credit accrual for the customer.
+      - **Cash Return to Customer (Change)**: Allows the cashier to return the surplus to the customer in USD (`returnUSD`), Congolese Francs (`returnFC`), or both combined.
+      - Integrated with Today's Rate (`rate` from `/rate` module) with 1-click helper buttons (`[Return All in USD]`, `[Return All in FC]`) and real-time equivalent balance validation.
+      - If Cash Return is chosen, customer credit balance is NOT increased by the returned amount, maintaining 100% accounting integrity.
+      - Updated `paymentSchema.js` and backend `/create-payment` and `/update-payment` routes to persist `excessAction`, `returnUSD`, and `returnFC`.
+  - **Payment Receipt & Daily Expenses Reconciliation**:
+    - In `PaymentInformationView.js`, updated the printable payment receipt to show `Cash Return USD` and `Cash Return FC` when change is given.
+    - In `DailyExpenseAdminView.js`, updated daily cash calculations so that cash returned to customers reduces the net cash retained in the register (`PaymentReceivedUSD - returnUSD` and `PaymentReceivedFC - returnFC`), and added clear visual badges (`Return Change: $X / FC Y`) in the daily payments table to ensure physical drawer cash matches the reports.
+  - **Maintenance Convert to Invoice Expenses Inclusion**:
+    - In `MaintenanceConvertToInvoice.js`, added live fetching and grouping of maintenance expenses (`expense` and `expensesCategory`) and employee labor planning (`planing`).
+    - Merged maintenance expenses categories and employee labor rows into the generated invoice items table alongside existing parts and labor fees, ensuring converted invoices match the Maintenance overview grand total.
+  - **Release & Distribution**: Bumped version to `3.4.99`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.4.99.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Maintenance Customer Retention & DB Overwrite Protection (Ver 3.4.98)**:
   - **Maintenance Customer Name Loading & State Initialization**:
     - Fixed missing `setCustomerName(mData.customerName || null)` in `MaintenanceUpdateView.js` `fetchData()`, ensuring existing client names are always loaded into state when opening maintenance records for editing.

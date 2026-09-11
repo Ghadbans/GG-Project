@@ -212,6 +212,9 @@ function MaintenanceConvertToInvoice() {
   }
   const [customer, setCustomer] = useState('');
   const [customerName, setCustomerName] = useState({});
+  const [expensesInfo, setExpensesInfo] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [planingInfo, setPlaningInfo] = useState([]);
 
   const invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0')
   useEffect(() => {
@@ -222,7 +225,7 @@ function MaintenanceConvertToInvoice() {
         setCustomerName(res.data.data.customerName);
         setServiceNumber(Number(res.data?.data?.serviceNumber || res.data?.serviceNumber || 0));
         setInvoiceDate(res.data.data.serviceDate);
-        SetItems(res.data.data.items);
+        SetItems(res.data.data.items || []);
         setLaborName(res.data.data.adjustment);
         setLaborTotal(res.data.data.adjustmentNumber);
         setInvoiceSubject(res.data.data.itemDescriptionInfo + ' ' + res.data.data.brand + ' ' + res.data.data.model + ' ' + res.data.data.serialNo)
@@ -241,7 +244,34 @@ function MaintenanceConvertToInvoice() {
       }
     }
     fetchData()
-  }, [])
+  }, [id])
+
+  useEffect(() => {
+    const fetchExpensesAndPlaning = async () => {
+      try {
+        const [resCategory, resExpenses, resPlaning] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/expensesCategory`),
+          axios.get(`${ENDPOINT_URL}/expense?summary=true`),
+          axios.get(`${ENDPOINT_URL}/planing`)
+        ]);
+        setCategories(resCategory.data?.data || []);
+        if (id) {
+          const resultExp = resExpenses.data?.data?.filter((row) => row.accountNameInfo !== undefined && row.accountNameInfo._id === id);
+          setExpensesInfo(resultExp || []);
+          const resultPlaning = resPlaning.data?.data?.filter((row) => row.projectName !== undefined && row.projectName._id === id)
+            .map((row) => ({
+              ...row,
+              totalWorkDay: parseFloat(row.dayPayUSd * row.workNumber || 0).toFixed(2)
+            }));
+          setPlaningInfo(resultPlaning || []);
+        }
+      } catch (error) {
+        console.error('Error fetching expenses & planing for maintenance:', error);
+      }
+    };
+    fetchExpensesAndPlaning();
+  }, [id]);
+
   useEffect(() => {
     const fetchlastNumber = async () => {
       try {
@@ -370,24 +400,94 @@ function MaintenanceConvertToInvoice() {
   };
   {/** Modal Item Show End */ }
   useEffect(() => {
-    const newRow = {
-      idRow: v4(),
-      itemName: {
-        itemName: 'empty'
-      },
-      itemDescription: laborName,
-      itemDiscount: laborDiscount,
-      discount: totalDiscount,
-      percentage: laborPercentage,
-      itemRate: laborTotal,
-      totalAmount: totalLaborFees,
-      itemAmount: laborTotalGeneral,
-      itemQty: laborQTy,
-      totalCost: 0,
-      itemCost: 0,
+    const categoryTotal = expensesInfo?.reduce((acc, curr) => {
+      const catName = curr.expenseCategory?.expensesCategory || 'Expense';
+      if (!acc[catName]) {
+        acc[catName] = 0;
+      }
+      acc[catName] += parseFloat(curr.total || 0);
+      return acc;
+    }, {});
+
+    let expenseRows = [];
+    Object.keys(categoryTotal || {}).forEach((Item) => {
+      expenseRows.push({
+        idRow: v4(),
+        itemName: { itemName: 'empty' },
+        itemDescription: Item.toUpperCase(),
+        itemDiscount: 0,
+        discount: 0,
+        percentage: 0,
+        itemRate: categoryTotal[Item],
+        totalAmount: categoryTotal[Item],
+        itemAmount: categoryTotal[Item],
+        itemQty: 1,
+        totalCost: 0,
+        itemCost: 0,
+      });
+    });
+
+    const planingObject = planingInfo?.reduce((acc, item) => {
+      const pId = item.employeeID;
+      const name = item.employeeName;
+      const dayPay = item.dayPayUSd;
+      if (!acc[pId]) {
+        acc[pId] = { id: pId, name, dayPay, workD: 0, total: 0 };
+      }
+      acc[pId].total += parseFloat(item.totalWorkDay || 0);
+      acc[pId].workD += parseFloat(item.workNumber || 0);
+      return acc;
+    }, {});
+
+    const totalAmount2 = Object.keys(planingObject || {}).map((row) => planingObject[row]);
+    const totalPayRoll = totalAmount2?.reduce((sum, row) => sum + row.total, 0) || 0;
+
+    let employeeRows = [];
+    if (totalPayRoll > 0) {
+      employeeRows.push({
+        idRow: v4(),
+        itemName: { itemName: 'empty' },
+        itemDescription: "EMPLOYEE",
+        itemDiscount: 0,
+        discount: 0,
+        percentage: 0,
+        itemRate: totalPayRoll,
+        totalAmount: totalPayRoll,
+        itemAmount: totalPayRoll,
+        itemQty: 1,
+        totalCost: 0,
+        itemCost: 0,
+      });
     }
-    SetItems([...items, newRow]);
-  }, [laborTotal, laborName])
+
+    let laborRow = [];
+    if (laborName || laborTotal > 0) {
+      laborRow.push({
+        idRow: v4(),
+        itemName: { itemName: 'empty' },
+        itemDescription: laborName || "Labor Fees",
+        itemDiscount: laborDiscount,
+        discount: totalDiscount,
+        percentage: laborPercentage,
+        itemRate: laborTotal,
+        totalAmount: totalLaborFees,
+        itemAmount: laborTotalGeneral,
+        itemQty: laborQTy || 1,
+        totalCost: 0,
+        itemCost: 0,
+      });
+    }
+
+    SetItems(prevItems => {
+      const filtered = prevItems.filter(item => {
+        const isEmployee = item.itemDescription === "EMPLOYEE";
+        const isLabor = item.itemDescription === (laborName || "Labor Fees");
+        const isExpense = (categories || []).some(cat => cat.expensesCategory && cat.expensesCategory.toUpperCase() === item.itemDescription);
+        return !isEmployee && !isLabor && !isExpense;
+      });
+      return [...filtered, ...laborRow, ...expenseRows, ...employeeRows];
+    });
+  }, [expensesInfo, planingInfo, categories, laborTotal, laborName, laborDiscount, totalDiscount, laborPercentage, totalLaborFees, laborTotalGeneral, laborQTy]);
   useEffect(() => {
     const fetchCustomer = async () => {
       if (customer) {

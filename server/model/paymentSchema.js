@@ -55,7 +55,20 @@ const paymentSchema = new Schema({
     },
     remaining: {
       type: Number,
-      trim: true
+      trim: true,
+    },
+    excessAction: {
+      type: String,
+      enum: ['Credit', 'Return'],
+      default: 'Credit'
+    },
+    returnUSD: {
+      type: Number,
+      default: 0
+    },
+    returnFC: {
+      type: Number,
+      default: 0
     },Create: {
     },
     branchId: { type: String, default: 'HQ' },

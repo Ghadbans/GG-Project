@@ -213,7 +213,8 @@ function PaymentView() {
           ? item.TotalAmount.map((row1) => (row1.prefix ? row1.prefix.replace('00', '') : (item.reason === "Project" ? "P-" : "INV-")) + String(row1.Ref).padStart(6, '0'))
           : item.referenceNumber?.map((row1) => (item.reason === "Project" ? "P-" : "INV-") + String(row1).padStart(6, '0'))
             })) 
-            setPayment(formatDate.reverse());
+            const sortedPayments = [...formatDate].sort((a, b) => Number(b.paymentNumber || 0) - Number(a.paymentNumber || 0));
+            setPayment(sortedPayments);
             // Use bulkPut instead of 1031 individual puts — major perf fix
             // Filter out items without paymentNumber to prevent Dexie DataError
             const validItems = res.data.data.filter(item => item.paymentNumber).map(item => ({...item, synced:true, updateS:true}));
@@ -232,7 +233,8 @@ function PaymentView() {
       dateField: dayjs(item.paymentDate).format('DD/MM/YYYY'),
       reference: item.referenceNumber?.map((row1)=> 'INV-'+ String(row1).padStart(6, '0'))
      })) 
-     setPayment(formatDate.reverse())
+     const sortedPayments = [...formatDate].sort((a, b) => Number(b.paymentNumber || 0) - Number(a.paymentNumber || 0));
+     setPayment(sortedPayments)
        setLoadingData(false)
         }
       }

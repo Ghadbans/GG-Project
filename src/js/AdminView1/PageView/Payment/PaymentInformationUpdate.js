@@ -173,6 +173,9 @@ function PaymentInformationUpdate() {
   const [reason, setReason] = useState('')
   const [transactionType, setTransactionType] = useState('Payment')
   const [status, setStatus] = useState('Cleared')
+  const [excessAction, setExcessAction] = useState('Credit')
+  const [returnUSD, setReturnUSD] = useState(0)
+  const [returnFC, setReturnFC] = useState(0)
   useEffect(() => {
     const fetchlastNumber = async () => {
       try {
@@ -202,6 +205,9 @@ function PaymentInformationUpdate() {
         setReason(res.data.data.reason || 'Invoice');
         setTransactionType(res.data.data.transactionType || 'Payment');
         setStatus(res.data.data.status || 'Cleared');
+        setExcessAction(res.data.data.excessAction || (res.data.data.returnUSD > 0 || res.data.data.returnFC > 0 ? 'Return' : 'Credit'));
+        setReturnUSD(res.data.data.returnUSD || 0);
+        setReturnFC(res.data.data.returnFC || 0);
         setInvoice1(res.data.data.TotalAmount ? res.data.data.TotalAmount.filter((row) => parseFloat(row.total) !== 0 || parseFloat(row.total) !== 0.00) : []);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -491,6 +497,9 @@ function PaymentInformationUpdate() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
+    const totalReturnUSDVal = (parseFloat(returnUSD) || 0) + ((parseFloat(returnFC) || 0) / (parseFloat(rate) || 1));
+    const effectiveRemaining = excessAction === 'Return' ? Math.max(0, remaining - totalReturnUSDVal) : remaining;
+
     const data = {
       amount,
       bankCharge,
@@ -501,7 +510,10 @@ function PaymentInformationUpdate() {
       description,
       PaymentReceivedFC,
       PaymentReceivedUSD,
-      remaining,
+      remaining: effectiveRemaining,
+      excessAction: excessAction || 'Credit',
+      returnUSD: excessAction === 'Return' ? Number(returnUSD || 0) : 0,
+      returnFC: excessAction === 'Return' ? Number(returnFC || 0) : 0,
       reason,
       transactionType,
       status
@@ -946,6 +958,104 @@ function PaymentInformationUpdate() {
                       )
                   }
 
+                  {remaining > 0 && modes !== 'Credit-Account' && (
+                    <Box sx={{ mt: 2, mb: 2, p: 2, border: '1px solid #30368a', borderRadius: '8px', backgroundColor: '#f0f4ff', width: '100%' }}>
+                      <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#30368a', mb: 1.5 }}>
+                        Rest / Surplus Amount Action (Overpayment: ${remaining.toFixed(2)})
+                      </Typography>
+                      <Grid container spacing={2} alignItems="center">
+                        <Grid item xs={12} md={6}>
+                          <FormControl fullWidth size="small">
+                            <InputLabel id="excess-action-label-update">Surplus Option</InputLabel>
+                            <Select
+                              labelId="excess-action-label-update"
+                              value={excessAction}
+                              label="Surplus Option"
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setExcessAction(val);
+                                if (val === 'Return') {
+                                  setReturnUSD(remaining);
+                                  setReturnFC(0);
+                                } else {
+                                  setReturnUSD(0);
+                                  setReturnFC(0);
+                                }
+                              }}
+                              sx={{ backgroundColor: 'white' }}
+                            >
+                              <MenuItem value="Credit">Keep in Customer Credit (${remaining.toFixed(2)})</MenuItem>
+                              <MenuItem value="Return">Cash Return to Customer (Change)</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </Grid>
+                        {excessAction === 'Return' && (
+                          <>
+                            <Grid item xs={12} md={6}>
+                              <Box sx={{ display: 'flex', gap: 1 }}>
+                                <button
+                                  type="button"
+                                  className="btnCustomer"
+                                  style={{ padding: '6px 10px', fontSize: '11px', flex: 1 }}
+                                  onClick={() => {
+                                    setReturnUSD(remaining);
+                                    setReturnFC(0);
+                                  }}
+                                >
+                                  Return All in USD ($)
+                                </button>
+                                <button
+                                  type="button"
+                                  className="btnCustomer"
+                                  style={{ padding: '6px 10px', fontSize: '11px', flex: 1 }}
+                                  onClick={() => {
+                                    setReturnFC(Math.round(remaining * (parseFloat(rate) || 1)));
+                                    setReturnUSD(0);
+                                  }}
+                                >
+                                  Return All in FC (Rate: {rate})
+                                </button>
+                              </Box>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <TextField
+                                fullWidth
+                                size="small"
+                                label="Return USD ($)"
+                                type="number"
+                                value={returnUSD}
+                                onChange={(e) => setReturnUSD(e.target.value)}
+                                InputProps={{
+                                  startAdornment: <InputAdornment position="start">$</InputAdornment>,
+                                }}
+                                sx={{ backgroundColor: 'white' }}
+                              />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                              <TextField
+                                fullWidth
+                                size="small"
+                                label={`Return FC (Today's Rate: ${rate})`}
+                                type="number"
+                                value={returnFC}
+                                onChange={(e) => setReturnFC(e.target.value)}
+                                InputProps={{
+                                  startAdornment: <InputAdornment position="start">FC</InputAdornment>,
+                                }}
+                                sx={{ backgroundColor: 'white' }}
+                              />
+                            </Grid>
+                            <Grid item xs={12}>
+                              <Typography variant="body2" sx={{ color: '#2e7d32', fontWeight: 500 }}>
+                                Returned Equivalent: ${((parseFloat(returnUSD) || 0) + ((parseFloat(returnFC) || 0) / (parseFloat(rate) || 1))).toFixed(2)} / Required Rest: ${remaining.toFixed(2)}
+                              </Typography>
+                            </Grid>
+                          </>
+                        )}
+                      </Grid>
+                    </Box>
+                  )}
+
                   <div style={{ width: ' 100%' }}>
                     <table style={{ position: 'relative', float: 'right', padding: '40px', width: '50%' }}>
                       <tbody>
@@ -973,10 +1083,27 @@ function PaymentInformationUpdate() {
                           <th style={{ textAlign: 'left' }}><Typography> Balance Due </Typography></th>
                           <td style={{ textAlign: 'left' }}><span> $ </span>{remainingInvoice.toFixed(2)}</td>
                         </tr>
-                        <tr>
-                          <th style={{ textAlign: 'left' }}><Typography> Credit </Typography></th>
-                          <td style={{ textAlign: 'left' }}><span> $ </span>{remaining}</td>
-                        </tr>
+                        {excessAction === 'Return' ? (
+                          <>
+                            <tr>
+                              <th style={{ textAlign: 'left' }}><Typography> Cash Return USD </Typography></th>
+                              <td style={{ textAlign: 'left' }}><span> $ </span>{parseFloat(returnUSD || 0).toFixed(2)}</td>
+                            </tr>
+                            <tr>
+                              <th style={{ textAlign: 'left' }}><Typography> Cash Return FC </Typography></th>
+                              <td style={{ textAlign: 'left' }}><span> FC </span>{parseFloat(returnFC || 0).toLocaleString()}</td>
+                            </tr>
+                            <tr>
+                              <th style={{ textAlign: 'left' }}><Typography> Credit Added </Typography></th>
+                              <td style={{ textAlign: 'left' }}><span> $ </span>0.00</td>
+                            </tr>
+                          </>
+                        ) : (
+                          <tr>
+                            <th style={{ textAlign: 'left' }}><Typography> Credit </Typography></th>
+                            <td style={{ textAlign: 'left' }}><span> $ </span>{remaining}</td>
+                          </tr>
+                        )}
                       </tbody>
                     </table>
                   </div>

@@ -641,12 +641,30 @@ function PaymentInformationView() {
                                                         <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Total Paid USD</span></td>
                                                         <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{PaymentInfo ? PaymentInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
                                                       </tr>
-                                                      <tr>
-                                                        <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                                        <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Credit</span></td>
-                                                        <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.remaining ? row.remaining?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
-
-                                                      </tr>
+                                                      {row.excessAction === 'Return' || (row.returnUSD > 0 || row.returnFC > 0) ? (
+                                                        <>
+                                                          {row.returnUSD > 0 && (
+                                                            <tr>
+                                                              <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Cash Return USD</span></td>
+                                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.returnUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                            </tr>
+                                                          )}
+                                                          {row.returnFC > 0 && (
+                                                            <tr>
+                                                              <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Cash Return FC</span></td>
+                                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>FC </span><span>{row.returnFC.toLocaleString()}</span></td>
+                                                            </tr>
+                                                          )}
+                                                        </>
+                                                      ) : (
+                                                        <tr>
+                                                          <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                          <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Credit</span></td>
+                                                          <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.remaining ? row.remaining?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
+                                                        </tr>
+                                                      )}
                                                     </tbody>
                                                   </table>
                                                   <address style={{ float: 'left', fontSize: '70%', textAlign: 'left', width: '700px' }}>
@@ -825,12 +843,30 @@ function PaymentInformationView() {
                                               <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Total Paid USD</span></td>
                                               <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{PaymentInfo ? PaymentInfo?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
                                             </tr>
-                                            <tr>
-                                              <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
-                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Credit</span></td>
-                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.remaining ? row.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
-
-                                            </tr>
+                                            {row.excessAction === 'Return' || (row.returnUSD > 0 || row.returnFC > 0) ? (
+                                              <>
+                                                {row.returnUSD > 0 && (
+                                                  <tr>
+                                                    <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                    <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Cash Return USD</span></td>
+                                                    <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.returnUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                  </tr>
+                                                )}
+                                                {row.returnFC > 0 && (
+                                                  <tr>
+                                                    <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                    <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Cash Return FC</span></td>
+                                                    <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>FC </span><span>{row.returnFC.toLocaleString()}</span></td>
+                                                  </tr>
+                                                )}
+                                              </>
+                                            ) : (
+                                              <tr>
+                                                <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Credit</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.remaining ? row.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
+                                              </tr>
+                                            )}
                                           </tbody>
                                         </table>
                                         <table style={{ position: 'relative', marginTop: '-40px', fontSize: '80%' }} >

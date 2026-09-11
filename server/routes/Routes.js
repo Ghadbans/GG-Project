@@ -673,7 +673,7 @@ Route.route("/payment", cors(corsOptionsDelegate)).get(
         if (req.query.projectId) {
           filter['TotalAmount.id'] = req.query.projectId;
         }
-        const result = await paymentSchema.find(filter).sort({ _id: -1 }).lean().exec();
+        const result = await paymentSchema.find(filter).sort({ paymentNumber: -1, _id: -1 }).lean().exec();
         res.json({
           data: result,
           message: "Data successfully fetched!",
@@ -731,7 +731,10 @@ Route.route("/create-payment").post(async (req, res, next) => {
     referenceNumber,
     description,
     remaining,Create,
-    TotalAmount
+    TotalAmount,
+    excessAction,
+    returnUSD,
+    returnFC
   } = req.body
    try {
     const branchId = req.body.branchId || req.query.branchId;
@@ -752,7 +755,10 @@ Route.route("/create-payment").post(async (req, res, next) => {
         referenceNumber,
         description,
         remaining,Create,
-        TotalAmount
+        TotalAmount,
+        excessAction: excessAction || 'Credit',
+        returnUSD: Number(returnUSD || 0),
+        returnFC: Number(returnFC || 0)
       ,
       branchId}).then((result)=>{
         res.json({
@@ -777,7 +783,10 @@ Route.route("/create-payment").post(async (req, res, next) => {
         referenceNumber,
         description,
         remaining,Create,
-        TotalAmount
+        TotalAmount,
+        excessAction: excessAction || 'Credit',
+        returnUSD: Number(returnUSD || 0),
+        returnFC: Number(returnFC || 0)
       ,
       branchId}).then((result)=>{
         res.json({

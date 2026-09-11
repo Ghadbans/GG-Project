@@ -537,11 +537,11 @@ function DailyExpenseAdminView() {
   const totalDay = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) === 0).reduce((sum, row) => Math.round((sum + parseFloat(row.total)) * 100) / 100, 0) : 0
   const totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0
 
-  const totalPaymentFC1 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : parseFloat(row.PaymentReceivedFC || 0)), 0) : 0
-  const totalPaymentUSD0 = filterTotalPayment.length > 0 ? filterTotalPayment.filter((row) => (row.modes === 'Cash' && row.remaining > 0) || (row.modes === 'Bank Transfer' && row.remaining > 0)).reduce((acc, row) => acc + parseFloat(row.remaining), 0) : 0
-  const totalPaymentUSD15 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : parseFloat(row.PaymentReceivedUSD || 0)), 0) : 0
+  const totalPaymentFC1 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : Math.max(0, parseFloat(row.PaymentReceivedFC || 0) - parseFloat(row.returnFC || 0))), 0) : 0
+  const totalPaymentUSD0 = filterTotalPayment.length > 0 ? filterTotalPayment.filter((row) => (row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return') || (row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return')).reduce((acc, row) => acc + parseFloat(row.remaining), 0) : 0
+  const totalPaymentUSD15 = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount) ? 0 : Math.max(0, parseFloat(row.PaymentReceivedUSD || 0) - parseFloat(row.returnUSD || 0))), 0) : 0
   const totalPaymentUSD1 = totalPaymentUSD0 + totalPaymentUSD15
-  const totalPaymentUSDTotal = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + parseFloat(row.amount), 0) : 0
+  const totalPaymentUSDTotal = filterTotalPayment.length > 0 ? filterTotalPayment.reduce((acc, row) => acc + (parseFloat(row.amount) - parseFloat(row.returnUSD || 0)), 0) : 0
 
   const totalGrossPosFC = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalFc) || 0), 0) : 0
   const totalGrossPosUSD = posFiltered.length > 0 ? posFiltered.reduce((acc, row) => acc + (parseFloat(row.amountTotalUsd) || 0), 0) : 0
@@ -1093,7 +1093,12 @@ function DailyExpenseAdminView() {
                                         {item.customerName !== undefined ? item.customerName.customerName : ''}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        {item.modes !== undefined ? item.modes.toUpperCase() : ''}  {' | ' + item.description}
+                                        {item.modes !== undefined ? item.modes.toUpperCase() : ''}  {' | ' + (item.description || '')}
+                                        {(item.returnUSD > 0 || item.returnFC > 0) && (
+                                          <div style={{ fontSize: '11px', color: '#c62828', fontWeight: 'bold' }}>
+                                            Return Change: {item.returnUSD > 0 ? `$${item.returnUSD.toFixed(2)} ` : ''}{item.returnFC > 0 ? `FC ${item.returnFC.toLocaleString()}` : ''}
+                                          </div>
+                                        )}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
                                         {item.TotalAmount?.map((Item, i) => (
@@ -1103,13 +1108,13 @@ function DailyExpenseAdminView() {
                                         ))}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>FC </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedFC !== undefined ? item.PaymentReceivedFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)}
+                                        <span>FC </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedFC !== undefined ? Math.max(0, item.PaymentReceivedFC - (item.returnFC || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedUSD !== undefined ? item.PaymentReceivedUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : item.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
+                                        <span>$ </span>{item.reason === 'Project' || item.reason === 'Customer Credit' || parseFloat(item.remaining) === parseFloat(item.amount) ? (0).toFixed(2) : (item.PaymentReceivedUSD !== undefined ? Math.max(0, item.PaymentReceivedUSD - (item.returnUSD || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : (item.amount - (item.returnUSD || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{item.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        <span>$ </span>{item.excessAction === 'Return' ? (0).toFixed(2) : (item.remaining || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                       </td>
                                     </>
                                   )
