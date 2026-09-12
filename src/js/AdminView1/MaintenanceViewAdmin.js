@@ -638,7 +638,7 @@ function MaintenanceViewAdmin() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="none" sx={{ mt: 1 }} >
+          <Container maxWidth="none" sx={{ mt: 0.5, px: { xs: 1, sm: 2 } }} >
             {/* Status Summary Filter Cards Grid */}
             <Box
               sx={{
@@ -649,19 +649,19 @@ function MaintenanceViewAdmin() {
                   md: 'repeat(4, 1fr)',
                   lg: 'repeat(7, 1fr)',
                 },
-                gap: 1.5,
-                mb: 1.5,
-                mt: 0.5,
+                gap: 1,
+                mb: 0.75,
+                mt: 0.25,
               }}
             >
               {[
-                { key: 'ALL', label: 'ALL ORDERS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 20, color: '#30368a' }} /> },
-                { key: 'Open', label: 'OPEN', count: statusCounts.open, color: '#1976d2', bgLight: '#e3f2fd', icon: <BuildIcon sx={{ fontSize: 20, color: '#1976d2' }} /> },
-                { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#ed6c02', bgLight: '#fff3e0', icon: <HourglassEmptyIcon sx={{ fontSize: 20, color: '#ed6c02' }} /> },
-                { key: 'Close', label: 'CLOSED', count: statusCounts.close, color: '#2e7d32', bgLight: '#e8f5e9', icon: <CheckCircleIcon sx={{ fontSize: 20, color: '#2e7d32' }} /> },
-                { key: 'Converted', label: 'CONVERTED', count: statusCounts.converted, color: '#00838f', bgLight: '#e0f7fa', icon: <ReceiptIcon sx={{ fontSize: 20, color: '#00838f' }} /> },
-                { key: 'Reschedule', label: 'RESCHEDULE', count: statusCounts.reschedule, color: '#9c27b0', bgLight: '#f3e5f5', icon: <EventRepeatIcon sx={{ fontSize: 20, color: '#9c27b0' }} /> },
-                { key: 'Cancel', label: 'CANCEL', count: statusCounts.cancel, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 20, color: '#d32f2f' }} /> },
+                { key: 'ALL', label: 'ALL ORDERS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
+                { key: 'Open', label: 'OPEN', count: statusCounts.open, color: '#1976d2', bgLight: '#e3f2fd', icon: <BuildIcon sx={{ fontSize: 15, color: '#1976d2' }} /> },
+                { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#ed6c02', bgLight: '#fff3e0', icon: <HourglassEmptyIcon sx={{ fontSize: 15, color: '#ed6c02' }} /> },
+                { key: 'Close', label: 'CLOSED', count: statusCounts.close, color: '#2e7d32', bgLight: '#e8f5e9', icon: <CheckCircleIcon sx={{ fontSize: 15, color: '#2e7d32' }} /> },
+                { key: 'Converted', label: 'CONVERTED', count: statusCounts.converted, color: '#00838f', bgLight: '#e0f7fa', icon: <ReceiptIcon sx={{ fontSize: 15, color: '#00838f' }} /> },
+                { key: 'Reschedule', label: 'RESCHEDULE', count: statusCounts.reschedule, color: '#9c27b0', bgLight: '#f3e5f5', icon: <EventRepeatIcon sx={{ fontSize: 15, color: '#9c27b0' }} /> },
+                { key: 'Cancel', label: 'CANCEL', count: statusCounts.cancel, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 15, color: '#d32f2f' }} /> },
               ].map((card) => {
                 const isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
                 return (
@@ -670,8 +670,8 @@ function MaintenanceViewAdmin() {
                     onClick={() => handleStatusClick(card.key)}
                     sx={{
                       backgroundColor: '#ffffff',
-                      borderRadius: '12px',
-                      p: 1.5,
+                      borderRadius: '8px',
+                      p: '6px 10px',
                       cursor: 'pointer',
                       position: 'relative',
                       overflow: 'hidden',
@@ -680,13 +680,13 @@ function MaintenanceViewAdmin() {
                       justifyContent: 'space-between',
                       border: isSelected ? `2px solid ${card.color}` : '1px solid #e2e8f0',
                       boxShadow: isSelected
-                        ? `0 6px 16px -2px ${card.color}33, 0 2px 6px -1px rgba(0, 0, 0, 0.06)`
-                        : '0 1px 3px 0 rgba(0, 0, 0, 0.05)',
-                      transform: isSelected ? 'translateY(-2px)' : 'none',
-                      transition: 'all 0.2s ease-in-out',
+                        ? `0 4px 12px -2px ${card.color}33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
+                        : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+                      transform: isSelected ? 'translateY(-1px)' : 'none',
+                      transition: 'all 0.15s ease-in-out',
                       '&:hover': {
-                        boxShadow: `0 6px 14px -2px ${card.color}25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
-                        transform: 'translateY(-2px)',
+                        boxShadow: `0 4px 10px -2px ${card.color}25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
+                        transform: 'translateY(-1px)',
                         borderColor: card.color,
                       },
                     }}
@@ -699,17 +699,17 @@ function MaintenanceViewAdmin() {
                           top: 0,
                           left: 0,
                           right: 0,
-                          height: '4px',
+                          height: '3px',
                           backgroundColor: card.color,
                         }}
                       />
                     )}
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.25 }}>
                       <Typography
                         sx={{
-                          fontSize: '11px',
+                          fontSize: '9.5px',
                           fontWeight: 700,
-                          letterSpacing: '0.5px',
+                          letterSpacing: '0.4px',
                           color: isSelected ? card.color : '#64748b',
                           textTransform: 'uppercase',
                         }}
@@ -718,8 +718,8 @@ function MaintenanceViewAdmin() {
                       </Typography>
                       <Box
                         sx={{
-                          width: 30,
-                          height: 30,
+                          width: 22,
+                          height: 22,
                           borderRadius: '50%',
                           backgroundColor: card.bgLight,
                           display: 'flex',
@@ -733,10 +733,10 @@ function MaintenanceViewAdmin() {
                     <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
                       <Typography
                         sx={{
-                          fontSize: '22px',
+                          fontSize: '16px',
                           fontWeight: 800,
                           color: isSelected ? card.color : '#1e293b',
-                          lineHeight: 1.2,
+                          lineHeight: 1.1,
                         }}
                       >
                         {(card.count || 0).toLocaleString()}
@@ -753,40 +753,34 @@ function MaintenanceViewAdmin() {
                 </div>
               </div> : (
                 <div >
-                  {maintenance.length > 0 ? (
-                    <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                      {
-                        selectedRows.length > 1 && selectedRows.length < maintenance.length && (
-                          <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                        )
-                      }
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5, mt: 0.25 }}>
+                    <Box>
+                      {maintenance.length > 0 && selectedRows.length > 1 && selectedRows.length < maintenance.length && (
+                        <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                      )}
+                      {maintenance.length > 0 && selectedRows.length === maintenance.length && (
+                        <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                      )}
+                    </Box>
+                    {!isNativeMobile() && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <ViewTooltip>
+                          <span>
+                            <IconButton disabled={MaintenanceInfoC.length === 0} size="small">
+                              <NavLink to={'/MaintenanceFormView'} className='LinkName'>
+                                <span className='btnCustomerAdding'>
+                                  <Add sx={{ fontSize: 18 }} />
+                                </span>
+                              </NavLink>
+                            </IconButton>
+                          </span>
+                        </ViewTooltip>
+                        <button onClick={handleRefreshSearch} className='btnCustomer2' style={{ height: '32px', lineHeight: '32px', padding: '0 12px' }}>Refresh Search</button>
+                      </Box>
+                    )}
+                  </Box>
 
-                      {
-                        selectedRows.length === maintenance.length ? (
-                          <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                        ) : ''
-                      }
-                    </section>
-                  )
-                    : ''}
-                  {!isNativeMobile() && (
-                    <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
-                      <ViewTooltip>
-                        <span>
-                          <IconButton disabled={MaintenanceInfoC.length === 0}>
-                            <NavLink to={'/MaintenanceFormView'} className='LinkName'>
-                              <span className='btnCustomerAdding'>
-                                <Add />
-                              </span>
-                            </NavLink>
-                          </IconButton>
-                        </span>
-                      </ViewTooltip>
-                      <button onClick={handleRefreshSearch} className='btnCustomer2'>Refresh Search</button>
-                    </section>
-                  )}
-
-                  <Box sx={{ height: isNativeMobile() ? 'auto' : 600, width: '100%' }}>
+                  <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                     {isNativeMobile() ? (
                       <MobileCardList type="maintenance" data={maintenance} />
                     ) : (

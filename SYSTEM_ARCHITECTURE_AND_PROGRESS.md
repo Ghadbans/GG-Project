@@ -28,7 +28,7 @@
 ## Current Progress Log
 - **Maintenance Module Interactive Status Summary Filter Cards with Dedicated Converted Card (Ver 3.5.02)**:
   - **7 Status Summary Cards Grid**:
-    - Embedded a responsive 7-card interactive grid in `MaintenanceViewAdmin.js` positioned in the top area between the AppBar and the data table:
+    - Embedded a responsive, ultra-compact 7-card interactive grid in `MaintenanceViewAdmin.js` positioned in the top area between the AppBar and the data table:
       - **ALL ORDERS**: Dark Blue `#30368a` | `AssignmentIcon`
       - **OPEN**: Primary Blue `#1976d2` | `BuildIcon`
       - **PENDING**: Amber `#ed6c02` | `HourglassEmptyIcon`
@@ -36,7 +36,10 @@
       - **CONVERTED**: Teal `#00838f` | `ReceiptLongIcon` (Strictly counts & displays only orders converted to invoice)
       - **RESCHEDULE**: Purple `#9c27b0` | `EventRepeatIcon`
       - **CANCEL**: Danger Red `#d32f2f` | `CancelIcon`
-    - Each card displays category label, formatted real-time count, icon badge, hover animations, and an active top bar highlight with elevated shadow when selected.
+    - Streamlined cards to a compact height (~52px) with `p: '6px 10px'`, 22px icon badge, 16px bold count, and 9.5px uppercase header to prevent pushing the table off screen.
+  - **Full Viewport Fit & Pagination Visibility**:
+    - Replaced hardcoded `height: 600` with `height: calc(100vh - 200px)` (with `minHeight: 380px`), ensuring the DataGrid and bottom pagination footer (`< 1 2 3 ... 12 >`) are permanently visible on all screen sizes without scrolling the page.
+    - Compacted top action header bar (Add & Refresh Search) into a unified flex row.
   - **1-Click Filter & Reset Integration**:
     - Clicking any status card (e.g. `CLOSED` or `CONVERTED`) filters the maintenance orders table and pagination to display orders matching that status alone.
     - Clicking `ALL` or re-clicking the active card clears the filter and reloads all records.
