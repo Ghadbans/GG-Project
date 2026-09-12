@@ -122,7 +122,7 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
 
 Route.route("/invoice-Information").get(async (req, res) => {
   try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId } = req.query;
+    const { page = 1, limit = 100, search = '', filterField, filterValue, branchId, status } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
     // Build the query object dynamically based on the filters
@@ -135,6 +135,27 @@ Route.route("/invoice-Information").get(async (req, res) => {
         query.branchId = branchId;
       }
     }
+
+    const baseBranchQuery = { ...query };
+    if (branchCondition) {
+      baseBranchQuery.$or = branchCondition.$or;
+    }
+
+    if (status && status !== 'ALL') {
+      const s = status.trim().toLowerCase();
+      if (s === 'draft') {
+        query.status = { $regex: /^draft$/i };
+      } else if (s === 'pending') {
+        query.status = { $regex: /^pending$/i };
+      } else if (s === 'decline') {
+        query.status = { $regex: /^decline$/i };
+      } else if (s === 'free of charge') {
+        query.status = { $regex: /^free of charge$/i };
+      } else {
+        query.status = new RegExp(`^${status.trim()}$`, 'i');
+      }
+    }
+
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
@@ -181,12 +202,41 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (filterField && filterValue) {
       query[`items.${filterField}`] = new RegExp(filterValue, 'i');
     }
-    const itemI = await invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
-    const totalItem = await invoiceSchema.countDocuments(query);
+    const [itemI, totalItem, statusAggregation] = await Promise.all([
+      invoiceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean(),
+      invoiceSchema.countDocuments(query),
+      invoiceSchema.aggregate([
+        { $match: baseBranchQuery },
+        {
+          $group: {
+            _id: { $toLower: "$status" },
+            count: { $sum: 1 }
+          }
+        }
+      ])
+    ]);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+    const statusCounts = {
+      all: 0,
+      draft: 0,
+      pending: 0,
+      decline: 0,
+      freeOfCharge: 0
+    };
+
+    statusAggregation.forEach(item => {
+      const key = (item._id || '').trim().toLowerCase();
+      const cnt = item.count || 0;
+      statusCounts.all += cnt;
+      if (key === 'draft') statusCounts.draft += cnt;
+      else if (key === 'pending') statusCounts.pending += cnt;
+      else if (key === 'decline') statusCounts.decline += cnt;
+      else if (key === 'free of charge') statusCounts.freeOfCharge += cnt;
+    });
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)), statusCounts });
   } catch (error) {
-    console.error("Error fetching itemOut-Information:", error); // Log the error for debugging
+    console.error("Error fetching invoice-Information:", error);
     res.status(500).json({ message: error.message });
   }
 });

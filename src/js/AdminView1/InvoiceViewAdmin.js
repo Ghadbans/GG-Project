@@ -26,7 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded } from '@mui/icons-material';
+import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -184,6 +184,15 @@ function InvoiceViewAdmin() {
   const [reason, setReason] = useState("");
   const [newPurchase, setNewPurchase] = useState([]);
 
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [statusCounts, setStatusCounts] = useState({
+    all: 0,
+    draft: 0,
+    pending: 0,
+    decline: 0,
+    freeOfCharge: 0
+  });
+
   const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
   const limit = 100;
   const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
@@ -203,9 +212,10 @@ function InvoiceViewAdmin() {
     };
   }, [searchTerm]);
 
-  const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+  const fetchItems = async (page, searchTerm, filterField, filterValue, statusFilter) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/invoice-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const statusParam = statusFilter && statusFilter !== 'ALL' ? `&status=${encodeURIComponent(statusFilter)}` : '';
+      const res = await axios.get(`${ENDPOINT_URL}/invoice-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent((searchTerm || '').trim())}&filterField=${encodeURIComponent((filterField || '').trim())}&filterValue=${encodeURIComponent((filterValue || '').trim())}${statusParam}`);
       const formatDate = res.data.itemI.map((row) => ({
         ...row,
         id: row._id,
@@ -215,7 +225,10 @@ function InvoiceViewAdmin() {
       }));
       const invoices = formatDate;
       SetTotalPage(res.data.totalPages); // Ensure totalPage is correctly calculated
-        setTotalItemCount(res.data.totalItem);
+      setTotalItemCount(res.data.totalItem);
+      if (res.data.statusCounts) {
+        setStatusCounts(res.data.statusCounts);
+      }
       setInvoice(invoices);
       setLoadingData(false);
 
@@ -252,19 +265,24 @@ function InvoiceViewAdmin() {
 
 
   useEffect(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
-  }, [page, debouncedSearchTerm, filterField, filterValue]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
 
-  useEffect(() => {
-    // fetchAndSaveData();
-  }, []);
+  const handleStatusClick = (statusKey) => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+    setPage(0);
+  };
 
   const handlePageChange = (newPage) => {
     setPage(newPage); // Update page state (convert to 0-based index)
   };
 
   const handleRefreshSearch = () => {
-    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   };
 
   const [loading, setLoading] = useState(false);
@@ -768,7 +786,110 @@ function InvoiceViewAdmin() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="none" sx={{ mt: 1 }} >
+          <Container maxWidth="none" sx={{ mt: 0.5, px: { xs: 1, sm: 2 } }} >
+            {/* Status Summary Filter Cards Grid */}
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(3, 1fr)',
+                  md: 'repeat(5, 1fr)',
+                },
+                gap: 1,
+                mb: 0.75,
+                mt: 0.25,
+              }}
+            >
+              {[
+                { key: 'ALL', label: 'ALL ORDERS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
+                { key: 'Draft', label: 'DRAFT', count: statusCounts.draft, color: '#78909c', bgLight: '#eceff1', icon: <EditNoteIcon sx={{ fontSize: 15, color: '#78909c' }} /> },
+                { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#801313', bgLight: '#fbe9e7', icon: <HourglassEmptyIcon sx={{ fontSize: 15, color: '#801313' }} /> },
+                { key: 'Decline', label: 'DECLINE', count: statusCounts.decline, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 15, color: '#d32f2f' }} /> },
+                { key: 'Free of Charge', label: 'FREE OF CHARGE', count: statusCounts.freeOfCharge, color: '#9c27b0', bgLight: '#f3e5f5', icon: <CardGiftcardIcon sx={{ fontSize: 15, color: '#9c27b0' }} /> },
+              ].map((card) => {
+                const isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+                return (
+                  <Box
+                    key={card.key}
+                    onClick={() => handleStatusClick(card.key)}
+                    sx={{
+                      backgroundColor: '#ffffff',
+                      borderRadius: '8px',
+                      p: '6px 10px',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      border: isSelected ? `2px solid ${card.color}` : '1px solid #e2e8f0',
+                      boxShadow: isSelected
+                        ? `0 4px 12px -2px ${card.color}33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
+                        : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+                      transform: isSelected ? 'translateY(-1px)' : 'none',
+                      transition: 'all 0.15s ease-in-out',
+                      '&:hover': {
+                        boxShadow: `0 4px 10px -2px ${card.color}25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
+                        transform: 'translateY(-1px)',
+                        borderColor: card.color,
+                      },
+                    }}
+                  >
+                    {isSelected && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '3px',
+                          backgroundColor: card.color,
+                        }}
+                      />
+                    )}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.25 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '9.5px',
+                          fontWeight: 700,
+                          letterSpacing: '0.4px',
+                          color: isSelected ? card.color : '#64748b',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {card.label}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: '50%',
+                          backgroundColor: card.bgLight,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {card.icon}
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '16px',
+                          fontWeight: 800,
+                          color: isSelected ? card.color : '#1e293b',
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        {(card.count || 0).toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
             {
               loadingData ? <div >
                 <div style={{ position: 'relative', top: '120px' }}>
@@ -776,36 +897,34 @@ function InvoiceViewAdmin() {
                 </div>
               </div> : (
                 <div  >
-                  <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
-                    <ViewTooltip>
-                      <span>
-                        <IconButton disabled={InvoiceInfoC.length === 0}>
-                          <NavLink to={'/InvoiceForm'} className='LinkName'>
-                            <span className='btnCustomerAdding'>
-                              <Add />
-                            </span>
-                          </NavLink>
-                        </IconButton>
-                      </span>
-                    </ViewTooltip>
-                    <button onClick={handleRefreshSearch} className='btnCustomer2'>Refresh Search</button>
-                  </section>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5, mt: 0.25 }}>
+                    <Box>
+                      {invoice.length > 0 && selectedRows.length > 1 && selectedRows.length < invoice.length && (
+                        <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                      )}
+                      {invoice.length > 0 && selectedRows.length === invoice.length && (
+                        <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                      )}
+                    </Box>
+                    {!isNativeMobile() && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <ViewTooltip>
+                          <span>
+                            <IconButton disabled={InvoiceInfoC.length === 0} size="small">
+                              <NavLink to={'/InvoiceForm'} className='LinkName'>
+                                <span className='btnCustomerAdding'>
+                                  <Add sx={{ fontSize: 18 }} />
+                                </span>
+                              </NavLink>
+                            </IconButton>
+                          </span>
+                        </ViewTooltip>
+                        <button onClick={handleRefreshSearch} className='btnCustomer2' style={{ height: '32px', lineHeight: '32px', padding: '0 12px' }}>Refresh Search</button>
+                      </Box>
+                    )}
+                  </Box>
 
-                  <Box sx={{ height: 600, width: '100%' }}>
-                    {invoice.length > 0 ? (
-                      <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                        {
-                          selectedRows.length > 1 && selectedRows.length < invoice.length && (
-                            <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                          )
-                        }
-                        {
-                          selectedRows.length === invoice.length ? (
-                            <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                          ) : ''
-                        }
-                      </section>
-                    ) : ''}
+                  <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                     {
                       isNativeMobile() ? (
                         <MobileCardList type="invoices" data={invoice} />

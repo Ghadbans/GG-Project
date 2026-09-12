@@ -220,32 +220,76 @@ Route.route("/remove-projects").delete(async (req, res) => {
 
 Route.route("/project-Information").get(async (req, res) => {
     try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+      const { page = 1, limit = 100, search = '', filterField, filterValue, status } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
-      const orConditions = [
-        { projectName: regex },
-        { ReferenceName: regex },
-        { status: regex },
-        { note: regex },
-        { projectDescription: regex },
-        { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex }
-      ];
-      if (!isNaN(Number(search))) {
-        orConditions.push({ projectNumber: Number(search) });
+        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(escapedSearch, 'i');
+        const orConditions = [
+          { projectName: regex },
+          { ReferenceName: regex },
+          { status: regex },
+          { note: regex },
+          { projectDescription: regex },
+          { 'customerName.customerName': regex },
+          { 'customerName.customerEmail': regex }
+        ];
+        if (!isNaN(Number(search))) {
+          orConditions.push({ projectNumber: Number(search) });
+        }
+        query.$or = orConditions;
       }
-      query.$or = orConditions;
-    }
-    if (filterField && filterValue) {
+      if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
+      if (status && status !== 'ALL') {
+        const escapedStatus = status.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        if (escapedStatus.toLowerCase() === 'on-going' || escapedStatus.toLowerCase() === 'ongoing') {
+          query.status = new RegExp('^(on-going|ongoing)$', 'i');
+        } else {
+          query.status = new RegExp(`^${escapedStatus}$`, 'i');
+        }
+      }
+
+      // Live status summary counts for branch
+      const countMatch = branchFilter(req);
+      const aggCounts = await projectSchema.aggregate([
+        { $match: countMatch },
+        {
+          $group: {
+            _id: { $toLower: { $ifNull: ["$status", ""] } },
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+
+      const statusCounts = {
+        all: 0,
+        pending: 0,
+        ongoing: 0,
+        stopped: 0,
+        completed: 0
+      };
+
+      aggCounts.forEach(item => {
+        const st = (item._id || '').toLowerCase().trim();
+        const cnt = item.count || 0;
+        statusCounts.all += cnt;
+        if (st === 'pending') {
+          statusCounts.pending += cnt;
+        } else if (st === 'on-going' || st === 'ongoing') {
+          statusCounts.ongoing += cnt;
+        } else if (st === 'stopped') {
+          statusCounts.stopped += cnt;
+        } else if (st === 'completed') {
+          statusCounts.completed += cnt;
+        }
+      });
+
       const itemI = await projectSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await projectSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)), statusCounts });
     } catch (error) { res.status(500).json({ message: error.message }); }
 });
 

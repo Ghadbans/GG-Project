@@ -271,10 +271,35 @@ Route.route("/delete-estimation/:id").delete(async (req, res, next) => {
 
 Route.route("/estimation-Information").get(async (req, res) => {
   try {
-    const { page = 1, limit = 100, search = '', filterField, filterValue, summary } = req.query;
+    const { page = 1, limit = 100, search = '', filterField, filterValue, status, branchId } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
     const query = branchFilter(req);
+    if (branchId && branchId !== 'ALL') {
+      if (branchId === 'HQ') {
+        query.$or = [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }];
+      } else {
+        query.branchId = branchId;
+      }
+    }
+
+    const baseBranchQuery = { ...query };
+
+    if (status && status !== 'ALL') {
+      const s = status.trim().toLowerCase();
+      if (s === 'draft') {
+        query.status = { $regex: /^draft$/i };
+      } else if (s === 'sent') {
+        query.status = { $regex: /^sent$/i };
+      } else if (s === 'decline') {
+        query.status = { $regex: /^decline$/i };
+      } else if (s === 'approved') {
+        query.status = { $regex: /^approved$/i };
+      } else {
+        query.status = new RegExp(`^${status.trim()}$`, 'i');
+      }
+    }
+
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
@@ -292,19 +317,54 @@ Route.route("/estimation-Information").get(async (req, res) => {
       if (!isNaN(Number(search))) {
         orConditions.push({ estimateNumber: Number(search) });
       }
-      query.$or = orConditions;
+      if (query.$or) {
+        query.$and = [{ $or: query.$or }, { $or: orConditions }];
+        delete query.$or;
+      } else {
+        query.$or = orConditions;
+      }
     }
     if (filterField && filterValue) {
       query[filterField] = new RegExp(filterValue, 'i');
     }
 
-    const itemI = await estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
-    const totalItem = await estimationSchema.countDocuments(query);
+    const [itemI, totalItem, statusAggregation] = await Promise.all([
+      estimationSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean(),
+      estimationSchema.countDocuments(query),
+      estimationSchema.aggregate([
+        { $match: baseBranchQuery },
+        {
+          $group: {
+            _id: { $toLower: "$status" },
+            count: { $sum: 1 }
+          }
+        }
+      ])
+    ]);
+
+    const statusCounts = {
+      all: 0,
+      draft: 0,
+      sent: 0,
+      decline: 0,
+      approved: 0
+    };
+
+    statusAggregation.forEach(item => {
+      const key = (item._id || '').trim().toLowerCase();
+      const cnt = item.count || 0;
+      statusCounts.all += cnt;
+      if (key === 'draft') statusCounts.draft += cnt;
+      else if (key === 'sent') statusCounts.sent += cnt;
+      else if (key === 'decline') statusCounts.decline += cnt;
+      else if (key === 'approved') statusCounts.approved += cnt;
+    });
 
     res.status(200).json({
       itemI,
       totalItem,
-      totalPages: Math.ceil(totalItem / Number(limit))
+      totalPages: Math.ceil(totalItem / Number(limit)),
+      statusCounts
     });
   } catch (error) {
     console.error("Error fetching estimation-Information:", error);

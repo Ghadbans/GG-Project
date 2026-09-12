@@ -431,27 +431,80 @@ Route.route("/remove-purchaseOrder").delete(async (req, res) => {
 
 Route.route("/purchase-Information").get(async (req, res) => {
     try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue } = req.query;
+      const { page = 1, limit = 100, search = '', filterField, filterValue, status } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
         const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
+        const regex = new RegExp(escapedSearch, 'i');
         query.$or = [
-            ...(!isNaN(Number(search)) ? [{ purchaseNumber: Number(search) }] : []),
-            ...(!isNaN(Number(search)) ? [{ purchaseAmount1: Number(search) }] : []),
-            { 'projectName.projectName': regex },
-            { 'customerName.customerName': regex },
-            { description: regex },
-            { status: regex }
-          ];
+          ...(!isNaN(Number(search)) ? [{ purchaseNumber: Number(search) }] : []),
+          ...(!isNaN(Number(search)) ? [{ purchaseAmount1: Number(search) }] : []),
+          { 'projectName.projectName': regex },
+          { 'customerName.customerName': regex },
+          { description: regex },
+          { status: regex },
+          { statusInfo: regex }
+        ];
       }
       if (filterField && filterValue) {
         query[filterField] = new RegExp(filterValue, 'i');
       }
+      if (status && status !== 'ALL') {
+        const escapedStatus = status.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        let statusRegex;
+        if (escapedStatus.toLowerCase() === 'on-going' || escapedStatus.toLowerCase() === 'ongoing') {
+          statusRegex = new RegExp('^(on-going|ongoing)$', 'i');
+        } else {
+          statusRegex = new RegExp(`^${escapedStatus}$`, 'i');
+        }
+        query.$and = query.$and || [];
+        query.$and.push({
+          $or: [
+            { statusInfo: statusRegex },
+            { status: statusRegex }
+          ]
+        });
+      }
+
+      // Live status summary counts for branch
+      const countMatch = branchFilter(req);
+      const aggCounts = await purchaseSchema.aggregate([
+        { $match: countMatch },
+        {
+          $group: {
+            _id: { $toLower: { $ifNull: ["$statusInfo", { $ifNull: ["$status", ""] }] } },
+            count: { $sum: 1 }
+          }
+        }
+      ]);
+
+      const statusCounts = {
+        all: 0,
+        pending: 0,
+        ongoing: 0,
+        stopped: 0,
+        completed: 0
+      };
+
+      aggCounts.forEach(item => {
+        const st = (item._id || '').toLowerCase().trim();
+        const cnt = item.count || 0;
+        statusCounts.all += cnt;
+        if (st === 'pending') {
+          statusCounts.pending += cnt;
+        } else if (st === 'on-going' || st === 'ongoing') {
+          statusCounts.ongoing += cnt;
+        } else if (st === 'stopped') {
+          statusCounts.stopped += cnt;
+        } else if (st === 'completed') {
+          statusCounts.completed += cnt;
+        }
+      });
+
       const itemI = await purchaseSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
       const totalItem = await purchaseSchema.countDocuments(query);
-      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+      res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)), statusCounts });
     } catch (error) { res.status(500).json({ message: error.message }); }
 });
 

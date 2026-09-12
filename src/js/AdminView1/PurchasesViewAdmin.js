@@ -25,7 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
-import { Add, Close, MailOutline } from '@mui/icons-material';
+import { Add, Close, MailOutline, Assignment as AssignmentIcon, HourglassEmpty as HourglassEmptyIcon, Autorenew as AutorenewIcon, Block as BlockIcon } from '@mui/icons-material';
 import { ENDPOINT_URL } from '../apiConfig';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from "react-redux"
@@ -37,6 +37,8 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
+import { isNativeMobile } from '../utils/isMobile';
+import MobileCardList from '../component/MobileCardList';
 
 import { io } from 'socket.io-client';
 
@@ -184,6 +186,15 @@ function PurchasesViewAdmin() {
   const [loadingData, setLoadingData] = useState(true);
   const [reason, setReason] = useState("");
   const apiUrl = `${ENDPOINT_URL}/purchase`;
+  const [statusFilter, setStatusFilter] = useState('ALL');
+  const [statusCounts, setStatusCounts] = useState({
+    all: 0,
+    pending: 0,
+    ongoing: 0,
+    stopped: 0,
+    completed: 0
+  });
+
   const [page, setPage] = useState(0);
   const limit = 100;
   const [searchTerm, setSearchTerm] = useState("");
@@ -201,9 +212,10 @@ function PurchasesViewAdmin() {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  const fetchItems = async (page, searchTerm, filterField, filterValue) => {
+  const fetchItems = async (page, searchTerm, filterField, filterValue, statusFilter) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/purchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent(searchTerm.trim())}&filterField=${encodeURIComponent(filterField.trim())}&filterValue=${encodeURIComponent(filterValue.trim())}`);
+      const statusParam = statusFilter && statusFilter !== 'ALL' ? `&status=${encodeURIComponent(statusFilter)}` : '';
+      const res = await axios.get(`${ENDPOINT_URL}/purchase-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent((searchTerm || '').trim())}&filterField=${encodeURIComponent((filterField || '').trim())}&filterValue=${encodeURIComponent((filterValue || '').trim())}${statusParam}`);
       const formatDate = res.data.itemI.map((item) => ({
         ...item,
         id: item._id,
@@ -211,17 +223,33 @@ function PurchasesViewAdmin() {
       }));
       setPurchase(formatDate);
       SetTotalPage(res.data.totalPages);
-        setTotalItemCount(res.data.totalItem);
+      setTotalItemCount(res.data.totalItem || 0);
+      if (res.data.statusCounts) {
+        setStatusCounts(res.data.statusCounts);
+      }
       setLoadingData(false);
     } catch (error) {
       console.error('Error fetching data:', error);
       setLoadingData(false);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
-  }, [page, debouncedSearchTerm, filterField, filterValue]);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+  }, [page, debouncedSearchTerm, filterField, filterValue, statusFilter]);
+
+  const handleStatusClick = (statusKey) => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+    setPage(0);
+  };
+
+  const handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  };
 
   const handlePageChange = (newPage) => {
     setPage(newPage);
@@ -563,7 +591,110 @@ function PurchasesViewAdmin() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="none" sx={{ mt: 1 }} >
+          <Container maxWidth="none" sx={{ mt: 0.5, px: { xs: 1, sm: 2 } }} >
+            {/* Status Summary Filter Cards Grid */}
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(3, 1fr)',
+                  md: 'repeat(5, 1fr)',
+                },
+                gap: 1,
+                mb: 0.75,
+                mt: 0.25,
+              }}
+            >
+              {[
+                { key: 'ALL', label: 'ALL REQUESTS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
+                { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#ed6c02', bgLight: '#fff3e0', icon: <HourglassEmptyIcon sx={{ fontSize: 15, color: '#ed6c02' }} /> },
+                { key: 'On-Going', label: 'ON-GOING', count: statusCounts.ongoing, color: '#1976d2', bgLight: '#e3f2fd', icon: <AutorenewIcon sx={{ fontSize: 15, color: '#1976d2' }} /> },
+                { key: 'Stopped', label: 'STOPPED', count: statusCounts.stopped, color: '#d32f2f', bgLight: '#ffebee', icon: <BlockIcon sx={{ fontSize: 15, color: '#d32f2f' }} /> },
+                { key: 'Completed', label: 'COMPLETED', count: statusCounts.completed, color: '#2e7d32', bgLight: '#e8f5e9', icon: <CheckCircleIcon sx={{ fontSize: 15, color: '#2e7d32' }} /> },
+              ].map((card) => {
+                const isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+                return (
+                  <Box
+                    key={card.key}
+                    onClick={() => handleStatusClick(card.key)}
+                    sx={{
+                      backgroundColor: '#ffffff',
+                      borderRadius: '8px',
+                      p: '6px 10px',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      border: isSelected ? `2px solid ${card.color}` : '1px solid #e2e8f0',
+                      boxShadow: isSelected
+                        ? `0 4px 12px -2px ${card.color}33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
+                        : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+                      transform: isSelected ? 'translateY(-1px)' : 'none',
+                      transition: 'all 0.15s ease-in-out',
+                      '&:hover': {
+                        boxShadow: `0 4px 10px -2px ${card.color}25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
+                        transform: 'translateY(-1px)',
+                        borderColor: card.color,
+                      },
+                    }}
+                  >
+                    {isSelected && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '3px',
+                          backgroundColor: card.color,
+                        }}
+                      />
+                    )}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.25 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '9.5px',
+                          fontWeight: 700,
+                          letterSpacing: '0.4px',
+                          color: isSelected ? card.color : '#64748b',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {card.label}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: '50%',
+                          backgroundColor: card.bgLight,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {card.icon}
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '16px',
+                          fontWeight: 800,
+                          color: isSelected ? card.color : '#1e293b',
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        {(card.count || 0).toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
             {
               loadingData ? <div >
                 <div style={{ position: 'relative', top: '120px' }}>
@@ -571,36 +702,34 @@ function PurchasesViewAdmin() {
                 </div>
               </div> : (
                 <div >
-                  <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
-                    <ViewTooltip>
-                      <span>
-                        <IconButton disabled={PurchaseInfoC.length === 0}>
-                          <NavLink to={'/PurchasesFormView'} className='LinkName'>
-                            <span className='btnCustomerAdding'>
-                              <Add />
-                            </span>
-                          </NavLink>
-                        </IconButton>
-                      </span>
-                    </ViewTooltip>
-                  </section>
-                  {purchase.length > 0 ? (
-                    <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                      {
-                        selectedRows.length > 1 && selectedRows.length < purchase.length && (
-                          <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                        )
-                      }
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5, mt: 0.25 }}>
+                    <Box>
+                      {purchase.length > 0 && selectedRows.length > 1 && selectedRows.length < purchase.length && (
+                        <button disabled={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                      )}
+                      {purchase.length > 0 && selectedRows.length === purchase.length && (
+                        <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                      )}
+                    </Box>
+                    {!isNativeMobile() && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <ViewTooltip>
+                          <span>
+                            <IconButton disabled={PurchaseInfoC.length === 0} size="small">
+                              <NavLink to={'/PurchasesFormView'} className='LinkName'>
+                                <span className='btnCustomerAdding'>
+                                  <Add sx={{ fontSize: 18 }} />
+                                </span>
+                              </NavLink>
+                            </IconButton>
+                          </span>
+                        </ViewTooltip>
+                        <button onClick={handleRefreshSearch} className='btnCustomer2' style={{ height: '32px', lineHeight: '32px', padding: '0 12px' }}>Refresh Search</button>
+                      </Box>
+                    )}
+                  </Box>
 
-                      {
-                        selectedRows.length === purchase.length ? (
-                          <button onClick={handleOpenAll} disabled={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                        ) : ''
-                      }
-                    </section>
-                  )
-                    : ''}
-                  <Box sx={{ height: 600, width: '100%' }}>
+                  <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                       <DataGrid
                           paginationMode="server"
                           filterMode="server"

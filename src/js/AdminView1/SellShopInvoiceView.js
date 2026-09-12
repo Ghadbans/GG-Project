@@ -1,6 +1,6 @@
 import PrintHeader from '../component/PrintHeader';
 import PrintFooter from '../component/PrintFooter';
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo } from 'react'
 import './view.css'
 import './PageView/Chartview.css';
 import SideShop from '../component/SideShop'
@@ -27,7 +27,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Print } from '@mui/icons-material';
+import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Print, Assignment as AssignmentIcon, PendingActions as PendingActionsIcon, EditNote as EditNoteIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -39,6 +39,7 @@ import Logout from '../component/NetworkLogoutIcon';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
+import { isNativeMobile } from '../utils/isMobile';
 
 import { useReactToPrint } from 'react-to-print';
 
@@ -206,11 +207,48 @@ function SellShopInvoiceView() {
       fetchData(); // refresh table
     }
   };
-;
   const [hidden, setHidden] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
   const [reason, setReason] = useState("");
+  const [statusFilter, setStatusFilter] = useState('ALL');
+
+  const statusCounts = useMemo(() => {
+    const counts = { all: 0, paid: 0, partiallyPaid: 0, draft: 0 };
+    (invoice || []).forEach(item => {
+      counts.all += 1;
+      const st = (item.status || '').toLowerCase().trim();
+      if (st === 'paid') counts.paid += 1;
+      else if (st === 'partially-paid' || st === 'partially paid') counts.partiallyPaid += 1;
+      else if (st === 'draft') counts.draft += 1;
+    });
+    return counts;
+  }, [invoice]);
+
+  const displayedInvoice = useMemo(() => {
+    if (!statusFilter || statusFilter === 'ALL') return invoice;
+    return (invoice || []).filter(item => {
+      const st = (item.status || '').toLowerCase().trim();
+      if (statusFilter === 'Paid') return st === 'paid';
+      if (statusFilter === 'Partially-Paid') return st === 'partially-paid' || st === 'partially paid';
+      if (statusFilter === 'Draft') return st === 'draft';
+      return true;
+    });
+  }, [invoice, statusFilter]);
+
+  const handleStatusClick = (statusKey) => {
+    if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
+      setStatusFilter('ALL');
+    } else {
+      setStatusFilter(statusKey);
+    }
+  };
+
+  const handleRefreshSearch = () => {
+    setStatusFilter('ALL');
+    fetchData();
+  };
+
   const fetchData = async () => {
     try {
       const res = await axios.get(`${ENDPOINT_URL}/pos?summary=true`)
@@ -553,9 +591,9 @@ function SellShopInvoiceView() {
   }
   const [filteredRows, setFilteredRows] = useState([])
   useEffect(() => {
-    const Inv = invoice.filter(row => !hiddenRow.includes(row._id))
+    const Inv = (displayedInvoice || []).filter(row => !hiddenRow.includes(row._id))
     setFilteredRows(Inv)
-  }, [invoice, hiddenRow])
+  }, [displayedInvoice, hiddenRow])
   {/** search start */ }
   const [searchInvoice, setSearchInvoice] = useState("");
   useState(() => {
@@ -757,7 +795,109 @@ function SellShopInvoiceView() {
           }}
         >
           <Toolbar />
-          <Container maxWidth="none" sx={{ mt: 1 }} >
+          <Container maxWidth="none" sx={{ mt: 0.5, px: { xs: 1, sm: 2 } }} >
+            {/* Status Summary Filter Cards Grid */}
+            <Box
+              sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                  xs: 'repeat(2, 1fr)',
+                  sm: 'repeat(2, 1fr)',
+                  md: 'repeat(4, 1fr)',
+                },
+                gap: 1,
+                mb: 0.75,
+                mt: 0.25,
+              }}
+            >
+              {[
+                { key: 'ALL', label: 'ALL INVOICES', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
+                { key: 'Paid', label: 'PAID', count: statusCounts.paid, color: '#2e7d32', bgLight: '#e8f5e9', icon: <CheckCircleIcon sx={{ fontSize: 15, color: '#2e7d32' }} /> },
+                { key: 'Partially-Paid', label: 'PARTIALLY-PAID', count: statusCounts.partiallyPaid, color: '#fb8c00', bgLight: '#fff3e0', icon: <PendingActionsIcon sx={{ fontSize: 15, color: '#fb8c00' }} /> },
+                { key: 'Draft', label: 'DRAFT', count: statusCounts.draft, color: '#78909c', bgLight: '#eceff1', icon: <EditNoteIcon sx={{ fontSize: 15, color: '#78909c' }} /> },
+              ].map((card) => {
+                const isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
+                return (
+                  <Box
+                    key={card.key}
+                    onClick={() => handleStatusClick(card.key)}
+                    sx={{
+                      backgroundColor: '#ffffff',
+                      borderRadius: '8px',
+                      p: '6px 10px',
+                      cursor: 'pointer',
+                      position: 'relative',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between',
+                      border: isSelected ? `2px solid ${card.color}` : '1px solid #e2e8f0',
+                      boxShadow: isSelected
+                        ? `0 4px 12px -2px ${card.color}33, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`
+                        : '0 1px 2px 0 rgba(0, 0, 0, 0.04)',
+                      transform: isSelected ? 'translateY(-1px)' : 'none',
+                      transition: 'all 0.15s ease-in-out',
+                      '&:hover': {
+                        boxShadow: `0 4px 10px -2px ${card.color}25, 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
+                        transform: 'translateY(-1px)',
+                        borderColor: card.color,
+                      },
+                    }}
+                  >
+                    {isSelected && (
+                      <Box
+                        sx={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          right: 0,
+                          height: '3px',
+                          backgroundColor: card.color,
+                        }}
+                      />
+                    )}
+                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 0.25 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '9.5px',
+                          fontWeight: 700,
+                          letterSpacing: '0.4px',
+                          color: isSelected ? card.color : '#64748b',
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {card.label}
+                      </Typography>
+                      <Box
+                        sx={{
+                          width: 22,
+                          height: 22,
+                          borderRadius: '50%',
+                          backgroundColor: card.bgLight,
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        {card.icon}
+                      </Box>
+                    </Box>
+                    <Box sx={{ display: 'flex', alignItems: 'baseline', gap: 1 }}>
+                      <Typography
+                        sx={{
+                          fontSize: '16px',
+                          fontWeight: 800,
+                          color: isSelected ? card.color : '#1e293b',
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        {(card.count || 0).toLocaleString()}
+                      </Typography>
+                    </Box>
+                  </Box>
+                );
+              })}
+            </Box>
             {
               loadingData ? <div >
                 <div style={{ position: 'relative', top: '120px' }}>
@@ -765,39 +905,38 @@ function SellShopInvoiceView() {
                 </div>
               </div> : (
                 <div  >
-                  <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
-                    <ViewTooltip>
-                      <span>
-                        <IconButton disabled={InvoiceInfoC.length === 0}>
-                          <NavLink to={'/ShopPosForm'} className='LinkName'>
-                            <span className='btnCustomerAdding'>
-                              <Add />
-                            </span>
-                          </NavLink>
-                        </IconButton>
-                      </span>
-                    </ViewTooltip>
-                  </section>
-                    <Box sx={{ height: 600, width: '100%' }}>
-                      {invoice.length > 0 ? (
-                        <section style={{ position: 'relative', float: 'left', margin: '10px' }}>
-                          {
-                            selectedRows.length > 1 && selectedRows.length < invoice.length && (
-                              <button hidden={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
-                            )
-                          }
-                          {
-                            selectedRows.length === invoice.length ? (
-                              <button onClick={handleOpenAll} hidden={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
-                            ) : ''
-                          }
-                        </section>
-                      )
-                        : ''}
-                      {
-                        user.data.role === 'CEO' ? (
-                          <DataGrid
-                            rows={invoice}
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.5, mt: 0.25 }}>
+                    <Box>
+                      {invoice.length > 0 && selectedRows.length > 1 && selectedRows.length < invoice.length && (
+                        <button hidden={user.data.role !== 'CEO'} onClick={handleOpenAll} className='btnCustomer2'>Delete multiple</button>
+                      )}
+                      {invoice.length > 0 && selectedRows.length === invoice.length && (
+                        <button onClick={handleOpenAll} hidden={user.data.role !== 'CEO'} className='btnCustomer2'>Delete all</button>
+                      )}
+                    </Box>
+                    {!isNativeMobile() && (
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <ViewTooltip>
+                          <span>
+                            <IconButton disabled={InvoiceInfoC.length === 0} size="small">
+                              <NavLink to={'/ShopPosForm'} className='LinkName'>
+                                <span className='btnCustomerAdding'>
+                                  <Add sx={{ fontSize: 18 }} />
+                                </span>
+                              </NavLink>
+                            </IconButton>
+                          </span>
+                        </ViewTooltip>
+                        <button onClick={handleRefreshSearch} className='btnCustomer2' style={{ height: '32px', lineHeight: '32px', padding: '0 12px' }}>Refresh Search</button>
+                      </Box>
+                    )}
+                  </Box>
+
+                  <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
+                    {
+                      user.data.role === 'CEO' ? (
+                        <DataGrid
+                          rows={displayedInvoice}
                             columns={columns}
                             slots={{ toolbar: GridToolbar }}
                             slotProps={{
