@@ -27,6 +27,20 @@
 18. **Status Summary Filter Cards Uniformity & Viewport Awareness**: When embedding compact status summary cards grids across master listing views (Maintenance, Invoice, Quotation, Project, Purchase Request, POS Invoice), always style cards with `p: '6px 10px'`, 22px icon badge, 16px bold count, 9.5px uppercase label, and a 3px active status bar indicator. Concurrently, set DataGrid container height to `calc(100vh - 200px)` with `minHeight: 380px` and compact top action buttons to ensure table pagination controls remain permanently visible on screen without requiring vertical page scrolling.
 
 ## Current Progress Log
+- **Maintenance Order Status Summary Filter Cards & Version Sync (Ver 3.5.06)**:
+  - **Maintenance Order View (`MaintenanceOrderAdmin.js` & `server/routes/maintenanceRoutes.js`)**:
+    - Embedded 4 compact interactive status summary cards in `MaintenanceOrderAdmin.js`:
+      - **ALL ORDERS**: Dark Blue `#30368a` | `AssignmentIcon`
+      - **OPEN**: Primary Blue `#1976d2` | `BuildIcon`
+      - **PENDING**: Amber `#ed6c02` | `HourglassEmptyIcon`
+      - **RESCHEDULE**: Purple `#9c27b0` | `EventRepeatIcon`
+    - Added MongoDB `$group` aggregation in `/technician-maintenance-Information` endpoint returning branch-scoped `statusCounts: { all, open, pending, reschedule }`.
+    - Integrated 1-click status filtering resetting `page = 0`, toggle reset on re-clicking active card, and adjusted DataGrid height to `calc(100vh - 200px)` (minHeight `380px`).
+  - **Version Display Synchronization**:
+    - Synchronized version `3.5.06` across desktop app (Electron) and web version (`dist_web/`).
+    - Packaged Windows installer `dist/Global Gate Setup 3.5.6.exe`.
+    - Pushed commit to GitHub `main` for Railway backend & web deployment.
+
 - **Invoice Module SENT Status Summary Card Addition (Ver 3.5.05)**:
   - **Invoice Module (`InvoiceViewAdmin.js` & `server/routes/invoiceRoutes.js`)**:
     - Expanded Invoice status summary cards from 5 to 6 cards: **ALL ORDERS** (`#30368a`), **DRAFT** (`#78909c`), **SENT** (`#1976d2`), **PENDING** (`#801313`), **DECLINE** (`#d32f2f`), **FREE OF CHARGE** (`#9c27b0`).

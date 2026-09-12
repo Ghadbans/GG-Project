@@ -66,18 +66,33 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
 
 Route.route('/technician-maintenance-Information').get(async (req, res) => {
   try {
-    const { page = 1, limit = 100, search = '', technician, isOffice } = req.query;
+    const { page = 1, limit = 100, search = '', technician, isOffice, status } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
-    const query = { status: { $nin: ['Close', 'Converted', 'Cancel'] } };
+    const baseScopeQuery = { status: { $nin: ['Close', 'Converted', 'Cancel'] } };
     if (isOffice !== 'true' && technician) {
-      query.technicianAssign = technician;
+      baseScopeQuery.technicianAssign = technician;
+    }
+
+    const query = { ...baseScopeQuery };
+
+    if (status && status !== 'ALL') {
+      const s = status.trim().toLowerCase();
+      if (s === 'open') {
+        query.status = { $regex: /^open$/i };
+      } else if (s === 'pending') {
+        query.status = { $regex: /^pending$/i };
+      } else if (s === 'reschedule') {
+        query.status = { $regex: /^reschedule$/i };
+      } else {
+        query.status = new RegExp(`^${status.trim()}$`, 'i');
+      }
     }
     
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [
+      const searchOr = [
         ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
         { serviceName: regex },
         { status: regex },
@@ -90,12 +105,41 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
         { 'customerName.customerName': regex },
         { 'customerName.customerPhone': regex },
       ].filter(condition => condition !== null);
+
+      query.$and = [{ $or: searchOr }];
     }
     
-    const itemI = await maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean();
-    const totalItem = await maintenanceSchema.countDocuments(query);
+    const [itemI, totalItem, statusAggregation] = await Promise.all([
+      maintenanceSchema.find(query).sort({ _id: -1 }).allowDiskUse(true).skip(skip).limit(Number(limit)).lean(),
+      maintenanceSchema.countDocuments(query),
+      maintenanceSchema.aggregate([
+        { $match: baseScopeQuery },
+        {
+          $group: {
+            _id: { $toLower: "$status" },
+            count: { $sum: 1 }
+          }
+        }
+      ])
+    ]);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+    const statusCounts = {
+      all: 0,
+      open: 0,
+      pending: 0,
+      reschedule: 0
+    };
+
+    statusAggregation.forEach(item => {
+      const key = (item._id || '').trim().toLowerCase();
+      const cnt = item.count || 0;
+      statusCounts.all += cnt;
+      if (key === 'open') statusCounts.open += cnt;
+      else if (key === 'pending') statusCounts.pending += cnt;
+      else if (key === 'reschedule') statusCounts.reschedule += cnt;
+    });
+
+    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)), statusCounts });
   } catch (error) {
     console.error('Error fetching technician-maintenance-Information:', error);
     res.status(500).json({ message: error.message });
