@@ -611,7 +611,7 @@ function MaintenanceOrderViewInformation() {
     number: `M-${String(row.serviceNumber).padStart(6, '0')}`,
     visitDate: dayjs(row.visitDate).format('DD/MM/YYYY'),
     serviceDate: dayjs(row.serviceDate).format('DD/MM/YYYY'),
-    status: row.status,
+    status: ((row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true')) ? 'Converted' : row.status,
   }))
   const data2 = maintenance.filter(row => row._id === id).map((row) => ({
     Customer: row.customerName?.customerName,
@@ -1035,19 +1035,35 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
                                       <Typography variant='h5'>{row.customerName?.customerName} | <span>  M-{String(row.serviceNumber).padStart(6, '0')}</span></Typography>
 
-                                      <Typography
-                                        color={row.status === "Open"
-                                          ? "blue" :
-                                          row.status === "Pending"
-                                            ? "red" :
-                                            row.status === "Reschedule"
-                                              ? "Orange" :
-                                              row.status === "Close"
-                                                ? "green" : "black"
-                                        }
-                                        sx={{ textAlign: 'center' }}  >
-                                        {row.status}
-                                      </Typography>
+                                       {(() => {
+                                         const isConverted = (row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true');
+                                         const displayStatus = isConverted ? 'Converted' : row.status;
+                                         const statusColor = isConverted
+                                           ? "#00838f"
+                                           : row.status === "Open"
+                                             ? "blue"
+                                             : row.status === "Pending"
+                                               ? "#801313"
+                                               : row.status === "Reschedule"
+                                                 ? "Orange"
+                                                 : row.status === "Cancel"
+                                                   ? "red"
+                                                   : row.status === "Close"
+                                                     ? "green"
+                                                     : "black";
+
+                                         return (
+                                           <Typography
+                                             sx={{
+                                               color: statusColor,
+                                               textAlign: 'center',
+                                               fontWeight: 600
+                                             }}
+                                           >
+                                             {displayStatus}
+                                           </Typography>
+                                         );
+                                       })()}
                                       <div>
                                         <Button
                                           aria-controls={open ? 'demo-customized-menu' : undefined}
@@ -1311,8 +1327,10 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                               <tr>
                                                 <td style={{ border: '1px solid black' }}>Visit Date</td>
                                                 <td style={{ border: '1px solid black' }}>{dayjs(row.visitDate).format('DD/MM/YYYY')}</td>
-                                                <td style={{ border: '1px solid black' }}>status</td>
-                                                <td style={{ border: '1px solid black' }}>{row.status}</td>
+                                                 <td style={{ border: '1px solid black' }}>status</td>
+                                                 <td style={{ border: '1px solid black' }}>
+                                                   {((row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true')) ? 'Converted' : row.status}
+                                                 </td>
                                               </tr>
                                             </tbody>
                                           </table>

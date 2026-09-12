@@ -27,6 +27,12 @@
 18. **Status Summary Filter Cards Uniformity & Viewport Awareness**: When embedding compact status summary cards grids across master listing views (Maintenance, Invoice, Quotation, Project, Purchase Request, POS Invoice), always style cards with `p: '6px 10px'`, 22px icon badge, 16px bold count, 9.5px uppercase label, and a 3px active status bar indicator. Concurrently, set DataGrid container height to `calc(100vh - 200px)` with `minHeight: 380px` and compact top action buttons to ensure table pagination controls remain permanently visible on screen without requiring vertical page scrolling.
 
 ## Current Progress Log
+- **Maintenance Information Converted Status Display Fix (Ver 3.5.07)**:
+  - **Maintenance Detail Views (`MaintenanceViewInformation.js` & `MaintenanceOrderViewInformation.js`)**:
+    - Fixed status display at the top header (next to Customer Name & Order No.) to show **Converted** in teal (`#00838f`) with bold font weight whenever an order has been converted to an invoice (`row.Converted === true` or `row.status === 'Converted'`).
+    - Fixed status row in the Job Card Info printable table and Excel export (`data1`) to properly display `Converted` instead of raw `Close`.
+  - **Release & Distribution**: Bumped version to `3.5.07`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.7.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Maintenance Order Status Summary Filter Cards & Version Sync (Ver 3.5.06)**:
   - **Maintenance Order View (`MaintenanceOrderAdmin.js` & `server/routes/maintenanceRoutes.js`)**:
     - Embedded 4 compact interactive status summary cards in `MaintenanceOrderAdmin.js`:
