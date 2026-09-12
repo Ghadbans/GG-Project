@@ -26,7 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon } from '@mui/icons-material';
+import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -188,6 +188,7 @@ function InvoiceViewAdmin() {
   const [statusCounts, setStatusCounts] = useState({
     all: 0,
     draft: 0,
+    sent: 0,
     pending: 0,
     decline: 0,
     freeOfCharge: 0
@@ -794,7 +795,7 @@ function InvoiceViewAdmin() {
                 gridTemplateColumns: {
                   xs: 'repeat(2, 1fr)',
                   sm: 'repeat(3, 1fr)',
-                  md: 'repeat(5, 1fr)',
+                  md: 'repeat(6, 1fr)',
                 },
                 gap: 1,
                 mb: 0.75,
@@ -804,6 +805,7 @@ function InvoiceViewAdmin() {
               {[
                 { key: 'ALL', label: 'ALL ORDERS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
                 { key: 'Draft', label: 'DRAFT', count: statusCounts.draft, color: '#78909c', bgLight: '#eceff1', icon: <EditNoteIcon sx={{ fontSize: 15, color: '#78909c' }} /> },
+                { key: 'Sent', label: 'SENT', count: statusCounts.sent, color: '#1976d2', bgLight: '#e3f2fd', icon: <SendIcon sx={{ fontSize: 15, color: '#1976d2' }} /> },
                 { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#801313', bgLight: '#fbe9e7', icon: <HourglassEmptyIcon sx={{ fontSize: 15, color: '#801313' }} /> },
                 { key: 'Decline', label: 'DECLINE', count: statusCounts.decline, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 15, color: '#d32f2f' }} /> },
                 { key: 'Free of Charge', label: 'FREE OF CHARGE', count: statusCounts.freeOfCharge, color: '#9c27b0', bgLight: '#f3e5f5', icon: <CardGiftcardIcon sx={{ fontSize: 15, color: '#9c27b0' }} /> },

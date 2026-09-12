@@ -27,6 +27,13 @@
 18. **Status Summary Filter Cards Uniformity & Viewport Awareness**: When embedding compact status summary cards grids across master listing views (Maintenance, Invoice, Quotation, Project, Purchase Request, POS Invoice), always style cards with `p: '6px 10px'`, 22px icon badge, 16px bold count, 9.5px uppercase label, and a 3px active status bar indicator. Concurrently, set DataGrid container height to `calc(100vh - 200px)` with `minHeight: 380px` and compact top action buttons to ensure table pagination controls remain permanently visible on screen without requiring vertical page scrolling.
 
 ## Current Progress Log
+- **Invoice Module SENT Status Summary Card Addition (Ver 3.5.05)**:
+  - **Invoice Module (`InvoiceViewAdmin.js` & `server/routes/invoiceRoutes.js`)**:
+    - Expanded Invoice status summary cards from 5 to 6 cards: **ALL ORDERS** (`#30368a`), **DRAFT** (`#78909c`), **SENT** (`#1976d2`), **PENDING** (`#801313`), **DECLINE** (`#d32f2f`), **FREE OF CHARGE** (`#9c27b0`).
+    - Added `sent` to MongoDB aggregation in `/invoice-Information` and backend status regex query.
+    - Updated grid layout columns to `repeat(6, 1fr)` on desktop viewports.
+  - **Release & Distribution**: Bumped version to `3.5.05`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.5.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Status Summary Filter Cards Across 5 Core Modules (Ver 3.5.03)**:
   - **Module 1: Invoice (`InvoiceViewAdmin.js` & `server/routes/invoiceRoutes.js`)**:
     - Embedded 5 compact status cards: **ALL ORDERS** (`#30368a`), **DRAFT** (`#78909c`), **PENDING** (`#801313`), **DECLINE** (`#d32f2f`), **FREE OF CHARGE** (`#9c27b0`).

@@ -145,6 +145,8 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const s = status.trim().toLowerCase();
       if (s === 'draft') {
         query.status = { $regex: /^draft$/i };
+      } else if (s === 'sent') {
+        query.status = { $regex: /^sent$/i };
       } else if (s === 'pending') {
         query.status = { $regex: /^pending$/i };
       } else if (s === 'decline') {
@@ -219,6 +221,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
     const statusCounts = {
       all: 0,
       draft: 0,
+      sent: 0,
       pending: 0,
       decline: 0,
       freeOfCharge: 0
@@ -229,6 +232,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const cnt = item.count || 0;
       statusCounts.all += cnt;
       if (key === 'draft') statusCounts.draft += cnt;
+      else if (key === 'sent') statusCounts.sent += cnt;
       else if (key === 'pending') statusCounts.pending += cnt;
       else if (key === 'decline') statusCounts.decline += cnt;
       else if (key === 'free of charge') statusCounts.freeOfCharge += cnt;
