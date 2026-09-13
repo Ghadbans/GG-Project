@@ -90,7 +90,7 @@ function ExpensesViewAdmin() {
   const [invoice,setInvoice] = useState([]);
   const [hidden, setHidden] = useState([]);
   const [loadingData, setLoadingData] = useState(true);
-  const apiUrl = 'https://gg-project-production.up.railway.app/endpoint/dailyexpense';
+  const apiUrl = `${ENDPOINT_URL}/dailyexpense`;
   
   useEffect(()=> {
   axios.get(apiUrl)

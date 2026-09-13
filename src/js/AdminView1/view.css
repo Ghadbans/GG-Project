@@ -674,84 +674,53 @@ body.is-mobile-app {
         --content-padding: 8px !important;
 }
 
-/* 1. Global Navigation Bar Collision Fix */
-body.is-mobile-app .MuiBox-root > .MuiAppBar-root:not(.MobileLayout-appBar) {
-display: none !important;
+/* 1. Global Navigation Bar: Suppress All Non-MobileLayout AppBars */
+body.is-mobile-app .MuiAppBar-root:not(.MobileLayout-appBar),
+body.is-mobile-app header.MuiAppBar-root:not(.MobileLayout-appBar),
+body.is-mobile-app .Homeemployee > .MuiBox-root > .MuiAppBar-root,
+body.is-mobile-app .Homeemployee > .MuiAppBar-root {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    visibility: hidden !important;
+    pointer-events: none !important;
 }
 
-body.is-mobile-app .MuiAppBar-root {
-width: 100% !important;
-        left: 0 !important;
-        right: 0 !important;
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        box-sizing: border-box !important;
-        position: fixed !important;
-        top: 0 !important;
-        z-index: 1200 !important;
+body.is-mobile-app .MobileLayout-appBar {
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box !important;
+    position: fixed !important;
+    top: 0 !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    z-index: 1200 !important;
+    display: flex !important;
 }
 
-body.is-mobile-app .MuiToolbar-root {
-display: flex !important;
-        justify-content: space-between !important;
-        align-items: center !important;
-        width: 100% !important;
-        min-height: 52px !important;
-        height: 52px !important;
-        padding-left: 6px !important;
-        padding-right: 6px !important;
-        box-sizing: border-box !important;
-        gap: 4px !important;
-}
-
-/* Left Section: Hamburger & Title */
-body.is-mobile-app .MuiToolbar-root > .MuiIconButton-root:first-of-type,
-body.is-mobile-app .MuiToolbar-root > button:first-of-type {
-padding: 4px !important;
-        margin-right: 4px !important;
-        flex-shrink: 0 !important;
-}
-
-body.is-mobile-app .MuiToolbar-root .MuiTypography-root,
-body.is-mobile-app .MuiToolbar-root h1,
-body.is-mobile-app .MuiToolbar-root h6 {
-white-space: nowrap !important;
-        text-overflow: ellipsis !important;
-        overflow: hidden !important;
-        max-width: 115px !important;
-        font-size: 1rem !important;
-        font-weight: 700 !important;
-        margin: 0 !important;
-        flex-shrink: 1 !important;
-}
-
-/* Right Section Icons & Controls */
-body.is-mobile-app .MuiToolbar-root .MuiIconButton-root {
-padding: 3px !important;
-        margin: 0 !important;
-}
-
-body.is-mobile-app .MuiToolbar-root .MuiSvgIcon-root {
-font-size: 20px !important;
-}
-
-/* 2. Hard Hide Desktop Sidebar on Mobile (Zero mini-rail) */
+/* 2. Hard Hide Desktop Sidebars on Mobile (Zero mini-rail) */
 body.is-mobile-app .MuiDrawer-docked,
 body.is-mobile-app .MuiDrawer-root.MuiDrawer-docked,
-body.is-mobile-app .MuiDrawer-paperAnchorDockedLeft {
-width: 0px !important;
-        min-width: 0px !important;
-        display: none !important;
-        visibility: hidden !important;
-        flex-shrink: 1 !important;
+body.is-mobile-app .MuiDrawer-paperAnchorDockedLeft,
+body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal) {
+    width: 0px !important;
+    min-width: 0px !important;
+    max-width: 0px !important;
+    display: none !important;
+    visibility: hidden !important;
+    flex-shrink: 1 !important;
+    border: none !important;
 }
 
 body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal) .MuiDrawer-paper {
-display: none !important;
-        width: 0px !important;
-        min-width: 0px !important;
-        border: none !important;
-        visibility: hidden !important;
+    display: none !important;
+    width: 0px !important;
+    min-width: 0px !important;
+    border: none !important;
+    visibility: hidden !important;
 }
 
 /* 3. Universal Auto-Fit Wrapper & Zoho Canvas Background */

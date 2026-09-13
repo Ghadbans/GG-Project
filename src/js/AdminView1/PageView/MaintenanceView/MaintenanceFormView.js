@@ -46,6 +46,7 @@ import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { toast } from 'react-toastify';
 import ItemThumbnail from '../../../component/ItemThumbnail';
 import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './AssetControlReportSection';
+import { useIsMobile } from '../../../utils/isMobile';
 
 
 
@@ -150,7 +151,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+
 function MaintenanceFormView() {
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -724,6 +727,372 @@ function MaintenanceFormView() {
   const toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  if (isMobile) {
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                New Maintenance Job
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                M-{String(serviceNumber || 1).padStart(6, '0')}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {saving === 'true' ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Order & Technician */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Service Overview
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Autocomplete
+                  size="small"
+                  options={customer || []}
+                  getOptionLabel={(option) => option?.customerName || option?.Customer || ''}
+                  value={customerName?.customerName ? customerName : null}
+                  onChange={(e, val) => setCustomerName(val || {})}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Select Customer *" size="small" fullWidth />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Assigned Technician</InputLabel>
+                  <Select
+                    value={technicianAssign || ''}
+                    label="Assigned Technician"
+                    onChange={(e) => setTechnicianAssign(e.target.value)}
+                  >
+                    <MenuItem value=""><em>Unassigned</em></MenuItem>
+                    {employee
+                      .filter(emp => emp.department === 'TECHNICIAN' || emp.role === 'TECHNICIAN' || emp.role === 'Technician')
+                      .map((emp) => (
+                        <MenuItem key={emp._id || emp.employeeName} value={emp.employeeName}>
+                          {emp.employeeName}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Service Date"
+                    value={serviceDate ? dayjs(serviceDate) : null}
+                    onChange={(date) => setServiceDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 2: Appliance & Defect */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Appliance & Defect Info
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Appliance Description"
+                  value={itemDescriptionInfo || ''}
+                  onChange={(e) => setItemDescriptionInfo(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Brand"
+                  value={brand || ''}
+                  onChange={(e) => setBrand(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Model"
+                  value={model || ''}
+                  onChange={(e) => setModel(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  size="small"
+                  label="Defect Description"
+                  value={defectDescription || ''}
+                  onChange={(e) => setDefectDescription(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 3: Asset Control Schedule */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)', border: '1.5px solid #EEF2FF' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 800, textTransform: 'uppercase' }}>
+                📋 Asset Control Schedule ({assetControlReport?.units?.length || 0})
+              </Typography>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={Boolean(includeAssetControl)}
+                    onChange={(e) => setIncludeAssetControl(e.target.checked)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={<Typography variant="caption" sx={{ fontWeight: 700 }}>Enable</Typography>}
+              />
+            </Box>
+
+            {includeAssetControl && (
+              <Box sx={{ mt: 1.5 }}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Subject"
+                  value={assetControlReport?.subject || 'Assets Report'}
+                  onChange={(e) => setAssetControlReport(prev => ({ ...prev, subject: e.target.value }))}
+                  sx={{ mb: 1.5 }}
+                />
+
+                {(assetControlReport?.units || []).map((unit, uIdx) => (
+                  <Box key={unit.idRow || uIdx} sx={{ p: 1.5, mb: 1.5, backgroundColor: '#F8FAFC', borderRadius: 2.5, border: '1px solid #E2E8F0' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B' }}>
+                        Unit #{uIdx + 1}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          setAssetControlReport(prev => ({
+                            ...prev,
+                            units: prev.units.filter((_, idx) => idx !== uIdx)
+                          }));
+                        }}
+                        sx={{ color: '#EF4444' }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+
+                    <Grid container spacing={1.5}>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Device / Item Type"
+                          value={unit.itemType || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, itemType: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Brand"
+                          value={unit.brand || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, brand: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Model No"
+                          value={unit.modelNo || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, modelNo: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Serial No"
+                          value={unit.serialNo || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, serialNo: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Location"
+                          value={unit.location || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, location: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                ))}
+
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  onClick={() => {
+                    const newUnit = {
+                      idRow: v4(),
+                      itemType: 'SPLIT A/C',
+                      brand: '',
+                      modelNo: '',
+                      serialNo: '',
+                      dateOfVisit: '',
+                      location: '',
+                      repairHistory: '',
+                      deepCleaning: false,
+                      softCleaning: false,
+                      correctiveMaintenance: false,
+                      reactiveMaintenance: false,
+                      cleaningHistory: ''
+                    };
+                    setAssetControlReport(prev => ({
+                      ...prev,
+                      units: [...(prev.units || []), newUnit]
+                    }));
+                  }}
+                  sx={{ textTransform: 'none', fontWeight: 700, borderRadius: 2 }}
+                >
+                  + Add Equipment Unit
+                </Button>
+              </Box>
+            )}
+          </Card>
+
+          {/* Bottom Save Button */}
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 800,
+              py: 1.5,
+              borderRadius: 3,
+              boxShadow: '0 4px 14px rgba(48, 54, 138, 0.3)',
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#202a5a' }
+            }}
+          >
+            {saving === 'true' ? 'Saving Job Card...' : 'Save Job Card'}
+          </Button>
+        </Box>
+
+        {/* Loading Modal */}
+        <Modal open={loadingOpenModal} onClose={handleClose}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            {loading ? <Loader /> : (
+              <div>
+                <CheckCircleIcon sx={{ color: 'green', fontSize: 48, mb: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 800 }}>Maintenance Created Successfully</Typography>
+                <Button fullWidth variant="contained" onClick={() => navigate('/MaintenanceViewAdmin')} sx={{ mt: 2, backgroundColor: '#30368a', borderRadius: 2 }}>
+                  Go to Maintenance
+                </Button>
+              </div>
+            )}
+          </Box>
+        </Modal>
+
+        {/* Error Modal */}
+        <Modal open={ErrorOpenModal} onClose={handleCloseError}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            <CancelIcon sx={{ color: 'red', fontSize: 48, mb: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Error Occurred</Typography>
+            <Typography variant="body2" sx={{ color: '#64748B', mt: 1 }}>Please check required fields.</Typography>
+            <Button fullWidth variant="outlined" onClick={handleCloseError} sx={{ mt: 2, borderRadius: 2 }}>
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

@@ -24,6 +24,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 import PeopleIcon from '@mui/icons-material/People';
 import BuildIcon from '@mui/icons-material/Build';
 import AppsIcon from '@mui/icons-material/Apps';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import LogoutIcon from '../component/NetworkLogoutIcon';
 import BranchSwitcher from './BranchSwitcher';
 import NotificationVIewInfo from '../AdminView1/NotificationVIewInfo';
@@ -50,6 +51,27 @@ function getTitleFromPath(pathname) {
   return 'Dashboard';
 }
 
+const mainListRoutes = [
+  '/adminhome',
+  '/customerviewadmin',
+  '/itemviewadmin',
+  '/invoiceviewadmin',
+  '/dailyexpenses',
+  '/estimateviewadmin',
+  '/paymentview',
+  '/projectviewadmin',
+  '/maintenanceviewadmin',
+  '/maintenanceorderadmin',
+  '/technicianstoredisplay',
+  '/employeeviewadminall',
+  '/supplieradminview'
+];
+
+function isMainListRoute(pathname) {
+  const p = (pathname || '').toLowerCase().replace(/\/$/, '');
+  return mainListRoutes.includes(p);
+}
+
 function MobileLayout({ children }) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,6 +92,15 @@ function MobileLayout({ children }) {
 
   if (isAuthPage) {
     return <>{children}</>;
+  }
+
+  // Full-screen form / edit / create / detail sub-pages manage their own header & layout
+  if (!isMainListRoute(pathname)) {
+    return (
+      <Box sx={{ width: '100vw', minHeight: '100vh', backgroundColor: '#F8FAFC', overflowX: 'hidden', boxSizing: 'border-box' }}>
+        {children}
+      </Box>
+    );
   }
 
   const pageTitle = getTitleFromPath(pathname);
@@ -99,9 +130,14 @@ function MobileLayout({ children }) {
         }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 1, minHeight: '52px !important', height: 52 }}>
-          {/* Left: Hamburger + Title */}
+          {/* Left: Back (if not home) + Hamburger + Title */}
           <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1, gap: 0.5 }}>
-            <IconButton color="inherit" size="small" onClick={() => setDrawerOpen(true)} sx={{ p: 0.5 }}>
+            {pathname.toLowerCase() !== '/adminhome' && (
+              <IconButton color="inherit" size="small" onClick={() => navigate(-1)} sx={{ p: 0.5 }} title="Go Back">
+                <ArrowBack sx={{ fontSize: 22 }} />
+              </IconButton>
+            )}
+            <IconButton color="inherit" size="small" onClick={() => setDrawerOpen(true)} sx={{ p: 0.5 }} title="Menu">
               <MenuIcon sx={{ fontSize: 24 }} />
             </IconButton>
             <Typography
@@ -112,7 +148,7 @@ function MobileLayout({ children }) {
                 whiteSpace: 'nowrap',
                 textOverflow: 'ellipsis',
                 overflow: 'hidden',
-                maxWidth: 140,
+                maxWidth: 160,
                 fontSize: '1rem',
                 ml: 0.5
               }}

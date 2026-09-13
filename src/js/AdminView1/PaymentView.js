@@ -38,7 +38,7 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import db from '../dexieDb';
 import { ENDPOINT_URL } from '../apiConfig';
-import { isNativeMobile } from '../utils/isMobile';
+import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -130,6 +130,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 function PaymentView() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   useEffect(()=> {
@@ -798,6 +799,18 @@ const toggleDrawer = () => {
                                     ) }
                                   ]
                                   
+  if (isMobile) {
+    return loadingData ? (
+      <div style={{ position: 'relative', top: '120px', textAlign: 'center' }}>
+        <Loader />
+      </div>
+    ) : (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <MobileCardList type="payments" data={invoicePaymentRow} searchPlaceholder="Search payments..." />
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
 <Box sx={{ display: 'flex' }}>

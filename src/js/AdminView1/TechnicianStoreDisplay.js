@@ -35,7 +35,7 @@ import Logout from '../component/NetworkLogoutIcon';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { isNativeMobile } from '../utils/isMobile';
+import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -129,6 +129,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 function PointOfSale() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
 
@@ -283,6 +284,18 @@ function PointOfSale() {
     navigate('/ShopPosForm', { state: { cart } });
     setOpenCart(false);
   };
+
+  if (isMobile) {
+    return loadingData ? (
+      <div style={{ position: 'relative', top: '120px', textAlign: 'center' }}>
+        <Loader />
+      </div>
+    ) : (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <MobileCardList type="tech_store" data={item} searchPlaceholder="Search technician catalog..." />
+      </Box>
+    );
+  }
 
   return (
     <div>

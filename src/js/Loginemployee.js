@@ -125,10 +125,14 @@ function Loginemployee() {
 							<LogoutIcon className='btnBackIcon' />
 						</button>
 						{isLoading ? (<LoadingView />) : (<div> {isErrorLoading ? (<LoadingView />) : (<form onSubmit={handleSubmit} className="login100-form">
-							{errorMsg ? <p style={{ color: 'red', position: 'fixed', zIndex: '1', top: '37%', marginLeft: '40px' }}>{errorMsg}</p> : ''}
 							<span className="login100-form-title">
 								Employee Login
 							</span>
+							{errorMsg && (
+								<p style={{ color: '#ef4444', backgroundColor: '#fee2e2', borderRadius: '8px', padding: '8px 12px', fontSize: '0.85rem', fontWeight: '600', marginBottom: '14px', textAlign: 'center', width: '100%' }}>
+									{errorMsg}
+								</p>
+							)}
 							<div className="wrap-input100 " >
 								<input required className="input100" type="text" name="employeeName" placeholder="User Name" onChange={(e) => setEmployeeName(e.target.value)} />
 								<span className="focus-input100"></span>

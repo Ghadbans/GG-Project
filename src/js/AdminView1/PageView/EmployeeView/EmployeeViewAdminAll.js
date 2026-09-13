@@ -49,7 +49,7 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import Image from '../../../img/images.png';
-import { isNativeMobile } from '../../../utils/isMobile';
+import { isNativeMobile, useIsMobile } from '../../../utils/isMobile';
 import MobileCardList from '../../../component/MobileCardList';
 import Phone from '@mui/icons-material/Phone';
 import WebIcon from '@mui/icons-material/Web';
@@ -155,6 +155,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function EmployeeViewAdminAll() {
   let { id } = useParams()
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   useEffect(() => {
@@ -778,6 +779,18 @@ function EmployeeViewAdminAll() {
           </TableCell>
         </TableRow>
       </React.Fragment>
+    );
+  }
+
+  if (isMobile) {
+    return loadingData ? (
+      <div style={{ position: 'relative', top: '120px', textAlign: 'center' }}>
+        <Loader />
+      </div>
+    ) : (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <MobileCardList type="employees" data={employee} searchPlaceholder="Search employees..." />
+      </Box>
     );
   }
 

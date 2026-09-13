@@ -37,7 +37,7 @@ import Image from '../img/no-data.png';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
-import { isNativeMobile } from '../utils/isMobile';
+import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 
@@ -129,6 +129,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 function MaintenanceViewAdmin() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   useEffect(() => {
@@ -567,6 +568,18 @@ function MaintenanceViewAdmin() {
       )
     },
   ]
+
+  if (isMobile) {
+    return loadingData ? (
+      <div style={{ position: 'relative', top: '120px', textAlign: 'center' }}>
+        <Loader />
+      </div>
+    ) : (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <MobileCardList type="maintenance" data={maintenance} searchPlaceholder="Search job cards..." />
+      </Box>
+    );
+  }
 
   return (
     <div className='Homeemployee'>

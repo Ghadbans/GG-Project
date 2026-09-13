@@ -14,10 +14,10 @@ import "react-toastify/ReactToastify.css";
 import useLayoutConfig from './hooks/useLayoutConfig';
 import MobileLayout from './component/MobileLayout';
 
-import { isNativeMobile } from './utils/isMobile';
+import { isNativeMobile, useIsMobile } from './utils/isMobile';
 
 function AppLayoutWrapper({ children }) {
-  const isMobile = isNativeMobile();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     if (typeof document !== 'undefined') {

@@ -32,6 +32,8 @@ import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { v4 as uuidv4, v4 } from 'uuid';
+import { useIsMobile } from '../../../utils/isMobile';
+import { Card, Button } from '@mui/material';
 
 
 
@@ -100,8 +102,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
-function CustomerForm() {
 
+function CustomerForm() {
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -269,6 +272,242 @@ function CustomerForm() {
   const toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  if (isMobile) {
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                New Customer
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                {Customer || 'Fill Details'}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {saving === 'true' ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Primary Identification */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Customer Details
+            </Typography>
+
+            <FormControl component="fieldset" sx={{ mb: 2 }}>
+              <RadioGroup row value={customerType} onChange={handleRadioChange}>
+                <FormControlLabel value="Business" control={<Radio size="small" />} label={<Typography variant="body2" sx={{ fontWeight: 600 }}>Business</Typography>} />
+                <FormControlLabel value="Individual" control={<Radio size="small" />} label={<Typography variant="body2" sx={{ fontWeight: 600 }}>Individual</Typography>} />
+              </RadioGroup>
+            </FormControl>
+
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Display Name / Billing Name *"
+                  value={Customer}
+                  onChange={(e) => setCustomer(e.target.value)}
+                />
+              </Grid>
+              {customerType === 'Business' && (
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    size="small"
+                    label="Company Name"
+                    value={companyName}
+                    onChange={(e) => setCompanyName(e.target.value)}
+                  />
+                </Grid>
+              )}
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="First Name"
+                  value={customerFirstName}
+                  onChange={(e) => setCustomerFirstName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Last Name"
+                  value={customerLastName}
+                  onChange={(e) => setCustomerLastName(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 2: Contact Info */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Contact Information
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Email Address"
+                  type="email"
+                  value={customerEmail}
+                  onChange={(e) => setCustomerEmail(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Company Phone"
+                  value={customerCompanyPhone}
+                  onChange={(e) => setCustomerCompanyPhone(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Mobile Phone"
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 3: Address & Notes */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Address & Notes
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Billing Address"
+                  value={billingAddress}
+                  onChange={(e) => setBillingAddress(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="City / Location"
+                  value={billingCity}
+                  onChange={(e) => setBillingCity(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  size="small"
+                  label="Remarks / Notes"
+                  value={customerDescription}
+                  onChange={(e) => setCustomerDescription(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Bottom Save Button */}
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 800,
+              py: 1.5,
+              borderRadius: 3,
+              boxShadow: '0 4px 14px rgba(48, 54, 138, 0.3)',
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#202a5a' }
+            }}
+          >
+            {saving === 'true' ? 'Saving Customer...' : 'Save Customer'}
+          </Button>
+        </Box>
+
+        {/* Loading Modal */}
+        <Modal open={loadingOpenModal} onClose={handleClose}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            {loading ? <Loader /> : (
+              <div>
+                <CheckCircleIcon sx={{ color: 'green', fontSize: 48, mb: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 800 }}>Saved Successfully</Typography>
+                <Button fullWidth variant="contained" onClick={() => navigate('/CustomerViewAdmin')} sx={{ mt: 2, backgroundColor: '#30368a', borderRadius: 2 }}>
+                  Go to Customers
+                </Button>
+              </div>
+            )}
+          </Box>
+        </Modal>
+
+        {/* Error Modal */}
+        <Modal open={ErrorOpenModal} onClose={handleCloseError}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            <CancelIcon sx={{ color: 'red', fontSize: 48, mb: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Error Occurred</Typography>
+            <Typography variant="body2" sx={{ color: '#64748B', mt: 1 }}>Please verify all required fields.</Typography>
+            <Button fullWidth variant="outlined" onClick={handleCloseError} sx={{ mt: 2, borderRadius: 2 }}>
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

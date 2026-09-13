@@ -1,12 +1,13 @@
 import { useDocumentLock } from '../../../hooks/useDocumentLock';
 import React, { useEffect, useState } from 'react';
+import { useIsMobile } from '../../../utils/isMobile';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardContent, CardMedia, Pagination, Button, SwipeableDrawer, Avatar } from '@mui/material'
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, Modal, Backdrop, TableContainer, OutlinedInput, InputAdornment, Divider, Card, CardContent, CardMedia, Pagination, Button, SwipeableDrawer, Avatar, FormControlLabel, Checkbox } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -152,6 +153,7 @@ const style2 = {
 function MaintenanceUpdateView() {
   const { id } = useParams();
   const { isLocked, lockConfig, lockError, forceRelease } = useDocumentLock(id, 'maintenance');
+  const isMobile = useIsMobile();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -836,6 +838,628 @@ function MaintenanceUpdateView() {
       </div>
     );
   }
+
+  if (isMobile) {
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                Edit Job Card
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                M-{String(serviceNumber).padStart(6, '0')}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmit}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {loading ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Order & Status */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Service Overview
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    value={statusInfo || 'Open'}
+                    label="Status"
+                    onChange={(e) => setStatusInfo(e.target.value)}
+                  >
+                    <MenuItem value="Open">Open</MenuItem>
+                    <MenuItem value="In Progress">In Progress</MenuItem>
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="Completed">Completed</MenuItem>
+                    <MenuItem value="Close">Close</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Assigned Technician</InputLabel>
+                  <Select
+                    value={technicianAssign || ''}
+                    label="Assigned Technician"
+                    onChange={(e) => setTechnicianAssign(e.target.value)}
+                  >
+                    <MenuItem value=""><em>Unassigned</em></MenuItem>
+                    {employee
+                      .filter(emp => emp.department === 'TECHNICIAN' || emp.role === 'TECHNICIAN' || emp.role === 'Technician')
+                      .map((emp) => (
+                        <MenuItem key={emp._id || emp.employeeName} value={emp.employeeName}>
+                          {emp.employeeName}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Service Date"
+                    value={serviceDate ? dayjs(serviceDate) : null}
+                    onChange={(date) => setServiceDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 2: Customer / Site Details */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Client Information
+            </Typography>
+            <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1E293B' }}>
+              {customerName?.customerName || customerName?.Customer || 'N/A'}
+            </Typography>
+            {(customerName?.billingAddress || customerName?.address) && (
+              <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.5 }}>
+                {customerName?.billingAddress || customerName?.address}
+              </Typography>
+            )}
+            {(customerName?.customerCompanyPhone || customerName?.phone) && (
+              <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }}>
+                Phone: {customerName?.customerCompanyPhone || customerName?.phone}
+              </Typography>
+            )}
+          </Card>
+
+          {/* Card 3: Appliance & Defect Info */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Appliance & Defect Info
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Item / Appliance Description"
+                  value={itemDescriptionInfo || ''}
+                  onChange={(e) => setItemDescriptionInfo(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Brand"
+                  value={brand || ''}
+                  onChange={(e) => setBrand(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Model"
+                  value={model || ''}
+                  onChange={(e) => setModel(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Serial No"
+                  value={serialNo || ''}
+                  onChange={(e) => setSerialNo(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Warranty"
+                  value={warranty || ''}
+                  onChange={(e) => setWarranty(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  size="small"
+                  label="Defect Description"
+                  value={defectDescription || ''}
+                  onChange={(e) => setDefectDescription(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 4: Repair Action & Notes */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Repair Action & Notes
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Action</InputLabel>
+                  <Select
+                    value={action || 'Workshop'}
+                    label="Action"
+                    onChange={(e) => setAction(e.target.value)}
+                  >
+                    <MenuItem value="Workshop">Workshop</MenuItem>
+                    <MenuItem value="On-Site">On-Site</MenuItem>
+                    <MenuItem value="Carry-In">Carry-In</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={2}
+                  size="small"
+                  label="Action Taken"
+                  value={actionTaken || ''}
+                  onChange={(e) => setActionTaken(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={2}
+                  size="small"
+                  label="Technical Notes"
+                  value={note || ''}
+                  onChange={(e) => setNote(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 5: Asset Control Schedule */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)', border: '1.5px solid #EEF2FF' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 800, textTransform: 'uppercase' }}>
+                📋 Asset Control Schedule ({assetControlReport?.units?.length || 0})
+              </Typography>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={Boolean(includeAssetControl)}
+                    onChange={(e) => setIncludeAssetControl(e.target.checked)}
+                    color="primary"
+                    size="small"
+                  />
+                }
+                label={<Typography variant="caption" sx={{ fontWeight: 700 }}>Enable</Typography>}
+              />
+            </Box>
+
+            {includeAssetControl && (
+              <Box sx={{ mt: 1.5 }}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Subject"
+                  value={assetControlReport?.subject || 'Assets Report'}
+                  onChange={(e) => setAssetControlReport(prev => ({ ...prev, subject: e.target.value }))}
+                  sx={{ mb: 1.5 }}
+                />
+
+                {(assetControlReport?.units || []).map((unit, uIdx) => (
+                  <Box key={unit.idRow || uIdx} sx={{ p: 1.5, mb: 1.5, backgroundColor: '#F8FAFC', borderRadius: 2.5, border: '1px solid #E2E8F0' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B' }}>
+                        Unit #{uIdx + 1}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          setAssetControlReport(prev => ({
+                            ...prev,
+                            units: prev.units.filter((_, idx) => idx !== uIdx)
+                          }));
+                        }}
+                        sx={{ color: '#EF4444' }}
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+
+                    <Grid container spacing={1.5}>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Device / Item Type"
+                          value={unit.itemType || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, itemType: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Brand"
+                          value={unit.brand || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, brand: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Model No"
+                          value={unit.modelNo || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, modelNo: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Serial No"
+                          value={unit.serialNo || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, serialNo: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={6}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Location"
+                          value={unit.location || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, location: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, display: 'block', mt: 0.5 }}>
+                          Maintenance Type:
+                        </Typography>
+                        <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0.5 }}>
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                size="small"
+                                checked={Boolean(unit.deepCleaning)}
+                                onChange={(e) => {
+                                  const chk = e.target.checked;
+                                  setAssetControlReport(prev => ({
+                                    ...prev,
+                                    units: prev.units.map((u, idx) => idx === uIdx ? { ...u, deepCleaning: chk } : u)
+                                  }));
+                                }}
+                              />
+                            }
+                            label={<Typography variant="caption">Deep Clean</Typography>}
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                size="small"
+                                checked={Boolean(unit.softCleaning)}
+                                onChange={(e) => {
+                                  const chk = e.target.checked;
+                                  setAssetControlReport(prev => ({
+                                    ...prev,
+                                    units: prev.units.map((u, idx) => idx === uIdx ? { ...u, softCleaning: chk } : u)
+                                  }));
+                                }}
+                              />
+                            }
+                            label={<Typography variant="caption">Soft Clean</Typography>}
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                size="small"
+                                checked={Boolean(unit.correctiveMaintenance)}
+                                onChange={(e) => {
+                                  const chk = e.target.checked;
+                                  setAssetControlReport(prev => ({
+                                    ...prev,
+                                    units: prev.units.map((u, idx) => idx === uIdx ? { ...u, correctiveMaintenance: chk } : u)
+                                  }));
+                                }}
+                              />
+                            }
+                            label={<Typography variant="caption">Corrective</Typography>}
+                          />
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                size="small"
+                                checked={Boolean(unit.reactiveMaintenance)}
+                                onChange={(e) => {
+                                  const chk = e.target.checked;
+                                  setAssetControlReport(prev => ({
+                                    ...prev,
+                                    units: prev.units.map((u, idx) => idx === uIdx ? { ...u, reactiveMaintenance: chk } : u)
+                                  }));
+                                }}
+                              />
+                            }
+                            label={<Typography variant="caption">Reactive</Typography>}
+                          />
+                        </Box>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Cleaning / Repair Notes"
+                          value={unit.cleaningHistory || ''}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setAssetControlReport(prev => ({
+                              ...prev,
+                              units: prev.units.map((u, idx) => idx === uIdx ? { ...u, cleaningHistory: val } : u)
+                            }));
+                          }}
+                        />
+                      </Grid>
+                    </Grid>
+                  </Box>
+                ))}
+
+                <Button
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  onClick={() => {
+                    const newUnit = {
+                      idRow: v4(),
+                      itemType: 'SPLIT A/C',
+                      brand: '',
+                      modelNo: '',
+                      serialNo: '',
+                      dateOfVisit: '',
+                      location: '',
+                      repairHistory: '',
+                      deepCleaning: false,
+                      softCleaning: false,
+                      correctiveMaintenance: false,
+                      reactiveMaintenance: false,
+                      cleaningHistory: ''
+                    };
+                    setAssetControlReport(prev => ({
+                      ...prev,
+                      units: [...(prev?.units || []), newUnit]
+                    }));
+                  }}
+                  sx={{ mt: 1, borderRadius: 2, textTransform: 'none', fontWeight: 700 }}
+                >
+                  + Add Asset Unit
+                </Button>
+              </Box>
+            )}
+          </Card>
+
+          {/* Card 6: Parts / Items Used */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 3, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+              <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
+                Parts / Items Used ({items.length})
+              </Typography>
+            </Box>
+
+            {items.map((it, idx) => {
+              const name = it?.itemName?.itemName || it?.itemName?.name || it?.newDescription || `Part #${idx + 1}`;
+              const desc = it?.itemDescription || '';
+              const qty = Number(it?.itemQty || 1);
+              return (
+                <Box key={it.idRow || idx} sx={{ py: 1.5, borderBottom: idx < items.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <Box sx={{ flex: 1, pr: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1E293B' }}>
+                        {name}
+                      </Typography>
+                      {desc && (
+                        <Typography variant="caption" sx={{ color: '#64748B', display: 'block' }}>
+                          {desc}
+                        </Typography>
+                      )}
+                    </Box>
+                    <IconButton size="small" onClick={() => deleteItem(it.idRow)} sx={{ color: '#EF4444' }}>
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mt: 1 }}>
+                    <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600 }}>Quantity:</Typography>
+                    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#F1F5F9', borderRadius: 2, px: 1 }}>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemQty: Math.max(1, (Number(itemRow.itemQty) || 1) - 1) } : itemRow));
+                        }}
+                      >
+                        -
+                      </IconButton>
+                      <Typography variant="body2" sx={{ fontWeight: 700, px: 1.5, minWidth: 20, textAlign: 'center' }}>
+                        {qty}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemQty: (Number(itemRow.itemQty) || 1) + 1 } : itemRow));
+                        }}
+                      >
+                        +
+                      </IconButton>
+                    </Box>
+                  </Box>
+                </Box>
+              );
+            })}
+
+            {/* Add Part Autocomplete */}
+            <Box sx={{ mt: 2, pt: 2, borderTop: '1px dashed #E2E8F0' }}>
+              <Autocomplete
+                size="small"
+                options={ItemInformation || []}
+                getOptionLabel={(option) => option.itemName || option.name || ''}
+                onChange={(e, val) => {
+                  if (val) {
+                    SetItems(prev => [...prev, {
+                      idRow: v4(),
+                      itemName: { _id: val._id, itemName: val.itemName },
+                      itemDescription: val.itemDescription || '',
+                      itemQty: 1,
+                      itemDiscount: 0,
+                      itemRate: 0,
+                      itemAmount: 0,
+                      itemCost: 0,
+                      totalAmount: 0,
+                      discount: 0,
+                      percentage: 0,
+                      itemBuy: 0,
+                      itemWeight: '',
+                      totalGenerale: 0,
+                      totalCost: 0,
+                      stock: val.stock || 0,
+                      itemOut: 0,
+                      newItemOut: 0,
+                    }]);
+                  }
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="+ Add Part from Inventory..." size="small" />
+                )}
+              />
+            </Box>
+          </Card>
+        </Box>
+
+        {/* Sticky Bottom Save Action */}
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            p: 2,
+            backgroundColor: '#ffffff',
+            boxShadow: '0 -4px 16px rgba(0,0,0,0.08)',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmit}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: '1rem',
+              py: 1.2,
+              borderRadius: 3,
+              textTransform: 'none',
+              boxShadow: '0 4px 12px rgba(48, 54, 138, 0.3)',
+              '&:hover': { backgroundColor: '#20265b' }
+            }}
+          >
+            {loading ? 'Saving...' : 'Update Job Card'}
+          </Button>
+        </Box>
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

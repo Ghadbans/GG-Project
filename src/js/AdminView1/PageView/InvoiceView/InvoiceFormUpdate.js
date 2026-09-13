@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { useIsMobile } from '../../../utils/isMobile';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
 import '../Chartview.css'
@@ -152,6 +153,7 @@ function InvoiceFormUpdate() {
 
   const { id } = useParams();
   const { isLocked, lockConfig, lockError, forceRelease } = useDocumentLock(id, 'invoice');
+  const isMobile = useIsMobile();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -869,6 +871,350 @@ function InvoiceFormUpdate() {
       </div>
     );
   }
+
+  if (isMobile) {
+    const formatMoney = (amount) => {
+      const num = Number(amount) || 0;
+      return '$ ' + num.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                Edit Invoice
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                INV-{String(invoiceNumber).padStart(6, '0')}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmitEdit}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {loading ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Invoice Overview */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Invoice Overview
+            </Typography>
+            <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1E293B' }}>
+              {customerName?.customerName || (typeof customerName === 'string' ? customerName : 'Select Customer')}
+            </Typography>
+            {(customerName?.billingAddress || customerName?.address) && (
+              <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.5 }}>
+                {customerName?.billingAddress || customerName?.address}
+              </Typography>
+            )}
+
+            <Divider sx={{ my: 1.5 }} />
+
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Invoice Date"
+                    value={invoiceDate ? dayjs(invoiceDate) : null}
+                    onChange={(date) => setInvoiceDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Due Date"
+                    value={invoiceDueDate ? dayjs(invoiceDueDate) : null}
+                    onChange={(date) => setInvoiceDueDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Subject / Reference"
+                  value={invoiceSubject || ''}
+                  onChange={(e) => setInvoiceSubject(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 2: Line Items */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+              <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
+                Line Items ({items.length})
+              </Typography>
+            </Box>
+
+            {items.map((it, idx) => {
+              const name = it?.itemName?.itemName || it?.itemName?.name || it?.newDescription || `Item #${idx + 1}`;
+              const desc = it?.itemDescription || '';
+              const qty = Number(it?.itemQty || 1);
+              const rate = Number(it?.itemRate || 0);
+              const amount = Number(it?.itemAmount || (qty * rate));
+
+              return (
+                <Box key={it.idRow || idx} sx={{ py: 1.5, borderBottom: idx < items.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
+                  <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                    <Box sx={{ flex: 1, pr: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#1E293B' }}>
+                        {name}
+                      </Typography>
+                      {desc && (
+                        <Typography variant="caption" sx={{ color: '#64748B', display: 'block' }}>
+                          {desc}
+                        </Typography>
+                      )}
+                    </Box>
+                    <IconButton size="small" onClick={() => deleteItem(it.idRow)} sx={{ color: '#EF4444' }}>
+                      <DeleteIcon fontSize="small" />
+                    </IconButton>
+                  </Box>
+
+                  <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mt: 1.5, flexWrap: 'wrap', gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', backgroundColor: '#F1F5F9', borderRadius: 2, px: 1 }}>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          const newQty = Math.max(1, qty - 1);
+                          const newAmount = Math.round(newQty * rate * 100) / 100;
+                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemQty: newQty, itemAmount: newAmount, totalAmount: newAmount } : itemRow));
+                        }}
+                      >
+                        -
+                      </IconButton>
+                      <Typography variant="body2" sx={{ fontWeight: 700, px: 1.5, minWidth: 20, textAlign: 'center' }}>
+                        {qty}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => {
+                          const newQty = qty + 1;
+                          const newAmount = Math.round(newQty * rate * 100) / 100;
+                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemQty: newQty, itemAmount: newAmount, totalAmount: newAmount } : itemRow));
+                        }}
+                      >
+                        +
+                      </IconButton>
+                    </Box>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <TextField
+                        size="small"
+                        label="Rate"
+                        type="number"
+                        value={rate || ''}
+                        onChange={(e) => {
+                          const newRate = Number(e.target.value) || 0;
+                          const newAmount = Math.round(qty * newRate * 100) / 100;
+                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemRate: newRate, itemAmount: newAmount, totalAmount: newAmount } : itemRow));
+                        }}
+                        sx={{ width: 100 }}
+                      />
+                      <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#30368a', minWidth: 70, textAlign: 'right' }}>
+                        {formatMoney(amount)}
+                      </Typography>
+                    </Box>
+                  </Box>
+                </Box>
+              );
+            })}
+
+            {/* Add Item Autocomplete */}
+            <Box sx={{ mt: 2, pt: 2, borderTop: '1px dashed #E2E8F0' }}>
+              <Autocomplete
+                size="small"
+                options={ItemInformation || []}
+                getOptionLabel={(option) => option.itemName || option.name || ''}
+                onChange={(e, val) => {
+                  if (val) {
+                    const rate = Number(val.rate || val.sellingPrice || val.price || 0);
+                    SetItems(prev => [...prev, {
+                      idRow: v4(),
+                      itemName: { _id: val._id, itemName: val.itemName },
+                      itemDescription: val.itemDescription || '',
+                      itemQty: 1,
+                      itemRate: rate,
+                      itemAmount: rate,
+                      totalAmount: rate,
+                      itemDiscount: 0,
+                      itemCost: val.cost || 0,
+                      discount: 0,
+                      percentage: 0,
+                      itemBuy: 0,
+                      itemWeight: '',
+                      totalGenerale: 0,
+                      totalCost: 0,
+                      stock: val.stock || 0,
+                      itemOut: 0,
+                      newItemOut: 0,
+                    }]);
+                  }
+                }}
+                renderInput={(params) => (
+                  <TextField {...params} placeholder="+ Add Item from Inventory..." size="small" />
+                )}
+              />
+            </Box>
+          </Card>
+
+          {/* Card 3: Financial Summary */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Financial Summary
+            </Typography>
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 1 }}>
+              <Typography variant="body2" sx={{ color: '#64748B' }}>Sub Total:</Typography>
+              <Typography variant="body2" sx={{ fontWeight: 700, color: '#1E293B' }}>{formatMoney(subTotal)}</Typography>
+            </Box>
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+              <Typography variant="body2" sx={{ color: '#64748B' }}>Adjustment / Labor:</Typography>
+              <TextField
+                size="small"
+                type="number"
+                value={adjustmentNumber || ''}
+                onChange={(e) => setAdjustmentNumber(e.target.value)}
+                sx={{ width: 110 }}
+              />
+            </Box>
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+              <Typography variant="body2" sx={{ color: '#64748B' }}>Shipping / Other:</Typography>
+              <TextField
+                size="small"
+                type="number"
+                value={shipping || ''}
+                onChange={(e) => setShipping(e.target.value)}
+                sx={{ width: 110 }}
+              />
+            </Box>
+
+            <Divider sx={{ my: 1.5 }} />
+
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1E293B' }}>Total Invoice:</Typography>
+              <Typography variant="h6" sx={{ fontWeight: 800, color: '#30368a' }}>{formatMoney(totalInvoice)}</Typography>
+            </Box>
+
+            {balanceDue > 0 && (
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.5 }}>
+                <Typography variant="body2" sx={{ fontWeight: 700, color: '#EF4444' }}>Balance Due:</Typography>
+                <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#EF4444' }}>{formatMoney(balanceDue)}</Typography>
+              </Box>
+            )}
+          </Card>
+
+          {/* Card 4: Notes & Terms */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 3, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Notes & Terms
+            </Typography>
+            <TextField
+              fullWidth
+              multiline
+              rows={2}
+              size="small"
+              label="Customer Notes"
+              value={note || ''}
+              onChange={(e) => setNote(e.target.value)}
+              sx={{ mb: 1.5 }}
+            />
+            <TextField
+              fullWidth
+              multiline
+              rows={2}
+              size="small"
+              label="Terms & Conditions"
+              value={terms || ''}
+              onChange={(e) => setTerms(e.target.value)}
+            />
+          </Card>
+        </Box>
+
+        {/* Sticky Bottom Save Action */}
+        <Box
+          sx={{
+            position: 'fixed',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            zIndex: 1000,
+            p: 2,
+            backgroundColor: '#ffffff',
+            boxShadow: '0 -4px 16px rgba(0,0,0,0.08)',
+            display: 'flex',
+            justifyContent: 'center'
+          }}
+        >
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmitEdit}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 700,
+              fontSize: '1rem',
+              py: 1.2,
+              borderRadius: 3,
+              textTransform: 'none',
+              boxShadow: '0 4px 12px rgba(48, 54, 138, 0.3)',
+              '&:hover': { backgroundColor: '#20265b' }
+            }}
+          >
+            {loading ? 'Saving...' : 'Update Invoice'}
+          </Button>
+        </Box>
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

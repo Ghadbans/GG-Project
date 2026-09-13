@@ -40,6 +40,8 @@ import dayjs from 'dayjs';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { toast } from 'react-toastify';
+import { useIsMobile } from '../../../utils/isMobile';
+import { Button, Card } from '@mui/material';
 
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -143,6 +145,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 function ProjectFormView() {
+  const isMobile = useIsMobile();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -349,6 +352,194 @@ function ProjectFormView() {
   const toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  if (isMobile) {
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                New Project
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                P-{String(projectNumber || 1).padStart(6, '0')}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {saving === 'true' ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Project Details */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Project Information
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Autocomplete
+                  size="small"
+                  options={customer || []}
+                  getOptionLabel={(option) => option?.Customer || option?.customerName || ''}
+                  onChange={(e, val) => handleChangeCustomer(val)}
+                  renderInput={(params) => (
+                    <TextField {...params} label="Select Customer *" size="small" fullWidth required />
+                  )}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Project Name *"
+                  value={projectName}
+                  onChange={(e) => setProjectName(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    value={status || 'Pending'}
+                    label="Status"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="In Progress">In Progress</MenuItem>
+                    <MenuItem value="Completed">Completed</MenuItem>
+                    <MenuItem value="Cancelled">Cancelled</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Start Date"
+                    value={startDate ? dayjs(startDate) : null}
+                    onChange={(date) => setStartDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+
+              <Grid item xs={6}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Visit Date"
+                    value={visitDate ? dayjs(visitDate) : null}
+                    onChange={(date) => setVisitDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  size="small"
+                  label="Description / Scope"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Bottom Save Button */}
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 800,
+              py: 1.5,
+              borderRadius: 3,
+              boxShadow: '0 4px 14px rgba(48, 54, 138, 0.3)',
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#202a5a' }
+            }}
+          >
+            {saving === 'true' ? 'Saving Project...' : 'Save Project'}
+          </Button>
+        </Box>
+
+        {/* Loading Modal */}
+        <Modal open={loadingOpenModal} onClose={handleClose}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            {loading ? <Loader /> : (
+              <div>
+                <CheckCircleIcon sx={{ color: 'green', fontSize: 48, mb: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 800 }}>Project Saved Successfully</Typography>
+                <Button fullWidth variant="contained" onClick={() => navigate('/ProjectViewAdmin')} sx={{ mt: 2, backgroundColor: '#30368a', borderRadius: 2 }}>
+                  Go to Projects
+                </Button>
+              </div>
+            )}
+          </Box>
+        </Modal>
+
+        {/* Error Modal */}
+        <Modal open={ErrorOpenModal} onClose={handleCloseError}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            <CancelIcon sx={{ color: 'red', fontSize: 48, mb: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Error Occurred</Typography>
+            <Typography variant="body2" sx={{ color: '#64748B', mt: 1 }}>Please check required fields.</Typography>
+            <Button fullWidth variant="outlined" onClick={handleCloseError} sx={{ mt: 2, borderRadius: 2 }}>
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

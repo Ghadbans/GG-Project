@@ -34,6 +34,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
+import { useIsMobile } from '../../../utils/isMobile';
+import { Button, Card } from '@mui/material';
 
 import { parse } from 'uuid';
 
@@ -103,6 +105,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 function PaymentInformationUpdate() {
+  const isMobile = useIsMobile();
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -540,6 +543,215 @@ function PaymentInformationUpdate() {
   const toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  if (isMobile) {
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                Update Payment
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                PAY-{String(paymentNumber || 1).padStart(6, '0')}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {saving === 'true' ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Payment Details */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Payment Details
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Customer Name"
+                  disabled
+                  value={customerName?.customerName || customerName?.customerFullName || customerName?.Customer || ''}
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel id="m-status-label">Status</InputLabel>
+                  <Select
+                    labelId="m-status-label"
+                    value={status || 'Cleared'}
+                    label="Status"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <MenuItem value="Cleared">Cleared</MenuItem>
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="Voided">Voided</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel id="m-trans-label">Type</InputLabel>
+                  <Select
+                    labelId="m-trans-label"
+                    value={transactionType || 'Payment'}
+                    label="Type"
+                    onChange={(e) => setTransactionType(e.target.value)}
+                  >
+                    <MenuItem value="Payment">Payment</MenuItem>
+                    <MenuItem value="Refund">Refund</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    label="Payment Date"
+                    value={paymentDate ? dayjs(paymentDate) : null}
+                    onChange={(date) => setPaymentDate(date)}
+                    slotProps={{ textField: { fullWidth: true, size: 'small' } }}
+                    format="DD/MM/YYYY"
+                  />
+                </LocalizationProvider>
+              </Grid>
+
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Payment Mode</InputLabel>
+                  <Select
+                    value={modes || 'Cash'}
+                    label="Payment Mode"
+                    onChange={(e) => handleChangeModes(e)}
+                  >
+                    <MenuItem value="Cash">Cash</MenuItem>
+                    <MenuItem value="Bank-Transfer">Bank Transfer</MenuItem>
+                    <MenuItem value="Check">Check</MenuItem>
+                    <MenuItem value="Credit-Account">Credit Account</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Amount Received ($)"
+                  type="number"
+                  value={amount || ''}
+                  onChange={(e) => {
+                    const val = Number(e.target.value) || 0;
+                    setAmount(val);
+                  }}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={2}
+                  size="small"
+                  label="Reference / Notes"
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Bottom Save Button */}
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmit}
+            disabled={loading || saving === 'true'}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 800,
+              py: 1.5,
+              borderRadius: 3,
+              boxShadow: '0 4px 14px rgba(48, 54, 138, 0.3)',
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#202a5a' }
+            }}
+          >
+            {saving === 'true' ? 'Saving Changes...' : 'Save Changes'}
+          </Button>
+        </Box>
+
+        {/* Loading Modal */}
+        <Modal open={loadingOpenModal} onClose={handleClose}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            {loading ? <Loader /> : (
+              <div>
+                <CheckCircleIcon sx={{ color: 'green', fontSize: 48, mb: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 800 }}>Payment Updated Successfully</Typography>
+                <Button fullWidth variant="contained" onClick={() => navigate('/PaymentView')} sx={{ mt: 2, backgroundColor: '#30368a', borderRadius: 2 }}>
+                  Go to Payments
+                </Button>
+              </div>
+            )}
+          </Box>
+        </Modal>
+
+        {/* Error Modal */}
+        <Modal open={ErrorOpenModal} onClose={handleCloseError}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            <CancelIcon sx={{ color: 'red', fontSize: 48, mb: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Error Occurred</Typography>
+            <Typography variant="body2" sx={{ color: '#64748B', mt: 1 }}>Please check required fields.</Typography>
+            <Button fullWidth variant="outlined" onClick={handleCloseError} sx={{ mt: 2, borderRadius: 2 }}>
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
       <Box sx={{ display: 'flex' }}>

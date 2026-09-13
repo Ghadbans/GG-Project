@@ -30,8 +30,9 @@ import Logout from '../../../component/NetworkLogoutIcon';
 import { Close, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import dayjs from 'dayjs';
-import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { useIsMobile } from '../../../utils/isMobile';
+import { Button, Card } from '@mui/material';
 
 
 
@@ -110,7 +111,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+
 function ItemFormUpdate() {
+  const isMobile = useIsMobile();
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -385,6 +388,239 @@ function ItemFormUpdate() {
   const toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  if (isMobile) {
+    return (
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+        {/* Sticky Mobile Header */}
+        <Box
+          sx={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 1000,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+              <ArrowBack />
+            </IconButton>
+            <Box>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, lineHeight: 1.2, color: '#ffffff' }}>
+                Edit Item
+              </Typography>
+              <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
+                {itemName || 'Update Item'}
+              </Typography>
+            </Box>
+          </Box>
+          <Button
+            variant="contained"
+            size="small"
+            onClick={handleSubmitEdit}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#10B981',
+              color: '#ffffff',
+              fontWeight: 700,
+              textTransform: 'none',
+              borderRadius: 2,
+              px: 2,
+              '&:hover': { backgroundColor: '#059669' }
+            }}
+          >
+            {loading ? 'Saving...' : 'Save'}
+          </Button>
+        </Box>
+
+        <Box sx={{ p: 2 }}>
+          {/* Card 1: Item Details */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Item Information
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  required
+                  size="small"
+                  label="Item Name *"
+                  value={itemName}
+                  onChange={(e) => setItemName(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Category</InputLabel>
+                  <Select
+                    value={itemCategory || ''}
+                    label="Category"
+                    onChange={(e) => setItemCategory(e.target.value)}
+                  >
+                    {itemCode.map((c) => (
+                      <MenuItem key={c._id || c.itemCategory} value={c.itemCategory}>
+                        {c.itemCategory}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Item Code / Suffix"
+                  value={newCode ? `${newCode}-${itemNumber}` : ''}
+                  InputProps={{ readOnly: true }}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Brand"
+                  value={itemBrand}
+                  onChange={(e) => setItemBrand(e.target.value)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Manufacturer"
+                  value={itemManufacturer}
+                  onChange={(e) => setItemManufacturer(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Card 2: Pricing & Stock */}
+          <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+            <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+              Pricing & Stock
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Cost Price ($)"
+                  type="number"
+                  value={itemCostPrice || ''}
+                  onChange={(e) => setItemCostPrice(Number(e.target.value))}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Selling Price ($)"
+                  type="number"
+                  value={itemSellingPrice || ''}
+                  onChange={(e) => setItemSellingPrice(Number(e.target.value))}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="Current Stock Qty"
+                  type="number"
+                  value={itemQuantity || ''}
+                  onChange={(e) => setItemQuantity(Number(e.target.value))}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Unit</InputLabel>
+                  <Select
+                    value={unit || ''}
+                    label="Unit"
+                    onChange={(e) => setUnit(e.target.value)}
+                  >
+                    {unitInfo.map((u) => (
+                      <MenuItem key={u._id || u.itemUnit} value={u.itemUnit}>
+                        {u.itemUnit}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  multiline
+                  rows={3}
+                  size="small"
+                  label="Description / Specifications"
+                  value={itemDescription}
+                  onChange={(e) => setItemDescription(e.target.value)}
+                />
+              </Grid>
+            </Grid>
+          </Card>
+
+          {/* Bottom Save Button */}
+          <Button
+            fullWidth
+            variant="contained"
+            size="large"
+            onClick={handleSubmitEdit}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              fontWeight: 800,
+              py: 1.5,
+              borderRadius: 3,
+              boxShadow: '0 4px 14px rgba(48, 54, 138, 0.3)',
+              textTransform: 'none',
+              fontSize: '1rem',
+              '&:hover': { backgroundColor: '#202a5a' }
+            }}
+          >
+            {loading ? 'Saving Changes...' : 'Save Changes'}
+          </Button>
+        </Box>
+
+        {/* Loading Modal */}
+        <Modal open={loadingOpenModal} onClose={handleClose}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            {loading ? <Loader /> : (
+              <div>
+                <CheckCircleIcon sx={{ color: 'green', fontSize: 48, mb: 1 }} />
+                <Typography variant="h6" sx={{ fontWeight: 800 }}>Item Updated Successfully</Typography>
+                <Button fullWidth variant="contained" onClick={() => navigate('/ItemViewAdmin')} sx={{ mt: 2, backgroundColor: '#30368a', borderRadius: 2 }}>
+                  Go to Store & Items
+                </Button>
+              </div>
+            )}
+          </Box>
+        </Modal>
+
+        {/* Error Modal */}
+        <Modal open={ErrorOpenModal} onClose={handleCloseError}>
+          <Box sx={{ ...style, width: '90%', maxWidth: 400, borderRadius: 4, textAlign: 'center', p: 3 }}>
+            <CancelIcon sx={{ color: 'red', fontSize: 48, mb: 1 }} />
+            <Typography variant="h6" sx={{ fontWeight: 800 }}>Error Occurred</Typography>
+            <Typography variant="body2" sx={{ color: '#64748B', mt: 1 }}>Please check required fields.</Typography>
+            <Button fullWidth variant="outlined" onClick={handleCloseError} sx={{ mt: 2, borderRadius: 2 }}>
+              Close
+            </Button>
+          </Box>
+        </Modal>
+      </Box>
+    );
+  }
+
   return (
     <div>
       <Box sx={{ display: 'flex' }}>

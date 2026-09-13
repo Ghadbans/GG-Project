@@ -14,9 +14,34 @@ import {
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBack from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import MobileDetailSheet from './MobileDetailSheet';
+
+function safeText(val, fallback = '') {
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === 'string' || typeof val === 'number') return String(val);
+  if (typeof val === 'object') {
+    if (val.itemName) return safeText(val.itemName, fallback);
+    if (val.customerName) return safeText(val.customerName, fallback);
+    if (val.Customer) return safeText(val.Customer, fallback);
+    if (val.employeeName) return safeText(val.employeeName, fallback);
+    if (val.technicianAssign) return safeText(val.technicianAssign, fallback);
+    if (val.name) return safeText(val.name, fallback);
+    if (val.expensesCategory) return safeText(val.expensesCategory, fallback);
+    if (val.category) return safeText(val.category, fallback);
+    if (val.projectName) return safeText(val.projectName, fallback);
+    if (val.newCode) return safeText(val.newCode, fallback);
+    if (val.code) return safeText(val.code, fallback);
+    if (val.defectDescription) return safeText(val.defectDescription, fallback);
+    if (val.description) return safeText(val.description, fallback);
+    if (val.label) return safeText(val.label, fallback);
+    if (val.title) return safeText(val.title, fallback);
+    return fallback;
+  }
+  return String(val);
+}
 
 function formatMoney(val) {
   if (val === undefined || val === null || isNaN(val)) return '$ 0.00';
@@ -25,16 +50,20 @@ function formatMoney(val) {
 
 function getStatusChip(status, balanceDue, totalAmount) {
   const isPaid = parseFloat(balanceDue || 0) <= 0 && parseFloat(totalAmount || 0) > 0;
-  const stat = isPaid ? 'Paid' : (status || 'Draft');
+  const rawStat = safeText(isPaid ? 'Paid' : (status || 'Draft'), 'Draft');
+  const stat = rawStat.toLowerCase();
 
   let bg = '#F1F5F9';
   let color = '#475569';
 
-  switch (String(stat).toLowerCase()) {
+  switch (stat) {
     case 'paid':
+    case 'close':
+    case 'converted':
       bg = '#DCFCE7';
       color = '#15803D';
       break;
+    case 'open':
     case 'sent':
     case 'active':
       bg = '#DBEAFE';
@@ -45,6 +74,11 @@ function getStatusChip(status, balanceDue, totalAmount) {
       bg = '#FEF3C7';
       color = '#B45309';
       break;
+    case 'reschedule':
+      bg = '#F3E8FF';
+      color = '#7E22CE';
+      break;
+    case 'cancel':
     case 'overdue':
     case 'decline':
     case 'fired':
@@ -62,7 +96,7 @@ function getStatusChip(status, balanceDue, totalAmount) {
 
   return (
     <Chip
-      label={String(stat).toUpperCase()}
+      label={rawStat.toUpperCase()}
       size="small"
       sx={{
         backgroundColor: bg,
@@ -86,64 +120,76 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
   const filtered = safeData.filter((item) => {
     if (!item) return false;
     if (!search.trim()) return true;
-    const q = search.toLowerCase();
+    const q = search.trim().toLowerCase();
 
     if (type === 'invoices') {
-      const cust = String(item.customerName?.customerName || item.customer || '').toLowerCase();
-      const num = String(item.invoiceNumber || '').toLowerCase();
-      const subj = String(item.invoiceSubject || '').toLowerCase();
-      return cust.includes(q) || num.includes(q) || subj.includes(q);
+      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const num = safeText(item.invoiceNumber).toLowerCase();
+      const numFmt = `inv-${String(item.invoiceNumber || '').padStart(6, '0')}`.toLowerCase();
+      const subj = safeText(item.invoiceSubject).toLowerCase();
+      return cust.includes(q) || num.includes(q) || numFmt.includes(q) || subj.includes(q);
     }
     if (type === 'quotations' || type === 'estimates') {
-      const cust = String(item.customerName?.customerName || item.customer || '').toLowerCase();
-      const num = String(item.estimateNumber || '').toLowerCase();
-      return cust.includes(q) || num.includes(q);
+      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const num = safeText(item.estimateNumber).toLowerCase();
+      const numFmt = `est-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
+      return cust.includes(q) || num.includes(q) || numFmt.includes(q);
     }
     if (type === 'customers') {
-      const name = String(item.customerName || item.Customer || '').toLowerCase();
-      const phone = String(item.phone || item.phone1 || item.contact || '').toLowerCase();
-      const email = String(item.email || '').toLowerCase();
+      const name = safeText(item.customerName || item.Customer).toLowerCase();
+      const phone = safeText(item.phone || item.phone1 || item.contact || item.customerCompanyPhone).toLowerCase();
+      const email = safeText(item.email).toLowerCase();
       return name.includes(q) || phone.includes(q) || email.includes(q);
     }
     if (type === 'maintenance') {
-      const defect = String(item.defectDescription || item.defect || '').toLowerCase();
-      const cust = String(item.customerName?.customerName || item.customer || '').toLowerCase();
-      const num = String(item.serviceNumber || '').toLowerCase();
-      return defect.includes(q) || cust.includes(q) || num.includes(q);
+      const defect = safeText(item.defectDescription || item.defect || item.itemDescriptionInfo).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const num = safeText(item.serviceNumber).toLowerCase();
+      const numFmt = `m-${String(item.serviceNumber || '').padStart(6, '0')}`.toLowerCase();
+      const tech = safeText(item.technicianAssign || item.technicianName || item.technician).toLowerCase();
+      const brand = safeText(item.brand).toLowerCase();
+      const model = safeText(item.model).toLowerCase();
+      const serial = safeText(item.serialNo).toLowerCase();
+      return defect.includes(q) || cust.includes(q) || num.includes(q) || numFmt.includes(q) || tech.includes(q) || brand.includes(q) || model.includes(q) || serial.includes(q);
     }
     if (type === 'maintenance_orders') {
-      const num = String(item.orderNumber || item.maintenanceNumber || '').toLowerCase();
-      const tech = String(item.technicianName || item.technician || '').toLowerCase();
-      return num.includes(q) || tech.includes(q);
+      const num = safeText(item.serviceNumber || item.orderNumber || item.maintenanceNumber).toLowerCase();
+      const numFmt = `m-${String(item.serviceNumber || item.orderNumber || '').padStart(6, '0')}`.toLowerCase();
+      const tech = safeText(item.technicianAssign || item.technicianName || item.technician).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect || item.brand).toLowerCase();
+      const brand = safeText(item.brand).toLowerCase();
+      const serial = safeText(item.serialNo).toLowerCase();
+      return num.includes(q) || numFmt.includes(q) || tech.includes(q) || cust.includes(q) || defect.includes(q) || brand.includes(q) || serial.includes(q);
     }
     if (type === 'items' || type === 'tech_store') {
-      const name = String(item.itemName || '').toLowerCase();
-      const code = String(item.itemCode || item.code || item.itemUpc?.newCode || '').toLowerCase();
+      const name = safeText(item.itemName || item.name).toLowerCase();
+      const code = safeText(item.itemCode || item.code || item.itemUpc?.newCode || item.itemUpc).toLowerCase();
       return name.includes(q) || code.includes(q);
     }
     if (type === 'payments') {
-      const cust = String(item.customerName?.customerName || item.customer || '').toLowerCase();
-      const num = String(item.paymentNumber || '').toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const num = safeText(item.paymentNumber).toLowerCase();
       return cust.includes(q) || num.includes(q);
     }
     if (type === 'expenses') {
-      const cat = String(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category || '').toLowerCase();
-      const note = String(item.description || item.expenseDescription || '').toLowerCase();
+      const cat = safeText(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category).toLowerCase();
+      const note = safeText(item.description || item.expenseDescription).toLowerCase();
       return cat.includes(q) || note.includes(q);
     }
     if (type === 'projects') {
-      const proj = String(item.projectName || item.project || '').toLowerCase();
-      const cust = String(item.customerName?.customerName || item.customer || '').toLowerCase();
+      const proj = safeText(item.projectName || item.project).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
       return proj.includes(q) || cust.includes(q);
     }
     if (type === 'employees') {
-      const emp = String(item.employeeName || item.name || '').toLowerCase();
-      const pos = String(item.position || item.role || '').toLowerCase();
+      const emp = safeText(item.employeeName || item.name).toLowerCase();
+      const pos = safeText(item.position || item.role || item.status).toLowerCase();
       return emp.includes(q) || pos.includes(q);
     }
     if (type === 'suppliers') {
-      const sup = String(item.supplierName || item.name || '').toLowerCase();
-      const phone = String(item.phone || item.contact || '').toLowerCase();
+      const sup = safeText(item.supplierName || item.name).toLowerCase();
+      const phone = safeText(item.phone || item.contact).toLowerCase();
       return sup.includes(q) || phone.includes(q);
     }
     return true;
@@ -166,8 +212,21 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
   return (
     <Box sx={{ width: '100%', pb: 8, boxSizing: 'border-box', position: 'relative', minHeight: '80vh' }}>
-      {/* ── SEARCH BAR ── */}
-      <Box sx={{ mb: 2 }}>
+      {/* ── TOP PINNED / STICKY SEARCH BAR ── */}
+      <Box
+        sx={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 1000,
+          backgroundColor: '#F8FAFC',
+          pt: 0.5,
+          pb: 1.5,
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1
+        }}
+      >
         <TextField
           fullWidth
           size="small"
@@ -177,21 +236,24 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon sx={{ color: '#94a3b8', fontSize: 20 }} />
+                <SearchIcon sx={{ color: '#30368a', fontSize: 22 }} />
               </InputAdornment>
             ),
             endAdornment: search ? (
               <InputAdornment position="end">
                 <IconButton size="small" onClick={() => setSearch('')}>
-                  <ClearIcon sx={{ fontSize: 16 }} />
+                  <ClearIcon sx={{ fontSize: 18 }} />
                 </IconButton>
               </InputAdornment>
             ) : null,
             sx: {
               backgroundColor: '#ffffff',
               borderRadius: 3,
-              boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-              '& fieldset': { borderColor: '#e2e8f0' }
+              height: 44,
+              boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
+              '& fieldset': { borderColor: '#cbd5e1' },
+              '&:hover fieldset': { borderColor: '#30368a' },
+              '&.Mui-focused fieldset': { borderColor: '#30368a' }
             }
           }}
         />
@@ -204,11 +266,11 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 1. Invoices
           if (type === 'invoices') {
-            const customer = item.customerName?.customerName || item.customer || 'Global Gate Client';
+            const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Global Gate Client');
             const invNum = typeof item.invoiceNumber === 'number'
               ? `INV-${String(item.invoiceNumber).padStart(6, '0')}`
-              : (item.invoiceNumber || `INV-00${idx + 1}`);
-            const date = item.dateField || item.date || item.createdAt?.substring(0, 10) || '2026';
+              : safeText(item.invoiceNumber, `INV-00${idx + 1}`);
+            const date = safeText(item.dateField || item.date || item.createdAt?.substring(0, 10), '2026');
             const total = Number(item.totalInvoice ?? item.totalAmount ?? item.total ?? 0);
             const balanceDue = Number(item.balanceDue ?? 0);
 
@@ -259,9 +321,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 2. Quotations / Estimates
           if (type === 'quotations' || type === 'estimates') {
-            const customer = item.customerName?.customerName || item.customer || 'Quotation Client';
-            const estNum = typeof item.estimateNumber === 'number' ? `EST-${String(item.estimateNumber).padStart(6, '0')}` : (item.estimateNumber || 'EST');
-            const date = item.dateField || item.date || '2026';
+            const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Quotation Client');
+            const estNum = typeof item.estimateNumber === 'number' ? `EST-${String(item.estimateNumber).padStart(6, '0')}` : safeText(item.estimateNumber, 'EST');
+            const date = safeText(item.dateField || item.date, '2026');
             const total = Number(item.totalEstimate ?? item.total ?? 0);
 
             return (
@@ -304,10 +366,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 3. Customers
           if (type === 'customers') {
-            const name = item.customerName || item.Customer || 'Customer';
-            const phone = item.phone || item.phone1 || item.contact || 'No Phone';
-            const email = item.email || '';
-            const typePill = item.customerType || 'Individual';
+            const name = safeText(item.customerName || item.Customer, 'Customer');
+            const phone = safeText(item.phone || item.phone1 || item.contact, 'No Phone');
+            const email = safeText(item.email);
+            const typePill = safeText(item.customerType, 'Individual');
 
             return (
               <Card
@@ -344,8 +406,8 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 4. Items / Store & Technician Store (WITH 48x48 THUMBNAIL)
           if (type === 'items' || type === 'tech_store') {
-            const name = item.itemName || 'Store Item';
-            const code = item.itemCode || item.code || item.itemUpc?.newCode || 'N/A';
+            const name = safeText(item.itemName || item.name, 'Store Item');
+            const code = safeText(item.itemCode || item.code || item.itemUpc?.newCode || item.itemUpc, 'N/A');
             const qty = Number(item.itemQuantity ?? item.balanceQty ?? item.quantity ?? 0);
             const sell = Number(item.itemSellingPrice ?? item.Sell ?? item.sellPrice ?? 0);
             const hasImg = Boolean(item?.data && item?.contentType);
@@ -421,11 +483,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 5. Maintenance / Job Cards
           if (type === 'maintenance') {
-            const defect = item.defectDescription || item.defect || 'Maintenance Job';
-            const customer = item.customerName?.customerName || item.customer || 'Client';
-            const servNum = item.serviceNumber ? `M-${String(item.serviceNumber).padStart(6, '0')}` : `M-00${idx + 1}`;
-            const date = item.dateField || item.date || '2026';
-            const cost = Number(item.infoSell ?? item.totalLaborFeesGenerale ?? 0);
+            const defect = safeText(item.defectDescription || item.defect || item.itemDescriptionInfo, 'Maintenance Job');
+            const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Client');
+            const servNum = item.serviceNumber ? (String(item.serviceNumber).startsWith('M-') ? item.serviceNumber : `M-${String(item.serviceNumber).padStart(6, '0')}`) : `M-00${idx + 1}`;
+            const date = safeText(item.dateField || item.date, '2026');
 
             return (
               <Card
@@ -452,14 +513,11 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                     {servNum} • {customer} • {date}
                   </Typography>
                   <Box sx={{ mt: 0.8 }}>
-                    <Chip label="JOB CARD" size="small" sx={{ height: 20, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#FEF3C7', color: '#B45309' }} />
+                    {getStatusChip(item.status || 'Open', 0, 0)}
                   </Box>
                 </Box>
-                <Box sx={{ textAlign: 'right' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1E293B' }}>
-                    {formatMoney(cost)}
-                  </Typography>
-                  <ArrowForwardIosIcon sx={{ fontSize: 12, color: '#CBD5E1', mt: 0.5 }} />
+                <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
+                  <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
                 </Box>
               </Card>
             );
@@ -467,10 +525,11 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 6. Maintenance Orders
           if (type === 'maintenance_orders') {
-            const num = item.orderNumber || item.maintenanceNumber || `MO-${idx + 1}`;
-            const tech = item.technicianName || item.technician || 'Technician';
-            const date = item.dateField || item.date || '2026';
-            const total = Number(item.totalCost ?? item.amount ?? 0);
+            const servNum = safeText(item.serviceNumber || item.orderNumber || item.maintenanceNumber, `MO-${idx + 1}`);
+            const tech = safeText(item.technicianAssign || item.technicianName || item.technician, 'Unassigned');
+            const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, '');
+            const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect || item.brand, 'Service Order');
+            const date = safeText(item.dateField || item.date || item.visit, '2026');
 
             return (
               <Card
@@ -490,18 +549,28 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                 }}
               >
                 <Box sx={{ minWidth: 0, flex: 1, pr: 1.5 }}>
-                  <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.95rem' }} noWrap>
-                    {num}
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.95rem' }} noWrap>
+                      {servNum}
+                    </Typography>
+                    {customer && (
+                      <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600 }} noWrap>
+                        • {customer}
+                      </Typography>
+                    )}
+                  </Box>
+                  <Typography variant="body2" sx={{ color: '#334155', fontWeight: 600, mt: 0.3 }} noWrap>
+                    {defect}
                   </Typography>
-                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.3 }}>
+                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }}>
                     Tech: {tech} • {date}
                   </Typography>
+                  <Box sx={{ mt: 0.8 }}>
+                    {getStatusChip(item.status || 'Open', 0, 0)}
+                  </Box>
                 </Box>
-                <Box sx={{ textAlign: 'right' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#1E293B' }}>
-                    {formatMoney(total)}
-                  </Typography>
-                  <ArrowForwardIosIcon sx={{ fontSize: 12, color: '#CBD5E1', mt: 0.5 }} />
+                <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
+                  <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
                 </Box>
               </Card>
             );
@@ -509,9 +578,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 7. Payments
           if (type === 'payments') {
-            const customer = item.customerName?.customerName || item.customer || 'Client';
+            const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Client');
             const payNum = item.paymentNumber ? `PAY-${item.paymentNumber}` : 'Payment';
-            const date = item.dateField || item.date || '2026';
+            const date = safeText(item.dateField || item.date, '2026');
             const amount = Number(item.amount ?? item.total ?? 0);
 
             return (
@@ -551,9 +620,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 8. Daily Expenses
           if (type === 'expenses') {
-            const cat = item.expenseCategory?.expensesCategory || item.expenseCategory || item.category || 'Expense';
-            const note = item.description || item.expenseDescription || 'Daily Expense';
-            const date = item.expenseDate || item.dateField || item.date || '2026';
+            const cat = safeText(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category, 'Expense');
+            const note = safeText(item.description || item.expenseDescription, 'Daily Expense');
+            const date = safeText(item.expenseDate || item.dateField || item.date, '2026');
             const amount = Number(item.amount ?? item.total ?? 0);
 
             return (
@@ -593,9 +662,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 9. Projects
           if (type === 'projects') {
-            const projName = item.projectName || item.project || 'Project';
-            const customer = item.customerName?.customerName || item.customer || 'Client';
-            const desc = item.description || '';
+            const projName = safeText(item.projectName || item.project, 'Project');
+            const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Client');
+            const desc = safeText(item.description);
 
             return (
               <Card
@@ -629,9 +698,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 10. Employees
           if (type === 'employees') {
-            const empName = item.employeeName || item.name || 'Employee';
-            const role = item.position || item.role || item.status || 'Staff';
-            const phone = item.phone || '';
+            const empName = safeText(item.employeeName || item.name, 'Employee');
+            const role = safeText(item.position || item.role || item.status, 'Staff');
+            const phone = safeText(item.phone);
 
             return (
               <Card
@@ -665,9 +734,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 11. Suppliers
           if (type === 'suppliers') {
-            const supName = item.supplierName || item.name || 'Supplier';
-            const phone = item.phone || item.contact || '';
-            const email = item.email || '';
+            const supName = safeText(item.supplierName || item.name, 'Supplier');
+            const phone = safeText(item.phone || item.contact);
+            const email = safeText(item.email);
 
             return (
               <Card

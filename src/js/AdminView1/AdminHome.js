@@ -21,7 +21,7 @@ import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import Loader from '../component/Loader';
 import { useNavigate, NavLink } from 'react-router-dom';
-import { isNativeMobile } from '../utils/isMobile';
+import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileDashboard from '../component/MobileDashboard';
 import Logout from '../component/NetworkLogoutIcon';
 import { AccountBalance, AddCard, BackHandOutlined, Close, GroupAdd, GroupOutlined, GroupRemove, MailOutline, NotificationAdd, Person2Sharp, PersonAddDisabled, PriceChange, Receipt, Sell, ShoppingBagOutlined, ShoppingCart, Square, Storefront } from '@mui/icons-material';
@@ -149,6 +149,7 @@ const xLabels = [
 ];
 function AdminHome() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
 
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
@@ -1106,7 +1107,6 @@ function AdminHome() {
     setMetricType(type)
   }
 
-  const isMobile = isNativeMobile();
   if (isMobile) {
     return <MobileDashboard />;
   }
@@ -1127,7 +1127,9 @@ function AdminHome() {
         <div style={{ padding: '5px' }}>
           <Loader />
         </div>
-      </div>) : (
+      </div>) : isMobile ? (
+        <MobileDashboard />
+      ) : (
         <div className='Homeemployee'>
           <Box sx={{ display: 'flex' }}>
             <CssBaseline />

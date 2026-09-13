@@ -29,7 +29,7 @@ import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { Close } from '@mui/icons-material';
-import { isNativeMobile } from '../utils/isMobile';
+import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 
 import { TabContext, TabList, TabPanel } from '@mui/lab';
@@ -129,6 +129,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 function ItemViewAdmin() {
   const navigate = useNavigate();
+  const isMobile = useIsMobile();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
 
@@ -679,6 +680,18 @@ function ItemViewAdmin() {
 
 
 
+
+  if (isMobile) {
+    return loadingData ? (
+      <div style={{ position: 'relative', top: '120px', textAlign: 'center' }}>
+        <Loader />
+      </div>
+    ) : (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <MobileCardList type="items" data={item} searchPlaceholder="Search items..." />
+      </Box>
+    );
+  }
 
   return (
     <div className='Homeemployee'>
