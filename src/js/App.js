@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import "react-toastify/ReactToastify.css";
 import useLayoutConfig from './hooks/useLayoutConfig';
 import MobileLayout from './component/MobileLayout';
+import NativeBackHandler from './component/NativeBackHandler';
 
 import { isNativeMobile, useIsMobile } from './utils/isMobile';
 
@@ -29,10 +30,12 @@ function AppLayoutWrapper({ children }) {
     }
   }, [isMobile]);
 
-  if (isMobile) {
-    return <MobileLayout>{children}</MobileLayout>;
-  }
-  return <>{children}</>;
+  return (
+    <>
+      <NativeBackHandler />
+      {isMobile ? <MobileLayout>{children}</MobileLayout> : children}
+    </>
+  );
 }
 
 // --- CORE ADMIN VIEWS ---
@@ -362,6 +365,7 @@ function App() {
             <Route path='ProjectPhase/:id' element={<ProjectPhase />}></Route>
 
             {/**Employee */}
+            <Route path='EmployeeViewAdminAll' element={<EmployeeViewAdminAll />}></Route>
             <Route path='EmployeeViewAdminAll/:id' element={<EmployeeViewAdminAll />}></Route>
             <Route path='TewmViewAdmin' element={<TewmViewAdmin />}></Route>
             <Route path='EmployeeAttendanceForm' element={<EmployeeAttendanceForm />}></Route>

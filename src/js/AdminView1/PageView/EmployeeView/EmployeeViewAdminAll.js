@@ -221,6 +221,7 @@ function EmployeeViewAdminAll() {
 
   useEffect(() => {
     const fetchEId = async () => {
+      if (!id) return;
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-employee/${id}`)
         setEmployeeName(res.data?.data?.employeeName || null)

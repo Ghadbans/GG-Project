@@ -1,6 +1,723 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ 16546
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   E_: () => (/* binding */ WebPlugin)
+/* harmony export */ });
+/* unused harmony exports Capacitor, CapacitorCookies, CapacitorException, CapacitorHttp, CapacitorPlatforms, ExceptionCode, Plugins, WebView, addPlatform, buildRequestInit, registerWebPlugin, setPlatform */
+/*! Capacitor: https://capacitorjs.com/ - MIT License */
+const createCapacitorPlatforms = (win) => {
+    const defaultPlatformMap = new Map();
+    defaultPlatformMap.set('web', { name: 'web' });
+    const capPlatforms = win.CapacitorPlatforms || {
+        currentPlatform: { name: 'web' },
+        platforms: defaultPlatformMap,
+    };
+    const addPlatform = (name, platform) => {
+        capPlatforms.platforms.set(name, platform);
+    };
+    const setPlatform = (name) => {
+        if (capPlatforms.platforms.has(name)) {
+            capPlatforms.currentPlatform = capPlatforms.platforms.get(name);
+        }
+    };
+    capPlatforms.addPlatform = addPlatform;
+    capPlatforms.setPlatform = setPlatform;
+    return capPlatforms;
+};
+const initPlatforms = (win) => (win.CapacitorPlatforms = createCapacitorPlatforms(win));
+/**
+ * @deprecated Set `CapacitorCustomPlatform` on the window object prior to runtime executing in the web app instead
+ */
+const CapacitorPlatforms = /*#__PURE__*/ initPlatforms((typeof globalThis !== 'undefined'
+    ? globalThis
+    : typeof self !== 'undefined'
+        ? self
+        : typeof window !== 'undefined'
+            ? window
+            : typeof globalThis !== 'undefined'
+                ? globalThis
+                : {}));
+/**
+ * @deprecated Set `CapacitorCustomPlatform` on the window object prior to runtime executing in the web app instead
+ */
+const addPlatform = CapacitorPlatforms.addPlatform;
+/**
+ * @deprecated Set `CapacitorCustomPlatform` on the window object prior to runtime executing in the web app instead
+ */
+const setPlatform = CapacitorPlatforms.setPlatform;
+
+const legacyRegisterWebPlugin = (cap, webPlugin) => {
+    var _a;
+    const config = webPlugin.config;
+    const Plugins = cap.Plugins;
+    if (!(config === null || config === void 0 ? void 0 : config.name)) {
+        // TODO: add link to upgrade guide
+        throw new Error(`Capacitor WebPlugin is using the deprecated "registerWebPlugin()" function, but without the config. Please use "registerPlugin()" instead to register this web plugin."`);
+    }
+    // TODO: add link to upgrade guide
+    console.warn(`Capacitor plugin "${config.name}" is using the deprecated "registerWebPlugin()" function`);
+    if (!Plugins[config.name] || ((_a = config === null || config === void 0 ? void 0 : config.platforms) === null || _a === void 0 ? void 0 : _a.includes(cap.getPlatform()))) {
+        // Add the web plugin into the plugins registry if there already isn't
+        // an existing one. If it doesn't already exist, that means
+        // there's no existing native implementation for it.
+        // - OR -
+        // If we already have a plugin registered (meaning it was defined in the native layer),
+        // then we should only overwrite it if the corresponding web plugin activates on
+        // a certain platform. For example: Geolocation uses the WebPlugin on Android but not iOS
+        Plugins[config.name] = webPlugin;
+    }
+};
+
+var ExceptionCode;
+(function (ExceptionCode) {
+    /**
+     * API is not implemented.
+     *
+     * This usually means the API can't be used because it is not implemented for
+     * the current platform.
+     */
+    ExceptionCode["Unimplemented"] = "UNIMPLEMENTED";
+    /**
+     * API is not available.
+     *
+     * This means the API can't be used right now because:
+     *   - it is currently missing a prerequisite, such as network connectivity
+     *   - it requires a particular platform or browser version
+     */
+    ExceptionCode["Unavailable"] = "UNAVAILABLE";
+})(ExceptionCode || (ExceptionCode = {}));
+class CapacitorException extends Error {
+    constructor(message, code, data) {
+        super(message);
+        this.message = message;
+        this.code = code;
+        this.data = data;
+    }
+}
+const getPlatformId = (win) => {
+    var _a, _b;
+    if (win === null || win === void 0 ? void 0 : win.androidBridge) {
+        return 'android';
+    }
+    else if ((_b = (_a = win === null || win === void 0 ? void 0 : win.webkit) === null || _a === void 0 ? void 0 : _a.messageHandlers) === null || _b === void 0 ? void 0 : _b.bridge) {
+        return 'ios';
+    }
+    else {
+        return 'web';
+    }
+};
+
+const createCapacitor = (win) => {
+    var _a, _b, _c, _d, _e;
+    const capCustomPlatform = win.CapacitorCustomPlatform || null;
+    const cap = win.Capacitor || {};
+    const Plugins = (cap.Plugins = cap.Plugins || {});
+    /**
+     * @deprecated Use `capCustomPlatform` instead, default functions like registerPlugin will function with the new object.
+     */
+    const capPlatforms = win.CapacitorPlatforms;
+    const defaultGetPlatform = () => {
+        return capCustomPlatform !== null
+            ? capCustomPlatform.name
+            : getPlatformId(win);
+    };
+    const getPlatform = ((_a = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _a === void 0 ? void 0 : _a.getPlatform) || defaultGetPlatform;
+    const defaultIsNativePlatform = () => getPlatform() !== 'web';
+    const isNativePlatform = ((_b = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _b === void 0 ? void 0 : _b.isNativePlatform) || defaultIsNativePlatform;
+    const defaultIsPluginAvailable = (pluginName) => {
+        const plugin = registeredPlugins.get(pluginName);
+        if (plugin === null || plugin === void 0 ? void 0 : plugin.platforms.has(getPlatform())) {
+            // JS implementation available for the current platform.
+            return true;
+        }
+        if (getPluginHeader(pluginName)) {
+            // Native implementation available.
+            return true;
+        }
+        return false;
+    };
+    const isPluginAvailable = ((_c = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _c === void 0 ? void 0 : _c.isPluginAvailable) ||
+        defaultIsPluginAvailable;
+    const defaultGetPluginHeader = (pluginName) => { var _a; return (_a = cap.PluginHeaders) === null || _a === void 0 ? void 0 : _a.find(h => h.name === pluginName); };
+    const getPluginHeader = ((_d = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _d === void 0 ? void 0 : _d.getPluginHeader) || defaultGetPluginHeader;
+    const handleError = (err) => win.console.error(err);
+    const pluginMethodNoop = (_target, prop, pluginName) => {
+        return Promise.reject(`${pluginName} does not have an implementation of "${prop}".`);
+    };
+    const registeredPlugins = new Map();
+    const defaultRegisterPlugin = (pluginName, jsImplementations = {}) => {
+        const registeredPlugin = registeredPlugins.get(pluginName);
+        if (registeredPlugin) {
+            console.warn(`Capacitor plugin "${pluginName}" already registered. Cannot register plugins twice.`);
+            return registeredPlugin.proxy;
+        }
+        const platform = getPlatform();
+        const pluginHeader = getPluginHeader(pluginName);
+        let jsImplementation;
+        const loadPluginImplementation = async () => {
+            if (!jsImplementation && platform in jsImplementations) {
+                jsImplementation =
+                    typeof jsImplementations[platform] === 'function'
+                        ? (jsImplementation = await jsImplementations[platform]())
+                        : (jsImplementation = jsImplementations[platform]);
+            }
+            else if (capCustomPlatform !== null &&
+                !jsImplementation &&
+                'web' in jsImplementations) {
+                jsImplementation =
+                    typeof jsImplementations['web'] === 'function'
+                        ? (jsImplementation = await jsImplementations['web']())
+                        : (jsImplementation = jsImplementations['web']);
+            }
+            return jsImplementation;
+        };
+        const createPluginMethod = (impl, prop) => {
+            var _a, _b;
+            if (pluginHeader) {
+                const methodHeader = pluginHeader === null || pluginHeader === void 0 ? void 0 : pluginHeader.methods.find(m => prop === m.name);
+                if (methodHeader) {
+                    if (methodHeader.rtype === 'promise') {
+                        return (options) => cap.nativePromise(pluginName, prop.toString(), options);
+                    }
+                    else {
+                        return (options, callback) => cap.nativeCallback(pluginName, prop.toString(), options, callback);
+                    }
+                }
+                else if (impl) {
+                    return (_a = impl[prop]) === null || _a === void 0 ? void 0 : _a.bind(impl);
+                }
+            }
+            else if (impl) {
+                return (_b = impl[prop]) === null || _b === void 0 ? void 0 : _b.bind(impl);
+            }
+            else {
+                throw new CapacitorException(`"${pluginName}" plugin is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+            }
+        };
+        const createPluginMethodWrapper = (prop) => {
+            let remove;
+            const wrapper = (...args) => {
+                const p = loadPluginImplementation().then(impl => {
+                    const fn = createPluginMethod(impl, prop);
+                    if (fn) {
+                        const p = fn(...args);
+                        remove = p === null || p === void 0 ? void 0 : p.remove;
+                        return p;
+                    }
+                    else {
+                        throw new CapacitorException(`"${pluginName}.${prop}()" is not implemented on ${platform}`, ExceptionCode.Unimplemented);
+                    }
+                });
+                if (prop === 'addListener') {
+                    p.remove = async () => remove();
+                }
+                return p;
+            };
+            // Some flair ✨
+            wrapper.toString = () => `${prop.toString()}() { [capacitor code] }`;
+            Object.defineProperty(wrapper, 'name', {
+                value: prop,
+                writable: false,
+                configurable: false,
+            });
+            return wrapper;
+        };
+        const addListener = createPluginMethodWrapper('addListener');
+        const removeListener = createPluginMethodWrapper('removeListener');
+        const addListenerNative = (eventName, callback) => {
+            const call = addListener({ eventName }, callback);
+            const remove = async () => {
+                const callbackId = await call;
+                removeListener({
+                    eventName,
+                    callbackId,
+                }, callback);
+            };
+            const p = new Promise(resolve => call.then(() => resolve({ remove })));
+            p.remove = async () => {
+                console.warn(`Using addListener() without 'await' is deprecated.`);
+                await remove();
+            };
+            return p;
+        };
+        const proxy = new Proxy({}, {
+            get(_, prop) {
+                switch (prop) {
+                    // https://github.com/facebook/react/issues/20030
+                    case '$$typeof':
+                        return undefined;
+                    case 'toJSON':
+                        return () => ({});
+                    case 'addListener':
+                        return pluginHeader ? addListenerNative : addListener;
+                    case 'removeListener':
+                        return removeListener;
+                    default:
+                        return createPluginMethodWrapper(prop);
+                }
+            },
+        });
+        Plugins[pluginName] = proxy;
+        registeredPlugins.set(pluginName, {
+            name: pluginName,
+            proxy,
+            platforms: new Set([
+                ...Object.keys(jsImplementations),
+                ...(pluginHeader ? [platform] : []),
+            ]),
+        });
+        return proxy;
+    };
+    const registerPlugin = ((_e = capPlatforms === null || capPlatforms === void 0 ? void 0 : capPlatforms.currentPlatform) === null || _e === void 0 ? void 0 : _e.registerPlugin) || defaultRegisterPlugin;
+    // Add in convertFileSrc for web, it will already be available in native context
+    if (!cap.convertFileSrc) {
+        cap.convertFileSrc = filePath => filePath;
+    }
+    cap.getPlatform = getPlatform;
+    cap.handleError = handleError;
+    cap.isNativePlatform = isNativePlatform;
+    cap.isPluginAvailable = isPluginAvailable;
+    cap.pluginMethodNoop = pluginMethodNoop;
+    cap.registerPlugin = registerPlugin;
+    cap.Exception = CapacitorException;
+    cap.DEBUG = !!cap.DEBUG;
+    cap.isLoggingEnabled = !!cap.isLoggingEnabled;
+    // Deprecated props
+    cap.platform = cap.getPlatform();
+    cap.isNative = cap.isNativePlatform();
+    return cap;
+};
+const initCapacitorGlobal = (win) => (win.Capacitor = createCapacitor(win));
+
+const Capacitor = /*#__PURE__*/ initCapacitorGlobal(typeof globalThis !== 'undefined'
+    ? globalThis
+    : typeof self !== 'undefined'
+        ? self
+        : typeof window !== 'undefined'
+            ? window
+            : typeof globalThis !== 'undefined'
+                ? globalThis
+                : {});
+const registerPlugin = Capacitor.registerPlugin;
+/**
+ * @deprecated Provided for backwards compatibility for Capacitor v2 plugins.
+ * Capacitor v3 plugins should import the plugin directly. This "Plugins"
+ * export is deprecated in v3, and will be removed in v4.
+ */
+const Plugins = Capacitor.Plugins;
+/**
+ * Provided for backwards compatibility. Use the registerPlugin() API
+ * instead, and provide the web plugin as the "web" implmenetation.
+ * For example
+ *
+ * export const Example = registerPlugin('Example', {
+ *   web: () => import('./web').then(m => new m.Example())
+ * })
+ *
+ * @deprecated Deprecated in v3, will be removed from v4.
+ */
+const registerWebPlugin = (plugin) => legacyRegisterWebPlugin(Capacitor, plugin);
+
+/**
+ * Base class web plugins should extend.
+ */
+class WebPlugin {
+    constructor(config) {
+        this.listeners = {};
+        this.retainedEventArguments = {};
+        this.windowListeners = {};
+        if (config) {
+            // TODO: add link to upgrade guide
+            console.warn(`Capacitor WebPlugin "${config.name}" config object was deprecated in v3 and will be removed in v4.`);
+            this.config = config;
+        }
+    }
+    addListener(eventName, listenerFunc) {
+        let firstListener = false;
+        const listeners = this.listeners[eventName];
+        if (!listeners) {
+            this.listeners[eventName] = [];
+            firstListener = true;
+        }
+        this.listeners[eventName].push(listenerFunc);
+        // If we haven't added a window listener for this event and it requires one,
+        // go ahead and add it
+        const windowListener = this.windowListeners[eventName];
+        if (windowListener && !windowListener.registered) {
+            this.addWindowListener(windowListener);
+        }
+        if (firstListener) {
+            this.sendRetainedArgumentsForEvent(eventName);
+        }
+        const remove = async () => this.removeListener(eventName, listenerFunc);
+        const p = Promise.resolve({ remove });
+        return p;
+    }
+    async removeAllListeners() {
+        this.listeners = {};
+        for (const listener in this.windowListeners) {
+            this.removeWindowListener(this.windowListeners[listener]);
+        }
+        this.windowListeners = {};
+    }
+    notifyListeners(eventName, data, retainUntilConsumed) {
+        const listeners = this.listeners[eventName];
+        if (!listeners) {
+            if (retainUntilConsumed) {
+                let args = this.retainedEventArguments[eventName];
+                if (!args) {
+                    args = [];
+                }
+                args.push(data);
+                this.retainedEventArguments[eventName] = args;
+            }
+            return;
+        }
+        listeners.forEach(listener => listener(data));
+    }
+    hasListeners(eventName) {
+        return !!this.listeners[eventName].length;
+    }
+    registerWindowListener(windowEventName, pluginEventName) {
+        this.windowListeners[pluginEventName] = {
+            registered: false,
+            windowEventName,
+            pluginEventName,
+            handler: event => {
+                this.notifyListeners(pluginEventName, event);
+            },
+        };
+    }
+    unimplemented(msg = 'not implemented') {
+        return new Capacitor.Exception(msg, ExceptionCode.Unimplemented);
+    }
+    unavailable(msg = 'not available') {
+        return new Capacitor.Exception(msg, ExceptionCode.Unavailable);
+    }
+    async removeListener(eventName, listenerFunc) {
+        const listeners = this.listeners[eventName];
+        if (!listeners) {
+            return;
+        }
+        const index = listeners.indexOf(listenerFunc);
+        this.listeners[eventName].splice(index, 1);
+        // If there are no more listeners for this type of event,
+        // remove the window listener
+        if (!this.listeners[eventName].length) {
+            this.removeWindowListener(this.windowListeners[eventName]);
+        }
+    }
+    addWindowListener(handle) {
+        window.addEventListener(handle.windowEventName, handle.handler);
+        handle.registered = true;
+    }
+    removeWindowListener(handle) {
+        if (!handle) {
+            return;
+        }
+        window.removeEventListener(handle.windowEventName, handle.handler);
+        handle.registered = false;
+    }
+    sendRetainedArgumentsForEvent(eventName) {
+        const args = this.retainedEventArguments[eventName];
+        if (!args) {
+            return;
+        }
+        delete this.retainedEventArguments[eventName];
+        args.forEach(arg => {
+            this.notifyListeners(eventName, arg);
+        });
+    }
+}
+
+const WebView = /*#__PURE__*/ (/* unused pure expression or super */ null && (registerPlugin('WebView')));
+/******** END WEB VIEW PLUGIN ********/
+/******** COOKIES PLUGIN ********/
+/**
+ * Safely web encode a string value (inspired by js-cookie)
+ * @param str The string value to encode
+ */
+const encode = (str) => encodeURIComponent(str)
+    .replace(/%(2[346B]|5E|60|7C)/g, decodeURIComponent)
+    .replace(/[()]/g, escape);
+/**
+ * Safely web decode a string value (inspired by js-cookie)
+ * @param str The string value to decode
+ */
+const decode = (str) => str.replace(/(%[\dA-F]{2})+/gi, decodeURIComponent);
+class CapacitorCookiesPluginWeb extends WebPlugin {
+    async getCookies() {
+        const cookies = document.cookie;
+        const cookieMap = {};
+        cookies.split(';').forEach(cookie => {
+            if (cookie.length <= 0)
+                return;
+            // Replace first "=" with CAP_COOKIE to prevent splitting on additional "="
+            let [key, value] = cookie.replace(/=/, 'CAP_COOKIE').split('CAP_COOKIE');
+            key = decode(key).trim();
+            value = decode(value).trim();
+            cookieMap[key] = value;
+        });
+        return cookieMap;
+    }
+    async setCookie(options) {
+        try {
+            // Safely Encoded Key/Value
+            const encodedKey = encode(options.key);
+            const encodedValue = encode(options.value);
+            // Clean & sanitize options
+            const expires = `; expires=${(options.expires || '').replace('expires=', '')}`; // Default is "; expires="
+            const path = (options.path || '/').replace('path=', ''); // Default is "path=/"
+            const domain = options.url != null && options.url.length > 0
+                ? `domain=${options.url}`
+                : '';
+            document.cookie = `${encodedKey}=${encodedValue || ''}${expires}; path=${path}; ${domain};`;
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    async deleteCookie(options) {
+        try {
+            document.cookie = `${options.key}=; Max-Age=0`;
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    async clearCookies() {
+        try {
+            const cookies = document.cookie.split(';') || [];
+            for (const cookie of cookies) {
+                document.cookie = cookie
+                    .replace(/^ +/, '')
+                    .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+            }
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+    async clearAllCookies() {
+        try {
+            await this.clearCookies();
+        }
+        catch (error) {
+            return Promise.reject(error);
+        }
+    }
+}
+const CapacitorCookies = registerPlugin('CapacitorCookies', {
+    web: () => new CapacitorCookiesPluginWeb(),
+});
+// UTILITY FUNCTIONS
+/**
+ * Read in a Blob value and return it as a base64 string
+ * @param blob The blob value to convert to a base64 string
+ */
+const readBlobAsBase64 = async (blob) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+        const base64String = reader.result;
+        // remove prefix "data:application/pdf;base64,"
+        resolve(base64String.indexOf(',') >= 0
+            ? base64String.split(',')[1]
+            : base64String);
+    };
+    reader.onerror = (error) => reject(error);
+    reader.readAsDataURL(blob);
+});
+/**
+ * Normalize an HttpHeaders map by lowercasing all of the values
+ * @param headers The HttpHeaders object to normalize
+ */
+const normalizeHttpHeaders = (headers = {}) => {
+    const originalKeys = Object.keys(headers);
+    const loweredKeys = Object.keys(headers).map(k => k.toLocaleLowerCase());
+    const normalized = loweredKeys.reduce((acc, key, index) => {
+        acc[key] = headers[originalKeys[index]];
+        return acc;
+    }, {});
+    return normalized;
+};
+/**
+ * Builds a string of url parameters that
+ * @param params A map of url parameters
+ * @param shouldEncode true if you should encodeURIComponent() the values (true by default)
+ */
+const buildUrlParams = (params, shouldEncode = true) => {
+    if (!params)
+        return null;
+    const output = Object.entries(params).reduce((accumulator, entry) => {
+        const [key, value] = entry;
+        let encodedValue;
+        let item;
+        if (Array.isArray(value)) {
+            item = '';
+            value.forEach(str => {
+                encodedValue = shouldEncode ? encodeURIComponent(str) : str;
+                item += `${key}=${encodedValue}&`;
+            });
+            // last character will always be "&" so slice it off
+            item.slice(0, -1);
+        }
+        else {
+            encodedValue = shouldEncode ? encodeURIComponent(value) : value;
+            item = `${key}=${encodedValue}`;
+        }
+        return `${accumulator}&${item}`;
+    }, '');
+    // Remove initial "&" from the reduce
+    return output.substr(1);
+};
+/**
+ * Build the RequestInit object based on the options passed into the initial request
+ * @param options The Http plugin options
+ * @param extra Any extra RequestInit values
+ */
+const buildRequestInit = (options, extra = {}) => {
+    const output = Object.assign({ method: options.method || 'GET', headers: options.headers }, extra);
+    // Get the content-type
+    const headers = normalizeHttpHeaders(options.headers);
+    const type = headers['content-type'] || '';
+    // If body is already a string, then pass it through as-is.
+    if (typeof options.data === 'string') {
+        output.body = options.data;
+    }
+    // Build request initializers based off of content-type
+    else if (type.includes('application/x-www-form-urlencoded')) {
+        const params = new URLSearchParams();
+        for (const [key, value] of Object.entries(options.data || {})) {
+            params.set(key, value);
+        }
+        output.body = params.toString();
+    }
+    else if (type.includes('multipart/form-data') ||
+        options.data instanceof FormData) {
+        const form = new FormData();
+        if (options.data instanceof FormData) {
+            options.data.forEach((value, key) => {
+                form.append(key, value);
+            });
+        }
+        else {
+            for (const key of Object.keys(options.data)) {
+                form.append(key, options.data[key]);
+            }
+        }
+        output.body = form;
+        const headers = new Headers(output.headers);
+        headers.delete('content-type'); // content-type will be set by `window.fetch` to includy boundary
+        output.headers = headers;
+    }
+    else if (type.includes('application/json') ||
+        typeof options.data === 'object') {
+        output.body = JSON.stringify(options.data);
+    }
+    return output;
+};
+// WEB IMPLEMENTATION
+class CapacitorHttpPluginWeb extends WebPlugin {
+    /**
+     * Perform an Http request given a set of options
+     * @param options Options to build the HTTP request
+     */
+    async request(options) {
+        const requestInit = buildRequestInit(options, options.webFetchExtra);
+        const urlParams = buildUrlParams(options.params, options.shouldEncodeUrlParams);
+        const url = urlParams ? `${options.url}?${urlParams}` : options.url;
+        const response = await fetch(url, requestInit);
+        const contentType = response.headers.get('content-type') || '';
+        // Default to 'text' responseType so no parsing happens
+        let { responseType = 'text' } = response.ok ? options : {};
+        // If the response content-type is json, force the response to be json
+        if (contentType.includes('application/json')) {
+            responseType = 'json';
+        }
+        let data;
+        let blob;
+        switch (responseType) {
+            case 'arraybuffer':
+            case 'blob':
+                blob = await response.blob();
+                data = await readBlobAsBase64(blob);
+                break;
+            case 'json':
+                data = await response.json();
+                break;
+            case 'document':
+            case 'text':
+            default:
+                data = await response.text();
+        }
+        // Convert fetch headers to Capacitor HttpHeaders
+        const headers = {};
+        response.headers.forEach((value, key) => {
+            headers[key] = value;
+        });
+        return {
+            data,
+            headers,
+            status: response.status,
+            url: response.url,
+        };
+    }
+    /**
+     * Perform an Http GET request given a set of options
+     * @param options Options to build the HTTP request
+     */
+    async get(options) {
+        return this.request(Object.assign(Object.assign({}, options), { method: 'GET' }));
+    }
+    /**
+     * Perform an Http POST request given a set of options
+     * @param options Options to build the HTTP request
+     */
+    async post(options) {
+        return this.request(Object.assign(Object.assign({}, options), { method: 'POST' }));
+    }
+    /**
+     * Perform an Http PUT request given a set of options
+     * @param options Options to build the HTTP request
+     */
+    async put(options) {
+        return this.request(Object.assign(Object.assign({}, options), { method: 'PUT' }));
+    }
+    /**
+     * Perform an Http PATCH request given a set of options
+     * @param options Options to build the HTTP request
+     */
+    async patch(options) {
+        return this.request(Object.assign(Object.assign({}, options), { method: 'PATCH' }));
+    }
+    /**
+     * Perform an Http DELETE request given a set of options
+     * @param options Options to build the HTTP request
+     */
+    async delete(options) {
+        return this.request(Object.assign(Object.assign({}, options), { method: 'DELETE' }));
+    }
+}
+const CapacitorHttp = registerPlugin('CapacitorHttp', {
+    web: () => new CapacitorHttpPluginWeb(),
+});
+/******** END HTTP PLUGIN ********/
+
+
+//# sourceMappingURL=index.js.map
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "F3", 0, /* binding */ registerPlugin
+/* harmony export */ ]);
+
+
+/***/ },
+
 /***/ 55655
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -2458,6 +3175,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 18329
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 16H5V10h14zM9 14H7v-2h2zm4 0h-2v-2h2zm4 0h-2v-2h2zm-8 4H7v-2h2zm4 0h-2v-2h2zm4 0h-2v-2h2z"
+}), 'CalendarMonth');
+
+/***/ },
+
 /***/ 82299
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -2545,6 +3283,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"
 }), 'ChevronLeft');
+
+/***/ },
+
+/***/ 27562
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+}), 'ChevronRight');
 
 /***/ },
 
@@ -2799,6 +3558,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M9 15c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4m13.1-8.16c.01-.11.02-.22.02-.34 0-.12-.01-.23-.03-.34l.74-.58c.07-.05.08-.15.04-.22l-.7-1.21c-.04-.08-.14-.1-.21-.08l-.86.35c-.18-.14-.38-.25-.59-.34l-.13-.93c-.02-.09-.09-.15-.18-.15h-1.4c-.09 0-.16.06-.17.15l-.13.93c-.21.09-.41.21-.59.34l-.87-.35c-.08-.03-.17 0-.21.08l-.7 1.21c-.04.08-.03.17.04.22l.74.58c-.02.11-.03.23-.03.34 0 .11.01.23.03.34l-.74.58c-.07.05-.08.15-.04.22l.7 1.21c.04.08.14.1.21.08l.87-.35c.18.14.38.25.59.34l.13.93c.01.09.08.15.17.15h1.4c.09 0 .16-.06.17-.15l.13-.93c.21-.09.41-.21.59-.34l.87.35c.08.03.17 0 .21-.08l.7-1.21c.04-.08.03-.17-.04-.22zm-2.6.91c-.69 0-1.25-.56-1.25-1.25s.56-1.25 1.25-1.25 1.25.56 1.25 1.25-.56 1.25-1.25 1.25m.42 3.93-.5-.87c-.03-.06-.1-.08-.15-.06l-.62.25c-.13-.1-.27-.18-.42-.24l-.09-.66c-.02-.06-.08-.1-.14-.1h-1c-.06 0-.11.04-.12.11l-.09.66c-.15.06-.29.15-.42.24l-.62-.25c-.06-.02-.12 0-.15.06l-.5.87c-.03.06-.02.12.03.16l.53.41c-.01.08-.02.16-.02.24 0 .08.01.17.02.24l-.53.41c-.05.04-.06.11-.03.16l.5.87c.03.06.1.08.15.06l.62-.25c.13.1.27.18.42.24l.09.66c.01.07.06.11.12.11h1c.06 0 .12-.04.12-.11l.09-.66c.15-.06.29-.15.42-.24l.62.25c.06.02.12 0 .15-.06l.5-.87c.03-.06.02-.12-.03-.16l-.52-.41c.01-.08.02-.16.02-.24 0-.08-.01-.17-.02-.24l.53-.41c.05-.04.06-.11.04-.17m-2.42 1.65c-.46 0-.83-.38-.83-.83 0-.46.38-.83.83-.83s.83.38.83.83c0 .46-.37.83-.83.83M4.74 9h8.53c.27 0 .49-.22.49-.49v-.02c0-.27-.22-.49-.49-.49H13c0-1.48-.81-2.75-2-3.45v.95c0 .28-.22.5-.5.5s-.5-.22-.5-.5V4.14C9.68 4.06 9.35 4 9 4s-.68.06-1 .14V5.5c0 .28-.22.5-.5.5S7 5.78 7 5.5v-.95C5.81 5.25 5 6.52 5 8h-.26c-.27 0-.49.22-.49.49v.03c0 .26.22.48.49.48M9 13c1.86 0 3.41-1.28 3.86-3H5.14c.45 1.72 2 3 3.86 3"
 }), 'Engineering');
+
+/***/ },
+
+/***/ 83465
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M10.09 15.59 11.5 17l5-5-5-5-1.41 1.41L12.67 11H3v2h9.67zM19 3H5c-1.11 0-2 .9-2 2v4h2V5h14v14H5v-4H3v4c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2"
+}), 'ExitToApp');
 
 /***/ },
 
@@ -3496,6 +4276,29 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"
 }), 'Visibility');
+
+/***/ },
+
+/***/ 15542
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M12 5.99 19.53 19H4.47zM12 2 1 21h22z"
+}, "0"), /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M13 16h-2v2h2zm0-6h-2v5h2z"
+}, "1")], 'WarningAmber');
 
 /***/ },
 
@@ -9659,6 +10462,86 @@ const DialogContent = /*#__PURE__*/react.forwardRef(function DialogContent(inPro
 });
  false ? 0 : void 0;
 /* harmony default export */ const DialogContent_DialogContent = (DialogContent);
+
+/***/ },
+
+/***/ 46831
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(58168);
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(98587);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(96540);
+/* harmony import */ var clsx__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(34164);
+/* harmony import */ var _mui_utils_composeClasses__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75659);
+/* harmony import */ var _Typography__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(14073);
+/* harmony import */ var _styles_styled__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11848);
+/* harmony import */ var _DefaultPropsProvider__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(15607);
+/* harmony import */ var _dialogTitleClasses__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(61435);
+/* harmony import */ var _Dialog_DialogContext__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(28102);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(74848);
+'use client';
+
+
+
+const _excluded = ["className", "id"];
+
+
+
+
+
+
+
+
+
+
+const useUtilityClasses = ownerState => {
+  const {
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root']
+  };
+  return (0,_mui_utils_composeClasses__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A)(slots, _dialogTitleClasses__WEBPACK_IMPORTED_MODULE_8__/* .getDialogTitleUtilityClass */ .t, classes);
+};
+const DialogTitleRoot = (0,_styles_styled__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .Ay)(_Typography__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  name: 'MuiDialogTitle',
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})({
+  padding: '16px 24px',
+  flex: '0 0 auto'
+});
+const DialogTitle = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.forwardRef(function DialogTitle(inProps, ref) {
+  const props = (0,_DefaultPropsProvider__WEBPACK_IMPORTED_MODULE_7__/* .useDefaultProps */ .b)({
+    props: inProps,
+    name: 'MuiDialogTitle'
+  });
+  const {
+      className,
+      id: idProp
+    } = props,
+    other = (0,_babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A)(props, _excluded);
+  const ownerState = props;
+  const classes = useUtilityClasses(ownerState);
+  const {
+    titleId = idProp
+  } = react__WEBPACK_IMPORTED_MODULE_2__.useContext(_Dialog_DialogContext__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A);
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(DialogTitleRoot, (0,_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)({
+    component: "h2",
+    className: (0,clsx__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A)(classes.root, className),
+    ownerState: ownerState,
+    ref: ref,
+    variant: "h6",
+    id: idProp != null ? idProp : titleId
+  }, other));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DialogTitle);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
 
 /***/ },
 
@@ -89713,31 +90596,32 @@ function NetworkLogoutIcon(_ref) {
           var signal = controllerRef.current.signal;
           var timeoutId = setTimeout(() => {
             if (controllerRef.current) controllerRef.current.abort();
-          }, 4000);
-
-          // Ping a public reliable endpoint to check network status without hitting the API and causing 404 console spam
-          // Ping the Railway backend /status endpoint to ensure the actual server is reachable
-          yield fetch("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_2__/* .API_BASE_URL */ .J, "/status"), {
-            method: 'HEAD',
-            mode: 'no-cors',
+          }, 5000);
+          var res = yield fetch("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_2__/* .API_BASE_URL */ .J, "/status"), {
+            method: 'GET',
             cache: 'no-store',
             signal
           });
           clearTimeout(timeoutId);
-          var duration = Date.now() - startTime;
-          if (duration < 1500) {
-            setConnectionStatus('fast');
-          } else {
-            setConnectionStatus('slow');
-          }
-        } catch (e) {
-          if (e.name === 'AbortError') {
-            var _duration = Date.now() - startTime;
-            if (_duration >= 3900) {
-              setConnectionStatus('offline');
+          if (res.ok) {
+            var duration = Date.now() - startTime;
+            if (duration < 2500) {
+              setConnectionStatus('fast');
+            } else {
+              setConnectionStatus('slow');
             }
           } else {
             setConnectionStatus('offline');
+          }
+        } catch (e) {
+          if (e.name === 'AbortError') {
+            setConnectionStatus('offline');
+          } else {
+            if (navigator.onLine) {
+              setConnectionStatus('slow');
+            } else {
+              setConnectionStatus('offline');
+            }
           }
         }
       });
@@ -89749,7 +90633,7 @@ function NetworkLogoutIcon(_ref) {
     var handleOffline = () => setConnectionStatus('offline');
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
-    var interval = setInterval(checkStatus, 5000);
+    var interval = setInterval(checkStatus, 6000);
     checkStatus();
     return () => {
       window.removeEventListener('online', handleOnline);
@@ -92388,46 +93272,50 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
 
 /**
- * Checks if the current environment is running on a mobile viewport or native platform.
- * Supports:
- * - Native Capacitor runtime (Android / iOS)
- * - Explicit query parameter for browser testing (?mobile=true)
- * - Viewport width (< 900px)
- * - Mobile user-agent strings
+ * Checks if the current environment is running as a Mobile Application.
+ * Mobile layout is strictly isolated to:
+ * - Native Capacitor runtime (Android / iOS native app)
+ * - Real mobile handheld devices (smartphones/tablets via user-agent)
+ * - Explicit URL query parameter override for mobile testing/preview (?mobile=true)
+ * 
+ * Desktop Application (.exe / Electron) and Webversion on desktop/laptops will
+ * NEVER switch to mobile layout when resizing or minimizing windows.
  */
 var isNativeMobile = () => {
   if (typeof window === 'undefined') return false;
 
-  // 1. Explicit query parameter override for testing
-  if (window.location && window.location.search && window.location.search.includes('mobile=true')) {
+  // 1. Electron Desktop App check (.exe) - ALWAYS desktop layout
+  if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.includes('Electron')) {
+    return false;
+  }
+
+  // 2. Explicit query parameter override for testing/debugging in browser
+  if (typeof window.location !== 'undefined' && window.location.search && window.location.search.includes('mobile=true')) {
     return true;
   }
 
-  // 2. Capacitor native runtime
+  // 3. Capacitor native runtime (iOS / Android App)
   if (typeof window.Capacitor !== 'undefined' && typeof window.Capacitor.isNativePlatform === 'function') {
     if (window.Capacitor.isNativePlatform()) {
       return true;
     }
   }
 
-  // 3. User agent mobile check
+  // 4. Mobile handheld devices (Smartphones / Tablets only)
   if (typeof navigator !== 'undefined' && navigator.userAgent) {
-    var isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobileUA) {
+    var isMobileDevice = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobileDevice) {
       return true;
     }
   }
 
-  // 4. Viewport width check (Responsive mobile breakpoint)
-  if (typeof window.innerWidth === 'number' && window.innerWidth < 900) {
-    return true;
-  }
+  // On desktop browsers and Electron, always return false
   return false;
 };
 var isMobile = (/* unused pure expression or super */ null && (isNativeMobile));
 
 /**
- * Reactive React hook to detect mobile viewport changes dynamically.
+ * Reactive React hook to detect mobile environment dynamically.
  */
 var useIsMobile = () => {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => isNativeMobile()),
@@ -92536,7 +93424,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `body{margin:0;padding:0;width:100vw;he
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `:root{--sidebar-width: 240px;--sidebar-collapsed-width: 70px;--content-padding: 20px}.sidemnuandcontent{display:flex;width:100%}.header{margin-left:var(--sidebar-width);width:calc(100% - var(--sidebar-width));height:50px;display:flex;color:#fff;justify-content:space-between;align-items:center;background-color:#202a5a;transition:margin-left .3s,width .3s}.headername{padding:12px}.box1{align-items:center;display:flex;width:16%}#centercontent{align-items:center;display:flex;position:relative;margin:auto;width:0;height:30px;box-shadow:0 5px 10px rgba(0,0,0,.3);border-radius:20px;transition:all .5s ease}#checkBox1{display:none}#checkBox1:checked~#centercontent{width:100%}#centercontent input[type=text],#centercontent .inputSearch{position:absolute;width:100%;border-radius:25px;outline:none;border:none;height:29px;padding-left:20px;font-size:15px}#centercontent .searchIcon1{position:absolute;right:-30px;height:105%;width:50px;background-color:#202a5a;border-radius:25px}#checkBox1:checked~#centercontent .searchIcon1{background-color:#fff;color:#30368a;width:60px;border-radius:0 25px 25px 0}.rightcontent{align-items:center;gap:15px;display:flex}.iconesize{font-size:20px}.featured{margin-left:310px;padding:10px;align-items:center;width:calc(100% - 310px - 20px);display:flex;flex-wrap:wrap}.featurecontent{display:inline-block;margin:5px 10px;flex:1;min-width:250px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);z-index:1;cursor:pointer}.icontopitem{gap:20px;display:flex;justify-content:space-between;margin:10px}.iconmo2,.iconmo3,.iconmo4,.iconmo5,.iconmo7,.iconmo8{position:static;height:50px;width:50px;float:right;margin-bottom:-105px;border-radius:5px;box-shadow:1px 1px 2rem rgba(0,0,0,.3);align-items:center;text-align:center;color:#fff;z-index:1}.iconmo2{background-color:#357a38}.iconmo3{background-color:#c1121f}.iconmo4{background-color:#003049}.iconmo5{background-color:#643047}.iconmo7{background-color:#643047}.iconmo8{background-color:#003049}.iconmo1{height:3.5rem;width:3.5rem;position:relative;top:-30px;background-color:#ff0;border-radius:20px;box-shadow:1px 1px 2rem rgba(0,0,0,.3);z-index:1;align-items:center;text-align:center;color:#fff}.itemview1,.itemview2,.invoice1,.invoice2,.employeeth{margin-left:260px !important;margin-right:20px !important;width:calc(100% - 280px) !important;padding:10px}.itemInfoContainer,.itemInfoContainer2{width:100%;min-height:calc(100vh - 90px);background-color:#fff;padding:15px;border-radius:15px;box-sizing:border-box}.itemInfoContainerContent1{display:flex;align-items:center;padding:5px}.itemInfoContainerContent1:hover{background-color:#f2f2f2;padding:5px}.itemInfoContainer3,.itemInfoContainer4{width:100%;min-height:calc(100vh - 90px);background-color:#f2f2f2;border-radius:15px;padding:20px;box-sizing:border-box}.itemInfoContainer2Head{width:100%;display:flex;max-height:53px;justify-content:space-between;align-items:center}.itemInfoContainer2Content{display:flex;gap:20px;flex-wrap:wrap;align-items:center}.purchaseOrderTableExpenses{border-collapse:collapse;width:100%;background-color:#fff}.purchaseOrderTableExpenses th{border:1px solid #000;padding:10px;color:#000;height:40px}.purchaseOrderTableExpenses tr{border:1px solid #000}.purchaseOrderTableExpenses td{text-align:center;border:1px solid #000;padding:10px}.modalView{position:fixed;z-index:1000;width:80%;max-width:1200px;top:50%;left:50%;transform:translate(-50%, -50%);display:flex;justify-content:center}.modalView2{position:fixed;left:0;top:0;z-index:999;height:100vh;width:100vw;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;border-radius:20px}.Modal1{border-radius:8px;padding:2rem;background-color:#f2f2f2;width:100%;max-width:500px}.invoice .allTableContainer{height:auto;max-height:70vh;padding:10px;overflow-y:auto}.settingsView{width:100%;background-color:#fff;min-height:600px}.settingsViewtitle{display:flex;width:100%;padding:20px;justify-content:space-between;align-items:center}.projectSection1{display:flex;gap:20px;flex-wrap:wrap}.projectSectionAdminView,.projectSectionAdminView2{margin-left:290px;width:calc(40% - 20px);padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.projectSectionAdminView2{width:calc(74% - 20px)}.notificatonsSections{width:28%;padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.customerDetails{width:100%;display:flex;gap:20px}.customerDetails1{width:100%;position:relative;left:0}.btnCustomer{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer:hover{background-color:#fff;color:#30368a}.btnCustomer2{background-color:red;color:#fff;border:1px solid red;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer2:hover{background-color:#fff;color:red}.btnCustomer6{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.btnCustomer6:hover{background-color:#fff;color:#30368a}.btnMenuItem{display:flex;background-color:#fff;border:none;align-items:center;color:#000;height:30px;width:100%}.btnMenuItem:hover{background-color:#f2f2f2}.btnCustomerAdding{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;width:40px;height:40px}.btnCustomerAdding:hover{background-color:#fff;color:#30368a}.btnCustomer7{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.purchaseOrderTableExpenses tr{border:1px solid #000}.purchaseOrderTableExpenses td{text-align:center;border:1px solid #000;padding:10px}.modalView{position:fixed;z-index:1000;width:80%;max-width:1200px;top:50%;left:50%;transform:translate(-50%, -50%);display:flex;justify-content:center}.modalView2{position:fixed;left:0;top:0;z-index:999;height:100vh;width:100vw;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;border-radius:20px}.Modal1{border-radius:8px;padding:2rem;background-color:#f2f2f2;width:100%;max-width:500px}.invoice .allTableContainer{height:auto;max-height:70vh;padding:10px;overflow-y:auto}.settingsView{width:100%;background-color:#fff;min-height:600px}.settingsViewtitle{display:flex;width:100%;padding:20px;justify-content:space-between;align-items:center}.projectSection1{display:flex;gap:20px;flex-wrap:wrap}.projectSectionAdminView,.projectSectionAdminView2{margin-left:290px;width:calc(40% - 20px);padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.projectSectionAdminView2{width:calc(74% - 20px)}.notificatonsSections{width:28%;padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.customerDetails{width:100%;display:flex;gap:20px}.customerDetails1{width:100%;position:relative;left:0}.btnCustomer{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer:hover{background-color:#fff;color:#30368a}.btnCustomer2{background-color:red;color:#fff;border:1px solid red;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer2:hover{background-color:#fff;color:red}.btnCustomer6{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.btnCustomer6:hover{background-color:#fff;color:#30368a}.btnMenuItem{display:flex;background-color:#fff;border:none;align-items:center;color:#000;height:30px;width:100%}.btnMenuItem:hover{background-color:#f2f2f2}.btnCustomerAdding{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;width:40px;height:40px}.btnCustomerAdding:hover{background-color:#fff;color:#30368a}.btnCustomer7{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.btnCustomer7:hover{background-color:#fff;color:#30368a}@media print{body.printing-document-history *{visibility:hidden}body.printing-document-history #printable-document-history,body.printing-document-history #printable-document-history *{visibility:visible}body.printing-document-history #printable-document-history{position:absolute;left:0;top:0;width:100%;height:auto !important}body.printing-document-history .MuiDataGrid-root,body.printing-document-history .MuiDataGrid-main,body.printing-document-history .MuiDataGrid-virtualScroller{display:block !important;overflow:visible !important;height:auto !important}body.printing-document-history .MuiDataGrid-virtualScrollerContent{height:auto !important}body.printing-document-history .MuiDataGrid-virtualScrollerRenderZone{position:static !important;transform:none !important}body.printing-document-history .MuiDataGrid-footerContainer{display:none !important}body.printing-document-history [data-field=actions]{display:none !important}}body.is-mobile-app{--sidebar-width: 0px !important;--sidebar-collapsed-width: 0px !important;--content-padding: 8px !important}body.is-mobile-app .MuiAppBar-root:not(.MobileLayout-appBar),body.is-mobile-app header.MuiAppBar-root:not(.MobileLayout-appBar),body.is-mobile-app .Homeemployee>.MuiBox-root>.MuiAppBar-root,body.is-mobile-app .Homeemployee>.MuiAppBar-root{display:none !important;width:0 !important;height:0 !important;visibility:hidden !important;pointer-events:none !important}body.is-mobile-app .MobileLayout-appBar{width:100% !important;left:0 !important;right:0 !important;margin-left:0 !important;margin-right:0 !important;box-sizing:border-box !important;position:fixed !important;top:0 !important;height:52px !important;min-height:52px !important;z-index:1200 !important;display:flex !important}body.is-mobile-app .MuiDrawer-docked,body.is-mobile-app .MuiDrawer-root.MuiDrawer-docked,body.is-mobile-app .MuiDrawer-paperAnchorDockedLeft,body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal){width:0px !important;min-width:0px !important;max-width:0px !important;display:none !important;visibility:hidden !important;flex-shrink:1 !important;border:none !important}body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal) .MuiDrawer-paper{display:none !important;width:0px !important;min-width:0px !important;border:none !important;visibility:hidden !important}body.is-mobile-app,body.is-mobile-app,body.is-mobile-app #root{width:100% !important;max-width:100vw !important;overflow-x:hidden !important;background-color:#f8fafc !important}body.is-mobile-app .MuiContainer-root,body.is-mobile-app .Homeemployee,body.is-mobile-app .container-fluid,body.is-mobile-app .featured,body.is-mobile-app .header,body.is-mobile-app .Chart1,body.is-mobile-app .tableemploye,body.is-mobile-app .fomrCustomer,body.is-mobile-app .invoice,body.is-mobile-app .employeecard,body.is-mobile-app .projectSection1,body.is-mobile-app .projectSectionAdminView,body.is-mobile-app .invoicedetails,body.is-mobile-app .downTabledetailstotal,body.is-mobile-app .table-responsive,body.is-mobile-app main{width:100% !important;max-width:100vw !important;box-sizing:border-box !important;padding:8px !important;padding-bottom:75px !important;margin-left:0 !important;margin-right:0 !important;overflow-x:hidden !important;background-color:#f8fafc !important}body.is-mobile-app .header,body.is-mobile-app .featured,body.is-mobile-app .Homeemployee,body.is-mobile-app main{margin-left:0 !important;margin-right:0 !important;width:100% !important}body.is-mobile-app .MuiDataGrid-root,body.is-mobile-app .MuiTableContainer-root,body.is-mobile-app .table-container{width:100% !important;min-width:0 !important;max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;display:block !important;box-sizing:border-box !important;background-color:#fff !important;border-radius:14px !important;box-shadow:0 2px 8px rgba(0,0,0,.06) !important}body.is-mobile-app .MuiDataGrid-main{min-width:0 !important;width:100% !important;overflow-x:auto !important}body.is-mobile-app .MuiDataGrid-toolbarContainer,body.is-mobile-app .MuiDataGrid-toolbar{display:flex !important;flex-wrap:wrap !important;gap:6px !important;width:100% !important;padding:6px !important;box-sizing:border-box !important}body.is-mobile-app .MuiDataGrid-toolbarContainer button,body.is-mobile-app .MuiDataGrid-toolbarContainer .MuiButton-root{font-size:11px !important;padding:3px 6px !important;min-width:auto !important}body.is-mobile-app .MuiDataGrid-toolbarContainer .MuiTextField-root{width:100% !important;margin-top:4px !important}body.is-mobile-app .btnCustomerAdding,body.is-mobile-app .Customerbuttonadd1 .MuiIconButton-root{position:fixed !important;bottom:75px !important;right:18px !important;z-index:1200 !important;background-color:#30368a !important;color:#fff !important;box-shadow:0 4px 14px rgba(48,54,138,.4) !important;border-radius:50% !important;width:52px !important;height:52px !important;display:flex !important;align-items:center !important;justify-content:center !important}body.is-mobile-app .Customerbuttonadd1,body.is-mobile-app .buttonHolder,body.is-mobile-app .btnHolder,body.is-mobile-app .topActions,body.is-mobile-app .filterSection,body.is-mobile-app .filterCustomer{display:flex !important;flex-wrap:wrap !important;gap:8px !important;width:100% !important;margin-left:0 !important;margin-right:0 !important;justify-content:flex-start !important;box-sizing:border-box !important}body.is-mobile-app .Customerbuttonadd1 button,body.is-mobile-app .btnCustomer,body.is-mobile-app .btnCustomer2,body.is-mobile-app .btnCustomer3,body.is-mobile-app .btnCustomer4,body.is-mobile-app .btnCustomer5{font-size:12px !important;padding:6px 12px !important;max-width:100% !important;margin:2px !important}body.is-mobile-app .itemInfoContainer,body.is-mobile-app .GridListRecord,body.is-mobile-app [class*=itemInfoContainer]{display:none !important}body.is-mobile-app .MuiGrid-root.MuiGrid-item{width:100% !important;max-width:100% !important;flex-basis:100% !important;padding-left:0 !important;margin-left:0 !important}body.is-mobile-app div[style*="position: 'fixed'"][style*="right: '-5px'"],body.is-mobile-app div[style*="position: fixed"][style*="right: -5px"],body.is-mobile-app div[style*="top: 400px"],body.is-mobile-app div[style*="top: 350px"],body.is-mobile-app div[style*="top: '400px'"]{position:static !important;display:flex !important;flex-direction:row !important;justify-content:flex-end !important;gap:8px !important;width:100% !important;margin:10px 0 !important;float:none !important}body.is-mobile-app .MuiTextField-root,body.is-mobile-app .MuiFormControl-root,body.is-mobile-app .MuiAutocomplete-root,body.is-mobile-app .MuiInputBase-root{width:100% !important;min-height:48px !important;box-sizing:border-box !important}body.is-mobile-app .MuiInputBase-input{min-height:24px !important;font-size:15px !important}body.is-mobile-app .MuiDialog-paper,body.is-mobile-app .MuiModal-root .MuiBox-root,body.is-mobile-app .modalView,body.is-mobile-app .modalView1,body.is-mobile-app .modalView4,body.is-mobile-app .modalView5,body.is-mobile-app .Modal0,body.is-mobile-app .Modal1,body.is-mobile-app .Modal10,body.is-mobile-app .Modal15{width:95% !important;max-width:95vw !important;box-sizing:border-box !important;border-radius:14px !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `:root{--sidebar-width: 240px;--sidebar-collapsed-width: 70px;--content-padding: 20px}.sidemnuandcontent{display:flex;width:100%}.header{margin-left:var(--sidebar-width);width:calc(100% - var(--sidebar-width));height:50px;display:flex;color:#fff;justify-content:space-between;align-items:center;background-color:#202a5a;transition:margin-left .3s,width .3s}.headername{padding:12px}.box1{align-items:center;display:flex;width:16%}#centercontent{align-items:center;display:flex;position:relative;margin:auto;width:0;height:30px;box-shadow:0 5px 10px rgba(0,0,0,.3);border-radius:20px;transition:all .5s ease}#checkBox1{display:none}#checkBox1:checked~#centercontent{width:100%}#centercontent input[type=text],#centercontent .inputSearch{position:absolute;width:100%;border-radius:25px;outline:none;border:none;height:29px;padding-left:20px;font-size:15px}#centercontent .searchIcon1{position:absolute;right:-30px;height:105%;width:50px;background-color:#202a5a;border-radius:25px}#checkBox1:checked~#centercontent .searchIcon1{background-color:#fff;color:#30368a;width:60px;border-radius:0 25px 25px 0}.rightcontent{align-items:center;gap:15px;display:flex}.iconesize{font-size:20px}.featured{margin-left:310px;padding:10px;align-items:center;width:calc(100% - 310px - 20px);display:flex;flex-wrap:wrap}.featurecontent{display:inline-block;margin:5px 10px;flex:1;min-width:250px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);z-index:1;cursor:pointer}.icontopitem{gap:20px;display:flex;justify-content:space-between;margin:10px}.iconmo2,.iconmo3,.iconmo4,.iconmo5,.iconmo7,.iconmo8{position:static;height:50px;width:50px;float:right;margin-bottom:-105px;border-radius:5px;box-shadow:1px 1px 2rem rgba(0,0,0,.3);align-items:center;text-align:center;color:#fff;z-index:1}.iconmo2{background-color:#357a38}.iconmo3{background-color:#c1121f}.iconmo4{background-color:#003049}.iconmo5{background-color:#643047}.iconmo7{background-color:#643047}.iconmo8{background-color:#003049}.iconmo1{height:3.5rem;width:3.5rem;position:relative;top:-30px;background-color:#ff0;border-radius:20px;box-shadow:1px 1px 2rem rgba(0,0,0,.3);z-index:1;align-items:center;text-align:center;color:#fff}.itemview1,.itemview2,.invoice1,.invoice2,.employeeth{margin-left:260px !important;margin-right:20px !important;width:calc(100% - 280px) !important;padding:10px}.itemInfoContainer,.itemInfoContainer2{width:100%;min-height:calc(100vh - 90px);background-color:#fff;padding:15px;border-radius:15px;box-sizing:border-box}.itemInfoContainerContent1{display:flex;align-items:center;padding:5px}.itemInfoContainerContent1:hover{background-color:#f2f2f2;padding:5px}.itemInfoContainer3,.itemInfoContainer4{width:100%;min-height:calc(100vh - 90px);background-color:#f2f2f2;border-radius:15px;padding:20px;box-sizing:border-box}.itemInfoContainer2Head{width:100%;display:flex;max-height:53px;justify-content:space-between;align-items:center}.itemInfoContainer2Content{display:flex;gap:20px;flex-wrap:wrap;align-items:center}.purchaseOrderTableExpenses{border-collapse:collapse;width:100%;background-color:#fff}.purchaseOrderTableExpenses th{border:1px solid #000;padding:10px;color:#000;height:40px}.purchaseOrderTableExpenses tr{border:1px solid #000}.purchaseOrderTableExpenses td{text-align:center;border:1px solid #000;padding:10px}.modalView{position:fixed;z-index:1000;width:80%;max-width:1200px;top:50%;left:50%;transform:translate(-50%, -50%);display:flex;justify-content:center}.modalView2{position:fixed;left:0;top:0;z-index:999;height:100vh;width:100vw;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;border-radius:20px}.Modal1{border-radius:8px;padding:2rem;background-color:#f2f2f2;width:100%;max-width:500px}.invoice .allTableContainer{height:auto;max-height:70vh;padding:10px;overflow-y:auto}.settingsView{width:100%;background-color:#fff;min-height:600px}.settingsViewtitle{display:flex;width:100%;padding:20px;justify-content:space-between;align-items:center}.projectSection1{display:flex;gap:20px;flex-wrap:wrap}.projectSectionAdminView,.projectSectionAdminView2{margin-left:290px;width:calc(40% - 20px);padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.projectSectionAdminView2{width:calc(74% - 20px)}.notificatonsSections{width:28%;padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.customerDetails{width:100%;display:flex;gap:20px}.customerDetails1{width:100%;position:relative;left:0}.btnCustomer{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer:hover{background-color:#fff;color:#30368a}.btnCustomer2{background-color:red;color:#fff;border:1px solid red;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer2:hover{background-color:#fff;color:red}.btnCustomer6{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.btnCustomer6:hover{background-color:#fff;color:#30368a}.btnMenuItem{display:flex;background-color:#fff;border:none;align-items:center;color:#000;height:30px;width:100%}.btnMenuItem:hover{background-color:#f2f2f2}.btnCustomerAdding{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;width:40px;height:40px}.btnCustomerAdding:hover{background-color:#fff;color:#30368a}.btnCustomer7{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.purchaseOrderTableExpenses tr{border:1px solid #000}.purchaseOrderTableExpenses td{text-align:center;border:1px solid #000;padding:10px}.modalView{position:fixed;z-index:1000;width:80%;max-width:1200px;top:50%;left:50%;transform:translate(-50%, -50%);display:flex;justify-content:center}.modalView2{position:fixed;left:0;top:0;z-index:999;height:100vh;width:100vw;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;border-radius:20px}.Modal1{border-radius:8px;padding:2rem;background-color:#f2f2f2;width:100%;max-width:500px}.invoice .allTableContainer{height:auto;max-height:70vh;padding:10px;overflow-y:auto}.settingsView{width:100%;background-color:#fff;min-height:600px}.settingsViewtitle{display:flex;width:100%;padding:20px;justify-content:space-between;align-items:center}.projectSection1{display:flex;gap:20px;flex-wrap:wrap}.projectSectionAdminView,.projectSectionAdminView2{margin-left:290px;width:calc(40% - 20px);padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.projectSectionAdminView2{width:calc(74% - 20px)}.notificatonsSections{width:28%;padding:20px;background-color:#202a5a;color:#fff;box-shadow:10px 10px 5px -4px rgba(23,21,21,.75);display:block}.customerDetails{width:100%;display:flex;gap:20px}.customerDetails1{width:100%;position:relative;left:0}.btnCustomer{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer:hover{background-color:#fff;color:#30368a}.btnCustomer2{background-color:red;color:#fff;border:1px solid red;border-radius:10px;padding:10px;width:150px;cursor:pointer}.btnCustomer2:hover{background-color:#fff;color:red}.btnCustomer6{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.btnCustomer6:hover{background-color:#fff;color:#30368a}.btnMenuItem{display:flex;background-color:#fff;border:none;align-items:center;color:#000;height:30px;width:100%}.btnMenuItem:hover{background-color:#f2f2f2}.btnCustomerAdding{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;width:40px;height:40px}.btnCustomerAdding:hover{background-color:#fff;color:#30368a}.btnCustomer7{background-color:#30368a;color:#fff;border:1px solid #30368a;border-radius:10px;padding:10px;cursor:pointer}.btnCustomer7:hover{background-color:#fff;color:#30368a}@media print{body.printing-document-history *{visibility:hidden}body.printing-document-history #printable-document-history,body.printing-document-history #printable-document-history *{visibility:visible}body.printing-document-history #printable-document-history{position:absolute;left:0;top:0;width:100%;height:auto !important}body.printing-document-history .MuiDataGrid-root,body.printing-document-history .MuiDataGrid-main,body.printing-document-history .MuiDataGrid-virtualScroller{display:block !important;overflow:visible !important;height:auto !important}body.printing-document-history .MuiDataGrid-virtualScrollerContent{height:auto !important}body.printing-document-history .MuiDataGrid-virtualScrollerRenderZone{position:static !important;transform:none !important}body.printing-document-history .MuiDataGrid-footerContainer{display:none !important}body.printing-document-history [data-field=actions]{display:none !important}}body.is-mobile-app{--sidebar-width: 0px !important;--sidebar-collapsed-width: 0px !important;--content-padding: 8px !important}body.is-mobile-app .MuiAppBar-root:not(.MobileLayout-appBar),body.is-mobile-app header.MuiAppBar-root:not(.MobileLayout-appBar),body.is-mobile-app .Homeemployee>.MuiBox-root>.MuiAppBar-root,body.is-mobile-app .Homeemployee>.MuiAppBar-root{display:none !important;width:0 !important;height:0 !important;visibility:hidden !important;pointer-events:none !important}body.is-mobile-app .MobileLayout-appBar{width:100% !important;left:0 !important;right:0 !important;margin-left:0 !important;margin-right:0 !important;box-sizing:border-box !important;position:relative !important;top:auto !important;height:auto !important;min-height:54px !important;z-index:1200 !important;display:flex !important}body.is-mobile-app .MuiDrawer-docked,body.is-mobile-app .MuiDrawer-root.MuiDrawer-docked,body.is-mobile-app .MuiDrawer-paperAnchorDockedLeft,body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal){width:0px !important;min-width:0px !important;max-width:0px !important;display:none !important;visibility:hidden !important;flex-shrink:1 !important;border:none !important}body.is-mobile-app .MuiDrawer-root:not(.MuiDrawer-modal) .MuiDrawer-paper{display:none !important;width:0px !important;min-width:0px !important;border:none !important;visibility:hidden !important}body.is-mobile-app,body.is-mobile-app,body.is-mobile-app #root{width:100% !important;max-width:100vw !important;overflow-x:hidden !important;background-color:#f8fafc !important}body.is-mobile-app .MuiContainer-root,body.is-mobile-app .Homeemployee,body.is-mobile-app .container-fluid,body.is-mobile-app .featured,body.is-mobile-app .header,body.is-mobile-app .Chart1,body.is-mobile-app .tableemploye,body.is-mobile-app .fomrCustomer,body.is-mobile-app .invoice,body.is-mobile-app .employeecard,body.is-mobile-app .projectSection1,body.is-mobile-app .projectSectionAdminView,body.is-mobile-app .invoicedetails,body.is-mobile-app .downTabledetailstotal,body.is-mobile-app .table-responsive,body.is-mobile-app main{width:100% !important;max-width:100vw !important;box-sizing:border-box !important;padding:8px !important;padding-bottom:75px !important;margin-left:0 !important;margin-right:0 !important;overflow-x:hidden !important;background-color:#f8fafc !important}body.is-mobile-app .header,body.is-mobile-app .featured,body.is-mobile-app .Homeemployee,body.is-mobile-app main{margin-left:0 !important;margin-right:0 !important;width:100% !important}body.is-mobile-app .MuiDataGrid-root,body.is-mobile-app .MuiTableContainer-root,body.is-mobile-app .table-container{width:100% !important;min-width:0 !important;max-width:100% !important;overflow-x:auto !important;-webkit-overflow-scrolling:touch !important;display:block !important;box-sizing:border-box !important;background-color:#fff !important;border-radius:14px !important;box-shadow:0 2px 8px rgba(0,0,0,.06) !important}body.is-mobile-app .MuiDataGrid-main{min-width:0 !important;width:100% !important;overflow-x:auto !important}body.is-mobile-app .MuiDataGrid-toolbarContainer,body.is-mobile-app .MuiDataGrid-toolbar{display:flex !important;flex-wrap:wrap !important;gap:6px !important;width:100% !important;padding:6px !important;box-sizing:border-box !important}body.is-mobile-app .MuiDataGrid-toolbarContainer button,body.is-mobile-app .MuiDataGrid-toolbarContainer .MuiButton-root{font-size:11px !important;padding:3px 6px !important;min-width:auto !important}body.is-mobile-app .MuiDataGrid-toolbarContainer .MuiTextField-root{width:100% !important;margin-top:4px !important}body.is-mobile-app .btnCustomerAdding,body.is-mobile-app .Customerbuttonadd1 .MuiIconButton-root{position:fixed !important;bottom:75px !important;right:18px !important;z-index:1200 !important;background-color:#30368a !important;color:#fff !important;box-shadow:0 4px 14px rgba(48,54,138,.4) !important;border-radius:50% !important;width:52px !important;height:52px !important;display:flex !important;align-items:center !important;justify-content:center !important}body.is-mobile-app .Customerbuttonadd1,body.is-mobile-app .buttonHolder,body.is-mobile-app .btnHolder,body.is-mobile-app .topActions,body.is-mobile-app .filterSection,body.is-mobile-app .filterCustomer{display:flex !important;flex-wrap:wrap !important;gap:8px !important;width:100% !important;margin-left:0 !important;margin-right:0 !important;justify-content:flex-start !important;box-sizing:border-box !important}body.is-mobile-app .Customerbuttonadd1 button,body.is-mobile-app .btnCustomer,body.is-mobile-app .btnCustomer2,body.is-mobile-app .btnCustomer3,body.is-mobile-app .btnCustomer4,body.is-mobile-app .btnCustomer5{font-size:12px !important;padding:6px 12px !important;max-width:100% !important;margin:2px !important}body.is-mobile-app .itemInfoContainer,body.is-mobile-app .GridListRecord,body.is-mobile-app [class*=itemInfoContainer]{display:none !important}body.is-mobile-app .MuiGrid-root.MuiGrid-item{width:100% !important;max-width:100% !important;flex-basis:100% !important;padding-left:0 !important;margin-left:0 !important}body.is-mobile-app div[style*="position: 'fixed'"][style*="right: '-5px'"],body.is-mobile-app div[style*="position: fixed"][style*="right: -5px"],body.is-mobile-app div[style*="top: 400px"],body.is-mobile-app div[style*="top: 350px"],body.is-mobile-app div[style*="top: '400px'"]{position:static !important;display:flex !important;flex-direction:row !important;justify-content:flex-end !important;gap:8px !important;width:100% !important;margin:10px 0 !important;float:none !important}body.is-mobile-app .MuiTextField-root,body.is-mobile-app .MuiFormControl-root,body.is-mobile-app .MuiAutocomplete-root,body.is-mobile-app .MuiInputBase-root{width:100% !important;min-height:48px !important;box-sizing:border-box !important}body.is-mobile-app .MuiInputBase-input{min-height:24px !important;font-size:15px !important}body.is-mobile-app .MuiDialog-paper,body.is-mobile-app .MuiModal-root .MuiBox-root,body.is-mobile-app .modalView,body.is-mobile-app .modalView1,body.is-mobile-app .modalView4,body.is-mobile-app .modalView5,body.is-mobile-app .Modal0,body.is-mobile-app .Modal1,body.is-mobile-app .Modal10,body.is-mobile-app .Modal15{width:95% !important;max-width:95vw !important;box-sizing:border-box !important;border-radius:14px !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -99943,7 +100831,7 @@ module.exports = styleTagTransform;
 /***/ 91435
 (module) {
 
-module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATwAAAEhCAYAAADiTRxDAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0NTY2MSwgMjAxMi8wMi8wNi0xNDo1NjoyNyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNiAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NEQ1NDlGNDlFMjZEMTFFNzhFRUVCREQ3RUYyNzE1RTkiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NEQ1NDlGNEFFMjZEMTFFNzhFRUVCREQ3RUYyNzE1RTkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo0RDU0OUY0N0UyNkQxMUU3OEVFRUJERDdFRjI3MTVFOSIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo0RDU0OUY0OEUyNkQxMUU3OEVFRUJERDdFRjI3MTVFOSIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PtrRntcAAB4LSURBVHja7J0HlJXVtcf3FPoMjBQFRBQQRBCkKCJKfIqxm2XU2N5LsSTRxJhoTJ5mGV1JXCkvURMTU2xoYouJLp/G3gs8C6FYQboioLSBYejl7X2/c4cZmBlmbvna+f3W+nPvMHduOd8+/3vqPiXbt28XAAAfKMHwAADDAwDA8AAAMDwACJElS5a0qvL26tWrxPcyKyVsAMAXyikCgMRzn+rlJn53lOo8igjDA0gLr2l39dYmur1lGB5dWgDA8AAAMDwAAAwPAADDAwCIGczSAiSfI5csWbK1qd9RPDtgpwVAQmGnBV1aAABaeAAAGB4AYHgAABgeAACGBwCA4QEAYHgAABgeAEAaDG/dunWUOgDsQseOHYv+Guy0AABvIHkA5Es31T5OPZ16qLqr9lBVObVVdXFfsh1U7Xd6ng2q9aptqtWqTapqp1Wq5aplqqVOHzut4BIAXVooJO1UQ1XDVENU+zsNUHWK+L3Vquaq5ji9r3pH9Z5qI5eOLi2GB81hrbBxqpGqg53JDUxgb2CLarYzvxmqaarJrvUIGB6G5yn9ncGNd7dDJL1ju9tcC9CM71V3O48QwPAwvPRi42nHq05wt708L48lqqdVT6meVa0kRDA8DC/ZjHQGd4JrxTFZ1TiWNXiSM7+nXDcYMDwMLwGMUJ2tOst1W6H1zFf93Wk6xYHhYXjx4iDVOc7kBlIcBcUmQB5UPaB6l+LA8DC8aOiqOk/1NdVoiiMU/q26S3WfMOaH4WF4oXCE6mLVlyRYJwfhY+v8/qn6kwRjf4DhYXgFxHYrnKu6QjWc4ogVb6tuVN0vwS4RwPAwvByxpSTfVF2m6k1xxJrFqptVf5FgWxxgeNBC9lN9V3WhqpLiSBQ1qomqm1QLKA4MD5qmj+oa1fmuGwvJZZMzvutViygODA92YJlGrnbdVyYi0sVG1839hQTZXgDD8xZLsXSV6tsSpE6C9GIpsG5R/UqClFeA4XmDbfH6huonEuSPA38ws7tOdasEmV0wPAwv1di+1hskyE4C/mLZW74vwd5dDK/IkOI9fCxx5mOqJzE7cDFgsfC4iw3A8FJBO9eFsX2Yp1AcsBMnudi4TpiwokubcD4nwVjNAYQctIBZEoztvkKXlhZekqhQ/V71ImYHreAAFzN/cDEEtPBij23u/5uqH2EGeWA5+b4qQUp6Wni08GKHLTWxZSYvYXZQAPq5WLJ1e4zt0cKLFXZs4T2qsYQWFAFLOW/ZcmbRwqOFFzVfcQGJ2UGxsLNJpkiQ7BUwvEhor7pddbeQ0QSKj01iTHQx157ioEsbJn0lyHh7KKEEEWCtvTNUH9GlpYVXbCa4gMPsICoOcTE4gaLA8IrJDyU4vLkHRQER08PF4g8pCrq0haaN6s+qCwgdiCF3SnCw02a6tBhevnRR/UP1eeoVxJhnJTjJbjWGVyTDK3luxTESnHJvt33df9tA6guqB7cf2+35hBuefaZ/qYZRnyABvCNBgopETWbE3vDU6AZLcCbnf+zmoS+pLlHjm5lAwxslQTonTguDJLFEdbIEa0MxvHwNT83uKGcELV17Zqc4nVo7rsPLCQoa+4yPqjpTfyCBrHYtvdcwvDwMz7XsXpdgXEvalopcvHd7ObdnOzmooizzmHfXbpV7l26UWz/ZIJu2NbgAY9X0Ziag/E9V/V04YwKSTa3qNNVzGF4OhqdmV6I3k8VtoerdrlT+NaJSRlaWN/r46TVb5OTpNbJ4Y53rmVGOU9PbHuOyP1N1r3BEIqSDDaqzXI/Ma8PLZR3ehKzZtSstkcebMTtjhP7uCX2MPdYxVuK9UPI81QOYHaQI24JmO4LO9r0gcjG8s7J3LunTLmNou+NgfYw9trHniBnnqP6qKqOOQMpo63otXpteLoZ3TPbO2Xu1PD3XTo89Jqbd2HswO0gxZc70zsTwWs4+2TujWtC6yzKysqzR54gJp7pAwOzAF9P7AobXMjbm8kKb4ztFYUtPGLMD37q398vu189ieMri7J2pNS0/MN2WqdRjUUw+v+2c+F9VR+oAeIbF/CPi2e6hXAzvzeyd+5a2vLF3b8PHTorBZ++jekLcWkIAD+ni6kAfDK8Z78reufWTjTKjBa28t7V1d9snDQzvHi40QCzw6os/F8N7RoLFw7Jx2/bMouLpzZie/e6kaWsyj3XY3z4b4We28YuHhUQAAFmGuTqR+nHsgm8tG+a2lr3T9Nayw2vHdfggws/8FwlOdQeAhtg5GV+P6sVJHlB4rlT9mrgGaJIfqH6D4TXd0rMTlHZ3NKG1Bs+POD2UbWezVNistQNoGltOcYJEkGygMcO7/u3zC/b81wyfmN+ZFmZgejNOdbzqNtU8CdJLW4aGme7/7Hfj3GOjwhY634/ZAewWqyP3yY5EvnHB0rTtn++TlOf7BGpk1kR8ximO2J42G5DlwB2AlmF15SHVkZLjRoMiYLuhjlXdoPq5an0uT+LDqWW3SHCcHQC0nENc3YkTlpvyGtd7PB3D25Wvqi4kdgFy4kJXh+LEetfdfsj1Kg/E8AIOUP2BmAXIu4c0OEbvx7rZtnzGFrvZCYLTJVh5UeGz4WU3R1cQrwB50UmCSYx2MXk/yyVYK2grQ95wdd2Wm30oQfLeEh8N72eqkcQqQEEY6epUnHhLghUiFzoT7CXBtldb5zvCJ8Mbr/o+MQpQUK5QfS5m78m6tXeqBkowfLXF1f+33M9VaTc8a37fLay3Ayg0VqfucnUsblSrviPBzPIrEiy3+7ZqtmsBlqbV8KzZ3Y/YBCgK/WLYta3PDNXRqn+4n7tLMMFxcxoN71DVZcQkQFG5zNW1ODJc9YLqS+7n7ATHZWkzvDbOyenKAhS/a3u7q3Nxocq14v4twZENNpb3RwnG9rJLWFJleFc6dweAcFpSP4zB+zD/ukCCJSk2hmdjd6+qxkgwhlfd2B8kHXPxa4lBgFC5xtW9qLAJCjsq4g4J9v4uUf2Xa+FNa84hk86NEpysDgDh0d7VvbCxiYhbJVh0bIuPN0mQUGCQBOvwms13V57wQj9OdQqxBxAJp7g6GGampNckSCJgWM6+76reb00fOKmUR/QNAwA7uCnkhpOZ3UeqMyXYS/t+a/44yYZ3iWoo8QYQKUNU3wrptSxTyvUSJDN4KJcnSKrhdVNdR6wBxIJrXZ0sJnZ+js0O/1hyTP6ZZMO7KoQCBoCWN0CuKvJrfEE1J98nyesQn1wowCE+PVVzVR2JM4DYYK2uARIsD8mJME4tS2IL70eYHUDssMmEq+P+JpPWwuvjmrVxSUYoa2vXyQMPPyYvT3pDFi/9TLZt20boQ26tj9JS6d1zTznqiMPknNNPlYpOiftetwN/bDHyx3Ft4SXN8P6s+mZcru6ceQvl6p/9WpavWElthYLSvVtX+eW1P5AB/fZN2lv/i+piDC9/w9tPgj1zsdi0XL16jVx42VWyclU1tROKQtc9quSOm38pVV06J+lt27nUdp7M/DgaXpLG8K6QGGVouOfBRzA7KCoWXxZnCcPq6OWxHTZISCFa+pfz4/SGnn9lMjUSiLPGOV8aSa+O4bUc21URmxPIVq+pyXRpAYqNxZnFW8KwuvqtOL6xJBieHcP2nTi9ofUbNlATgXhrnktd3cXwWsk5EhzBBgDJwersuXF7U0lID3VlUq94SUkJYQ/NEvYqiZCx41LvxvBazmGqYUm80mXl5VJZ1ZUaDc1SU71Stm7ZktaPN8zV4Tfo0raMr1MlABLNN+L0ZuJseJWqs4kXgERzlqvLGN5usAHPCuIFINFYHT4Pw9s9FxErAKkgNnU5roZng52HEicAqeAQicnkY1wN7zxiBCBVxKJOx9HwbPHaucQHQKo419VtDG8nDlftS3wApAqr0+MwvF05k9gASCVnYHi7dme/SFwApJLTo+7Wxs3wRkqQ2RgA0tmtHYnh7eBkYgIg1URax+NmeKcSDwCp5jQML2AvCRYoAkB6sS5tTwxP5FiJwTodACgqJa6ue294xxMLAF5wHIYnMoE4APCCY3w3vP6q3sQBgBfs7ep86MQlxfsRxED66FbVWXr26CZdKhumNfx0+UqZ+9EnFJDf2DazeRgeJJqOHdrJiAMHyQH77yedOnVs9rGz5y2UOfM/xvz85EjVPb4a3pFc/xR8ZY8aJgcdOFDatm3ToscP7L9vRks/Wy4vTnpLVlRzuLlHRNLIiYPh7aE6kOuf7FbdsUeMkb777BiGra1dJ7PmLNil+5rt5vbpvVfG7Iyee3aXM04+VqbMeE+mvjuLAvWDIaoqVbVvhjdWknEgODRhdqcdf7R03aNLndG9Oe1deW/2/EYfb604k/3+1TenyfgxIzPGZ63CcYeOyDwG0/MCq/OWCu5J3wxvFNc+HWZnY3JmYuvWb2zR39vjnn759cw43oTxh2F6/jEqbMOLQ8tqGNc9mYw5eGgDszPzaqnZ1ce6vI8//6ps2rQ58/Mh+rzW9YXUE3rdj4PhDee6J48BfffOTFAYNulgZpcPnyxdJs+/GhxQby29o4/gDCcML32G10E1iOuePEYOG5y5tVaZzbAWAmvpvfvB7Mx9m8gwU4VUM8h5gDeGZzM1ZVz3ZJGZaVVDMj6cu6Cgy0nenPFeXdd2/377UNjpptx5gDeGx/hdAjmg/44zlt6ZOaegz21jgAsXLc7c37cPuw3p1qavhQcJo3evPTO3K1etLspi4UWLP83c2lge3drU41ULbyDXO3lUui1jK1YVZ83o0mUr6u7v1b0rBZ5u9vfJ8AZwvZNHdo9sTU1tUZ6fLWYYXloNrz/XG8BrQvWAKA2vmzUWuN4AfncYVN19MLy+XOtkYguNjezkRaGpP1GxumYtBZ5++vhgeCyySig1a4Oxu65VXYry/PUnKupPYEBqCa3xE6Xh9eA6J5P6y0ZGHXRAwZ/fkocalnmFCQwvCM0Loh7DgwRiqZ2yuyH671vY3oh1Z7OzwJZPD7wgtLVHtPAgJ+rvebVMx4XA0k19bmyQLcwMdfoHH1LQfrBnWC8UpeGxojTBmBlZl9OwrCl798z/+8uSgWZbd2aouaSaAlp4dGmh4JgZvfL61Mx9G8s7ecL4vEzv+KPG1qV8t1ngyVPfoZD9ITQvoEsLOWPpnCa/Nb2B6bW2e2uZV848eUKd2dn+3CdeeI3C9YvQvCDKFO+ktE0B2VTslpo9M2t78BDZr+/eMnPO/GbTtJvRDRu8vwwasF/dKWdmdo88/SJdWf/oEtYLYXhQENNbvWZtZsLBxuAs7bsZoKVqX1m9WhYv+azusZWVnaTbHlV1qeGz2Jid5cLD7Lyk0gfD68B1Tlf3dsmy5ZlDuLNn05psFjebLLQxbLxu2jszOYzbb9r7YHhtuc7pwlpnNtlgGjqwX+bs2cqKTg0Mz2Z2a1TW6ps1byELi8Fo54PhteE6pxdbnNzU2bQAUflQlLO0HbnOACAhZk0qp6yh0GSznXTpXCHt2zY+cvHp8pWZ2+o1NXRrIX1NSUgntth43949pXvXKummyu6UaC2Z8zFWVcuyFatk5twFzNYChgfxILuGrl+9jf75YstUTLYA2Za0fPTxYlm09LNm1/JBaggt6WGUhmcbMRnHS1hrbvRBg6XvPrsen2izr4s/XZY558KSdm7YuKnZ7mq222u572z5SvduezSYzbXXMNlaPlujx1azVLPVB8PbzHVOBpbFZIwaj62vq4+toZu3cJEsXLSk1eNw2XV3O6+/MyPcp/dedTswsrs3LEee7d1lvV4qCW38IkrD28R1Tkar7qixoxvsjJg9b6FMmfF+USYbzNBML6m5WXLRg4cMynSbTSdOOFKm6uvS2ksdG3wwvPVc5/ibnSUEyO51tRbdi5PeCm1W1cbvTJaQILt7w1p7tj3t6Zdf5wLRpU2U4bEWIUFmF2XLyl534eKldS3NbGYVTC81hDZpEeXCYwwvptiY3XGfG1tndpYCKupu5CdLl2UyqdjyFSMzm1ugTMsQOTU+GN4yrnM8OfaIMXXLTaxlF5elIbY2z0wvm2nZureFyLQMkROaF0RpeJy/F0NsljS77MTWwsVtgqB+pmXj8NHDuWjJJzQviNLwVnKd48fIYYMzt3aIzqQpM2L5Hm0W12aKDVu7V//gbkgkoXkBXVqow7qH2cW/ttg3zntcbVlMlqGD+nPx6NLSpYXWYXtis8xyLajY9oHUjLMTGI3t/AC6tLTwoFksAYBhkwJJyGCyoN6uC7q1tPDibngfc53jRUVFkJasxs2Cxp1siimjfTsSaCeY0LwAw4M6stvH6h+6E2fq76vtUlnBBcTwYm14y633xLWODzYza/TutWdm8XHcsXMzIPHUOi8Ihajz4c1TsVw+Jnw4d0Fmz6rN1F5wzmmJMuq4T7JAk4R68ElpxB92Ltc7Pti5sJYgIGmt0in6vkkTn1hmh/li5T59WGge28Xwz8efz3QVkzImxlGPiWeOT4b3Ptc7fnC8IqTVA6Lu0pLJEcBvQvWAqA3P3H0r1xzAS7b61sKzrMeM4wH4ySwJOfN5aQw+9AyuOwDdWV8Mj3E8AAzPG8ObynUH8JLQ634cDO8N1TauPYBXWJ0P/RSmOBiepbz4gOsP4BU2O7vKR8MzXuP6A3jFpCheNC6GN5nrD4Dh+WJ4k7j+ABieL4ZnWVMWEwMAXmB1fZ7Phmc8TxwAeEFkdT1OhvcMcQDgBZHV9TgZ3nOq7cQCQKrZ7uq694a3VDWNeABINdNcXffe8IxHiAeAVPNYlC8eN8N7nHgASDWPYngNm7scPwWQThZKxMNWcTM8G9B8mLgASCUPS8QTk6UxLJSHiAuAVBJ53Y6j4U2mWwuQyu5s5Hvmy2NYMNbkvV91VZKv7tYtW2T1imWEOTQf7Nu9WXp6v8RgnW15TAvnvqQbnmfBDNCSOh05pTEtHMt1P4UYAUgFUyQmZ9eUxriQbidOAFLBHXF5I3E2PGsCryVWABKN1eF7MbzdU6N6kHgBSDQPurqM4bWAW4kXgERzW5zeTNwNz45w5KBugGRidff1OL2h0gQU2g2FfDJbKlIIAYRFgmP2xriVZUnYBbFu3brW/klb1QJVr0K8/qo1a6hBrWT9+vWyYsWK2Lyfbt26SYcOHbgwrWSPzp3DfLklqv1Um1r6Bx07dqSF5wrsD4RrdGzdupX3A63lj60xO7q0uxYeS1QioqysjPcDrWFtXBspSTG8atVE4iga2rVrJ6Wl8QgVex/2fiDWTHR1FsPLg5tUm/P+wCUlhGMOJlNVVRWL92LvIy7mm6hrGF7cb3Z1NZ7lkKBrNl91Z75PUl5eTvTngA0o9+jRI9O6Kgn5S8Nez17XXj+Mge00EmLcT3R1NZYkYZa2PvuoZlsvK+evny1bZG1+7wEgcVToF0Wb4pveRtVA1ce5fqnSwmuIFWReuy/sojPoDT5h8d4mnBbebbmaHS28prH1eHNVOS/EsmUNNbW1nPoNqccGHyo7dQrjS369aoAE6+9yghZe41iB3pLvN14nLVymLyDtZmdxHlKP5pZ8zI4WXvN0U81ytzljLb3a9etl67Zt1A5IVze2tFQ6degQltmtVA1S5bUdhxZe01jB/jTvoNBg6FxRIRUaGG3btGHJCiQai1+LY4tni+sQx6p/kq/Z0cLbPTYK+7bqQEIdIDI+UA1Xbcn3iWjhNY8V8PeIN4BIubwQZhdaKzjhhf2M6nFiDiASrO49naQ3nOQubZaBrmvbnvgDCI2Nriv7YaGekC5ty7CdF9cTfwChcn0hzY4WXutoI8HZl8OJQ4CiY6nbR0sBknnQwssNK/iLVGSGBCguVse+XmizC4s05dl5S3Uz8QhQVH4vweFaiSQtXdosnVxzux9xCVBwLO3TMFVtMZ6cLm3rsQvxNbq2AAVnm6tbtUn+EGlMHfuKxPB4OICEc6OrW4kmbV3aLHa0ox0APJI4Bcib6aqxEqy9Kxp0aXPHjoc7N+nNb4AYUOvq0sY0fJg0n4Zi6aMuJV4B8sLq0My0fJi0H/90l+oOYhYgJ+50dSg1pHUMrz524M9rqkOIX4AWYzuXxqs2hPWCjOEVBht7OEO1jBgGaBHLXJ3ZkLYP5suJxh+p/lNYnwewO7a6uvJRGj+cT0e4P6u6ingGaJarXV1JJT6M4e2MTWJcQFwD7MJdqvOjevEwxvB8NDxblPyk6hjiG6COF1QnSrCGNbWGV+rhhbULeroESQYAIKgLp0dpdmFR6ukFXq06SbWIWAfPWeTqwmofPmyp5xf6ZF8uNEATX/yn+vTFX+r5BbfDf76oWkfsg2esc7E/3acPXcp1lxcl2By9iaIAT8gm13jRtw+O4QU8KixMBj/ILix+1McPj+Ht4J+qL2N6kHKz+7KLdS8pt3+uf7vwaw2vGT4xieVxv6pE9VdVGfUDUoSdMvYV1QM+F0JpKx/7ew9ahfdJML6xmToCKSGbQOMB3wuiNeZl27EuFT+2Zf1DUpotArzDZmNPUT1GUbTc8KpUP3f3f+5+TjsWILbVZg1hAgnF1tkdr3qOomid4f1E1cPdt9ufelI+L6mOVi0hVCBhLJVgv/hrFEXrDG+E6tv1unrGt9z/+8BUCU5sepdwgYRgsXqYi11oheHZjOXNEsxYvqo6x92Wuf8v8aScLBnikXQNIAE852L1I4qi9YZns5WW136L6jsSnD5+qft5vPu9L2QTDkwkbCCmTBSPEgEU2vA6q/7H3f+jaoa7/7b7WdzvO3tUXrZUxWapLXMyC5QhLmx1MXmBsJwqZ8O7VrW3BAd6XLfT765z/7+3e5xv/Ep1gmo5IQQRs9zF4q8oitwNb7DqMnf/R6rqnX5f7f5f3OMGe1h2NlYyWoLj7ACiYIqLQcaW8zS836naqF6X4DDexrjD/b6Ne7yP2MDweOGwbwifO13sMTmRp+F9SXWcBBMU2YmKxthe7/f2+DM9LUPbjXGRBIef1BBSUGRqXKxdKOwEytvw7BSN39T7Btldd21KvRbgDe7vfeUu1UjVG4QVFIk3XYzdRVEUxvBspqev++a4XdW/BbLHrXN/5/u5r3MlWAN1vTCLC4Vjq4upI1yMQY6U17u/v+oH7n57CcbnWov9/d2eXxRbo/hj1VOqv6n6EWaQB/MlyGE3iaIobAvvt87o8sH+/ncUawYL0GGuXGntQWvZ5mJnOGZXnBbeKRRHwalVXS5BYtHbnQEC7A47J9Ymwt5M8ofoNHn9vhIMc9nuj54SJDR4QvXL2nEdFkbdwoPiYYE72nV1mVmDptjgYmR0CszuBGfcF0swvt/W3drP77jfh07J9u3bQ33Bdeu8PxFxkOv2n0D9hnrYmO/3VLOS/kHUzPaTYCtqc9tObXnNcG3pLcj+R8eOxV/kQQsvfD6UILGonQk6h+LwnjkuFk5Mg9k5rs6aXb8OpfL8qM5Sc3TXzK397KhU/TddWn94RDVUdaXsunUP0k+1u/ZDXSykiROzd+4cUiHHdG0jFWUlmdu/Dq2s/7iTMDy/sAORbcH2QNVNwvieD9g1/q275jdIOg+A3yt755DO5Q1+Mabhzz0xPD+xjBdXqA6QYF/uFookdWxx19au8eWS7kw7n2bvvL66YShPXt0ge9VSDM9vbCO4LUew7DMTMb7UGN1Ed00vEj82+z+ZvXPh+2vluZWbZe3W7Znbr763tv7jngr7jTFLG2/6udaAJXbsRHEkCluDeacbqpjv0wd3s7SWKLiymYdFMkuL4SWDrhKsX7LsND0pjlhj3TQ7sP7PqpW+FoJbZ/dgE6ZnZneWml2DFh6GBzvTToJzRKzVN5ziiBW2yNYmI+5VbaQ46nZa2BIVm421iQwb27OdFr9obKcFhgfNYVlZLlGd4YwQwseM7SHVn4TzX/MGw4OWdnfPU31Ngi1JUHz+LUFOuvt87rZieBhe1FhygrNVZ0mwzgsKx2wJDqK3cakZFAeGh+HFi1HO+Ezk5MuN+c7gTFMpDgwPw0sGh0iw3cc0RlVGkTSK5S20LCVPOnEiHYaH4SUcG/P7vATZWo5X9fK8PJaonpZgEeyzwpgchofhpZoBEsz4jnMaIundgWNZhN9XTXaymVXOiMDwMDzPW4CHq0ZIsNbPNDCB3WDrntpEw9tO01X/RwsOw8PwYHfYWSWWxmiYu7UDn/q726iP5rSAspxy89ztexIsArZbss9geBgeFJTuqj4SpO/u6dTD/X9VPbV1tyUSJIcsa6S7uVqCA94tV9wmd5uVZRdZJsHWLZNtwl8k6c46guFheACA4SXE8AAAogLDAwBv+H8BBgDZzud/LKh9xwAAAABJRU5ErkJggg=="
+module.exports = "data:image/png;base64,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"
 
 /***/ },
 
@@ -120083,7 +120971,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.08"};
+module.exports = {"rE":"3.5.09"};
 
 /***/ },
 
@@ -120215,7 +121103,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"4341527bf87bcc2dca1f","116":"8be55cfd8e56510d4cd7","118":"9649e9ad98fb4b1a6648","223":"c952fc08b587fdf51ade","296":"330fe98687ab60c00035","327":"a2a7a4cd81cccbfc3973","441":"7cde0b558a6a9c2f7ff4","457":"a6f0436b64a3a6bacb98","483":"342be2530e4d9bff3bc7","590":"5bc49206885952ec5ff6","614":"24a14f077bad8679b55f","712":"9663b76964278bfcf746","742":"849277eea4b4c5a47808","778":"85c86df57eae6f397454","806":"68f4ff85ff22d692f2c4","808":"39069a2248cd9cc5e8cb","864":"ac9193b4bf40eb4964a0","885":"807970f8c4edc66fa83d","956":"195d11b02eb5fb9b20c7","1019":"1d406482e04e60bb652f","1096":"66747ad07eb81d930943","1223":"9b5aa43baa1bbf262d80","1251":"9da50dc8470bc764d3b6","1364":"4677e3a7cf1a1fa18f1b","1390":"d068203d76b14fda80ff","1500":"af40ea979f401d809120","1624":"e087efe6d5dca00bd5a7","1645":"99e6e5ead43489248031","1679":"94ce0f7a089c6eba7a67","1722":"7ceb3b03926770448e8a","1853":"b4a7851a7c2573dbfcfe","1861":"89d05880a79dcb45e693","1919":"d433c3bd92847cde6210","1985":"02e97ae71b3a0b197840","2120":"6495c3f514fc90312aa9","2122":"f228f1754a500c4b13d0","2153":"4c7916d41bc94db7f1ad","2410":"046c922762a6768eb373","2495":"448d55e4fa85737b2d32","2517":"2ce00c36c1a009a461cf","2529":"a738851ae08d823c3d3d","2533":"4d06a88d9c66664dec39","2605":"5b030741d19d64e6644a","2608":"d678bedc842234bcd0f5","2611":"d8b119a353ab72a24785","2756":"688eeb592566045f97ac","2757":"37e017925354e0aeecaf","2778":"1eab68394fba8cf0355e","2821":"7f9615dd4f152b6b7fad","2835":"0a5756bd6c77bc03fff7","2982":"bca1e5db7a18bf714234","2992":"4e38b8b3050b5df36669","3009":"a4ae81fc5a6ba3e4e2ef","3058":"66644adce62cf0874b07","3094":"43fdaea0994c8aca9ef6","3229":"563d8bdb07f11d318c95","3426":"79bb35c857154d8ce678","3502":"ad2227effaab11f70748","3547":"73a78c66c82c535f7dd1","3697":"9892f1adcb2b8c25c545","3741":"ce7040c66a4a1e937547","3808":"f44593f1f36010c7a8fc","3976":"eee2194020cd5d92a404","4001":"d05588ea6262a03692e0","4006":"0e63c857c888f8d11d6f","4107":"35867ab09bca30273003","4184":"7bd3b64a308b5a6f4e3c","4237":"ae9e77c6d4f5a70c297a","4270":"92c7c14b40cfad3a7806","4444":"789e122ee35e838ed0f1","4783":"4aea970728a512022f93","5059":"13587dbad394c5ddc53d","5072":"1ae35b3f50a587527ee1","5151":"e6455b78731ed03cfd4b","5194":"0187247a9cdaaee9e68c","5391":"39000a74a87983cacf45","5394":"69e3811ffd7921985da0","5646":"1e53fb1b30c30e36b3e1","5669":"a0c4c46c8c791ebbb16c","5754":"522b58315ec9fb445b23","5824":"6fb63fdd17598f12ef86","5881":"6a4c1003971cb952a894","5910":"f57963010b8ae5ab6217","5919":"f833248bd27b403561c3","6155":"58a2a0fe476e79d84f32","6226":"c416c65728f57de5c4dd","6619":"69490a347d78afb7abe6","6671":"f71ec56798361a47e66a","6685":"771d743f8ea2ec01c94c","6725":"425fdcbc93ef836a9a3d","6744":"3a47fe7ee18cb8f14ffe","6934":"2336fc86a063c981fa52","7120":"36521905fd60dfc439f0","7171":"ea2bcc5ce1442994d297","7189":"91f7f47ea7579f980bfb","7269":"e933c64e9db7b0f23a02","7270":"30220f7a7bda0ccab3a3","7384":"f0f60173be807cb12b08","7405":"726acb348b4f8c4b8399","7444":"a97b22a40ad291400689","7445":"eac1b3a4aee59c7dd484","7539":"73d93ee0d105ec04e601","7592":"e27b22d84fa357a766e0","7645":"5169553c2559af8ff31a","7757":"8271280a2eea1822794c","7801":"3c528f8312ee7e3cde47","7897":"51d0ef28435dfd6a888f","7941":"e7ae84523e2458af4b89","7997":"93c887afd6d2a2fe48c0","8011":"d8a1659ebbaa512167cd","8017":"b51c59b374752fd99280","8027":"7c1d4169dafa18d0a390","8060":"bf904f65cf29510543fa","8117":"3dcded6d706d2ffcf494","8282":"b0ef83417528f11f348d","8354":"2ae7fb5178a94693fdeb","8442":"5186906ed075010ff7d8","8520":"c65122def95e1926bca9","8646":"f0f883c6943916b3c589","8685":"1a745e1a9f3082110df5","8838":"00d41604d2236aea518c","8849":"b94133ff4f825428cf35","8970":"45baf7515d3893f38ef0","9127":"74240d27da8de7e3ab06","9220":"861c86c07129ab78a89d","9246":"7d37a12940cfb46fb700","9250":"b5d9464ce13f90b82087","9260":"2fea6f5f45d4b50c31b2","9528":"6dc89c613ad4fd9edbf4","9564":"9d5791b88dd093aa4439","9573":"9e85bfc7f1dc0fa20eeb","9575":"ebe17627f878fa02f4dd","9670":"53fa8ff6afa35d003dbf","9762":"14d1eb70b1da72ed44fe","9773":"7d085ee711300ab47ca1","9846":"c52060f41e4cdd521922","9971":"4b791673ce1d7830a992"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"ef5dc456570da26ac845","116":"8be55cfd8e56510d4cd7","118":"9649e9ad98fb4b1a6648","223":"c952fc08b587fdf51ade","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"4989b278eaf1b9b5be5b","457":"0af954391bfe2422e052","483":"342be2530e4d9bff3bc7","590":"5bc49206885952ec5ff6","614":"24a14f077bad8679b55f","712":"d893bdcb6957bee6579f","742":"d98d21bf6a93c798fa0d","778":"85c86df57eae6f397454","806":"7e5116a105614011a982","808":"e97cfb841a1ae21eb9da","864":"ac9193b4bf40eb4964a0","885":"af95aadf99f2df0af718","956":"195d11b02eb5fb9b20c7","1019":"1d406482e04e60bb652f","1096":"76185d9c9ad90035350c","1168":"b2f690e1d5399977dcaf","1223":"ba7ee3f6bda57f152c77","1251":"9da50dc8470bc764d3b6","1364":"4677e3a7cf1a1fa18f1b","1390":"d068203d76b14fda80ff","1500":"af40ea979f401d809120","1624":"e087efe6d5dca00bd5a7","1645":"08a0e19138658a75d51a","1679":"01e46a77693167979f84","1722":"7ceb3b03926770448e8a","1853":"6e9db325f27a5fbbed6b","1861":"89d05880a79dcb45e693","1919":"6aea47e9e68095920004","1985":"02e97ae71b3a0b197840","2120":"6495c3f514fc90312aa9","2122":"f228f1754a500c4b13d0","2153":"4c7916d41bc94db7f1ad","2410":"ee6b77291601bb83e4f2","2495":"448d55e4fa85737b2d32","2517":"2ce00c36c1a009a461cf","2529":"a738851ae08d823c3d3d","2533":"8794e99950160fc78567","2605":"5b030741d19d64e6644a","2608":"d678bedc842234bcd0f5","2611":"d8b119a353ab72a24785","2756":"688eeb592566045f97ac","2757":"37e017925354e0aeecaf","2778":"97f2c9761482d9f06b39","2821":"8380eaa49deabfe42aa1","2835":"0a5756bd6c77bc03fff7","2982":"ab6cb4b2645a7e73e94c","2992":"2c205519c9a96f460c88","3009":"a4ae81fc5a6ba3e4e2ef","3058":"3fbb91bd37dc580359e1","3094":"43fdaea0994c8aca9ef6","3229":"3679dfac428e286bfc9d","3426":"79bb35c857154d8ce678","3502":"a3b0adfce9144ee7143b","3547":"1e2de2721983f1041975","3697":"134f25d3273637784d47","3741":"ce7040c66a4a1e937547","3808":"4d97aa3bc76d5bbfa4d7","3976":"eee2194020cd5d92a404","4001":"d05588ea6262a03692e0","4006":"3f9b0c74b0981752060f","4107":"35867ab09bca30273003","4184":"e5e29a57cdc8fb920208","4237":"ae9e77c6d4f5a70c297a","4270":"67fb80bb7342e8dfa5f1","4444":"6d9ef4cb81d563ba0088","4783":"33f8e38660eecd5e7913","5059":"13587dbad394c5ddc53d","5072":"45bf3849b44a17b70ff2","5151":"9eeb4853ef40c7673538","5194":"6fec4b0f360f5a946a1d","5391":"478a187fb932c5112d1f","5394":"69e3811ffd7921985da0","5646":"1e53fb1b30c30e36b3e1","5669":"1d81e9485d932b76025e","5754":"63206ac5550239930563","5824":"b868db50ddaecea300eb","5881":"f942b8413b424bbf6084","5910":"f57963010b8ae5ab6217","5919":"1340a05e3cdd3cbafe2e","6155":"871dc0db026d734b3a07","6226":"c416c65728f57de5c4dd","6619":"69490a347d78afb7abe6","6671":"f71ec56798361a47e66a","6685":"771d743f8ea2ec01c94c","6725":"cbedc38facfef25eda57","6744":"d4b707410fb90f42fc25","6934":"2336fc86a063c981fa52","7120":"36521905fd60dfc439f0","7171":"ea2bcc5ce1442994d297","7189":"91f7f47ea7579f980bfb","7269":"e933c64e9db7b0f23a02","7270":"30220f7a7bda0ccab3a3","7384":"65263f0496e681b331ac","7405":"726acb348b4f8c4b8399","7444":"a97b22a40ad291400689","7445":"6de5773e1da6d0f2bc58","7539":"73d93ee0d105ec04e601","7592":"73768da979b3c7088620","7645":"5169553c2559af8ff31a","7757":"8271280a2eea1822794c","7801":"bd0eb06796f2cb519c69","7897":"f7c2dd5d89c754a9d060","7941":"66c8cd5ff26c4d5ff346","7997":"61d4bd79e52b1ffcf1aa","8011":"0feb1c337c8165065e8a","8017":"165306babf7d95cf8c68","8027":"788c527efeb12e3f577c","8060":"bf904f65cf29510543fa","8117":"3dcded6d706d2ffcf494","8282":"29b811dfccca1daad336","8354":"2ae7fb5178a94693fdeb","8442":"5186906ed075010ff7d8","8520":"c65122def95e1926bca9","8646":"6dbf8d2f40f56c4e04e4","8685":"1a745e1a9f3082110df5","8838":"00d41604d2236aea518c","8849":"e7361047af98561396ac","8970":"45baf7515d3893f38ef0","9127":"74240d27da8de7e3ab06","9220":"861c86c07129ab78a89d","9246":"7d37a12940cfb46fb700","9250":"b5d9464ce13f90b82087","9260":"2fea6f5f45d4b50c31b2","9528":"6dc89c613ad4fd9edbf4","9564":"476378dc942265c23c57","9573":"6fb976a060f032697847","9575":"ebe17627f878fa02f4dd","9670":"53fa8ff6afa35d003dbf","9762":"1bb90535650c3961e6ad","9773":"26c833d6a6e021d1f356","9846":"c52060f41e4cdd521922","9971":"4b791673ce1d7830a992"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -123561,10 +124449,12 @@ function Loginadmin() {
         }
         setShowBranchModal(true);
       } catch (error) {
+        var _error$data, _error$data2;
         console.log(error);
         setIsErrorLoading(true);
         yield new Promise(resolve => setTimeout(resolve, 500));
-        setErrorMsg('An Error As Occurred, Try Again');
+        var backendMsg = (error === null || error === void 0 || (_error$data = error.data) === null || _error$data === void 0 ? void 0 : _error$data.message) || (error === null || error === void 0 || (_error$data2 = error.data) === null || _error$data2 === void 0 ? void 0 : _error$data2.error) || (error === null || error === void 0 ? void 0 : error.message) || (typeof error === 'string' ? error : null);
+        setErrorMsg(backendMsg || 'An Error Has Occurred, Try Again');
       } finally {
         setIsLoading(false);
         setIsErrorLoading(false);
@@ -123870,9 +124760,11 @@ function Loginemployee() {
         }
         setShowBranchModal(true);
       } catch (err) {
+        var _err$data, _err$data2;
         setIsErrorLoading(true);
         yield new Promise(resolve => setTimeout(resolve, 500));
-        setErrorMsg('An Error As Occurred, Try Again ');
+        var backendMsg = (err === null || err === void 0 || (_err$data = err.data) === null || _err$data === void 0 ? void 0 : _err$data.message) || (err === null || err === void 0 || (_err$data2 = err.data) === null || _err$data2 === void 0 ? void 0 : _err$data2.error) || (err === null || err === void 0 ? void 0 : err.message) || (typeof err === 'string' ? err : null);
+        setErrorMsg(backendMsg || 'An Error Has Occurred, Try Again');
       } finally {
         setIsLoading(false);
         setIsErrorLoading(false);
@@ -124181,10 +125073,10 @@ var Tooltip = __webpack_require__(56655);
 var tooltipClasses = __webpack_require__(58331);
 // EXTERNAL MODULE: ./src/js/utils/isMobile.js
 var utils_isMobile = __webpack_require__(2650);
-// EXTERNAL MODULE: ./node_modules/@mui/material/CardContent/CardContent.js + 1 modules
-var CardContent = __webpack_require__(37636);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
 var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/CardContent/CardContent.js + 1 modules
+var CardContent = __webpack_require__(37636);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Fab/Fab.js + 1 modules
 var Fab = __webpack_require__(87992);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Menu/Menu.js + 1 modules
@@ -124193,6 +125085,14 @@ var Menu_Menu = __webpack_require__(94405);
 var ListItemIcon = __webpack_require__(57873);
 // EXTERNAL MODULE: ./node_modules/@mui/material/ListItemText/ListItemText.js
 var ListItemText = __webpack_require__(82241);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
+var Dialog = __webpack_require__(77037);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
+var DialogTitle = __webpack_require__(46831);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogContent/DialogContent.js + 1 modules
+var DialogContent = __webpack_require__(22477);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DialogActions/DialogActions.js + 1 modules
+var DialogActions = __webpack_require__(58763);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Add.js
 var Add = __webpack_require__(16718);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Receipt.js
@@ -124205,6 +125105,15 @@ var ShoppingBag = __webpack_require__(5675);
 var Build = __webpack_require__(97017);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ArrowForwardIos.js
 var ArrowForwardIos = __webpack_require__(61566);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronRight.js
+var ChevronRight = __webpack_require__(27562);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CalendarMonth.js
+var CalendarMonth = __webpack_require__(18329);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ExpandMore.js
+var ExpandMore = __webpack_require__(72048);
+// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
+var dayjs_min = __webpack_require__(74353);
+var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
 ;// ./src/js/component/MobileDashboard.js
 function MobileDashboard_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function MobileDashboard_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { MobileDashboard_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { MobileDashboard_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -124215,6 +125124,11 @@ function MobileDashboard_arrayLikeToArray(r, a) { (null == a || a > r.length) &&
 function MobileDashboard_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function MobileDashboard_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
+
+
+
+
 
 
 
@@ -124247,7 +125161,9 @@ function SvgDonutChart(_ref) {
     _ref$size = _ref.size,
     size = _ref$size === void 0 ? 180 : _ref$size,
     _ref$strokeWidth = _ref.strokeWidth,
-    strokeWidth = _ref$strokeWidth === void 0 ? 26 : _ref$strokeWidth;
+    strokeWidth = _ref$strokeWidth === void 0 ? 26 : _ref$strokeWidth,
+    _ref$centerLabel = _ref.centerLabel,
+    centerLabel = _ref$centerLabel === void 0 ? '2026 FY' : _ref$centerLabel;
   try {
     var validData = Array.isArray(data) ? data : [];
     var total = validData.reduce((sum, d) => sum + (Number(d.value) || 0), 0) || 1;
@@ -124292,17 +125208,19 @@ function SvgDonutChart(_ref) {
     })), /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         position: 'absolute',
-        textAlign: 'center'
+        textAlign: 'center',
+        px: 1
       }
     }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
       variant: "caption",
       sx: {
-        color: '#64748B',
-        fontWeight: 700,
-        fontSize: '0.75rem',
-        textTransform: 'uppercase'
+        color: '#30368a',
+        fontWeight: 800,
+        fontSize: '0.8rem',
+        textTransform: 'uppercase',
+        display: 'block'
       }
-    }, "2026 FY")));
+    }, centerLabel)));
   } catch (e) {
     return /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
@@ -124353,6 +125271,24 @@ class DashboardErrorBoundary extends react.Component {
     return this.props.children;
   }
 }
+function parseItemDate(item) {
+  if (!item) return null;
+  var raw = item.invoiceDate || item.expenseDate || item.paymentDate || item.date || item.dateField || item.createdAt;
+  if (!raw) return null;
+  if (typeof raw === 'string') {
+    var trimmed = raw.trim();
+    if (/^\d{2}\/\d{2}\/\d{4}$/.test(trimmed)) {
+      var _trimmed$split = trimmed.split('/'),
+        _trimmed$split2 = MobileDashboard_slicedToArray(_trimmed$split, 3),
+        d = _trimmed$split2[0],
+        m = _trimmed$split2[1],
+        y = _trimmed$split2[2];
+      return dayjs_min_default()("".concat(y, "-").concat(m, "-").concat(d));
+    }
+  }
+  var parsed = dayjs_min_default()(raw);
+  return parsed.isValid() ? parsed : null;
+}
 function MobileDashboardContent() {
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
@@ -124360,7 +125296,23 @@ function MobileDashboardContent() {
     _useState2 = MobileDashboard_slicedToArray(_useState, 2),
     loading = _useState2[0],
     setLoading = _useState2[1];
-  var _useState3 = (0,react.useState)({
+  var _useState3 = (0,react.useState)(dayjs_min_default()()),
+    _useState4 = MobileDashboard_slicedToArray(_useState3, 2),
+    selectedMonth = _useState4[0],
+    setSelectedMonth = _useState4[1];
+  var _useState5 = (0,react.useState)('monthly'),
+    _useState6 = MobileDashboard_slicedToArray(_useState5, 2),
+    viewMode = _useState6[0],
+    setViewMode = _useState6[1]; // 'monthly' | 'yearly'
+  var _useState7 = (0,react.useState)({
+      invoices: [],
+      expenses: [],
+      payments: []
+    }),
+    _useState8 = MobileDashboard_slicedToArray(_useState7, 2),
+    rawData = _useState8[0],
+    setRawData = _useState8[1];
+  var _useState9 = (0,react.useState)({
       totalRevenue: 0,
       totalExpenses: 0,
       currentReceivables: 0,
@@ -124370,13 +125322,13 @@ function MobileDashboardContent() {
       netIncome: 0,
       recentInvoices: []
     }),
-    _useState4 = MobileDashboard_slicedToArray(_useState3, 2),
-    metrics = _useState4[0],
-    setMetrics = _useState4[1];
-  var _useState5 = (0,react.useState)(null),
-    _useState6 = MobileDashboard_slicedToArray(_useState5, 2),
-    anchorEl = _useState6[0],
-    setAnchorEl = _useState6[1];
+    _useState0 = MobileDashboard_slicedToArray(_useState9, 2),
+    metrics = _useState0[0],
+    setMetrics = _useState0[1];
+  var _useState1 = (0,react.useState)(null),
+    _useState10 = MobileDashboard_slicedToArray(_useState1, 2),
+    anchorEl = _useState10[0],
+    setAnchorEl = _useState10[1];
   var fabMenuOpen = Boolean(anchorEl);
   (0,react.useEffect)(() => {
     var isMounted = true;
@@ -124409,46 +125361,10 @@ function MobileDashboardContent() {
           var invoices = rawInvoices.filter(inv => !(inv !== null && inv !== void 0 && inv.branch) || activeBranch === 'HQ' || inv.branch === activeBranch);
           var expenses = rawExpenses.filter(exp => !(exp !== null && exp !== void 0 && exp.branch) || activeBranch === 'HQ' || exp.branch === activeBranch);
           var payments = rawPayments.filter(p => !(p !== null && p !== void 0 && p.branch) || activeBranch === 'HQ' || p.branch === activeBranch);
-          var revenue = 0;
-          var currentRec = 0;
-          var overdueRec = 0;
-          var now = new Date();
-          invoices.forEach(inv => {
-            if (!inv) return;
-            var total = Number(inv.totalAmount || inv.totalInvoice || inv.total || 0);
-            var paid = Number(inv.paidAmount || inv.total || 0);
-            var balance = total - paid;
-            revenue += total;
-            if (balance > 0) {
-              var dueDate = inv.dueDate ? new Date(inv.dueDate) : null;
-              if (dueDate && !isNaN(dueDate.getTime()) && dueDate < now) {
-                overdueRec += balance;
-              } else {
-                currentRec += balance;
-              }
-            }
-          });
-          var totalExp = 0;
-          expenses.forEach(exp => {
-            if (!exp) return;
-            var expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' ? Number(exp.total) : exp.rate && exp.amount ? Number(exp.amount) / Number(exp.rate) : Number(exp.amount || 0);
-            totalExp += isNaN(expTotal) ? 0 : expTotal;
-          });
-          var totalPaid = 0;
-          payments.forEach(p => {
-            if (!p) return;
-            totalPaid += Number(p.amount || p.total || 0);
-          });
-          var recent = invoices.slice(-5).reverse();
-          setMetrics({
-            totalRevenue: revenue,
-            totalExpenses: totalExp,
-            currentReceivables: currentRec > 0 ? currentRec : revenue * 0.35,
-            overdueReceivables: overdueRec > 0 ? overdueRec : revenue * 0.15,
-            cashIn: totalPaid > 0 ? totalPaid : revenue * 0.8,
-            cashOut: totalExp,
-            netIncome: revenue - totalExp,
-            recentInvoices: recent
+          setRawData({
+            invoices,
+            expenses,
+            payments
           });
         } catch (err) {
           console.error('Error in mobile dashboard fetch:', err);
@@ -124465,6 +125381,131 @@ function MobileDashboardContent() {
       isMounted = false;
     };
   }, []);
+  (0,react.useEffect)(() => {
+    var isCurrentPeriod = item => {
+      var d = parseItemDate(item);
+      if (!d) return true;
+      if (viewMode === 'monthly') {
+        return d.isSame(selectedMonth, 'month') && d.isSame(selectedMonth, 'year');
+      }
+      return d.isSame(selectedMonth, 'year');
+    };
+    var invoices = rawData.invoices.filter(isCurrentPeriod);
+    var expenses = rawData.expenses.filter(isCurrentPeriod);
+    var payments = rawData.payments.filter(isCurrentPeriod);
+    var revenue = 0;
+    var currentRec = 0;
+    var overdueRec = 0;
+    var now = new Date();
+    invoices.forEach(inv => {
+      if (!inv) return;
+      var total = Number(inv.totalAmount || inv.totalInvoice || inv.total || 0);
+      var paid = Number(inv.paidAmount || inv.total || 0);
+      var balance = total - paid;
+      revenue += total;
+      if (balance > 0) {
+        var dueDate = inv.dueDate ? new Date(inv.dueDate) : null;
+        if (dueDate && !isNaN(dueDate.getTime()) && dueDate < now) {
+          overdueRec += balance;
+        } else {
+          currentRec += balance;
+        }
+      }
+    });
+    var totalExp = 0;
+    expenses.forEach(exp => {
+      if (!exp) return;
+      var expTotal = exp.total !== undefined && exp.total !== null && exp.total !== '' ? Number(exp.total) : exp.rate && exp.amount ? Number(exp.amount) / Number(exp.rate) : Number(exp.amount || 0);
+      totalExp += isNaN(expTotal) ? 0 : expTotal;
+    });
+    var totalPaid = 0;
+    payments.forEach(p => {
+      if (!p) return;
+      totalPaid += Number(p.amount || p.total || 0);
+    });
+    var recent = invoices.slice(-5).reverse();
+    setMetrics({
+      totalRevenue: revenue,
+      totalExpenses: totalExp,
+      currentReceivables: currentRec > 0 ? currentRec : revenue * 0.35,
+      overdueReceivables: overdueRec > 0 ? overdueRec : revenue * 0.15,
+      cashIn: totalPaid > 0 ? totalPaid : revenue * 0.8,
+      cashOut: totalExp,
+      netIncome: revenue - totalExp,
+      recentInvoices: recent
+    });
+  }, [rawData, selectedMonth, viewMode]);
+  var _useState11 = (0,react.useState)(false),
+    _useState12 = MobileDashboard_slicedToArray(_useState11, 2),
+    pickerOpen = _useState12[0],
+    setPickerOpen = _useState12[1];
+  var _useState13 = (0,react.useState)(dayjs_min_default()().year()),
+    _useState14 = MobileDashboard_slicedToArray(_useState13, 2),
+    pickerYear = _useState14[0],
+    setPickerYear = _useState14[1];
+  var monthsList = [{
+    label: 'Jan',
+    full: 'January',
+    idx: 0
+  }, {
+    label: 'Feb',
+    full: 'February',
+    idx: 1
+  }, {
+    label: 'Mar',
+    full: 'March',
+    idx: 2
+  }, {
+    label: 'Apr',
+    full: 'April',
+    idx: 3
+  }, {
+    label: 'May',
+    full: 'May',
+    idx: 4
+  }, {
+    label: 'Jun',
+    full: 'June',
+    idx: 5
+  }, {
+    label: 'Jul',
+    full: 'July',
+    idx: 6
+  }, {
+    label: 'Aug',
+    full: 'August',
+    idx: 7
+  }, {
+    label: 'Sep',
+    full: 'September',
+    idx: 8
+  }, {
+    label: 'Oct',
+    full: 'October',
+    idx: 9
+  }, {
+    label: 'Nov',
+    full: 'November',
+    idx: 10
+  }, {
+    label: 'Dec',
+    full: 'December',
+    idx: 11
+  }];
+  var handleOpenPicker = () => {
+    setPickerYear(selectedMonth.year());
+    setPickerOpen(true);
+  };
+  var handleSelectMonth = monthIdx => {
+    setSelectedMonth(dayjs_min_default()().year(pickerYear).month(monthIdx).date(1));
+    setViewMode('monthly');
+    setPickerOpen(false);
+  };
+  var handleSelectYearly = () => {
+    setSelectedMonth(dayjs_min_default()().year(pickerYear).month(0).date(1));
+    setViewMode('yearly');
+    setPickerOpen(false);
+  };
   var chartData = [{
     id: 0,
     value: metrics.totalRevenue > 0 ? metrics.totalRevenue : 12000,
@@ -124486,6 +125527,7 @@ function MobileDashboardContent() {
     label: 'Cash Out',
     color: '#F59E0B'
   }];
+  var periodLabel = viewMode === 'monthly' ? selectedMonth.format('MMMM YYYY') : "".concat(selectedMonth.year(), " FY");
   return /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       width: '100%',
@@ -124493,6 +125535,105 @@ function MobileDashboardContent() {
       boxSizing: 'border-box'
     }
   }, /*#__PURE__*/react.createElement(Card/* default */.A, {
+    sx: {
+      borderRadius: 3.5,
+      backgroundColor: '#ffffff',
+      boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+      mb: 1.5,
+      p: 1,
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.5
+    }
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => setSelectedMonth(prev => prev.subtract(1, viewMode === 'monthly' ? 'month' : 'year')),
+    sx: {
+      color: '#30368a'
+    }
+  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null)), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    onClick: handleOpenPicker,
+    sx: {
+      textAlign: 'center',
+      minWidth: 120,
+      cursor: 'pointer',
+      px: 1,
+      py: 0.5,
+      borderRadius: 2,
+      '&:active': {
+        backgroundColor: '#F1F5F9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 800,
+      color: '#1E293B',
+      fontSize: '0.95rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 0.5
+    }
+  }, periodLabel, " ", /*#__PURE__*/react.createElement(ExpandMore/* default */.A, {
+    sx: {
+      fontSize: 18,
+      color: '#30368a'
+    }
+  })), !selectedMonth.isSame(dayjs_min_default()(), viewMode === 'monthly' ? 'month' : 'year') && /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    onClick: e => {
+      e.stopPropagation();
+      setSelectedMonth(dayjs_min_default()());
+      setViewMode('monthly');
+    },
+    sx: {
+      color: '#30368a',
+      fontWeight: 700,
+      cursor: 'pointer',
+      display: 'block',
+      fontSize: '0.7rem'
+    }
+  }, "Reset to Current")), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => setSelectedMonth(prev => prev.add(1, viewMode === 'monthly' ? 'month' : 'year')),
+    sx: {
+      color: '#30368a'
+    }
+  }, /*#__PURE__*/react.createElement(ChevronRight/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      gap: 0.5
+    }
+  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: "Month",
+    size: "small",
+    onClick: () => setViewMode('monthly'),
+    sx: {
+      backgroundColor: viewMode === 'monthly' ? '#30368a' : '#F1F5F9',
+      color: viewMode === 'monthly' ? '#ffffff' : '#64748B',
+      fontWeight: 700,
+      fontSize: '0.75rem',
+      cursor: 'pointer'
+    }
+  }), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: "Year",
+    size: "small",
+    onClick: () => setViewMode('yearly'),
+    sx: {
+      backgroundColor: viewMode === 'yearly' ? '#30368a' : '#F1F5F9',
+      color: viewMode === 'yearly' ? '#ffffff' : '#64748B',
+      fontWeight: 700,
+      fontSize: '0.75rem',
+      cursor: 'pointer'
+    }
+  }))), /*#__PURE__*/react.createElement(Card/* default */.A, {
     sx: {
       borderRadius: 4,
       backgroundColor: '#ffffff',
@@ -124528,13 +125669,25 @@ function MobileDashboardContent() {
       mt: 0.5
     }
   }, formatCurrency(metrics.currentReceivables + metrics.overdueReceivables))), /*#__PURE__*/react.createElement(Chip/* default */.A, {
-    label: "2026 FY",
+    icon: /*#__PURE__*/react.createElement(CalendarMonth/* default */.A, {
+      sx: {
+        fontSize: '15px !important',
+        color: '#30368a !important'
+      }
+    }),
+    label: periodLabel,
     size: "small",
+    onClick: handleOpenPicker,
     sx: {
       backgroundColor: '#EEF2FF',
       color: '#30368a',
       fontWeight: 700,
-      fontSize: '0.75rem'
+      fontSize: '0.75rem',
+      cursor: 'pointer',
+      border: '1px solid #C7D2FE',
+      '&:active': {
+        transform: 'scale(0.96)'
+      }
     }
   })), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
@@ -124546,7 +125699,8 @@ function MobileDashboardContent() {
   }, /*#__PURE__*/react.createElement(SvgDonutChart, {
     data: chartData,
     size: 180,
-    strokeWidth: 26
+    strokeWidth: 26,
+    centerLabel: viewMode === 'monthly' ? selectedMonth.format('MMM YYYY') : "".concat(selectedMonth.year(), " FY")
   })), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
@@ -124892,7 +126046,113 @@ function MobileDashboardContent() {
       fontWeight: 600,
       fontSize: '0.9rem'
     }
-  }))));
+  }))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: pickerOpen,
+    onClose: () => setPickerOpen(false),
+    PaperProps: {
+      sx: {
+        borderRadius: 4,
+        width: '90%',
+        maxWidth: 360,
+        p: 1.5,
+        backgroundColor: '#ffffff'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      p: 1,
+      pb: 2,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => setPickerYear(y => y - 1),
+    sx: {
+      color: '#30368a'
+    }
+  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#1E293B',
+      fontSize: '1.15rem'
+    }
+  }, pickerYear), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => setPickerYear(y => y + 1),
+    sx: {
+      color: '#30368a'
+    }
+  }, /*#__PURE__*/react.createElement(ChevronRight/* default */.A, null))), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      p: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'grid',
+      gridTemplateColumns: 'repeat(3, 1fr)',
+      gap: 1
+    }
+  }, monthsList.map(m => {
+    var isSelected = selectedMonth.month() === m.idx && selectedMonth.year() === pickerYear && viewMode === 'monthly';
+    var isCurrentMonth = dayjs_min_default()().month() === m.idx && dayjs_min_default()().year() === pickerYear;
+    return /*#__PURE__*/react.createElement(Button/* default */.A, {
+      key: m.idx,
+      variant: isSelected ? 'contained' : 'outlined',
+      onClick: () => handleSelectMonth(m.idx),
+      sx: {
+        py: 1.2,
+        borderRadius: 3,
+        fontWeight: 700,
+        fontSize: '0.85rem',
+        textTransform: 'none',
+        backgroundColor: isSelected ? '#30368a' : isCurrentMonth ? '#EEF2FF' : 'transparent',
+        color: isSelected ? '#ffffff' : isCurrentMonth ? '#30368a' : '#334155',
+        borderColor: isSelected ? '#30368a' : isCurrentMonth ? '#C7D2FE' : '#E2E8F0',
+        '&:hover': {
+          backgroundColor: isSelected ? '#202a5a' : '#F1F5F9',
+          borderColor: '#30368a'
+        }
+      }
+    }, m.label);
+  }))), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      p: 1,
+      pt: 1.5,
+      display: 'flex',
+      justifyContent: 'space-between',
+      borderTop: '1px solid #F1F5F9'
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: () => {
+      setSelectedMonth(dayjs_min_default()());
+      setViewMode('monthly');
+      setPickerOpen(false);
+    },
+    sx: {
+      color: '#30368a',
+      fontWeight: 700,
+      textTransform: 'none'
+    }
+  }, "This Month"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: handleSelectYearly,
+    sx: {
+      color: '#64748B',
+      fontWeight: 700,
+      textTransform: 'none'
+    }
+  }, "Full Year ", pickerYear), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    onClick: () => setPickerOpen(false),
+    sx: {
+      color: '#94A3B8',
+      textTransform: 'none'
+    }
+  }, "Close"))));
 }
 function MobileDashboard() {
   return /*#__PURE__*/react.createElement(DashboardErrorBoundary, null, /*#__PURE__*/react.createElement(MobileDashboardContent, null));
@@ -125010,9 +126270,6 @@ var Store = __webpack_require__(10420);
 var Payment = __webpack_require__(2291);
 // EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
 var DataGrid = __webpack_require__(1835);
-// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
-var dayjs_min = __webpack_require__(74353);
-var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
 var esm_extends = __webpack_require__(58168);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
@@ -132022,8 +133279,6 @@ var Collapse = __webpack_require__(52848);
 var icons_material_Close = __webpack_require__(39781);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ExpandLess.js
 var ExpandLess = __webpack_require__(31656);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ExpandMore.js
-var ExpandMore = __webpack_require__(72048);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Inventory.js
 var Inventory = __webpack_require__(3965);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ShoppingCart.js
@@ -132043,6 +133298,8 @@ var Business = __webpack_require__(78883);
 // EXTERNAL MODULE: ./package.json
 var package_0 = __webpack_require__(8330);
 ;// ./src/js/component/MobileDrawer.js
+function MobileDrawer_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function MobileDrawer_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { MobileDrawer_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { MobileDrawer_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function MobileDrawer_slicedToArray(r, e) { return MobileDrawer_arrayWithHoles(r) || MobileDrawer_iterableToArrayLimit(r, e) || MobileDrawer_unsupportedIterableToArray(r, e) || MobileDrawer_nonIterableRest(); }
 function MobileDrawer_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function MobileDrawer_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return MobileDrawer_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? MobileDrawer_arrayLikeToArray(r, a) : void 0; } }
@@ -132071,8 +133328,11 @@ function MobileDrawer_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
+
 function MobileDrawer(_ref) {
-  var _user$data, _user$data2;
+  var _user$data3, _user$data4;
   var open = _ref.open,
     onClose = _ref.onClose;
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
@@ -132086,6 +133346,49 @@ function MobileDrawer(_ref) {
     _useState4 = MobileDrawer_slicedToArray(_useState3, 2),
     maintenanceOpen = _useState4[0],
     setMaintenanceOpen = _useState4[1];
+  var _useState5 = (0,react.useState)([]),
+    _useState6 = MobileDrawer_slicedToArray(_useState5, 2),
+    grantAccess = _useState6[0],
+    setGrantAccess = _useState6[1];
+  (0,react.useEffect)(() => {
+    var fetchAccess = /*#__PURE__*/function () {
+      var _ref2 = MobileDrawer_asyncToGenerator(function* () {
+        var _user$data;
+        if (!(user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id)) return;
+        try {
+          var _res$data;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var userAccess = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => {
+            var _user$data2;
+            return row.userID === (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.id);
+          });
+          if (userAccess && Array.isArray(userAccess.modules)) {
+            setGrantAccess(userAccess.modules);
+          }
+        } catch (err) {
+          console.error('Error loading grantAccess in drawer:', err);
+        }
+      });
+      return function fetchAccess() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+    if (open) {
+      fetchAccess();
+    }
+  }, [open, user]);
+  var userName = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'Global Gate User';
+  var userRole = (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.role) || 'Staff';
+  var isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
+  var canAccess = moduleName => {
+    var _mod$access, _mod$access2;
+    if (isSuperUser) return true;
+    var mod = grantAccess.find(m => {
+      var _m$moduleName, _m$name;
+      return ((_m$moduleName = m.moduleName) === null || _m$moduleName === void 0 ? void 0 : _m$moduleName.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase()) || ((_m$name = m.name) === null || _m$name === void 0 ? void 0 : _m$name.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase());
+    });
+    return Boolean((mod === null || mod === void 0 || (_mod$access = mod.access) === null || _mod$access === void 0 ? void 0 : _mod$access.readM) || (mod === null || mod === void 0 || (_mod$access2 = mod.access) === null || _mod$access2 === void 0 ? void 0 : _mod$access2.viewM));
+  };
   var handleNav = path => {
     navigate(path);
     onClose();
@@ -132098,8 +133401,6 @@ function MobileDrawer(_ref) {
     navigate('/');
     onClose();
   };
-  var userName = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'Global Gate User';
-  var userRole = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || 'Staff';
   return /*#__PURE__*/react.createElement(Drawer/* default */.Ay, {
     anchor: "left",
     open: open,
@@ -132201,7 +133502,7 @@ function MobileDrawer(_ref) {
       fontWeight: 600,
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), canAccess('Customer') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/CustomerViewAdmin'),
     sx: {
       py: 1,
@@ -132219,7 +133520,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), (canAccess('Store') || canAccess('Item') || canAccess('Point-Of-Sell')) && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/ItemViewAdmin'),
     sx: {
       py: 1,
@@ -132241,7 +133542,7 @@ function MobileDrawer(_ref) {
     sx: {
       my: 0.5
     }
-  }), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }), (canAccess('Estimate') || canAccess('Invoice')) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => setSalesOpen(!salesOpen),
     sx: {
       py: 1,
@@ -132272,7 +133573,7 @@ function MobileDrawer(_ref) {
     component: "div",
     disablePadding: true,
     dense: true
-  }, /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }, canAccess('Estimate') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     sx: {
       pl: 6,
       py: 0.7
@@ -132290,7 +133591,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.85rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), canAccess('Invoice') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     sx: {
       pl: 6,
       py: 0.7
@@ -132308,7 +133609,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.85rem'
     }
-  })))), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }))))), canAccess('Payment') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/PaymentView'),
     sx: {
       py: 1,
@@ -132326,7 +133627,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), canAccess('Expenses') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/DailyExpenses'),
     sx: {
       py: 1,
@@ -132344,7 +133645,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), canAccess('Project') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/ProjectViewAdmin'),
     sx: {
       py: 1,
@@ -132366,7 +133667,7 @@ function MobileDrawer(_ref) {
     sx: {
       my: 0.5
     }
-  }), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }), (canAccess('Maintenance') || canAccess('Maintenance-Order') || canAccess('Technician-Store')) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => setMaintenanceOpen(!maintenanceOpen),
     sx: {
       py: 1,
@@ -132397,7 +133698,7 @@ function MobileDrawer(_ref) {
     component: "div",
     disablePadding: true,
     dense: true
-  }, /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }, canAccess('Maintenance') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     sx: {
       pl: 6,
       py: 0.7
@@ -132408,7 +133709,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.85rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), canAccess('Maintenance-Order') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     sx: {
       pl: 6,
       py: 0.7
@@ -132419,7 +133720,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.85rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), (canAccess('Technician-Store') || canAccess('Maintenance')) && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     sx: {
       pl: 6,
       py: 0.7
@@ -132437,7 +133738,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.85rem'
     }
-  })))), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }))))), (canAccess('Pay-Roll') || canAccess('Employee') || isSuperUser) && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/EmployeeViewAdminAll'),
     sx: {
       py: 1,
@@ -132455,7 +133756,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), (canAccess('Purchase') || canAccess('Suppliers') || isSuperUser) && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/SupplierAdminView'),
     sx: {
       py: 1,
@@ -132559,7 +133860,7 @@ function getTitleFromPath(pathname) {
   if (pathname.includes('Setting') || pathname.includes('Access')) return 'Settings';
   return 'Dashboard';
 }
-var mainListRoutes = ['/adminhome', '/customerviewadmin', '/itemviewadmin', '/invoiceviewadmin', '/dailyexpenses', '/estimateviewadmin', '/paymentview', '/projectviewadmin', '/maintenanceviewadmin', '/maintenanceorderadmin', '/technicianstoredisplay', '/employeeviewadminall', '/supplieradminview'];
+var mainListRoutes = ['/adminhome', '/customerviewadmin', '/itemviewadmin', '/invoiceviewadmin', '/dailyexpenses', '/estimateviewadmin', '/paymentview', '/projectviewadmin', '/maintenanceviewadmin', '/maintenanceorderadmin', '/technicianstoredisplay', '/employeeviewadminall', '/tewmviewadmin', '/supplieradminview'];
 function isMainListRoute(pathname) {
   var p = (pathname || '').toLowerCase().replace(/\/$/, '');
   return mainListRoutes.includes(p);
@@ -132575,6 +133876,41 @@ function MobileLayout(_ref) {
     _useState2 = MobileLayout_slicedToArray(_useState, 2),
     drawerOpen = _useState2[0],
     setDrawerOpen = _useState2[1];
+  var touchStartXRef = react.useRef(null);
+  var touchStartYRef = react.useRef(null);
+  var handleTouchStart = e => {
+    if (e.touches && e.touches.length === 1) {
+      var clientX = e.touches[0].clientX;
+      var clientY = e.touches[0].clientY;
+      // If swipe started within 50px of the left screen edge
+      if (clientX <= 50) {
+        touchStartXRef.current = clientX;
+        touchStartYRef.current = clientY;
+      } else {
+        touchStartXRef.current = null;
+        touchStartYRef.current = null;
+      }
+    }
+  };
+  var handleTouchMove = e => {
+    if (touchStartXRef.current !== null && e.touches && e.touches.length === 1) {
+      var currentX = e.touches[0].clientX;
+      var currentY = e.touches[0].clientY;
+      var deltaX = currentX - touchStartXRef.current;
+      var deltaY = currentY - touchStartYRef.current;
+
+      // Swiped right by at least 45px with mostly horizontal gesture
+      if (deltaX > 45 && Math.abs(deltaY) < 40) {
+        setDrawerOpen(true);
+        touchStartXRef.current = null;
+        touchStartYRef.current = null;
+      }
+    }
+  };
+  var handleTouchEnd = () => {
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+  };
   var pathname = location.pathname;
   var isAuthPage = pathname === '/' || pathname === '/Loginadmin' || pathname === '/Loginemployee' || pathname === '';
   var handleLogout = () => {
@@ -132591,6 +133927,9 @@ function MobileLayout(_ref) {
   // Full-screen form / edit / create / detail sub-pages manage their own header & layout
   if (!isMainListRoute(pathname)) {
     return /*#__PURE__*/react.createElement(Box/* default */.A, {
+      onTouchStart: handleTouchStart,
+      onTouchMove: handleTouchMove,
+      onTouchEnd: handleTouchEnd,
       sx: {
         width: '100vw',
         minHeight: '100vh',
@@ -132598,7 +133937,10 @@ function MobileLayout(_ref) {
         overflowX: 'hidden',
         boxSizing: 'border-box'
       }
-    }, children);
+    }, children, /*#__PURE__*/react.createElement(component_MobileDrawer, {
+      open: drawerOpen,
+      onClose: () => setDrawerOpen(false)
+    }));
   }
   var pageTitle = getTitleFromPath(pathname);
   var bottomTabs = [{
@@ -132627,24 +133969,26 @@ function MobileLayout(_ref) {
     })
   }];
   return /*#__PURE__*/react.createElement(Box/* default */.A, {
+    onTouchStart: handleTouchStart,
+    onTouchMove: handleTouchMove,
+    onTouchEnd: handleTouchEnd,
     sx: {
       width: '100vw',
-      minHeight: '100vh',
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
       backgroundColor: '#F8FAFC',
-      position: 'relative',
-      overflowX: 'hidden'
+      overflow: 'hidden',
+      boxSizing: 'border-box'
     }
   }, /*#__PURE__*/react.createElement(AppBar/* default */.A, {
     className: "MobileLayout-appBar",
-    position: "fixed",
+    position: "relative",
+    elevation: 0,
     sx: {
-      top: 0,
-      left: 0,
-      right: 0,
-      height: 52,
+      flexShrink: 0,
       backgroundColor: '#30368a',
       zIndex: 1200,
-      justifyContent: 'center',
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
     }
   }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
@@ -132653,8 +133997,8 @@ function MobileLayout(_ref) {
       justifyContent: 'space-between',
       alignItems: 'center',
       px: 1,
-      minHeight: '52px !important',
-      height: 52
+      minHeight: '54px !important',
+      height: 54
     }
   }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
@@ -132726,14 +134070,13 @@ function MobileLayout(_ref) {
   }))))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     component: "main",
     sx: {
-      width: '100vw',
-      minHeight: '100vh',
-      boxSizing: 'border-box',
-      pt: '60px',
-      pb: '80px',
-      px: 1.5,
+      flex: 1,
+      width: '100%',
       overflowY: 'auto',
-      overflowX: 'hidden'
+      overflowX: 'hidden',
+      boxSizing: 'border-box',
+      p: 1.5,
+      pb: 'calc(80px + env(safe-area-inset-bottom, 0px))'
     }
   }, children), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
@@ -132741,7 +134084,7 @@ function MobileLayout(_ref) {
       bottom: 0,
       left: 0,
       right: 0,
-      height: 60,
+      height: '58px',
       backgroundColor: '#ffffff',
       borderTop: '1px solid #e2e8f0',
       display: 'flex',
@@ -132763,6 +134106,7 @@ function MobileLayout(_ref) {
         alignItems: 'center',
         justifyContent: 'center',
         flex: 1,
+        minWidth: 0,
         cursor: 'pointer',
         color: isActive ? '#30368a' : '#64748B',
         py: 0.5,
@@ -132773,11 +134117,16 @@ function MobileLayout(_ref) {
       }
     }, tab.icon, /*#__PURE__*/react.createElement(Typography/* default */.A, {
       variant: "caption",
+      noWrap: true,
       sx: {
-        fontSize: '11px',
+        fontSize: '10px',
         fontWeight: isActive ? 700 : 500,
         mt: '2px',
-        color: isActive ? '#30368a' : '#64748B'
+        color: isActive ? '#30368a' : '#64748B',
+        textAlign: 'center',
+        width: '100%',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis'
       }
     }, tab.label));
   }), /*#__PURE__*/react.createElement(Box/* default */.A, {
@@ -132788,6 +134137,7 @@ function MobileLayout(_ref) {
       alignItems: 'center',
       justifyContent: 'center',
       flex: 1,
+      minWidth: 0,
       cursor: 'pointer',
       color: drawerOpen ? '#30368a' : '#64748B',
       py: 0.5,
@@ -132800,11 +134150,16 @@ function MobileLayout(_ref) {
     fontSize: "small"
   }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "caption",
+    noWrap: true,
     sx: {
-      fontSize: '11px',
+      fontSize: '10px',
       fontWeight: drawerOpen ? 700 : 500,
       mt: '2px',
-      color: drawerOpen ? '#30368a' : '#64748B'
+      color: drawerOpen ? '#30368a' : '#64748B',
+      textAlign: 'center',
+      width: '100%',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis'
     }
   }, "Modules"))), /*#__PURE__*/react.createElement(component_MobileDrawer, {
     open: drawerOpen,
@@ -132812,8 +134167,337 @@ function MobileLayout(_ref) {
   }));
 }
 /* harmony default export */ const component_MobileLayout = (MobileLayout);
+// EXTERNAL MODULE: ./node_modules/@capacitor/core/dist/index.js
+var core_dist = __webpack_require__(16546);
+;// ./node_modules/@capacitor/app/dist/esm/index.js
+
+const App = (0,core_dist/* registerPlugin */.F3)('App', {
+    web: () => __webpack_require__.e(/* import() */ 1168).then(__webpack_require__.bind(__webpack_require__, 41168)).then((m) => new m.AppWeb()),
+});
+
+
+//# sourceMappingURL=index.js.map
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/rootShouldForwardProp.js
+var rootShouldForwardProp = __webpack_require__(39770);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js + 1 modules
+var DefaultPropsProvider = __webpack_require__(15607);
+;// ./node_modules/@mui/material/DialogContentText/dialogContentTextClasses.js
+
+
+function getDialogContentTextUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiDialogContentText', slot);
+}
+const dialogContentTextClasses = (0,generateUtilityClasses/* default */.A)('MuiDialogContentText', ['root']);
+/* harmony default export */ const DialogContentText_dialogContentTextClasses = ((/* unused pure expression or super */ null && (dialogContentTextClasses)));
+;// ./node_modules/@mui/material/DialogContentText/DialogContentText.js
+'use client';
+
+
+
+const DialogContentText_excluded = ["children", "className"];
+
+
+
+
+
+
+
+
+
+const DialogContentText_useUtilityClasses = ownerState => {
+  const {
+    classes
+  } = ownerState;
+  const slots = {
+    root: ['root']
+  };
+  const composedClasses = (0,composeClasses/* default */.A)(slots, getDialogContentTextUtilityClass, classes);
+  return (0,esm_extends/* default */.A)({}, classes, composedClasses);
+};
+const DialogContentTextRoot = (0,styled/* default */.Ay)(Typography/* default */.A, {
+  shouldForwardProp: prop => (0,rootShouldForwardProp/* default */.A)(prop) || prop === 'classes',
+  name: 'MuiDialogContentText',
+  slot: 'Root',
+  overridesResolver: (props, styles) => styles.root
+})({});
+const DialogContentText = /*#__PURE__*/react.forwardRef(function DialogContentText(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiDialogContentText'
+  });
+  const {
+      className
+    } = props,
+    ownerState = (0,objectWithoutPropertiesLoose/* default */.A)(props, DialogContentText_excluded);
+  const classes = DialogContentText_useUtilityClasses(ownerState);
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(DialogContentTextRoot, (0,esm_extends/* default */.A)({
+    component: "p",
+    variant: "body1",
+    color: "text.secondary",
+    ref: ref,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className)
+  }, props, {
+    classes: classes
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const DialogContentText_DialogContentText = (DialogContentText);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ExitToApp.js
+var ExitToApp = __webpack_require__(83465);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/WarningAmber.js
+var WarningAmber = __webpack_require__(15542);
+;// ./src/js/component/NativeBackHandler.js
+function NativeBackHandler_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function NativeBackHandler_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { NativeBackHandler_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { NativeBackHandler_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function NativeBackHandler_slicedToArray(r, e) { return NativeBackHandler_arrayWithHoles(r) || NativeBackHandler_iterableToArrayLimit(r, e) || NativeBackHandler_unsupportedIterableToArray(r, e) || NativeBackHandler_nonIterableRest(); }
+function NativeBackHandler_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function NativeBackHandler_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return NativeBackHandler_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? NativeBackHandler_arrayLikeToArray(r, a) : void 0; } }
+function NativeBackHandler_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function NativeBackHandler_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function NativeBackHandler_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+function NativeBackHandler() {
+  var location = (0,react_router_dist/* useLocation */.zy)();
+  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var _useState = (0,react.useState)(false),
+    _useState2 = NativeBackHandler_slicedToArray(_useState, 2),
+    exitDialogOpen = _useState2[0],
+    setExitDialogOpen = _useState2[1];
+  var _useState3 = (0,react.useState)(false),
+    _useState4 = NativeBackHandler_slicedToArray(_useState3, 2),
+    discardDialogOpen = _useState4[0],
+    setDiscardDialogOpen = _useState4[1];
+  var _useState5 = (0,react.useState)(null),
+    _useState6 = NativeBackHandler_slicedToArray(_useState5, 2),
+    pendingBackAction = _useState6[0],
+    setPendingBackAction = _useState6[1];
+  var pathname = location.pathname;
+  var isRootOrDashboard = () => {
+    var p = (pathname || '').toLowerCase().replace(/\/$/, '');
+    return p === '' || p === '/' || p === '/adminhome' || p === '/loginadmin' || p === '/loginemployee';
+  };
+  var isFormOrEditPage = () => {
+    var p = (pathname || '').toLowerCase();
+    return p.includes('form') || p.includes('update') || p.includes('clone') || p.includes('convertto');
+  };
+  (0,react.useEffect)(() => {
+    var backListener = null;
+    var setupListener = /*#__PURE__*/function () {
+      var _ref = NativeBackHandler_asyncToGenerator(function* () {
+        try {
+          backListener = yield App.addListener('backButton', _ref2 => {
+            var canGoBack = _ref2.canGoBack;
+            if (exitDialogOpen || discardDialogOpen) {
+              setExitDialogOpen(false);
+              setDiscardDialogOpen(false);
+              return;
+            }
+            if (isRootOrDashboard()) {
+              setExitDialogOpen(true);
+            } else if (isFormOrEditPage()) {
+              setDiscardDialogOpen(true);
+              setPendingBackAction(() => () => navigate(-1));
+            } else {
+              navigate(-1);
+            }
+          });
+        } catch (e) {
+          // Fallback for non-Capacitor environment (e.g. desktop/browser)
+        }
+      });
+      return function setupListener() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    setupListener();
+    return () => {
+      if (backListener && typeof backListener.remove === 'function') {
+        backListener.remove();
+      }
+    };
+  }, [pathname, exitDialogOpen, discardDialogOpen, navigate]);
+  var handleConfirmExit = /*#__PURE__*/function () {
+    var _ref3 = NativeBackHandler_asyncToGenerator(function* () {
+      setExitDialogOpen(false);
+      try {
+        yield App.exitApp();
+      } catch (e) {
+        // In web/desktop, no-op
+      }
+    });
+    return function handleConfirmExit() {
+      return _ref3.apply(this, arguments);
+    };
+  }();
+  var handleConfirmDiscard = () => {
+    setDiscardDialogOpen(false);
+    if (pendingBackAction) {
+      pendingBackAction();
+      setPendingBackAction(null);
+    } else {
+      navigate(-1);
+    }
+  };
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: exitDialogOpen,
+    onClose: () => setExitDialogOpen(false),
+    PaperProps: {
+      sx: {
+        borderRadius: 3.5,
+        p: 1,
+        width: '90%',
+        maxWidth: 380,
+        boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      pb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1,
+      borderRadius: 2,
+      backgroundColor: '#FEF2F2',
+      color: '#EF4444',
+      display: 'flex'
+    }
+  }, /*#__PURE__*/react.createElement(ExitToApp/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#1E293B',
+      fontSize: '1.1rem'
+    }
+  }, "Exit Application")), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      pb: 1
+    }
+  }, /*#__PURE__*/react.createElement(DialogContentText_DialogContentText, {
+    sx: {
+      color: '#64748B',
+      fontSize: '0.9rem'
+    }
+  }, "Are you sure you want to exit Global Gate Management?")), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 2,
+      pb: 2,
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: () => setExitDialogOpen(false),
+    variant: "outlined",
+    sx: {
+      flex: 1,
+      borderRadius: 2.5,
+      borderColor: '#CBD5E1',
+      color: '#475569',
+      textTransform: 'none',
+      fontWeight: 600
+    }
+  }, "Cancel"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: handleConfirmExit,
+    variant: "contained",
+    sx: {
+      flex: 1,
+      borderRadius: 2.5,
+      backgroundColor: '#EF4444',
+      color: '#ffffff',
+      textTransform: 'none',
+      fontWeight: 700,
+      '&:hover': {
+        backgroundColor: '#DC2626'
+      }
+    }
+  }, "Exit App"))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+    open: discardDialogOpen,
+    onClose: () => setDiscardDialogOpen(false),
+    PaperProps: {
+      sx: {
+        borderRadius: 3.5,
+        p: 1,
+        width: '90%',
+        maxWidth: 380,
+        boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DialogTitle/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1.5,
+      pb: 1
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1,
+      borderRadius: 2,
+      backgroundColor: '#FFFBEB',
+      color: '#F59E0B',
+      display: 'flex'
+    }
+  }, /*#__PURE__*/react.createElement(WarningAmber/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "h6",
+    sx: {
+      fontWeight: 800,
+      color: '#1E293B',
+      fontSize: '1.1rem'
+    }
+  }, "Unsaved Changes")), /*#__PURE__*/react.createElement(DialogContent/* default */.A, {
+    sx: {
+      pb: 1
+    }
+  }, /*#__PURE__*/react.createElement(DialogContentText_DialogContentText, {
+    sx: {
+      color: '#64748B',
+      fontSize: '0.9rem'
+    }
+  }, "You have unsaved form entries. Are you sure you want to leave without saving?")), /*#__PURE__*/react.createElement(DialogActions/* default */.A, {
+    sx: {
+      px: 2,
+      pb: 2,
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: () => setDiscardDialogOpen(false),
+    variant: "outlined",
+    sx: {
+      flex: 1,
+      borderRadius: 2.5,
+      borderColor: '#CBD5E1',
+      color: '#475569',
+      textTransform: 'none',
+      fontWeight: 600
+    }
+  }, "Keep Editing"), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    onClick: handleConfirmDiscard,
+    variant: "contained",
+    sx: {
+      flex: 1,
+      borderRadius: 2.5,
+      backgroundColor: '#EF4444',
+      color: '#ffffff',
+      textTransform: 'none',
+      fontWeight: 700,
+      '&:hover': {
+        backgroundColor: '#DC2626'
+      }
+    }
+  }, "Discard & Exit"))));
+}
+/* harmony default export */ const component_NativeBackHandler = (NativeBackHandler);
 ;// ./src/js/App.js
 /* unused harmony import specifier */ var App_React;
+
 
 
 
@@ -132840,10 +134524,7 @@ function AppLayoutWrapper(_ref) {
       }
     }
   }, [isMobile]);
-  if (isMobile) {
-    return /*#__PURE__*/react.createElement(component_MobileLayout, null, children);
-  }
-  return /*#__PURE__*/react.createElement(react.Fragment, null, children);
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(component_NativeBackHandler, null), isMobile ? /*#__PURE__*/react.createElement(component_MobileLayout, null, children) : children);
 }
 
 // --- CORE ADMIN VIEWS ---
@@ -133026,7 +134707,7 @@ var WorkerPaymentView = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* i
 var BlockDamageView = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 4184).then(__webpack_require__.bind(__webpack_require__, 54184)));
 var BlockMixerView = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 2122).then(__webpack_require__.bind(__webpack_require__, 12122)));
 var BlockFactoryLayout = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 4237).then(__webpack_require__.bind(__webpack_require__, 44237)));
-function App() {
+function App_App() {
   (0,useLayoutConfig/* default */.A)();
   (0,react.useEffect)(() => {
     var handleGlobalError = event => {
@@ -133305,6 +134986,9 @@ function App() {
     path: "ProjectPhase/:id",
     element: /*#__PURE__*/react.createElement(ProjectPhase, null)
   }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+    path: "EmployeeViewAdminAll",
+    element: /*#__PURE__*/react.createElement(EmployeeViewAdminAll, null)
+  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
     path: "EmployeeViewAdminAll/:id",
     element: /*#__PURE__*/react.createElement(EmployeeViewAdminAll, null)
   }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
@@ -133484,7 +135168,7 @@ function App() {
     theme: "light"
   }));
 }
-/* harmony default export */ const js_App = (App);
+/* harmony default export */ const js_App = (App_App);
 ;// ./src/js/app/store.js
 
 

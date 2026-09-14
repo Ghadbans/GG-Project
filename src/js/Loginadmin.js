@@ -146,7 +146,8 @@ function Loginadmin() {
 			console.log(error)
 			setIsErrorLoading(true);
 			await new Promise((resolve) => setTimeout(resolve, 500));
-			setErrorMsg('An Error As Occurred, Try Again');
+			const backendMsg = error?.data?.message || error?.data?.error || error?.message || (typeof error === 'string' ? error : null);
+			setErrorMsg(backendMsg || 'An Error Has Occurred, Try Again');
 		} finally {
 			setIsLoading(false)
 			setIsErrorLoading(false)

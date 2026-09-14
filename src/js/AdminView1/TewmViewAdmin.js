@@ -41,6 +41,8 @@ import { TabContext, TabList, TabPanel } from '@mui/lab';
 import EmployeeAttendanceSheet from './PageView/EmployeeView/EmployeeAttendanceSheet';
 
 import EmployeePlaningView from './PageView/EmployeeView/EmployeePlaningView';
+import { useIsMobile } from '../utils/isMobile';
+import MobileCardList from '../component/MobileCardList';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -131,6 +133,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 function TewmViewAdmin() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
   const user = useSelector(selectCurrentUser);
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
@@ -503,6 +506,18 @@ function TewmViewAdmin() {
       )
     },
   ]
+  if (isMobile) {
+    return loadingData ? (
+      <div style={{ position: 'relative', top: '120px', textAlign: 'center' }}>
+        <Loader />
+      </div>
+    ) : (
+      <Box sx={{ width: '100%', py: 1 }}>
+        <MobileCardList type="employees" data={employee} searchPlaceholder="Search employees..." />
+      </Box>
+    );
+  }
+
   return (
     <div className='Homeemployee'>
 

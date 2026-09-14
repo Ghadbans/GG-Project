@@ -26,8 +26,18 @@
 17. **Maintenance Converted vs Closed Distinction**: In the database, when a maintenance order is converted to an invoice, its `Converted` field is set to `true` while its `status` may remain `'Close'`. Queries and aggregations for pure `CLOSED` orders MUST explicitly filter for `Converted: { $nin: [true, 'true'] }`, while `CONVERTED` queries must filter for `{ $or: [{ Converted: true }, { Converted: 'true' }, { status: /^converted$/i }] }`. Neglecting this distinction will cause converted orders to bleed into the closed list and counts.
 18. **Status Summary Filter Cards Uniformity & Viewport Awareness**: When embedding compact status summary cards grids across master listing views (Maintenance, Invoice, Quotation, Project, Purchase Request, POS Invoice), always style cards with `p: '6px 10px'`, 22px icon badge, 16px bold count, 9.5px uppercase label, and a 3px active status bar indicator. Concurrently, set DataGrid container height to `calc(100vh - 200px)` with `minHeight: 380px` and compact top action buttons to ensure table pagination controls remain permanently visible on screen without requiring vertical page scrolling.
 19. **Backend Cloudflare Proxied Custom Domain**: The backend endpoint is permanently unified under `https://api.globalgate.sarl` with Cloudflare proxy (Orange Cloud) enabled. This shields the Railway backend from ISP-level DNS blocks and routing throttling worldwide (especially in DRC/Africa), ensuring all desktop apps, web portals (`portal.globalgate.sarl`), and mobile apps connect reliably with ultra-low latency without requiring any VPN. Always use `API_BASE_URL` and `ENDPOINT_URL` from `src/js/apiConfig.js`.
+20. **Strict Isolation of Mobile Application Layout from Desktop & Web (Ver 3.5.09)**: The mobile application layout (`MobileLayout`, `MobileCardList`, mobile bottom tabs) must be strictly isolated to native Capacitor mobile environments (`window.Capacitor.isNativePlatform()`), real mobile handheld devices (smartphones/tablets via user-agent), or explicit debug query `?mobile=true`. Desktop executable (.exe / Electron) and desktop browsers MUST NEVER switch to mobile layout when users resize, snap, or minimize windows (`window.innerWidth < 900` fallback completely removed).
 
 ## Current Progress Log
+- **Desktop vs Mobile Layout Strict Separation & Daily Expenses ReferenceError Fix (Ver 3.5.09)**:
+  - **Strict Mobile / Desktop Layout Separation (`src/js/utils/isMobile.js`)**:
+    - Completely eliminated the `window.innerWidth < 900` fallback in `isMobile.js` that caused the desktop .exe and desktop web version to abruptly transform into mobile bottom-navigation and mobile cards when minimizing or resizing the window.
+    - Added explicit Electron environment bypass (`navigator.userAgent.includes('Electron')` -> `false`) ensuring the desktop app always retains full desktop DataGrids, toolbars, sidebars, and dialogs.
+    - Mobile layout is now strictly reserved for native Capacitor mobile builds (iOS/Android) and real mobile handhelds.
+  - **Daily Expenses Component Integrity (`DailyExpenses.js`)**:
+    - Verified and ensured `NotificationVIewInfo` import is clean and present, resolving any undefined component reference runtime crashes.
+  - **Release & Distribution**: Bumped version to `3.5.09`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.9.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+
 - **Cloudflare Proxied Custom Domain Backend Migration (Ver 3.5.08)**:
   - **Backend Domain Routing (`api.globalgate.sarl`)**:
     - Connected Railway backend to custom domain `api.globalgate.sarl` with Cloudflare Anycast Proxy (`CNAME -> 4wu3pn5e.up.railway.app` Proxied).

@@ -41,6 +41,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { v4 } from 'uuid';
 import CancelIcon from '@mui/icons-material/Cancel';
 import MessageAdminView from './MessageAdminView';
+import NotificationVIewInfo from './NotificationVIewInfo';
 import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
 

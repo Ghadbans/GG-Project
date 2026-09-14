@@ -418,17 +418,11 @@ function EmployeeFormView() {
   };
   if (isMobile) {
     return (
-      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 'calc(90px + env(safe-area-inset-bottom, 0px))' }}>
         {/* Sticky Mobile Header */}
         <Box
           sx={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 1000,
-            backgroundColor: '#30368a',
-            color: '#ffffff',
-            px: 2,
-            py: 1.5,
+            position: 'sticky', top: 0, zIndex: 1000, backgroundColor: '#30368a', color: '#ffffff', px: 2, pt: 'calc(10px + env(safe-area-inset-top, 0px))', pb: '10px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',

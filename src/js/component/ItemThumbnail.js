@@ -39,11 +39,23 @@ const ItemThumbnail = ({ itemId, initialData, initialType }) => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-item/${itemId}`);
         if (res.data.data && res.data.data.data) {
-          const buffer = new Uint8Array(res.data.data.data.data);
-          const blob = new Blob([buffer], { type: res.data.data.contentType });
-          const reader = new FileReader();
-          reader.onloadend = () => setSrc(reader.result);
-          reader.readAsDataURL(blob);
+          const raw = res.data.data.data;
+          const ct = res.data.data.contentType || 'image/jpeg';
+          if (typeof raw === 'string') {
+            if (raw.startsWith('data:')) {
+              setSrc(raw);
+            } else {
+              setSrc(`data:${ct};base64,${raw}`);
+            }
+          } else if (raw.data && Array.isArray(raw.data)) {
+            const buffer = new Uint8Array(raw.data);
+            const blob = new Blob([buffer], { type: ct });
+            const reader = new FileReader();
+            reader.onloadend = () => setSrc(reader.result);
+            reader.readAsDataURL(blob);
+          } else {
+            setSrc(null);
+          }
         } else {
           setSrc(null);
         }

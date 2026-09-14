@@ -90,7 +90,8 @@ function Loginemployee() {
 		} catch (err) {
 			setIsErrorLoading(true);
 			await new Promise((resolve) => setTimeout(resolve, 500));
-			setErrorMsg('An Error As Occurred, Try Again ');
+			const backendMsg = err?.data?.message || err?.data?.error || err?.message || (typeof err === 'string' ? err : null);
+			setErrorMsg(backendMsg || 'An Error Has Occurred, Try Again');
 		} finally {
 			setIsLoading(false)
 			setIsErrorLoading(false)

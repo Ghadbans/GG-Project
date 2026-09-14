@@ -391,15 +391,27 @@ function ItemInformationVIew() {
           const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`)
           setItemName(res.data.data.itemName)
           if (res.data.data && res.data.data.data != null) {
-            const buffer = new Uint8Array(res.data.data.data.data)
-            const bold = new Blob([buffer], { type: `${res.data.data.contentType}` })
-            const reader = new FileReader();
-            reader.readAsDataURL(bold)
-            reader.onloadend = () => {
-              setImagesURL(reader.result)
-            };
+            const raw = res.data.data.data;
+            const ct = res.data.data.contentType || 'image/jpeg';
+            if (typeof raw === 'string') {
+              if (raw.startsWith('data:')) {
+                setImagesURL(raw);
+              } else {
+                setImagesURL(`data:${ct};base64,${raw}`);
+              }
+            } else if (raw.data && Array.isArray(raw.data)) {
+              const buffer = new Uint8Array(raw.data);
+              const bold = new Blob([buffer], { type: ct });
+              const reader = new FileReader();
+              reader.readAsDataURL(bold);
+              reader.onloadend = () => {
+                setImagesURL(reader.result);
+              };
+            } else {
+              setImagesURL(null);
+            }
           } else {
-            setImagesURL(null)
+            setImagesURL(null);
           }
         }
         setLoadingData1(false)

@@ -252,18 +252,26 @@ function SupplierForm() {
   }
   const [saving, setSaving] = useState('')
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     setSaving('true')
     const data = {
       _id: v4(),
-      supplierName, storeName, customerPhone1, customerPhone2, address, description, synced: false
+      supplierName,
+      storeName,
+      customerPhone1,
+      customerPhone2,
+      phone: customerPhone1,
+      phone1: customerPhone1,
+      phone2: customerPhone2,
+      address,
+      description,
+      synced: false
     };
     try {
-      const res = await axios.post(apiUrl, { supplierName, storeName, customerPhone1, customerPhone2, address, description, synced: false });
+      const res = await axios.post(apiUrl, data);
       if (res) {
         const ReferenceInfo = res.data.data._id
         handleCreateNotification(ReferenceInfo)
-
         handleOpen();
       }
     } catch (error) {
@@ -272,21 +280,14 @@ function SupplierForm() {
         handleError();
       }
     }
-
   };
   if (isMobile) {
     return (
-      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 'calc(90px + env(safe-area-inset-bottom, 0px))' }}>
         {/* Sticky Mobile Header */}
         <Box
           sx={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 1000,
-            backgroundColor: '#30368a',
-            color: '#ffffff',
-            px: 2,
-            py: 1.5,
+            position: 'sticky', top: 0, zIndex: 1000, backgroundColor: '#30368a', color: '#ffffff', px: 2, pt: 'calc(10px + env(safe-area-inset-top, 0px))', pb: '10px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',

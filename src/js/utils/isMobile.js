@@ -1,48 +1,51 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Checks if the current environment is running on a mobile viewport or native platform.
- * Supports:
- * - Native Capacitor runtime (Android / iOS)
- * - Explicit query parameter for browser testing (?mobile=true)
- * - Viewport width (< 900px)
- * - Mobile user-agent strings
+ * Checks if the current environment is running as a Mobile Application.
+ * Mobile layout is strictly isolated to:
+ * - Native Capacitor runtime (Android / iOS native app)
+ * - Real mobile handheld devices (smartphones/tablets via user-agent)
+ * - Explicit URL query parameter override for mobile testing/preview (?mobile=true)
+ * 
+ * Desktop Application (.exe / Electron) and Webversion on desktop/laptops will
+ * NEVER switch to mobile layout when resizing or minimizing windows.
  */
 export const isNativeMobile = () => {
   if (typeof window === 'undefined') return false;
 
-  // 1. Explicit query parameter override for testing
-  if (window.location && window.location.search && window.location.search.includes('mobile=true')) {
+  // 1. Electron Desktop App check (.exe) - ALWAYS desktop layout
+  if (typeof navigator !== 'undefined' && navigator.userAgent && navigator.userAgent.includes('Electron')) {
+    return false;
+  }
+
+  // 2. Explicit query parameter override for testing/debugging in browser
+  if (typeof window.location !== 'undefined' && window.location.search && window.location.search.includes('mobile=true')) {
     return true;
   }
 
-  // 2. Capacitor native runtime
+  // 3. Capacitor native runtime (iOS / Android App)
   if (typeof window.Capacitor !== 'undefined' && typeof window.Capacitor.isNativePlatform === 'function') {
     if (window.Capacitor.isNativePlatform()) {
       return true;
     }
   }
 
-  // 3. User agent mobile check
+  // 4. Mobile handheld devices (Smartphones / Tablets only)
   if (typeof navigator !== 'undefined' && navigator.userAgent) {
-    const isMobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobileUA) {
+    const isMobileDevice = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if (isMobileDevice) {
       return true;
     }
   }
 
-  // 4. Viewport width check (Responsive mobile breakpoint)
-  if (typeof window.innerWidth === 'number' && window.innerWidth < 900) {
-    return true;
-  }
-
+  // On desktop browsers and Electron, always return false
   return false;
 };
 
 export const isMobile = isNativeMobile;
 
 /**
- * Reactive React hook to detect mobile viewport changes dynamically.
+ * Reactive React hook to detect mobile environment dynamically.
  */
 export const useIsMobile = () => {
   const [mobile, setMobile] = useState(() => isNativeMobile());

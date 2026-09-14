@@ -174,6 +174,7 @@ function SupplierFormUpdate() {
     dispatch(logOut());
     navigate('/')
   }
+  const [saving, setSaving] = useState(false);
   const [openBack, setOpenBack] = useState(false);
 
   const handleOpenBack = (e) => {
@@ -198,13 +199,16 @@ function SupplierFormUpdate() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/get-Supplier/${id}`)
-        setSupplierName(res.data.data.supplierName);
-        setStoreName(res.data.data.storeName);
-        setCustomerPhone1(res.data.data.customerPhone1);
-        setCustomerPhone2(res.data.data.customerPhone2);
-        setAddress(res.data.data.address);
-        setDescription(res.data.data.description);
+        const res = await axios.get(`${ENDPOINT_URL}/get-Supplier/${id}`);
+        const sup = res?.data?.data;
+        if (sup) {
+          setSupplierName(sup.supplierName || sup.name || '');
+          setStoreName(sup.storeName || sup.companyName || '');
+          setCustomerPhone1(sup.customerPhone1 || sup.phone || sup.phone1 || sup.contact || '');
+          setCustomerPhone2(sup.customerPhone2 || sup.phone2 || '');
+          setAddress(sup.address || '');
+          setDescription(sup.description || '');
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -260,21 +264,30 @@ function SupplierFormUpdate() {
   const handleCreateComment = async () => {
     const data = {
       idInfo: id,
-      person: user.data.userName + ' Modify SUPPLIER ' + storeName,
+      person: (user?.data?.userName || 'User') + ' Modify SUPPLIER ' + storeName,
       reason,
       dateNotification: dateComment
     };
     try {
       await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
-
     } catch (error) {
       console.log(error)
     }
   }
   const handleSubmitEdit = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
+    setSaving(true);
     const data = {
-      supplierName, storeName, customerPhone1, customerPhone2, address, description, updateS: false
+      supplierName,
+      storeName,
+      customerPhone1,
+      customerPhone2,
+      phone: customerPhone1,
+      phone1: customerPhone1,
+      phone2: customerPhone2,
+      address,
+      description,
+      updateS: false
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-Supplier/${id}`, data)
@@ -287,24 +300,19 @@ function SupplierFormUpdate() {
         handleOpen();
       }
     } catch (error) {
-      if (error) {
-        handleError();
-      }
+      console.error('Error updating supplier:', error);
+      handleError();
+    } finally {
+      setSaving(false);
     }
   };
   if (isMobile) {
     return (
-      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 'calc(90px + env(safe-area-inset-bottom, 0px))' }}>
         {/* Sticky Mobile Header */}
         <Box
           sx={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 1000,
-            backgroundColor: '#30368a',
-            color: '#ffffff',
-            px: 2,
-            py: 1.5,
+            position: 'sticky', top: 0, zIndex: 1000, backgroundColor: '#30368a', color: '#ffffff', px: 2, pt: 'calc(10px + env(safe-area-inset-top, 0px))', pb: '10px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -327,8 +335,8 @@ function SupplierFormUpdate() {
           <Button
             variant="contained"
             size="small"
-            onClick={handleSubmit}
-            disabled={loading || saving === 'true'}
+            onClick={handleSubmitEdit}
+            disabled={loading || saving}
             sx={{
               backgroundColor: '#10B981',
               color: '#ffffff',
@@ -339,7 +347,7 @@ function SupplierFormUpdate() {
               '&:hover': { backgroundColor: '#059669' }
             }}
           >
-            {saving === 'true' ? 'Saving...' : 'Save'}
+            {saving ? 'Saving...' : 'Save'}
           </Button>
         </Box>
 
@@ -420,8 +428,8 @@ function SupplierFormUpdate() {
             fullWidth
             variant="contained"
             size="large"
-            onClick={handleSubmit}
-            disabled={loading || saving === 'true'}
+            onClick={handleSubmitEdit}
+            disabled={loading || saving}
             sx={{
               backgroundColor: '#30368a',
               color: '#ffffff',
@@ -434,7 +442,7 @@ function SupplierFormUpdate() {
               '&:hover': { backgroundColor: '#202a5a' }
             }}
           >
-            {saving === 'true' ? 'Saving Changes...' : 'Save Changes'}
+            {saving ? 'Saving Changes...' : 'Save Changes'}
           </Button>
         </Box>
 

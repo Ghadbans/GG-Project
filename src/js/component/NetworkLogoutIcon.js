@@ -24,28 +24,30 @@ export default function NetworkLogoutIcon({ style, ...props }) {
 
         const timeoutId = setTimeout(() => {
             if (controllerRef.current) controllerRef.current.abort();
-        }, 4000);
+        }, 5000);
 
-        // Ping a public reliable endpoint to check network status without hitting the API and causing 404 console spam
-        // Ping the Railway backend /status endpoint to ensure the actual server is reachable
-        await fetch(`${API_BASE_URL}/status`, { method: 'HEAD', mode: 'no-cors', cache: 'no-store', signal });
+        const res = await fetch(`${API_BASE_URL}/status`, { method: 'GET', cache: 'no-store', signal });
         clearTimeout(timeoutId);
 
-        const duration = Date.now() - startTime;
-
-        if (duration < 1500) {
-          setConnectionStatus('fast');
-        } else {
-          setConnectionStatus('slow');
-        }
-      } catch (e) {
-        if (e.name === 'AbortError') {
+        if (res.ok) {
           const duration = Date.now() - startTime;
-          if (duration >= 3900) {
-              setConnectionStatus('offline');
+          if (duration < 2500) {
+            setConnectionStatus('fast');
+          } else {
+            setConnectionStatus('slow');
           }
         } else {
           setConnectionStatus('offline');
+        }
+      } catch (e) {
+        if (e.name === 'AbortError') {
+          setConnectionStatus('offline');
+        } else {
+          if (navigator.onLine) {
+            setConnectionStatus('slow');
+          } else {
+            setConnectionStatus('offline');
+          }
         }
       }
     };
@@ -56,7 +58,7 @@ export default function NetworkLogoutIcon({ style, ...props }) {
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    const interval = setInterval(checkStatus, 5000);
+    const interval = setInterval(checkStatus, 6000);
     checkStatus();
 
     return () => {

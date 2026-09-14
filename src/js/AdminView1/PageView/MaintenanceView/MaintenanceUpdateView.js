@@ -841,17 +841,11 @@ function MaintenanceUpdateView() {
 
   if (isMobile) {
     return (
-      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 12 }}>
+      <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 'calc(90px + env(safe-area-inset-bottom, 0px))' }}>
         {/* Sticky Mobile Header */}
         <Box
           sx={{
-            position: 'sticky',
-            top: 0,
-            zIndex: 1000,
-            backgroundColor: '#30368a',
-            color: '#ffffff',
-            px: 2,
-            py: 1.5,
+            position: 'sticky', top: 0, zIndex: 1000, backgroundColor: '#30368a', color: '#ffffff', px: 2, pt: 'calc(10px + env(safe-area-inset-top, 0px))', pb: '10px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -1901,7 +1895,15 @@ function MaintenanceUpdateView() {
                                                           disableClearable
                                                           options={filterItemInformation}
                                                           getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
-                                                          renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + '/' + option.itemBrand}</Box>)}
+                                                          renderOption={(props, option) => (
+                                                            <Box component="li" {...props} sx={{ backgroundColor: '#f2f2f2', display: 'flex', alignItems: 'center', gap: 1.5, py: 1 }}>
+                                                              <ItemThumbnail itemId={option._id} initialData={option.data} initialType={option.contentType} />
+                                                              <Box>
+                                                                <Typography variant="body2" sx={{ fontWeight: 600, color: '#202a5a' }}>{option.itemName}</Typography>
+                                                                <Typography variant="caption" color="text.secondary">{option.itemBrand} {option.itemDescription ? `— ${option.itemDescription}` : ''}</Typography>
+                                                              </Box>
+                                                            </Box>
+                                                          )}
                                                           renderInput={(params) =>
                                                             <TextField multiline
                                                               rows={4} {...params} required

@@ -693,10 +693,10 @@ body.is-mobile-app .MobileLayout-appBar {
     margin-left: 0 !important;
     margin-right: 0 !important;
     box-sizing: border-box !important;
-    position: fixed !important;
-    top: 0 !important;
-    height: 52px !important;
-    min-height: 52px !important;
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 54px !important;
     z-index: 1200 !important;
     display: flex !important;
 }

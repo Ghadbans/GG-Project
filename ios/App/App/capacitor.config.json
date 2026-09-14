@@ -4,26 +4,19 @@
 	"webDir": "dist_web",
 	"bundledWebRuntime": false,
 	"server": {
-		"androidScheme": "https",
-		"cleartext": true
+		"cleartext": true,
+		"androidScheme": "https"
 	},
 	"plugins": {
 		"SplashScreen": {
-			"launchAutoHide": true,
 			"launchShowDuration": 2000,
-			"backgroundColor": "#0f172a"
+			"backgroundColor": "#30368a",
+			"showSpinner": false
 		},
 		"StatusBar": {
 			"style": "DARK",
-			"backgroundColor": "#0f172a"
-		},
-		"Keyboard": {
-			"resize": "body"
+			"backgroundColor": "#30368a"
 		}
 	},
-	"packageClassList": [
-		"KeyboardPlugin",
-		"SplashScreenPlugin",
-		"StatusBarPlugin"
-	]
+	"packageClassList": []
 }

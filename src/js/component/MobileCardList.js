@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../features/auth/authSlice';
+import { cachedGet } from '../utils/apiCache';
+import { ENDPOINT_URL } from '../apiConfig';
 import {
   Box,
   Card,
@@ -48,15 +52,41 @@ function formatMoney(val) {
   return '$ ' + Number(val).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
+function getItemImageSrc(item) {
+  if (!item) return null;
+  if (item.data && typeof item.data === 'string' && item.data.length > 50) {
+    if (item.data.startsWith('data:')) return item.data;
+    const ct = item.contentType || 'image/jpeg';
+    return `data:${ct};base64,${item.data}`;
+  }
+  if (item.image && typeof item.image === 'string' && item.image.length > 20) {
+    return item.image;
+  }
+  if (item.data && item.data.data && Array.isArray(item.data.data)) {
+    try {
+      const bytes = new Uint8Array(item.data.data);
+      let binary = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+      const b64 = window.btoa(binary);
+      return `data:${item.contentType || 'image/jpeg'};base64,${b64}`;
+    } catch(e) {}
+  }
+  return null;
+}
+
 function getStatusChip(status, balanceDue, totalAmount) {
   const isPaid = parseFloat(balanceDue || 0) <= 0 && parseFloat(totalAmount || 0) > 0;
-  const rawStat = safeText(isPaid ? 'Paid' : (status || 'Draft'), 'Draft');
+  const rawStat = safeText(status === 'Free of Charge' ? 'Free of Charge' : (isPaid ? 'Paid' : (status || 'Draft')), 'Draft');
   const stat = rawStat.toLowerCase();
 
   let bg = '#F1F5F9';
   let color = '#475569';
 
   switch (stat) {
+    case 'free of charge':
+      bg = '#F3E8FF';
+      color = '#7E22CE';
+      break;
     case 'paid':
     case 'close':
     case 'converted':
@@ -75,8 +105,8 @@ function getStatusChip(status, balanceDue, totalAmount) {
       color = '#B45309';
       break;
     case 'reschedule':
-      bg = '#F3E8FF';
-      color = '#7E22CE';
+      bg = '#EDE9FE';
+      color = '#6D28D9';
       break;
     case 'cancel':
     case 'overdue':
@@ -112,8 +142,51 @@ function getStatusChip(status, balanceDue, totalAmount) {
 
 function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Search records...' }) {
   const navigate = useNavigate();
+  const user = useSelector(selectCurrentUser);
   const [search, setSearch] = useState('');
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [grantAccess, setGrantAccess] = useState([]);
+
+  useEffect(() => {
+    const fetchAccess = async () => {
+      if (!user?.data?.id) return;
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
+        const userAccess = res?.data?.data?.find(row => row.userID === user?.data?.id);
+        if (userAccess && Array.isArray(userAccess.modules)) {
+          setGrantAccess(userAccess.modules);
+        }
+      } catch (err) {
+        console.error('Error loading grantAccess in MobileCardList:', err);
+      }
+    };
+    fetchAccess();
+  }, [user]);
+
+  const userName = user?.data?.userName || '';
+  const userRole = user?.data?.role || '';
+  const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
+
+  const canCreate = (t) => {
+    if (isSuperUser) return true;
+    const typeToModule = {
+      invoices: 'Invoice',
+      quotations: 'Estimate',
+      estimates: 'Estimate',
+      customers: 'Customer',
+      items: 'Store',
+      maintenance: 'Maintenance',
+      maintenance_orders: 'Maintenance-Order',
+      payments: 'Payment',
+      expenses: 'Expenses',
+      projects: 'Project',
+      employees: 'Employee',
+      suppliers: 'Purchase'
+    };
+    const modName = typeToModule[t] || '';
+    const mod = grantAccess.find(m => m.moduleName?.toLowerCase() === modName?.toLowerCase() || m.name?.toLowerCase() === modName?.toLowerCase());
+    return Boolean(mod?.access?.createM);
+  };
 
   const safeData = Array.isArray(data) ? data : [];
 
@@ -170,7 +243,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
     if (type === 'payments') {
       const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
       const num = safeText(item.paymentNumber).toLowerCase();
-      return cust.includes(q) || num.includes(q);
+      const numFmt = `pay-${String(item.paymentNumber || '').padStart(6, '0')}`.toLowerCase();
+      const desc = safeText(item.description).toLowerCase();
+      const mode = safeText(item.modes || item.mode).toLowerCase();
+      return cust.includes(q) || num.includes(q) || numFmt.includes(q) || desc.includes(q) || mode.includes(q);
     }
     if (type === 'expenses') {
       const cat = safeText(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category).toLowerCase();
@@ -184,13 +260,14 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
     }
     if (type === 'employees') {
       const emp = safeText(item.employeeName || item.name).toLowerCase();
-      const pos = safeText(item.position || item.role || item.status).toLowerCase();
+      const pos = safeText(item.position || item.role || item.status || item.department).toLowerCase();
       return emp.includes(q) || pos.includes(q);
     }
     if (type === 'suppliers') {
-      const sup = safeText(item.supplierName || item.name).toLowerCase();
-      const phone = safeText(item.phone || item.contact).toLowerCase();
-      return sup.includes(q) || phone.includes(q);
+      const sup = safeText(item.supplierName || item.storeName || item.companyName || item.name || item.contactPerson).toLowerCase();
+      const phone = safeText(item.phone || item.phone1 || item.contact || item.address || item.description).toLowerCase();
+      const email = safeText(item.email).toLowerCase();
+      return sup.includes(q) || phone.includes(q) || email.includes(q);
     }
     return true;
   });
@@ -212,15 +289,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
   return (
     <Box sx={{ width: '100%', pb: 8, boxSizing: 'border-box', position: 'relative', minHeight: '80vh' }}>
-      {/* ── TOP PINNED / STICKY SEARCH BAR ── */}
+      {/* ── TOP SEARCH BAR ── */}
       <Box
         sx={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1000,
-          backgroundColor: '#F8FAFC',
-          pt: 0.5,
-          pb: 1.5,
+          mb: 1.5,
           width: '100%',
           display: 'flex',
           alignItems: 'center',
@@ -322,9 +394,11 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
           // 2. Quotations / Estimates
           if (type === 'quotations' || type === 'estimates') {
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Quotation Client');
-            const estNum = typeof item.estimateNumber === 'number' ? `EST-${String(item.estimateNumber).padStart(6, '0')}` : safeText(item.estimateNumber, 'EST');
+            const estNum = typeof item.estimateNumber === 'number' ? `Q-${String(item.estimateNumber).padStart(6, '0')}` : safeText(item.estimateNumber, 'QUO');
             const date = safeText(item.dateField || item.date, '2026');
-            const total = Number(item.totalEstimate ?? item.total ?? 0);
+            const lineItems = Array.isArray(item.itemInfo) ? item.itemInfo : (Array.isArray(item.items) ? item.items : []);
+            const calcLineTotal = lineItems.reduce((acc, it) => acc + (Number(it?.itemTotal) || (Number(it?.itemQuantity || it?.quantity || 1) * Number(it?.itemSellingPrice || it?.rate || it?.price || 0))), 0);
+            const total = Number(item.totalInvoice ?? item.totalAmount ?? item.totalEstimate ?? item.total ?? (calcLineTotal > 0 ? calcLineTotal : 0));
 
             return (
               <Card
@@ -406,12 +480,12 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 4. Items / Store & Technician Store (WITH 48x48 THUMBNAIL)
           if (type === 'items' || type === 'tech_store') {
+            const isTechStore = type === 'tech_store';
             const name = safeText(item.itemName || item.name, 'Store Item');
             const code = safeText(item.itemCode || item.code || item.itemUpc?.newCode || item.itemUpc, 'N/A');
             const qty = Number(item.itemQuantity ?? item.balanceQty ?? item.quantity ?? 0);
             const sell = Number(item.itemSellingPrice ?? item.Sell ?? item.sellPrice ?? 0);
-            const hasImg = Boolean(item?.data && item?.contentType);
-            const imgSrc = hasImg ? `data:${item.contentType};base64,${item.data}` : (item?.image || null);
+            const imgSrc = getItemImageSrc(item);
 
             return (
               <Card
@@ -440,7 +514,8 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                       width: 48,
                       height: 48,
                       borderRadius: 2,
-                      objectFit: 'cover',
+                      objectFit: 'contain',
+                      backgroundColor: '#f8fafc',
                       border: '1px solid #E2E8F0',
                       flexShrink: 0
                     }}
@@ -467,14 +542,16 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                     {name}
                   </Typography>
                   <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }}>
-                    Code: {code} • Stock: {qty}
+                    {isTechStore ? `Code: ${code}` : `Code: ${code} • Stock: ${qty}`}
                   </Typography>
                 </Box>
 
                 <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#10B981', fontSize: '0.95rem' }}>
-                    {formatMoney(sell)}
-                  </Typography>
+                  {!isTechStore && (
+                    <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#10B981', fontSize: '0.95rem' }}>
+                      {formatMoney(sell)}
+                    </Typography>
+                  )}
                   <ArrowForwardIosIcon sx={{ fontSize: 12, color: '#CBD5E1', mt: 0.5 }} />
                 </Box>
               </Card>
@@ -579,9 +656,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
           // 7. Payments
           if (type === 'payments') {
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Client');
-            const payNum = item.paymentNumber ? `PAY-${item.paymentNumber}` : 'Payment';
-            const date = safeText(item.dateField || item.date, '2026');
-            const amount = Number(item.amount ?? item.total ?? 0);
+            const payNum = item.paymentNumber ? `PAY-${String(item.paymentNumber).padStart(6, '0')}` : 'Payment';
+            const date = safeText(item.dateField || item.date || item.paymentDate?.substring(0, 10), '2026');
+            const amount = Number(item.amount ?? item.paidAmount ?? item.total ?? 0);
+            const mode = safeText(item.modes || item.mode, '');
 
             return (
               <Card
@@ -605,7 +683,7 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                     {customer}
                   </Typography>
                   <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.3 }}>
-                    {payNum} • {date}
+                    {payNum} • {date} {mode ? `• ${mode}` : ''}
                   </Typography>
                 </Box>
                 <Box sx={{ textAlign: 'right' }}>
@@ -620,10 +698,14 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 8. Daily Expenses
           if (type === 'expenses') {
-            const cat = safeText(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category, 'Expense');
-            const note = safeText(item.description || item.expenseDescription, 'Daily Expense');
+            const cat = safeText(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category || item.categoryExpenses, 'Expense');
+            const note = safeText(item.description || item.expenseDescription || item.name, 'Daily Expense');
             const date = safeText(item.expenseDate || item.dateField || item.date, '2026');
-            const amount = Number(item.amount ?? item.total ?? 0);
+            
+            // In DB: item.amount is Congolese Francs (FC), item.total is USD ($)
+            const fcAmount = Number(item.amount || 0);
+            const usdTotal = Number(item.total || 0);
+            const isFC = fcAmount > 0;
 
             return (
               <Card
@@ -646,14 +728,19 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.95rem' }} noWrap>
                     {cat}
                   </Typography>
-                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.3 }}>
+                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.3 }} noWrap>
                     {note} • {date}
                   </Typography>
                 </Box>
-                <Box sx={{ textAlign: 'right' }}>
-                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#EF4444' }}>
-                    {formatMoney(amount)}
+                <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#EF4444', fontSize: '0.95rem' }}>
+                    {isFC ? `FC ${fcAmount.toLocaleString()}` : `$ ${usdTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
                   </Typography>
+                  {isFC && usdTotal > 0 && (
+                    <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 600, display: 'block' }}>
+                      ≈ $ {usdTotal.toFixed(2)}
+                    </Typography>
+                  )}
                   <ArrowForwardIosIcon sx={{ fontSize: 12, color: '#CBD5E1', mt: 0.5 }} />
                 </Box>
               </Card>
@@ -734,9 +821,11 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
           // 11. Suppliers
           if (type === 'suppliers') {
-            const supName = safeText(item.supplierName || item.name, 'Supplier');
-            const phone = safeText(item.phone || item.contact);
+            const supName = safeText(item.supplierName || item.storeName || item.companyName || item.name, 'Supplier');
+            const store = safeText(item.storeName || item.companyName);
+            const phone = safeText(item.phone || item.phone1 || item.contact);
             const email = safeText(item.email);
+            const address = safeText(item.address);
 
             return (
               <Card
@@ -759,8 +848,13 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.95rem' }} noWrap>
                     {supName}
                   </Typography>
+                  {store && store !== supName && (
+                    <Typography variant="caption" sx={{ color: '#30368a', fontWeight: 600, display: 'block', mt: 0.2 }} noWrap>
+                      {store}
+                    </Typography>
+                  )}
                   <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.3 }}>
-                    {phone} {email ? `• ${email}` : ''}
+                    {phone || 'No Phone'} {email ? `• ${email}` : ''} {address ? `• ${address}` : ''}
                   </Typography>
                 </Box>
                 <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
@@ -779,23 +873,28 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
       )}
 
       {/* ── FLOATING ACTION BUTTON (+) ── */}
-      <Fab
-        color="primary"
-        aria-label="add"
-        onClick={handleFabAdd}
-        sx={{
-          position: 'fixed',
-          bottom: 74,
-          right: 20,
-          backgroundColor: '#30368a',
-          color: '#ffffff',
-          boxShadow: '0 4px 14px rgba(48, 54, 138, 0.4)',
-          zIndex: 1000,
-          '&:hover': { backgroundColor: '#202a5a' }
-        }}
-      >
-        <AddIcon sx={{ fontSize: 28 }} />
-      </Fab>
+      {canCreate(type) && (
+        <Fab
+          color="primary"
+          aria-label="add"
+          onClick={handleFabAdd}
+          sx={{
+            position: 'fixed',
+            bottom: 'calc(70px + env(safe-area-inset-bottom, 0px))',
+            right: 16,
+            width: 50,
+            height: 50,
+            minHeight: 50,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            boxShadow: '0 4px 14px rgba(48, 54, 138, 0.4)',
+            zIndex: 1300,
+            '&:hover': { backgroundColor: '#202a5a' }
+          }}
+        >
+          <AddIcon sx={{ fontSize: 26 }} />
+        </Fab>
+      )}
 
       {/* ── DEDICATED MOBILE DETAIL SHEET ── */}
       <MobileDetailSheet

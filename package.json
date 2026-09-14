@@ -1,6 +1,6 @@
 {
   "name": "gg-management",
-  "version": "3.5.08",
+  "version": "3.5.09",
   "private": true,
   "description": "",
   "main": "main.js",
@@ -79,6 +79,7 @@
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-react": "^7.22.15",
     "@capacitor/android": "^6.2.2",
+    "@capacitor/app": "^8.1.1",
     "@capacitor/core": "^6.0.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
