@@ -30,14 +30,17 @@
 21. **Brand Identity & Icon Preservation**: Root `Icon.png` and `src/js/img/Image1.png` represent the official stylized **GG** (Global Gate) brand logo. Never overwrite them with generic placeholder or mobile generator assets. Always maintain the official Global Gate icon across Electron builds and titlebars.
 
 ## Current Progress Log
-- **Desktop vs Mobile Layout Strict Separation & Daily Expenses ReferenceError Fix (Ver 3.5.09)**:
+- **Desktop vs Mobile Layout Strict Separation, Daily Expenses Fix & Brand Icon Restoration (Ver 3.5.09)**:
   - **Strict Mobile / Desktop Layout Separation (`src/js/utils/isMobile.js`)**:
-    - Completely eliminated the `window.innerWidth < 900` fallback in `isMobile.js` that caused the desktop .exe and desktop web version to abruptly transform into mobile bottom-navigation and mobile cards when minimizing or resizing the window.
-    - Added explicit Electron environment bypass (`navigator.userAgent.includes('Electron')` -> `false`) ensuring the desktop app always retains full desktop DataGrids, toolbars, sidebars, and dialogs.
-    - Mobile layout is now strictly reserved for native Capacitor mobile builds (iOS/Android) and real mobile handhelds.
+    - Completely removed the `window.innerWidth < 900` fallback in `isMobile.js` that caused the desktop .exe and desktop web version to abruptly transform into mobile bottom-navigation tabs and mobile cards when minimizing, resizing, or snapping windows.
+    - Added explicit Electron desktop bypass (`navigator.userAgent.includes('Electron')` -> `false`) guaranteeing that the desktop app always retains full desktop DataGrids, sidebars, filters, and toolbars regardless of window dimensions.
+    - Mobile layout is strictly isolated to native Capacitor mobile builds (`window.Capacitor.isNativePlatform()`), real handheld mobile devices via user-agent, or explicit debug query (`?mobile=true`).
   - **Daily Expenses Component Integrity (`DailyExpenses.js`)**:
-    - Verified and ensured `NotificationVIewInfo` import is clean and present, resolving any undefined component reference runtime crashes.
-  - **Release & Distribution**: Bumped version to `3.5.09`, compiled Webpack electron and web bundles, packaged `dist/Global Gate Setup 3.5.9.exe`, and pushed commit to GitHub for live Railway and Cloudflare Pages deployment.
+    - Resolved `ReferenceError: NotificationVIewInfo is not defined` runtime crash by ensuring `NotificationVIewInfo` is properly imported and rendered on the top AppBar.
+  - **Brand Icon & Logo Preservation (`Icon.png` & `src/js/img/Image1.png`)**:
+    - Restored the official stylized **"GG"** (Global Gate) brand logo across root `Icon.png` and `Image1.png` which was temporarily replaced by a generic mobile script asset.
+    - Added Rule 21 to permanently protect the official GG brand icon from being overwritten in future builds.
+  - **Release & Distribution**: Bumped version to `3.5.09`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.9.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
 
 - **Cloudflare Proxied Custom Domain Backend Migration (Ver 3.5.08)**:
   - **Backend Domain Routing (`api.globalgate.sarl`)**:
