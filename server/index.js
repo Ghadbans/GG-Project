@@ -110,6 +110,14 @@ mongoDbConnection().then(async () => {
     } catch (err) {
       console.log("Migration Home -> Receivables check note:", err.message);
     }
+
+    // Auto-reconcile all invoices against recorded payments
+    try {
+      const { reconcileAllInvoiceBalances } = require("./utils/invoiceBalanceUtils");
+      await reconcileAllInvoiceBalances();
+    } catch (err) {
+      console.log("Startup invoice reconciliation note:", err.message);
+    }
 }),
   (error) => {
     console.log("Could not connect to database : " + err);

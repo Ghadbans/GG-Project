@@ -797,3 +797,14 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - **Sidebar Navigation Components (`SidebarDashE2.js`, `SideMaintenance.js`, `SideShop.js`):** Added `useNavigate()` initialization.
   - **Verification:** Re-scanned all 228 files with 0 unresolved references remaining. Compiled Webpack bundles (`npm run build`) and generated Windows executable installer `dist/Global Gate Setup 3.5.9.exe`.
 
+- **Automatic Invoice Payment Synchronization & Balance Self-Healing Engine (Ver 3.5.10)**:
+  - **Problem Reported:** On invoice `NAISA ENGINEERING | INV-002380`, the `PAYMENT-RECEIVED` tab showed payment `PAY-001097` of `$1,578.25` made from client credit, yet the `OVERVIEW` tab and header still displayed status `Sent` with `$1,578.25` Balance Due and prompted *"Customer has credit, Do you want to use it? Click here"*. The user also raised concern about other historical invoices having the same issue.
+  - **Root Causes Fixed:**
+    1. **Backend Lock Middleware Interception:** `verifyLock` intercepted `PUT /endpoint/update-invoice/:id` from payment and credit flows where interactive document locks were absent, returning `403/409`. Updated `lockMiddleware.js` to allow balance/payment updates (`total`, `balanceDue`, `status`, `credit`) without requiring interactive edit locks.
+    2. **Authoritative Backend Balance Engine:** Created [`server/utils/invoiceBalanceUtils.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/server/utils/invoiceBalanceUtils.js) with `syncInvoiceBalances(invoiceIds)` and `reconcileAllInvoiceBalances()`. It accurately matches non-voided payments in `paymentSchema`, calculates exact paid totals, updates `balanceDue = max(0, totalInvoice - totalPaid)`, and assigns `status: 'Paid'` (if balance <= 0) or `'Partially-Paid'`.
+    3. **Automated Server Boot Self-Healing Sweep:** Wired `reconcileAllInvoiceBalances()` to run on MongoDB startup in `server/index.js` and added routes `POST /reconcile-all-invoices` and `POST /reconcile-invoice-balance/:id`. This automatically sweeps and repairs all historical mismatched invoices across the database.
+    4. **Automatic Mutation Hooks:** Wired `syncInvoiceBalances` into `POST /create-payment`, `PUT /update-payment/:id`, and `DELETE /delete-payment/:id` in `server/routes/Routes.js` so every future payment transaction instantly reconciles linked invoices.
+    5. **Frontend State & Calculation Resiliency:** Updated `InvoiceViewAdminAll.js` to dynamically live-sync the `invoice` state from `relatedPaymentInfo`, preventing `NaN` in `parseFloat(total || 0)` and ensuring the Overview tab and header status immediately reflect true paid totals and balances. Fixed `handleUpdateInvoice` in `PaymentInformationForm.js` and `PaymentInformationUpdate.js`.
+  - **Verification:** AST scope validation passed with 0 unresolved references. Built Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.10.exe`.
+
+

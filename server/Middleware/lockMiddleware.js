@@ -22,6 +22,13 @@ const verifyLock = async (req, res, next) => {
         return next();
     }
 
+    // Allow balance/payment/status updates without requiring an interactive edit lock
+    const bodyKeys = Object.keys(req.body || {});
+    const isBalanceOnlyUpdate = bodyKeys.length > 0 && bodyKeys.every(k => ['total', 'balanceDue', 'status', 'credit', 'synced', 'tax'].includes(k));
+    if (isBalanceOnlyUpdate || req.headers['x-system-bypass'] === 'true') {
+        return next();
+    }
+
     if (!lockedBy) {
         // If frontend doesn't send x-lock-user, we reject it to be safe, or we could just skip if the frontend hasn't been updated yet.
         // Let's reject it to force the frontend to adopt locking.

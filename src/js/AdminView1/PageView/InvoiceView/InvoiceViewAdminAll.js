@@ -556,19 +556,49 @@ function InvoiceViewAdminAll() {
         const relatedProjectIds = resPur.data?.data?.filter(p => p.ReferenceName2 === id).map(p => p.projectName?._id).filter(Boolean);
         const projectIdsSet = new Set(relatedProjectIds);
 
-        const formatDate = resPayment.data.data.map(row => {
-          const directPayments = row.TotalAmount?.filter((Item) => Item.id === id) || [];
+        const formatDate = resPayment.data?.data?.map(row => {
+          const directPayments = row.TotalAmount?.filter((Item) => Item.id === id || (invoiceNumber && Number(Item.Ref) === Number(invoiceNumber))) || [];
           const projectPayments = row.reason === "Project" ? (row.TotalAmount?.filter((Item) => projectIdsSet.has(Item.id)) || []) : [];
           return {
             ...row,
             TotalAmount: [...directPayments, ...projectPayments]
           };
-        }).filter(row => row.TotalAmount?.length > 0)
+        }).filter(row => (row.TotalAmount?.length || 0) > 0 && row.status !== 'Voided') || [];
 
-        setRelatedPaymentInfo(formatDate)
+        setRelatedPaymentInfo(formatDate);
+        const totalPaidAll = formatDate.reduce((sum, row) => sum + (row.TotalAmount || []).reduce((s, item) => s + parseFloat(item.total || item.amount || 0), 0), 0);
+        const roundedPaid = Math.round(totalPaidAll * 100) / 100;
+
         setTotalAmountPaidInvoice(formatDate.map((row) => ({
-          totalAP: row.TotalAmount.reduce((sum, item) => sum + parseFloat(item.total || 0), 0)
-        })))
+          totalAP: (row.TotalAmount || []).reduce((sum, item) => sum + parseFloat(item.total || item.amount || 0), 0)
+        })));
+
+        // Live-sync the active invoice state with true payment figures
+        setInvoice(prev => prev.map(inv => {
+          if (inv._id === id) {
+            const totInv = parseFloat(inv.totalInvoice || 0);
+            const bal = Math.max(0, Math.round((totInv - roundedPaid) * 100) / 100);
+            let st = inv.status;
+            if (inv.status !== 'Void' && inv.status !== 'Free of Charge') {
+              if (totInv > 0 && roundedPaid >= totInv - 0.001) st = 'Paid';
+              else if (roundedPaid > 0.001) st = 'Partially-Paid';
+              else if (inv.status === 'Paid' || inv.status === 'Partially-Paid') st = 'Sent';
+            }
+            return {
+              ...inv,
+              total: roundedPaid,
+              balanceDue: bal,
+              status: st
+            };
+          }
+          return inv;
+        }));
+
+        // If invoice has payments, trigger background server reconciliation
+        if (id && roundedPaid > 0) {
+          axios.post(`${ENDPOINT_URL}/reconcile-invoice-balance/${id}`).catch(() => {});
+        }
+
         const resNotification = await axios.get(`${ENDPOINT_URL}/notification`)
         setNotification(resNotification.data?.data?.filter((row) => row.idInfo === id))
       } catch (error) {
@@ -577,7 +607,7 @@ function InvoiceViewAdminAll() {
     }
     fetchComment()
   }, [id])
-  const TotalAPaidInfo = totalAmountPaidInvoice?.reduce((sum, item) => sum + parseFloat(item.totalAP), 0)
+  const TotalAPaidInfo = totalAmountPaidInvoice?.reduce((sum, item) => sum + parseFloat(item.totalAP || 0), 0)
 
   const InvoiceToUpdate = invoice?.filter((row) => row._id === id).map((row) => ({
     ...row,
@@ -589,11 +619,22 @@ function InvoiceViewAdminAll() {
     e.preventDefault();
     for (const InvoiceToUpdates of InvoiceToUpdate) {
       try {
+        const bal = Math.max(0, Math.round(parseFloat(InvoiceToUpdates.balanceDue || 0) * 100) / 100);
+        const tot = Math.round(parseFloat(InvoiceToUpdates.total || 0) * 100) / 100;
+        const totInv = parseFloat(InvoiceToUpdates.totalInvoice || 0);
+        let st = InvoiceToUpdates.status;
+        if (st !== 'Void' && st !== 'Free of Charge') {
+          if (totInv > 0 && tot >= totInv - 0.001) st = 'Paid';
+          else if (tot > 0.001) st = 'Partially-Paid';
+          else st = 'Sent';
+        }
         const res = await axios.put(`${ENDPOINT_URL}/update-invoice/${InvoiceToUpdates._id}`, {
-          balanceDue: InvoiceToUpdates.balanceDue,
-          total: InvoiceToUpdates.total
+          balanceDue: bal,
+          total: tot,
+          status: st
         })
         if (res) {
+          invalidateCache('/invoice');
           handleOpen();
         }
       } catch (error) {

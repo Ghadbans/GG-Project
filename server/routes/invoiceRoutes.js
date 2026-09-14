@@ -48,6 +48,7 @@ let posSchema = require("../model/posSchema");
 let departmentSchema = require("../model/departmentSchema");
 let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
+const { syncInvoiceBalances, reconcileAllInvoiceBalances } = require("../utils/invoiceBalanceUtils");
 
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
@@ -419,6 +420,27 @@ Route.route("/update-invoice/:id").put(async (req, res, next) => {
       data: result,
       msg: "Data successfully updated.",
     });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+// Reconcile single invoice balance against payments
+Route.route("/reconcile-invoice-balance/:id").post(async (req, res, next) => {
+  try {
+    await syncInvoiceBalances([req.params.id]);
+    const updated = await invoiceSchema.findById(req.params.id);
+    res.json({ data: updated, msg: "Invoice balance successfully reconciled." });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+// Reconcile all invoices in MongoDB
+Route.route("/reconcile-all-invoices").all(async (req, res, next) => {
+  try {
+    const result = await reconcileAllInvoiceBalances();
+    res.json({ data: result, msg: "All invoice balances reconciled successfully." });
   } catch (err) {
     return next(err);
   }

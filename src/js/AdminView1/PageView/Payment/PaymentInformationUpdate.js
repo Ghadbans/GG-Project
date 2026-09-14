@@ -38,6 +38,7 @@ import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
+import { invalidateCache } from '../../../utils/apiCache';
 
 import { parse } from 'uuid';
 
@@ -428,6 +429,7 @@ function PaymentInformationUpdate() {
     if (updateRequest !== null) {
       try {
         await Promise.all(updateRequest);
+        invalidateCache('/invoice');
       } catch (error) {
         console.log('An error as occur');
       }

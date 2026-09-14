@@ -402,18 +402,25 @@ function PaymentInformationForm() {
         const correspondingId = oldInvoice.find((row2) => row2._id === row.id)
         if (!correspondingId) return null;
         let total = 0;
+        const currentPaid = parseFloat(correspondingId.total || 0);
+        const rowPaid = parseFloat(row.total || 0);
         if (transactionType === 'Payment') {
-          total = parseFloat(correspondingId.total) + parseFloat(row.total);
+          total = currentPaid + rowPaid;
         } else {
-          total = Math.max(0, parseFloat(correspondingId.total) - parseFloat(row.total));
+          total = Math.max(0, currentPaid - rowPaid);
         }
-        const difference = Math.round((correspondingId.totalInvoice - total) * 100) / 100;
-        if (difference <= 0) {
-          row.status = 'Paid'
-        } else if (total > 0 && total < correspondingId.totalInvoice) {
-          row.status = 'Partially-Paid'
-        } else {
-          row.status = 'Sent'
+        total = Math.round(total * 100) / 100;
+        const totalInv = parseFloat(correspondingId.totalInvoice || 0);
+        const difference = Math.max(0, Math.round((totalInv - total) * 100) / 100);
+        let status = correspondingId.status;
+        if (status !== 'Void' && status !== 'Free of Charge') {
+          if (totalInv > 0 && total >= totalInv - 0.001) {
+            status = 'Paid';
+          } else if (total > 0.001) {
+            status = 'Partially-Paid';
+          } else {
+            status = 'Sent';
+          }
         }
         return {
           id: row.id,
@@ -421,7 +428,7 @@ function PaymentInformationForm() {
           data: {
             total,
             balanceDue: difference,
-            status: row.status
+            status: status
           }
         }
       }).filter(Boolean) : null
@@ -433,6 +440,7 @@ function PaymentInformationForm() {
       if (updateRequest !== null) {
         try {
           await Promise.all(updateRequest);
+          invalidateCache('/invoice');
         } catch (error) {
           console.log('An error as occur');
         }

@@ -43,6 +43,7 @@ let posSchema = require("../model/posSchema");
 let departmentSchema = require("../model/departmentSchema");
 let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
+const { syncInvoiceBalances } = require("../utils/invoiceBalanceUtils");
 
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
@@ -741,8 +742,9 @@ Route.route("/create-payment").post(async (req, res, next) => {
     const paymentInfo = await paymentSchema.findOne(branchId ? { branchId } : {}).sort({
     paymentNumber: -1
   }).exec();
+    let createdResult = null;
     if (paymentInfo && paymentInfo.paymentNumber === paymentNumber) {
-      await paymentSchema.create({
+      createdResult = await paymentSchema.create({
         customerName,
         amount,
         tax,
@@ -751,26 +753,19 @@ Route.route("/create-payment").post(async (req, res, next) => {
         paymentDate,
         PaymentReceivedFC,
         PaymentReceivedUSD,
-        paymentNumber:paymentNumber+1,
+        paymentNumber: paymentNumber + 1,
         referenceNumber,
         description,
-        remaining,Create,
+        remaining,
+        Create,
         TotalAmount,
         excessAction: excessAction || 'Credit',
         returnUSD: Number(returnUSD || 0),
-        returnFC: Number(returnFC || 0)
-      ,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
-      }).catch((err)=>{
-        return next(err)
-      })
+        returnFC: Number(returnFC || 0),
+        branchId
+      });
     } else {
-      await paymentSchema.create({
+      createdResult = await paymentSchema.create({
         customerName,
         amount,
         tax,
@@ -782,22 +777,28 @@ Route.route("/create-payment").post(async (req, res, next) => {
         paymentNumber,
         referenceNumber,
         description,
-        remaining,Create,
+        remaining,
+        Create,
         TotalAmount,
         excessAction: excessAction || 'Credit',
         returnUSD: Number(returnUSD || 0),
-        returnFC: Number(returnFC || 0)
-      ,
-      branchId}).then((result)=>{
-        res.json({
-          data: result,
-          message: "Data successfully added.",
-          status: 200,
-        });
-      }).catch((err)=>{
-        return next(err)
-      })
+        returnFC: Number(returnFC || 0),
+        branchId
+      });
     }
+
+    if (createdResult && Array.isArray(TotalAmount)) {
+      const invIds = TotalAmount.map(item => item?.id).filter(Boolean);
+      if (invIds.length > 0) {
+        syncInvoiceBalances(invIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
+      }
+    }
+
+    return res.json({
+      data: createdResult,
+      message: "Data successfully added.",
+      status: 200,
+    });
    } catch (error) {
     next(error);
    }
@@ -824,34 +825,46 @@ Route.route("/get-payment/:id").get(async (req, res, next) => {
 // Update single payment
 
 Route.route("/update-payment/:id").put(async (req, res, next) => {
-  await paymentSchema
-    .findByIdAndUpdate(req.params.id, {
+  try {
+    const paymentBefore = await paymentSchema.findById(req.params.id);
+    const result = await paymentSchema.findByIdAndUpdate(req.params.id, {
       $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+    }, { new: true });
+
+    const beforeIds = (paymentBefore?.TotalAmount || []).map(i => i?.id).filter(Boolean);
+    const newIds = (req.body?.TotalAmount || []).map(i => i?.id).filter(Boolean);
+    const allIds = Array.from(new Set([...beforeIds, ...newIds]));
+    if (allIds.length > 0) {
+      syncInvoiceBalances(allIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
+    }
+
+    res.json({
+      data: result,
+      msg: "Data successfully updated.",
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 // Delete single payment
 
-Route.route("/delete-payment/:id").delete(async (req, res) => {
-  await paymentSchema
-    .findByIdAndRemove(req.params.id)
-    .then(() => {
-      res.json({
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+Route.route("/delete-payment/:id").delete(async (req, res, next) => {
+  try {
+    const paymentBefore = await paymentSchema.findById(req.params.id);
+    await paymentSchema.findByIdAndRemove(req.params.id);
+
+    const invIds = (paymentBefore?.TotalAmount || []).map(i => i?.id).filter(Boolean);
+    if (invIds.length > 0) {
+      syncInvoiceBalances(invIds).catch(e => console.error("Error in syncInvoiceBalances:", e.message));
+    }
+
+    res.json({
+      msg: "Data successfully updated.",
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 
