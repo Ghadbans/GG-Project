@@ -41,6 +41,7 @@ import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import Close from '@mui/icons-material/Close';
 import ProjectFormView from '../ProjectView/ProjectFormView';
 import ProjectFormView2 from '../ProjectView/ProjectFormView2';
+import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
@@ -141,6 +142,10 @@ function DailyExpenseForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const [sideBar, setSideBar] = useState(true);
+  const toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
 
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');

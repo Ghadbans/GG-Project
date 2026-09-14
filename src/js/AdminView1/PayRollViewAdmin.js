@@ -240,7 +240,7 @@ function PayRollViewAdmin() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: relatedMonth + ' PaySlip For ' + employeeName.name + ' / PR-' + ReferenceInfoNumber,
+      reason: 'PaySlip For ' + (ReferenceInfoName || '') + ' / PR-' + ReferenceInfoNumber,
       dateNotification: new Date()
     }
     try {
@@ -250,7 +250,7 @@ function PayRollViewAdmin() {
     }
   }
   const syncOff = async () => {
-    fetchData()
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue);
   }
   
 

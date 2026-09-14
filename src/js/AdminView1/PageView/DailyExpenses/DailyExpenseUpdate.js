@@ -40,6 +40,7 @@ import MonetizationOn from '@mui/icons-material/MonetizationOn';
 import Close from '@mui/icons-material/Close';
 import ProjectFormView from '../ProjectView/ProjectFormView';
 import ProjectFormView2 from '../ProjectView/ProjectFormView2';
+import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
@@ -128,6 +129,12 @@ function DailyExpenseUpdate() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const [sideBar, setSideBar] = useState(true);
+  const toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
+  const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
+  const [modalOpenLoading, setModalOpenLoading] = useState(false);
 
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
@@ -515,7 +522,7 @@ function DailyExpenseUpdate() {
           <Button
             variant="contained"
             size="small"
-            onClick={handleSubmitEdit}
+            onClick={handleSubmit}
             disabled={loading}
             sx={{
               backgroundColor: '#10B981',
@@ -605,7 +612,7 @@ function DailyExpenseUpdate() {
             fullWidth
             variant="contained"
             size="large"
-            onClick={handleSubmitEdit}
+            onClick={handleSubmit}
             disabled={loading}
             sx={{
               backgroundColor: '#30368a',

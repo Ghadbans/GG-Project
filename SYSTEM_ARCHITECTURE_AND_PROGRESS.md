@@ -780,3 +780,20 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - **Identification & References:** `invoiceName` (`INV-XXXXXX`), numeric `invoiceNumber`, `invoiceSubject`, `subject`, `status`, `ReferenceName`, `ReferenceName2`, `Ref.projectName`, `Position`
   - **Safe Branch Filtering Integration:** Refactored query construction using `$and` when both branch filtering (`branchId === 'HQ'`) and search criteria are present, preventing search conditions from overwriting branch filters.
   - **Invoice Information Sidebar Search:** Updated `InvoiceInformation.js` local sidebar search (`newArray` & `newArray2`) to filter across `actionTaken`, `actionTaking`, `note`, `noteInfo`, `terms`, and `defect`.
+
+- **Comprehensive Scope & Identifier Audit Across All 228 Modules (Ver 3.5.09)**:
+  - **Root Cause Analysis:** User reported runtime crashes (`ReferenceError: sideBar is not defined`) in `PaymentInformationForm.js` and `DailyExpenseForm.js` when opening create forms on Desktop. The root cause was that recent mobile responsiveness refactorings omitted local desktop drawer state hooks (`sideBar`, `toggleDrawer`) and specific component/icon imports (`MessageAdminView`, `NotificationVIewInfo`, `DeleteIcon`, `Close`, `Logout`, `toast`) across various forms and sub-modules.
+  - **Automated AST Scope Verification:** Built an automated AST scope scanner leveraging Babel (`@babel/parser` & `@babel/traverse`) that parsed all 228 JavaScript files in `src/js/` to statically evaluate scope bindings and identify any unresolved/unbound identifiers across the entire codebase.
+  - **Resolved Issues Across Modules:**
+    - **Payment Information (`PaymentInformationForm.js` & `PaymentInformationUpdate.js`):** Added `MessageAdminView`, `NotificationVIewInfo`, `sideBar`, and `toggleDrawer`. Cleaned up duplicate state declarations.
+    - **Daily Expenses (`DailyExpenseForm.js` & `DailyExpenseUpdate.js`):** Added `MessageAdminView`, `sideBar`, `toggleDrawer`, `openAutocomplete2`, `modalOpenLoading`, and aligned submit handlers (`handleSubmit`).
+    - **Customer Views (`CustomerForm.js` & `CustomerFormUpdate.js`):** Added missing `MessageAdminView` and `toast` notification imports.
+    - **Employee Views (`EmployeeFormView.js` & `EmployeeUpdateView.js`):** Added missing `MessageAdminView`, `Close`, and `Logout` imports.
+    - **Item & Supplier Forms (`ItemForm.js`, `ItemFormUpdate.js`, `SupplierForm.js`, `SupplierFormUpdate.js`):** Added missing `MessageAdminView` imports.
+    - **Maintenance & Orders (`MaintenanceFormView.js`):** Added missing `DeleteIcon` import.
+    - **Dashboard Reports (`ProjectReportInfo.js`):** Declared default date filter states (`fromDate`, `endDate`, `month`, `transactionYears`).
+    - **Estimate & Payroll Views (`EstimateViewAdmin.js`, `PayRollViewAdmin.js`):** Aligned sync functions and variable references (`statusFilter`, `fetchItems`).
+    - **Item Out & Return Views (`ItemOutViewUpdate.js`):** Defined local `related` reference mapping within table rows.
+    - **Sidebar Navigation Components (`SidebarDashE2.js`, `SideMaintenance.js`, `SideShop.js`):** Added `useNavigate()` initialization.
+  - **Verification:** Re-scanned all 228 files with 0 unresolved references remaining. Compiled Webpack bundles (`npm run build`) and generated Windows executable installer `dist/Global Gate Setup 3.5.9.exe`.
+

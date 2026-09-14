@@ -757,6 +757,7 @@ function ItemOutViewUpdate() {
   ) : itemsQtyArray
 
   const tableRows = newArray2.map((Item, i) => {
+    const related = Item;
     const relatedItemQty = ItemInformation.find((row2) => row2._id === Item.itemName._id)
     return (<tr key={Item.idRow}>
       {

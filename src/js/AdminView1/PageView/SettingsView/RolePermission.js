@@ -306,7 +306,7 @@ function RolePermission() {
   const handleChangeIdIndex2 = (index, id) => {
     const newIndex = index;
     const newIndexId = id;
-    const result = categories.findIndex((row) => row._id === id)
+    const result = grantAccess.findIndex((row) => row._id === id)
     setValue(result);
     setValue2(newIndex);
     setGrantID(id)

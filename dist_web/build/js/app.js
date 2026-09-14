@@ -87520,14 +87520,30 @@ function ProjectReportInfo(_ref3) {
     _useState4 = _slicedToArray(_useState3, 2),
     selectOptions = _useState4[0],
     setSelectOptions = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(new Date()),
     _useState6 = _slicedToArray(_useState5, 2),
-    project = _useState6[0],
-    setProject = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
+    fromDate = _useState6[0],
+    setFromDate = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(new Date()),
     _useState8 = _slicedToArray(_useState7, 2),
-    search2 = _useState8[0],
-    setSearch2 = _useState8[1];
+    endDate = _useState8[0],
+    setEndDate = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
+    _useState0 = _slicedToArray(_useState9, 2),
+    month = _useState0[0],
+    setMonth = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(new Date().getFullYear()),
+    _useState10 = _slicedToArray(_useState1, 2),
+    transactionYears = _useState10[0],
+    setTransactionYears = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+    _useState12 = _slicedToArray(_useState11, 2),
+    project = _useState12[0],
+    setProject = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
+    _useState14 = _slicedToArray(_useState13, 2),
+    search2 = _useState14[0],
+    setSearch2 = _useState14[1];
   var handleSearch2 = e => {
     var value = e.target.value;
     setSearch2(value);
@@ -87538,10 +87554,10 @@ function ProjectReportInfo(_ref3) {
       setProject(onProjectName);
     }
   }, [onMonth, onProjectName]);
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
-    _useState0 = _slicedToArray(_useState9, 2),
-    FilterProject = _useState0[0],
-    setFilterProject = _useState0[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    FilterProject = _useState16[0],
+    setFilterProject = _useState16[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (selectOptions === 'By Project') {
       var filterO = search2 !== '' ? project.filter(Item => Item.customerName && Item.customerName.customerName.toLowerCase().includes(search2.toLowerCase()) || Item.description && Item.description.toLowerCase().includes(search2.toLowerCase()) || Item.projectName && Item.projectName.toLowerCase().includes(search2.toLowerCase())) : project;
@@ -87553,26 +87569,26 @@ function ProjectReportInfo(_ref3) {
   var handleChangeSelected = e => {
     setInfoOptions(e.target.value);
   };
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
-    _useState10 = _slicedToArray(_useState1, 2),
-    TotalPayment = _useState10[0],
-    setTotalPayment = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
-    _useState12 = _slicedToArray(_useState11, 2),
-    TotalExpenses = _useState12[0],
-    setTotalExpenses = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
-    _useState14 = _slicedToArray(_useState13, 2),
-    TotalItemPurchase = _useState14[0],
-    setTotalItemPurchase = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
-    _useState16 = _slicedToArray(_useState15, 2),
-    TotalAdvances = _useState16[0],
-    setTotalAdvances = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
     _useState18 = _slicedToArray(_useState17, 2),
-    TotalRevenue = _useState18[0],
-    setTotalRevenue = _useState18[1];
+    TotalPayment = _useState18[0],
+    setTotalPayment = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
+    _useState20 = _slicedToArray(_useState19, 2),
+    TotalExpenses = _useState20[0],
+    setTotalExpenses = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
+    _useState22 = _slicedToArray(_useState21, 2),
+    TotalItemPurchase = _useState22[0],
+    setTotalItemPurchase = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
+    _useState24 = _slicedToArray(_useState23, 2),
+    TotalAdvances = _useState24[0],
+    setTotalAdvances = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
+    _useState26 = _slicedToArray(_useState25, 2),
+    TotalRevenue = _useState26[0],
+    setTotalRevenue = _useState26[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     var projectCostInfo = FilterProject.length > 0 ? FilterProject.reduce((acc, row) => {
       var relatedCost = (row.relatedPurchase || []).reduce((sum, item) => sum + Number(item.infoCost || 0), 0);
@@ -91097,6 +91113,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function SideMaintenance(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7;
   var onView = _ref.onView;
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var location = (0,dist/* useLocation */.zy)();
   var isActive = path => {
     return location.pathname === path;
@@ -91664,6 +91681,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function SideShop(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4;
   var onView = _ref.onView;
+  var navigate = (0,dist/* useNavigate */.Zp)();
   var location = (0,dist/* useLocation */.zy)();
   var isActive = path => {
     return location.pathname === path;
@@ -92453,6 +92471,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function SidebarDashE2(_ref) {
   var _user$data2, _user$data3, _user$data4, _user$data5;
   var onView = _ref.onView;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Zp)();
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useLocation */ .zy)();
   var isActive = path => {
     return location.pathname === path;
@@ -121103,7 +121122,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"ef5dc456570da26ac845","116":"8be55cfd8e56510d4cd7","118":"9649e9ad98fb4b1a6648","223":"c952fc08b587fdf51ade","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"4989b278eaf1b9b5be5b","457":"0af954391bfe2422e052","483":"342be2530e4d9bff3bc7","590":"5bc49206885952ec5ff6","614":"24a14f077bad8679b55f","712":"d893bdcb6957bee6579f","742":"d98d21bf6a93c798fa0d","778":"85c86df57eae6f397454","806":"7e5116a105614011a982","808":"e97cfb841a1ae21eb9da","864":"ac9193b4bf40eb4964a0","885":"af95aadf99f2df0af718","956":"195d11b02eb5fb9b20c7","1019":"1d406482e04e60bb652f","1096":"76185d9c9ad90035350c","1168":"b2f690e1d5399977dcaf","1223":"ba7ee3f6bda57f152c77","1251":"9da50dc8470bc764d3b6","1364":"4677e3a7cf1a1fa18f1b","1390":"d068203d76b14fda80ff","1500":"af40ea979f401d809120","1624":"e087efe6d5dca00bd5a7","1645":"08a0e19138658a75d51a","1679":"01e46a77693167979f84","1722":"7ceb3b03926770448e8a","1853":"6e9db325f27a5fbbed6b","1861":"89d05880a79dcb45e693","1919":"6aea47e9e68095920004","1985":"02e97ae71b3a0b197840","2120":"6495c3f514fc90312aa9","2122":"f228f1754a500c4b13d0","2153":"4c7916d41bc94db7f1ad","2410":"ee6b77291601bb83e4f2","2495":"448d55e4fa85737b2d32","2517":"2ce00c36c1a009a461cf","2529":"a738851ae08d823c3d3d","2533":"8794e99950160fc78567","2605":"5b030741d19d64e6644a","2608":"d678bedc842234bcd0f5","2611":"d8b119a353ab72a24785","2756":"688eeb592566045f97ac","2757":"37e017925354e0aeecaf","2778":"97f2c9761482d9f06b39","2821":"8380eaa49deabfe42aa1","2835":"0a5756bd6c77bc03fff7","2982":"ab6cb4b2645a7e73e94c","2992":"2c205519c9a96f460c88","3009":"a4ae81fc5a6ba3e4e2ef","3058":"3fbb91bd37dc580359e1","3094":"43fdaea0994c8aca9ef6","3229":"3679dfac428e286bfc9d","3426":"79bb35c857154d8ce678","3502":"a3b0adfce9144ee7143b","3547":"1e2de2721983f1041975","3697":"134f25d3273637784d47","3741":"ce7040c66a4a1e937547","3808":"4d97aa3bc76d5bbfa4d7","3976":"eee2194020cd5d92a404","4001":"d05588ea6262a03692e0","4006":"3f9b0c74b0981752060f","4107":"35867ab09bca30273003","4184":"e5e29a57cdc8fb920208","4237":"ae9e77c6d4f5a70c297a","4270":"67fb80bb7342e8dfa5f1","4444":"6d9ef4cb81d563ba0088","4783":"33f8e38660eecd5e7913","5059":"13587dbad394c5ddc53d","5072":"45bf3849b44a17b70ff2","5151":"9eeb4853ef40c7673538","5194":"6fec4b0f360f5a946a1d","5391":"478a187fb932c5112d1f","5394":"69e3811ffd7921985da0","5646":"1e53fb1b30c30e36b3e1","5669":"1d81e9485d932b76025e","5754":"63206ac5550239930563","5824":"b868db50ddaecea300eb","5881":"f942b8413b424bbf6084","5910":"f57963010b8ae5ab6217","5919":"1340a05e3cdd3cbafe2e","6155":"871dc0db026d734b3a07","6226":"c416c65728f57de5c4dd","6619":"69490a347d78afb7abe6","6671":"f71ec56798361a47e66a","6685":"771d743f8ea2ec01c94c","6725":"cbedc38facfef25eda57","6744":"d4b707410fb90f42fc25","6934":"2336fc86a063c981fa52","7120":"36521905fd60dfc439f0","7171":"ea2bcc5ce1442994d297","7189":"91f7f47ea7579f980bfb","7269":"e933c64e9db7b0f23a02","7270":"30220f7a7bda0ccab3a3","7384":"65263f0496e681b331ac","7405":"726acb348b4f8c4b8399","7444":"a97b22a40ad291400689","7445":"6de5773e1da6d0f2bc58","7539":"73d93ee0d105ec04e601","7592":"73768da979b3c7088620","7645":"5169553c2559af8ff31a","7757":"8271280a2eea1822794c","7801":"bd0eb06796f2cb519c69","7897":"f7c2dd5d89c754a9d060","7941":"66c8cd5ff26c4d5ff346","7997":"61d4bd79e52b1ffcf1aa","8011":"0feb1c337c8165065e8a","8017":"165306babf7d95cf8c68","8027":"788c527efeb12e3f577c","8060":"bf904f65cf29510543fa","8117":"3dcded6d706d2ffcf494","8282":"29b811dfccca1daad336","8354":"2ae7fb5178a94693fdeb","8442":"5186906ed075010ff7d8","8520":"c65122def95e1926bca9","8646":"6dbf8d2f40f56c4e04e4","8685":"1a745e1a9f3082110df5","8838":"00d41604d2236aea518c","8849":"e7361047af98561396ac","8970":"45baf7515d3893f38ef0","9127":"74240d27da8de7e3ab06","9220":"861c86c07129ab78a89d","9246":"7d37a12940cfb46fb700","9250":"b5d9464ce13f90b82087","9260":"2fea6f5f45d4b50c31b2","9528":"6dc89c613ad4fd9edbf4","9564":"476378dc942265c23c57","9573":"6fb976a060f032697847","9575":"ebe17627f878fa02f4dd","9670":"53fa8ff6afa35d003dbf","9762":"1bb90535650c3961e6ad","9773":"26c833d6a6e021d1f356","9846":"c52060f41e4cdd521922","9971":"4b791673ce1d7830a992"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"d0826151812e1ffb5870","116":"8be55cfd8e56510d4cd7","118":"fcb2c1307283515e2ca0","223":"c952fc08b587fdf51ade","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"4989b278eaf1b9b5be5b","457":"1852e5096d027ebdb985","483":"342be2530e4d9bff3bc7","590":"5bc49206885952ec5ff6","614":"24a14f077bad8679b55f","712":"a7574da98a1afb89d765","742":"d98d21bf6a93c798fa0d","778":"85c86df57eae6f397454","806":"83b922fc8d9dfa954cca","808":"e97cfb841a1ae21eb9da","864":"ac9193b4bf40eb4964a0","885":"f40bb03d202efecc8f49","956":"195d11b02eb5fb9b20c7","1019":"1d406482e04e60bb652f","1096":"21d20d96c7fff7249cf4","1168":"b2f690e1d5399977dcaf","1223":"ba7ee3f6bda57f152c77","1251":"9da50dc8470bc764d3b6","1364":"4677e3a7cf1a1fa18f1b","1390":"d068203d76b14fda80ff","1500":"af40ea979f401d809120","1624":"e087efe6d5dca00bd5a7","1645":"08a0e19138658a75d51a","1679":"01e46a77693167979f84","1722":"7ceb3b03926770448e8a","1853":"6e9db325f27a5fbbed6b","1861":"89d05880a79dcb45e693","1919":"2d5f0d19adac134c3179","1985":"b0a2a2d812e3036f7cc2","2120":"6495c3f514fc90312aa9","2122":"f228f1754a500c4b13d0","2153":"4c7916d41bc94db7f1ad","2410":"dcec0100fcfba92fb04b","2495":"448d55e4fa85737b2d32","2517":"2ce00c36c1a009a461cf","2529":"a52d21c517630e831ab8","2533":"06125cb18ac05db990ad","2605":"5b030741d19d64e6644a","2608":"d678bedc842234bcd0f5","2611":"d8b119a353ab72a24785","2756":"688eeb592566045f97ac","2757":"37e017925354e0aeecaf","2778":"97f2c9761482d9f06b39","2821":"8380eaa49deabfe42aa1","2835":"0a5756bd6c77bc03fff7","2982":"68c141df4f6ff573c3ec","2992":"2c205519c9a96f460c88","3009":"14c10eedc25033ed1d99","3058":"3fbb91bd37dc580359e1","3094":"43fdaea0994c8aca9ef6","3229":"111c5fa675cdc8b1760d","3426":"79bb35c857154d8ce678","3502":"a6d9a42a2807cc6a7fa9","3547":"1e2de2721983f1041975","3697":"1fa9aa3532eeaa998d27","3741":"f8c316c8288e2bf4e9c5","3808":"4d97aa3bc76d5bbfa4d7","3976":"eee2194020cd5d92a404","4001":"228a64af178a66a9f4d5","4006":"2217f3323151abd1e4d0","4107":"35867ab09bca30273003","4184":"e5e29a57cdc8fb920208","4237":"ae9e77c6d4f5a70c297a","4270":"67fb80bb7342e8dfa5f1","4444":"6d9ef4cb81d563ba0088","4783":"33f8e38660eecd5e7913","5059":"13587dbad394c5ddc53d","5072":"45bf3849b44a17b70ff2","5151":"9eeb4853ef40c7673538","5194":"9c2f512f1c2c471f23f5","5391":"478a187fb932c5112d1f","5394":"69e3811ffd7921985da0","5646":"1e53fb1b30c30e36b3e1","5669":"1d81e9485d932b76025e","5754":"63206ac5550239930563","5824":"b868db50ddaecea300eb","5881":"f942b8413b424bbf6084","5910":"f57963010b8ae5ab6217","5919":"1340a05e3cdd3cbafe2e","6155":"871dc0db026d734b3a07","6226":"c416c65728f57de5c4dd","6619":"69490a347d78afb7abe6","6671":"f71ec56798361a47e66a","6685":"771d743f8ea2ec01c94c","6725":"cbedc38facfef25eda57","6744":"d4b707410fb90f42fc25","6934":"2336fc86a063c981fa52","7120":"36521905fd60dfc439f0","7171":"ea2bcc5ce1442994d297","7189":"91f7f47ea7579f980bfb","7269":"e933c64e9db7b0f23a02","7270":"30220f7a7bda0ccab3a3","7384":"65263f0496e681b331ac","7405":"726acb348b4f8c4b8399","7444":"a97b22a40ad291400689","7445":"6de5773e1da6d0f2bc58","7539":"73d93ee0d105ec04e601","7592":"73768da979b3c7088620","7645":"5169553c2559af8ff31a","7757":"8271280a2eea1822794c","7801":"20d27f75b817974e41dd","7897":"f7c2dd5d89c754a9d060","7941":"66c8cd5ff26c4d5ff346","7997":"61d4bd79e52b1ffcf1aa","8011":"0feb1c337c8165065e8a","8017":"71a045bf4ce3356d06e4","8027":"827209f9b8790e221657","8060":"bf904f65cf29510543fa","8117":"3dcded6d706d2ffcf494","8282":"29b811dfccca1daad336","8354":"2ae7fb5178a94693fdeb","8442":"5186906ed075010ff7d8","8520":"c65122def95e1926bca9","8646":"6dbf8d2f40f56c4e04e4","8685":"1a745e1a9f3082110df5","8838":"00d41604d2236aea518c","8849":"c055320a1ca00b364a7c","8970":"45baf7515d3893f38ef0","9127":"74240d27da8de7e3ab06","9220":"861c86c07129ab78a89d","9246":"7d37a12940cfb46fb700","9250":"b5d9464ce13f90b82087","9260":"2fea6f5f45d4b50c31b2","9528":"6dc89c613ad4fd9edbf4","9564":"476378dc942265c23c57","9573":"6fb976a060f032697847","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"1bb90535650c3961e6ad","9773":"26c833d6a6e021d1f356","9846":"c52060f41e4cdd521922","9971":"4b791673ce1d7830a992"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	

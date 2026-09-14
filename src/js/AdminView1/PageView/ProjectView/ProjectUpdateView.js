@@ -153,6 +153,7 @@ function ProjectUpdateView() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [saving, setSaving] = useState(false);
   const user = useSelector(selectCurrentUser);
 
   useEffect(() => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../css/SidebarNew.scss'
-import {  Outlet, NavLink, useLocation } from 'react-router-dom'
+import { Outlet, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import { AccountBox, AllInclusive, AssignmentInd, CurrencyExchange, Home, SupervisedUserCircle } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import PaymentIcon from '@mui/icons-material/Payment';
@@ -25,6 +25,7 @@ import { ENDPOINT_URL } from '../apiConfig';
 
 
 function SidebarDashE2({ onView }) {
+  const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => {
     return location.pathname === path;

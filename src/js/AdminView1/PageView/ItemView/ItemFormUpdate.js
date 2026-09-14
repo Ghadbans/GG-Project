@@ -30,6 +30,7 @@ import Logout from '../../../component/NetworkLogoutIcon';
 import { Close, RemoveCircleOutline } from '@mui/icons-material';
 import { v4 } from 'uuid';
 import dayjs from 'dayjs';
+import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';

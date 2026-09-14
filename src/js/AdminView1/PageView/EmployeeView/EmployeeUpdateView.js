@@ -35,6 +35,9 @@ import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authS
 import Loader from '../../../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import Logout from '../../../component/NetworkLogoutIcon';
+import Close from '@mui/icons-material/Close';
+import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';

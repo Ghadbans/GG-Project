@@ -71,6 +71,10 @@ const PrintTooltip = styled(({ className, ...props }) => (
 function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
   const [infoOptions, setInfoOptions] = useState('');
   const [selectOptions, setSelectOptions] = useState('');
+  const [fromDate, setFromDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [month, setMonth] = useState('');
+  const [transactionYears, setTransactionYears] = useState(new Date().getFullYear());
   const [project, setProject] = useState([]);
   const [search2, setSearch2] = useState('');
   const handleSearch2 = (e) => {

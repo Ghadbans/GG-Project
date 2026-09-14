@@ -34,6 +34,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logOut, selectCurrentUser, setUser } from '../../../features/auth/authSlice';
 import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
+import MessageAdminView from '../../MessageAdminView';
+import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
 
@@ -110,6 +112,10 @@ function PaymentInformationUpdate() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const [sideBar, setSideBar] = useState(true);
+  const toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
 
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
@@ -539,10 +545,7 @@ function PaymentInformationUpdate() {
       }
     }
   };
-  const [sideBar, setSideBar] = React.useState(true);
-  const toggleDrawer = () => {
-    setSideBar(!sideBar);
-  };
+
   if (isMobile) {
     return (
       <Box sx={{ width: '100%', minHeight: '100vh', backgroundColor: '#F8FAFC', pb: 'calc(90px + env(safe-area-inset-bottom, 0px))' }}>

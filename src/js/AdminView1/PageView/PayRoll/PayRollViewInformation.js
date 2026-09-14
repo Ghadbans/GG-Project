@@ -934,7 +934,7 @@ function PayRollViewInformation() {
                           <div style={{ height: '518px', overflow: 'hidden', overflowY: 'scroll', width: '100%' }}>
                             <div style={{ padding: '10px' }}>
                               {
-                                maintenance.filter((row) => row._id === id)
+                                payRoll.filter((row) => row._id === id)
                                   .map((row) => (
                                     <p key={row._id}>{row.Create ? (
                                       <span>{row.Create}</span>

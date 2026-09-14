@@ -362,6 +362,15 @@ const handleShowAutocomplete = (idRow) => {
      }, 
      }: row))
   }
+  const handleShowAutocompleteDescription = (idRow) => {
+    SetItems(items => items.map((row) => row.idRow === idRow ? {
+      ...row,
+      itemName: { _id: null, itemName: null },
+      itemDescription: '',
+      itemRate: 0,
+      stock: 0
+    } : row));
+  };
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
   const [idItem,setIdItem] = useState(null)
   

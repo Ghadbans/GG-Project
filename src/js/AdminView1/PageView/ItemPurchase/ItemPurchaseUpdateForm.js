@@ -394,12 +394,6 @@ function ItemPurchaseUpdateForm() {
   const handleClearCustomer = () => {
     setManufacturer(null)
   }
-  const handleClearProject = () => {
-    setProject({
-      _id: '',
-      name: ''
-    })
-  }
   const handleChange = (e, idRow) => {
     const { name, value } = e.target;
     setItems(items => items.map(item => {

@@ -340,7 +340,6 @@ function PurchaseOrderViewAdmin() {
   const handleOpenLoading = () => {
     setLoadingOpenModal(true);
     setLoading(true);
-    handleCloseUpdate();
     setTimeout(() => {
       setLoading(false);
     }, 500)

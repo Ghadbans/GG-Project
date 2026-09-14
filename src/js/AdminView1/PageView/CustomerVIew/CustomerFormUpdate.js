@@ -28,6 +28,7 @@ import CancelIcon from '@mui/icons-material/Cancel';
 import Logout from '../../../component/NetworkLogoutIcon';
 import { Close } from '@mui/icons-material';
 import dayjs from 'dayjs';
+import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';

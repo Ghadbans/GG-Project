@@ -313,7 +313,7 @@ function EstimateViewAdmin() {
     }
   }
   const syncOff = async () => {
-    fetchData()
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
   }
   
   useEffect(() => {

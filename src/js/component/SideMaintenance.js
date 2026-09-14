@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../css/SidebarNew.scss'
-import { Outlet, NavLink, Link, useLocation } from 'react-router-dom'
+import { Outlet, NavLink, Link, useLocation, useNavigate } from 'react-router-dom'
 import { AccountBox, ArtTrack, AllInclusive, ContactEmergencyRounded, Home, InventoryOutlined, Shop2Outlined, SupervisedUserCircle } from '@mui/icons-material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import EngineeringIcon from '@mui/icons-material/Engineering';
@@ -24,6 +24,7 @@ import { ENDPOINT_URL } from '../apiConfig';
 
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@mui/material';
 function SideMaintenance({ onView }) {
+  const navigate = useNavigate();
   const location = useLocation();
 
   const isActive = (path) => {

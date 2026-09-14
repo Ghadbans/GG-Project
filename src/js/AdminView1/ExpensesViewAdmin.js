@@ -69,10 +69,7 @@ function ExpensesViewAdmin() {
          console.error('Error fetching data:', error);
        }
      } else {
-      const resLocalInfo = await db.employeeUserSchema.get({_id:storesUserId})
-      const Name = resLocalInfo.employeeName;
-      const Role = resLocalInfo.role;
-      dispatch(setUser({userName: Name, role: Role, id:resLocalInfo._id}));
+       navigate('/');
      }
     }else {
       navigate('/');
@@ -243,7 +240,7 @@ const columns = [
                           checkboxSelection
                           disableDensitySelector
                           filterModel={filterModel}
-                          onFilterModelChange={(newModel) => handleFilter(newModel)}
+                          onFilterModelChange={(newModel) => setFilterModel(newModel)}
                           columnVisibilityModel = {columnVisibilityModel}
                           onColumnVisibilityModelChange={handelHiddenColumn}
                            sx={{width:'100%',backgroundColor:'white', padding:'10px'}}
