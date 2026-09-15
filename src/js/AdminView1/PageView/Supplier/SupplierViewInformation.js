@@ -281,14 +281,14 @@ function SupplierViewInformation() {
   const formatPurchaseReason = (p) => {
     if (!p) return 'Item Purchase';
     const rawReason = p.reason || '';
-    let nameStr = p.projectName?.name || p.description || rawReason || 'Item Purchase';
+    let nameStr = String(p.projectName?.name || p.description || rawReason || 'Item Purchase');
 
     // If reason is Project, ensure Project Number (P-000xxx) is included
     if (rawReason === 'Project' || (!nameStr.startsWith('P-') && !nameStr.startsWith('INV-') && !nameStr.startsWith('M-') && !nameStr.startsWith('PUR-') && p.projectName?._id)) {
       const foundProject = projectsList.find(proj => 
         proj._id === p.projectName?._id || 
-        (proj.projectName && nameStr.toLowerCase().includes(proj.projectName.toLowerCase())) ||
-        (proj.customerName?.customerName && nameStr.toLowerCase().includes(proj.customerName.customerName.toLowerCase()))
+        (proj.projectName && typeof proj.projectName === 'string' && nameStr.toLowerCase().includes(proj.projectName.toLowerCase())) ||
+        (proj.customerName?.customerName && typeof proj.customerName.customerName === 'string' && nameStr.toLowerCase().includes(proj.customerName.customerName.toLowerCase()))
       );
       if (foundProject && foundProject.projectNumber !== undefined) {
         const pNum = `P-${String(foundProject.projectNumber).padStart(6, '0')}`;
@@ -485,15 +485,18 @@ function SupplierViewInformation() {
 //     localStorage.setItem('QuickFilterItemPurchaseItemSupplier-Summary', value)
   }
   const newArray = search !== '' ? itemPurchase.filter((row) =>
-    row.itemPurchaseNumber.toString().includes(search) ||
-    row.description.toLowerCase().includes(search.toLowerCase()) ||
-    (row.projectName && row.projectName.name.toLowerCase().includes(search.toLowerCase())) ||
-    row.manufacturer.toLowerCase().includes(search.toLowerCase()) ||
-    row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) ||
-    row.items.some((Item) => Item.itemName !== undefined && (typeof Item.itemName === 'string' ? Item.itemName : Item.itemName.itemName)?.toLowerCase().includes(search.toLowerCase())) ||
-    row.items.some((Item) => Item.itemDescription !== undefined && Item.itemDescription.toLowerCase().includes(search.toLowerCase())) ||
-    row.items.some((Item) => Item.newDescription !== undefined && Item.newDescription.toLowerCase().includes(search.toLowerCase())) ||
-    dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search)
+    (row.itemPurchaseNumber !== undefined && row.itemPurchaseNumber !== null ? row.itemPurchaseNumber.toString().includes(search) : false) ||
+    (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.projectName && row.projectName.name ? row.projectName.name.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.manufacturer ? row.manufacturer.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.items && Array.isArray(row.items) && row.items.some((Item) => {
+      const name = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName;
+      return (name ? name.toLowerCase().includes(search.toLowerCase()) : false) ||
+             (Item.itemDescription ? Item.itemDescription.toLowerCase().includes(search.toLowerCase()) : false) ||
+             (Item.newDescription ? Item.newDescription.toLowerCase().includes(search.toLowerCase()) : false);
+    })) ||
+    (row.itemPurchaseDate && dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search))
   ) : itemPurchase
 
 
@@ -528,39 +531,42 @@ function SupplierViewInformation() {
   }, [idView])
 
   const newArray1 = search !== '' ? itemPurchase.filter((row) =>
-    row.itemPurchaseNumber.toString().includes(search) ||
-    (row.status && row.status.toLowerCase().includes(search.toLowerCase())) ||
-    row.description.toLowerCase().includes(search.toLowerCase()) ||
-    (row.projectName && row.projectName.name.toLowerCase().includes(search.toLowerCase())) ||
-    row.manufacturer.toLowerCase().includes(search.toLowerCase()) ||
-    row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) ||
-    row.items.some((Item) => Item.itemName !== undefined && (typeof Item.itemName === 'string' ? Item.itemName : Item.itemName.itemName)?.toLowerCase().includes(search.toLowerCase())) ||
-    row.items.some((Item) => Item.itemDescription !== undefined && Item.itemDescription.toLowerCase().includes(search.toLowerCase())) ||
-    row.items.some((Item) => Item.newDescription !== undefined && Item.newDescription.toLowerCase().includes(search.toLowerCase())) ||
-    dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search)
+    (row.itemPurchaseNumber !== undefined && row.itemPurchaseNumber !== null ? row.itemPurchaseNumber.toString().includes(search) : false) ||
+    (row.status ? row.status.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.projectName && row.projectName.name ? row.projectName.name.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.manufacturer ? row.manufacturer.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.items && Array.isArray(row.items) && row.items.some((Item) => {
+      const name = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName;
+      return (name ? name.toLowerCase().includes(search.toLowerCase()) : false) ||
+             (Item.itemDescription ? Item.itemDescription.toLowerCase().includes(search.toLowerCase()) : false) ||
+             (Item.newDescription ? Item.newDescription.toLowerCase().includes(search.toLowerCase()) : false);
+    })) ||
+    (row.itemPurchaseDate && dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search))
   ) : itemPurchase
 
   //const payFc = newArray1.filter((row1)=>  row1.manufacturerID === id || row1.manufacturer === StoreName).reduce((acc, row) => acc + (row.total || 0), 0)
 
   const relatedItemPurchases = itemPurchase.length > 0 ? itemPurchase.reduce((acc, row) => {
-    row.items.filter((item) => parseFloat(item.itemQty) >= 0).forEach((item) => {
+    (row.items || []).filter((item) => parseFloat(item.itemQty) >= 0).forEach((item) => {
       const ItemName = typeof item.itemName === 'string' ? item.itemName : item.itemName?.itemName;
-      const Id = item.itemName._id;
+      const Id = item.itemName?._id;
       const description = item.itemDescription;
-      if (!acc[ItemName]) {
+      if (ItemName && !acc[ItemName]) {
         acc[ItemName] = { ItemName, Id, description, total: 0 }
       }
     });
     return acc
   }, {}) : null
   const relatedItemPurchases2 = []
-  itemPurchase.filter((Item) => isMatchingSupplier(Item)).map((Item) => Item.items.filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
+  itemPurchase.filter((Item) => isMatchingSupplier(Item)).map((Item) => (Item.items || []).filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
 
   const newArray2 = search4 !== '' ? relatedItemPurchases2.filter((row) =>
     (row.itemName?.itemName && row.itemName.itemName.toString().includes(search4)) ||
-    (row.itemDescription?.toLowerCase().includes(search4.toLowerCase())) ||
-    (row.newDescription?.toLowerCase().includes(search4.toLowerCase())) ||
-    dayjs(row.date).format('DD/MM/YYYY').includes(search4)
+    (row.itemDescription ? row.itemDescription.toLowerCase().includes(search4.toLowerCase()) : false) ||
+    (row.newDescription ? row.newDescription.toLowerCase().includes(search4.toLowerCase()) : false) ||
+    (row.date && dayjs(row.date).format('DD/MM/YYYY').includes(search4))
   ) : relatedItemPurchases2
 
   function Row(props) {

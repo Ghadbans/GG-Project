@@ -28,8 +28,29 @@
 19. **Backend Cloudflare Proxied Custom Domain**: The backend endpoint is permanently unified under `https://api.globalgate.sarl` with Cloudflare proxy (Orange Cloud) enabled. This shields the Railway backend from ISP-level DNS blocks and routing throttling worldwide (especially in DRC/Africa), ensuring all desktop apps, web portals (`portal.globalgate.sarl`), and mobile apps connect reliably with ultra-low latency without requiring any VPN. Always use `API_BASE_URL` and `ENDPOINT_URL` from `src/js/apiConfig.js`.
 20. **Strict Isolation of Mobile Application Layout from Desktop & Web (Ver 3.5.09)**: The mobile application layout (`MobileLayout`, `MobileCardList`, mobile bottom tabs) must be strictly isolated to native Capacitor mobile environments (`window.Capacitor.isNativePlatform()`), real mobile handheld devices (smartphones/tablets via user-agent), or explicit debug query `?mobile=true`. Desktop executable (.exe / Electron) and desktop browsers MUST NEVER switch to mobile layout when users resize, snap, or minimize windows (`window.innerWidth < 900` fallback completely removed).
 21. **Brand Identity & Icon Preservation**: Root `Icon.png` and `src/js/img/Image1.png` represent the official stylized **GG** (Global Gate) brand logo. Never overwrite them with generic placeholder or mobile generator assets. Always maintain the official Global Gate icon across Electron builds and titlebars.
+22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Null-Safe Client Search & Global Crash Prevention (Ver 3.5.11)**:
+  - **Supplier Detail & Master Views (`SupplierViewInformation.js` & `SupplierName.js`)**:
+    - Resolved critical `TypeError: Cannot read properties of null (reading 'toLowerCase')` runtime crash that triggered a white screen when viewing suppliers with `null` `manufacturerNumber`, `description`, `manufacturer`, `storeName`, or `address`.
+    - Guarded all search filters (`newArray`, `newArray1`, `newArray2`), `formatPurchaseReason`, and related item purchases iteration with strict null-checks and safe optional chaining.
+  - **Customer & Project Master Views (`CustomerInformationView.js` & `ProjectNameInfo.js`)**:
+    - Hardened customer and project search filters against `null` `customerType`, `projectName`, `projectNumber`, `description`, and `customerName`.
+  - **Daily Expenses Autocomplete Filters (`DailyExpenseUpdate.js`)**:
+    - Fixed project selection Autocomplete `filterOptions`, `getOptionLabel`, and `renderOption` to safely handle records with missing or `null` customer names and project descriptions.
+  - **Release & Distribution**: Bumped version to `3.5.11`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.11.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
+- **Authoritative Invoice Payment Balance Synchronization & Self-Healing Engine (Ver 3.5.10)**:
+  - **Authoritative Balance Engine (`server/utils/invoiceBalanceUtils.js`)**:
+    - Created `syncInvoiceBalances(invoiceIds)` to recompute `totalPaid` and `balanceDue` directly from `paymentSchema` records and accurately update invoice status (`Paid`, `Partially-Paid`, `Sent`).
+    - Hooked sync into `POST /create-payment`, `PUT /update-payment/:id`, and `DELETE /delete-payment/:id`.
+  - **Automatic DB Startup Sweep (`server/index.js` & `server/routes/invoiceRoutes.js`)**:
+    - Integrated `reconcileAllInvoiceBalances()` into server startup to automatically repair all historical mismatched invoices on MongoDB / Railway.
+  - **Lock Exemption & UI Dynamic State (`lockMiddleware.js`, `InvoiceViewAdminAll.js`, `PaymentInformationForm.js`)**:
+    - Exempted system balance updates from interactive document locks and added dynamic UI balance calculations on load.
+  - **Release & Distribution**: Bumped version to `3.5.10`, compiled Webpack bundles, packaged `dist/Global Gate Setup 3.5.10.exe`, and pushed commit to GitHub `origin main`.
+
 - **Desktop vs Mobile Layout Strict Separation, Daily Expenses Fix & Brand Icon Restoration (Ver 3.5.09)**:
   - **Strict Mobile / Desktop Layout Separation (`src/js/utils/isMobile.js`)**:
     - Completely removed the `window.innerWidth < 900` fallback in `isMobile.js` that caused the desktop .exe and desktop web version to abruptly transform into mobile bottom-navigation tabs and mobile cards when minimizing, resizing, or snapping windows.

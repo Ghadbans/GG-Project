@@ -891,19 +891,20 @@ function DailyExpenseUpdate() {
                                             setInputValueProject(newInputValue);
                                           }}
                                           filterOptions={(options, { inputValue }) => {
+                                            const lower = (inputValue || '').toLowerCase();
                                             return options.filter(
                                               (option) =>
-                                                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                                (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(lower)) ||
+                                                (option.projectName && option.projectName.toLowerCase().includes(lower)) ||
+                                                (option.description && option.description.toLowerCase().includes(lower))
                                             )
                                           }}
                                           sx={{ width: '100%', backgroundColor: 'white' }}
                                         />
                                         : <Autocomplete
                                           options={project2}
-                                          getOptionLabel={(option) => option.projectName.toUpperCase()}
-                                          renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                          getOptionLabel={(option) => option.projectName ? option.projectName.toUpperCase() : ''}
+                                          renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || ''} | {option.projectName || ''} | {option.description || ''}</Box>)}
                                           renderInput={(params) => <TextField {...params} label="Project Name" />}
                                           onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
                                           inputValue={inputValueProject}
@@ -911,11 +912,12 @@ function DailyExpenseUpdate() {
                                             setInputValueProject(newInputValue);
                                           }}
                                           filterOptions={(options, { inputValue }) => {
+                                            const lower = (inputValue || '').toLowerCase();
                                             return options.filter(
                                               (option) =>
-                                                option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                                (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(lower)) ||
+                                                (option.projectName && option.projectName.toLowerCase().includes(lower)) ||
+                                                (option.description && option.description.toLowerCase().includes(lower))
                                             )
                                           }}
                                           sx={{ width: '100%', backgroundColor: 'white' }}
@@ -1181,8 +1183,8 @@ function DailyExpenseUpdate() {
                                               user.data.role === 'CEO' ?
                                                 (<Autocomplete
                                                   options={project}
-                                                  getOptionLabel={(option) => option.projectName.toUpperCase()}
-                                                  renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                                  getOptionLabel={(option) => option.projectName ? option.projectName.toUpperCase() : ''}
+                                                  renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || ''} | {option.projectName || ''} | {option.description || ''}</Box>)}
                                                   onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
                                                   inputValue={inputValueProject}
                                                   onInputChange={(event, newInputValue) => {
@@ -1191,34 +1193,35 @@ function DailyExpenseUpdate() {
                                                   filterOptions={(options, { inputValue }) => {
                                                     return options.filter(
                                                       (option) =>
-                                                        option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                        option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                        option.description.toLowerCase().includes(inputValue.toLowerCase())
+                                                        (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                                                        (option.projectName && option.projectName.toLowerCase().includes(inputValue.toLowerCase())) ||
+                                                        (option.description && option.description.toLowerCase().includes(inputValue.toLowerCase()))
                                                     )
                                                   }}
                                                   renderInput={(params) => <TextField {...params} label="Project Name" />}
                                                   sx={{ width: '100%', backgroundColor: 'white' }}
                                                 />)
                                                 : (<Autocomplete
-                                                  options={project2}
-                                                  getOptionLabel={(option) => option.projectName.toUpperCase()}
-                                                  renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
-                                                  renderInput={(params) => <TextField {...params} label="Project Name" />}
-                                                  onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
-                                                  inputValue={inputValueProject}
-                                                  onInputChange={(event, newInputValue) => {
-                                                    setInputValueProject(newInputValue);
-                                                  }}
-                                                  filterOptions={(options, { inputValue }) => {
-                                                    return options.filter(
-                                                      (option) =>
-                                                        option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                        option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                        option.description.toLowerCase().includes(inputValue.toLowerCase())
-                                                    )
-                                                  }}
-                                                  sx={{ width: '100%', backgroundColor: 'white' }}
-                                                />)
+                                                   options={project2}
+                                                   getOptionLabel={(option) => option.projectName ? option.projectName.toUpperCase() : ''}
+                                                   renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || ''} | {option.projectName || ''} | {option.description || ''}</Box>)}
+                                                   renderInput={(params) => <TextField {...params} label="Project Name" />}
+                                                   onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
+                                                   inputValue={inputValueProject}
+                                                   onInputChange={(event, newInputValue) => {
+                                                     setInputValueProject(newInputValue);
+                                                   }}
+                                                   filterOptions={(options, { inputValue }) => {
+                                                     const lower = (inputValue || '').toLowerCase();
+                                                     return options.filter(
+                                                       (option) =>
+                                                         (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(lower)) ||
+                                                         (option.projectName && option.projectName.toLowerCase().includes(lower)) ||
+                                                         (option.description && option.description.toLowerCase().includes(lower))
+                                                     )
+                                                   }}
+                                                   sx={{ width: '100%', backgroundColor: 'white' }}
+                                                 />)
                                             }
                                           </div>
                                       }

@@ -67,17 +67,17 @@ function ProjectNameInfo({ onId }) {
     };
 
     const newArray = search !== '' ? project.filter((row) =>
-        row.projectName.toLowerCase().includes(search.toLowerCase()) ||
-        row.projectNumber.toString().includes(search) ||
-        (row.description && row.description.toLowerCase().includes(search.toLowerCase())) ||
-        (row.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase()))
+        (row.projectName ? row.projectName.toLowerCase().includes(search.toLowerCase()) : false) ||
+        (row.projectNumber !== undefined && row.projectNumber !== null ? row.projectNumber.toString().includes(search) : false) ||
+        (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
+        (row.customerName && row.customerName.customerName ? row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) : false)
     ) : project;
 
     const newArray2 = search !== '' ? filteredRows.filter((row) =>
-        row.projectName.toLowerCase().includes(search.toLowerCase()) ||
-        (row.description && row.description.toLowerCase().includes(search.toLowerCase())) ||
-        row.projectNumber.toString().includes(search) ||
-        (row.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase()))
+        (row.projectName ? row.projectName.toLowerCase().includes(search.toLowerCase()) : false) ||
+        (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
+        (row.projectNumber !== undefined && row.projectNumber !== null ? row.projectNumber.toString().includes(search) : false) ||
+        (row.customerName && row.customerName.customerName ? row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) : false)
     ) : filteredRows;
 
     return (

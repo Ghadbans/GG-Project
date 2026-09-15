@@ -244,10 +244,10 @@ function CustomerInformationView() {
     setSearch(value)
   }
   const newArray = search !== '' ? customer.filter((row) =>
-    row.customerType.toLowerCase().includes(search.toLowerCase()) ||
-    row.Customer && row.Customer.toLowerCase().includes(search.toLowerCase()) ||
-    row.customerEmail && row.customerEmail.toLowerCase().includes(search.toLowerCase()) ||
-    row.customerDescription && row.customerDescription.toLowerCase().includes(search.toLowerCase())
+    (row.customerType ? row.customerType.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.Customer && row.Customer.toLowerCase().includes(search.toLowerCase())) ||
+    (row.customerEmail && row.customerEmail.toLowerCase().includes(search.toLowerCase())) ||
+    (row.customerDescription && row.customerDescription.toLowerCase().includes(search.toLowerCase()))
   ) : customer
   {/** search && Tab End */ }
   {/* Start Estimate Transaction Information */ }

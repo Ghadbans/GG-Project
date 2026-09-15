@@ -57,10 +57,10 @@ function SupplierName({ onId }) {
     setSearch(value)
   }
   const newArray = search !== '' ? item.filter((row) =>
-    row.supplierName.toLowerCase().includes(search.toLowerCase()) ||
-    row.storeName && row.storeName.toLowerCase().includes(search.toLowerCase()) ||
-    row.address.toLowerCase().includes(search.toLowerCase()) ||
-    row.description.toLowerCase().includes(search.toLowerCase())
+    (row.supplierName ? row.supplierName.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.storeName ? row.storeName.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.address ? row.address.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false)
   ) : item
   return (
     <div>
