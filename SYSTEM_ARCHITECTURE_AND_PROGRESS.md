@@ -828,4 +828,17 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     5. **Frontend State & Calculation Resiliency:** Updated `InvoiceViewAdminAll.js` to dynamically live-sync the `invoice` state from `relatedPaymentInfo`, preventing `NaN` in `parseFloat(total || 0)` and ensuring the Overview tab and header status immediately reflect true paid totals and balances. Fixed `handleUpdateInvoice` in `PaymentInformationForm.js` and `PaymentInformationUpdate.js`.
   - **Verification:** AST scope validation passed with 0 unresolved references. Built Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.10.exe`.
 
+- **Quotation Number Format Unification to `Q-00####` (Ver 3.5.12)**:
+  - **Problem Reported:** Quotations displayed conflicting prefixes across different screens (`QUO-001728` in the main list table, `QT-001728` / `EST-001728` in headers, sidebars, and forms, and `Q-001728` in printable templates and PDFs).
+  - **Comprehensive Unification:**
+    1. **Master List (`EstimateViewAdmin.js`):** Unified `Quotation#` value formatter to strictly display `'Q-' + String(params?.value || '').padStart(6, '0')` and updated offline notification prefixes to `'Q-'`.
+    2. **Detail View & Printing (`EstimateViewAdminAll.js`):** Standardized top header to `{customerName} | Q-{estimateNumber}` (using regex normalization `/^(EST|QUO|QT|Q)\s*-?/i` -> `'Q-'` when raw legacy `estimateName` is present) and updated print `documentTitle` to `'Q-' + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1`.
+    3. **Sidebar & Search (`EstimateInformation.js`):** Added `formatQuotationLabel` helper formatting all navigation tab labels as `${customerName} | Q-${String(estimateNumber).padStart(6, '0')}` and enhanced search filtering to match `Q-00####` queries.
+    4. **Create & Edit Forms (`EstimateInvoiceForm.js`, `EstimateFormClone.js`, `EstimateInvoiceFormUpdate.js`, `ConvertToEstimate.js`):** Standardized `estimateName` generation to `"Q-" + String(estimateNumber).padStart(6, '0')`, set input adornments to `Q-00`, and unified notification reasons and mobile header titles.
+    5. **Cross-Module Displays (`MaintenanceOrderViewInformation.js`, `MaintenanceViewInformation.js`, `InvoiceViewAdminAll.js`, `PurchasesViewAdminAll.js`, `LayoutTemplateManager.js`, `EstimateConvertToMaintenance.js`):** Standardized all cross-module quotation references and links to format with `Q-` and 6-digit zero-padding.
+    6. **Mobile Components (`MobileCardList.js`, `MobileDetailSheet.js`):** Updated search filters and card title formatting to strictly use `Q-00####`.
+    7. **Backend Route Search Enhancement (`server/routes/Routes.js`):** Expanded `GET /estimate-Information` search query to support numeric `estimateNumber` matching alongside `customerName.customerName`, `estimateSubject`, `status`, and `estimateName`.
+  - **Verification:** AST scope validation passed with 0 errors. Compiled Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.12.exe`.
+
+
 

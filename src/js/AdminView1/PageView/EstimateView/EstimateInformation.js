@@ -111,6 +111,7 @@ function EstimateInformation({ onId }) {
     const estSub = String(row.estimateSubject || '').toLowerCase();
     const estDef = String(row.estimateDefect || '').toLowerCase();
     const estNum = String(row.estimateNumber || '').toLowerCase();
+    const qFmt = ('q-' + String(row.estimateNumber || '').padStart(6, '0')).toLowerCase();
     const custName = String(row.customerName?.customerName || row.customerName?.companyName || (typeof row.customerName === 'string' ? row.customerName : '')).toLowerCase();
 
     const matchesItem = Array.isArray(row.items) && row.items.some((Item) => {
@@ -125,8 +126,17 @@ function EstimateInformation({ onId }) {
            estSub.includes(s) ||
            estDef.includes(s) ||
            estNum.includes(s) ||
+           qFmt.includes(s) ||
            custName.includes(s) ||
            matchesItem;
+  };
+
+  const formatQuotationLabel = (row) => {
+    const cust = row.customerName?.customerName || '';
+    const qNum = row.estimateNumber !== undefined && row.estimateNumber !== null
+      ? ('Q-' + String(row.estimateNumber).padStart(6, '0'))
+      : ((row.estimateName || '').replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-'));
+    return `${cust} | ${qNum}`;
   };
 
   const newArray = search !== '' ? estimate.filter((row) => matchEstimateSearch(row, search)) : estimate;
@@ -163,7 +173,7 @@ function EstimateInformation({ onId }) {
                     {estimate?.map((row, index) => (
                       <Tab
                         key={index}
-                        label={row.customerName.customerName + ' | ' + (row.estimateName ? row.estimateName.replace(/EST\s*-?/i, 'QUO-') : ('QUO-' + String(row.estimateNumber).padStart(6, '0')))}
+                        label={formatQuotationLabel(row)}
                         component={Link}
                         to={`/EstimateViewAdminAll/${row._id}`}
                         sx={{
@@ -215,7 +225,7 @@ function EstimateInformation({ onId }) {
                     {newArray?.map((row, index) => (
                       <Tab
                         key={index}
-                        label={row.customerName.customerName + ' | ' + (row.estimateName ? row.estimateName.replace(/EST\s*-?/i, 'QUO-') : ('QUO-' + String(row.estimateNumber).padStart(6, '0')))}
+                        label={formatQuotationLabel(row)}
                         component={Link}
                         to={`/EstimateViewAdminAll/${row._id}`}
                         sx={{
@@ -259,7 +269,7 @@ function EstimateInformation({ onId }) {
                     {filteredRows?.map((row, index) => (
                       <Tab
                         key={index}
-                        label={row.customerName.customerName + ' | ' + (row.estimateName ? row.estimateName.replace(/EST\s*-?/i, 'QUO-') : ('QUO-' + String(row.estimateNumber).padStart(6, '0')))}
+                        label={formatQuotationLabel(row)}
                         component={Link}
                         to={`/EstimateViewAdminAll/${row._id}`}
                         sx={{
@@ -312,7 +322,7 @@ function EstimateInformation({ onId }) {
                     {newArray2?.map((row, index) => (
                       <Tab
                         key={index}
-                        label={row.customerName.customerName + ' | ' + (row.estimateName ? row.estimateName.replace(/EST\s*-?/i, 'QUO-') : ('QUO-' + String(row.estimateNumber).padStart(6, '0')))}
+                        label={formatQuotationLabel(row)}
                         component={Link}
                         to={`/EstimateViewAdminAll/${row._id}`}
                         sx={{

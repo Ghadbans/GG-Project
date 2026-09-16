@@ -2508,9 +2508,23 @@ Route.route("/estimate-Information").get(async (req, res) => {
     const skip = (Number(page) - 1) * Number(limit);
     const query = branchFilter(req);
     if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const trimmed = search.trim();
+      const escapedSearch = trimmed.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [{ 'customerName.customerName': regex }, { estimateSubject: regex }];
+      const orConditions = [
+        { 'customerName.customerName': regex },
+        { estimateSubject: regex },
+        { status: regex },
+        { estimateName: regex }
+      ];
+      const numericMatch = trimmed.match(/\d+/);
+      if (numericMatch) {
+        const num = parseInt(numericMatch[0], 10);
+        if (!isNaN(num)) {
+          orConditions.push({ estimateNumber: num });
+        }
+      }
+      query.$or = orConditions;
     }
     const itemI = await estimateSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).lean();
     const totalItem = await estimateSchema.countDocuments(query);

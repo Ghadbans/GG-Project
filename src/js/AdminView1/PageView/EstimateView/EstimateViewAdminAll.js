@@ -268,7 +268,7 @@ function EstimateViewAdminAll() {
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    documentTitle: 'Q-00' + estimateNumber + ' For ' + customerName1,
+    documentTitle: 'Q-' + String(estimateNumber).padStart(6, '0') + ' For ' + customerName1,
     onBeforeGetContent: () => {
       const PAGE_HEIGHT = 1045;
       const printElement = componentRef.current;
@@ -627,7 +627,7 @@ function EstimateViewAdminAll() {
                               <header style={{ display: 'block', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                   <div>
-                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>{row.customerName.customerName.toUpperCase()} | {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')} </Typography>
+                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}>{row.customerName?.customerName?.toUpperCase() || ''} | {row.estimateNumber !== undefined && row.estimateNumber !== null ? ('Q-' + String(row.estimateNumber).padStart(6, '0')) : ((row.estimateName || row.invoiceName)?.replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-'))} </Typography>
                                   </div>
                                   <div>
                                     <Typography

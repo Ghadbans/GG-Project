@@ -1357,12 +1357,12 @@ function InvoiceViewAdminAll() {
                                               }
                                               {
                                                 estimate2 ? estimate2.map((row) => (
-                                                  <span key={row._id}> | {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')}</span>
+                                                  <span key={row._id}> | {row.estimateNumber !== undefined && row.estimateNumber !== null ? ('Q-' + String(row.estimateNumber).padStart(6, '0')) : ((row.estimateName || row.invoiceName)?.replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-'))}</span>
                                                 )) : null
                                               }
                                               {
                                                 estimate ? estimate.map((row) => (
-                                                  <span key={row._id}> | {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')}</span>
+                                                  <span key={row._id}> | {row.estimateNumber !== undefined && row.estimateNumber !== null ? ('Q-' + String(row.estimateNumber).padStart(6, '0')) : ((row.estimateName || row.invoiceName)?.replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-'))}</span>
                                                 )) : null
                                               }
                                               {
@@ -1471,7 +1471,7 @@ function InvoiceViewAdminAll() {
                                                       estimate.map((row) => (
                                                         <tr key={row._id}>
                                                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.estimateDate).format('DD/MM/YYYY')}</td>
-                                                          <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Quotation # {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')}</td>
+                                                          <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Quotation # {row.estimateNumber !== undefined && row.estimateNumber !== null ? ('Q-' + String(row.estimateNumber).padStart(6, '0')) : ((row.estimateName || row.invoiceName)?.replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-'))}</td>
                                                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span data-prefix>$ </span> {row.totalInvoice}</td>
                                                           <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
                                                             <BlackTooltip>
@@ -1495,7 +1495,7 @@ function InvoiceViewAdminAll() {
                                                       estimate2.map((row) => (
                                                         <tr key={row._id}>
                                                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Date {dayjs(row.estimateDate).format('DD/MM/YYYY')}</td>
-                                                          <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Quotation # {(row.estimateName || row.invoiceName)?.replace(/EST\s*-?/i, 'QUO-')}</td>
+                                                          <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Quotation # {row.estimateNumber !== undefined && row.estimateNumber !== null ? ('Q-' + String(row.estimateNumber).padStart(6, '0')) : ((row.estimateName || row.invoiceName)?.replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-'))}</td>
                                                           <td style={{ textAlign: 'left', border: '1px solid #DDD' }}> Amount  <span data-prefix>$ </span> {row.totalInvoice}</td>
                                                           <td style={{ textAlign: 'center', border: '1px solid #DDD' }}>
                                                             <BlackTooltip>

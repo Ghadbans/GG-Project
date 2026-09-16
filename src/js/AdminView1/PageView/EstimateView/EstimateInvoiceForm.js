@@ -202,7 +202,7 @@ function EstimateInvoiceForm() {
   const [rate, setRate] = useState(0);
   const [shopLoading, setShopLoading] = useState(false);
   const dateComment = new Date()
-  const estimateName = "QUO-" + String(estimateNumber).padStart(6, '0')
+  const estimateName = "Q-" + String(estimateNumber).padStart(6, '0')
   const [ItemInformation, setItemInformation] = useState([]);
   const [includeLetter, setIncludeLetter] = useState(false);
   const PROFESSIONAL_COVER_LETTER = `Dear Valued Customer,
@@ -714,7 +714,7 @@ The GLOBAL GATE Team`;
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'QUO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
+      reason: 'Q-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
       dateNotification: dateComment
     }
     try {
@@ -813,7 +813,7 @@ The GLOBAL GATE Team`;
                 New Quotation
               </Typography>
               <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
-                EST-{String(estimateNumber).padStart(6, '0')}
+                Q-{String(estimateNumber).padStart(6, '0')}
               </Typography>
             </Box>
           </Box>
@@ -1183,15 +1183,15 @@ The GLOBAL GATE Team`;
                   </Grid>
                   <Grid item xs={6}>
                     <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
-                      <InputLabel htmlFor="estimateNumber">Estimate Number</InputLabel>
+                      <InputLabel htmlFor="estimateNumber">Quotation Number</InputLabel>
                       <OutlinedInput
                         required
                         type='number'
                         id='estimateNumber'
-                        label='Estimate Number'
+                        label='Quotation Number'
                         value={estimateNumber}
                         onChange={(e) => setEstimateNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">QUO-00</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">Q-00</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>

@@ -692,7 +692,7 @@ function EstimateConvertToMaintenance() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: `${quotationNumber ? `QUO-${String(quotationNumber).padStart(6, '0')} to ` : ''}M-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName?.customerName}`,
+      reason: `${quotationNumber ? `Q-${String(quotationNumber).padStart(6, '0')} to ` : ''}M-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName?.customerName}`,
       dateNotification: new Date()
     }
     try {

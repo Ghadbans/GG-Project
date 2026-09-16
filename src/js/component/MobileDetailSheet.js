@@ -212,8 +212,9 @@ function MobileDetailSheet({ open, onClose, record, type }) {
     if (type === 'invoices') {
       refNum = typeof record?.invoiceNumber === 'number' ? `INV-${String(record.invoiceNumber).padStart(6, '0')}` : safeText(record?.invoiceNumber, 'INV');
       title = refNum;
-    } else if (type === 'quotations' || type === 'estimates') {
-      refNum = typeof record?.estimateNumber === 'number' ? `Q-${String(record.estimateNumber).padStart(6, '0')}` : safeText(record?.estimateNumber, 'QUO');
+      refNum = typeof record?.estimateNumber === 'number'
+        ? `Q-${String(record.estimateNumber).padStart(6, '0')}`
+        : (String(record?.estimateNumber || record?.estimateName || '').replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-') || 'Q-000000');
       title = refNum;
     } else if (type === 'customers') {
       title = customerName || 'Customer';

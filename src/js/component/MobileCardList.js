@@ -205,8 +205,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
     if (type === 'quotations' || type === 'estimates') {
       const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
       const num = safeText(item.estimateNumber).toLowerCase();
-      const numFmt = `est-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
-      return cust.includes(q) || num.includes(q) || numFmt.includes(q);
+      const numFmt = `q-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
+      const numFmtEst = `est-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
+      const numFmtQuo = `quo-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
+      return cust.includes(q) || num.includes(q) || numFmt.includes(q) || numFmtEst.includes(q) || numFmtQuo.includes(q);
     }
     if (type === 'customers') {
       const name = safeText(item.customerName || item.Customer).toLowerCase();
@@ -394,7 +396,9 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
           // 2. Quotations / Estimates
           if (type === 'quotations' || type === 'estimates') {
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Quotation Client');
-            const estNum = typeof item.estimateNumber === 'number' ? `Q-${String(item.estimateNumber).padStart(6, '0')}` : safeText(item.estimateNumber, 'QUO');
+            const estNum = typeof item.estimateNumber === 'number'
+              ? `Q-${String(item.estimateNumber).padStart(6, '0')}`
+              : (String(item.estimateNumber || item.estimateName || '').replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-') || 'Q-000000');
             const date = safeText(item.dateField || item.date, '2026');
             const lineItems = Array.isArray(item.itemInfo) ? item.itemInfo : (Array.isArray(item.items) ? item.items : []);
             const calcLineTotal = lineItems.reduce((acc, it) => acc + (Number(it?.itemTotal) || (Number(it?.itemQuantity || it?.quantity || 1) * Number(it?.itemSellingPrice || it?.rate || it?.price || 0))), 0);

@@ -202,7 +202,7 @@ function LiveDocumentPreview({ localConfig, setLocalConfig, setSaved }) {
               >
                 <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: '24px', rowGap: '6px', fontSize: `${globalFontSize}px`, alignContent: 'start', position: 'relative' }}>
                   <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Quotation #</div>
-                  <div style={{ textAlign: 'left' }}>QUO-000456</div>
+                  <div style={{ textAlign: 'left' }}>Q-000456</div>
                   <div style={{ fontWeight: 'bold', textAlign: 'left' }}>Date</div>
                   <div style={{ textAlign: 'left' }}>17/07/2026</div>
                 </div>

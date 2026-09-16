@@ -828,7 +828,7 @@ The GLOBAL GATE Team`;
                 Edit Quotation
               </Typography>
               <Typography variant="caption" sx={{ color: '#E0E7FF' }}>
-                EST-{String(quotationNumber).padStart(6, '0')}
+                Q-{String(quotationNumber).padStart(6, '0')}
               </Typography>
             </Box>
           </Box>

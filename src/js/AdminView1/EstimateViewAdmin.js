@@ -303,7 +303,7 @@ function EstimateViewAdmin() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'QUO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + ReferenceInfoCustomer,
+      reason: 'Q-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + ReferenceInfoCustomer,
       dateNotification: new Date()
     }
     try {
@@ -577,7 +577,7 @@ function EstimateViewAdmin() {
   const columns = [
     { field: 'estimateDate', headerName: 'Date', minWidth: 100, flex: 1, type: 'date', valueGetter: (params) => new Date(params.row.estimateDate), renderCell: (params) => dayjs(params.row.estimateDate).format('DD/MM/YYYY') },
     { field: 'customer', headerName: 'Customer Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
-    { field: 'estimateNumber', headerName: 'Quotation#', minWidth: 100, flex: 1, valueFormatter: (params) => 'QUO-' + String(params?.value || '').padStart(6, '0') },
+    { field: 'estimateNumber', headerName: 'Quotation#', minWidth: 100, flex: 1, valueFormatter: (params) => 'Q-' + String(params?.value || '').padStart(6, '0') },
     { field: 'estimateSubject', headerName: 'Subject', minWidth: 150, flex: 1.5 },
     {
       field: 'status', headerName: 'Status', minWidth: 110, flex: 1, renderCell: (params) => (

@@ -138,7 +138,7 @@ function ConvertToEstimate() {
        const Create = {person: user.data.userName+ ' CREATED ',
                       dateComment
                     }
-       const estimateName = "QUO-" + String(estimateNumber).padStart(6, '0')
+       const estimateName = "Q-" + String(estimateNumber).padStart(6, '0')
     useEffect(()=>{
       let newNumber = 0;
       axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
@@ -567,11 +567,11 @@ const handleCreateItem = (newItem)=> {
                  required
                  disabled
                  type='number'
-                 id='estimateNumber'
-                 label='Quotation Number'
-                 value={'00'+estimateNumber}
-                startAdornment={<InputAdornment position="start">QUO-</InputAdornment>}
-                />
+                  id='estimateNumber'
+                  label='Quotation Number'
+                  value={estimateNumber}
+                 startAdornment={<InputAdornment position="start">Q-00</InputAdornment>}
+                 />
                </FormControl>
                </Grid>
                <Grid item xs={4}> 

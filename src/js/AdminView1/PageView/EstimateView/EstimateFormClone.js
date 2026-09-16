@@ -198,7 +198,7 @@ The GLOBAL GATE Team`;
   const [attachedLetter, setAttachedLetter] = useState(PROFESSIONAL_COVER_LETTER);
   const [noteInfo, setNoteInfo] = useState("");
   const dateComment = new Date()
-  const estimateName = "QUO-" + String(quotationNumber).padStart(6, '0')
+  const estimateName = "Q-" + String(quotationNumber).padStart(6, '0')
   const [ItemInformation, setItemInformation] = useState([]);
 
   const [customerName, setCustomerName] = useState({});
@@ -542,7 +542,7 @@ The GLOBAL GATE Team`;
     const data = {
       idInfo: ReferenceInfo,
       person: (user?.data?.userName || '') + ' Created ',
-      reason: 'QUO-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
+      reason: 'Q-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
       dateNotification: dateComment
     }
     try {
@@ -733,7 +733,7 @@ The GLOBAL GATE Team`;
                         label='Quotation Number'
                         value={quotationNumber}
                         onChange={(e) => setQuotationNumber(e.target.value)}
-                        startAdornment={<InputAdornment position="start">QUO-00</InputAdornment>}
+                        startAdornment={<InputAdornment position="start">Q-00</InputAdornment>}
                       />
                     </FormControl>
                   </Grid>
