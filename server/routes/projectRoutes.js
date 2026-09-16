@@ -220,29 +220,18 @@ Route.route("/remove-projects").delete(async (req, res) => {
 
 Route.route("/project-Information").get(async (req, res) => {
     try {
-      const { page = 1, limit = 100, search = '', filterField, filterValue, status } = req.query;
+      const { page = 1, limit = 100, search = '', filterField, filterValue, status, branchId } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
-      if (search) {
-        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(escapedSearch, 'i');
-        const orConditions = [
-          { projectName: regex },
-          { ReferenceName: regex },
-          { status: regex },
-          { note: regex },
-          { projectDescription: regex },
-          { 'customerName.customerName': regex },
-          { 'customerName.customerEmail': regex }
-        ];
-        if (!isNaN(Number(search))) {
-          orConditions.push({ projectNumber: Number(search) });
+      let branchCondition = null;
+      if (branchId && branchId !== 'ALL') {
+        if (branchId === 'HQ') {
+          branchCondition = { $or: [{ branchId: 'HQ' }, { branchId: { $exists: false } }, { branchId: null }] };
+        } else {
+          query.branchId = branchId;
         }
-        query.$or = orConditions;
       }
-      if (filterField && filterValue) {
-        query[filterField] = new RegExp(filterValue, 'i');
-      }
+
       if (status && status !== 'ALL') {
         const escapedStatus = status.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         if (escapedStatus.toLowerCase() === 'on-going' || escapedStatus.toLowerCase() === 'ongoing') {
@@ -252,8 +241,54 @@ Route.route("/project-Information").get(async (req, res) => {
         }
       }
 
+      if (search) {
+        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(escapedSearch, 'i');
+        const orConditions = [
+          { description: regex },
+          { projectDescription: regex },
+          { projectName: regex },
+          { 'customerName.customerName': regex },
+          { 'customerName.companyName': regex },
+          { 'customerName.customerEmail': regex },
+          { 'customerName.customerPhone': regex },
+          { 'customerName.phone': regex },
+          { 'customerName.billingAddress': regex },
+          { 'customerName.address': regex },
+          { customerName: regex },
+          { ReferenceName: regex },
+          { ReferenceName2: regex },
+          { status: regex },
+          { note: regex },
+          { notes: regex },
+          { 'phase.phaseName': regex },
+          { 'phase.name': regex },
+          { 'phase.description': regex }
+        ];
+
+        const numClean = search.trim().replace(/^[Pp](?:[Rr][Jj])?[-_\s]*/, '');
+        if (numClean && !isNaN(Number(numClean))) {
+          orConditions.push({ projectNumber: Number(numClean) });
+        }
+
+        if (branchCondition) {
+          query.$and = [branchCondition, { $or: orConditions }];
+        } else if (query.$or) {
+          query.$and = [{ $or: query.$or }, { $or: orConditions }];
+          delete query.$or;
+        } else {
+          query.$or = orConditions;
+        }
+      } else if (branchCondition) {
+        query.$or = branchCondition.$or;
+      }
+
+      if (filterField && filterValue) {
+        query[filterField] = new RegExp(filterValue, 'i');
+      }
+
       // Live status summary counts for branch
-      const countMatch = branchFilter(req);
+      const countMatch = branchCondition ? { $or: branchCondition.$or } : branchFilter(req);
       const aggCounts = await projectSchema.aggregate([
         { $match: countMatch },
         {

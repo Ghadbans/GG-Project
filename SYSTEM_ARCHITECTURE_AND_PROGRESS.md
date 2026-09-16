@@ -840,5 +840,23 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     7. **Backend Route Search Enhancement (`server/routes/Routes.js`):** Expanded `GET /estimate-Information` search query to support numeric `estimateNumber` matching alongside `customerName.customerName`, `estimateSubject`, `status`, and `estimateName`.
   - **Verification:** AST scope validation passed with 0 errors. Compiled Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.12.exe`.
 
+- **Comprehensive Project Search Across Description, Customer, References, Notes & Status (Ver 3.5.13)**:
+  - **Problem Reported:** In the Project module, searching (e.g. `finish`) failed to return projects where the searched term appeared in the `description` (e.g. `P-000177` with description `FINISH`), only matching projects with that term in `projectName` (`P-000161`).
+  - **Root Causes Fixed:**
+    1. **Backend Route Search Field Correction (`server/routes/projectRoutes.js`):** In `/project-Information`, the `$or` conditions previously checked `projectDescription` instead of `description` (the actual schema and database field).
+    2. **Comprehensive Field Coverage:** Expanded `/project-Information` `$or` conditions to search across:
+       - `description` & `projectDescription`
+       - `projectName`
+       - `customerName.customerName`, `customerName.companyName`, `customerName.customerEmail`, `customerName.customerPhone`, `customerName.phone`, `customerName.billingAddress`, `customerName.address`, and string `customerName`
+       - `ReferenceName` & `ReferenceName2`
+       - `status`
+       - `note` & `notes`
+       - `phase.phaseName`, `phase.name`, `phase.description`
+       - Numeric project numbers (`177`, `000177`, `P-000177`, `P-177`)
+    3. **Safe Branch Scoping Integration:** Ensured branch filtering (`branchId === 'HQ'`) is merged safely with search `$or` using `$and`, preventing branch filters and search queries from overriding each other, and maintaining accurate live status card counts.
+    4. **Project Sidebar Search (`ProjectNameInfo.js`):** Updated `matchProjectSearch` to perform full multi-field filtering across project names, descriptions, customer details, status, notes, references, and project number formats (`P-00####`).
+  - **Verification:** AST scope validation passed with 0 errors. Compiled Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.13.exe`.
+
+
 
 

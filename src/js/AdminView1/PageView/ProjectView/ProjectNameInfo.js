@@ -66,19 +66,35 @@ function ProjectNameInfo({ onId }) {
         setSearch(e.target.value);
     };
 
-    const newArray = search !== '' ? project.filter((row) =>
-        (row.projectName ? row.projectName.toLowerCase().includes(search.toLowerCase()) : false) ||
-        (row.projectNumber !== undefined && row.projectNumber !== null ? row.projectNumber.toString().includes(search) : false) ||
-        (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
-        (row.customerName && row.customerName.customerName ? row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) : false)
-    ) : project;
+    const matchProjectSearch = (row, term) => {
+        if (!term) return true;
+        const lower = term.toLowerCase().trim();
+        const pNum = row.projectNumber !== undefined && row.projectNumber !== null ? String(row.projectNumber) : '';
+        const pFormatted = pNum ? ('p-' + pNum.padStart(6, '0')).toLowerCase() : '';
+        const cust = typeof row.customerName === 'string'
+            ? row.customerName
+            : (row.customerName?.customerName || row.customerName?.companyName || '');
+        const custEmail = row.customerName?.customerEmail || '';
+        const custPhone = row.customerName?.customerPhone || row.customerName?.phone || '';
+        const desc = row.description || row.projectDescription || '';
+        const pName = row.projectName || '';
+        const status = row.status || '';
+        const note = row.note || row.notes || '';
+        const ref = row.ReferenceName || row.ReferenceName2 || '';
+        return pName.toLowerCase().includes(lower) ||
+            desc.toLowerCase().includes(lower) ||
+            cust.toLowerCase().includes(lower) ||
+            custEmail.toLowerCase().includes(lower) ||
+            custPhone.toLowerCase().includes(lower) ||
+            status.toLowerCase().includes(lower) ||
+            note.toLowerCase().includes(lower) ||
+            ref.toLowerCase().includes(lower) ||
+            pNum.includes(lower) ||
+            pFormatted.includes(lower);
+    };
 
-    const newArray2 = search !== '' ? filteredRows.filter((row) =>
-        (row.projectName ? row.projectName.toLowerCase().includes(search.toLowerCase()) : false) ||
-        (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
-        (row.projectNumber !== undefined && row.projectNumber !== null ? row.projectNumber.toString().includes(search) : false) ||
-        (row.customerName && row.customerName.customerName ? row.customerName.customerName.toLowerCase().includes(search.toLowerCase()) : false)
-    ) : filteredRows;
+    const newArray = search !== '' ? project.filter(row => matchProjectSearch(row, search)) : project;
+    const newArray2 = search !== '' ? filteredRows.filter(row => matchProjectSearch(row, search)) : filteredRows;
 
     return (
         <div className='itemInfoContainer'>
