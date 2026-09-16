@@ -17,6 +17,11 @@ function createWindow() {
     icon: 'Icon.png'
   })
   win.maximize();
+  win.webContents.on('did-finish-load', () => {
+    if (win && !win.isDestroyed()) {
+      win.webContents.focus();
+    }
+  });
   win.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',
@@ -103,6 +108,11 @@ function createNewWindow() {
     icon: 'Icon.png'
   })
   newWin.maximize();
+  newWin.webContents.on('did-finish-load', () => {
+    if (newWin && !newWin.isDestroyed()) {
+      newWin.webContents.focus();
+    }
+  });
   newWin.loadURL(url.format({
     pathname: path.join(__dirname, 'index.html'),
     protocol: 'file:',

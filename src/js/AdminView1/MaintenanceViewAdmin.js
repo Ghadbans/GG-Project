@@ -258,7 +258,9 @@ function MaintenanceViewAdmin() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
   }
   {/** Loading Update View End */ }
 
@@ -273,7 +275,9 @@ function MaintenanceViewAdmin() {
     }, 500)
   }
   const handleDeleteCloseLoading = () => {
-    window.location.reload();
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
   }
 
   const handleOpenOffline = () => {

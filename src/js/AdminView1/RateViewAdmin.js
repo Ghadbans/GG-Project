@@ -322,7 +322,9 @@ function RateViewAdmin() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** Loading Update View End */ }
 

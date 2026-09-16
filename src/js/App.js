@@ -2,6 +2,7 @@ import React, { useEffect, useState, Suspense } from 'react'
 import {
   HashRouter as Router, Routes, Route
 } from 'react-router-dom'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import '../js/css/Side.css'
 import Loginadmin from './Loginadmin'
 import Loginemployee from './Loginemployee'
@@ -16,6 +17,25 @@ import MobileLayout from './component/MobileLayout';
 import NativeBackHandler from './component/NativeBackHandler';
 
 import { isNativeMobile, useIsMobile } from './utils/isMobile';
+
+const globalMuiTheme = createTheme({
+  components: {
+    MuiModal: {
+      defaultProps: {
+        disableRestoreFocus: true,
+        disableAutoFocus: true,
+        disableEnforceFocus: false,
+      },
+    },
+    MuiDialog: {
+      defaultProps: {
+        disableRestoreFocus: true,
+        disableAutoFocus: true,
+        disableEnforceFocus: false,
+      },
+    },
+  },
+});
 
 function AppLayoutWrapper({ children }) {
   const isMobile = useIsMobile();
@@ -243,7 +263,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ThemeProvider theme={globalMuiTheme}>
       <Router>
         <AppLayoutWrapper>
           <Suspense fallback={<Loader />}>
@@ -453,7 +473,7 @@ function App() {
         pauseOnHover
         theme="light"
       />
-    </>
+    </ThemeProvider>
   )
 }
 

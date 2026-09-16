@@ -767,7 +767,7 @@ function EstimateViewAdmin() {
               }}
             >
               {[
-                { key: 'ALL', label: 'ALL ESTIMATES', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
+                { key: 'ALL', label: 'ALL QUOTATIONS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
                 { key: 'Draft', label: 'DRAFT', count: statusCounts.draft, color: '#78909c', bgLight: '#eceff1', icon: <EditNoteIcon sx={{ fontSize: 15, color: '#78909c' }} /> },
                 { key: 'Sent', label: 'SENT', count: statusCounts.sent, color: '#1976d2', bgLight: '#e3f2fd', icon: <SendIcon sx={{ fontSize: 15, color: '#1976d2' }} /> },
                 { key: 'Decline', label: 'DECLINE', count: statusCounts.decline, color: '#d32f2f', bgLight: '#ffebee', icon: <CancelIcon sx={{ fontSize: 15, color: '#d32f2f' }} /> },

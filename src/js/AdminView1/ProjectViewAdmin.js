@@ -414,16 +414,13 @@ function ProjectViewAdmin() {
     setOpen(false);
   };
   const handleCloseModal = () => {
-
-    window.location.reload();
     setOpen(false);
     setOpenDeleteMultiple(false);
     setOpenDeleteAll(false);
     setModalOpenLoading(false);
     setLoading(false);
     setSelectedRows([]);
-    fetchItems(page, searchTerm, filterField, filterValue); // Refresh data instead of reload
-
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
   };
   const [ProjectDeleted, setProjectDeleted] = useState([])
   useEffect(() => {

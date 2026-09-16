@@ -857,6 +857,21 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     4. **Project Sidebar Search (`ProjectNameInfo.js`):** Updated `matchProjectSearch` to perform full multi-field filtering across project names, descriptions, customer details, status, notes, references, and project number formats (`P-00####`).
   - **Verification:** AST scope validation passed with 0 errors. Compiled Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.13.exe`.
 
+- **Quotation Status Card Label Standardization & Global Post-Delete Keyboard Lock Elimination (Ver 3.5.14)**:
+  - **Problems Reported:**
+    1. In Quotation module, top summary card displayed `ALL ESTIMATES` instead of `ALL QUOTATIONS`.
+    2. In all modules, after performing a delete operation, keyboard typing became completely unresponsive across all inputs in the application until the app was closed and restarted.
+  - **Root Causes & Resolutions:**
+    1. **Quotation Status Card:** Updated `label: 'ALL QUOTATIONS'` in `src/js/AdminView1/EstimateViewAdmin.js`.
+    2. **MUI Modal Focus Trap & Restore Focus Lock:** When a table row was deleted and its delete modal closed, MUI's default `restoreFocus` attempted to return focus to the deleted element that was removed from the DOM. This left `document.activeElement` detached and MUI's `TrapFocus` listeners intercepting all keystrokes.
+       - Configured global MUI `ThemeProvider` in `src/js/App.js` with `disableRestoreFocus: true`, `disableAutoFocus: true`, and `disableEnforceFocus: false` across all `MuiModal` and `MuiDialog` components.
+    3. **Self-Healing Lock & Focus Watcher (`src/js/index.js`):** Fixed modal detection (removed flawed `[role="presentation"]` selector that was permanently matching SVG icons and layout divs) and added global click/focus capture rescue listeners ensuring `<input>` and `<textarea>` elements always immediately receive focus and keystrokes.
+    4. **Eliminated Destructive `window.location.reload()` Calls:** Replaced full-window reloads upon closing delete/action modals with smooth in-place `fetchItems(...)` state updates across `ProjectViewAdmin.js`, `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`, `ItemOutViewAdmin.js`, `ItemReturnAdminView.js`, `PayRollViewAdmin.js`, `RateViewAdmin.js`, and `SellShopInvoiceView.js`.
+    5. **Electron WebContents Focus Guarantee (`main.js`):** Added `did-finish-load` listeners ensuring `webContents.focus()` is maintained on all browser windows.
+  - **Verification:** AST scope validation passed with 0 errors. Compiled Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.14.exe`.
+
+
+
 
 
 

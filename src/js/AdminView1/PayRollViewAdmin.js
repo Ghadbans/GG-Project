@@ -301,7 +301,6 @@ function PayRollViewAdmin() {
     setOpen(false);
   };
   const handleCloseModal = () => {
-    window.location.reload();
     setModalOpenLoading(false);
     setLoading(false);
     setOpen(false);
@@ -392,7 +391,6 @@ function PayRollViewAdmin() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
     setLoadingOpenModal(false);
     setLoading(false);
     setUpdateId(null);

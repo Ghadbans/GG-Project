@@ -319,7 +319,9 @@ function ItemReturnAdminView() {
     }, 500)
   }
   const handleCloseLoading = () => {
-    window.location.reload();
+    setLoadingOpenModal(false);
+    setLoading(false);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
   }
   {/** Loading Update View End */ }
 
@@ -331,11 +333,12 @@ function ItemReturnAdminView() {
 
     setTimeout(() => {
       setLoading(false);
-      window.location.reload();
     }, 500)
   }
   const handleDeleteCloseLoading = () => {
-    window.location.reload();
+    setModalDeleteOpenLoading(false);
+    setLoading(false);
+    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
   }
   {/** getting all info start */ }
   const [itemsQtyArray, SetItemsQtyArray] = useState([]);

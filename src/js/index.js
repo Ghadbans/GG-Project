@@ -108,74 +108,71 @@ axios.interceptors.response.use((response) => {
   return response;
 }, (error) => Promise.reject(error));
 
-// Self-healing page interaction lock watcher
+// Self-healing page interaction lock & keyboard focus watcher
 if (typeof window !== 'undefined') {
-  const observer = new MutationObserver(() => {
-    // Check if there are any active MUI modals, dialogs, or presentation popups in the document body
-    const activeModals = document.querySelectorAll('.MuiModal-root, .MuiDialog-root, [role="presentation"]');
-    
-    // If no modals are active in the DOM, ensure the page is completely unlocked
+  const unlockPageIfNoModals = () => {
+    // Check if there are any genuinely active, visible MUI modals or dialogs in the DOM
+    const allModals = document.querySelectorAll('.MuiModal-root, .MuiDialog-root');
+    const activeModals = Array.from(allModals).filter(el => {
+      if (el.getAttribute('aria-hidden') === 'true') return false;
+      const style = window.getComputedStyle ? window.getComputedStyle(el) : el.style;
+      return style.visibility !== 'hidden' && style.display !== 'none';
+    });
+
+    // If no active modals are present in the DOM, ensure the page and all inputs are completely unlocked
     if (activeModals.length === 0) {
-      let madeChanges = false;
-      
-      // 1. Clean up body overflow & pointer-events
       if (document.body) {
-        if (document.body.style.overflow === 'hidden') {
-          document.body.style.overflow = '';
-          madeChanges = true;
-        }
-        if (document.body.style.pointerEvents === 'none') {
-          document.body.style.pointerEvents = '';
-          madeChanges = true;
-        }
-        if (document.body.style.paddingRight) {
-          document.body.style.paddingRight = '';
-          madeChanges = true;
-        }
-        if (document.body.classList.contains('MuiModal-open')) {
-          document.body.classList.remove('MuiModal-open');
-          madeChanges = true;
-        }
+        if (document.body.style.overflow === 'hidden') document.body.style.overflow = '';
+        if (document.body.style.pointerEvents === 'none') document.body.style.pointerEvents = '';
+        if (document.body.style.paddingRight) document.body.style.paddingRight = '';
+        if (document.body.classList.contains('MuiModal-open')) document.body.classList.remove('MuiModal-open');
       }
-      
-      // 2. Remove aria-hidden & styles from the React root container
+
       const rootEl = document.getElementById('root');
       if (rootEl) {
-        if (rootEl.getAttribute('aria-hidden') === 'true') {
-          rootEl.removeAttribute('aria-hidden');
-          madeChanges = true;
-        }
-        if (rootEl.style.pointerEvents === 'none') {
-          rootEl.style.pointerEvents = '';
-          madeChanges = true;
-        }
+        if (rootEl.getAttribute('aria-hidden') === 'true') rootEl.removeAttribute('aria-hidden');
+        if (rootEl.style.pointerEvents === 'none') rootEl.style.pointerEvents = '';
       }
-      
-      // 3. Scan other siblings of root to ensure they are not blocking focus or input
-      const bodyChildren = document.body.children;
+
+      const bodyChildren = document.body ? document.body.children : [];
       for (let i = 0; i < bodyChildren.length; i++) {
         const child = bodyChildren[i];
-        if (child.id !== 'root' && child.tagName !== 'SCRIPT') {
-          if (child.getAttribute('aria-hidden') === 'true') {
-            child.removeAttribute('aria-hidden');
-            madeChanges = true;
-          }
+        if (child && child.id === 'root' && child.getAttribute('aria-hidden') === 'true') {
+          child.removeAttribute('aria-hidden');
         }
       }
-      
-      if (madeChanges) {
-        console.log('[LockWatcher] Self-healed lingering modal locks successfully!');
-      }
     }
-  });
+  };
 
-  // Watch for mutations (child additions/removals and attribute changes) on body
+  const observer = new MutationObserver(unlockPageIfNoModals);
   observer.observe(document.body, {
     childList: true,
     subtree: true,
     attributes: true,
     attributeFilter: ['class', 'style', 'aria-hidden']
   });
+
+  // Global click & focus rescue listener: ensures inputs and textareas always receive focus and typing
+  document.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable || (target.closest && target.closest('input, textarea, [contenteditable="true"]')))) {
+      unlockPageIfNoModals();
+      const inputEl = target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' ? target : target.closest('input, textarea');
+      if (inputEl && typeof inputEl.focus === 'function' && document.activeElement !== inputEl) {
+        inputEl.focus();
+      }
+    }
+  }, true);
+
+  document.addEventListener('focusin', (e) => {
+    const target = e.target;
+    if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA')) {
+      const rootEl = document.getElementById('root');
+      if (rootEl && rootEl.getAttribute('aria-hidden') === 'true') {
+        rootEl.removeAttribute('aria-hidden');
+      }
+    }
+  }, true);
 }
 
 // Render your React component instead
