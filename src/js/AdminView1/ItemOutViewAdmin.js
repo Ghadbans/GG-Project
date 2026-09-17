@@ -334,7 +334,7 @@ function ItemOutViewAdmin() {
   const handleCloseLoading = () => {
     setLoadingOpenModal(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** Loading Update View End */ }
 
@@ -351,7 +351,7 @@ function ItemOutViewAdmin() {
   const handleDeleteCloseLoading = () => {
     setModalDeleteOpenLoading(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchItems(page, searchTerm, filterField, filterValue);
   }
   {/** getting all info start */ }
   const [itemsQtyArray, SetItemsQtyArray] = useState([]);

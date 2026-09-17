@@ -31,6 +31,16 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Maintenance-to-Invoice Lifecycle Standardization & Global Search State Fix (Ver 3.5.15)**:
+  - **Automated Maintenance Transition to 'Close' on Invoice Deletion (`server/routes/invoiceRoutes.js` & `src/js/AdminView1/InvoiceViewAdmin.js`)**:
+    - When an invoice created from a maintenance order (`Position === 'Maintenance'`) is deleted (single or batch delete), the backend and frontend cascade automatically unlinks the maintenance record (`Converted: false`, `ReferenceName: ''`) and sets its status back to `'Close'`.
+    - Once unlinked and in `'Close'` state, the maintenance order is completely unlocked, allowing full editing, status modifications (Open, Pending, Reschedule, Cancel, Close), and re-conversion to an invoice whenever needed.
+  - **Strict Edit & Status Lock While Converted (`MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`, `MaintenanceViewInformation.js`, `MaintenanceOrderViewInformation.js`, `MaintenanceUpdateView.js`, `MaintenanceOrderUpdate.js`)**:
+    - Disabled Edit buttons, status updates, and form submissions on maintenance orders that are actively converted to an existing invoice, with clear informative tooltips explaining that the linked invoice must be deleted first.
+  - **Elimination of `debouncedSearchTerm is not defined` ReferenceError**:
+    - Corrected post-action modal close and delete handlers across `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`, `ItemOutViewAdmin.js`, `ItemReturnAdminView.js`, and `SellShopInvoiceView.js` to correctly pass component state variables (`searchTerm`, `filterField`, `filterValue`, `statusFilter` / `fetchData()`).
+  - **Release & Distribution**: Bumped version to `3.5.15`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.15.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Null-Safe Client Search & Global Crash Prevention (Ver 3.5.11)**:
   - **Supplier Detail & Master Views (`SupplierViewInformation.js` & `SupplierName.js`)**:
     - Resolved critical `TypeError: Cannot read properties of null (reading 'toLowerCase')` runtime crash that triggered a white screen when viewing suppliers with `null` `manufacturerNumber`, `description`, `manufacturer`, `storeName`, or `address`.

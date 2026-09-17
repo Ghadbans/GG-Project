@@ -259,7 +259,7 @@ function MaintenanceOrderAdmin() {
   const handleCloseLoading = () => {
     setLoadingOpenModal(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   }
   {/** Loading Update View End */ }
 
@@ -276,7 +276,7 @@ function MaintenanceOrderAdmin() {
   const handleDeleteCloseLoading = () => {
     setModalDeleteOpenLoading(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   }
 
   const handleOpenOffline = () => {

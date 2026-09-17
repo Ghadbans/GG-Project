@@ -460,7 +460,10 @@ Route.route("/delete-invoice/:id").delete(async (req, res, next) => {
           } else if (row.Position === 'Last') {
             await purchaseSchema.findOneAndUpdate({ReferenceName2:row._id},{$set:{status: 'Estimated',ReferenceName2:'null'}});
           } else if (row.Position === 'Maintenance') {
-            await maintenanceSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{Converted: false,ReferenceName:''}});
+            await maintenanceSchema.updateMany(
+              { $or: [{ ReferenceName: String(row._id) }, { _id: row.ReferenceName }] },
+              { $set: { Converted: false, ReferenceName: '', status: 'Close' } }
+            );
           } else if (row.Position === 'Second' && row.ReferenceName2 === 'null') {
             await estimationSchema.findOneAndUpdate({ReferenceName:row._id},{$set:{status: 'Approved',ReferenceName:'null'}});
           }

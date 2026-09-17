@@ -1185,12 +1185,24 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                           onClose={handleCloseMenu}
                                           TransitionComponent={Fade}
                                         >
-                                          <MenuItem disabled={row.status === 'Converted' && MaintenanceInfoU.length === 0}>
-                                            <NavLink to={`/MaintenanceUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
-                                              <EditIcon />
-                                              <Typography>Edit</Typography>
-                                            </NavLink>
-                                          </MenuItem>
+                                          {(() => {
+                                            const isConverted = (row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true');
+                                            return (
+                                              <MenuItem disabled={isConverted || MaintenanceInfoU.length === 0}>
+                                                {isConverted ? (
+                                                  <span style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'lightgray', cursor: 'not-allowed' }}>
+                                                    <EditIcon />
+                                                    <Typography>Edit (Converted)</Typography>
+                                                  </span>
+                                                ) : (
+                                                  <NavLink to={`/MaintenanceUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                                    <EditIcon />
+                                                    <Typography>Edit</Typography>
+                                                  </NavLink>
+                                                )}
+                                              </MenuItem>
+                                            );
+                                          })()}
                                           <Divider />
                                           <MenuItem>
                                             <NavLink to={`/MaintenanceFormClone/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>

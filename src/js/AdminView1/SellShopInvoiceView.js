@@ -282,7 +282,7 @@ function SellShopInvoiceView() {
   const handleCloseLoading = () => {
     setLoadingOpenModal(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchData();
   }
   {/** Loading Update View End */ }
 
@@ -299,7 +299,7 @@ function SellShopInvoiceView() {
   const handleDeleteCloseLoading = () => {
     setModalDeleteOpenLoading(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchData();
   }
 
   const handleOpenOffline = () => {

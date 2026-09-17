@@ -782,6 +782,10 @@ function MaintenanceUpdateView() {
       includeAssetControl, assetControlReport
     };
 
+    if (converted === true || converted === 'true') {
+      alert("Cannot edit maintenance order while it is converted to an invoice. Please delete the linked invoice first.");
+      return;
+    }
     try {
       // Fetch fresh state from server
       const currentRes = await axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`);

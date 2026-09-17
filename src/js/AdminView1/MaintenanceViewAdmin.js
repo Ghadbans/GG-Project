@@ -260,7 +260,7 @@ function MaintenanceViewAdmin() {
   const handleCloseLoading = () => {
     setLoadingOpenModal(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   }
   {/** Loading Update View End */ }
 
@@ -277,7 +277,7 @@ function MaintenanceViewAdmin() {
   const handleDeleteCloseLoading = () => {
     setModalDeleteOpenLoading(false);
     setLoading(false);
-    fetchItems(page, debouncedSearchTerm, filterField, filterValue, statusFilter);
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
   }
 
   const handleOpenOffline = () => {
@@ -357,6 +357,13 @@ function MaintenanceViewAdmin() {
   }
   {/** Update Invoice Status End */ }
   const handleOpenUpdate = (id) => {
+    const target = maintenance.find(m => m._id === id);
+    if (target) {
+      const isConverted = (target.status === 'Close' && (target.Converted === true || target.Converted === 'true')) || target.status === 'Converted' || (target.Converted === true || target.Converted === 'true');
+      if (isConverted) {
+        return;
+      }
+    }
     setOpen1(true);
     setUpdateId(id);
   };
@@ -550,16 +557,18 @@ function MaintenanceViewAdmin() {
       )
     },
     {
-      field: 'edit', headerName: 'Edit', width: 40, renderCell: (params) => (
-        <EditTooltip title="Edit">
-          <span>
-            <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={params.row.status === 'Converted' && MaintenanceInfoU.length === 0}>
-              <EditIcon style={{ color: 'gray' }} />
-            </IconButton>
-          </span>
-        </EditTooltip>
-
-      )
+      field: 'edit', headerName: 'Edit', width: 40, renderCell: (params) => {
+        const isConverted = (params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true')) || params.row.status === 'Converted' || (params.row.Converted === true || params.row.Converted === 'true');
+        return (
+          <EditTooltip title={isConverted ? "Cannot edit or change status of converted maintenance order until linked invoice is deleted" : "Edit"}>
+            <span>
+              <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={isConverted || MaintenanceInfoU.length === 0}>
+                <EditIcon style={{ color: (isConverted || MaintenanceInfoU.length === 0) ? 'lightgray' : 'gray' }} />
+              </IconButton>
+            </span>
+          </EditTooltip>
+        );
+      }
     },
     {
       field: 'Delete', headerName: 'Delete', width: 40, renderCell: (params) => (

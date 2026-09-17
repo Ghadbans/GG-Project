@@ -413,7 +413,7 @@ function InvoiceViewAdmin() {
       const invToDelete = invoice.find(inv => inv._id === DeleteId);
       if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
         try {
-          await axios.put(`${ENDPOINT_URL}/update-maintenance/${invToDelete.ReferenceName}`, { Converted: false, ReferenceName: null });
+          await axios.put(`${ENDPOINT_URL}/update-maintenance/${invToDelete.ReferenceName}`, { Converted: false, ReferenceName: '', status: 'Close' });
         } catch (e) { console.error('Failed to update maintenance order', e); }
       }
 
@@ -469,7 +469,7 @@ function InvoiceViewAdmin() {
       const invToDelete = invoice.find(inv => inv._id === idToDelete);
       if (invToDelete && invToDelete.ReferenceName && invToDelete.Position === 'Maintenance') {
         try {
-          await axios.put(`${ENDPOINT_URL}/update-maintenance/${invToDelete.ReferenceName}`, { Converted: false, ReferenceName: null });
+          await axios.put(`${ENDPOINT_URL}/update-maintenance/${invToDelete.ReferenceName}`, { Converted: false, ReferenceName: '', status: 'Close' });
         } catch (e) { console.error('Failed to update maintenance order', e); }
       }
       return axios.delete(`${ENDPOINT_URL}/delete-invoice/${idToDelete}`)
