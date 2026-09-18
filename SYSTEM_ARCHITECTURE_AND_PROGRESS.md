@@ -31,6 +31,14 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Project-to-Invoice Unit Price & Manual Item Rate Preservation (Ver 3.5.18)**:
+  - **Authoritative Rate Resolution in Convert To Invoice (`ConvertToInvoice.js`)**:
+    - Resolved issue where manually entered or unregistered items from a Project Purchase defaulted to `Rate: 0` / `$0.00` upon converting to an invoice.
+    - Added `getProjectItemRate(item)` fallback hierarchy checking `item.itemRate`, `item.itemCost`, `item.itemPrice`, `item.totalCost / item.itemQty`, and `item.totalAmount / item.itemQty` during initial load (`fetchData`) and post-catalog reconciliation (`fetchItem`).
+    - Recalculates `totalAmount`, `discount`, `percentage`, and `itemAmount` seamlessly on load so invoice preview tables accurately reflect the exact quantities and unit prices entered in the Project.
+    - Extended robust rate resolution to `MaintenanceConvertToInvoice.js` and `ConvertToEstimate.js`.
+  - **Release & Distribution**: Bumped version to `3.5.18`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.18.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Message Center Direct Reply-Back Engine & Quoted Context Support (Ver 3.5.17)**:
   - **Direct Reply Interaction in Message Center (`src/js/AdminView1/MessageAdminView.js`)**:
     - Embedded interactive Reply action buttons on each message card across the Message Center popover.

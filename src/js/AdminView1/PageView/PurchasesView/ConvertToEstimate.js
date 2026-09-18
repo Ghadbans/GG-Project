@@ -187,7 +187,36 @@ const handleChange = (e,i) => {
             // Handle the response data here
            setCustomerName1(res.data.data.customerName);
            setProjectName(res.data.data.projectName);
-           SetItems(res.data.data.items);
+            const purchaseItems = (res.data.data.items || []).map(item => {
+              if (item.newDescription !== undefined) return item;
+              const rateVal = parseFloat(item.itemRate);
+              const costVal = parseFloat(item.itemCost);
+              const priceVal = parseFloat(item.itemPrice);
+              const rate = (!isNaN(rateVal) && rateVal > 0)
+                ? rateVal
+                : ((!isNaN(costVal) && costVal > 0)
+                    ? costVal
+                    : ((!isNaN(priceVal) && priceVal > 0)
+                        ? priceVal
+                        : (parseFloat(item.totalCost) > 0 && parseFloat(item.itemQty) > 0
+                            ? Math.round((parseFloat(item.totalCost) / parseFloat(item.itemQty)) * 100) / 100
+                            : 0)));
+              const qty = parseFloat(item.itemQty) || 0;
+              const discount = parseFloat(item.itemDiscount) || 0;
+              const totalAmount = Math.round((qty * rate) * 100) / 100;
+              const discountVal = Math.round((totalAmount * discount) * 100) / 100;
+              const percentage = Math.round((discountVal / 100) * 100) / 100;
+              const itemAmount = Math.round((totalAmount - percentage) * 100) / 100;
+              return {
+                ...item,
+                itemRate: rate,
+                totalAmount,
+                discount: discountVal,
+                percentage,
+                itemAmount
+              };
+            });
+            SetItems(purchaseItems);
            setPurchaseName(res.data.data.purchaseName);
           })
           .catch(error => {

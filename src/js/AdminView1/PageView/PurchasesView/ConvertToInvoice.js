@@ -249,28 +249,70 @@ function ConvertToInvoice() {
       console.error("Error updating customer credit:", error);
     }
   };
+  const getProjectItemRate = (item) => {
+    if (!item || item.newDescription !== undefined) return 0;
+    const rateVal = parseFloat(item.itemRate);
+    if (!isNaN(rateVal) && rateVal > 0) return rateVal;
+
+    const costVal = parseFloat(item.itemCost);
+    if (!isNaN(costVal) && costVal > 0) return costVal;
+
+    const priceVal = parseFloat(item.itemPrice);
+    if (!isNaN(priceVal) && priceVal > 0) return priceVal;
+
+    const totalCostVal = parseFloat(item.totalCost);
+    const qtyVal = parseFloat(item.itemQty);
+    if (!isNaN(totalCostVal) && totalCostVal > 0 && !isNaN(qtyVal) && qtyVal > 0) {
+      return Math.round((totalCostVal / qtyVal) * 100) / 100;
+    }
+
+    const totalAmtVal = parseFloat(item.totalAmount);
+    if (!isNaN(totalAmtVal) && totalAmtVal > 0 && !isNaN(qtyVal) && qtyVal > 0) {
+      return Math.round((totalAmtVal / qtyVal) * 100) / 100;
+    }
+
+    return 0;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
         setCustomer(res.data.data.customerName);
-        setProjectID(res.data.data.projectName._id);
-        const purchaseItems = res.data.data.items || [];
-        SetItems(prev => {
-          // If we already have items (e.g. from expenses loop), merge them carefully.
-          // For now, fetchData is the primary source, so we just set it but preserve any existing non-purchase items if they were added (unlikely this early but safe).
-          return purchaseItems;
+        setProjectID(res.data.data.projectName?._id || res.data.data.projectName);
+        const purchaseItems = (res.data.data.items || []).map(item => {
+          if (item.newDescription !== undefined) return item;
+          const rate = getProjectItemRate(item);
+          const qty = parseFloat(item.itemQty) || 0;
+          const discount = parseFloat(item.itemDiscount) || 0;
+          const totalAmount = Math.round((qty * rate) * 100) / 100;
+          const discountVal = Math.round((totalAmount * discount) * 100) / 100;
+          const percentage = Math.round((discountVal / 100) * 100) / 100;
+          const itemAmount = Math.round((totalAmount - percentage) * 100) / 100;
+
+          return {
+            ...item,
+            itemQty: qty,
+            itemRate: rate,
+            itemDiscount: discount,
+            totalAmount: totalAmount,
+            discount: discountVal,
+            percentage: percentage,
+            itemAmount: itemAmount,
+            totalCost: Math.round((qty * (parseFloat(item.itemCost) || rate)) * 100) / 100
+          };
         });
+        SetItems(purchaseItems);
         setPurchaseName(res.data.data._id);
         setNoteInfo(res.data.data.noteInfo);
-        setInvoiceSubject(res.data.data.projectName.projectName);
+        setInvoiceSubject(res.data.data.projectName?.projectName || res.data.data.projectName || '');
         setInvoiceDefect(res.data.data.estimateDefect);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     }
     fetchData()
-  }, [])
+  }, [id])
   useEffect(() => {
     const fetchCustomer = async () => {
       if (customer) {
@@ -339,16 +381,31 @@ function ConvertToInvoice() {
         const res = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(res.data.data.reverse())
         SetItems(items => items.map((row) => {
-          const related = res.data?.data?.find((row2) => row.itemName !== undefined && row2._id === row.itemName?._id)
-          if (related) {
-            return {
-              ...row, itemRate: related.itemSellingPrice, totalAmount: row.itemQty * related.itemSellingPrice,
-              discount: (row.itemQty * related.itemSellingPrice) * row.itemDiscount,
-              percentage: ((row.itemQty * related.itemSellingPrice) * row.itemDiscount) / 100,
-              itemAmount: (row.itemQty * related.itemSellingPrice) - (((row.itemQty * related.itemSellingPrice) * row.itemDiscount) / 100),
-            }
+          if (row.newDescription !== undefined) return row;
+          const related = res.data?.data?.find((row2) => row.itemName !== undefined && row2._id === row.itemName?._id);
+          
+          let rate = 0;
+          if (related && Number(related.itemSellingPrice) > 0) {
+            rate = Number(related.itemSellingPrice);
+          } else {
+            rate = getProjectItemRate(row);
           }
-          return row
+
+          const qty = parseFloat(row.itemQty) || 0;
+          const discount = parseFloat(row.itemDiscount) || 0;
+          const totalAmount = Math.round((qty * rate) * 100) / 100;
+          const discountVal = Math.round((totalAmount * discount) * 100) / 100;
+          const percentage = Math.round((discountVal / 100) * 100) / 100;
+          const itemAmount = Math.round((totalAmount - percentage) * 100) / 100;
+
+          return {
+            ...row,
+            itemRate: rate,
+            totalAmount: totalAmount,
+            discount: discountVal,
+            percentage: percentage,
+            itemAmount: itemAmount,
+          };
         }))
         const resCategory = await axios.get(`${ENDPOINT_URL}/expensesCategory`)
         setCategories(resCategory.data.data);
