@@ -146,6 +146,30 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
   }),
 );
+const cleanStr = (str) => String(str || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+
+const isItemMatch = (item1, item2) => {
+  if (!item1 || !item2) return false;
+  
+  const id1 = String(item1.itemName?._id || (typeof item1.itemName === 'string' && item1.itemName !== 'empty' && item1.itemName.length === 24 ? item1.itemName : '') || '');
+  const id2 = String(item2.itemName?._id || (typeof item2.itemName === 'string' && item2.itemName !== 'empty' && item2.itemName.length === 24 ? item2.itemName : '') || '');
+  
+  if (id1 && id2 && id1 !== 'empty' && id2 !== 'empty') {
+    return id1 === id2;
+  }
+  
+  const desc1 = cleanStr(item1.itemDescription || (typeof item1.itemName === 'string' ? item1.itemName : item1.itemName?.itemName) || item1.newDescription || '');
+  const desc2 = cleanStr(item2.itemDescription || (typeof item2.itemName === 'string' ? item2.itemName : item2.itemName?.itemName) || item2.newDescription || '');
+  
+  if (desc1 && desc2) {
+    if (desc1 === desc2) return true;
+    if (desc1.length >= 5 && desc2.length >= 5) {
+      if (desc1.includes(desc2) || desc2.includes(desc1)) return true;
+    }
+  }
+  return false;
+};
+
 function PurchaseFormUpdate() {
   const { id } = useParams();
   const { isLocked, lockConfig, lockError, forceRelease } = useDocumentLock(id, 'purchase');
@@ -203,17 +227,87 @@ function PurchaseFormUpdate() {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
-      setCustomerName(res.data.data.customerName);
-      setPurchaseDate(res.data.data.purchaseDate);
-      setProjectName(res.data.data.projectName);
-      setPurchaseNumber(Number(res.data?.data?.purchaseNumber || res.data?.purchaseNumber || 0));
-      setPurchaseAmount2(res.data.data.purchaseAmount2);
-      setPurchaseAmount1(res.data.data.purchaseAmount1);
-      SetItems(res.data.data.items);
-      setDescription(res.data.data.description);
-      setCheckTvA(res.data.data.CheckTvA || false);
-      setTax(res.data.data.tax || 0);
+      const [resPurchase, resOut, resReturn, resPrec] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/get-purchase/${id}`),
+        axios.get(`${ENDPOINT_URL}/itemOut`),
+        axios.get(`${ENDPOINT_URL}/itemReturn`),
+        axios.get(`${ENDPOINT_URL}/itemPurchase`)
+      ]);
+      const currentPurchase = resPurchase.data.data;
+      setCustomerName(currentPurchase.customerName);
+      setPurchaseDate(currentPurchase.purchaseDate);
+      setProjectName(currentPurchase.projectName);
+      const currentPurchaseNo = Number(currentPurchase.purchaseNumber || 0);
+      setPurchaseNumber(currentPurchaseNo);
+      setPurchaseAmount2(currentPurchase.purchaseAmount2);
+      setPurchaseAmount1(currentPurchase.purchaseAmount1);
+      setDescription(currentPurchase.description);
+      setCheckTvA(currentPurchase.CheckTvA || false);
+      setTax(currentPurchase.tax || 0);
+
+      const projectIdStr = String(currentPurchase.projectName?._id || currentPurchase.projectName || '');
+      const projectNameStr = currentPurchase.projectName?.projectName || '';
+
+      const isMatchingProjectOrPurchase = (row) => {
+        if (!row) return false;
+        const refId = String(row.reference?._id || row.reference || row.POID || row.projectName?._id || row.projectName || '');
+        if (refId && String(id) && refId === String(id)) return true;
+        if (projectIdStr && refId && refId === projectIdStr) return true;
+        
+        const rowPOID = String(row.POID || '').trim();
+        if (currentPurchaseNo > 0) {
+          if (rowPOID === String(currentPurchaseNo) || 
+              rowPOID === `PUR-${String(currentPurchaseNo).padStart(6, '0')}` ||
+              rowPOID === `P-${String(currentPurchaseNo).padStart(6, '0')}` ||
+              rowPOID === `PUR-${currentPurchaseNo}` ||
+              rowPOID === `P-${currentPurchaseNo}`) {
+            return true;
+          }
+        }
+
+        const desc = cleanStr(row.description || (typeof row.projectName === 'string' ? row.projectName : row.projectName?.projectName) || '');
+        if (projectNameStr && cleanStr(projectNameStr).length >= 4 && desc.includes(cleanStr(projectNameStr))) {
+          return true;
+        }
+        if (currentPurchaseNo > 0 && (desc.includes(`pur${currentPurchaseNo}`) || desc.includes(`pur-${currentPurchaseNo}`))) {
+          return true;
+        }
+        return false;
+      };
+
+      const matchedOut = (resOut.data?.data || []).filter(isMatchingProjectOrPurchase);
+      const matchedReturn = (resReturn.data?.data || []).filter(isMatchingProjectOrPurchase);
+      const matchedPurchase = (resPrec.data?.data || []).filter(isMatchingProjectOrPurchase);
+
+      const computedItems = (currentPurchase.items || []).map((Item) => {
+        if (Item.newDescription !== undefined) return Item;
+
+        const matchedOutQty = (matchedOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
+          .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
+        const matchedReturnQty = (matchedReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
+          .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
+        const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
+
+        const matchedPurchases = (matchedPurchase || []).flatMap(ip => 
+          (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
+            qty: parseFloat(it.newItemOut || it.itemQty || 0),
+            total: parseFloat(it.totalAmount || it.totalAmountUSD || (parseFloat(it.newItemOut || it.itemQty || 0) * (parseFloat(it.itemRate || it.cost || 0))) || 0)
+          }))
+        );
+        const totalBoughtQty = matchedPurchases.reduce((sum, p) => sum + p.qty, 0);
+        const totalBoughtCost = matchedPurchases.reduce((sum, p) => sum + p.total, 0);
+        const buyQty = totalBoughtQty > 0 ? totalBoughtQty : (parseFloat(Item.itemBuy) || 0);
+        const totalBuyCost = totalBoughtCost > 0 ? totalBoughtCost : (parseFloat(Item.totalGenerale) || (buyQty * (parseFloat(Item.itemCost) || 0)));
+
+        return {
+          ...Item,
+          itemOut: netOutQty,
+          itemBuy: buyQty,
+          totalGenerale: totalBuyCost
+        };
+      });
+
+      SetItems(computedItems);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -1134,7 +1228,7 @@ function PurchaseFormUpdate() {
                                                 <TextField
                                                   name='itemBuy' id='itemBuy'
                                                   onChange={(e) => handleChange(e, Item.idRow)}
-                                                  value={Item.itemBuy}
+                                                  value={Item.itemBuy != null && Item.itemBuy !== '' ? Item.itemBuy : 0}
                                                   size="small"
 
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
@@ -1146,7 +1240,7 @@ function PurchaseFormUpdate() {
                                                   disabled
                                                   name='itemOut' id='itemOut'
                                                   onChange={(e) => handleChange(e, Item.idRow)}
-                                                  value={Item.itemOut !== undefined ? Item.itemOut : 0}
+                                                  value={Item.itemOut != null && Item.itemOut !== '' ? Item.itemOut : 0}
                                                   size="small"
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />

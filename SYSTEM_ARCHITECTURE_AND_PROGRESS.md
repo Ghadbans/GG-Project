@@ -31,6 +31,13 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Purchase Update Live Movement Synchronization & Strict Zero Formatting (Ver 3.5.16)**:
+  - **Live Movement Resolution Engine in Update Purchase (`PurchaseFormUpdate.js`)**:
+    - Integrated dynamic transaction movement synchronization identical to `PurchasesViewAdminAll.js`. `PurchaseFormUpdate.js` now queries `/itemOut`, `/itemReturn`, and `/itemPurchase` on load and computes live `netOutQty` (`matchedOut - matchedReturn`) and `buyQty` across all item rows.
+    - Eliminated blank input boxes in the Out and Buy columns by enforcing safe numerical fallbacks `Item.itemOut != null && Item.itemOut !== '' ? Item.itemOut : 0` so zero-out items clearly show `0`.
+    - Persists updated live movement values back into MongoDB upon saving the form.
+  - **Release & Distribution**: Bumped version to `3.5.16`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.16.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Maintenance-to-Invoice Lifecycle Standardization & Global Search State Fix (Ver 3.5.15)**:
   - **Automated Maintenance Transition to 'Close' on Invoice Deletion (`server/routes/invoiceRoutes.js` & `src/js/AdminView1/InvoiceViewAdmin.js`)**:
     - When an invoice created from a maintenance order (`Position === 'Maintenance'`) is deleted (single or batch delete), the backend and frontend cascade automatically unlinks the maintenance record (`Converted: false`, `ReferenceName: ''`) and sets its status back to `'Close'`.
