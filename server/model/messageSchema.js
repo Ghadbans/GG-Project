@@ -18,6 +18,11 @@ const messageSchema = new Schema(
       type: String,
       trim: true,
     },
+    replyTo: {
+      id: { type: String },
+      userName: { type: String },
+      message: { type: String },
+    },
     branchId: { type: String, default: 'HQ' },
 },
   {

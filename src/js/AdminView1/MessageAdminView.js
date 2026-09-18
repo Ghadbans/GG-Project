@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { Close, Height, MailOutline } from '@mui/icons-material'
+import React, { useEffect, useState, useRef } from 'react'
+import { Close, Height, MailOutline, Reply } from '@mui/icons-material'
 import { IconButton, Paper, TextField, Typography, styled, Backdrop, Modal, Box, Grid, Card, CardContent, Popper, Fade, Popover, Container, Divider, Menu, MenuItem, ListItemText, List } from '@mui/material';
 import { Badge } from '@mui/material'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -38,6 +38,8 @@ function MessageAdminView({ name, role }) {
   const [editView, setEditView] = useState('false');
   const [idEdit, setIdEdit] = useState(null);
   const [updatedMessage, setUpdatedMessage] = useState('');
+  const [replyingTo, setReplyingTo] = useState(null);
+  const inputRef = useRef(null);
   const [badgeNumber, setBadgeNumber] = useState(
     parseInt(localStorage.getItem('badgeMessage')) || 0
   );
@@ -53,6 +55,7 @@ function MessageAdminView({ name, role }) {
   const handleClose = () => {
     setLoadingOpenModal(false);
     setAnchorEl(null);
+    setReplyingTo(null);
   };
 
   const open = Boolean(anchorEl);
@@ -71,8 +74,8 @@ function MessageAdminView({ name, role }) {
   useEffect(() => {
     const socket = io(`${API_BASE_URL}`)
     socket.on('newMessage', (newMessage) => {
-      setMessageInfo([newMessage, ...messageInfo])
-      setBadgeNumber(badgeNumber + 1)
+      setMessageInfo((prev) => [newMessage, ...prev])
+      setBadgeNumber((prev) => prev + 1)
       toast.success(`new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`)
       const message = `new message from ${newMessage.userName + ' On ' + dayjs(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime}`
       if (window.electron && window.electron.sendNotification) {
@@ -85,7 +88,7 @@ function MessageAdminView({ name, role }) {
     return () => {
       socket.off('newMessage')
     }
-  }, [badgeNumber, messageInfo])
+  }, [badgeNumber])
 
 
   const [openDelete, setOpen] = useState(false);
@@ -101,7 +104,21 @@ function MessageAdminView({ name, role }) {
   const handleEditView = (status, id) => {
     setEditView(status);
     setIdEdit(id);
+    if (status === 'true') {
+      setReplyingTo(null);
+    }
   }
+
+  const handleReply = (row) => {
+    setReplyingTo(row);
+    setEditView('false');
+    setIdEdit(null);
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 100);
+  };
   useEffect(() => {
     const fetchData = async () => {
       if (idEdit !== null) {
@@ -180,17 +197,27 @@ function MessageAdminView({ name, role }) {
   }
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
+    if (!message.trim()) return;
+
     const data = {
       userName,
       nowDate,
       nowTime,
-      message
+      message,
+      ...(replyingTo && {
+        replyTo: {
+          id: replyingTo._id,
+          userName: replyingTo.userName,
+          message: replyingTo.message
+        }
+      })
     };
     try {
       const res = await axios.post(`${ENDPOINT_URL}/create-message/`, data)
       if (res) {
         setUpdateD('saved')
         setMessage("");
+        setReplyingTo(null);
         handleOpen();
         setBadgeNumber(0);
         localStorage.removeItem('badgeMessage');
@@ -219,16 +246,16 @@ function MessageAdminView({ name, role }) {
           horizontal: 'left',
         }}
       >
-        <Box sx={{ width: 430, height: 670, padding: '10px' }} component={Paper}>
-          <Box sx={{ height: 480, marginBottom: '20px', overflow: 'hidden', overflowY: 'scroll' }}>
+        <Box sx={{ width: 440, maxHeight: 680, display: 'flex', flexDirection: 'column', padding: '12px' }} component={Paper}>
+          <Box sx={{ flex: 1, maxHeight: 460, marginBottom: '12px', overflow: 'hidden', overflowY: 'auto' }}>
             {
               messageInfo.map((row) => (
                 <div key={row._id} >
                   {
                     editView === "true" && idEdit === row._id ?
-                      <div sx={{ padding: '10px', lineHeight: '5px', border: '2px solid gray', borderRadius: '20px', margin: '10px', backgroundColor: '#30368a', color: 'white' }}>
-                        <IconButton onClick={() => setEditView("false")} sx={{ float: 'right' }}>
-                          <Close />
+                      <div style={{ padding: '10px', lineHeight: 'normal', border: '2px solid gray', borderRadius: '16px', margin: '10px 0', backgroundColor: '#30368a', color: 'white' }}>
+                        <IconButton onClick={() => setEditView("false")} sx={{ float: 'right', color: 'white' }} size="small">
+                          <Close fontSize="small" />
                         </IconButton>
                         <form onSubmit={handleSubmit}>
                           <TextField
@@ -237,28 +264,91 @@ function MessageAdminView({ name, role }) {
                             label='Message'
                             value={updatedMessage}
                             onChange={(e) => setUpdatedMessage(e.target.value)}
-                            sx={{ width: '100%', backgroundColor: 'white', marginBottom: '10px' }}
+                            sx={{ width: '100%', backgroundColor: 'white', marginBottom: '10px', borderRadius: '4px' }}
                           />
                           <button type='submit' style={{ width: '100%' }} className='btnCustomer6'>update</button>
                         </form>
                       </div> :
-                      <ListItemText sx={row.userName === name ? { padding: '10px', lineHeight: '5px', border: '2px solid gray', borderRadius: '20px', margin: '10px', backgroundColor: '#30368a', color: 'white' } : { padding: '10px', lineHeight: '5px', border: '2px solid gray', borderRadius: '20px', margin: '10px', backgroundColor: 'green', color: 'white' }}>
-                        <List style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '5px' }}>
-                          <span className="txt2" style={{ color: 'white' }}>{row.userName}</span>
-                          <span className="txt2" style={{ color: 'white' }}>{' On ' + dayjs(row.nowDate).format('DD/MMMM') + ' At ' + row.nowTime}</span>
+                      <ListItemText sx={row.userName === name ? { padding: '12px', lineHeight: 'normal', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '16px', margin: '10px 0', backgroundColor: '#30368a', color: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' } : { padding: '12px', lineHeight: 'normal', border: '1px solid rgba(255,255,255,0.2)', borderRadius: '16px', margin: '10px 0', backgroundColor: '#2e7d32', color: 'white', boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+                        <List style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '6px', padding: 0 }}>
+                          <span className="txt2" style={{ color: 'white', fontWeight: 'bold' }}>{row.userName}</span>
+                          <span className="txt2" style={{ color: 'rgba(255,255,255,0.85)', fontSize: '11px' }}>{' On ' + dayjs(row.nowDate).format('DD/MMMM') + ' At ' + row.nowTime}</span>
                         </List>
-                        <List className="txt2" style={{ color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <span>{row.message}</span>
-                          <span style={{ display: 'flex', alignItems: 'center' }}>
-                            <IconButton disabled={row.userName !== name} onClick={() => handleEditView('true', row._id)}>
-                              <Edit style={{ color: 'white' }} />
+
+                        {/* Quoted Reply Block */}
+                        {row.replyTo && (
+                          <Box
+                            sx={{
+                              p: '6px 10px',
+                              mb: 1,
+                              borderRadius: '8px',
+                              backgroundColor: 'rgba(0, 0, 0, 0.25)',
+                              borderLeft: '4px solid #ffb74d',
+                              color: '#fff',
+                            }}
+                          >
+                            <Typography
+                              variant="caption"
+                              sx={{
+                                fontWeight: 'bold',
+                                color: '#ffb74d',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                fontSize: '11px'
+                              }}
+                            >
+                              <Reply sx={{ fontSize: '13px' }} /> Replying to {row.replyTo.userName}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              sx={{
+                                fontSize: '12px',
+                                opacity: 0.9,
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis',
+                                fontStyle: 'italic',
+                                mt: '2px',
+                                lineHeight: 1.3
+                              }}
+                            >
+                              {row.replyTo.message}
+                            </Typography>
+                          </Box>
+                        )}
+
+                        <List className="txt2" style={{ color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: 0 }}>
+                          <span style={{ wordBreak: 'break-word', flex: 1, mr: 1 }}>{row.message}</span>
+                          <span style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                            <IconButton
+                              title={`Reply to ${row.userName}`}
+                              onClick={() => handleReply(row)}
+                              size="small"
+                              sx={{ color: 'white', ml: 0.5, '&:hover': { color: '#ffb74d', backgroundColor: 'rgba(255,255,255,0.1)' } }}
+                            >
+                              <Reply fontSize="small" />
                             </IconButton>
-                            <IconButton disabled={role !== 'CEO'} onClick={() => handleOpenDelete(row._id)}>
-                              <Delete style={{ color: 'red' }} />
+                            <IconButton
+                              disabled={row.userName !== name}
+                              onClick={() => handleEditView('true', row._id)}
+                              size="small"
+                              sx={{ color: 'white', ml: 0.5, opacity: row.userName !== name ? 0.3 : 1 }}
+                            >
+                              <Edit fontSize="small" />
+                            </IconButton>
+                            <IconButton
+                              disabled={role !== 'CEO'}
+                              onClick={() => handleOpenDelete(row._id)}
+                              size="small"
+                              sx={{ color: '#ff5252', ml: 0.5, opacity: role !== 'CEO' ? 0.3 : 1 }}
+                            >
+                              <Delete fontSize="small" />
                             </IconButton>
                           </span>
                         </List>
-                        <Divider />
                       </ListItemText>
                   }
                 </div>
@@ -266,19 +356,51 @@ function MessageAdminView({ name, role }) {
             }
           </Box>
           <section>
+            {/* Active Replying-to Banner */}
+            {replyingTo && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  backgroundColor: '#e8eaf6',
+                  borderLeft: '4px solid #30368a',
+                  borderRadius: '6px',
+                  p: '6px 10px',
+                  mb: 1,
+                  boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+                }}
+              >
+                <Box sx={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', mr: 1, flex: 1 }}>
+                  <Typography variant="caption" sx={{ fontWeight: 'bold', color: '#30368a', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Reply sx={{ fontSize: '14px' }} /> Replying to {replyingTo.userName}
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#555', fontStyle: 'italic', display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {replyingTo.message}
+                  </Typography>
+                </Box>
+                <IconButton size="small" onClick={() => setReplyingTo(null)} sx={{ color: '#666', p: '2px' }} title="Cancel reply">
+                  <Close fontSize="small" />
+                </IconButton>
+              </Box>
+            )}
+
             <form onSubmit={handleSubmitEdit}>
               <TextField
                 required
                 id='message'
                 name='message'
+                inputRef={inputRef}
                 value={message}
                 multiline
                 rows={2}
                 onChange={(e) => setMessage(e.target.value)}
-                label='Message'
+                label={replyingTo ? `Reply to ${replyingTo.userName}...` : 'Type a message...'}
                 sx={{ width: '100%', backgroundColor: 'white', marginBottom: '10px' }}
               />
-              <button type='submit' style={{ width: '100%' }} className='btnCustomer6'>Save</button>
+              <button type='submit' style={{ width: '100%' }} className='btnCustomer6'>
+                {replyingTo ? 'Send Reply' : 'Save'}
+              </button>
             </form>
           </section>
         </Box>

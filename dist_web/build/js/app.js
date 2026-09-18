@@ -80933,7 +80933,7 @@ function persistAppliedTransitions(_window, transitions) {
 
 /***/ },
 
-/***/ 3100
+/***/ 83818
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -80959,6 +80959,14 @@ var jsx_runtime = __webpack_require__(74848);
 }), 'MailOutline'));
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
 var Close = __webpack_require__(17809);
+;// ./node_modules/@mui/icons-material/esm/Reply.js
+"use client";
+
+
+
+/* harmony default export */ const Reply = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M10 9V5l-7 7 7 7v-4.1c5 0 8.5 1.6 11 5.1-1-5-4-10-11-11"
+}), 'Reply'));
 // EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
 var IconButton = __webpack_require__(11641);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Popover/Popover.js + 1 modules
@@ -80973,16 +80981,14 @@ var TextField = __webpack_require__(844);
 var ListItemText = __webpack_require__(82241);
 // EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
 var List = __webpack_require__(49799);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
-var Divider = __webpack_require__(71543);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
+var Typography = __webpack_require__(14073);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
 var Modal = __webpack_require__(35406);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Backdrop/Backdrop.js + 1 modules
 var Backdrop = __webpack_require__(47419);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Grid/Grid.js + 2 modules
 var Grid = __webpack_require__(8239);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
-var Typography = __webpack_require__(14073);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Badge/Badge.js + 2 modules
 var Badge = __webpack_require__(11154);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircle.js
@@ -81076,10 +81082,15 @@ function MessageAdminView(_ref) {
     _useState0 = _slicedToArray(_useState9, 2),
     updatedMessage = _useState0[0],
     setUpdatedMessage = _useState0[1];
-  var _useState1 = (0,react.useState)(parseInt(localStorage.getItem('badgeMessage')) || 0),
+  var _useState1 = (0,react.useState)(null),
     _useState10 = _slicedToArray(_useState1, 2),
-    badgeNumber = _useState10[0],
-    setBadgeNumber = _useState10[1];
+    replyingTo = _useState10[0],
+    setReplyingTo = _useState10[1];
+  var inputRef = (0,react.useRef)(null);
+  var _useState11 = (0,react.useState)(parseInt(localStorage.getItem('badgeMessage')) || 0),
+    _useState12 = _slicedToArray(_useState11, 2),
+    badgeNumber = _useState12[0],
+    setBadgeNumber = _useState12[1];
   var _React$useState = react.useState(null),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     anchorEl = _React$useState2[0],
@@ -81092,6 +81103,7 @@ function MessageAdminView(_ref) {
   var handleClose = () => {
     setLoadingOpenModal(false);
     setAnchorEl(null);
+    setReplyingTo(null);
   };
   var open = Boolean(anchorEl);
   var id = open ? 'simple-popover' : undefined;
@@ -81114,8 +81126,8 @@ function MessageAdminView(_ref) {
   (0,react.useEffect)(() => {
     var socket = (0,esm.io)("".concat(apiConfig/* API_BASE_URL */.J));
     socket.on('newMessage', newMessage => {
-      setMessageInfo([newMessage, ...messageInfo]);
-      setBadgeNumber(badgeNumber + 1);
+      setMessageInfo(prev => [newMessage, ...prev]);
+      setBadgeNumber(prev => prev + 1);
       react_toastify_esm/* toast */.oR.success("new message from ".concat(newMessage.userName + ' On ' + dayjs_min_default()(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime));
       var message = "new message from ".concat(newMessage.userName + ' On ' + dayjs_min_default()(newMessage.nowDate).format('DD/MMMM') + ' At ' + newMessage.nowTime);
       if (window.electron && window.electron.sendNotification) {
@@ -81130,15 +81142,15 @@ function MessageAdminView(_ref) {
     return () => {
       socket.off('newMessage');
     };
-  }, [badgeNumber, messageInfo]);
-  var _useState11 = (0,react.useState)(false),
-    _useState12 = _slicedToArray(_useState11, 2),
-    openDelete = _useState12[0],
-    setOpen = _useState12[1];
-  var _useState13 = (0,react.useState)(null),
+  }, [badgeNumber]);
+  var _useState13 = (0,react.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    DeleteId = _useState14[0],
-    setDeleteId = _useState14[1];
+    openDelete = _useState14[0],
+    setOpen = _useState14[1];
+  var _useState15 = (0,react.useState)(null),
+    _useState16 = _slicedToArray(_useState15, 2),
+    DeleteId = _useState16[0],
+    setDeleteId = _useState16[1];
   var handleOpenDelete = id => {
     setOpen(true);
     setDeleteId(id);
@@ -81150,6 +81162,19 @@ function MessageAdminView(_ref) {
   var handleEditView = (status, id) => {
     setEditView(status);
     setIdEdit(id);
+    if (status === 'true') {
+      setReplyingTo(null);
+    }
+  };
+  var handleReply = row => {
+    setReplyingTo(row);
+    setEditView('false');
+    setIdEdit(null);
+    setTimeout(() => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }, 100);
   };
   (0,react.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
@@ -81169,18 +81194,18 @@ function MessageAdminView(_ref) {
     }();
     fetchData();
   }, [idEdit]);
-  var _useState15 = (0,react.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    loading = _useState16[0],
-    setLoading = _useState16[1];
   var _useState17 = (0,react.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    loadingOpenModal = _useState18[0],
-    setLoadingOpenModal = _useState18[1];
+    loading = _useState18[0],
+    setLoading = _useState18[1];
   var _useState19 = (0,react.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    ErrorOpenModal = _useState20[0],
-    setErrorOpenModal = _useState20[1];
+    loadingOpenModal = _useState20[0],
+    setLoadingOpenModal = _useState20[1];
+  var _useState21 = (0,react.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    ErrorOpenModal = _useState22[0],
+    setErrorOpenModal = _useState22[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -81195,10 +81220,10 @@ function MessageAdminView(_ref) {
       setLoading(false);
     }, 500);
   };
-  var _useState21 = (0,react.useState)(''),
-    _useState22 = _slicedToArray(_useState21, 2),
-    updateD = _useState22[0],
-    setUpdateD = _useState22[1];
+  var _useState23 = (0,react.useState)(''),
+    _useState24 = _slicedToArray(_useState23, 2),
+    updateD = _useState24[0],
+    setUpdateD = _useState24[1];
   var handleCloseModale = () => {
     setLoadingOpenModal(false);
     setBadgeNumber(0);
@@ -81251,17 +81276,25 @@ function MessageAdminView(_ref) {
   var handleSubmitEdit = /*#__PURE__*/function () {
     var _ref6 = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      var data = {
+      if (!message.trim()) return;
+      var data = _objectSpread({
         userName,
         nowDate,
         nowTime,
         message
-      };
+      }, replyingTo && {
+        replyTo: {
+          id: replyingTo._id,
+          userName: replyingTo.userName,
+          message: replyingTo.message
+        }
+      });
       try {
         var res = yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-message/"), data);
         if (res) {
           setUpdateD('saved');
           setMessage("");
+          setReplyingTo(null);
           handleOpen();
           setBadgeNumber(0);
           localStorage.removeItem('badgeMessage');
@@ -81298,36 +81331,43 @@ function MessageAdminView(_ref) {
     }
   }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
-      width: 430,
-      height: 670,
-      padding: '10px'
+      width: 440,
+      maxHeight: 680,
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '12px'
     },
     component: Paper/* default */.A
   }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
-      height: 480,
-      marginBottom: '20px',
+      flex: 1,
+      maxHeight: 460,
+      marginBottom: '12px',
       overflow: 'hidden',
-      overflowY: 'scroll'
+      overflowY: 'auto'
     }
   }, messageInfo.map(row => /*#__PURE__*/react.createElement("div", {
     key: row._id
   }, editView === "true" && idEdit === row._id ? /*#__PURE__*/react.createElement("div", {
-    sx: {
+    style: {
       padding: '10px',
-      lineHeight: '5px',
+      lineHeight: 'normal',
       border: '2px solid gray',
-      borderRadius: '20px',
-      margin: '10px',
+      borderRadius: '16px',
+      margin: '10px 0',
       backgroundColor: '#30368a',
       color: 'white'
     }
   }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     onClick: () => setEditView("false"),
     sx: {
-      float: 'right'
-    }
-  }, /*#__PURE__*/react.createElement(Close/* default */.A, null)), /*#__PURE__*/react.createElement("form", {
+      float: 'right',
+      color: 'white'
+    },
+    size: "small"
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+    fontSize: "small"
+  })), /*#__PURE__*/react.createElement("form", {
     onSubmit: handleSubmit
   }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
     multiline: true,
@@ -81338,7 +81378,8 @@ function MessageAdminView(_ref) {
     sx: {
       width: '100%',
       backgroundColor: 'white',
-      marginBottom: '10px'
+      marginBottom: '10px',
+      borderRadius: '4px'
     }
   }), /*#__PURE__*/react.createElement("button", {
     type: "submit",
@@ -81348,77 +81389,203 @@ function MessageAdminView(_ref) {
     className: "btnCustomer6"
   }, "update"))) : /*#__PURE__*/react.createElement(ListItemText/* default */.A, {
     sx: row.userName === name ? {
-      padding: '10px',
-      lineHeight: '5px',
-      border: '2px solid gray',
-      borderRadius: '20px',
-      margin: '10px',
+      padding: '12px',
+      lineHeight: 'normal',
+      border: '1px solid rgba(255,255,255,0.2)',
+      borderRadius: '16px',
+      margin: '10px 0',
       backgroundColor: '#30368a',
-      color: 'white'
+      color: 'white',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     } : {
-      padding: '10px',
-      lineHeight: '5px',
-      border: '2px solid gray',
-      borderRadius: '20px',
-      margin: '10px',
-      backgroundColor: 'green',
-      color: 'white'
+      padding: '12px',
+      lineHeight: 'normal',
+      border: '1px solid rgba(255,255,255,0.2)',
+      borderRadius: '16px',
+      margin: '10px 0',
+      backgroundColor: '#2e7d32',
+      color: 'white',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
     }
   }, /*#__PURE__*/react.createElement(List/* default */.A, {
     style: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: '5px'
+      marginBottom: '6px',
+      padding: 0
     }
   }, /*#__PURE__*/react.createElement("span", {
     className: "txt2",
     style: {
-      color: 'white'
+      color: 'white',
+      fontWeight: 'bold'
     }
   }, row.userName), /*#__PURE__*/react.createElement("span", {
     className: "txt2",
     style: {
-      color: 'white'
+      color: 'rgba(255,255,255,0.85)',
+      fontSize: '11px'
     }
-  }, ' On ' + dayjs_min_default()(row.nowDate).format('DD/MMMM') + ' At ' + row.nowTime)), /*#__PURE__*/react.createElement(List/* default */.A, {
+  }, ' On ' + dayjs_min_default()(row.nowDate).format('DD/MMMM') + ' At ' + row.nowTime)), row.replyTo && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: '6px 10px',
+      mb: 1,
+      borderRadius: '8px',
+      backgroundColor: 'rgba(0, 0, 0, 0.25)',
+      borderLeft: '4px solid #ffb74d',
+      color: '#fff'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 'bold',
+      color: '#ffb74d',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px',
+      fontSize: '11px'
+    }
+  }, /*#__PURE__*/react.createElement(Reply, {
+    sx: {
+      fontSize: '13px'
+    }
+  }), " Replying to ", row.replyTo.userName), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "body2",
+    sx: {
+      fontSize: '12px',
+      opacity: 0.9,
+      display: '-webkit-box',
+      WebkitLineClamp: 2,
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      fontStyle: 'italic',
+      mt: '2px',
+      lineHeight: 1.3
+    }
+  }, row.replyTo.message)), /*#__PURE__*/react.createElement(List/* default */.A, {
     className: "txt2",
     style: {
       color: 'white',
       display: 'flex',
       alignItems: 'center',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
+      padding: 0
     }
-  }, /*#__PURE__*/react.createElement("span", null, row.message), /*#__PURE__*/react.createElement("span", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      wordBreak: 'break-word',
+      flex: 1,
+      mr: 1
+    }
+  }, row.message), /*#__PURE__*/react.createElement("span", {
     style: {
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      flexShrink: 0
     }
   }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-    disabled: row.userName !== name,
-    onClick: () => handleEditView('true', row._id)
-  }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
-    style: {
-      color: 'white'
+    title: "Reply to ".concat(row.userName),
+    onClick: () => handleReply(row),
+    size: "small",
+    sx: {
+      color: 'white',
+      ml: 0.5,
+      '&:hover': {
+        color: '#ffb74d',
+        backgroundColor: 'rgba(255,255,255,0.1)'
+      }
     }
+  }, /*#__PURE__*/react.createElement(Reply, {
+    fontSize: "small"
+  })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    disabled: row.userName !== name,
+    onClick: () => handleEditView('true', row._id),
+    size: "small",
+    sx: {
+      color: 'white',
+      ml: 0.5,
+      opacity: row.userName !== name ? 0.3 : 1
+    }
+  }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
+    fontSize: "small"
   })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     disabled: role !== 'CEO',
-    onClick: () => handleOpenDelete(row._id)
-  }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
-    style: {
-      color: 'red'
+    onClick: () => handleOpenDelete(row._id),
+    size: "small",
+    sx: {
+      color: '#ff5252',
+      ml: 0.5,
+      opacity: role !== 'CEO' ? 0.3 : 1
     }
-  })))), /*#__PURE__*/react.createElement(Divider/* default */.A, null))))), /*#__PURE__*/react.createElement("section", null, /*#__PURE__*/react.createElement("form", {
+  }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
+    fontSize: "small"
+  })))))))), /*#__PURE__*/react.createElement("section", null, replyingTo && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: '#e8eaf6',
+      borderLeft: '4px solid #30368a',
+      borderRadius: '6px',
+      p: '6px 10px',
+      mb: 1,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      mr: 1,
+      flex: 1
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      fontWeight: 'bold',
+      color: '#30368a',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '4px'
+    }
+  }, /*#__PURE__*/react.createElement(Reply, {
+    sx: {
+      fontSize: '14px'
+    }
+  }), " Replying to ", replyingTo.userName), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    variant: "caption",
+    sx: {
+      color: '#555',
+      fontStyle: 'italic',
+      display: 'block',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap'
+    }
+  }, replyingTo.message)), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: () => setReplyingTo(null),
+    sx: {
+      color: '#666',
+      p: '2px'
+    },
+    title: "Cancel reply"
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+    fontSize: "small"
+  }))), /*#__PURE__*/react.createElement("form", {
     onSubmit: handleSubmitEdit
   }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
     required: true,
     id: "message",
     name: "message",
+    inputRef: inputRef,
     value: message,
     multiline: true,
     rows: 2,
     onChange: e => setMessage(e.target.value),
-    label: "Message",
+    label: replyingTo ? "Reply to ".concat(replyingTo.userName, "...") : 'Type a message...',
     sx: {
       width: '100%',
       backgroundColor: 'white',
@@ -81430,7 +81597,7 @@ function MessageAdminView(_ref) {
       width: '100%'
     },
     className: "btnCustomer6"
-  }, "Save"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, replyingTo ? 'Send Reply' : 'Save'))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: loadingOpenModal,
     onClose: handleCloseModale,
     closeAfterTransition: true,
@@ -81926,7 +82093,7 @@ function NotificationVIewInfo() {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(95236);
 /* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(19873);
 /* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(67415);
@@ -82727,7 +82894,7 @@ function DailyExpensesReportInfo(_ref3) {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(95236);
 /* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(19873);
 /* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(67415);
@@ -83777,7 +83944,7 @@ function InvoiceReportInfo(_ref3) {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(95236);
 /* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(19873);
 /* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(67415);
@@ -84171,7 +84338,7 @@ function ItemReportInfo(_ref3) {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(95236);
 /* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(19873);
 /* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(67415);
@@ -85525,7 +85692,7 @@ function MaintenanceReportInfo(_ref3) {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(95236);
 /* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(19873);
 /* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(67415);
@@ -87417,7 +87584,7 @@ function PosReportInvoice(_ref) {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(95236);
 /* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(19873);
 /* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(67415);
@@ -88521,7 +88688,7 @@ function ProjectReportInfo(_ref3) {
 /* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(32005);
 /* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(40301);
 /* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(3100);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(83818);
 /* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(95236);
 /* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(72761);
 /* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_26__);
@@ -120998,7 +121165,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.16"};
+module.exports = {"rE":"3.5.17"};
 
 /***/ },
 
@@ -121130,7 +121297,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"ffe90c328e2d81ca9f66","116":"8be55cfd8e56510d4cd7","118":"fcb2c1307283515e2ca0","223":"c952fc08b587fdf51ade","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"9f961c28e0ddd249e5ae","457":"097c366fa472a7c7ad9b","483":"342be2530e4d9bff3bc7","590":"5bc49206885952ec5ff6","614":"a8274c332db197dbb9d5","712":"bc100c3507382e2cebdb","742":"f737032c5ac34b9d6db5","778":"ba64a22bf352dba3488e","806":"727d047eff774b47c041","808":"cc8b459d8f5a2e17705c","864":"ac9193b4bf40eb4964a0","885":"76deb4bbaafa2bcd36c6","956":"195d11b02eb5fb9b20c7","1019":"1d406482e04e60bb652f","1096":"d27c2f6241082e04a0b8","1168":"b2f690e1d5399977dcaf","1223":"ee025a0a4c0e3c8209b1","1251":"9da50dc8470bc764d3b6","1364":"5efd1211260e14e0edd2","1390":"d068203d76b14fda80ff","1500":"af40ea979f401d809120","1624":"e087efe6d5dca00bd5a7","1645":"5cfa100c8484fe1dee1d","1679":"904571ba65bb286b8e61","1722":"90c172b88983cc1cf991","1853":"5713d07696370aa064eb","1861":"89d05880a79dcb45e693","1919":"163f645454ec15d3f3bf","1985":"9aa72adfea24f2b1b8bb","2120":"c1ef8ce434b718742367","2122":"766d75174c54f7d4b37c","2153":"80f4b0e15e4e39c53934","2410":"c4e5f7260ceaa204ac1a","2495":"448d55e4fa85737b2d32","2517":"956f7558989fb2a45d33","2529":"fb441c335e624090ebee","2533":"d991f5cf50fc687561e5","2605":"5b030741d19d64e6644a","2608":"d678bedc842234bcd0f5","2611":"d8b119a353ab72a24785","2756":"36e4afedfb6df9fa5541","2757":"37e017925354e0aeecaf","2778":"79c52f08840cd3a98f5c","2821":"ea8efd55583a977c4792","2835":"265d30e293ce7c069544","2982":"fa8f307486e889217262","2992":"574689a0e79c23bd166e","3009":"16f9da4624b2c3606c91","3058":"ced30eb4eb594413c57a","3094":"be2a94b9cac4eef8b0bf","3229":"27115faaa57a879e2c89","3426":"768978a35ad4bfdd7e67","3502":"3a5bd0a4aed3e15f401a","3547":"1e2de2721983f1041975","3697":"f53691bdbe0acb5a04ff","3741":"f8c316c8288e2bf4e9c5","3808":"cd0bcc730d4b9f456fa4","3976":"c8be09f7b507fc7922be","4001":"51a76e3cfe05b16b9aab","4006":"4e7f9a4d500991578b64","4107":"2c640c6931e08fcf9b6a","4184":"e592159ce50be0900c39","4237":"ae9e77c6d4f5a70c297a","4270":"08e67b2d93a93870cea9","4444":"98c55f0d41827b5ec809","4783":"3cad84c210cdf3d9209d","5059":"13587dbad394c5ddc53d","5072":"4e28cdbba42d960d2297","5151":"909f59811d9f284137a0","5194":"03038da2b72dc8ff0028","5391":"f7aede9b687af666b616","5394":"6ae625ff8521bcd57b8b","5646":"e2e8f697bcd06a54c997","5669":"1d81e9485d932b76025e","5754":"91b0ed1f01573869ac34","5824":"bdf3550d6544ffb9ea2b","5881":"35c1509672faa8eacba1","5910":"aa6c9374cda32ab12604","5919":"233d3859d39b925f7ec9","6155":"1e91dcca568bd813b492","6226":"5f4f8d6e4e1d9dacdf3a","6619":"9a87210295d05dea3f1b","6671":"f6590f0828da677c484d","6685":"fce65c105419f359af11","6725":"35ece90833e2cb0b186a","6744":"4786e76f316647b2ba66","6934":"444fb30d0cfb22f711b1","7120":"36521905fd60dfc439f0","7171":"918e19a0ed17fcdfa115","7189":"91f7f47ea7579f980bfb","7269":"2d309400a0cea3c0791a","7270":"31e757eae03868cfd848","7384":"65263f0496e681b331ac","7405":"726acb348b4f8c4b8399","7444":"a97b22a40ad291400689","7445":"53dd71bd59096ad5e364","7539":"2d302ba4ec6af52d0674","7592":"ea5c8a6978dc7c4ce0eb","7645":"e5f1386346b73f8668ba","7757":"f5bec923a5254dd785a6","7801":"74053fdb416decaceea2","7897":"c7200a61be69bd33ac4c","7941":"7e4f799c6ecd5b5fd1d5","7997":"61d4bd79e52b1ffcf1aa","8011":"19d660787674a674bf3d","8017":"88cfc5ce064013708923","8027":"b15c8c567c613e5b8110","8060":"093c1df64c34af122f2b","8117":"3dcded6d706d2ffcf494","8282":"0e757cfe0c3e823e3fc1","8354":"2ae7fb5178a94693fdeb","8442":"5186906ed075010ff7d8","8520":"bd678456cc879023807e","8646":"3acf42f02760c2ce2f85","8685":"1a745e1a9f3082110df5","8838":"4b7284ca20843236a77c","8849":"b6171fa6f20c6f78fcd2","8970":"45baf7515d3893f38ef0","9127":"74240d27da8de7e3ab06","9220":"861c86c07129ab78a89d","9246":"7d37a12940cfb46fb700","9250":"739e41027b099328904d","9260":"2fea6f5f45d4b50c31b2","9528":"6dc89c613ad4fd9edbf4","9564":"d1101dc480f8a57cc42c","9573":"ac7079fc3a80ac415b3f","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"12a1261eb1b849ebd41d","9773":"98d2303df1e9e86c10f2","9846":"1b6e74a7ddc93c8f7341","9971":"cc0c5a433d476375e248"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"ed7dff827d15c0347639","116":"6831118a441f44206ad3","118":"e1f227f4a5f10f211d60","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"644d6da1a77864ee46e5","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"4f09f6c2d50d9eda3835","712":"446dbbc86c7361c91235","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"69e689d21aeaecd2658a","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"76deb4bbaafa2bcd36c6","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"ca64489f7ae31ecbd5bb","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"6e91fc51f2635389da91","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"80ac8e0567add8c9e34a","1679":"a23f8b019bb6ae844586","1722":"ae9c9ed9c46fc985257d","1853":"4b2bf88f62492b48746d","1861":"89d05880a79dcb45e693","1919":"afe9710c1e2048d2d028","1985":"9490a4422b4c57e313c8","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"6827f1d16b907c447cb9","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"650406618ba9d3d221ef","2533":"f2270f461e6e7ff1cdfb","2605":"a90fd77660eddd34839a","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"1d2943e1d5d0c8c1fa3a","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"f94edd75598b699993cc","2835":"0e925b7f3cda249cb8c9","2982":"844444b2092e9853bad8","2992":"e92b8ef3728fde259e2f","3009":"567b00944880ad958271","3058":"34172a81b2ddcaa2f2c5","3094":"f7a66426a45e8c1e8115","3229":"b1a812db9d8c04f343da","3426":"a91564bfca5a2db29bb2","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"acb409900ad308caf0d2","3808":"1eeecafcc56dd0720b49","3976":"ec34ba80cd596606ae97","4001":"fb4c2237d040695239f0","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"8d4f2fbc69482204f1d4","4444":"ea0e7323ce783caf9e17","4783":"91a072dd70ad4c0a8848","5059":"2b89ac7d099d3898a08b","5072":"a2810c746d445bf1deb0","5151":"10affba40cbd04ed2467","5194":"d9e4d8382ebe97418258","5391":"e9d496a538c4976014ca","5394":"d9aa008ed4842ff6b9e0","5646":"e2e8f697bcd06a54c997","5669":"8db6b5e80069de4df516","5754":"8954e2acd6884dcf46b8","5824":"19fd197543afc80d74ff","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"97d1b595fd4d6341ee4c","6619":"854d51f3af603be9542a","6671":"b4c3250d072629719fc1","6685":"60c808ce521bc7244cdd","6725":"d901500eb521cabc7085","6744":"01aae95b9c8898aef755","6934":"0360265494794d3807b3","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"ee012b2fbb48101220f5","7270":"4492fc78c16d3a98de94","7384":"65263f0496e681b331ac","7405":"505a829dcdce44cb83e8","7444":"a97b22a40ad291400689","7445":"fcf8c3abaf8866aa6ad2","7539":"291ebc8d9295bd42eb39","7592":"1f3010073a15b909c20c","7645":"910b44e1f23d70ce2ae3","7757":"a1f891ba0a41df9bc5da","7801":"449c4b7f82f51dcf7722","7897":"d652bb85b27495a66470","7941":"7ccdd64bce8e665741d1","7997":"61d4bd79e52b1ffcf1aa","8011":"f8ca38fd6b31e7569290","8017":"71c4225691f8990e835d","8027":"7f14b949d53f556d7b23","8060":"d4e05bcf07c66cf7bd25","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"0e150175fa3bc0fde318","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"663b8748770e5ea22257","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7b8d6b345bcc8f3dca28","9528":"6dc89c613ad4fd9edbf4","9564":"c8098b30c53f4ebd6585","9573":"0c96e70b303ff08bd063","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"d3f5b83acfc4f38fb8bc","9773":"8654a57ddc213e782dbb","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -126527,8 +126694,8 @@ var Storefront = __webpack_require__(78325);
 }), 'NotificationAdd'));
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
 var Close = __webpack_require__(17809);
-// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 1 modules
-var MessageAdminView = __webpack_require__(3100);
+// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
+var MessageAdminView = __webpack_require__(83818);
 // EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
 var NotificationVIewInfo = __webpack_require__(95236);
 // EXTERNAL MODULE: ./node_modules/@mui/x-date-pickers/LocalizationProvider/LocalizationProvider.js

@@ -31,6 +31,16 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Message Center Direct Reply-Back Engine & Quoted Context Support (Ver 3.5.17)**:
+  - **Direct Reply Interaction in Message Center (`src/js/AdminView1/MessageAdminView.js`)**:
+    - Embedded interactive Reply action buttons on each message card across the Message Center popover.
+    - Added an active reply context banner showing `"Replying to [userName]"` along with a snippet preview and quick cancel button.
+    - Integrated quoted message bubbles (`Replying to @userName: "..."`) with warm amber accents inside reply messages, styled consistently with top collaboration apps.
+    - Linked `inputRef` to auto-focus the message compose field on reply trigger and dynamic submit button label (`Send Reply` vs `Save`).
+  - **Backend Reply Schema Support (`server/model/messageSchema.js` & `model/messageSchema.js`)**:
+    - Extended Mongoose `messageSchema` with optional `replyTo` sub-document (`{ id, userName, message }`) preserving backward compatibility for existing records.
+  - **Release & Distribution**: Bumped version to `3.5.17`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.17.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Purchase Update Live Movement Synchronization & Strict Zero Formatting (Ver 3.5.16)**:
   - **Live Movement Resolution Engine in Update Purchase (`PurchaseFormUpdate.js`)**:
     - Integrated dynamic transaction movement synchronization identical to `PurchasesViewAdminAll.js`. `PurchaseFormUpdate.js` now queries `/itemOut`, `/itemReturn`, and `/itemPurchase` on load and computes live `netOutQty` (`matchedOut - matchedReturn`) and `buyQty` across all item rows.
