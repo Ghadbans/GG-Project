@@ -548,30 +548,20 @@ function DailyExpenseAdminView() {
   const totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0
 
   const getPaymentRowValues = (row) => {
-    if (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount)) {
-      return {
-        grossFC: 0,
-        grossUSD: 0,
-        returnFC: 0,
-        returnUSD: 0,
-        netFC: 0,
-        netUSD: 0,
-        credit: 0
-      };
-    }
     const payFC = parseFloat(row.PaymentReceivedFC) || 0;
     const payUSD = parseFloat(row.PaymentReceivedUSD) || 0;
     const retFC = parseFloat(row.returnFC) || 0;
     const retUSD = parseFloat(row.returnUSD) || 0;
     const rem = parseFloat(row.remaining) || 0;
+    const amt = parseFloat(row.amount) || 0;
 
     let grossUSD = payUSD;
     let grossFC = payFC;
     let credit = 0;
 
     if (row.excessAction === 'Return') {
-      if (row.modes === 'Cash' && parseFloat(row.amount) > 0) {
-        grossUSD = Math.max(payUSD + retUSD, parseFloat(row.amount));
+      if (row.modes === 'Cash' && amt > 0) {
+        grossUSD = Math.max(payUSD + retUSD, amt);
         grossFC = payFC;
       } else {
         grossUSD = payUSD + retUSD;
@@ -579,10 +569,22 @@ function DailyExpenseAdminView() {
       }
       credit = 0;
     } else {
-      if ((row.modes === 'Cash' || row.modes === 'Bank Transfer') && rem > 0) {
-        grossUSD = payUSD + rem;
+      if (row.reason === 'Customer Credit' || row.reason === 'Project') {
+        if (payUSD === 0 && payFC === 0) {
+          grossUSD = rem > 0 ? rem : amt;
+        } else {
+          grossUSD = payUSD + rem;
+        }
+        credit = rem > 0 ? rem : amt;
+      } else {
+        if ((row.modes === 'Cash' || row.modes === 'Bank Transfer' || !row.modes) && rem > 0) {
+          grossUSD = payUSD + rem;
+        }
+        if (grossUSD === 0 && grossFC === 0 && amt > 0) {
+          grossUSD = amt;
+        }
+        credit = rem;
       }
-      credit = rem;
     }
 
     const netFC = grossFC - retFC;

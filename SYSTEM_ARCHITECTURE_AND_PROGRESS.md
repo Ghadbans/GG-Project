@@ -31,6 +31,14 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Daily Payment Received & Customer Deposit/Credit Drawer Reconciliation (Ver 3.5.19)**:
+  - **Reconciled Customer Credit & Advance Cash Collections (`DailyExpenseAdminView.js`)**:
+    - Resolved critical issue where cash payments received as customer deposits, advances, or direct customer credits (e.g. `$1,000` Cash received under `PAY-001136` with `Reference: INV-Credit`) were completely zeroed out in the "Expenses Daily Information" -> "VIEW PER DAY" tab.
+    - Removed the flawed blanket zeroing condition `if (row.reason === 'Project' || row.reason === 'Customer Credit' || parseFloat(row.remaining) === parseFloat(row.amount))` inside `getPaymentRowValues()`.
+    - Refactored `getPaymentRowValues` to properly compute `grossUSD`, `grossFC`, `credit`, `netUSD`, and `netFC` for all payment reasons (`Customer Credit`, `Project`, `Invoice`) when physical tender (Cash / Bank Transfer) is collected.
+    - Ensured that customer deposits and credit cash enter drawer reconciliation accurately, updating row-level columns (`Total $`, `Credit $`), "Payment Received Gross Total", "Daily Payment Received Total (Net Cash in Hand)", and the Daily Expenses Summary table (`Total Payment Received` / `Cash In`), while non-cash settlement modes (`modes === 'Credit-Account'`) remain properly excluded from physical cash in hand.
+  - **Release & Distribution**: Bumped version to `3.5.19`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.19.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Project-to-Invoice Unit Price & Manual Item Rate Preservation (Ver 3.5.18)**:
   - **Authoritative Rate Resolution in Convert To Invoice (`ConvertToInvoice.js`)**:
     - Resolved issue where manually entered or unregistered items from a Project Purchase defaulted to `Rate: 0` / `$0.00` upon converting to an invoice.
