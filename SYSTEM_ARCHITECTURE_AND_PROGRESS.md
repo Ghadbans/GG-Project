@@ -31,6 +31,14 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Maintenance Order Grant Access Permission & Action Buttons Alignment (Ver 3.5.20)**:
+  - **Reconciled `Maintenance-Order` Module Name in Grant Access Checks (`MaintenanceOrderViewInformation.js` & `MaintenanceOrderAdmin.js`)**:
+    - Resolved issue where technicians with Grant Access assigned to `Maintenance-Order` (Module 26) could not edit maintenance orders in `MaintenanceOrderViewInformation.js` because `MaintenanceInfoU` only checked `moduleName === 'Maintenance'`.
+    - Updated `MaintenanceOrderViewInformation.js`, `MaintenanceOrderAdmin.js`, and `MaintenanceViewInformation.js` to recognize both `"Maintenance-Order"` and `"Maintenance"` module entries for all permissions (`readM`, `createM`, `editM`, `deleteM`), with unconditional access support for owner (`userName === 'GG'` or `role === 'CEO'`).
+    - Corrected `MaintenanceInfoU` in `MaintenanceOrderAdmin.js` which was incorrectly checking `readM` instead of `editM`.
+    - Added the missing `+` (Create Maintenance Order) button to the toolbar in `MaintenanceOrderAdmin.js` linked to `/MaintenanceFormView` and guarded by `MaintenanceInfoC`.
+  - **Release & Distribution**: Bumped version to `3.5.20`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.20.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Daily Payment Received & Customer Deposit/Credit Drawer Reconciliation (Ver 3.5.19)**:
   - **Reconciled Customer Credit & Advance Cash Collections (`DailyExpenseAdminView.js`)**:
     - Resolved critical issue where cash payments received as customer deposits, advances, or direct customer credits (e.g. `$1,000` Cash received under `PAY-001136` with `Reference: INV-Credit`) were completely zeroed out in the "Expenses Daily Information" -> "VIEW PER DAY" tab.

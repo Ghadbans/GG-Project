@@ -164,10 +164,11 @@ function MaintenanceOrderAdmin() {
     fetchNumber()
   }, [user])
 
-  const MaintenanceInfoC = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.createM === true);
-  const MaintenanceInfoV = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
-  const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
-  const MaintenanceInfoD = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.deleteM === true);
+  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const MaintenanceInfoC = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.createM === true);
+  const MaintenanceInfoV = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.readM === true);
+  const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.editM === true);
+  const MaintenanceInfoD = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.deleteM === true);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -558,7 +559,7 @@ function MaintenanceOrderAdmin() {
         user.data.role === 'User' ? <span></span> : (
           <DeleteTooltip title="Delete">
             <span>
-              <IconButton onClick={handleOpenAll} disabled={MaintenanceInfoD.length === 0}>
+              <IconButton onClick={handleOpenAll} disabled={!isOwner && MaintenanceInfoD.length === 0}>
                 <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
               </IconButton>
             </span>
@@ -771,6 +772,17 @@ function MaintenanceOrderAdmin() {
                     </Box>
                     {!isNativeMobile() && (
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                        <ViewTooltip title="Create Maintenance Order">
+                          <span>
+                            <IconButton disabled={!isOwner && MaintenanceInfoC.length === 0} size="small">
+                              <NavLink to={'/MaintenanceFormView'} className='LinkName'>
+                                <span className='btnCustomerAdding'>
+                                  <Add sx={{ fontSize: 18 }} />
+                                </span>
+                              </NavLink>
+                            </IconButton>
+                          </span>
+                        </ViewTooltip>
                         <button onClick={handleRefreshSearch} className='btnCustomer2' style={{ height: '32px', lineHeight: '32px', padding: '0 12px' }}>Refresh Search</button>
                       </Box>
                     )}

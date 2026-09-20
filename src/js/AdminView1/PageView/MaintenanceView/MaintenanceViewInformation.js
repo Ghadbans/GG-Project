@@ -200,7 +200,8 @@ function MaintenanceViewInformation() {
     fetchNumber()
   }, [user])
 
-  const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.editM === true);
+  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.editM === true);
 
   const [maintenance, setMaintenance] = useState([]);
   const [quotation, setQuotation] = useState([]);
@@ -1188,7 +1189,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                           {(() => {
                                             const isConverted = (row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true');
                                             return (
-                                              <MenuItem disabled={isConverted || MaintenanceInfoU.length === 0}>
+                                              <MenuItem disabled={isConverted || (!isOwner && MaintenanceInfoU.length === 0)}>
                                                 {isConverted ? (
                                                   <span style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'lightgray', cursor: 'not-allowed' }}>
                                                     <EditIcon />

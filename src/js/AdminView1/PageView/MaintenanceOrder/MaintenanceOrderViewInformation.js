@@ -200,7 +200,8 @@ function MaintenanceOrderViewInformation() {
     fetchNumber()
   }, [user])
 
-  const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.editM === true);
+  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.editM === true);
 
   const [maintenance, setMaintenance] = useState([]);
   const [quotation, setQuotation] = useState([]);
@@ -216,7 +217,7 @@ function MaintenanceOrderViewInformation() {
       try {
         const [resM, resI, resSingle, resEstimate] = await Promise.all([
           // Dynamically fetch technician filtered list for sidebar
-          axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?summary=true&limit=1000&technician=${encodeURIComponent(user?.data?.userName || '')}&isOffice=${user?.data?.grantAccess?.some(r => r.moduleName === "Maintenance" && r.access.readM) || grantAccess?.some(r => r.moduleName === "Maintenance" && r.access.readM) || user?.data?.role === 'CEO'}`),
+          axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?summary=true&limit=1000&technician=${encodeURIComponent(user?.data?.userName || '')}&isOffice=${user?.data?.grantAccess?.some(r => (r.moduleName === "Maintenance" || r.moduleName === "Maintenance-Order") && r.access.readM) || grantAccess?.some(r => (r.moduleName === "Maintenance" || r.moduleName === "Maintenance-Order") && r.access.readM) || user?.data?.role === 'CEO' || user?.data?.userName === 'GG'}`),
           axios.get(`${ENDPOINT_URL}/item`),
           axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`),
           axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
@@ -1094,9 +1095,9 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                           TransitionComponent={Fade}
                                         >
                                           {(() => {
-                                            const isConverted = (row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true');
-                                            return (
-                                              <MenuItem disabled={isConverted || MaintenanceInfoU.length === 0}>
+                                              const isConverted = (row.status === 'Close' && (row.Converted === true || row.Converted === 'true')) || row.status === 'Converted' || (row.Converted === true || row.Converted === 'true');
+                                              return (
+                                                <MenuItem disabled={isConverted || (!isOwner && MaintenanceInfoU.length === 0)}>
                                                 {isConverted ? (
                                                   <span style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'lightgray', cursor: 'not-allowed' }}>
                                                     <EditIcon />

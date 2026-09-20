@@ -164,10 +164,11 @@ function MaintenanceViewAdmin() {
     fetchNumber()
   }, [user])
 
-  const MaintenanceInfoC = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.createM === true);
-  const MaintenanceInfoV = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.viewM === true);
-  const MaintenanceInfoU = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.editM === true);
-  const MaintenanceInfoD = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.deleteM === true);
+  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const MaintenanceInfoC = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.createM === true);
+  const MaintenanceInfoV = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.viewM === true);
+  const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.editM === true);
+  const MaintenanceInfoD = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.deleteM === true);
 
   const handleLogout = () => {
     localStorage.removeItem('user');
@@ -562,8 +563,8 @@ function MaintenanceViewAdmin() {
         return (
           <EditTooltip title={isConverted ? "Cannot edit or change status of converted maintenance order until linked invoice is deleted" : "Edit"}>
             <span>
-              <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={isConverted || MaintenanceInfoU.length === 0}>
-                <EditIcon style={{ color: (isConverted || MaintenanceInfoU.length === 0) ? 'lightgray' : 'gray' }} />
+              <IconButton onClick={() => handleOpenUpdate(params.row._id)} disabled={isConverted || (!isOwner && MaintenanceInfoU.length === 0)}>
+                <EditIcon style={{ color: (isConverted || (!isOwner && MaintenanceInfoU.length === 0)) ? 'lightgray' : 'gray' }} />
               </IconButton>
             </span>
           </EditTooltip>
@@ -573,7 +574,7 @@ function MaintenanceViewAdmin() {
     {
       field: 'Delete', headerName: 'Delete', width: 40, renderCell: (params) => (
         <DeleteTooltip title="Delete">
-          <span>                                <IconButton onClick={handleOpenAll} disabled={MaintenanceInfoD.length === 0}>
+          <span>                                <IconButton onClick={handleOpenAll} disabled={!isOwner && MaintenanceInfoD.length === 0}>
             <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
           </IconButton>
           </span>
@@ -792,7 +793,7 @@ function MaintenanceViewAdmin() {
                       <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                         <ViewTooltip>
                           <span>
-                            <IconButton disabled={MaintenanceInfoC.length === 0} size="small">
+                            <IconButton disabled={!isOwner && MaintenanceInfoC.length === 0} size="small">
                               <NavLink to={'/MaintenanceFormView'} className='LinkName'>
                                 <span className='btnCustomerAdding'>
                                   <Add sx={{ fontSize: 18 }} />
