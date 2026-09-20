@@ -29,6 +29,22 @@
 20. **Strict Isolation of Mobile Application Layout from Desktop & Web (Ver 3.5.09)**: The mobile application layout (`MobileLayout`, `MobileCardList`, mobile bottom tabs) must be strictly isolated to native Capacitor mobile environments (`window.Capacitor.isNativePlatform()`), real mobile handheld devices (smartphones/tablets via user-agent), or explicit debug query `?mobile=true`. Desktop executable (.exe / Electron) and desktop browsers MUST NEVER switch to mobile layout when users resize, snap, or minimize windows (`window.innerWidth < 900` fallback completely removed).
 21. **Brand Identity & Icon Preservation**: Root `Icon.png` and `src/js/img/Image1.png` represent the official stylized **GG** (Global Gate) brand logo. Never overwrite them with generic placeholder or mobile generator assets. Always maintain the official Global Gate icon across Electron builds and titlebars.
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
+23. **Technician Financial Privacy & Cost/Rate/Stock Hiding (Ver 3.5.21)**:
+    - Employees registered in the `TECHNICIAN` department (or users with `role: 'TECHNICIAN'`, or with Grant Access `costVisibility: false`) MUST NEVER be exposed to item rates, item costs, service prices, stock quantities (`Stock-A`), labor fee financial charges, discounts, or grand totals in ANY view or edit screen across the system (including `MaintenanceFormView`, `MaintenanceUpdateView`, `MaintenanceViewInformation`, `MaintenanceOrderUpdate`, `MaintenanceOrderViewInformation`, `TechnicianStoreCatalog`, etc.).
+    - Universal permission formula across maintenance and technician components:
+      ```javascript
+      const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+      const currentEmployee = (employee || []).find(e => 
+        (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
+      );
+      const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+                           (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
+      const canViewCosts = isOwner || (!isTechnician && costVisibility);
+      ```
+    - When `!canViewCosts`:
+      1. In form/update tables: Only display `#`, `Item`, `Quantity`, and `Action`. Completely suppress `Stock-A`, `Rate`, `Discount`, `Amount`, `Labor Fees` financial charge/discount, and `Total Generale`.
+      2. In detail/view pages: Render the dedicated 4-column "Items Used" table (`Parts/s Model`, `Description`, `Brand`, `Qty`) with no financial headers, labor totals, or grand totals.
+      3. Technicians can still edit maintenance orders via Grant Access permissions (`Maintenance` / `Maintenance-Order` `editM`), but their edit view must strictly enforce the restricted columns.
 
 ## Current Progress Log
 - **Technician Cost/Rate/Stock Hiding & Maintenance View/Edit Access Enforced (Ver 3.5.21)**:
