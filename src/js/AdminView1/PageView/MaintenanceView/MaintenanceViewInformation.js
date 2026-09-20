@@ -171,7 +171,7 @@ function MaintenanceViewInformation() {
           const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
-          dispatch(setUser({ userName: Name, role: Role }));
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -187,21 +187,39 @@ function MaintenanceViewInformation() {
     navigate('/')
   }
   const [grantAccess, setGrantAccess] = useState([]);
+  const [costVisibility, setCostVisibility] = useState(false);
+  const [employee, setEmployee] = useState([]);
+
   useEffect(() => {
-    const fetchNumber = async () => {
+    const fetchGrantAndEmployee = async () => {
+      const storesUserId = localStorage.getItem('user');
       try {
-        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
-        res.data?.data?.filter((row) => row.userID === user.data.id)
-          .map((row) => setGrantAccess(row.modules))
+        const [resGrant, resEmp] = await Promise.all([
+          cachedGet(`${ENDPOINT_URL}/grantAccess`),
+          axios.get(`${ENDPOINT_URL}/employee`)
+        ]);
+        setEmployee(resEmp.data?.data || []);
+        const userGrant = resGrant.data?.data?.find((row) => row.userID === (user.data?.id || storesUserId) || (row.employeeName || '').trim().toLowerCase() === (user.data?.userName || '').trim().toLowerCase());
+        if (userGrant) {
+          setGrantAccess(userGrant.modules || []);
+          setCostVisibility(userGrant.costVisibility === true);
+        }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
-    fetchNumber()
-  }, [user])
+    };
+    fetchGrantAndEmployee();
+  }, [user]);
 
   const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
   const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.editM === true);
+
+  const currentEmployee = (employee || []).find(e => 
+    (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
+  );
+  const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+                       (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
+  const canViewCosts = isOwner || (!isTechnician && costVisibility);
 
   const [maintenance, setMaintenance] = useState([]);
   const [quotation, setQuotation] = useState([]);
@@ -1196,7 +1214,7 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                                     <Typography>Edit (Converted)</Typography>
                                                   </span>
                                                 ) : (
-                                                  <NavLink to={`/MaintenanceUpdateView/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                                  <NavLink to={canViewCosts ? `/MaintenanceUpdateView/${row._id}` : `/MaintenanceOrderUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                                     <EditIcon />
                                                     <Typography>Edit</Typography>
                                                   </NavLink>
@@ -1519,81 +1537,123 @@ const RowMaintenanceExpenses = ({ maintenanceExpenses, totalMaintenanceExpenses 
                                             </tbody>
                                           </table>
                                           <br />
-                                          <table style={{ width: '100%', borderCollapse: 'collapse', height: '130px', marginBottom: '5px' }}>
-                                            <thead>
-                                              <tr>
-                                                <th style={{ width: '100%', textAlign: 'center', border: '1px solid black' }} colSpan={6}>Finance</th>
-                                              </tr>
-                                              <tr>
-                                                <th style={{ textAlign: 'left', border: '1px solid black', width: '120px' }}>Parts/s Model</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black', width: '150px' }}>Description</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black' }}>Brand</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black' }}>Qty</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black' }}>Price</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black', width: '50px' }}>Discount</th>
-                                                <th style={{ textAlign: 'left', border: '1px solid black', width: '100px' }}>Total</th>
-                                              </tr>
-                                            </thead>
-                                            <tbody>
-                                              {
-                                                (row.items || []).map((Item, i) => {
-                                                  const relatedUnit = itemMap[Item.itemName?._id];
-                                                  return (
-                                                    <tr key={Item.idRow}>
-                                                      {
-                                                        Item.newDescription !== undefined ?
-                                                          (
-                                                            <>
-                                                              <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
-                                                            </>
-                                                          )
-                                                          :
-                                                          (
-                                                            <>
-                                                              <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
-                                                              <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
-                                                              <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
-                                                              <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                              <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
-                                                              <td style={{ border: '1px solid black' }}> <span data-prefix>% </span>{Item.itemDiscount}</td>
-                                                              <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                                            </>
-                                                          )
-                                                      }
-                                                    </tr>
+                                          {canViewCosts ? (
+                                            <table style={{ width: '100%', borderCollapse: 'collapse', height: '130px', marginBottom: '5px' }}>
+                                              <thead>
+                                                <tr>
+                                                  <th style={{ width: '100%', textAlign: 'center', border: '1px solid black' }} colSpan={6}>Finance</th>
+                                                </tr>
+                                                <tr>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black', width: '120px' }}>Parts/s Model</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black', width: '150px' }}>Description</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black' }}>Brand</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black' }}>Qty</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black' }}>Price</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black', width: '50px' }}>Discount</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black', width: '100px' }}>Total</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                {
+                                                  (row.items || []).map((Item, i) => {
+                                                    const relatedUnit = itemMap[Item.itemName?._id];
+                                                    return (
+                                                      <tr key={Item.idRow}>
+                                                        {
+                                                          Item.newDescription !== undefined ?
+                                                            (
+                                                              <>
+                                                                <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
+                                                              </>
+                                                            )
+                                                            :
+                                                            (
+                                                              <>
+                                                                <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
+                                                                <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
+                                                                <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
+                                                                <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
+                                                                <td style={{ border: '1px solid black' }}> <span data-prefix>% </span>{Item.itemDiscount}</td>
+                                                                <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span id='totalItemService'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                              </>
+                                                            )
+                                                        }
+                                                      </tr>
+                                                    )
+                                                  }
                                                   )
                                                 }
-                                                )
-                                              }
-                                              <tr>
-                                                <td style={{ border: '1px solid black' }} colSpan={3}>Labor Fees</td>
-                                                <td style={{ border: '1px solid black' }} >{row.laborQty !== undefined ? row.laborQty : 0}</td>
-                                                <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.adjustmentNumber}</td>
-                                                <td style={{ border: '1px solid black' }} ><span data-prefix>% </span>{row.laborDiscount !== undefined ? row.laborDiscount : 0}</td>
-                                                <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale : 0}</td>
-                                              </tr>
-                                              {
-                                                user.data.role === 'CEO' ?
-                                                  <>
-                                                    <Row2 totalAmountPlaning={totalAmountPlaning} totalAmount2={totalAmount2} />
-                                                    <RowMaintenanceExpenses maintenanceExpenses={maintenanceExpenses} totalMaintenanceExpenses={totalMaintenanceExpenses} />
-                                                  </> :
-                                                  <tr></tr>
-                                              }
-                                              <tr>
-                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={5}>Grand Total</td>
-                                                <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{
-                                                  (() => {
-                                                    const liveItemsTotal = (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemAmount) || 0), 0);
-                                                    const liveLaborTotal = parseFloat(row.totalLaborFeesGenerale || 0);
-                                                    const liveExpensesTotal = user.data.role === 'CEO' ? (parseFloat(totalAmountPlaning || 0) + parseFloat(totalMaintenanceExpenses || 0)) : 0;
-                                                    const liveGrandTotal = liveItemsTotal + liveLaborTotal + liveExpensesTotal;
-                                                    return Number(liveGrandTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-                                                  })()
-                                                }</td>
-                                              </tr>
-                                            </tbody>
-                                          </table>
+                                                <tr>
+                                                  <td style={{ border: '1px solid black' }} colSpan={3}>Labor Fees</td>
+                                                  <td style={{ border: '1px solid black' }} >{row.laborQty !== undefined ? row.laborQty : 0}</td>
+                                                  <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.adjustmentNumber}</td>
+                                                  <td style={{ border: '1px solid black' }} ><span data-prefix>% </span>{row.laborDiscount !== undefined ? row.laborDiscount : 0}</td>
+                                                  <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span>{row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale : 0}</td>
+                                                </tr>
+                                                {
+                                                  user.data.role === 'CEO' ?
+                                                    <>
+                                                      <Row2 totalAmountPlaning={totalAmountPlaning} totalAmount2={totalAmount2} />
+                                                      <RowMaintenanceExpenses maintenanceExpenses={maintenanceExpenses} totalMaintenanceExpenses={totalMaintenanceExpenses} />
+                                                    </> :
+                                                    <tr></tr>
+                                                }
+                                                <tr>
+                                                  <td style={{ border: '1px solid black', width: '100px' }} colSpan={5}>Grand Total</td>
+                                                  <td style={{ border: '1px solid black', width: '100px' }} colSpan={2} ><span data-prefix>$ </span>{
+                                                    (() => {
+                                                      const liveItemsTotal = (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemAmount) || 0), 0);
+                                                      const liveLaborTotal = parseFloat(row.totalLaborFeesGenerale || 0);
+                                                      const liveExpensesTotal = user.data.role === 'CEO' ? (parseFloat(totalAmountPlaning || 0) + parseFloat(totalMaintenanceExpenses || 0)) : 0;
+                                                      const liveGrandTotal = liveItemsTotal + liveLaborTotal + liveExpensesTotal;
+                                                      return Number(liveGrandTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                                    })()
+                                                  }</td>
+                                                </tr>
+                                              </tbody>
+                                            </table>
+                                          ) : (
+                                            <table style={{ width: '100%', borderCollapse: 'collapse', height: '130px', marginBottom: '5px' }}>
+                                              <thead>
+                                                <tr>
+                                                  <th style={{ width: '100%', textAlign: 'center', border: '1px solid black' }} colSpan={4}>Items Used</th>
+                                                </tr>
+                                                <tr>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black', width: '120px' }}>Parts/s Model</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black', width: '150px' }}>Description</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black' }}>Brand</th>
+                                                  <th style={{ textAlign: 'left', border: '1px solid black' }}>Qty</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody>
+                                                {
+                                                  (row.items || []).map((Item, i) => {
+                                                    const relatedUnit = itemMap[Item.itemName?._id];
+                                                    return (
+                                                      <tr key={Item.idRow}>
+                                                        {
+                                                          Item.newDescription !== undefined ?
+                                                            (
+                                                              <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={4}>{Item.newDescription}</td>
+                                                            )
+                                                            :
+                                                            (
+                                                              <>
+                                                                <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
+                                                                <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
+                                                                <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
+                                                              </>
+                                                            )
+                                                        }
+                                                      </tr>
+                                                    )
+                                                  })
+                                                }
+                                              </tbody>
+                                            </table>
+                                          )}
                                           <br />
 
                                           {/* Printable ASSET CONTROL SCHEDULE */}

@@ -31,6 +31,15 @@
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
 
 ## Current Progress Log
+- **Technician Cost/Rate/Stock Hiding & Maintenance View/Edit Access Enforced (Ver 3.5.21)**:
+  - **Comprehensive Technician Financial Data Protection Across All Maintenance Views**:
+    - Enforced strict privacy rules for all employees registered in the `TECHNICIAN` department or with `costVisibility === false`.
+    - Updated `MaintenanceFormView.js`, `MaintenanceUpdateView.js`, and `MaintenanceViewInformation.js` to compute `canViewCosts = isOwner || (!isTechnician && costVisibility)`.
+    - In `MaintenanceFormView.js` & `MaintenanceUpdateView.js`: Conditionally hide `Stock-A`, `Rate`, `Discount`, `Amount`, `Labor Fees` financial amount/discount, and `Total Generale` rows when `canViewCosts` is false.
+    - In `MaintenanceViewInformation.js`: When `canViewCosts` is false, render the dedicated 4-column "Items Used" table (`Parts/s Model`, `Description`, `Brand`, `Qty`) without financial figures, matching technician UI standards.
+    - Preserved full edit capability for technicians via Grant Access while ensuring financial rates and stock counts remain hidden in both view and edit modes.
+  - **Release & Distribution**: Bumped version to `3.5.21`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.21.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Maintenance Order Grant Access Permission & Action Buttons Alignment (Ver 3.5.20)**:
   - **Reconciled `Maintenance-Order` Module Name in Grant Access Checks (`MaintenanceOrderViewInformation.js` & `MaintenanceOrderAdmin.js`)**:
     - Resolved issue where technicians with Grant Access assigned to `Maintenance-Order` (Module 26) could not edit maintenance orders in `MaintenanceOrderViewInformation.js` because `MaintenanceInfoU` only checked `moduleName === 'Maintenance'`.

@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { Add, ArrowUpwardOutlined, DragIndicatorRounded, Edit, Refresh, RemoveCircleOutline } from '@mui/icons-material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
@@ -166,7 +167,7 @@ function MaintenanceFormView() {
           const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storesUserId}`)
           const Name = res.data.data.employeeName;
           const Role = res.data.data.role;
-          dispatch(setUser({ userName: Name, role: Role }));
+          dispatch(setUser({ userName: Name, role: Role, id: res.data.data._id }));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -215,12 +216,47 @@ function MaintenanceFormView() {
   const [serviceNumber, setServiceNumber] = useState(0);
   const [customer, setCustomer] = useState([]);
   const [customerName, setCustomerName] = useState({});
+  const [employee, setEmployee] = useState([]);
+  const [grantAccess, setGrantAccess] = useState([]);
+  const [costVisibility, setCostVisibility] = useState(false);
   const [ItemInformation, setItemInformation] = useState([]);
   const [technicianAssign, setTechnicianAssign] = useState('');
   const [includeAssetControl, setIncludeAssetControl] = useState(false);
   const [assetControlReport, setAssetControlReport] = useState(DEFAULT_ASSET_CONTROL_REPORT);
   const serviceName = `M-${String(serviceNumber).padStart(6, '0')}`;
   const [inputValue, setInputValue] = React.useState('');
+
+  useEffect(() => {
+    const fetchGrant = async () => {
+      const storesUserId = localStorage.getItem('user');
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
+        const userGrant = res.data?.data?.find((row) => row.userID === (user.data?.id || storesUserId) || (row.employeeName || '').trim().toLowerCase() === (user.data?.userName || '').trim().toLowerCase());
+        if (userGrant) {
+          setGrantAccess(userGrant.modules || []);
+          setCostVisibility(userGrant.costVisibility === true);
+        }
+      } catch (error) {
+        console.error('Error fetching grant access:', error);
+      }
+    };
+    fetchGrant();
+  }, [user]);
+
+  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const currentEmployee = (employee || []).find(e => 
+    (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
+  );
+  const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+                       (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
+  const canViewCosts = isOwner || (!isTechnician && costVisibility);
+
+  const filterEmployee = employee.filter((row) => (row.department === 'TECHNICIAN' || (row.department || '').toUpperCase() === 'TECHNICIAN') && row.Status !== 'Fired' && row.Status !== 'Resign' && row.Status !== 'Suspended');
+
+  const handleChangeEmployee = (newValue) => {
+    const selectedOptions = employee.find((option) => option === newValue);
+    setTechnicianAssign(selectedOptions?.employeeName || '');
+  };
 
   // Side Shop State
   const [sideShopOpen, setSideShopOpen] = useState(false);
@@ -379,15 +415,6 @@ function MaintenanceFormView() {
     setCustomer([...customer, newCustomer])
   }
   {/** Customer info end */ }
-  const [employee, setEmployee] = useState([])
-  // Data already fetched in the combined useEffect above.
-
-  const filterEmployee = employee.filter((row) => row.department === 'TECHNICIAN' && row.status !== 'Fired' || row.status !== 'Resign' || row.status !== 'Suspended')
-
-  const handleChangeEmployee = (newValue) => {
-    const selectedOptions = employee.find((option) => option === newValue)
-    setTechnicianAssign(selectedOptions?.employeeName)
-  }
   {/** Item start */ }
   // Data already fetched in the combined useEffect above.
   const handleChangeItem = (idRow, newValue) => {
@@ -1390,11 +1417,11 @@ function MaintenanceFormView() {
                             <tr>
                               <th>#</th>
                               <th>Item</th>
-                              <th>Stock-A</th>
+                              {canViewCosts && <th>Stock-A</th>}
                               <th>Quantity</th>
-                              <th>Rate</th>
-                              <th>Discount</th>
-                              <th>Amount</th>
+                              {canViewCosts && <th>Rate</th>}
+                              {canViewCosts && <th>Discount</th>}
+                              {canViewCosts && <th>Amount</th>}
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -1416,7 +1443,7 @@ function MaintenanceFormView() {
                                           Item.newDescription !== undefined ? (
                                             <>
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
-                                              <td colSpan={5}><TextField
+                                              <td colSpan={canViewCosts ? 5 : 2}><TextField
                                                 required
                                                 name='newDescription' id='newDescription'
                                                 value={Item.newDescription}
@@ -1431,7 +1458,7 @@ function MaintenanceFormView() {
                                                   </IconButton>
                                                 </LightTooltip>
                                               </td>
-                                              <td></td>
+                                              {canViewCosts && <td></td>}
                                             </>
                                           ) : (
                                             <>
@@ -1467,7 +1494,7 @@ function MaintenanceFormView() {
                                                             </IconButton>
                                                           </BlackTooltip>
                                                           {
-                                                            Item.itemName._id && (
+                                                            Item.itemName._id && canViewCosts && (
                                                               <BlackTooltip title="Edit" placement='bottom'>
                                                                 <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
                                                                   <Edit style={{ color: '#202a5a' }} />
@@ -1483,7 +1510,7 @@ function MaintenanceFormView() {
                                                       <Autocomplete
                                                         disableClearable
                                                         options={filterItemInformation}
-                                                        getOptionLabel={(option) => option.itemName + '/' + option.itemBrand}
+                                                        getOptionLabel={(option) => option.itemName + (option.itemBrand ? `/${option.itemBrand}` : '')}
                                                         renderOption={(props, option) => (
                                                           <Box component="li" {...props} sx={{ backgroundColor: '#f2f2f2', display: 'flex', alignItems: 'center', gap: 1.5, py: 1 }}>
                                                             <ItemThumbnail itemId={option._id} initialData={option.data} initialType={option.contentType} />
@@ -1505,8 +1532,8 @@ function MaintenanceFormView() {
                                                           return options.filter(
                                                             (option) =>
                                                               option.itemName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                              option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) ||
-                                                              option.itemDescription.toLowerCase().includes(inputValue.toLowerCase())
+                                                              (option.itemBrand || '').toLowerCase().includes(inputValue.toLowerCase()) ||
+                                                              (option.itemDescription || '').toLowerCase().includes(inputValue.toLowerCase())
                                                           )
                                                         }}
                                                         onChange={(e, newValue) => handleChangeItem(Item.idRow, newValue)}
@@ -1515,11 +1542,13 @@ function MaintenanceFormView() {
 
                                                           <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                                             {children}
-                                                            <div>
-                                                              <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
-                                                                ADD NEW Item
-                                                              </button>
-                                                            </div>
+                                                            {canViewCosts && (
+                                                              <div>
+                                                                <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                  ADD NEW Item
+                                                                </button>
+                                                              </div>
+                                                            )}
                                                           </Box>
                                                         )}
                                                         sx={{ width: '470px', backgroundColor: 'white' }}
@@ -1534,50 +1563,55 @@ function MaintenanceFormView() {
                                                 }
 
                                               </td>
-                                              <td>
-                                                <TextField
-                                                  disabled
-                                                  name='stock' id='stock'
-                                                  value={Item.stock}
-
-                                                  onChange={(e) => handleChange(e, i)}
-                                                  size="small"
-                                                  sx={{ width: '100px', backgroundColor: 'white' }}
-                                                />
-                                              </td>
+                                              {canViewCosts && (
+                                                <td>
+                                                  <TextField
+                                                    disabled
+                                                    name='stock' id='stock'
+                                                    value={Item.stock}
+                                                    onChange={(e) => handleChange(e, i)}
+                                                    size="small"
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                              )}
                                               <td>
                                                 <TextField
                                                   name='itemQty' id='itemQty'
                                                   onChange={(e) => handleChange(e, i)}
                                                   size="small"
-
                                                   value={Item.itemQty}
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td >
-                                                <TextField
-                                                  name='itemRate' id='itemRate'
-                                                  value={Item.itemRate}
-
-                                                  disabled={user.data.role !== 'CEO'}
-                                                  onChange={(e) => handleChange(e, i)}
-                                                  size="small"
-                                                  sx={{ width: '100px', backgroundColor: 'white' }}
-                                                />
-                                              </td>
-                                              <td >
-                                                <TextField
-                                                  name='itemDiscount' id='itemDiscount'
-                                                  value={Item.itemDiscount}
-                                                  onChange={(e) => handleChange(e, i)}
-                                                  size="small"
-                                                  type='number'
-                                                  placeholder='1 to 5 %'
-                                                  sx={{ width: '100px', backgroundColor: 'white' }}
-                                                />
-                                              </td>
-                                              <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              {canViewCosts && (
+                                                <td >
+                                                  <TextField
+                                                    name='itemRate' id='itemRate'
+                                                    value={Item.itemRate}
+                                                    disabled={user.data.role !== 'CEO'}
+                                                    onChange={(e) => handleChange(e, i)}
+                                                    size="small"
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                              )}
+                                              {canViewCosts && (
+                                                <td >
+                                                  <TextField
+                                                    name='itemDiscount' id='itemDiscount'
+                                                    value={Item.itemDiscount}
+                                                    onChange={(e) => handleChange(e, i)}
+                                                    size="small"
+                                                    type='number'
+                                                    placeholder='1 to 5 %'
+                                                    sx={{ width: '100px', backgroundColor: 'white' }}
+                                                  />
+                                                </td>
+                                              )}
+                                              {canViewCosts && (
+                                                <td id='amountTotalInvoice'>{Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              )}
                                               <td >
                                                 <LightTooltip title="Delete" sx={{}}>
                                                   <IconButton onClick={() => deleteItem(Item.idRow)} >
@@ -1608,61 +1642,91 @@ function MaintenanceFormView() {
                               </tbody>
                             )}
                           </Droppable>
-                          <tbody>
-                            <tr>
-                              <td></td>
-                              <td colSpan={2}>
-                                <TextField
-                                  name='adjustment' id='adjustment'
-                                  size="small"
-                                  value={adjustment}
-                                  onChange={(e) => setAdjustment(e.target.value)}
-                                  sx={{ backgroundColor: 'white' }}
-                                />
-                              </td>
-                              <td>
-                                <TextField
-                                  id='laborQty'
-                                  type='number'
-                                  size="small"
-                                  placeholder='labor QTY'
-                                  name='laborQty'
-                                  value={laborQty !== undefined ? laborQty : 0}
-                                  onChange={(e) => setLaborQty(e.target.value)}
-                                  sx={{ width: '150px', backgroundColor: 'white' }}
-                                />
-                              </td>
-                              <td>
-                                <TextField
-                                  id='adjustmentNumber'
-                                  size="small"
-                                  placeholder='labor fees'
-                                  name='adjustmentNumber'
-                                  onChange={(e) => setAdjustmentNumber(e.target.value)}
-                                  sx={{ width: '150px', backgroundColor: 'white' }}
-                                />
-                              </td>
-                              <td>
-                                <TextField
-                                  name='laborDiscount' id='laborDiscount'
-                                  size="small"
-                                  onChange={(e) => setLaborDiscount(e.target.value)}
-                                  placeholder='Discount'
-                                  sx={{ backgroundColor: 'white' }}
-                                />
-                              </td>
-                              <td>
-                                <span>$</span><span>{Number(totalLaborFeesGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-                              </td>
-                            </tr>
-                            <tr>
-                              <td></td>
-                              <td></td>
-                              <td></td>
-                              <td colSpan={3}>Total Generale</td>
-                              <td><span>$</span><span>{Number(totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                            </tr>
-                          </tbody>
+                          {canViewCosts ? (
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td colSpan={2}>
+                                  <TextField
+                                    name='adjustment' id='adjustment'
+                                    size="small"
+                                    value={adjustment}
+                                    onChange={(e) => setAdjustment(e.target.value)}
+                                    sx={{ backgroundColor: 'white' }}
+                                  />
+                                </td>
+                                <td>
+                                  <TextField
+                                    id='laborQty'
+                                    type='number'
+                                    size="small"
+                                    placeholder='labor QTY'
+                                    name='laborQty'
+                                    value={laborQty !== undefined ? laborQty : 0}
+                                    onChange={(e) => setLaborQty(e.target.value)}
+                                    sx={{ width: '150px', backgroundColor: 'white' }}
+                                  />
+                                </td>
+                                <td>
+                                  <TextField
+                                    id='adjustmentNumber'
+                                    size="small"
+                                    placeholder='labor fees'
+                                    name='adjustmentNumber'
+                                    onChange={(e) => setAdjustmentNumber(e.target.value)}
+                                    sx={{ width: '150px', backgroundColor: 'white' }}
+                                  />
+                                </td>
+                                <td>
+                                  <TextField
+                                    name='laborDiscount' id='laborDiscount'
+                                    size="small"
+                                    onChange={(e) => setLaborDiscount(e.target.value)}
+                                    placeholder='Discount'
+                                    sx={{ backgroundColor: 'white' }}
+                                  />
+                                </td>
+                                <td>
+                                  <span>$</span><span>{Number(totalLaborFeesGenerale || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td colSpan={3}>Total Generale</td>
+                                <td><span>$</span><span>{Number(totalInvoice || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                              </tr>
+                            </tbody>
+                          ) : (
+                            <tbody>
+                              <tr>
+                                <td></td>
+                                <td>
+                                  <TextField
+                                    name='adjustment' id='adjustment'
+                                    size="small"
+                                    value={adjustment}
+                                    onChange={(e) => setAdjustment(e.target.value)}
+                                    sx={{ backgroundColor: 'white' }}
+                                  />
+                                </td>
+                                <td>
+                                  <TextField
+                                    id='laborQty'
+                                    type='number'
+                                    size="small"
+                                    placeholder='labor QTY'
+                                    name='laborQty'
+                                    value={laborQty !== undefined ? laborQty : 0}
+                                    onChange={(e) => setLaborQty(e.target.value)}
+                                    sx={{ width: '150px', backgroundColor: 'white' }}
+                                  />
+                                </td>
+                                <td></td>
+                              </tr>
+                            </tbody>
+                          )}
                         </table>
                       </DragDropContext>
                     </div>
