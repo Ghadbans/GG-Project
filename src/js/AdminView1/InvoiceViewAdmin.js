@@ -619,7 +619,19 @@ function InvoiceViewAdmin() {
   {/** search end */ }
   const columns = [
     { field: 'invoiceNumber', headerName: 'Invoice#', minWidth: 100, flex: 1, renderCell: (params) => (<div> <span>INV-{String(params.row.invoiceNumber).padStart(6, '0')}</span> </div>) },
-    { field: 'customer', headerName: 'Customer Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
+    { 
+      field: 'customer', 
+      headerName: 'Customer Name', 
+      minWidth: 200, 
+      flex: 2, 
+      valueGetter: (params) => {
+        const raw = params.row?.customerName || params.row?.Customer || params.row?.customer;
+        if (!raw) return '';
+        if (typeof raw === 'string') return raw.toUpperCase();
+        const name = raw.Customer || raw.customerName || raw.companyName || raw.customerFullName || raw.name || '';
+        return String(name).toUpperCase();
+      } 
+    },
     {
       field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
         const isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;

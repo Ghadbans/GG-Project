@@ -162,8 +162,12 @@ Route.route("/invoice-Information").get(async (req, res) => {
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
+      
+      const numClean = search.trim().replace(/^[Ii][Nn][Vv][-_\s]*/, '');
+      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+
       const searchOr = [
-        ...(!isNaN(Number(search)) ? [{ invoiceNumber: Number(search) }] : []),
+        ...(searchNum !== null ? [{ invoiceNumber: searchNum }] : []),
         { invoiceName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
@@ -180,17 +184,41 @@ Route.route("/invoice-Information").get(async (req, res) => {
         { invoiceNote: regex },
         { terms: regex },
         { status: regex },
+        { invoiceStatus: regex },
         { 'items.itemDescription': regex },
         { 'items.itemName': regex },
         { 'items.itemName.itemName': regex },
         { 'items.itemBrand': regex },
+        { 'items.itemCode': regex },
+        { 'items.partNumber': regex },
+        { 'items.model': regex },
+        { customerName: regex },
+        { 'customerName.Customer': regex },
         { 'customerName.customerName': regex },
+        { 'customerName.customer': regex },
+        { 'customerName.name': regex },
+        { 'customerName.companyName': regex },
+        { 'customerName.company': regex },
+        { 'customerName.customerFullName': regex },
+        { 'customerName.clientName': regex },
+        { 'customerName.contactName': regex },
         { 'customerName.customerEmail': regex },
+        { 'customerName.email': regex },
         { 'customerName.customerPhone': regex },
         { 'customerName.phone': regex },
-        { 'customerName.companyName': regex },
         { 'customerName.billingAddress': regex },
+        { 'customerName.address': regex },
+        { 'customerName.billingCity': regex },
+        { 'customerName.city': regex },
+        { 'customer.Customer': regex },
+        { 'customer.customerName': regex },
+        { 'customer.name': regex },
+        { customer: regex },
+        { Customer: regex },
+        { Client: regex },
+        { client: regex },
         { 'Ref.projectName': regex },
+        { 'Ref.reference': regex },
         { Position: regex }
       ];
 

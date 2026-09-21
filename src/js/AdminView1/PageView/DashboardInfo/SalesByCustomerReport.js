@@ -133,13 +133,10 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
                         pAmount = -Math.abs(pAmount);
                     }
 
-                    // For unapplied Credit deposits where remaining == amount, applied payment is 0
-                    // (the credit balance will be credited when applied via Credit-Account)
-                    let appliedAmount = pAmount;
-                    if (pay.modes === 'Credit') {
-                        const rem = parseFloat(pay.remaining || 0);
-                        appliedAmount = Math.max(0, pAmount - rem);
-                    }
+                    // For payments with remaining credit, applied payment is (amount - remaining)
+                    // matching CustomerInformationView.js exactly
+                    const rem = parseFloat(pay.remaining || 0);
+                    const appliedAmount = Math.max(0, pAmount - rem);
 
                     return {
                         ...pay,
@@ -147,6 +144,7 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
                         date: pay.paymentDate,
                         amount: 0,
                         paid: appliedAmount,
+                        rawAmount: pAmount,
                         due: 0
                     };
                 })
@@ -192,6 +190,7 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
                     invoiceCount: 0,
                     totalSales: 0,
                     totalPaid: 0,
+                    availableCredit: 0,
                     balance: 0,
                     transactions: []
                 };
@@ -202,7 +201,6 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
             if (item.type === 'Invoice') {
                 customerMap[id].invoiceCount += 1;
                 customerMap[id].totalSales += (item.amount || 0);
-                customerMap[id].totalPaid += (item.paid || 0);
             } else if (item.type === 'POS') {
                 customerMap[id].invoiceCount += 1;
                 customerMap[id].totalSales += (item.amount || 0);
@@ -212,10 +210,24 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
             }
         });
 
-        // Finalize balance calculation for each customer
+        // Calculate available credit and finalize balance calculation for each customer
+        // Exactly matching CustomerInformationView.js credit1 and totalBalance1 formula
         Object.values(customerMap).forEach(c => {
-            const rawBalance = c.totalSales - c.totalPaid;
-            // Snap floating-point rounding dust (-0.01 to 0.01) to 0
+            let customerCredit = 0;
+            const custPayments = c.transactions.filter(t => t.type === 'Payment');
+            custPayments.forEach(p => {
+                const remVal = (p.remaining !== undefined && p.remaining !== null && p.remaining !== '') ? parseFloat(p.remaining) : parseFloat(p.rawAmount || p.amount || 0);
+                if (p.modes === 'Credit' || (p.modes === 'Cash' && parseFloat(p.remaining || 0) > 0) || (p.modes === 'Bank Transfer' && parseFloat(p.remaining || 0) > 0)) {
+                    customerCredit += remVal;
+                } else if (p.modes === 'Credit-Account') {
+                    customerCredit -= parseFloat(p.rawAmount || p.amount || 0);
+                }
+            });
+            customerCredit = Math.max(0, customerCredit);
+            c.availableCredit = customerCredit;
+
+            const rawBalance = (c.totalSales - c.totalPaid) - customerCredit;
+            // Snap floating-point rounding dust (-0.05 to 0.05) to 0
             c.balance = Math.abs(rawBalance) < 0.05 ? 0 : rawBalance;
         });
 
@@ -228,8 +240,9 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
         return processedData.reduce((acc, curr) => ({
             sales: acc.sales + curr.totalSales,
             paid: acc.paid + curr.totalPaid,
+            credit: acc.credit + curr.availableCredit,
             balance: acc.balance + curr.balance
-        }), { sales: 0, paid: 0, balance: 0 });
+        }), { sales: 0, paid: 0, credit: 0, balance: 0 });
     }, [processedData]);
 
     const handleOpenDetails = (customer) => {
@@ -251,6 +264,7 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
             { header: 'Invoices', key: 'count', width: 10 },
             { header: 'Total Sales', key: 'sales', width: 15 },
             { header: 'Total Paid', key: 'paid', width: 15 },
+            { header: 'Available Credit', key: 'credit', width: 15 },
             { header: 'Balance Due', key: 'balance', width: 15 },
         ];
 
@@ -260,6 +274,7 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
                 count: row.invoiceCount,
                 sales: row.totalSales,
                 paid: row.totalPaid,
+                credit: row.availableCredit,
                 balance: row.balance
             });
         });
@@ -270,6 +285,7 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
             name: 'TOTALS',
             sales: totals.sales,
             paid: totals.paid,
+            credit: totals.credit,
             balance: totals.balance
         }).font = { bold: true };
 
@@ -438,23 +454,29 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
                 <DialogContent sx={{ p: 4, backgroundColor: '#f5f5f5' }}>
                     <Card sx={{ mb: 3 }}>
                         <CardContent>
-                            <Grid container spacing={4}>
-                                <Grid item xs={12} md={4}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <Typography variant="overline" color="textSecondary">Total Sales</Typography>
                                     <Typography variant="h5" sx={{ color: '#2e7d32', fontWeight: 'bold' }}>
-                                        ${(selectedCustomer?.totalSales || 0).toLocaleString()}
+                                        ${(selectedCustomer?.totalSales || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <Typography variant="overline" color="textSecondary">Total Paid</Typography>
                                     <Typography variant="h5" sx={{ color: '#0288d1', fontWeight: 'bold' }}>
-                                        ${(selectedCustomer?.totalPaid || 0).toLocaleString()}
+                                        ${(selectedCustomer?.totalPaid || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </Typography>
                                 </Grid>
-                                <Grid item xs={12} md={4}>
+                                <Grid item xs={12} sm={6} md={3}>
+                                    <Typography variant="overline" color="textSecondary">Available Credit</Typography>
+                                    <Typography variant="h5" sx={{ color: '#ed6c02', fontWeight: 'bold' }}>
+                                        -${(selectedCustomer?.availableCredit || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                    </Typography>
+                                </Grid>
+                                <Grid item xs={12} sm={6} md={3}>
                                     <Typography variant="overline" color="textSecondary">Balance Due</Typography>
-                                    <Typography variant="h5" sx={{ color: '#d32f2f', fontWeight: 'bold' }}>
-                                        ${(selectedCustomer?.balance || 0).toLocaleString()}
+                                    <Typography variant="h5" sx={{ color: (selectedCustomer?.balance || 0) > 0 ? '#d32f2f' : '#2e7d32', fontWeight: 'bold' }}>
+                                        ${(selectedCustomer?.balance || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </Typography>
                                 </Grid>
                             </Grid>

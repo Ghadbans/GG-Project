@@ -313,7 +313,10 @@ Route.route("/purchaseOrder-Information").get(async (req, res) => {
         { 'reference.serviceName': regex },
         { 'reference.invoiceName': regex },
         { 'reference.customerName': regex },
+        { 'reference.customerName.Customer': regex },
         { 'reference.customerName.customerName': regex },
+        { 'reference.customerName.name': regex },
+        { 'reference.customerName.companyName': regex },
         { 'itemsQtyArray.itemName': regex },
         { 'itemsQtyArray.itemName.itemName': regex },
         { 'itemsQtyArray.itemBrand': regex },
@@ -436,12 +439,25 @@ Route.route("/purchase-Information").get(async (req, res) => {
       const query = branchFilter(req);
       if (search) {
         const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(escapedSearch, 'i');
+        const numClean = search.trim().replace(/^[Pp][Uu][Rr][-_\s]*/, '');
+        const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+
         query.$or = [
-          ...(!isNaN(Number(search)) ? [{ purchaseNumber: Number(search) }] : []),
+          ...(searchNum !== null ? [{ purchaseNumber: searchNum }] : []),
           ...(!isNaN(Number(search)) ? [{ purchaseAmount1: Number(search) }] : []),
           { 'projectName.projectName': regex },
+          { 'projectName.name': regex },
+          { customerName: regex },
+          { 'customerName.Customer': regex },
           { 'customerName.customerName': regex },
+          { 'customerName.customer': regex },
+          { 'customerName.name': regex },
+          { 'customerName.companyName': regex },
+          { 'customerName.customerFullName': regex },
+          { 'customer.Customer': regex },
+          { 'customer.customerName': regex },
+          { customer: regex },
+          { Customer: regex },
           { description: regex },
           { status: regex },
           { statusInfo: regex }

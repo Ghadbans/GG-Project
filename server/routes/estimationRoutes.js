@@ -303,7 +303,12 @@ Route.route("/estimation-Information").get(async (req, res) => {
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
+      
+      const numClean = search.trim().replace(/^[Ee][Ss][Tt][-_\s]*/, '');
+      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+
       const orConditions = [
+        ...(searchNum !== null ? [{ estimateNumber: searchNum }] : []),
         { estimateName: regex },
         { ReferenceName2: regex },
         { ReferenceName: regex },
@@ -311,12 +316,29 @@ Route.route("/estimation-Information").get(async (req, res) => {
         { status: regex },
         { noteInfo: regex },
         { note: regex },
+        { terms: regex },
+        { 'items.itemDescription': regex },
+        { 'items.itemName': regex },
+        { customerName: regex },
+        { 'customerName.Customer': regex },
         { 'customerName.customerName': regex },
-        { 'customerName.customerEmail': regex }
+        { 'customerName.customer': regex },
+        { 'customerName.name': regex },
+        { 'customerName.companyName': regex },
+        { 'customerName.company': regex },
+        { 'customerName.customerFullName': regex },
+        { 'customerName.clientName': regex },
+        { 'customerName.customerEmail': regex },
+        { 'customerName.email': regex },
+        { 'customerName.customerPhone': regex },
+        { 'customerName.phone': regex },
+        { 'customerName.billingAddress': regex },
+        { 'customerName.address': regex },
+        { 'customer.Customer': regex },
+        { 'customer.customerName': regex },
+        { customer: regex },
+        { Customer: regex }
       ];
-      if (!isNaN(Number(search))) {
-        orConditions.push({ estimateNumber: Number(search) });
-      }
       if (query.$or) {
         query.$and = [{ $or: query.$or }, { $or: orConditions }];
         delete query.$or;

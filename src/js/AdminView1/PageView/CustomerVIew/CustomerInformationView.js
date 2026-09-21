@@ -479,40 +479,40 @@ function CustomerInformationView() {
 
   useEffect(() => {
     if (selectOptions === 'Year') {
-      const openingBalanceTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === '***Opening Balance***').reduce((sum, row) => sum + parseFloat(row.amount), 0) : 0
+      const openingBalanceTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === '***Opening Balance***').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setOpeningBalanceTotal(openingBalanceTotal1)
-      const InvoiceTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Invoice').reduce((sum, row) => sum + parseFloat(row.amount), 0) : 0
+      const InvoiceTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
-      const PaymentTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Payment').reduce((sum, row) => sum + parseFloat(row.payment), 0) : 0
+      const PaymentTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Payment' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
       setPaymentTotal(PaymentTotal1)
       const totalBalance1 = (openingBalanceTotal1 + InvoiceTotal1) - PaymentTotal1
       setTotalBalance(totalBalance1)
     } else if (selectOptions === 'All') {
       setOpeningBalanceTotal(0)
-      const InvoiceTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Invoice').reduce((sum, row) => sum + parseFloat(row.amount), 0) : 0
+      const InvoiceTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
-      const PaymentTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Payment').reduce((sum, row) => sum + parseFloat(row.payment), 0) : 0
+      const PaymentTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Payment' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
       setPaymentTotal(PaymentTotal1)
       const totalBalance1 = InvoiceTotal1 - PaymentTotal1 - parseFloat(credit2)
       setTotalBalance(totalBalance1)
     } else if (selectOptions === 'All Outstanding') {
       setOpeningBalanceTotal(0)
-      const InvoiceTotal1 = OutStandStatement.length > 0 ? OutStandStatement.filter((row) => row.type === 'Invoice').reduce((sum, row) => sum + parseFloat(row.amount), 0) : 0
-      const InvoiceTotal2 = OutStandStatement.length > 0 ? OutStandStatement.filter((row) => row.type === 'Invoice').reduce((sum, row) => sum + parseFloat(row.balance), 0) : 0
-      const InvoiceTotal3 = OutStandStatement.length > 0 ? OutStandStatement.filter((row) => row.type === 'Invoice').reduce((sum, row) => sum + parseFloat(row.paidAmount), 0) : 0
+      const InvoiceTotal1 = OutStandStatement.length > 0 ? OutStandStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
+      const InvoiceTotal2 = OutStandStatement.length > 0 ? OutStandStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.balance !== undefined ? row.balance : (row.amount - (row.payment || 0))), 0) : 0
+      const InvoiceTotal3 = OutStandStatement.length > 0 ? OutStandStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.paidAmount !== undefined ? row.paidAmount : (row.payment || 0)), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
       setPaymentTotal(InvoiceTotal3)
       setTotalBalance(InvoiceTotal2)
     } else if (selectOptions === 'Custom') {
       setOpeningBalanceTotal(0)
-      const InvoiceTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Invoice').reduce((sum, row) => sum + parseFloat(row.amount), 0) : 0
+      const InvoiceTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
-      const PaymentTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Payment').reduce((sum, row) => sum + parseFloat(row.payment), 0) : 0
+      const PaymentTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Payment' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
       setPaymentTotal(PaymentTotal1)
       const totalBalance1 = InvoiceTotal1 - PaymentTotal1
       setTotalBalance(totalBalance1)
     }
-  }, [selectOptions, newStatement, AllStatement, OutStandStatement, customStatement])
+  }, [selectOptions, newStatement, AllStatement, OutStandStatement, customStatement, credit2])
 
   {/** total year end */ }
 

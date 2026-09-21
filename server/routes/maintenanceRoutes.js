@@ -92,8 +92,11 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
       const regex = new RegExp(escapedSearch, 'i');
+      const numClean = search.trim().replace(/^[Ss][Ee][Rr][-_\s]*/, '');
+      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+
       const searchOr = [
-        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
+        ...(searchNum !== null ? [{ serviceNumber: searchNum }] : []),
         { serviceName: regex },
         { status: regex },
         { brand: regex },
@@ -102,8 +105,25 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
         { note: regex },
         { actionTaken: regex },
         { defectDescription: regex },
+        { customerName: regex },
+        { 'customerName.Customer': regex },
         { 'customerName.customerName': regex },
+        { 'customerName.customer': regex },
+        { 'customerName.name': regex },
+        { 'customerName.companyName': regex },
+        { 'customerName.company': regex },
+        { 'customerName.customerFullName': regex },
+        { 'customerName.clientName': regex },
         { 'customerName.customerPhone': regex },
+        { 'customerName.phone': regex },
+        { 'customerName.customerEmail': regex },
+        { 'customerName.email': regex },
+        { 'customerName.billingAddress': regex },
+        { 'customerName.address': regex },
+        { 'customer.Customer': regex },
+        { 'customer.customerName': regex },
+        { customer: regex },
+        { Customer: regex }
       ].filter(condition => condition !== null);
 
       query.$and = [{ $or: searchOr }];
@@ -195,8 +215,11 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
+      const numClean = search.trim().replace(/^[Ss][Ee][Rr][-_\s]*/, '');
+      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+
       const searchConditions = [
-        ...(!isNaN(Number(search)) ? [{ serviceNumber: Number(search) }] : []),
+        ...(searchNum !== null ? [{ serviceNumber: searchNum }] : []),
         { serviceName: regex },
         { technicianAssign: regex },
         { itemDescriptionInfo: regex },
@@ -210,10 +233,25 @@ Route.route("/maintenance-Information").get(async (req, res) => {
         { 'items.itemName': regex },
         { 'items.itemBrand': regex },
         { 'items.itemDescription': regex },
+        { customerName: regex },
+        { 'customerName.Customer': regex },
         { 'customerName.customerName': regex },
+        { 'customerName.customer': regex },
+        { 'customerName.name': regex },
+        { 'customerName.companyName': regex },
+        { 'customerName.company': regex },
+        { 'customerName.customerFullName': regex },
+        { 'customerName.clientName': regex },
         { 'customerName.customerEmail': regex },
+        { 'customerName.email': regex },
         { 'customerName.customerPhone': regex },
-        { 'customerName.billingAddress': regex }
+        { 'customerName.phone': regex },
+        { 'customerName.billingAddress': regex },
+        { 'customerName.address': regex },
+        { 'customer.Customer': regex },
+        { 'customer.customerName': regex },
+        { customer: regex },
+        { Customer: regex }
       ];
 
       if (query.$or) {
