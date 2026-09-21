@@ -155,8 +155,10 @@ function ReportsViewAdmin() {
     projects: [],
     pos: [],
     itemOut: [],
-    suppliers: []
+    suppliers: [],
+    customers: []
   });
+  const [loadingData, setLoadingData] = useState(true);
   const [stats, setStats] = useState({
     revenue: 0,
     expenses: 0,
@@ -317,41 +319,46 @@ function ReportsViewAdmin() {
     }
     const fetchAllData = async () => {
       try {
+        setLoadingData(true);
         const [
           resItems, resInvoices, resExpenses, resPayroll,
           resPayments, resItemPurchases, resMaintenance, resProjects,
-          resPos, resItemOut, resSuppliers
+          resPos, resItemOut, resSuppliers, resCustomers
         ] = await Promise.all([
-          axios.get(`${ENDPOINT_URL}/item`),
-          axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
-          axios.get(`${ENDPOINT_URL}/expense?summary=true`),
-          axios.get(`${ENDPOINT_URL}/payRoll`),
-          axios.get(`${ENDPOINT_URL}/payment`),
-          axios.get(`${ENDPOINT_URL}/itemPurchase?summary=true`),
-          axios.get(`${ENDPOINT_URL}/maintenance?summary=true`),
-          axios.get(`${ENDPOINT_URL}/projects`),
-          axios.get(`${ENDPOINT_URL}/pos?summary=true`),
-          axios.get(`${ENDPOINT_URL}/item-usage`),
-          axios.get(`${ENDPOINT_URL}/Supplier`)
+          cachedGet(`${ENDPOINT_URL}/item`),
+          cachedGet(`${ENDPOINT_URL}/invoice?summary=true`),
+          cachedGet(`${ENDPOINT_URL}/expense?summary=true`),
+          cachedGet(`${ENDPOINT_URL}/payRoll`),
+          cachedGet(`${ENDPOINT_URL}/payment`),
+          cachedGet(`${ENDPOINT_URL}/itemPurchase?summary=true`),
+          cachedGet(`${ENDPOINT_URL}/maintenance?summary=true`),
+          cachedGet(`${ENDPOINT_URL}/projects`),
+          cachedGet(`${ENDPOINT_URL}/pos?summary=true`),
+          cachedGet(`${ENDPOINT_URL}/item-usage`),
+          cachedGet(`${ENDPOINT_URL}/Supplier`),
+          cachedGet(`${ENDPOINT_URL}/customer`)
         ]);
 
         const fetchedData = {
-          items: resItems.data.data || [],
-          invoices: resInvoices.data.data || [],
-          expenses: resExpenses.data.data || [],
-          payroll: resPayroll.data.data || [],
-          payments: resPayments.data.data || [],
-          itemPurchases: resItemPurchases.data.data || [],
-          maintenance: resMaintenance.data.data || [],
-          projects: resProjects.data.data || [],
-          pos: resPos.data.data || [],
+          items: resItems.data?.data || [],
+          invoices: resInvoices.data?.data || [],
+          expenses: resExpenses.data?.data || [],
+          payroll: resPayroll.data?.data || [],
+          payments: resPayments.data?.data || [],
+          itemPurchases: resItemPurchases.data?.data || [],
+          maintenance: resMaintenance.data?.data || [],
+          projects: resProjects.data?.data || [],
+          pos: resPos.data?.data || [],
           itemOut: resItemOut.data?.data || [],
-          suppliers: resSuppliers.data?.data || []
+          suppliers: resSuppliers.data?.data || [],
+          customers: resCustomers.data?.data || []
         };
 
         setData(fetchedData);
       } catch (error) {
         console.error('Error fetching stats:', error);
+      } finally {
+        setLoadingData(false);
       }
     };
     fetchAllData();
@@ -562,66 +569,75 @@ function ReportsViewAdmin() {
                         <Divider sx={{ mb: 2 }} />
 
                         <Box sx={{ p: 1, backgroundColor: '#fff', minHeight: '550px' }} ref={componentRef}>
-                          {activeReport === 'revenue' && (
-                            <RevenueExpensesAll
-                              onMonth="All"
-                              onPayment={data.payments}
-                              onPayRoll={data.payroll}
-                              onItemPurChase={data.itemPurchases}
-                              onExpenses={data.expenses}
-                              allInvoices={data.invoices}
-                              posInvoice={data.pos}
-                              customers={data.customers}
-                            />
-                          )}
-                          {activeReport === 'item_report' && (
-                            <ItemReportInfo
-                              onMonth="Category"
-                              onItem={data.items}
-                            />
-                          )}
-                          {activeReport === 'maintenance' && (
-                            <MaintenanceReportInfo
-                              onMonth="All"
-                              onMaintenance={data.maintenance}
-                            />
-                          )}
-                          {activeReport === 'daily_exp' && (
-                            <DailyExpensesReportInfo
-                              onMonth="All"
-                              onExpenses={data.expenses}
-                            />
-                          )}
-                          {activeReport === 'ar_aging' && (
-                            <ARAgingReport onInvoice={data.invoices} onPayment={data.payments} />
-                          )}
-                          {activeReport === 'payroll' && (
-                            <PayRollReportInfo
-                              onMonth=""
-                              onPayRoll={data.payroll}
-                            />
-                          )}
-                          {activeReport === 'projects' && (
-                            <ProjectReportInfo
-                              onMonth="Revenue"
-                              onProjectName={data.projects}
-                              onPayment={data.payments}
-                            />
-                          )}
-                          {activeReport === 'stock_val' && (
-                            <InventoryValuationReport items={data.items} />
-                          )}
-                          {activeReport === 'sales_customer' && (
-                            <SalesByCustomerReport onInvoice={data.invoices} onPos={data.pos} onPayment={data.payments} />
-                          )}
-                          {activeReport === 'pos_analysis' && (
-                            <POSAnalyticsReport onPos={data.pos} />
-                          )}
-                          {activeReport === 'inventory_movement' && (
-                            <InventoryMovementReport onInventoryIn={data.itemPurchases} onInventoryOut={data.itemOut} />
-                          )}
-                          {activeReport === 'supplier_payables' && (
-                            <SupplierReportInfo onSuppliers={data.suppliers} onItemPurchase={data.itemPurchases} />
+                          {loadingData ? (
+                            <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '400px', gap: 2 }}>
+                              <CircularProgress size={48} sx={{ color: '#30368a' }} />
+                              <Typography variant="body2" color="textSecondary">Loading report data...</Typography>
+                            </Box>
+                          ) : (
+                            <>
+                              {activeReport === 'revenue' && (
+                                <RevenueExpensesAll
+                                  onMonth="All"
+                                  onPayment={data.payments}
+                                  onPayRoll={data.payroll}
+                                  onItemPurChase={data.itemPurchases}
+                                  onExpenses={data.expenses}
+                                  allInvoices={data.invoices}
+                                  posInvoice={data.pos}
+                                  customers={data.customers}
+                                />
+                              )}
+                              {activeReport === 'item_report' && (
+                                <ItemReportInfo
+                                  onMonth="Category"
+                                  onItem={data.items}
+                                />
+                              )}
+                              {activeReport === 'maintenance' && (
+                                <MaintenanceReportInfo
+                                  onMonth="All"
+                                  onMaintenance={data.maintenance}
+                                />
+                              )}
+                              {activeReport === 'daily_exp' && (
+                                <DailyExpensesReportInfo
+                                  onMonth="All"
+                                  onExpenses={data.expenses}
+                                />
+                              )}
+                              {activeReport === 'ar_aging' && (
+                                <ARAgingReport onInvoice={data.invoices} onPayment={data.payments} customers={data.customers} />
+                              )}
+                              {activeReport === 'payroll' && (
+                                <PayRollReportInfo
+                                  onMonth=""
+                                  onPayRoll={data.payroll}
+                                />
+                              )}
+                              {activeReport === 'projects' && (
+                                <ProjectReportInfo
+                                  onMonth="Revenue"
+                                  onProjectName={data.projects}
+                                  onPayment={data.payments}
+                                />
+                              )}
+                              {activeReport === 'stock_val' && (
+                                <InventoryValuationReport items={data.items} />
+                              )}
+                              {activeReport === 'sales_customer' && (
+                                <SalesByCustomerReport onInvoice={data.invoices} onPos={data.pos} onPayment={data.payments} customers={data.customers} />
+                              )}
+                              {activeReport === 'pos_analysis' && (
+                                <POSAnalyticsReport onPos={data.pos} />
+                              )}
+                              {activeReport === 'inventory_movement' && (
+                                <InventoryMovementReport onInventoryIn={data.itemPurchases} onInventoryOut={data.itemOut} />
+                              )}
+                              {activeReport === 'supplier_payables' && (
+                                <SupplierReportInfo onSuppliers={data.suppliers} onItemPurchase={data.itemPurchases} />
+                              )}
+                            </>
                           )}
                         </Box>
                       </CardContent>

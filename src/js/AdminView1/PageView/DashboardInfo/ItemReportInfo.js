@@ -16,6 +16,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, NavLink, Link } from 'react-router-dom'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
@@ -92,9 +93,9 @@ function ItemReportInfo({ onMonth, onItem }) {
   useEffect(() => {
     const fetchComment = async () => {
       try {
-        const resNotification = await axios.get(`${ENDPOINT_URL}/notification`);
-        const fetchData = resNotification.data?.data?.filter((item) => item.person.endsWith(' Created'));
-        setNotification(fetchData);
+        const resNotification = await cachedGet(`${ENDPOINT_URL}/notification`);
+        const fetchData = resNotification.data?.data?.filter((item) => item.person && item.person.endsWith(' Created'));
+        setNotification(fetchData || []);
       } catch (error) {
         console.error('Error fetching data:', error);
       }

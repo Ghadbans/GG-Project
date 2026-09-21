@@ -15,6 +15,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, NavLink, Link } from 'react-router-dom'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
@@ -122,7 +123,7 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
   useEffect(() => {
     const fetchRate = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/rate`);
+        const res = await cachedGet(`${ENDPOINT_URL}/rate`);
         if (Array.isArray(res?.data?.data) && res.data.data.length > 0) {
           setSystemRate(parseFloat(res.data?.data?.[0]?.rate || 1));
         }

@@ -33,29 +33,31 @@ const TTL = {
 const TTL_RULES = [
   // Static data — changes only when user manually updates
   { pattern: /\/item($|\?)/, ttl: TTL.STATIC },
-  { pattern: /\/itemCode/, ttl: TTL.STATIC },
-  { pattern: /\/customer($|\?)/, ttl: TTL.STATIC },
-  { pattern: /\/employee($|\?)/, ttl: TTL.STATIC },
-  { pattern: /\/rate($|\?)/, ttl: TTL.STATIC },
-  { pattern: /\/supplier/, ttl: TTL.STATIC },
-  { pattern: /\/grantAccess/, ttl: TTL.STATIC },
+  { pattern: /\/itemCode/i, ttl: TTL.STATIC },
+  { pattern: /\/customer($|\?)/i, ttl: TTL.STATIC },
+  { pattern: /\/employee($|\?)/i, ttl: TTL.STATIC },
+  { pattern: /\/rate($|\?)/i, ttl: TTL.STATIC },
+  { pattern: /\/supplier/i, ttl: TTL.STATIC },
+  { pattern: /\/grantAccess/i, ttl: TTL.STATIC },
 
   // Dynamic data — fetch fresh every 30 seconds
-  { pattern: /\/invoice($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/estimation($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/purchase($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/projects($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/maintenance($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/payment($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/pos($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/expense($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/payRoll($|\?)/, ttl: TTL.DYNAMIC },
-  { pattern: /\/itemPurchase($|\?)/, ttl: TTL.DYNAMIC },
+  { pattern: /\/invoice($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/estimation($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/purchase($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/projects($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/maintenance($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/payment($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/pos($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/expense($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/payRoll($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/itemPurchase($|\?)/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/item-usage/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/item-return/i, ttl: TTL.DYNAMIC },
+  { pattern: /\/notification/i, ttl: TTL.DYNAMIC },
 
   // Live data — always fetch fresh
-  { pattern: /\/notification/, ttl: TTL.NONE },
-  { pattern: /\/employeeattendance/, ttl: TTL.NONE },
-  { pattern: /\/comment/, ttl: TTL.NONE },
+  { pattern: /\/employeeattendance/i, ttl: TTL.NONE },
+  { pattern: /\/comment/i, ttl: TTL.NONE },
 ];
 
 /**

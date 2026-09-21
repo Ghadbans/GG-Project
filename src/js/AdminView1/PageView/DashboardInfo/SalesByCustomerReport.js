@@ -25,7 +25,56 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
+function getCustomerIdentity(record, customersList = []) {
+    if (!record) return { key: 'unknown', id: 'unknown', name: 'Unknown Customer' };
+
+    let raw = record.customerName || record.Customer || record.customer;
+    let id = null;
+    let name = null;
+
+    if (typeof raw === 'object' && raw !== null) {
+        id = raw._id || raw.id;
+        name = raw.Customer || raw.customerName || raw.companyName || raw.customerFullName || raw.name;
+    } else if (typeof raw === 'string') {
+        const trimmed = raw.trim();
+        if (/^[0-9a-fA-F]{24}$/.test(trimmed)) {
+            id = trimmed;
+        } else {
+            name = trimmed;
+        }
+    }
+
+    if (!id && record.customerId) {
+        id = record.customerId;
+    }
+
+    // Match against known customers list
+    if (customersList && customersList.length > 0) {
+        if (id) {
+            const found = customersList.find(c => String(c._id) === String(id));
+            if (found) {
+                name = found.Customer || found.customerName || name;
+            }
+        }
+        if (name && !id) {
+            const found = customersList.find(c => (c.Customer || c.customerName || '').trim().toLowerCase() === name.trim().toLowerCase());
+            if (found) {
+                id = found._id;
+                name = found.Customer || found.customerName || name;
+            }
+        }
+    }
+
+    // Unified key: if ID exists use ID, else normalize lower-case name
+    const normalizedKey = id ? String(id) : (name ? name.trim().toLowerCase() : 'unknown');
+    return {
+        key: normalizedKey,
+        id: id || normalizedKey,
+        name: name || 'Unknown Customer'
+    };
+}
+
+function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [dateRange, setDateRange] = useState('All');
     const [customStart, setCustomStart] = useState(dayjs().startOf('month').format('YYYY-MM-DD'));
@@ -42,54 +91,66 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
                 ...inv,
                 type: 'Invoice',
                 date: inv.invoiceDate,
-                amount: (inv.totalInvoice || 0),
-                paid: 0, // Do not add invoice's paid amount to avoid double counting with Payments
-                due: (inv.balanceDue || 0)
+                amount: Number(inv.totalInvoice || inv.total || 0),
+                paid: 0, // Invoices create receivable debits; payments credit them
+                due: Number(inv.balanceDue || 0)
             }))];
         }
 
         // 2. Process POS Sales (if customer is attached)
         if (onPos && Array.isArray(onPos)) {
             allTransactions = [...allTransactions, ...onPos
-                .filter(p => p.customerName && (p.customerName.customerName || typeof p.customerName === 'string')) // Only named customers
-                .map(pos => ({
-                    ...pos,
-                    type: 'POS',
-                    date: pos.invoiceDate || pos.paymentDate,
-                    amount: (pos.TotalAmountPaid || pos.totalInvoice || 0) / (pos.rate || 1),
-                    paid: (pos.TotalAmountPaid || pos.totalInvoice || 0) / (pos.rate || 1), // POS is fully paid
-                    due: 0
-                }))
+                .filter(p => p.customerName && (p.customerName.Customer || p.customerName.customerName || typeof p.customerName === 'string'))
+                .map(pos => {
+                    const posTotal = (pos.TotalAmountPaid || pos.totalInvoice || 0) / (pos.rate || 1);
+                    return {
+                        ...pos,
+                        type: 'POS',
+                        date: pos.invoiceDate || pos.paymentDate,
+                        amount: posTotal,
+                        paid: posTotal, // POS is fully paid tender
+                        due: 0
+                    };
+                })
             ];
         }
 
-        // 3. Process Payments
+        // 3. Process Payments (Cash, Bank Transfer, Credit-Account applied, Credit deposits)
         if (onPayment && Array.isArray(onPayment)) {
             allTransactions = [...allTransactions, ...onPayment
-                .filter(pay => pay.modes !== 'Credit-Account') // Prevent double counting credit usages
+                .filter(pay => pay.status !== 'Voided')
                 .map(pay => {
-                let pAmount = parseFloat(pay.amount || 0);
-                if (pay.modes === 'Credit') {
-                    pAmount = parseFloat(pay.PaymentReceivedUSD || 0) + (parseFloat(pay.PaymentReceivedFC || 0) / parseFloat(pay.rate || 1));
-                } else if (pAmount === 0 && (pay.amountFC || pay.PaymentReceivedFC)) {
-                    pAmount = parseFloat(pay.totalUSD || 0) || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || pay.PaymentReceivedFC || 0) / parseFloat(pay.rate || 1)));
-                }
-                
-                // Exclude Credit balance that hasn't been applied if we want true collections, 
-                // but since it's a customer statement, advanced payments SHOULD reduce their balance!
-                
-                if (pay.transactionType === 'Refund') {
-                    pAmount = -Math.abs(pAmount);
-                }
-                return {
-                    ...pay,
-                    type: 'Payment',
-                    date: pay.paymentDate,
-                    amount: 0,
-                    paid: pAmount,
-                    due: 0
-                }
-            })];
+                    let pAmount = parseFloat(pay.amount || 0);
+                    if (pay.modes === 'Credit') {
+                        const usdPart = parseFloat(pay.PaymentReceivedUSD || 0);
+                        const fcPart = parseFloat(pay.PaymentReceivedFC || 0) / parseFloat(pay.rate || 1);
+                        pAmount = (usdPart + fcPart) || parseFloat(pay.amount || 0);
+                    } else if (pAmount === 0 && (pay.amountFC || pay.PaymentReceivedFC)) {
+                        pAmount = parseFloat(pay.totalUSD || 0) || (parseFloat(pay.amount || 0) + (parseFloat(pay.amountFC || pay.PaymentReceivedFC || 0) / parseFloat(pay.rate || 1)));
+                    }
+
+                    if (pay.transactionType === 'Refund') {
+                        pAmount = -Math.abs(pAmount);
+                    }
+
+                    // For unapplied Credit deposits where remaining == amount, applied payment is 0
+                    // (the credit balance will be credited when applied via Credit-Account)
+                    let appliedAmount = pAmount;
+                    if (pay.modes === 'Credit') {
+                        const rem = parseFloat(pay.remaining || 0);
+                        appliedAmount = Math.max(0, pAmount - rem);
+                    }
+
+                    return {
+                        ...pay,
+                        type: 'Payment',
+                        date: pay.paymentDate,
+                        amount: 0,
+                        paid: appliedAmount,
+                        due: 0
+                    };
+                })
+            ];
         }
 
         let filteredTransactions = [...allTransactions];
@@ -118,22 +179,16 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
         // Aggregation
         const customerMap = {};
         filteredTransactions.forEach(item => {
-            let custId = item.customerName?._id || item.customerId; 
-            let custName = item.customerName?.customerName || item.customerName || 'Unknown Customer';
+            const custInfo = getCustomerIdentity(item, customers);
+            const id = custInfo.key;
 
-            // Fallback for missing ID but having name
-            if (!custId && typeof item.customerName === 'string') {
-                custId = item.customerName; 
-            }
-
-            if (!custId && item.type !== 'POS') return;
-
-            const id = custId || 'pos_unnamed';
+            if (id === 'unknown' && item.type !== 'POS') return;
 
             if (!customerMap[id]) {
                 customerMap[id] = {
-                    id: id,
-                    name: typeof custName === 'string' ? custName : 'Unknown Customer',
+                    id: custInfo.id,
+                    key: id,
+                    name: custInfo.name,
                     invoiceCount: 0,
                     totalSales: 0,
                     totalPaid: 0,
@@ -141,9 +196,6 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
                     transactions: []
                 };
             }
-
-            // Exclude voided payments from statement
-            if (item.type === 'Payment' && item.status === 'Voided') return;
 
             customerMap[id].transactions.push(item);
 
@@ -162,13 +214,15 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
 
         // Finalize balance calculation for each customer
         Object.values(customerMap).forEach(c => {
-            c.balance = c.totalSales - c.totalPaid;
+            const rawBalance = c.totalSales - c.totalPaid;
+            // Snap floating-point rounding dust (-0.01 to 0.01) to 0
+            c.balance = Math.abs(rawBalance) < 0.05 ? 0 : rawBalance;
         });
 
         return Object.values(customerMap).filter(c =>
             c.name.toLowerCase().includes(searchTerm.toLowerCase())
         ).sort((a, b) => b.totalSales - a.totalSales);
-    }, [onInvoice, onPos, onPayment, searchTerm, dateRange, customStart, customEnd]);
+    }, [onInvoice, onPos, onPayment, customers, searchTerm, dateRange, customStart, customEnd]);
 
     const totals = useMemo(() => {
         return processedData.reduce((acc, curr) => ({
@@ -429,6 +483,7 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
                                                 runningBalance += (item.amount || 0);
                                             }
                                             runningBalance -= (item.paid || 0);
+                                            const displayBalance = Math.abs(runningBalance) < 0.05 ? 0 : runningBalance;
 
                                             return (
                                                 <TableRow key={idx}>
@@ -445,14 +500,14 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment }) {
                                                         </span>
                                                     </TableCell>
                                                     <TableCell>
-                                                        {item.type === 'Invoice' ? `INV-${item.invoiceNumber}` :
-                                                            item.type === 'POS' ? `POS-${item.factureNumber}` :
-                                                                `PAY-${item.paymentNumber}`}
+                                                        {item.type === 'Invoice' ? `INV-${String(item.invoiceNumber || '').padStart(6, '0')}` :
+                                                            item.type === 'POS' ? `POS-${String(item.factureNumber || '').padStart(6, '0')}` :
+                                                                `PAY-${String(item.paymentNumber || '').padStart(6, '0')}`}
                                                     </TableCell>
-                                                    <TableCell align="right">${(item.amount || 0).toLocaleString()}</TableCell>
-                                                    <TableCell align="right">${(item.paid || 0).toLocaleString()}</TableCell>
+                                                    <TableCell align="right">${(item.amount || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
+                                                    <TableCell align="right">${(item.paid || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
                                                     <TableCell align="right" sx={{ fontWeight: 'bold' }}>
-                                                        ${runningBalance.toLocaleString()}
+                                                        ${displayBalance.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                                     </TableCell>
                                                 </TableRow>
                                             );

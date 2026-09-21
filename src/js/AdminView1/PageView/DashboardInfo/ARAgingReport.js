@@ -10,7 +10,55 @@ import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
 import { useReactToPrint } from 'react-to-print';
 
-function ARAgingReport({ onInvoice, onPayment }) {
+function getCustomerIdentity(record, customersList = []) {
+    if (!record) return { key: 'unknown', id: 'unknown', name: 'Unknown Customer' };
+
+    let raw = record.customerName || record.Customer || record.customer;
+    let id = null;
+    let name = null;
+
+    if (typeof raw === 'object' && raw !== null) {
+        id = raw._id || raw.id;
+        name = raw.Customer || raw.customerName || raw.companyName || raw.customerFullName || raw.name;
+    } else if (typeof raw === 'string') {
+        const trimmed = raw.trim();
+        if (/^[0-9a-fA-F]{24}$/.test(trimmed)) {
+            id = trimmed;
+        } else {
+            name = trimmed;
+        }
+    }
+
+    if (!id && record.customerId) {
+        id = record.customerId;
+    }
+
+    // Match against known customers list
+    if (customersList && customersList.length > 0) {
+        if (id) {
+            const found = customersList.find(c => String(c._id) === String(id));
+            if (found) {
+                name = found.Customer || found.customerName || name;
+            }
+        }
+        if (name && !id) {
+            const found = customersList.find(c => (c.Customer || c.customerName || '').trim().toLowerCase() === name.trim().toLowerCase());
+            if (found) {
+                id = found._id;
+                name = found.Customer || found.customerName || name;
+            }
+        }
+    }
+
+    const normalizedKey = id ? String(id) : (name ? name.trim().toLowerCase() : 'unknown');
+    return {
+        key: normalizedKey,
+        id: id || normalizedKey,
+        name: name || 'Unknown Customer'
+    };
+}
+
+function ARAgingReport({ onInvoice, onPayment, customers = [] }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCustomer, setSelectedCustomer] = useState(null);
     const componentRef = useRef();
@@ -26,10 +74,10 @@ function ARAgingReport({ onInvoice, onPayment }) {
             if (['Draft', 'Voided', 'Void', 'Decline'].includes(inv.status)) return false;
             const balance = Number(inv.balanceDue || 0);
             if (balance <= 0) return false;
-            const custId = inv.customerName?._id || inv.customerId || 'unknown';
-            return custId === selectedCustomer.id;
+            const custInfo = getCustomerIdentity(inv, customers);
+            return custInfo.key === selectedCustomer.key || custInfo.id === selectedCustomer.id;
         }).sort((a, b) => new Date(a.invoiceDate) - new Date(b.invoiceDate));
-    }, [selectedCustomer, onInvoice]);
+    }, [selectedCustomer, onInvoice, customers]);
 
     const agingData = useMemo(() => {
         if (!onInvoice || !Array.isArray(onInvoice)) return [];
@@ -43,12 +91,14 @@ function ARAgingReport({ onInvoice, onPayment }) {
             const balance = Number(inv.balanceDue || 0);
             if (balance <= 0) return;
 
-            const custId = inv.customerName?._id || inv.customerId || 'unknown';
-            const custName = inv.customerName?.customerName || 'Unknown Customer';
+            const custInfo = getCustomerIdentity(inv, customers);
+            const custId = custInfo.key;
+            const custName = custInfo.name;
 
             if (!customerMap[custId]) {
                 customerMap[custId] = {
-                    id: custId,
+                    id: custInfo.id,
+                    key: custId,
                     name: custName,
                     '0-30': 0,
                     '31-60': 0,
@@ -77,7 +127,7 @@ function ARAgingReport({ onInvoice, onPayment }) {
         return Object.values(customerMap)
             .filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()))
             .sort((a, b) => b.total - a.total);
-    }, [onInvoice, searchTerm]);
+    }, [onInvoice, customers, searchTerm]);
 
     const totals = useMemo(() => {
         return agingData.reduce((acc, curr) => ({

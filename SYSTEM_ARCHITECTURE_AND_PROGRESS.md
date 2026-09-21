@@ -49,8 +49,23 @@
     - In all admin listing views with single or bulk deletion (`MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `CustomerViewAdmin`, `EstimateViewAdmin`, `ItemViewAdmin`, `ProjectViewAdmin`, `SellShopInvoiceView`, `SupplierAdminView`, `TewmViewAdmin`, `DailyExpenses`, `UserAccount`, `RolePermission`, `EmployeePlaningView`), the delete reason/confirmation modal must NEVER be left open after submission.
     - Handlers (`handleDeleteMany`, `handleDelete`, `handleDeleteUpdate`) MUST explicitly close all associated modal states (`setOpenReasonDelete(false)`, `setOpenDeleteAll(false)`, `setOpenDeleteMultiple(false)` or `handleCloseReasonDelete()`), reset selection models (`setSelectedRows([])`), and clear reason text (`setReason('')`) before opening the deletion success dialog.
     - Confirm/Submit action buttons inside delete confirmation modals must ALWAYS render unconditionally (never guarded with `{info && <button...}`), and modal headers must immediately resolve item identifiers directly from the local client state with resilient fallback counts (`${selectedRows.length} selected record(s)`).
+25. **Professional Report Center Caching & Authoritative Customer Statement Reconciliation (Ver 3.5.23)**:
+    - **Smart TTL Caching for Report Dashboards:** `ReportsViewAdmin.js` and all sub-reports (`RevenueExpensesAll`, `ItemReportInfo`, `ARAgingReport`, `SalesByCustomerReport`) must NEVER issue un-cached, raw `axios.get` calls for massive database collections. Always route GET requests through `cachedGet` (`apiCache.js`) so that repeated navigation returns instantly in 0ms from memory.
+    - **Customer Identity Normalization Across Documents:** In MongoDB, customer references are stored heterogeneously as `{ _id, Customer }`, `{ _id, customerName }`, `{ _id, companyName }`, or strings. All report aggregation engines must use universal customer resolution (`getCustomerIdentity`) matching by `_id`, normalized `Customer` name, and the authoritative `customers` catalog to prevent fragmented records or "Unknown Customer" entries.
+    - **Credit-Account Payment Inclusion in Receivables:** When aggregating customer sales, collections, and statements, payments settled via customer credit (`modes === 'Credit-Account'`) represent authoritative settlements of invoice balances. They must NEVER be discarded or filtered out. The net invoice receivable balance must always calculate as `Total Invoiced - Total Applied Payments - Available Credit`, matching the Customer View Statement 100%.
 
 ## Current Progress Log
+- **Professional Report Center Performance & Customer Statement Discrepancy Fix (Ver 3.5.23)**:
+  - **Eliminated Report Center Loading Latency via Smart Memory Caching**:
+    - Replaced synchronous un-cached `axios.get` on 11 collections in `ReportsViewAdmin.js` with `cachedGet` from `apiCache.js`.
+    - Configured case-insensitive TTL rules for `/customer`, `/item`, `/invoice`, `/expense`, `/payRoll`, `/payment`, `/itemPurchase`, `/maintenance`, `/projects`, `/pos`, `/item-usage`, `/supplier`, `/rate`, and `/notification`.
+    - Added clean loading indicator and progressive render state during initial data hydration.
+  - **Resolved Customer Statement & Sales by Customer Discrepancy (e.g. PALM CENTER BLD $549.99 vs $-0.01)**:
+    - Fixed root cause where `SalesByCustomerReport.js` filtered out `pay.modes !== 'Credit-Account'`, ignoring $549.99 of credit settlements and artificially inflating the customer's balance.
+    - Implemented universal `getCustomerIdentity` across `SalesByCustomerReport.js` and `ARAgingReport.js` to correctly resolve `Customer` and `customerName` properties.
+    - Reconciled payment calculations with `CustomerInformationView.js`, ensuring Total Sales, Total Paid, and Balance Due match Customer View Statement 100% with floating-point rounding snap.
+  - **Release & Distribution**: Bumped version to `3.5.23`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.23.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Global Delete Confirmation Modal Lifecycle & State Teardown (Ver 3.5.22)**:
   - **Resolved Stuck Delete Confirmation Dialogs Across All Modules**:
     - Fixed critical bug where the "Why do you want to delete:" dialog stayed visibly stuck on screen after deleting records, requiring users to refresh the page.
