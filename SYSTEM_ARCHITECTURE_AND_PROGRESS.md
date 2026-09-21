@@ -69,7 +69,7 @@
     - Fixed issue where searching customer names (e.g. `ALI JAAFAR`) in the Invoice module returned zero rows due to MongoDB queries only checking `customerName.customerName` while documents store `Customer`, `customerName`, `companyName`, or strings.
     - Expanded `$or` search queries across `invoiceRoutes.js`, `estimationRoutes.js`, `maintenanceRoutes.js`, `purchaseRoutes.js`, and `projectRoutes.js` to match all customer object keys (`customerName.Customer`, `customerName.customerName`, `customerName.name`, `customerName.companyName`, direct `customerName`, `customer.Customer`, etc.).
     - Added prefix-cleaning logic (`INV-`, `EST-`, `SER-`, `PUR-`, `PRJ-`) so typing `INV-001167`, `INV-1167`, `001167`, or `1167` all accurately resolve and return matching records.
-    - Updated `InvoiceViewAdmin.js` column `valueGetter` to be null-safe and resolve customer names across all stored object and string formats.
+    - Updated client-side search filtering across `SalesByCustomerReport.js`, `ARAgingReport.js`, `SupplierReportInfo.js`, and `CustomerInformationView.js` with multi-token whitespace normalization (`searchTokens.every(token => normName.includes(token))`) to ensure searches like `ali ja` match records with irregular or double spaces (e.g. `Mr. ALI  JAAFAR`).
   - **Release & Distribution**: Bumped version to `3.5.24`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.24.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
 
 - **Professional Report Center Performance & Customer Statement Discrepancy Fix (Ver 3.5.23)**:
