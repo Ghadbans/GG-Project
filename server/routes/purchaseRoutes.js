@@ -438,7 +438,10 @@ Route.route("/purchase-Information").get(async (req, res) => {
       const skip = (Number(page) - 1) * Number(limit);
       const query = branchFilter(req);
       if (search) {
-        const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const tokens = search.trim().split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+        const regex = tokens.length > 1 
+          ? new RegExp(tokens.map(t => `(?=.*${t})`).join(''), 'i')
+          : new RegExp(tokens[0] || '', 'i');
         const numClean = search.trim().replace(/^[Pp][Uu][Rr][-_\s]*/, '');
         const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
 

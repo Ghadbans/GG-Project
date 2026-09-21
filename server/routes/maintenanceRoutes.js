@@ -90,8 +90,10 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
     }
     
     if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      const regex = new RegExp(escapedSearch, 'i');
+      const tokens = search.trim().split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const regex = tokens.length > 1 
+        ? new RegExp(tokens.map(t => `(?=.*${t})`).join(''), 'i')
+        : new RegExp(tokens[0] || '', 'i');
       const numClean = search.trim().replace(/^[Ss][Ee][Rr][-_\s]*/, '');
       const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
 
@@ -213,8 +215,10 @@ Route.route("/maintenance-Information").get(async (req, res) => {
     }
 
     if (search) {
-      const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      const regex = new RegExp(escapedSearch, 'i');
+      const tokens = search.trim().split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const regex = tokens.length > 1 
+        ? new RegExp(tokens.map(t => `(?=.*${t})`).join(''), 'i')
+        : new RegExp(tokens[0] || '', 'i');
       const numClean = search.trim().replace(/^[Ss][Ee][Rr][-_\s]*/, '');
       const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
 
