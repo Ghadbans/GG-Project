@@ -231,9 +231,12 @@ function SalesByCustomerReport({ onInvoice, onPos, onPayment, customers = [] }) 
             c.balance = Math.abs(rawBalance) < 0.05 ? 0 : rawBalance;
         });
 
-        return Object.values(customerMap).filter(c =>
-            c.name.toLowerCase().includes(searchTerm.toLowerCase())
-        ).sort((a, b) => b.totalSales - a.totalSales);
+        const searchTokens = searchTerm.trim().toLowerCase().split(/\s+/).filter(Boolean);
+        return Object.values(customerMap).filter(c => {
+            if (!searchTokens.length) return true;
+            const normName = (c.name || '').replace(/\s+/g, ' ').toLowerCase();
+            return searchTokens.every(token => normName.includes(token));
+        }).sort((a, b) => b.totalSales - a.totalSales);
     }, [onInvoice, onPos, onPayment, customers, searchTerm, dateRange, customStart, customEnd]);
 
     const totals = useMemo(() => {

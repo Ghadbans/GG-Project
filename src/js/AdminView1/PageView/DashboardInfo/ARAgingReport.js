@@ -124,8 +124,13 @@ function ARAgingReport({ onInvoice, onPayment, customers = [] }) {
             customerMap[custId].total += balance;
         });
 
+        const searchTokens = searchTerm.trim().toLowerCase().split(/\s+/).filter(Boolean);
         return Object.values(customerMap)
-            .filter(c => c.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            .filter(c => {
+                if (!searchTokens.length) return true;
+                const normName = (c.name || '').replace(/\s+/g, ' ').toLowerCase();
+                return searchTokens.every(token => normName.includes(token));
+            })
             .sort((a, b) => b.total - a.total);
     }, [onInvoice, customers, searchTerm]);
 

@@ -243,12 +243,16 @@ function CustomerInformationView() {
     const value = e.target.value
     setSearch(value)
   }
-  const newArray = search !== '' ? customer.filter((row) =>
-    (row.customerType ? row.customerType.toLowerCase().includes(search.toLowerCase()) : false) ||
-    (row.Customer && row.Customer.toLowerCase().includes(search.toLowerCase())) ||
-    (row.customerEmail && row.customerEmail.toLowerCase().includes(search.toLowerCase())) ||
-    (row.customerDescription && row.customerDescription.toLowerCase().includes(search.toLowerCase()))
-  ) : customer
+  const searchTokens = search.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const newArray = searchTokens.length > 0 ? customer.filter((row) => {
+    const custType = (row.customerType || '').replace(/\s+/g, ' ').toLowerCase();
+    const custName = (row.Customer || row.customerName || '').replace(/\s+/g, ' ').toLowerCase();
+    const custEmail = (row.customerEmail || '').toLowerCase();
+    const custDesc = (row.customerDescription || '').replace(/\s+/g, ' ').toLowerCase();
+    return searchTokens.every(token => 
+      custType.includes(token) || custName.includes(token) || custEmail.includes(token) || custDesc.includes(token)
+    );
+  }) : customer
   {/** search && Tab End */ }
   {/* Start Estimate Transaction Information */ }
   const [estimate, setEstimate] = useState([]);

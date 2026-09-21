@@ -102,9 +102,11 @@ function SupplierReportInfo({ onSuppliers, onItemPurchase }) {
             }
         });
 
+        const searchTokens = searchTerm.trim().toLowerCase().split(/\s+/).filter(Boolean);
         return Object.values(supplierMap).filter(s => {
-            const matchesSearch = s.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                                  s.storeName.toLowerCase().includes(searchTerm.toLowerCase());
+            const normName = (s.name || '').replace(/\s+/g, ' ').toLowerCase();
+            const normStore = (s.storeName || '').replace(/\s+/g, ' ').toLowerCase();
+            const matchesSearch = !searchTokens.length || searchTokens.every(token => normName.includes(token) || normStore.includes(token));
             
             const matchesStatus = filterPaid === 'All' || s.status === filterPaid;
 
