@@ -260,11 +260,14 @@ function UserAccount() {
     }
   }
   const handleDelete = async (e) => {
-    e.preventDefault()
+    if (e && e.preventDefault) e.preventDefault()
     try {
       const res = await axios.delete(`${ENDPOINT_URL}/delete-employeeuser/${DeleteId}`);
       if (res) {
-        handleCreateNotification()
+        handleCreateNotification();
+        setOpenReasonDelete(false);
+        setOpen(false);
+        setReason('');
         handleOpenModal();
       }
     } catch (error) {

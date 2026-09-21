@@ -356,16 +356,23 @@ function ItemViewAdmin() {
         console.log(error);
       }
     };
-    fetchFunction();
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction();
+    } else {
+      setItemDeleted([]);
+    }
   }, [selectedRows]);
 
-  const related = ItemDeleted.map(row => row);
-  const info = related.toString();
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = item.find(it => it._id === id || it.id === id);
+    return found?.itemName || '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (ItemDeleted.length > 0 ? ItemDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} item(s)` : ''));
 
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Item(s)'),
       reason,
       dateNotification: new Date()
     };
@@ -377,7 +384,7 @@ function ItemViewAdmin() {
   };
 
   const handleDeleteMany = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     const deletePromises = selectedRows.map(async (idToDelete) => {
       return axios.delete(`${ENDPOINT_URL}/delete-item/${idToDelete}`);
     });
@@ -385,10 +392,16 @@ function ItemViewAdmin() {
       const res = await Promise.all(deletePromises);
       if (res) {
         handleCreateNotification();
+        setOpenReasonDelete(false);
+        setOpenDeleteAll(false);
+        setOpenDeleteMultiple(false);
+        setSelectedRows([]);
+        setReason('');
         handleOpenModal();
       }
     } catch (error) {
       console.log(error);
+      alert("Error deleting items. Please try again.");
     }
   };
 
@@ -1097,7 +1110,7 @@ function ItemViewAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected items` : 'this item')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>

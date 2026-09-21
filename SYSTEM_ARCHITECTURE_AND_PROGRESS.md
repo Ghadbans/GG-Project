@@ -45,8 +45,21 @@
       1. In form/update tables: Only display `#`, `Item`, `Quantity`, and `Action`. Completely suppress `Stock-A`, `Rate`, `Discount`, `Amount`, `Labor Fees` financial charge/discount, and `Total Generale`.
       2. In detail/view pages: Render the dedicated 4-column "Items Used" table (`Parts/s Model`, `Description`, `Brand`, `Qty`) with no financial headers, labor totals, or grand totals.
       3. Technicians can still edit maintenance orders via Grant Access permissions (`Maintenance` / `Maintenance-Order` `editM`), but their edit view must strictly enforce the restricted columns.
+24. **Global Delete Confirmation Modal Lifecycle & State Teardown (Ver 3.5.22)**:
+    - In all admin listing views with single or bulk deletion (`MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `CustomerViewAdmin`, `EstimateViewAdmin`, `ItemViewAdmin`, `ProjectViewAdmin`, `SellShopInvoiceView`, `SupplierAdminView`, `TewmViewAdmin`, `DailyExpenses`, `UserAccount`, `RolePermission`, `EmployeePlaningView`), the delete reason/confirmation modal must NEVER be left open after submission.
+    - Handlers (`handleDeleteMany`, `handleDelete`, `handleDeleteUpdate`) MUST explicitly close all associated modal states (`setOpenReasonDelete(false)`, `setOpenDeleteAll(false)`, `setOpenDeleteMultiple(false)` or `handleCloseReasonDelete()`), reset selection models (`setSelectedRows([])`), and clear reason text (`setReason('')`) before opening the deletion success dialog.
+    - Confirm/Submit action buttons inside delete confirmation modals must ALWAYS render unconditionally (never guarded with `{info && <button...}`), and modal headers must immediately resolve item identifiers directly from the local client state with resilient fallback counts (`${selectedRows.length} selected record(s)`).
 
 ## Current Progress Log
+- **Global Delete Confirmation Modal Lifecycle & State Teardown (Ver 3.5.22)**:
+  - **Resolved Stuck Delete Confirmation Dialogs Across All Modules**:
+    - Fixed critical bug where the "Why do you want to delete:" dialog stayed visibly stuck on screen after deleting records, requiring users to refresh the page.
+    - Fixed root cause across `MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `CustomerViewAdmin`, `EstimateViewAdmin`, `ItemViewAdmin`, `ProjectViewAdmin`, `SellShopInvoiceView`, `SupplierAdminView`, `TewmViewAdmin`, `DailyExpenses`, `UserAccount`, `RolePermission`, and `EmployeePlaningView`.
+    - Removed `{info && <button...}` guards in maintenance views so that the "Confirm Bulk Delete" button is always visible, interactive, and validates `DELETE` confirmation text.
+    - Implemented immediate client-state item name/reference resolution with fallback to selected count so modal headers never render empty titles like `"Why do you want to delete: ?"`.
+    - Added comprehensive modal state teardown on delete submit: closes `openReasonDelete`, `openDeleteAll`, `openDeleteMultiple`, clears `selectedRows = []`, resets `reason = ''`, and transitions cleanly to the success confirmation dialog.
+  - **Release & Distribution**: Bumped version to `3.5.22`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.22.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Technician Cost/Rate/Stock Hiding & Maintenance View/Edit Access Enforced (Ver 3.5.21)**:
   - **Comprehensive Technician Financial Data Protection Across All Maintenance Views**:
     - Enforced strict privacy rules for all employees registered in the `TECHNICIAN` department or with `costVisibility === false`.

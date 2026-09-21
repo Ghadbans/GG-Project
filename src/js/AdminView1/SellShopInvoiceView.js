@@ -454,7 +454,11 @@ function SellShopInvoiceView() {
         console.log(error)
       }
     }
-    fetchFunction()
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction()
+    } else {
+      setInvoiceDeleted([])
+    }
   }, [selectedRows])
   const [openView, setOpenView] = useState(false);
   const [idView, setIdView] = useState(null);
@@ -484,12 +488,15 @@ function SellShopInvoiceView() {
     fetchData2()
   }, [idView])
 
-  const related = InvoiceDeleted.map(row => row)
-  const info = related.toString()
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = (invoice || []).find(inv => inv._id === id || inv.id === id);
+    return found?.factureNumber ? `S-00${found.factureNumber}` : '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (InvoiceDeleted.length > 0 ? InvoiceDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} invoice(s)` : ''));
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Invoice(s)'),
       reason,
       dateNotification: new Date()
     }
@@ -500,18 +507,24 @@ function SellShopInvoiceView() {
     }
   }
   const handleDeleteMany = async (e) => {
-    e.preventDefault()
+    if (e && e.preventDefault) e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
       return axios.delete(`${ENDPOINT_URL}/delete-pos/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
       if (res) {
-        handleCreateNotification()
+        handleCreateNotification();
+        setOpenReasonDelete(false);
+        setOpenDeleteAll(false);
+        setOpenDeleteMultiple(false);
+        setSelectedRows([]);
+        setReason('');
         handleDeleteOpenLoading();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert("Error deleting POS invoices. Please try again.");
     }
   }
   {/** End Delete Function */ }
@@ -1354,7 +1367,7 @@ function SellShopInvoiceView() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected invoices` : 'this invoice')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>

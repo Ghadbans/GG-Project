@@ -410,14 +410,21 @@ function EstimateViewAdmin() {
         console.log(error)
       }
     }
-    fetchFunction()
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction()
+    } else {
+      setEstimateDeleted([])
+    }
   }, [selectedRows])
-  const related = EstimateDeleted.map(row => row)
-  const info = related.toString()
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = estimate.find(e => e._id === id || e.id === id);
+    return found?.estimateNumber ? `Q-${found.estimateNumber}` : '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (EstimateDeleted.length > 0 ? EstimateDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} quotation(s)` : ''));
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Quotation(s)'),
       reason,
       dateNotification: new Date()
     }
@@ -428,7 +435,7 @@ function EstimateViewAdmin() {
     }
   }
     const handleDeleteMany = async (e) => {
-      e.preventDefault()
+      if (e && e.preventDefault) e.preventDefault()
       const deletePromises = selectedRows.map(async (idToDelete) => {
         return axios.delete(`${ENDPOINT_URL}/delete-estimation/${idToDelete}`)
       })
@@ -436,12 +443,17 @@ function EstimateViewAdmin() {
         const res = await Promise.all(deletePromises);
         if (res) {
           setEstimate(prevEstimate => prevEstimate.filter(item => !selectedRows.includes(item._id)));
-          handleCreateNotification()
-          setSelectedRows([])
-          handleDeleteOpenLoading()
+          handleCreateNotification();
+          setOpenReasonDelete(false);
+          setOpenDeleteAll(false);
+          setOpenDeleteMultiple(false);
+          setSelectedRows([]);
+          setReason('');
+          handleDeleteOpenLoading();
         }
       } catch (error) {
         console.error('Error deleting items:', error);
+        alert("Error deleting quotations. Please try again.");
       }
     }
   {/** DElete End */ }
@@ -1155,7 +1167,7 @@ function EstimateViewAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected quotations` : 'this quotation')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>

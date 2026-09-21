@@ -325,14 +325,21 @@ function CustomerViewAdmin() {
         console.log(error)
       }
     }
-    fetchFunction()
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction()
+    } else {
+      setCustomerDeleted([])
+    }
   }, [selectedRows])
-  const related = CustomerDeleted.map(row => row)
-  const info = related.toString()
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = customer.find(c => c._id === id || c.id === id);
+    return found?.Customer || found?.customerName || '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (CustomerDeleted.length > 0 ? CustomerDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} record(s)` : ''));
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Customer record(s)'),
       reason,
       dateNotification: new Date()
     }
@@ -343,18 +350,24 @@ function CustomerViewAdmin() {
     }
   }
   const handleDeleteMany = async (e) => {
-    e.preventDefault()
+    if (e && e.preventDefault) e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
       return axios.delete(`${ENDPOINT_URL}/remove-customer/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
       if (res) {
-        handleCreateNotification()
+        handleCreateNotification();
+        setOpenReasonDelete(false);
+        setOpenDeleteAll(false);
+        setOpenDeleteMultiple(false);
+        setSelectedRows([]);
+        setReason('');
         handleOpenModal();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert("Error deleting customers. Please try again.");
     }
   }
   const handleLogout = () => {
@@ -756,7 +769,7 @@ function CustomerViewAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected customers` : 'this customer')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>

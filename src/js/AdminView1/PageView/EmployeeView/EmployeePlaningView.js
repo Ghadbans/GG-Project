@@ -206,6 +206,7 @@ function EmployeePlaningView({ user }) {
     setModalDeleteOpenLoading(true);
     setLoading(true);
     handleClose();
+    handleCloseReasonDelete();
 
     setTimeout(() => {
       setLoading(false);

@@ -423,14 +423,21 @@ function MaintenanceViewAdmin() {
         console.log(error)
       }
     }
-    fetchFunction()
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction()
+    } else {
+      setMaintenanceDeleted([])
+    }
   }, [selectedRows])
-  const related = MaintenanceDeleted.map(row => row)
-  const info = related.toString()
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = maintenance.find(m => m._id === id || m.id === id);
+    return found?.serviceNumber || '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (MaintenanceDeleted.length > 0 ? MaintenanceDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} record(s)` : ''));
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Maintenance record(s)'),
       reason,
       dateNotification: new Date()
     }
@@ -441,18 +448,29 @@ function MaintenanceViewAdmin() {
     }
   }
   const handleDeleteMany = async (e) => {
-    e.preventDefault()
+    if (e && e.preventDefault) e.preventDefault()
+    const input = document.getElementById("confirmDeleteBulk");
+    if (input && input.value !== "DELETE") {
+      alert("Please type DELETE to confirm");
+      return;
+    }
     const deletePromises = selectedRows.map(async (idToDelete) => {
       return axios.delete(`${ENDPOINT_URL}/delete-maintenance/${idToDelete}`)
     })
     try {
       const res = await Promise.all(deletePromises);
       if (res) {
-        handleCreateNotification()
+        handleCreateNotification();
+        setOpenReasonDelete(false);
+        setOpenDeleteAll(false);
+        setOpenDeleteMultiple(false);
+        setSelectedRows([]);
+        setReason('');
         handleDeleteOpenLoading();
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert("Error deleting records. Please try again.");
     }
   }
   {/** search start */ }
@@ -1030,7 +1048,7 @@ function MaintenanceViewAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected orders` : 'this maintenance order')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: "center", padding: "15px" }} spacing={2}>
@@ -1055,22 +1073,20 @@ function MaintenanceViewAdmin() {
                 <TextField fullWidth size="small" placeholder="Type DELETE here" id="confirmDeleteBulk" autoFocus />
               </Grid>
               <Grid item xs={12}>
-                {info && (
-                  <button
-                    type="submit"
-                    className="btnCustomer"
-                    style={{ width: "100%" }}
-                    onClick={(e) => {
-                      const input = document.getElementById("confirmDeleteBulk");
-                      if (input && input.value !== "DELETE") {
-                        e.preventDefault();
-                        alert("Please type DELETE to confirm");
-                      }
-                    }}
-                  >
-                    Confirm Bulk Delete
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  className="btnCustomer"
+                  style={{ width: "100%" }}
+                  onClick={(e) => {
+                    const input = document.getElementById("confirmDeleteBulk");
+                    if (input && input.value !== "DELETE") {
+                      e.preventDefault();
+                      alert("Please type DELETE to confirm");
+                    }
+                  }}
+                >
+                  Confirm Bulk Delete
+                </button>
               </Grid>
             </Grid>
           </form>

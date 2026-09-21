@@ -488,14 +488,21 @@ function DailyExpenses() {
         console.error('Fetch error:', error);
       }
     }
-    fetchFunction()
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction()
+    } else {
+      setPurchaseDeleted([])
+    }
   }, [selectedRows])
-  const related = PurchaseDeleted.map(row => row)
-  const info = related.toString()
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = (expenses || []).find(e => e._id === id || e.id === id);
+    return found?.expenseNumber ? `D-${found.expenseNumber}` : '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (PurchaseDeleted.length > 0 ? PurchaseDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} expense(s)` : ''));
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Expense(s)'),
       reason,
       dateNotification: new Date()
     }
@@ -512,15 +519,15 @@ function DailyExpenses() {
         // Optimistic UI: Remove from local state immediately
         setExpenses(prev => prev.filter(item => item._id !== DeleteId));
         setOpen(false);
+        handleCloseReasonDelete();
         handleOpenModal();
-        window.location.reload(); // Removed to support instant responsiveness
       }
     } catch (error) {
       toast.error('Delete failed. Please try again.');
     }
   };
    const handleDeleteMany = async (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
     const deletePromises = selectedRows.map(async (idToDelete) => {
       return axios.delete(`${ENDPOINT_URL}/delete-expense/${idToDelete}`);
     });
@@ -530,10 +537,12 @@ function DailyExpenses() {
         // Optimistic UI: Remove all selected rows from state
         setExpenses(prev => prev.filter(item => !selectedRows.includes(item._id)));
         handleCreateNotification();
+        handleCloseReasonDelete();
         handleCloseAll();
         handleCloseMultiple();
+        setSelectedRows([]);
+        setReason('');
         handleOpenModal();
-        // setSelectedRows([]); // Important to clear selection after bulk action
       }
     } catch (error) {
       console.error('Delete Many error:', error);
@@ -1349,7 +1358,7 @@ function DailyExpenses() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected expenses` : 'this expense')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>

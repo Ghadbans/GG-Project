@@ -435,14 +435,21 @@ function ProjectViewAdmin() {
         console.log(error)
       }
     }
-    fetchFunction()
+    if (selectedRows && selectedRows.length > 0) {
+      fetchFunction()
+    } else {
+      setProjectDeleted([])
+    }
   }, [selectedRows])
-  const related = ProjectDeleted.map(row => row)
-  const info = related.toString()
+  const infoFromState = (selectedRows || []).map(id => {
+    const found = projects.find(p => p._id === id || p.id === id);
+    return found?.projectNumber ? `P-${found.projectNumber}` : '';
+  }).filter(Boolean);
+  const info = infoFromState.length > 0 ? infoFromState.join(', ') : (ProjectDeleted.length > 0 ? ProjectDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} project(s)` : ''));
   const handleCreateNotification = async () => {
     const data = {
       idInfo: '',
-      person: user.data.userName + ' Deleted ' + info,
+      person: user.data.userName + ' Deleted ' + (info || 'Project(s)'),
       reason,
       dateNotification: new Date()
     }
@@ -453,18 +460,24 @@ function ProjectViewAdmin() {
     }
   }
   const handleDeleteMany = async (e) => {
-    e.preventDefault()
+    if (e && e.preventDefault) e.preventDefault()
     const deletePromises = selectedRows.map(async (idToDelete) => {
       return axios.delete(`${ENDPOINT_URL}/delete-projects/${idToDelete}`);
     })
     try {
       const res = await Promise.all(deletePromises);
       if (res) {
-        handleCreateNotification()
+        handleCreateNotification();
+        setOpenReasonDelete(false);
+        setOpenDeleteAll(false);
+        setOpenDeleteMultiple(false);
+        setSelectedRows([]);
+        setReason('');
         handleOpenModal();
       }
     } catch (error) {
       console.log('an error as occur ', error);
+      alert("Error deleting projects. Please try again.");
     }
   };
   const handleDelete = async () => {
@@ -1016,7 +1029,7 @@ function ProjectViewAdmin() {
             </IconButton>
           </ViewTooltip>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Why do you want to delete: {info}?
+            Why do you want to delete: {info || (selectedRows.length > 1 ? `${selectedRows.length} selected projects` : 'this project')}?
           </Typography>
           <form onSubmit={handleDeleteMany}>
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
