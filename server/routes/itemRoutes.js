@@ -825,38 +825,21 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
         if (req.query.supplierId) {
           let objectId = null;
           try { objectId = new mongoose.Types.ObjectId(req.query.supplierId); } catch (e) {}
-          let conditions = [{ manufacturerID: req.query.supplierId }];
+          let conditions = [{ manufacturerID: req.query.supplierId }, { manufacturerID: String(req.query.supplierId) }];
           if (objectId) conditions.push({ manufacturerID: objectId });
           if (req.query.supplierName && req.query.supplierName !== 'undefined' && req.query.supplierName.trim()) {
             const rawName = req.query.supplierName.trim();
             const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             conditions.push({ manufacturer: rawName });
             conditions.push({ manufacturer: new RegExp('^' + escapedName + '$', 'i') });
-            conditions.push({ manufacturer: new RegExp(escapedName, 'i') });
           }
-          if (req.query.shortName && req.query.shortName !== 'undefined' && req.query.shortName.trim()) {
+          if (req.query.shortName && req.query.shortName !== 'undefined' && req.query.shortName.trim() && req.query.shortName.trim() !== '.') {
             const rawShort = req.query.shortName.trim();
             const escapedShort = rawShort.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             conditions.push({ manufacturer: rawShort });
             conditions.push({ manufacturer: new RegExp('^' + escapedShort + '$', 'i') });
-            conditions.push({ manufacturer: new RegExp('^' + escapedShort + '(\\b|[\\s\\.\\,\\-\\_\\/])', 'i') });
-            conditions.push({ manufacturer: new RegExp(escapedShort, 'i') });
           }
           filter['$or'] = conditions;
-
-          // Lazy reconciliation: if a valid supplierName is passed, ensure matching itemPurchase records carry the latest storeName and ID
-          if (req.query.supplierName && req.query.supplierName !== 'undefined' && req.query.supplierName.trim()) {
-            const targetStoreName = req.query.supplierName.trim();
-            itemPurchaseSchema.updateMany(
-              {
-                $and: [
-                  { $or: conditions },
-                  { $or: [{ manufacturer: { $ne: targetStoreName } }, { manufacturerID: { $ne: String(req.query.supplierId) } }] }
-                ]
-              },
-              { $set: { manufacturer: targetStoreName, manufacturerID: String(req.query.supplierId) } }
-            ).catch(err => console.error("Auto sync supplier purchase error:", err));
-          }
         }
 
 

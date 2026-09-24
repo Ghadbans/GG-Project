@@ -147,19 +147,14 @@ async function cascadeSupplierUpdate(supplierId, oldSupplier, newSupplierData) {
     } catch (e) {}
 
     const addNameConditions = (name) => {
-      if (!name || !name.trim()) return;
+      if (!name || !name.trim() || name.trim() === '.' || name.trim().length < 3) return;
       const raw = name.trim();
       const escaped = raw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       orConditions.push({ manufacturer: raw });
       orConditions.push({ manufacturer: new RegExp('^' + escaped + '$', 'i') });
-      orConditions.push({ manufacturer: new RegExp('^' + escaped + '(\\b|[\\s\\.\\,\\-\\_\\/])', 'i') });
-      orConditions.push({ manufacturer: new RegExp(escaped, 'i') });
     };
 
-    addNameConditions(oldStoreName);
-    addNameConditions(oldSupplierName);
-    addNameConditions(newStoreName);
-    addNameConditions(newSupplierName);
+    if (oldStoreName) addNameConditions(oldStoreName);
 
     // Update itemPurchase documents
     const updateItemPurchase = {

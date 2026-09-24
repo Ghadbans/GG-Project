@@ -231,32 +231,21 @@ function SupplierViewInformation() {
   const isMatchingSupplier = (ip) => {
     if (!ip) return false;
     const currentSupplier = item && item.length > 0 ? item[0] : null;
-    if (!currentSupplier) {
-      if (ip.manufacturerID && String(ip.manufacturerID) === String(id)) return true;
-      return false;
-    }
-    // 1. Direct ID match
-    if (ip.manufacturerID && (String(ip.manufacturerID) === String(id) || String(ip.manufacturerID) === String(currentSupplier._id))) {
+    
+    // 1. Direct ID match (authoritative)
+    if (ip.manufacturerID && (String(ip.manufacturerID) === String(id) || (currentSupplier && String(ip.manufacturerID) === String(currentSupplier._id)))) {
       return true;
     }
 
-    const mName = (ip.manufacturer || '').trim().toLowerCase();
-    if (!mName) return false;
+    if (!currentSupplier) return false;
 
+    // 2. Strict exact match on storeName or supplierName
+    const mName = (ip.manufacturer || '').trim().toLowerCase();
     const sStore = (currentSupplier.storeName || '').trim().toLowerCase();
     const sName = (currentSupplier.supplierName || '').trim().toLowerCase();
 
-    // 2. Direct string equality or inclusions
-    if (sStore && (mName === sStore || mName.includes(sStore) || sStore.includes(mName))) return true;
-    if (sName && (mName === sName || mName.startsWith(sName) || mName.includes(sName))) return true;
-
-    // 3. Cleaned alphanumeric match (removes punctuation, dots, dashes, spaces)
-    const cleanM = mName.replace(/[^a-z0-9]/g, '');
-    const cleanStore = sStore.replace(/[^a-z0-9]/g, '');
-    const cleanName = sName.replace(/[^a-z0-9]/g, '');
-
-    if (cleanStore && (cleanM === cleanStore || cleanM.includes(cleanStore) || cleanStore.includes(cleanM))) return true;
-    if (cleanName && (cleanM === cleanName || cleanM.startsWith(cleanName) || cleanM.includes(cleanName))) return true;
+    if (sStore && mName === sStore) return true;
+    if (sName && sName !== '.' && mName === sName) return true;
 
     return false;
   };
@@ -313,14 +302,14 @@ function SupplierViewInformation() {
   };
 
   useEffect(() => {
+    setItemPurchase([]);
     const handleFetch = async () => {
       if (!item || item.length === 0) return;
       const currentSupplier = item[0];
       const supplierStore = currentSupplier?.storeName || StoreName || '';
-      const supplierShort = currentSupplier?.supplierName || '';
       try {
         const resItemPurchase = await axios.get(
-          `${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${encodeURIComponent(supplierStore)}&shortName=${encodeURIComponent(supplierShort)}`
+          `${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${encodeURIComponent(supplierStore)}`
         );
         const formatDate = Array.isArray(resItemPurchase.data?.data) ? resItemPurchase.data.data : [];
         const filteredData = formatDate.filter(data => isMatchingSupplier(data));
