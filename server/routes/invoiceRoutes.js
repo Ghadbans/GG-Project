@@ -159,70 +159,132 @@ Route.route("/invoice-Information").get(async (req, res) => {
       }
     }
 
-    if (search) {
-      const tokens = search.trim().split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-      const regex = tokens.length > 1 
-        ? new RegExp(tokens.map(t => `(?=.*${t})`).join(''), 'i')
-        : new RegExp(tokens[0] || '', 'i');
+    if (search && search.trim()) {
+      const trimmedSearch = search.trim();
+      const escapedSearch = trimmedSearch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const tokens = trimmedSearch.split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
       
-      const numClean = search.trim().replace(/^[Ii][Nn][Vv][-_\s]*/, '');
-      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+      const fullRegex = new RegExp(escapedSearch, 'i');
+      const combinedRegex = tokens.length > 1 ? new RegExp(tokens.join('.*'), 'i') : fullRegex;
+      const reverseCombinedRegex = tokens.length > 1 ? new RegExp(tokens.slice().reverse().join('.*'), 'i') : fullRegex;
 
-      const searchOr = [
+      const numClean = trimmedSearch.replace(/^[Ii][Nn][Vv][-_\s]*/, '');
+      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(trimmedSearch)) ? Number(trimmedSearch) : null);
+
+      // Search matching customers from customerSchema
+      let matchingCustomerIds = [];
+      try {
+        const matchingCustomers = await customerSchema.find({
+          $or: [
+            { Customer: fullRegex },
+            { customerName: fullRegex },
+            { customerFullName: fullRegex },
+            { customerFirstName: fullRegex },
+            { customerLastName: fullRegex },
+            { companyName: fullRegex },
+            ...(tokens.length > 1 ? [
+              { Customer: combinedRegex },
+              { customerFullName: combinedRegex },
+              { companyName: combinedRegex }
+            ] : [])
+          ]
+        }, '_id').lean();
+        matchingCustomerIds = matchingCustomers.map(c => c._id);
+      } catch (err) {
+        console.error("Error matching customers:", err);
+      }
+
+      const regexList = [fullRegex];
+      if (tokens.length > 1) {
+        regexList.push(combinedRegex);
+        regexList.push(reverseCombinedRegex);
+      }
+
+      let searchOr = [
         ...(searchNum !== null ? [{ invoiceNumber: searchNum }] : []),
-        { invoiceName: regex },
-        { ReferenceName2: regex },
-        { ReferenceName: regex },
-        { invoiceSubject: regex },
-        { subject: regex },
-        { invoiceDefect: regex },
-        { defect: regex },
-        { defectDescription: regex },
-        { actionTaken: regex },
-        { actionTaking: regex },
-        { action: regex },
-        { note: regex },
-        { noteInfo: regex },
-        { invoiceNote: regex },
-        { terms: regex },
-        { status: regex },
-        { invoiceStatus: regex },
-        { 'items.itemDescription': regex },
-        { 'items.itemName': regex },
-        { 'items.itemName.itemName': regex },
-        { 'items.itemBrand': regex },
-        { 'items.itemCode': regex },
-        { 'items.partNumber': regex },
-        { 'items.model': regex },
-        { customerName: regex },
-        { 'customerName.Customer': regex },
-        { 'customerName.customerName': regex },
-        { 'customerName.customer': regex },
-        { 'customerName.name': regex },
-        { 'customerName.companyName': regex },
-        { 'customerName.company': regex },
-        { 'customerName.customerFullName': regex },
-        { 'customerName.clientName': regex },
-        { 'customerName.contactName': regex },
-        { 'customerName.customerEmail': regex },
-        { 'customerName.email': regex },
-        { 'customerName.customerPhone': regex },
-        { 'customerName.phone': regex },
-        { 'customerName.billingAddress': regex },
-        { 'customerName.address': regex },
-        { 'customerName.billingCity': regex },
-        { 'customerName.city': regex },
-        { 'customer.Customer': regex },
-        { 'customer.customerName': regex },
-        { 'customer.name': regex },
-        { customer: regex },
-        { Customer: regex },
-        { Client: regex },
-        { client: regex },
-        { 'Ref.projectName': regex },
-        { 'Ref.reference': regex },
-        { Position: regex }
+        ...(matchingCustomerIds.length > 0 ? [
+          { 'customerName._id': { $in: matchingCustomerIds } },
+          { customerId: { $in: matchingCustomerIds } },
+          { 'customerName.id': { $in: matchingCustomerIds } }
+        ] : [])
       ];
+
+      for (const rgx of regexList) {
+        searchOr.push(
+          { invoiceName: rgx },
+          { ReferenceName2: rgx },
+          { ReferenceName: rgx },
+          { invoiceSubject: rgx },
+          { subject: rgx },
+          { invoiceDefect: rgx },
+          { defect: rgx },
+          { defectDescription: rgx },
+          { actionTaken: rgx },
+          { actionTaking: rgx },
+          { action: rgx },
+          { note: rgx },
+          { noteInfo: rgx },
+          { invoiceNote: rgx },
+          { terms: rgx },
+          { status: rgx },
+          { invoiceStatus: rgx },
+          { 'items.itemDescription': rgx },
+          { 'items.itemName': rgx },
+          { 'items.itemName.itemName': rgx },
+          { 'items.itemBrand': rgx },
+          { 'items.itemCode': rgx },
+          { 'items.partNumber': rgx },
+          { 'items.model': rgx },
+          { customerName: rgx },
+          { 'customerName.Customer': rgx },
+          { 'customerName.customerName': rgx },
+          { 'customerName.customer': rgx },
+          { 'customerName.name': rgx },
+          { 'customerName.companyName': rgx },
+          { 'customerName.company': rgx },
+          { 'customerName.customerFullName': rgx },
+          { 'customerName.customerFirstName': rgx },
+          { 'customerName.customerLastName': rgx },
+          { 'customerName.clientName': rgx },
+          { 'customerName.contactName': rgx },
+          { 'customerName.customerEmail': rgx },
+          { 'customerName.email': rgx },
+          { 'customerName.customerPhone': rgx },
+          { 'customerName.phone': rgx },
+          { 'customerName.billingAddress': rgx },
+          { 'customerName.address': rgx },
+          { 'customerName.billingCity': rgx },
+          { 'customerName.city': rgx },
+          { 'customer.Customer': rgx },
+          { 'customer.customerName': rgx },
+          { 'customer.name': rgx },
+          { 'customer.companyName': rgx },
+          { 'customer.customerFirstName': rgx },
+          { 'customer.customerLastName': rgx },
+          { 'customer.customerFullName': rgx },
+          { customer: rgx },
+          { Customer: rgx },
+          { Client: rgx },
+          { client: rgx },
+          { 'Ref.projectName': rgx },
+          { 'Ref.reference': rgx },
+          { Position: rgx }
+        );
+      }
+
+      if (tokens.length > 1) {
+        tokens.forEach(tok => {
+          const tokRegex = new RegExp(tok, 'i');
+          searchOr.push(
+            { 'customerName.Customer': tokRegex },
+            { 'customerName.customerName': tokRegex },
+            { 'customerName.companyName': tokRegex },
+            { 'customerName.customerFullName': tokRegex },
+            { 'customerName.customerFirstName': tokRegex },
+            { 'customerName.customerLastName': tokRegex }
+          );
+        });
+      }
 
       if (branchCondition) {
         query.$and = [branchCondition, { $or: searchOr }];

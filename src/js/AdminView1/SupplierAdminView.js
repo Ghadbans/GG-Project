@@ -339,7 +339,7 @@ function SupplierAdminView() {
     }
   }, [selectedRows])
   const infoFromState = (selectedRows || []).map(id => {
-    const found = (supplier || []).find(s => s._id === id || s.id === id);
+    const found = (customer || []).find(s => s._id === id || s.id === id);
     return found?.storeName || '';
   }).filter(Boolean);
   const info = infoFromState.length > 0 ? infoFromState.join(', ') : (CustomerDeleted.length > 0 ? CustomerDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} supplier(s)` : ''));

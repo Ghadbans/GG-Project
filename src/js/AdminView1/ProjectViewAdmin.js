@@ -442,7 +442,7 @@ function ProjectViewAdmin() {
     }
   }, [selectedRows])
   const infoFromState = (selectedRows || []).map(id => {
-    const found = projects.find(p => p._id === id || p.id === id);
+    const found = (project || []).find(p => p._id === id || p.id === id);
     return found?.projectNumber ? `P-${found.projectNumber}` : '';
   }).filter(Boolean);
   const info = infoFromState.length > 0 ? infoFromState.join(', ') : (ProjectDeleted.length > 0 ? ProjectDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} project(s)` : ''));

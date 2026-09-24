@@ -364,7 +364,7 @@ function ItemViewAdmin() {
   }, [selectedRows]);
 
   const infoFromState = (selectedRows || []).map(id => {
-    const found = item.find(it => it._id === id || it.id === id);
+    const found = (item || []).find(it => it._id === id || it.id === id);
     return found?.itemName || '';
   }).filter(Boolean);
   const info = infoFromState.length > 0 ? infoFromState.join(', ') : (ItemDeleted.length > 0 ? ItemDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} item(s)` : ''));

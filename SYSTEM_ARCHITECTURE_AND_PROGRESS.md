@@ -55,6 +55,20 @@
     - **Credit-Account Payment Inclusion in Receivables:** When aggregating customer sales, collections, and statements, payments settled via customer credit (`modes === 'Credit-Account'`) represent authoritative settlements of invoice balances. They must NEVER be discarded or filtered out. The net invoice receivable balance must always calculate as `Total Invoiced - Total Applied Payments - Available Credit`, matching the Customer View Statement 100%.
 
 ## Current Progress Log
+- **Universal Invoice & Estimate Search Resolution + Admin Views State Reference Audit (Ver 3.5.25)**:
+  - **Enhanced Invoice & Estimate Server-Side Search Engine**:
+    - Resolved search failure where typing customer names (e.g. `Hassan`, `Mansour`, `BNF Construction`, `Ali Jaafar`) failed to return matching invoices due to PCRE lookaheads, nested customer object schemas, or missing first/last name keys.
+    - Integrated direct `customerSchema` lookup during invoice and estimation search queries to automatically resolve and match all customer `_id`s, full names, first/last names, and company names.
+    - Added multi-token wildcard matching (`tokens.join('.*')`, `tokens.reverse().join('.*')`, and individual token regexes) across all candidate customer and invoice fields.
+    - Expanded table column `valueGetter` for the Customer Name column to compose `customerFirstName` and `customerLastName` into full customer names seamlessly.
+    - Fixed DataGrid search state in `InvoiceViewAdmin.js` by resetting `page` to `0` on filter change and optimizing debounce to 250ms for snappy responsiveness.
+    - Updated `handleRefreshSearch` in `InvoiceViewAdmin.js` to fully reset filter model, search term, and debounced search state.
+  - **Fixed `ReferenceError` Crashes in Admin Views (`ProjectViewAdmin.js`, `SupplierAdminView.js`, etc.)**:
+    - Fixed `ReferenceError: projects is not defined` in `ProjectViewAdmin.js` by replacing `projects.find` with `(project || []).find`.
+    - Fixed `ReferenceError: supplier is not defined` in `SupplierAdminView.js` by replacing `(supplier || []).find` with `(customer || []).find`.
+    - Safely guarded state references in `ItemViewAdmin.js`, `EstimateViewAdmin.js`, and `MaintenanceOrderAdmin.js`.
+  - **Release & Distribution**: Bumped version to `3.5.25`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.25.exe`, and pushed commit to GitHub `origin main` for live Railway and Cloudflare Pages deployment.
+
 - **Authoritative Customer View Statement & Sales by Customer 100% Reconciliation (Ver 3.5.24)**:
   - **Reconciled Advance Deposits & Credit-Account Payments Across All Customer Statements**:
     - Resolved critical discrepancy where customers with advance deposits and subsequent credit settlements (such as `PROFESSIONAL CONSTRUCTION PCT`) showed inflated "Total Paid" figures (`$529,401.41` vs `$479,828.26`) and erroneous negative balances (`-$49,573.15` vs `-$864.58`) in the Professional Report Center.

@@ -422,7 +422,7 @@ function MaintenanceOrderAdmin() {
     }
   }, [selectedRows])
   const infoFromState = (selectedRows || []).map(id => {
-    const found = maintenance.find(m => m._id === id || m.id === id);
+    const found = (maintenance || []).find(m => m._id === id || m.id === id);
     return found?.serviceNumber || '';
   }).filter(Boolean);
   const info = infoFromState.length > 0 ? infoFromState.join(', ') : (MaintenanceDeleted.length > 0 ? MaintenanceDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} record(s)` : ''));

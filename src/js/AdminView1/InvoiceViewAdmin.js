@@ -207,7 +207,7 @@ function InvoiceViewAdmin() {
   useEffect(() => {
     const handler = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 500); // 500ms debounce delay
+    }, 250); // 250ms debounce delay
 
     return () => {
       clearTimeout(handler);
@@ -284,7 +284,15 @@ function InvoiceViewAdmin() {
   };
 
   const handleRefreshSearch = () => {
-    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+    setSearchTerm('');
+    setDebouncedSearchTerm('');
+    setFilterModel({
+      items: [],
+      quickFilterExcludeHiddenColumns: true,
+      quickFilterValues: [],
+    });
+    setPage(0);
+    fetchItems(0, '', filterField, filterValue, statusFilter);
   };
 
   const [loading, setLoading] = useState(false);
@@ -596,15 +604,15 @@ function InvoiceViewAdmin() {
   const handleFilter = (newModel) => {
     const searchTerm = newModel.quickFilterValues?.join(' ') || '';
     setSearchTerm(searchTerm);
-    setFilterModel(newModel)
-
+    setFilterModel(newModel);
+    setPage(0);
   }
   useEffect(() => {
     const storedQuick = JSON.parse(localStorage.getItem('QuickFilterInvoiceTst'));
     if (storedQuick) {
       const searchTerm = storedQuick.quickFilterValues?.join(' ') || '';
       setSearchTerm(searchTerm);
-      setFilterModel(storedQuick)
+      setFilterModel(storedQuick);
     }
     const storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsInvoice'))
     if (storedColumns) {
@@ -628,7 +636,8 @@ function InvoiceViewAdmin() {
         const raw = params.row?.customerName || params.row?.Customer || params.row?.customer;
         if (!raw) return '';
         if (typeof raw === 'string') return raw.toUpperCase();
-        const name = raw.Customer || raw.customerName || raw.companyName || raw.customerFullName || raw.name || '';
+        const fullName = [raw.customerFirstName, raw.customerLastName].filter(Boolean).join(' ');
+        const name = raw.Customer || raw.customerName || raw.customerFullName || raw.companyName || fullName || raw.name || raw.clientName || '';
         return String(name).toUpperCase();
       } 
     },

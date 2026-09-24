@@ -417,7 +417,7 @@ function EstimateViewAdmin() {
     }
   }, [selectedRows])
   const infoFromState = (selectedRows || []).map(id => {
-    const found = estimate.find(e => e._id === id || e.id === id);
+    const found = (estimate || []).find(e => e._id === id || e.id === id);
     return found?.estimateNumber ? `Q-${found.estimateNumber}` : '';
   }).filter(Boolean);
   const info = infoFromState.length > 0 ? infoFromState.join(', ') : (EstimateDeleted.length > 0 ? EstimateDeleted.join(', ') : (selectedRows.length > 0 ? `${selectedRows.length} quotation(s)` : ''));
