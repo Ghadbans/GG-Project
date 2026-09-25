@@ -952,7 +952,7 @@ function DailyExpenseUpdate() {
                                       getOptionLabel={(option) => `M-${String(option.serviceNumber || 0).padStart(6, '0')} - ${option.customerName?.customerName || ''}`}
                                       renderOption={(props, option) => (
                                         <Box {...props}>
-                                          {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.model || option.itemDescriptionInfo || ''}
+                                          {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.itemDescriptionInfo || option.model || ''}
                                         </Box>
                                       )}
                                       onChange={(e, newValue) => handleChangeMaintenance(newValue ? newValue : '')}
@@ -1258,7 +1258,7 @@ function DailyExpenseUpdate() {
                                               getOptionLabel={(option) => `M-${String(option.serviceNumber || 0).padStart(6, '0')} - ${option.customerName?.customerName || ''}`}
                                               renderOption={(props, option) => (
                                                 <Box {...props}>
-                                                  {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.model || option.itemDescriptionInfo || ''}
+                                                  {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.itemDescriptionInfo || option.model || ''}
                                                 </Box>
                                               )}
                                               onChange={(e, newValue) => handleChangeMaintenance(newValue ? newValue : '')}

@@ -60,8 +60,13 @@
     - In all maintenance creation and update forms (`MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `MaintenanceFormClone.js`, `EstimateConvertToMaintenance.js`, `MaintenanceOrderUpdate.js`), the "Assigned Technician" dropdown must strictly filter employees to ONLY those who are currently active (`status.toLowerCase() === 'employed' || status.toLowerCase() === 'active'`) and registered under the technician department (`department.toUpperCase() === 'TECHNICIAN' || department.toUpperCase() === 'TECHNICIEN' || department.toUpperCase().includes('TECH') || role.toUpperCase().includes('TECH')`).
     - Exclude all `Fired`, `Resign`, `Suspended`, and inactive employees, as well as employees from other non-technical departments (e.g. `DRIVER`, `CONSTRUCTION`, `OFFICE`, `SECURITY`).
     - Historical maintenance orders retain their assigned technician name seamlessly without breaking UI selections.
+28. **Daily Expenses Maintenance Order Autocomplete Label Prioritization (Ver 3.5.28)**:
+    - In Daily Expenses creation and edit forms (`DailyExpenseForm.js`, `DailyExpenseUpdate.js`), the "Maintenance Order" dropdown item formatting must strictly prioritize `itemDescriptionInfo` (e.g. `HILUX`) over `model` (e.g. `OLIVE GREEN`) via `{option.itemDescriptionInfo || option.model || ''}`, matching the item description displayed in the Maintenance Information module.
 
 ## Current Progress Log
+- **Daily Expenses Maintenance Order Item Description Display (Ver 3.5.28)**:
+  - **Prioritized Item Description in Autocomplete**: Updated option rendering in `DailyExpenseForm.js` and `DailyExpenseUpdate.js` from `option.model || option.itemDescriptionInfo` to `option.itemDescriptionInfo || option.model`, ensuring maintenance job cards display their appliance/item description (e.g. `HILUX`, `ICE MACHINE`, `SIGNAGE BOARD X2`) in the dropdown list.
+  - **Release & Distribution**: Bumped version to `3.5.28`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.28.exe`, and pushed commit to GitHub `origin main`.
 - **Strict Active Employed Maintenance Technician Filtering (Ver 3.5.27)**:
   - **Eliminated Inactive & Non-Technician Staff from Dropdown**: Fixed case-sensitivity bug (`row.Status` vs `row.status`), boolean operator precedence bug (`A && B || C || D`), and French spelling mismatch (`TECHNICIEN` vs `TECHNICIAN`) in technician filter queries.
   - **Unified `isEmployedTechnician` Filter**: Standardized filtering across `MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `MaintenanceFormClone.js`, `EstimateConvertToMaintenance.js`, and `MaintenanceOrderUpdate.js` ensuring only the 16 verified active employed technicians are selectable.
