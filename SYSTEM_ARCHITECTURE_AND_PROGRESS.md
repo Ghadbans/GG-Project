@@ -56,8 +56,18 @@
 26. **Zero-Side-Effect Query Routing & Strict Exact Supplier Match Isolation (Ver 3.5.26)**:
     - **GET Endpoints Must NEVER Mutate Documents:** `GET` API endpoints (such as `GET /itemPurchase`, `GET /purchaseOrder`, `GET /Supplier`) must be purely idempotent read operations. Never embed `updateMany` or background reconciliation mutations inside GET handlers.
     - **Strict Supplier Name & ID Matching:** When querying purchases or filtering transactions per supplier in backend routes or frontend views (`SupplierViewInformation.js`, `ItemPurchaseAdmin.js`), NEVER use loose substring inclusions (e.g. `sStore.includes(mName)` or `new RegExp(escaped, 'i')`). Such substring logic causes short supplier identifiers (like "ETS", "QUIN", "ZAC") to match and re-assign hundreds of unrelated suppliers' documents. Always match by authoritative `manufacturerID` or exact anchored equality (`^storeName$`).
+27. **Strict Active Employed Filtering for Maintenance Technician Selection (Ver 3.5.27)**:
+    - In all maintenance creation and update forms (`MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `MaintenanceFormClone.js`, `EstimateConvertToMaintenance.js`, `MaintenanceOrderUpdate.js`), the "Assigned Technician" dropdown must strictly filter employees to ONLY those who are currently active (`status.toLowerCase() === 'employed' || status.toLowerCase() === 'active'`) and registered under the technician department (`department.toUpperCase() === 'TECHNICIAN' || department.toUpperCase() === 'TECHNICIEN' || department.toUpperCase().includes('TECH') || role.toUpperCase().includes('TECH')`).
+    - Exclude all `Fired`, `Resign`, `Suspended`, and inactive employees, as well as employees from other non-technical departments (e.g. `DRIVER`, `CONSTRUCTION`, `OFFICE`, `SECURITY`).
+    - Historical maintenance orders retain their assigned technician name seamlessly without breaking UI selections.
 
 ## Current Progress Log
+- **Strict Active Employed Maintenance Technician Filtering (Ver 3.5.27)**:
+  - **Eliminated Inactive & Non-Technician Staff from Dropdown**: Fixed case-sensitivity bug (`row.Status` vs `row.status`), boolean operator precedence bug (`A && B || C || D`), and French spelling mismatch (`TECHNICIEN` vs `TECHNICIAN`) in technician filter queries.
+  - **Unified `isEmployedTechnician` Filter**: Standardized filtering across `MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `MaintenanceFormClone.js`, `EstimateConvertToMaintenance.js`, and `MaintenanceOrderUpdate.js` ensuring only the 16 verified active employed technicians are selectable.
+  - **Enhanced Technician Financial Privacy**: Expanded `isTechnician` detection across maintenance detail and edit views to accurately detect French `"TECHNICIEN"` department records.
+  - **Historical Technician Assignment Preservation**: Added safe fallback in edit forms to gracefully display historical technician names on existing records without throwing Material-UI out-of-range warnings.
+  - **Release & Distribution**: Bumped version to `3.5.27`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.27.exe`, and pushed commit to GitHub `origin main`.
 - **Supplier Purchases Integrity & Substring Reconciliation Bug Elimination (Ver 3.5.26)**:
   - **Eliminated Destructive Backend Auto-Sync in `server/routes/itemRoutes.js`**: Removed `itemPurchaseSchema.updateMany` from `GET /itemPurchase` which previously performed accidental bulk overwrites of `manufacturer` and `manufacturerID` across hundreds of supplier purchases on view.
   - **Hardened Supplier Cascade in `server/routes/supplierRoutes.js`**: Replaced permissive partial regexes with exact ID and anchored exact-name match only.

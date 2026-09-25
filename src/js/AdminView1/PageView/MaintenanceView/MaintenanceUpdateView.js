@@ -244,6 +244,8 @@ function MaintenanceUpdateView() {
     (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
   );
   const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+                       (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+                       (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
                        (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
   const canViewCosts = isOwner || (!isTechnician && costVisibility);
 
@@ -594,7 +596,16 @@ function MaintenanceUpdateView() {
   const handleClearTech = () => {
     setTechnicianAssign('')
   }
-  const filterEmployee = employee.filter((row) => row.department === 'TECHNICIAN' && row.Status !== 'Fired' || row.Status !== 'Resign' || row.Status !== 'Suspended')
+  const isEmployedTechnician = (row) => {
+    if (!row) return false;
+    const status = (row.status || row.Status || '').trim().toLowerCase();
+    if (status !== 'employed' && status !== 'active') return false;
+    const dept = (row.department || '').trim().toUpperCase();
+    const role = (row.employeeRole || row.role || row.Grade || '').trim().toUpperCase();
+    return dept === 'TECHNICIAN' || dept === 'TECHNICIEN' || dept.includes('TECH') || role.includes('TECH');
+  };
+
+  const filterEmployee = (employee || []).filter(isEmployedTechnician);
 
   const handleChangeEmployee = (newValue) => {
     const selectedOptions = employee.find((option) => option === newValue)
@@ -948,13 +959,16 @@ function MaintenanceUpdateView() {
                     onChange={(e) => setTechnicianAssign(e.target.value)}
                   >
                     <MenuItem value=""><em>Unassigned</em></MenuItem>
-                    {employee
-                      .filter(emp => emp.department === 'TECHNICIAN' || emp.role === 'TECHNICIAN' || emp.role === 'Technician')
-                      .map((emp) => (
-                        <MenuItem key={emp._id || emp.employeeName} value={emp.employeeName}>
-                          {emp.employeeName}
-                        </MenuItem>
-                      ))}
+                    {technicianAssign && !filterEmployee.some(emp => emp.employeeName === technicianAssign) && (
+                      <MenuItem value={technicianAssign}>
+                        {technicianAssign} (Historical)
+                      </MenuItem>
+                    )}
+                    {filterEmployee.map((emp) => (
+                      <MenuItem key={emp._id || emp.employeeName} value={emp.employeeName}>
+                        {emp.employeeName}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </FormControl>
               </Grid>

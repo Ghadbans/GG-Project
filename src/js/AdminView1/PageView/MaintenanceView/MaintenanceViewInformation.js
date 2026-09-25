@@ -218,6 +218,8 @@ function MaintenanceViewInformation() {
     (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
   );
   const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+                       (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+                       (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
                        (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
   const canViewCosts = isOwner || (!isTechnician && costVisibility);
 

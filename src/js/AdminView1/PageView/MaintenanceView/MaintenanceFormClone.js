@@ -307,7 +307,16 @@ function MaintenanceFormClone() {
     fetchEmployee()
   }, [])
 
-  const filterEmployee = employee.filter((row) => row.department === 'TECHNICIAN' && row.status !== 'Fired' || row.status !== 'Resign' || row.status !== 'Suspended')
+  const isEmployedTechnician = (row) => {
+    if (!row) return false;
+    const status = (row.status || row.Status || '').trim().toLowerCase();
+    if (status !== 'employed' && status !== 'active') return false;
+    const dept = (row.department || '').trim().toUpperCase();
+    const role = (row.employeeRole || row.role || row.Grade || '').trim().toUpperCase();
+    return dept === 'TECHNICIAN' || dept === 'TECHNICIEN' || dept.includes('TECH') || role.includes('TECH');
+  };
+
+  const filterEmployee = (employee || []).filter(isEmployedTechnician);
 
   const handleChangeEmployee = (newValue) => {
     const selectedOptions = employee.find((option) => option === newValue)
