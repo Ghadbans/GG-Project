@@ -159,6 +159,7 @@ function ItemInformationVIew() {
   const handleChangeSelected = (e) => {
     setSelectOptions(e.target.value)
   }
+  const [loadingData2, setLoadingData2] = useState(false);
   const [itemTransfers, setItemTransfers] = useState([]);
   const [availableBranches, setAvailableBranches] = useState([]);
   const [openTransferModal, setOpenTransferModal] = useState(false);
