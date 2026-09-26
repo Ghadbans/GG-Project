@@ -181,13 +181,14 @@ function ItemInformationVIew() {
   const handleFetch = async () => {
     try {
       // Run all fetches in parallel with server-side itemId filter — massively faster
+      const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
       const [resItemOut, resItemPurchase, resPosOut, resIReturn, resProj, resTransfers, resCompany] = await Promise.all([
         axios.get(`${ENDPOINT_URL}/itemOut?itemId=${id}`),
         axios.get(`${ENDPOINT_URL}/itemPurchase?itemId=${id}`),
         axios.get(`${ENDPOINT_URL}/pos?itemId=${id}`),
         axios.get(`${ENDPOINT_URL}/itemReturn?itemId=${id}`),
         axios.get(`${ENDPOINT_URL}/projects?summary=true`),
-        axios.get(`${ENDPOINT_URL}/itemTransferHistory?itemId=${id}`),
+        axios.get(`${ENDPOINT_URL}/itemTransferHistory?itemId=${id}&branchId=${selectedBranch}`),
         axios.get(`${ENDPOINT_URL}/companyProfile`)
       ]);
 
@@ -250,11 +251,16 @@ function ItemInformationVIew() {
       let tOut = 0;
       let tIn = 0;
       transfers.forEach(t => {
-        const isSource = String(t.itemId?._id || t.itemId) === String(id);
-        const isDest = String(t.toItemId?._id || t.toItemId) === String(id);
         const qty = parseFloat(t.quantity) || 0;
-        if (isSource) tOut += qty;
-        if (isDest) tIn += qty;
+        if (t.fromBranchId === selectedBranch) {
+          tOut += qty;
+        } else if (t.toBranchId === selectedBranch) {
+          tIn += qty;
+        } else if (String(t.itemId?._id || t.itemId) === String(id)) {
+          tOut += qty;
+        } else if (String(t.toItemId?._id || t.toItemId) === String(id)) {
+          tIn += qty;
+        }
       });
       setTotalTransferOut(tOut);
       setTotalTransferIn(tIn);
@@ -948,7 +954,7 @@ function ItemInformationVIew() {
                                 }}
                               />
                               <Tab
-                                label="Total-Summary"
+                                label="Transfer-Summary"
                                 value="5"
                                 sx={{
                                   '&.Mui-selected': {
@@ -964,7 +970,7 @@ function ItemInformationVIew() {
                                 }}
                               />
                               <Tab
-                                label="Transfer-Summary"
+                                label="Total-Summary"
                                 value="6"
                                 sx={{
                                   '&.Mui-selected': {
@@ -1365,69 +1371,13 @@ function ItemInformationVIew() {
                             </Card>
                           </TabPanel>
                           <TabPanel value="5" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
-                            <Card sx={{ position: 'relative', top: '90px' }}>
-                              <CardContent>
-                                <Typography sx={{ textAlign: 'center', color: 'gray' }}>Summary</Typography>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                  <PieChart
-                                    colors={['#1976d2', '#d32f2f', '#f57c00', '#388e3c', '#7b1fa2']}
-                                    series={[
-                                      {
-                                        arcLabel: (item) => `${item.label}(${item.value})`,
-                                        arcLabelMinAngle: 25,
-                                        highlightScope: { faded: 'global', highlighted: 'item' },
-                                        faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
-                                        data: [
-                                          {
-                                            "id": 1,
-                                            "label": "I-Purchase",
-                                            "value": totalPurchase,
-                                          },
-                                          {
-                                            "id": 2,
-                                            "label": "I-Out",
-                                            "value": totalGeneralOut,
-                                          },
-                                          ...(totalTransferOut > 0 ? [{
-                                            "id": 3,
-                                            "label": "Transfer-Out",
-                                            "value": totalTransferOut,
-                                          }] : []),
-                                          ...(totalTransferIn > 0 ? [{
-                                            "id": 4,
-                                            "label": "Transfer-In",
-                                            "value": totalTransferIn,
-                                          }] : []),
-                                          {
-                                            "id": 5,
-                                            "label": "Stock",
-                                            "value": stock,
-                                          }
-                                        ],
-                                      },
-                                    ]}
-                                    width={500}
-                                    height={250}
-                                    sx={{
-                                      [`& .${pieArcLabelClasses.root}`]: {
-                                        fill: 'white',
-                                        fontWeight: 'bold',
-                                        fontSize: '12px'
-                                      },
-                                    }}
-                                  />
-                                </div>
-                              </CardContent>
-                            </Card>
-                          </TabPanel>
-                          <TabPanel value="6" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
                             <Card>
                               <CardContent>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
                                   <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
                                     <Card sx={{ backgroundColor: '#202a5a', color: 'white', padding: '5px 15px', textAlign: 'center', minWidth: '130px' }}>
                                       <Typography variant="caption" sx={{ color: '#90caf9', display: 'block' }}>Branch</Typography>
-                                      <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{row.branchId || 'HQ'}</Typography>
+                                      <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{row.branchId || localStorage.getItem('selectedBranch') || 'HQ'}</Typography>
                                     </Card>
                                     <Card sx={{ backgroundColor: '#2e7d32', color: 'white', padding: '5px 15px', textAlign: 'center', minWidth: '110px' }}>
                                       <Typography variant="caption" sx={{ color: '#c8e6c9', display: 'block' }}>Live Stock</Typography>
@@ -1496,7 +1446,8 @@ function ItemInformationVIew() {
                                       </tr>
                                     ) : (
                                       newArrayTransfers.map((tRow, i) => {
-                                        const isOut = String(tRow.itemId?._id || tRow.itemId) === String(id);
+                                        const curB = row.branchId || localStorage.getItem('selectedBranch') || 'HQ';
+                                        const isOut = tRow.fromBranchId === curB || (String(tRow.itemId?._id || tRow.itemId) === String(id) && tRow.toBranchId !== curB);
                                         return (
                                           <tr key={tRow._id || i}>
                                             <td style={{ textAlign: 'left', width: '30px' }}>{i + 1}</td>
@@ -1539,6 +1490,62 @@ function ItemInformationVIew() {
                                     )}
                                   </tbody>
                                 </table>
+                              </CardContent>
+                            </Card>
+                          </TabPanel>
+                          <TabPanel value="6" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
+                            <Card sx={{ position: 'relative', top: '90px' }}>
+                              <CardContent>
+                                <Typography sx={{ textAlign: 'center', color: 'gray' }}>Summary</Typography>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                  <PieChart
+                                    colors={['#1976d2', '#d32f2f', '#f57c00', '#388e3c', '#7b1fa2']}
+                                    series={[
+                                      {
+                                        arcLabel: (item) => `${item.label}(${item.value})`,
+                                        arcLabelMinAngle: 25,
+                                        highlightScope: { faded: 'global', highlighted: 'item' },
+                                        faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
+                                        data: [
+                                          {
+                                            "id": 1,
+                                            "label": "I-Purchase",
+                                            "value": totalPurchase,
+                                          },
+                                          {
+                                            "id": 2,
+                                            "label": "I-Out",
+                                            "value": totalGeneralOut,
+                                          },
+                                          ...(totalTransferOut > 0 ? [{
+                                            "id": 3,
+                                            "label": "Transfer-Out",
+                                            "value": totalTransferOut,
+                                          }] : []),
+                                          ...(totalTransferIn > 0 ? [{
+                                            "id": 4,
+                                            "label": "Transfer-In",
+                                            "value": totalTransferIn,
+                                          }] : []),
+                                          {
+                                            "id": 5,
+                                            "label": "Stock",
+                                            "value": stock,
+                                          }
+                                        ],
+                                      },
+                                    ]}
+                                    width={500}
+                                    height={250}
+                                    sx={{
+                                      [`& .${pieArcLabelClasses.root}`]: {
+                                        fill: 'white',
+                                        fontWeight: 'bold',
+                                        fontSize: '12px'
+                                      },
+                                    }}
+                                  />
+                                </div>
                               </CardContent>
                             </Card>
                           </TabPanel>

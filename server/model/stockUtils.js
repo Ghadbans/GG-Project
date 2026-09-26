@@ -95,7 +95,9 @@ const calculateQuantity = async (branchId = null, specificItemIds = null) => {
     const outQuery = { ...query };
     const returnQuery = { ...query };
     const posQuery = { ...query };
-    const transferQuery = { ...query };
+    const transferQuery = branchId && branchId !== 'ALL'
+      ? { $or: [{ fromBranchId: branchId }, { toBranchId: branchId }, { branchId: branchId }] }
+      : {};
 
     // We removed the fragile $in clause here. Mongoose Mixed arrays with both Strings and ObjectIds
     // cause $in queries to fail matching, which falsely returns 0 transactions and sets stock to 0.
@@ -155,14 +157,25 @@ const calculateQuantity = async (branchId = null, specificItemIds = null) => {
 
     transfers.forEach(transfer => {
       const originItemId = transfer.itemId ? transfer.itemId.toString() : null;
+      const destItemId = transfer.toItemId ? transfer.toItemId.toString() : null;
       const qty = parseFloat(transfer.quantity) || 0;
-      
+
       if (originItemId && itemQuantities[originItemId]) {
          itemQuantities[originItemId].transferOut += qty;
       }
-      
-      if (transfer.toItemId && itemQuantities[transfer.toItemId.toString()]) {
-          itemQuantities[transfer.toItemId.toString()].transferIn += qty;
+
+      if (destItemId && itemQuantities[destItemId]) {
+          itemQuantities[destItemId].transferIn += qty;
+      }
+
+      if (!destItemId && transfer.toBranchId && transfer.itemName) {
+        const matchingDest = items.find(it =>
+          it.branchId === transfer.toBranchId &&
+          it.itemName && it.itemName.toLowerCase() === transfer.itemName.toLowerCase()
+        );
+        if (matchingDest && itemQuantities[matchingDest._id.toString()]) {
+          itemQuantities[matchingDest._id.toString()].transferIn += qty;
+        }
       }
     });
 

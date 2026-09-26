@@ -1119,13 +1119,11 @@ Route.route("/transfer-item").post(cors(corsOptionsDelegate), async (req, res, n
     }
 
     // 2. Find or create destination item in toBranchId
-    let destQuery = { branchId: toBranchId };
-    if (sourceItem.itemUpc && sourceItem.itemUpc.newCode && sourceItem.itemUpc.itemNumber) {
-      destQuery['itemUpc.newCode'] = sourceItem.itemUpc.newCode;
-      destQuery['itemUpc.itemNumber'] = sourceItem.itemUpc.itemNumber;
-    } else {
-      destQuery.itemName = sourceItem.itemName;
-    }
+    const escapedName = sourceItem.itemName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    let destQuery = {
+      branchId: toBranchId,
+      itemName: new RegExp('^' + escapedName + '$', 'i')
+    };
 
     let destinationItem = await itemSchema.findOne(destQuery);
     if (!destinationItem) {
@@ -1183,9 +1181,9 @@ Route.route("/transfer-item").post(cors(corsOptionsDelegate), async (req, res, n
     });
     await transferRecord.save();
 
-    // 4. Recalculate stock for both source and destination items
-    await calculateQuantity(fromBranchId, [sourceItem._id.toString()]);
-    await calculateQuantity(toBranchId, [destinationItem._id.toString()]);
+    // 4. Recalculate stock for both source and destination branches
+    await calculateQuantity(fromBranchId);
+    await calculateQuantity(toBranchId);
 
     res.status(200).json({
       message: `Successfully transferred ${transferQty} ${sourceItem.itemName} from ${fromBranchId} to ${toBranchId}.`,
@@ -1200,13 +1198,44 @@ Route.route("/transfer-item").post(cors(corsOptionsDelegate), async (req, res, n
 
 Route.route("/itemTransferHistory").get(cors(corsOptionsDelegate), async (req, res, next) => {
   try {
-    const { itemId, branchId } = req.query;
+    const { itemId, branchId, itemName } = req.query;
     let query = {};
+    const orConditions = [];
+
+    let targetItemName = itemName;
+    if (itemId && !targetItemName) {
+      try {
+        const itemDoc = await itemSchema.findById(itemId).lean();
+        if (itemDoc && itemDoc.itemName) {
+          targetItemName = itemDoc.itemName;
+        }
+      } catch (e) {}
+    }
+
     if (itemId) {
-      query.$or = [
-        { itemId: new mongoose.Types.ObjectId(itemId) },
-        { toItemId: new mongoose.Types.ObjectId(itemId) }
-      ];
+      const isValid = mongoose.Types.ObjectId.isValid(itemId);
+      const objId = isValid ? new mongoose.Types.ObjectId(itemId) : null;
+      if (objId) {
+        orConditions.push({ itemId: objId });
+        orConditions.push({ toItemId: objId });
+      }
+      orConditions.push({ itemId: String(itemId) });
+      orConditions.push({ toItemId: String(itemId) });
+    }
+
+    if (targetItemName) {
+      const escapedName = targetItemName.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const nameRegex = new RegExp('^' + escapedName + '$', 'i');
+      if (branchId && branchId !== 'ALL') {
+        orConditions.push({ itemName: nameRegex, fromBranchId: branchId });
+        orConditions.push({ itemName: nameRegex, toBranchId: branchId });
+      } else {
+        orConditions.push({ itemName: nameRegex });
+      }
+    }
+
+    if (orConditions.length > 0) {
+      query.$or = orConditions;
     } else if (branchId && branchId !== 'ALL') {
       query.$or = [
         { fromBranchId: branchId },

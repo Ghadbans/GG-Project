@@ -89,8 +89,11 @@ function ItemViewLayout() {
     useEffect(() => {
         const fetchItem = async () => {
             try {
-                const res = await axios.get(`${ENDPOINT_URL}/item`);
-                setItems(res.data.data.reverse());
+                const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+                const branchQuery = selectedBranch && selectedBranch !== 'ALL' ? `?branchId=${selectedBranch}` : '';
+                const res = await axios.get(`${ENDPOINT_URL}/item${branchQuery}`);
+                // Preserve newest to oldest order from backend
+                setItems(res.data.data || []);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
