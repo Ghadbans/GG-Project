@@ -27,6 +27,12 @@ mongoDbConnection().then(async () => {
   } catch (e) {
     // Ignore if index doesn't exist
   }
+  try {
+    await mongoose.connection.db.collection('item').dropIndex('itemName_1');
+    console.log('Dropped old itemName_1 index from item collection');
+  } catch (e) {
+    // Ignore if index doesn't exist
+  }
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;

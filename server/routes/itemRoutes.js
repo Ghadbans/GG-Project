@@ -1152,7 +1152,19 @@ Route.route("/transfer-item").post(cors(corsOptionsDelegate), async (req, res, n
         contentType: sourceItem.contentType,
         branchId: toBranchId
       });
-      await destinationItem.save();
+      try {
+        await destinationItem.save();
+      } catch (saveErr) {
+        if (saveErr.code === 11000) {
+          try {
+            await mongoose.connection.db.collection('item').dropIndex('itemName_1');
+            console.log('Dynamically dropped legacy itemName_1 index');
+          } catch (e) {}
+          await destinationItem.save();
+        } else {
+          throw saveErr;
+        }
+      }
     }
 
     // 3. Create transfer record
