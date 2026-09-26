@@ -93474,14 +93474,15 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
 
 /**
- * Checks if the current environment is running as a Mobile Application.
- * Mobile layout is strictly isolated to:
- * - Native Capacitor runtime (Android / iOS native app)
- * - Real mobile handheld devices (smartphones/tablets via user-agent)
- * - Explicit URL query parameter override for mobile testing/preview (?mobile=true)
+ * Checks if the current environment is running inside the standalone Capacitor Mobile App.
  * 
- * Desktop Application (.exe / Electron) and Webversion on desktop/laptops will
- * NEVER switch to mobile layout when resizing or minimizing windows.
+ * STRICT ARCHITECTURE RULE:
+ * 1. Desktop Application (.exe / Electron): ALWAYS returns false (Desktop layout).
+ * 2. Web Application (ANY web browser on PC, Mac, Laptop, iPhone, Android phone, iPad, Tablet, etc.):
+ *    ALWAYS returns false (Desktop layout).
+ * 3. Capacitor Native Mobile App ONLY: Returns true ONLY when running inside the native
+ *    Capacitor runtime wrapper (window.Capacitor.isNativePlatform() === true).
+ * 4. Development / Debugging override: Explicit query parameter (?mobile=true) for testing only.
  */
 var isNativeMobile = () => {
   if (typeof window === 'undefined') return false;
@@ -93491,27 +93492,24 @@ var isNativeMobile = () => {
     return false;
   }
 
-  // 2. Explicit query parameter override for testing/debugging in browser
+  // 2. Explicit query parameter override for testing/debugging in browser (?mobile=true)
   if (typeof window.location !== 'undefined' && window.location.search && window.location.search.includes('mobile=true')) {
     return true;
   }
 
-  // 3. Capacitor native runtime (iOS / Android App)
+  // 3. Capacitor native runtime (iOS / Android Native App ONLY)
   if (typeof window.Capacitor !== 'undefined' && typeof window.Capacitor.isNativePlatform === 'function') {
-    if (window.Capacitor.isNativePlatform()) {
-      return true;
+    try {
+      if (window.Capacitor.isNativePlatform()) {
+        return true;
+      }
+    } catch (e) {
+      return false;
     }
   }
 
-  // 4. Mobile handheld devices (Smartphones / Tablets only)
-  if (typeof navigator !== 'undefined' && navigator.userAgent) {
-    var isMobileDevice = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    if (isMobileDevice) {
-      return true;
-    }
-  }
-
-  // On desktop browsers and Electron, always return false
+  // All web browsers (Mobile Chrome, Safari on iPhone, Android browser, PC, laptop, tablets)
+  // MUST ALWAYS render the standard, complete Desktop theme and layout.
   return false;
 };
 var isMobile = (/* unused pure expression or super */ null && (isNativeMobile));
@@ -93525,14 +93523,14 @@ var useIsMobile = () => {
     mobile = _useState2[0],
     setMobile = _useState2[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var handleResize = () => {
+    var handleCheck = () => {
       setMobile(isNativeMobile());
     };
-    window.addEventListener('resize', handleResize);
-    window.addEventListener('orientationchange', handleResize);
+    window.addEventListener('resize', handleCheck);
+    window.addEventListener('orientationchange', handleCheck);
     return () => {
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('orientationchange', handleResize);
+      window.removeEventListener('resize', handleCheck);
+      window.removeEventListener('orientationchange', handleCheck);
     };
   }, []);
   return mobile;
@@ -121173,7 +121171,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.29"};
+module.exports = {"rE":"3.5.30"};
 
 /***/ },
 
@@ -121305,7 +121303,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"ed7dff827d15c0347639","116":"6831118a441f44206ad3","118":"e1f227f4a5f10f211d60","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"ff58da10b07f1fdbe70e","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"5b053114f2007a4db0a8","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"13930b420ba78da700d9","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"ca64489f7ae31ecbd5bb","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"6e91fc51f2635389da91","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"735084ce8c2b9f159721","1679":"a23f8b019bb6ae844586","1722":"a431d8e778608638392c","1853":"4b2bf88f62492b48746d","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"9490a4422b4c57e313c8","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"6827f1d16b907c447cb9","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"650406618ba9d3d221ef","2533":"f2270f461e6e7ff1cdfb","2605":"a90fd77660eddd34839a","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"1d2943e1d5d0c8c1fa3a","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"fd9ca34e7f42b62e0637","2835":"0e925b7f3cda249cb8c9","2982":"07702b6374f4d391d313","2992":"e92b8ef3728fde259e2f","3009":"567b00944880ad958271","3058":"34172a81b2ddcaa2f2c5","3094":"de4464a83004bd4b160e","3229":"b1a812db9d8c04f343da","3426":"a91564bfca5a2db29bb2","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"a9f2a0c58bb9d95a2672","3976":"e228d4cf264f623b15f8","4001":"fb4c2237d040695239f0","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"cfced021cfa92d09d913","4444":"6aebd3bfde22046c52ee","4783":"91a072dd70ad4c0a8848","5059":"2b89ac7d099d3898a08b","5072":"e3894d29d2bcade9731d","5151":"e6fd0d66b73db07d6d6d","5194":"d9e4d8382ebe97418258","5391":"e9d496a538c4976014ca","5394":"d9aa008ed4842ff6b9e0","5646":"e2e8f697bcd06a54c997","5669":"dd35f6ec28af20acf354","5754":"8954e2acd6884dcf46b8","5824":"19fd197543afc80d74ff","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"97d1b595fd4d6341ee4c","6619":"854d51f3af603be9542a","6671":"6bc90e12a8a2d3185368","6685":"60c808ce521bc7244cdd","6725":"d901500eb521cabc7085","6744":"01aae95b9c8898aef755","6934":"0360265494794d3807b3","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"ee012b2fbb48101220f5","7270":"869a8f5b0c03d943e731","7384":"65263f0496e681b331ac","7405":"505a829dcdce44cb83e8","7444":"a97b22a40ad291400689","7445":"561ed9af8a5202219570","7539":"291ebc8d9295bd42eb39","7592":"0e77524a57a39e6b2911","7645":"910b44e1f23d70ce2ae3","7757":"a1f891ba0a41df9bc5da","7801":"449c4b7f82f51dcf7722","7897":"d652bb85b27495a66470","7941":"3ee8010ef8298715a045","7997":"61d4bd79e52b1ffcf1aa","8011":"f8ca38fd6b31e7569290","8017":"71c4225691f8990e835d","8027":"a498e22a2661c81862a6","8060":"6b7f86f6287509b2b5cf","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"d36a0d840d8cb9071669","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7b8d6b345bcc8f3dca28","9528":"6dc89c613ad4fd9edbf4","9564":"ee06cb69d650577b1b6f","9573":"e09310c177da25aa7c73","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"d3f5b83acfc4f38fb8bc","9773":"cad5cd508b9815677ce4","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"ed7dff827d15c0347639","116":"6831118a441f44206ad3","118":"e1f227f4a5f10f211d60","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"ff58da10b07f1fdbe70e","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"2821adf3b43f404c06fc","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"13930b420ba78da700d9","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"ca64489f7ae31ecbd5bb","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"6e91fc51f2635389da91","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"5aba7d7dfb1ebc0af116","1679":"a23f8b019bb6ae844586","1722":"a431d8e778608638392c","1853":"4b2bf88f62492b48746d","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"9490a4422b4c57e313c8","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"c5c27ab7ae24c6bc908f","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"650406618ba9d3d221ef","2533":"f2270f461e6e7ff1cdfb","2605":"a90fd77660eddd34839a","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"1d2943e1d5d0c8c1fa3a","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"fd9ca34e7f42b62e0637","2835":"0e925b7f3cda249cb8c9","2982":"07702b6374f4d391d313","2992":"e92b8ef3728fde259e2f","3009":"567b00944880ad958271","3058":"4c289c855e7160b05ab2","3094":"de4464a83004bd4b160e","3229":"b1a812db9d8c04f343da","3426":"a91564bfca5a2db29bb2","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"26ac55c99b826f2f1de7","3976":"e228d4cf264f623b15f8","4001":"fb4c2237d040695239f0","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"338bbeddf06fee8b57c6","4444":"5b62c67a0c4e9a6aa8ac","4783":"91a072dd70ad4c0a8848","5059":"2b89ac7d099d3898a08b","5072":"5027b2ee51b79a9dc20f","5151":"ad2698f2ea050fbe0662","5194":"d9e4d8382ebe97418258","5391":"85cff7f5a351bc8c84b8","5394":"d9aa008ed4842ff6b9e0","5646":"e2e8f697bcd06a54c997","5669":"dd35f6ec28af20acf354","5754":"8954e2acd6884dcf46b8","5824":"19fd197543afc80d74ff","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"97d1b595fd4d6341ee4c","6619":"854d51f3af603be9542a","6671":"6bc90e12a8a2d3185368","6685":"60c808ce521bc7244cdd","6725":"d901500eb521cabc7085","6744":"01aae95b9c8898aef755","6934":"0360265494794d3807b3","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"ee012b2fbb48101220f5","7270":"869a8f5b0c03d943e731","7384":"65263f0496e681b331ac","7405":"505a829dcdce44cb83e8","7444":"a97b22a40ad291400689","7445":"bf2b7f5881cc42a860e4","7539":"291ebc8d9295bd42eb39","7592":"0e77524a57a39e6b2911","7645":"910b44e1f23d70ce2ae3","7757":"a1f891ba0a41df9bc5da","7801":"449c4b7f82f51dcf7722","7897":"b4756a8a78334227badf","7941":"3ee8010ef8298715a045","7997":"61d4bd79e52b1ffcf1aa","8011":"f8ca38fd6b31e7569290","8017":"71c4225691f8990e835d","8027":"a498e22a2661c81862a6","8060":"6b7f86f6287509b2b5cf","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"d36a0d840d8cb9071669","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7b8d6b345bcc8f3dca28","9528":"6dc89c613ad4fd9edbf4","9564":"ee06cb69d650577b1b6f","9573":"7bef5dee04e2653fe3ec","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"d3f5b83acfc4f38fb8bc","9773":"7b9788d9333e0f08d481","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -134273,6 +134271,8 @@ function MobileDrawer(_ref) {
 }
 /* harmony default export */ const component_MobileDrawer = (MobileDrawer);
 ;// ./src/js/component/MobileLayout.js
+function MobileLayout_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function MobileLayout_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { MobileLayout_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { MobileLayout_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function MobileLayout_slicedToArray(r, e) { return MobileLayout_arrayWithHoles(r) || MobileLayout_iterableToArrayLimit(r, e) || MobileLayout_unsupportedIterableToArray(r, e) || MobileLayout_nonIterableRest(); }
 function MobileLayout_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function MobileLayout_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return MobileLayout_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? MobileLayout_arrayLikeToArray(r, a) : void 0; } }
@@ -134280,6 +134280,8 @@ function MobileLayout_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a
 function MobileLayout_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function MobileLayout_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
+
 
 
 
@@ -134322,7 +134324,7 @@ function isMainListRoute(pathname) {
   return mainListRoutes.includes(p);
 }
 function MobileLayout(_ref) {
-  var _user$data, _user$data2;
+  var _user$data3, _user$data4, _user$data5, _user$data6;
   var children = _ref.children;
   var location = (0,react_router_dist/* useLocation */.zy)();
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
@@ -134332,6 +134334,47 @@ function MobileLayout(_ref) {
     _useState2 = MobileLayout_slicedToArray(_useState, 2),
     drawerOpen = _useState2[0],
     setDrawerOpen = _useState2[1];
+  var _useState3 = (0,react.useState)([]),
+    _useState4 = MobileLayout_slicedToArray(_useState3, 2),
+    grantAccess = _useState4[0],
+    setGrantAccess = _useState4[1];
+  (0,react.useEffect)(() => {
+    var fetchAccess = /*#__PURE__*/function () {
+      var _ref2 = MobileLayout_asyncToGenerator(function* () {
+        var _user$data;
+        if (!(user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id)) return;
+        try {
+          var _res$data;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var userAccess = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => {
+            var _user$data2;
+            return row.userID === (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.id);
+          });
+          if (userAccess && Array.isArray(userAccess.modules)) {
+            setGrantAccess(userAccess.modules);
+          }
+        } catch (err) {
+          console.error('Error loading grantAccess in MobileLayout:', err);
+        }
+      });
+      return function fetchAccess() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+    fetchAccess();
+  }, [user]);
+  var userName = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || '';
+  var userRole = (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.role) || '';
+  var isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
+  var canAccess = moduleName => {
+    var _mod$access, _mod$access2;
+    if (isSuperUser) return true;
+    var mod = grantAccess.find(m => {
+      var _m$moduleName, _m$name;
+      return ((_m$moduleName = m.moduleName) === null || _m$moduleName === void 0 ? void 0 : _m$moduleName.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase()) || ((_m$name = m.name) === null || _m$name === void 0 ? void 0 : _m$name.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase());
+    });
+    return Boolean((mod === null || mod === void 0 || (_mod$access = mod.access) === null || _mod$access === void 0 ? void 0 : _mod$access.readM) || (mod === null || mod === void 0 || (_mod$access2 = mod.access) === null || _mod$access2 === void 0 ? void 0 : _mod$access2.viewM));
+  };
   var touchStartXRef = react.useRef(null);
   var touchStartYRef = react.useRef(null);
   var handleTouchStart = e => {
@@ -134399,31 +134442,36 @@ function MobileLayout(_ref) {
     }));
   }
   var pageTitle = getTitleFromPath(pathname);
-  var bottomTabs = [{
+  var allTabs = [{
     label: 'Dashboard',
     path: '/AdminHome',
     icon: /*#__PURE__*/react.createElement(icons_material_Dashboard/* default */.A, {
       fontSize: "small"
-    })
+    }),
+    module: 'Dashboard'
   }, {
     label: 'Invoices',
     path: '/InvoiceViewAdmin',
     icon: /*#__PURE__*/react.createElement(Receipt/* default */.A, {
       fontSize: "small"
-    })
+    }),
+    module: 'Invoice'
   }, {
     label: 'Customers',
     path: '/CustomerViewAdmin',
     icon: /*#__PURE__*/react.createElement(People/* default */.A, {
       fontSize: "small"
-    })
+    }),
+    module: 'Customer'
   }, {
     label: 'Maintenance',
     path: '/MaintenanceViewAdmin',
     icon: /*#__PURE__*/react.createElement(Build/* default */.A, {
       fontSize: "small"
-    })
+    }),
+    module: 'Maintenance'
   }];
+  var bottomTabs = allTabs.filter(t => t.module === 'Dashboard' || canAccess(t.module));
   return /*#__PURE__*/react.createElement(Box/* default */.A, {
     onTouchStart: handleTouchStart,
     onTouchMove: handleTouchMove,
@@ -134508,8 +134556,8 @@ function MobileLayout(_ref) {
       flexShrink: 0
     }
   }, /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
-    name: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '',
-    role: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || ''
+    name: (user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) || '',
+    role: (user === null || user === void 0 || (_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.role) || ''
   }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     color: "inherit",
     size: "small",

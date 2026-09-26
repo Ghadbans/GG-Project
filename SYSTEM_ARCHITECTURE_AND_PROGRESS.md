@@ -1031,10 +1031,11 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     3. **Self-Healing Lock & Focus Watcher (`src/js/index.js`):** Fixed modal detection (removed flawed `[role="presentation"]` selector that was permanently matching SVG icons and layout divs) and added global click/focus capture rescue listeners ensuring `<input>` and `<textarea>` elements always immediately receive focus and keystrokes.
     4. **Eliminated Destructive `window.location.reload()` Calls:** Replaced full-window reloads upon closing delete/action modals with smooth in-place `fetchItems(...)` state updates across `ProjectViewAdmin.js`, `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`, `ItemOutViewAdmin.js`, `ItemReturnAdminView.js`, `PayRollViewAdmin.js`, `RateViewAdmin.js`, and `SellShopInvoiceView.js`.
     5. **Electron WebContents Focus Guarantee (`main.js`):** Added `did-finish-load` listeners ensuring `webContents.focus()` is maintained on all browser windows.
-  - **Verification:** AST scope validation passed with 0 errors. Compiled Webpack bundles (`npm run build`) and generated installer `dist/Global Gate Setup 3.5.14.exe`.
-
-
-
-
-
-
+- **Mobile Layout Isolation & Strict Universal Permission Enforcement (Ver 3.5.30)**:
+  - **Problem Reported:** Opening the web application on mobile browsers (e.g. Google Chrome on Android / iOS accessing `https://portal.globalgate.sarl`) incorrectly switched the entire web portal into mobile card layout mode. Furthermore, mobile views needed strict adherence to all Grant Access permission rules and technician restrictions identical to the desktop application.
+  - **Root Cause & Architectural Resolution:**
+    1. **Mobile Layout Isolation (`src/js/utils/isMobile.js`):** Removed userAgent-based mobile device matching so that web browsers on ANY device (smartphones, tablets, laptops, desktops) ALWAYS render the standard, complete Desktop theme and layout. Mobile layout is now strictly isolated to the native Capacitor mobile application wrapper (`window.Capacitor.isNativePlatform() === true`) or explicit developer debug mode (`?mobile=true`).
+    2. **Strict Bottom Navigation Permissions (`src/js/component/MobileLayout.js`):** Added live `grantAccess` module verification to dynamically filter bottom navigation tabs, preventing unauthorized access to Invoices, Customers, or Maintenance.
+    3. **Action & Edit Permission Enforcement (`src/js/component/MobileDetailSheet.js`):** Secured "Edit" and "Convert" actions with strict `canEdit(type)` permission checks against the logged-in user's `grantAccess` modules.
+    4. **Technician Financial Privacy Protection (`src/js/component/MobileDetailSheet.js`):** Enforced Rule 23 across all mobile sheets to ensure technician roles/departments (`TECHNICIAN` / `TECHNICIEN`) cannot view prices, stock, rates, or print financial breakdowns.
+  - **Verification:** AST syntax checks passed. Compiled Webpack production and web bundles (`dist_web/`) and generated Windows desktop installer `dist/Global Gate Setup 3.5.30.exe`.

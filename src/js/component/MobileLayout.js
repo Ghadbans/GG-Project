@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logOut } from '../features/auth/authSlice';
+import { cachedGet } from '../utils/apiCache';
+import { ENDPOINT_URL } from '../apiConfig';
 import {
   Box,
   AppBar,
@@ -79,6 +81,33 @@ function MobileLayout({ children }) {
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [grantAccess, setGrantAccess] = useState([]);
+
+  useEffect(() => {
+    const fetchAccess = async () => {
+      if (!user?.data?.id) return;
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
+        const userAccess = res?.data?.data?.find(row => row.userID === user?.data?.id);
+        if (userAccess && Array.isArray(userAccess.modules)) {
+          setGrantAccess(userAccess.modules);
+        }
+      } catch (err) {
+        console.error('Error loading grantAccess in MobileLayout:', err);
+      }
+    };
+    fetchAccess();
+  }, [user]);
+
+  const userName = user?.data?.userName || '';
+  const userRole = user?.data?.role || '';
+  const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
+
+  const canAccess = (moduleName) => {
+    if (isSuperUser) return true;
+    const mod = grantAccess.find(m => m.moduleName?.toLowerCase() === moduleName?.toLowerCase() || m.name?.toLowerCase() === moduleName?.toLowerCase());
+    return Boolean(mod?.access?.readM || mod?.access?.viewM);
+  };
 
   const touchStartXRef = React.useRef(null);
   const touchStartYRef = React.useRef(null);
@@ -151,12 +180,14 @@ function MobileLayout({ children }) {
 
   const pageTitle = getTitleFromPath(pathname);
 
-  const bottomTabs = [
-    { label: 'Dashboard', path: '/AdminHome', icon: <DashboardIcon fontSize="small" /> },
-    { label: 'Invoices', path: '/InvoiceViewAdmin', icon: <ReceiptIcon fontSize="small" /> },
-    { label: 'Customers', path: '/CustomerViewAdmin', icon: <PeopleIcon fontSize="small" /> },
-    { label: 'Maintenance', path: '/MaintenanceViewAdmin', icon: <BuildIcon fontSize="small" /> },
+  const allTabs = [
+    { label: 'Dashboard', path: '/AdminHome', icon: <DashboardIcon fontSize="small" />, module: 'Dashboard' },
+    { label: 'Invoices', path: '/InvoiceViewAdmin', icon: <ReceiptIcon fontSize="small" />, module: 'Invoice' },
+    { label: 'Customers', path: '/CustomerViewAdmin', icon: <PeopleIcon fontSize="small" />, module: 'Customer' },
+    { label: 'Maintenance', path: '/MaintenanceViewAdmin', icon: <BuildIcon fontSize="small" />, module: 'Maintenance' },
   ];
+
+  const bottomTabs = allTabs.filter(t => t.module === 'Dashboard' || canAccess(t.module));
 
   return (
     <Box

@@ -168,7 +168,12 @@ function MobileDetailSheet({ open, onClose, record, type }) {
 
   const userName = user?.data?.userName || '';
   const userRole = user?.data?.role || '';
+  const userDepartment = user?.data?.department || '';
   const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
+  const isTechnician = userRole?.toUpperCase() === 'TECHNICIAN' || 
+                       userRole?.toUpperCase() === 'TECHNICIEN' || 
+                       userDepartment?.toUpperCase() === 'TECHNICIAN' || 
+                       userDepartment?.toUpperCase() === 'TECHNICIEN';
 
   const canEdit = (t) => {
     if (isSuperUser) return true;
@@ -195,7 +200,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
 
   try {
     const id = record?._id || record?.id;
-    const isTechStore = type === 'tech_store';
+    const isTechStore = type === 'tech_store' || isTechnician;
     const isItem = type === 'items' || isTechStore;
 
     // Safe title extraction
@@ -304,7 +309,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
             </Box>
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-              {isPrintable && (
+              {isPrintable && !isTechnician && (
                 <Button
                   size="small"
                   variant="contained"
@@ -326,7 +331,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                 </Button>
               )}
 
-              {!isTechStore && (
+              {!isTechStore && canEdit(type) && (
                 <Button
                   size="small"
                   variant="contained"
@@ -348,7 +353,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                 </Button>
               )}
 
-              {(type === 'quotations' || type === 'estimates' || type === 'invoices' || type === 'maintenance') && (
+              {canEdit(type) && (type === 'quotations' || type === 'estimates' || type === 'invoices' || type === 'maintenance') && (
                 <IconButton
                   size="small"
                   onClick={handleConvert}
