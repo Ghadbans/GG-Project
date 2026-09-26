@@ -51,6 +51,8 @@ let posSchema = require("../model/posSchema");
 let departmentSchema = require("../model/departmentSchema");
 let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
+let itemTransferHistorySchema = require("../model/itemTransferHistorySchema");
+const { calculateQuantity } = require("../model/stockUtils");
 
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
@@ -1089,5 +1091,122 @@ async function deleteItemPurchaseHandler(req, res, next) {
     return next(err);
   }
 };
+
+// --- ITEM TRANSFER BETWEEN BRANCHES ---
+Route.route("/transfer-item").post(cors(corsOptionsDelegate), async (req, res, next) => {
+  try {
+    const { itemId, quantity, toBranchId, fromBranchId, userId, userName, reason } = req.body;
+    const transferQty = parseFloat(quantity);
+
+    if (!itemId || !toBranchId || !fromBranchId || isNaN(transferQty) || transferQty <= 0) {
+      return res.status(400).json({ error: "Invalid transfer parameters. Quantity must be > 0." });
+    }
+
+    if (fromBranchId === toBranchId) {
+      return res.status(400).json({ error: "Source and destination branches cannot be the same." });
+    }
+
+    // 1. Find source item
+    const sourceItem = await itemSchema.findById(itemId);
+    if (!sourceItem) {
+      return res.status(404).json({ error: "Source item not found." });
+    }
+
+    if (parseFloat(sourceItem.itemQuantity || 0) < transferQty) {
+      return res.status(400).json({ 
+        error: `Insufficient stock in branch ${fromBranchId}. Available: ${sourceItem.itemQuantity || 0}, requested: ${transferQty}.` 
+      });
+    }
+
+    // 2. Find or create destination item in toBranchId
+    let destQuery = { branchId: toBranchId };
+    if (sourceItem.itemUpc && sourceItem.itemUpc.newCode && sourceItem.itemUpc.itemNumber) {
+      destQuery['itemUpc.newCode'] = sourceItem.itemUpc.newCode;
+      destQuery['itemUpc.itemNumber'] = sourceItem.itemUpc.itemNumber;
+    } else {
+      destQuery.itemName = sourceItem.itemName;
+    }
+
+    let destinationItem = await itemSchema.findOne(destQuery);
+    if (!destinationItem) {
+      // Clone item definition into destination branch
+      destinationItem = new itemSchema({
+        itemName: sourceItem.itemName,
+        itemCategory: sourceItem.itemCategory,
+        itemBrand: sourceItem.itemBrand,
+        itemStore: sourceItem.itemStore,
+        itemUnit: sourceItem.itemUnit,
+        unit: sourceItem.unit,
+        itemDimension: sourceItem.itemDimension,
+        itemWeight: sourceItem.itemWeight,
+        itemSellingPrice: sourceItem.itemSellingPrice,
+        itemCostPrice: sourceItem.itemCostPrice,
+        itemDescription: sourceItem.itemDescription,
+        itemUpc: sourceItem.itemUpc,
+        itemQuantity: 0,
+        data: sourceItem.data,
+        contentType: sourceItem.contentType,
+        branchId: toBranchId
+      });
+      await destinationItem.save();
+    }
+
+    // 3. Create transfer record
+    const transferRecord = new itemTransferHistorySchema({
+      itemId: sourceItem._id,
+      toItemId: destinationItem._id,
+      itemName: sourceItem.itemName,
+      fromBranchId,
+      toBranchId,
+      quantity: transferQty,
+      userId: userId || 'User',
+      userName: userName || 'User',
+      reason: reason || '',
+      date: new Date(),
+      branchId: fromBranchId
+    });
+    await transferRecord.save();
+
+    // 4. Recalculate stock for both source and destination items
+    await calculateQuantity(fromBranchId, [sourceItem._id.toString()]);
+    await calculateQuantity(toBranchId, [destinationItem._id.toString()]);
+
+    res.status(200).json({
+      message: `Successfully transferred ${transferQty} ${sourceItem.itemName} from ${fromBranchId} to ${toBranchId}.`,
+      data: transferRecord,
+      status: 200
+    });
+  } catch (error) {
+    console.error("Error in transfer-item:", error);
+    res.status(500).json({ error: error.message || "Failed to transfer item." });
+  }
+});
+
+Route.route("/itemTransferHistory").get(cors(corsOptionsDelegate), async (req, res, next) => {
+  try {
+    const { itemId, branchId } = req.query;
+    let query = {};
+    if (itemId) {
+      query.$or = [
+        { itemId: new mongoose.Types.ObjectId(itemId) },
+        { toItemId: new mongoose.Types.ObjectId(itemId) }
+      ];
+    } else if (branchId && branchId !== 'ALL') {
+      query.$or = [
+        { fromBranchId: branchId },
+        { toBranchId: branchId },
+        { branchId: branchId }
+      ];
+    }
+    const result = await itemTransferHistorySchema.find(query).sort({ date: -1, _id: -1 }).lean().exec();
+    res.json({
+      data: result,
+      message: "Data successfully fetched!",
+      status: 200
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 module.exports = Route;

@@ -18,6 +18,10 @@ const itemTransferHistorySchema = new Schema(
       required: true,
       trim: true,
     },
+    toItemId: {
+      type: Schema.Types.ObjectId,
+      ref: "itemSchema",
+    },
     toBranchId: {
       type: String,
       required: true,
@@ -27,6 +31,10 @@ const itemTransferHistorySchema = new Schema(
       type: Number,
       required: true,
       min: 0,
+    },
+    reason: {
+      type: String,
+      trim: true,
     },
     userId: {
       type: String,

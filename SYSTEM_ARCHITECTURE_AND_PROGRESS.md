@@ -64,8 +64,18 @@
     - In Daily Expenses creation and edit forms (`DailyExpenseForm.js`, `DailyExpenseUpdate.js`), the "Maintenance Order" dropdown item formatting must strictly prioritize `itemDescriptionInfo` (e.g. `HILUX`) over `model` (e.g. `OLIVE GREEN`) via `{option.itemDescriptionInfo || option.model || ''}`, matching the item description displayed in the Maintenance Information module.
 29. **Rate View Admin Data Refresh Lifecycle Resolution (Ver 3.5.29)**:
     - In `RateViewAdmin.js`, data fetching logic `fetchData()` must reside in component scope and be invoked by `handleCloseLoading()` upon modal dismissal. Never invoke un-scoped or foreign handler functions (e.g. `fetchItems`) in views that do not implement paginated server tables.
+30. **Item Transfer Between Branches & Stock Synchronization (Ver 3.5.31)**:
+    - In the Item Module (`ItemInformationVIew.js`), the **Transfer-Summary** tab (Tab 6, located beside `Total-Summary`) displays complete inter-branch inventory transfer history and provides a modal to transfer items across company branches.
+    - Transfer requests (`POST /transfer-item`) record transaction details in `itemTransferHistorySchema` (including `itemId`, `toItemId`, `fromBranchId`, `toBranchId`, `quantity`, `userName`, `reason`), clone item records to the destination branch if not yet present, and trigger immediate stock recalculations via `calculateQuantity()` across both source and destination branches.
+    - Local item view calculations strictly factor transfers: `stock = (totalPurchase + totalTransferIn) - (totalGeneralOut + totalTransferOut)`.
 
 ## Current Progress Log
+- **Item Transfer Between Branches Restoration & Multi-Branch Stock Synchronization (Ver 3.5.31)**:
+  - **Restored Transfer-Summary Tab (Tab 6)**: Added the `Transfer-Summary` tab beside `Total-Summary` in `src/js/AdminView1/PageView/ItemView/ItemInformationVIew.js`.
+  - **Inter-Branch Transfer Modal**: Added interactive dialog allowing users to select destination branch from `companyProfile.branches`, enter transfer quantity (validated against available stock), provide reason/reference notes, and execute transfers with immediate UI feedback and toasts.
+  - **Backend Transfer Engine (`server/routes/itemRoutes.js`)**: Added `POST /transfer-item` (with branch validation, automated destination branch item creation/cloning, transfer history logging, and dual-branch stock recalculation) and `GET /itemTransferHistory` (supporting item and branch queries).
+  - **Transfer History Table & Stock Math Integration**: Added searchable transfer history table with visual `TRANSFER OUT` (red badge) and `TRANSFER IN` (green badge) indicators, branch indicators, and incorporated transfers into Total-Summary pie charts and live stock calculations `(Purchase + TransferIn) - (GeneralOut + TransferOut)`.
+  - **Release & Distribution**: Bumped version to `3.5.31`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.31.exe`, and pushed commit to GitHub `origin main`.
 - **Rate Module Modal Close Error Resolution & Scope Refactor (Ver 3.5.29)**:
   - **Eliminated `ReferenceError: fetchItems is not defined` in `RateViewAdmin.js`**: Lifted `fetchData()` from local `useEffect` scope to top-level component scope and updated `handleCloseLoading()` to call `fetchData()`, ensuring that editing categories, rates, return rates, and payment rates updates the tables smoothly without JavaScript runtime errors.
   - **Release & Distribution**: Bumped version to `3.5.29`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.29.exe`, and pushed commit to GitHub `origin main`.

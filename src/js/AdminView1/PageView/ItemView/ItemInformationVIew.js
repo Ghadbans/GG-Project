@@ -20,8 +20,9 @@ import { PieChart, pieArcLabelClasses } from '@mui/x-charts/PieChart';
 import { useDrawingArea } from '@mui/x-charts/hooks';
 import { FileCopy } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
-import CancelIcon from '@mui/icons-material/Cancel';
 import DeleteIcon from '@mui/icons-material/Delete';
+import SwapHorizIcon from '@mui/icons-material/SwapHoriz';
+import { toast } from 'react-toastify';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
@@ -158,79 +159,120 @@ function ItemInformationVIew() {
   const handleChangeSelected = (e) => {
     setSelectOptions(e.target.value)
   }
-  const [loadingData2, setLoadingData2] = useState(false);
+  const [itemTransfers, setItemTransfers] = useState([]);
+  const [availableBranches, setAvailableBranches] = useState([]);
+  const [openTransferModal, setOpenTransferModal] = useState(false);
+  const [transferToBranch, setTransferToBranch] = useState('');
+  const [transferQuantity, setTransferQuantity] = useState('');
+  const [transferReason, setTransferReason] = useState('');
+  const [transferLoading, setTransferLoading] = useState(false);
+  const [searchTransfer, setSearchTransfer] = useState('');
+  const [debouncedSearchTransfer, setDebouncedSearchTransfer] = useState('');
+  const [totalTransferOut, setTotalTransferOut] = useState(0);
+  const [totalTransferIn, setTotalTransferIn] = useState(0);
 
   useEffect(() => {
-    const handleFetch = async () => {
-      try {
-        // Run all 4 fetches in parallel with server-side itemId filter — massively faster
-        const [resItemOut, resItemPurchase, resPosOut, resIReturn, resProj] = await Promise.all([
-          axios.get(`${ENDPOINT_URL}/itemOut?itemId=${id}`),
-          axios.get(`${ENDPOINT_URL}/itemPurchase?itemId=${id}`),
-          axios.get(`${ENDPOINT_URL}/pos?itemId=${id}`),
-          axios.get(`${ENDPOINT_URL}/itemReturn?itemId=${id}`),
-          axios.get(`${ENDPOINT_URL}/projects?summary=true`),
-        ]);
+    const handler = setTimeout(() => setDebouncedSearchTransfer(searchTransfer), 300);
+    return () => clearTimeout(handler);
+  }, [searchTransfer]);
 
-        // itemOut — server filtered documents, but we still need to filter the inner array to hide other items in the same transaction
-        const formatDate1 = resItemOut.data.data.map((row) => ({
-          ...row,
-          itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
-        })).filter(row => row.itemsQtyArray.length > 0);
-        setItemOut(formatDate1.sort((a, b) => b.outNumber - a.outNumber));
+  const handleFetch = async () => {
+    try {
+      // Run all fetches in parallel with server-side itemId filter — massively faster
+      const [resItemOut, resItemPurchase, resPosOut, resIReturn, resProj, resTransfers, resCompany] = await Promise.all([
+        axios.get(`${ENDPOINT_URL}/itemOut?itemId=${id}`),
+        axios.get(`${ENDPOINT_URL}/itemPurchase?itemId=${id}`),
+        axios.get(`${ENDPOINT_URL}/pos?itemId=${id}`),
+        axios.get(`${ENDPOINT_URL}/itemReturn?itemId=${id}`),
+        axios.get(`${ENDPOINT_URL}/projects?summary=true`),
+        axios.get(`${ENDPOINT_URL}/itemTransferHistory?itemId=${id}`),
+        axios.get(`${ENDPOINT_URL}/companyProfile`)
+      ]);
 
-        // itemPurchase
-        const formatDate = resItemPurchase.data.data.map(row => ({
-          ...row,
-          items: row.items.filter((Item) => Item.itemName._id === id)
-        })).filter(row => row.items.length > 0);
-        setItemPurchase(formatDate.sort((a, b) => b.itemPurchaseNumber - a.itemPurchaseNumber));
+      // itemOut — server filtered documents, but we still need to filter the inner array to hide other items in the same transaction
+      const formatDate1 = resItemOut.data.data.map((row) => ({
+        ...row,
+        itemsQtyArray: row.itemsQtyArray.filter((Item) => Item.itemName._id === id && parseFloat(Item.newItemOut) > 0)
+      })).filter(row => row.itemsQtyArray.length > 0);
+      setItemOut(formatDate1.sort((a, b) => b.outNumber - a.outNumber));
 
-        // POS out
-        const formatDate3 = resPosOut.data.data.map((row) => ({
-          ...row,
-          items: row.items.filter((Item) => (Item.itemName?._id === id || Item.itemName === id) && parseFloat(Item.itemQty) >= 0)
-        })).filter(row => row.items.length > 0);
-        setPosOut(formatDate3.reverse());
+      // itemPurchase
+      const formatDate = resItemPurchase.data.data.map(row => ({
+        ...row,
+        items: row.items.filter((Item) => Item.itemName._id === id)
+      })).filter(row => row.items.length > 0);
+      setItemPurchase(formatDate.sort((a, b) => b.itemPurchaseNumber - a.itemPurchaseNumber));
 
-        // itemReturn - Include standard returns PLUS Shop POS refunds
-        const standardReturns = resIReturn.data.data.map((row) => ({
-          ...row,
-          itemsQtyArray: (row.itemsQtyArray || []).filter((Item) => (Item.itemName?._id === id || Item.itemName === id) && parseFloat(Item.newItemOut) > 0)
-        })).filter(row => row.itemsQtyArray.length > 0);
+      // POS out
+      const formatDate3 = resPosOut.data.data.map((row) => ({
+        ...row,
+        items: row.items.filter((Item) => (Item.itemName?._id === id || Item.itemName === id) && parseFloat(Item.itemQty) >= 0)
+      })).filter(row => row.items.length > 0);
+      setPosOut(formatDate3.reverse());
 
-        const posRefundReturns = [];
-        resPosOut.data.data.forEach(pos => {
-          (pos.items || []).forEach(it => {
-            const itemId = it.itemName?._id || it.itemName;
-            const refQty = parseFloat(it.refundedQty) || 0;
-            if (itemId === id && refQty > 0) {
-              posRefundReturns.push({
-                _id: `${pos._id}_refund_${it._id || it.idRow || '0'}`,
-                outNumber: 'S-' + String(pos.factureNumber).padStart(6, '0'),
-                itemOutDate: pos.invoiceDate || pos.time,
-                reason: 'Shop Refund',
-                reference: {
-                  referenceName: pos.customerName?.customerName || 'Walk-in Customer'
-                },
-                itemsQtyArray: [{
-                  itemName: it.itemName,
-                  newItemOut: refQty
-                }]
-              });
-            }
-          });
+      // itemReturn - Include standard returns PLUS Shop POS refunds
+      const standardReturns = resIReturn.data.data.map((row) => ({
+        ...row,
+        itemsQtyArray: (row.itemsQtyArray || []).filter((Item) => (Item.itemName?._id === id || Item.itemName === id) && parseFloat(Item.newItemOut) > 0)
+      })).filter(row => row.itemsQtyArray.length > 0);
+
+      const posRefundReturns = [];
+      resPosOut.data.data.forEach(pos => {
+        (pos.items || []).forEach(it => {
+          const itemId = it.itemName?._id || it.itemName;
+          const refQty = parseFloat(it.refundedQty) || 0;
+          if (itemId === id && refQty > 0) {
+            posRefundReturns.push({
+              _id: `${pos._id}_refund_${it._id || it.idRow || '0'}`,
+              outNumber: 'S-' + String(pos.factureNumber).padStart(6, '0'),
+              itemOutDate: pos.invoiceDate || pos.time,
+              reason: 'Shop Refund',
+              reference: {
+                referenceName: pos.customerName?.customerName || 'Walk-in Customer'
+              },
+              itemsQtyArray: [{
+                itemName: it.itemName,
+                newItemOut: refQty
+              }]
+            });
+          }
         });
+      });
 
-        setItemReturn([...standardReturns, ...posRefundReturns]);
+      setItemReturn([...standardReturns, ...posRefundReturns]);
+      setProjectsList(resProj.data.data);
 
-        setProjectsList(resProj.data.data);
-        setLoadingData2(true);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData2(true);
+      // Transfers
+      const transfers = resTransfers.data?.data || [];
+      setItemTransfers(transfers);
+      let tOut = 0;
+      let tIn = 0;
+      transfers.forEach(t => {
+        const isSource = String(t.itemId?._id || t.itemId) === String(id);
+        const isDest = String(t.toItemId?._id || t.toItemId) === String(id);
+        const qty = parseFloat(t.quantity) || 0;
+        if (isSource) tOut += qty;
+        if (isDest) tIn += qty;
+      });
+      setTotalTransferOut(tOut);
+      setTotalTransferIn(tIn);
+
+      // Company profile branches
+      const profile = resCompany.data?.data?.[0] || {};
+      let allBranches = [{ branchId: 'HQ', branchName: 'HeadQuarters' }];
+      if (profile.branches && profile.branches.length > 0) {
+        allBranches = profile.branches;
       }
-    };
+      setAvailableBranches(allBranches);
+
+      setLoadingData2(true);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData2(true);
+    }
+  };
+
+  useEffect(() => {
     handleFetch();
   }, [id])
   const [stock, setStock] = useState(0)
@@ -247,11 +289,11 @@ function ItemInformationVIew() {
       const totalPurchase2 = itemPurchase?.reduce((acc, row) => { return acc + row.items.reduce((sum, Item) => sum + parseFloat(Item.itemQty), 0) }, 0)
       settotalPurchase(totalPurchase2)
       settotalGeneralOut2(totalGeneralOut2)
-      const stock1 = parseFloat(totalPurchase2 - totalGeneralOut2).toFixed(2);
+      const stock1 = parseFloat((totalPurchase2 + totalTransferIn) - (totalGeneralOut2 + totalTransferOut)).toFixed(2);
       setStock(Math.round((stock1) * 100) / 100)
       setCompleted(true)
     }
-  }, [itemPurchase, posOut, itemOut, itemReturn, loadingData2])
+  }, [itemPurchase, posOut, itemOut, itemReturn, totalTransferIn, totalTransferOut, loadingData2])
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
@@ -286,18 +328,19 @@ function ItemInformationVIew() {
   }
 
   const [item, SetItems] = useState([]);
+  const fetchItem = async () => {
+    try {
+      // Fetch only this single item instead of downloading entire item collection
+      const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`);
+      SetItems([res.data.data]);
+      setLoadingData(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoadingData(false);
+    }
+  };
+
   useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        // Fetch only this single item instead of downloading entire item collection
-        const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`);
-        SetItems([res.data.data]);
-        setLoadingData(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoadingData(false);
-      }
-    };
     fetchItem();
   }, [id])
 
@@ -639,6 +682,74 @@ function ItemInformationVIew() {
     dayjs(row.itemOutDate).format('DD/MM/YYYY').includes(debouncedSearch3)
   ) : itemReturn).sort((a,b) => parseDate(b.itemReturnDate || b.itemOutDate || b.date) - parseDate(a.itemReturnDate || a.itemOutDate || a.date))
   const totalReturnTotal = newArray3.length > 0 ? newArray3.reduce((acc, row) => { return acc + row.itemsQtyArray.reduce((sum, item) => sum + parseFloat(item.newItemOut), 0) }, 0) : 0
+
+  const handleSearchTransfer = (e) => {
+    setSearchTransfer(e.target.value);
+  };
+
+  const newArrayTransfers = (debouncedSearchTransfer !== '' ? itemTransfers.filter((row) =>
+    (row.reason?.toString() || "").toLowerCase().includes(debouncedSearchTransfer.toLowerCase()) ||
+    (row.fromBranchId?.toString() || "").toLowerCase().includes(debouncedSearchTransfer.toLowerCase()) ||
+    (row.toBranchId?.toString() || "").toLowerCase().includes(debouncedSearchTransfer.toLowerCase()) ||
+    (row.userName?.toString() || "").toLowerCase().includes(debouncedSearchTransfer.toLowerCase()) ||
+    (row.userId?.toString() || "").toLowerCase().includes(debouncedSearchTransfer.toLowerCase()) ||
+    dayjs(row.date).format('DD/MM/YYYY').includes(debouncedSearchTransfer)
+  ) : itemTransfers).sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
+
+  const handleExecuteTransfer = async (e) => {
+    if (e) e.preventDefault();
+    if (!transferToBranch) {
+      toast.error("Please select a destination branch");
+      return;
+    }
+    const qty = parseFloat(transferQuantity);
+    if (isNaN(qty) || qty <= 0) {
+      toast.error("Please enter a valid transfer quantity (> 0)");
+      return;
+    }
+    const currentBranch = item[0]?.branchId || 'HQ';
+    if (transferToBranch === currentBranch) {
+      toast.error("Destination branch must be different from current branch");
+      return;
+    }
+    if (qty > stock) {
+      toast.error(`Transfer quantity exceeds available stock (${stock})`);
+      return;
+    }
+
+    try {
+      setTransferLoading(true);
+      const res = await axios.post(`${ENDPOINT_URL}/transfer-item`, {
+        itemId: id,
+        fromBranchId: currentBranch,
+        toBranchId: transferToBranch,
+        quantity: qty,
+        reason: transferReason,
+        userId: user?.data?.id || user?.data?.userName || 'User',
+        userName: user?.data?.employeeName || user?.data?.userName || 'User'
+      });
+
+      if (res.data && (res.data.status === 200 || res.status === 200)) {
+        toast.success(res.data.message || "Item transferred successfully!");
+        setOpenTransferModal(false);
+        setTransferQuantity('');
+        setTransferReason('');
+        setTransferToBranch('');
+
+        // Refresh data
+        handleFetch();
+        fetchItem();
+      } else {
+        toast.error(res.data?.error || "Failed to transfer item");
+      }
+    } catch (error) {
+      console.error("Transfer error:", error);
+      toast.error(error.response?.data?.error || "Error executing transfer");
+    } finally {
+      setTransferLoading(false);
+    }
+  };
+
   const [openView, setOpenView] = useState(false);
   const [idView, setIdView] = useState(null);
   const [itemPurchaseView, setItemPurchaseView] = useState(null)
@@ -837,6 +948,22 @@ function ItemInformationVIew() {
                               <Tab
                                 label="Total-Summary"
                                 value="5"
+                                sx={{
+                                  '&.Mui-selected': {
+                                    color: 'white',
+                                    backgroundColor: 'gray',
+                                    borderRadius: '10px'
+                                  }, '&:hover': {
+                                    color: 'gray',
+                                    bgcolor: 'white',
+                                    border: '1px solid gray',
+                                    borderRadius: '10px'
+                                  }
+                                }}
+                              />
+                              <Tab
+                                label="Transfer-Summary"
+                                value="6"
                                 sx={{
                                   '&.Mui-selected': {
                                     color: 'white',
@@ -1241,11 +1368,11 @@ function ItemInformationVIew() {
                                 <Typography sx={{ textAlign: 'center', color: 'gray' }}>Summary</Typography>
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                   <PieChart
-                                    colors={palette}
+                                    colors={['#1976d2', '#d32f2f', '#f57c00', '#388e3c', '#7b1fa2']}
                                     series={[
                                       {
                                         arcLabel: (item) => `${item.label}(${item.value})`,
-                                        arcLabelMinAngle: 35,
+                                        arcLabelMinAngle: 25,
                                         highlightScope: { faded: 'global', highlighted: 'item' },
                                         faded: { innerRadius: 30, additionalRadius: -30, color: 'gray' },
                                         data: [
@@ -1259,24 +1386,157 @@ function ItemInformationVIew() {
                                             "label": "I-Out",
                                             "value": totalGeneralOut,
                                           },
-                                          {
+                                          ...(totalTransferOut > 0 ? [{
                                             "id": 3,
+                                            "label": "Transfer-Out",
+                                            "value": totalTransferOut,
+                                          }] : []),
+                                          ...(totalTransferIn > 0 ? [{
+                                            "id": 4,
+                                            "label": "Transfer-In",
+                                            "value": totalTransferIn,
+                                          }] : []),
+                                          {
+                                            "id": 5,
                                             "label": "Stock",
                                             "value": stock,
                                           }
                                         ],
                                       },
                                     ]}
-                                    width={450}
+                                    width={500}
                                     height={250}
                                     sx={{
                                       [`& .${pieArcLabelClasses.root}`]: {
                                         fill: 'white',
                                         fontWeight: 'bold',
+                                        fontSize: '12px'
                                       },
                                     }}
                                   />
                                 </div>
+                              </CardContent>
+                            </Card>
+                          </TabPanel>
+                          <TabPanel value="6" sx={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'scroll' }}>
+                            <Card>
+                              <CardContent>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '10px', marginBottom: '15px' }}>
+                                  <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap' }}>
+                                    <Card sx={{ backgroundColor: '#202a5a', color: 'white', padding: '5px 15px', textAlign: 'center', minWidth: '130px' }}>
+                                      <Typography variant="caption" sx={{ color: '#90caf9', display: 'block' }}>Branch</Typography>
+                                      <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{row.branchId || 'HQ'}</Typography>
+                                    </Card>
+                                    <Card sx={{ backgroundColor: '#2e7d32', color: 'white', padding: '5px 15px', textAlign: 'center', minWidth: '110px' }}>
+                                      <Typography variant="caption" sx={{ color: '#c8e6c9', display: 'block' }}>Live Stock</Typography>
+                                      <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{stock}</Typography>
+                                    </Card>
+                                    <Card sx={{ backgroundColor: '#d32f2f', color: 'white', padding: '5px 15px', textAlign: 'center', minWidth: '120px' }}>
+                                      <Typography variant="caption" sx={{ color: '#ffcdd2', display: 'block' }}>Transfer Out</Typography>
+                                      <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{totalTransferOut}</Typography>
+                                    </Card>
+                                    <Card sx={{ backgroundColor: '#0288d1', color: 'white', padding: '5px 15px', textAlign: 'center', minWidth: '120px' }}>
+                                      <Typography variant="caption" sx={{ color: '#b3e5fc', display: 'block' }}>Transfer In</Typography>
+                                      <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{totalTransferIn}</Typography>
+                                    </Card>
+                                  </div>
+                                  <Button
+                                    variant="contained"
+                                    startIcon={<SwapHorizIcon />}
+                                    onClick={() => setOpenTransferModal(true)}
+                                    disabled={stock <= 0}
+                                    sx={{
+                                      backgroundColor: '#202a5a',
+                                      color: 'white',
+                                      fontWeight: 'bold',
+                                      padding: '8px 20px',
+                                      borderRadius: '8px',
+                                      '&:hover': {
+                                        backgroundColor: '#161e40'
+                                      }
+                                    }}
+                                  >
+                                    Transfer Item
+                                  </Button>
+                                </div>
+
+                                <section style={{ display: 'flex', justifyContent: 'flex-end', padding: '5px 0 15px 0' }}>
+                                  <TextField
+                                    label="Search Transfers"
+                                    id="searchTransfer"
+                                    value={searchTransfer}
+                                    variant="standard"
+                                    onChange={handleSearchTransfer}
+                                    placeholder="Branch, Reason, User..."
+                                    sx={{ width: '250px' }}
+                                  />
+                                </section>
+
+                                <table className="secondTable" style={{ fontSize: '80%', marginBottom: '5px', border: '1px solid #DDD', width: '100%' }}>
+                                  <thead>
+                                    <tr>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Type</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>From Branch</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>To Branch</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Qty</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Transferred By</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reason / Note</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {newArrayTransfers.length === 0 ? (
+                                      <tr>
+                                        <td colSpan={8} style={{ textAlign: 'center', padding: '20px', color: 'gray' }}>
+                                          No transfer history found for this item.
+                                        </td>
+                                      </tr>
+                                    ) : (
+                                      newArrayTransfers.map((tRow, i) => {
+                                        const isOut = String(tRow.itemId?._id || tRow.itemId) === String(id);
+                                        return (
+                                          <tr key={tRow._id || i}>
+                                            <td style={{ textAlign: 'left', width: '30px' }}>{i + 1}</td>
+                                            <td style={{ textAlign: 'left', width: '90px', borderLeft: '1px solid #DDD' }}>
+                                              {dayjs(tRow.date).format('DD/MM/YYYY HH:mm')}
+                                            </td>
+                                            <td style={{ textAlign: 'center', width: '110px', borderLeft: '1px solid #DDD' }}>
+                                              <span
+                                                style={{
+                                                  backgroundColor: isOut ? '#ffebee' : '#e8f5e9',
+                                                  color: isOut ? '#c62828' : '#2e7d32',
+                                                  fontWeight: 'bold',
+                                                  padding: '3px 8px',
+                                                  borderRadius: '12px',
+                                                  fontSize: '11px',
+                                                  display: 'inline-block'
+                                                }}
+                                              >
+                                                {isOut ? 'TRANSFER OUT' : 'TRANSFER IN'}
+                                              </span>
+                                            </td>
+                                            <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD', fontWeight: 'bold' }}>
+                                              {tRow.fromBranchId || 'HQ'}
+                                            </td>
+                                            <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD', fontWeight: 'bold' }}>
+                                              {tRow.toBranchId}
+                                            </td>
+                                            <td style={{ textAlign: 'left', width: '50px', borderLeft: '1px solid #DDD', fontWeight: 'bold', color: isOut ? '#c62828' : '#2e7d32' }}>
+                                              {isOut ? `-${tRow.quantity}` : `+${tRow.quantity}`}
+                                            </td>
+                                            <td style={{ textAlign: 'left', width: '120px', borderLeft: '1px solid #DDD' }}>
+                                              {tRow.userName || tRow.userId || 'User'}
+                                            </td>
+                                            <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>
+                                              {tRow.reason || '-'}
+                                            </td>
+                                          </tr>
+                                        );
+                                      })
+                                    )}
+                                  </tbody>
+                                </table>
                               </CardContent>
                             </Card>
                           </TabPanel>
@@ -1671,6 +1931,109 @@ function ItemInformationVIew() {
               : null
           }
 
+        </Box>
+      </Modal>
+
+      {/* Transfer Item Modal */}
+      <Modal
+        open={openTransferModal}
+        onClose={() => setOpenTransferModal(false)}
+        aria-labelledby="transfer-modal-title"
+        aria-describedby="transfer-modal-description"
+      >
+        <Box sx={{ ...style, width: 480, borderRadius: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '15px' }}>
+            <Typography id="transfer-modal-title" variant="h6" component="h2" sx={{ fontWeight: 'bold', color: '#202a5a', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <SwapHorizIcon /> Transfer Item Between Branches
+            </Typography>
+            <IconButton onClick={() => setOpenTransferModal(false)} size="small">
+              <Close style={{ color: '#202a5a' }} />
+            </IconButton>
+          </div>
+
+          <form onSubmit={handleExecuteTransfer}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Box sx={{ p: 1.5, bgcolor: '#f0f4f8', borderRadius: '6px', mb: 1 }}>
+                  <Typography variant="body2" sx={{ color: 'gray' }}>
+                    Item: <strong style={{ color: '#202a5a' }}>{item[0]?.itemName}</strong>
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'gray' }}>
+                    Current Branch: <strong style={{ color: '#202a5a' }}>{item[0]?.branchId || 'HQ'}</strong> | Available Stock: <strong style={{ color: '#2e7d32' }}>{stock}</strong>
+                  </Typography>
+                </Box>
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small" required>
+                  <InputLabel id="dest-branch-label">Destination Branch</InputLabel>
+                  <Select
+                    labelId="dest-branch-label"
+                    value={transferToBranch}
+                    label="Destination Branch"
+                    onChange={(e) => setTransferToBranch(e.target.value)}
+                  >
+                    {availableBranches
+                      .filter(b => b.branchId !== (item[0]?.branchId || 'HQ'))
+                      .map((b) => (
+                        <MenuItem key={b.branchId} value={b.branchId}>
+                          {b.branchName || b.branchId} ({b.branchId})
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  type="number"
+                  label="Quantity to Transfer"
+                  value={transferQuantity}
+                  onChange={(e) => setTransferQuantity(e.target.value)}
+                  inputProps={{ min: 1, max: stock, step: "any" }}
+                  helperText={`Maximum transferable: ${stock}`}
+                  required
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  fullWidth
+                  size="small"
+                  multiline
+                  rows={2}
+                  label="Transfer Reason / Reference"
+                  value={transferReason}
+                  onChange={(e) => setTransferReason(e.target.value)}
+                  placeholder="e.g. Replenish Lubumbashi Branch stock"
+                />
+              </Grid>
+
+              <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'flex-end', gap: '10px', mt: 1 }}>
+                <Button
+                  variant="outlined"
+                  onClick={() => setOpenTransferModal(false)}
+                  disabled={transferLoading}
+                  sx={{ color: 'gray', borderColor: 'gray' }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  disabled={transferLoading || stock <= 0}
+                  sx={{
+                    bgcolor: '#202a5a',
+                    '&:hover': { bgcolor: '#161e40' }
+                  }}
+                >
+                  {transferLoading ? "Transferring..." : "Confirm Transfer"}
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
         </Box>
       </Modal>
     </>
