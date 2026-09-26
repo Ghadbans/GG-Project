@@ -152,41 +152,43 @@ function RateViewAdmin() {
   const [PayRate, setPayRate] = useState([]);
   const [category, setCategory] = useState([]);
   const [cash, setCash] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get(`${ENDPOINT_URL}/rate`)
-        setRate(res.data.data);
-        const resReturn = await axios.get(`${ENDPOINT_URL}/rateReturn`)
-        setRateReturned(resReturn.data.data);
-        localStorage.setItem('Rate', JSON.stringify(res.data.data))
-        const resRatePayment = await axios.get(`${ENDPOINT_URL}/paymentRate`)
-        setPayRate(resRatePayment.data.data);
-        localStorage.setItem('PaymentRate', JSON.stringify(resRatePayment.data.data))
 
-        // Save POS Category to State and LocalStorage
-        const resCategory = await axios.get(`${ENDPOINT_URL}/expensesCategory`)
-        const formatDate = resCategory.data.data.map((item, i) => ({
-          ...item,
-          id: item._id,
-          number: i + 1
-        }))
-        localStorage.setItem('Category', JSON.stringify(resCategory.data.data))
-        setCategory(formatDate);
-        const resCash = await axios.get(`${ENDPOINT_URL}/cash`)
-        const formatDate1 = resCash.data.data.map((item) => ({
-          ...item,
-          id: item._id,
-          dataField: dayjs(item.cashDate).format('DD/MM/YYYY')
-        }))
-        localStorage.setItem('Cash', JSON.stringify(resCash.data.data))
-        setCash(formatDate1.reverse())
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        toast.error('Connection error.');
-      }
+  const fetchData = async () => {
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/rate`)
+      setRate(res.data.data);
+      const resReturn = await axios.get(`${ENDPOINT_URL}/rateReturn`)
+      setRateReturned(resReturn.data.data);
+      localStorage.setItem('Rate', JSON.stringify(res.data.data))
+      const resRatePayment = await axios.get(`${ENDPOINT_URL}/paymentRate`)
+      setPayRate(resRatePayment.data.data);
+      localStorage.setItem('PaymentRate', JSON.stringify(resRatePayment.data.data))
+
+      // Save POS Category to State and LocalStorage
+      const resCategory = await axios.get(`${ENDPOINT_URL}/expensesCategory`)
+      const formatDate = resCategory.data.data.map((item, i) => ({
+        ...item,
+        id: item._id,
+        number: i + 1
+      }))
+      localStorage.setItem('Category', JSON.stringify(resCategory.data.data))
+      setCategory(formatDate);
+      const resCash = await axios.get(`${ENDPOINT_URL}/cash`)
+      const formatDate1 = resCash.data.data.map((item) => ({
+        ...item,
+        id: item._id,
+        dataField: dayjs(item.cashDate).format('DD/MM/YYYY')
+      }))
+      localStorage.setItem('Cash', JSON.stringify(resCash.data.data))
+      setCash(formatDate1.reverse())
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error('Connection error.');
     }
-    fetchData()
+  };
+
+  useEffect(() => {
+    fetchData();
   }, []);
   const [selectedRows, setSelectedRows] = useState([]);
   const [filterModel, setFilterModel] = React.useState({
@@ -324,7 +326,7 @@ function RateViewAdmin() {
   const handleCloseLoading = () => {
     setLoadingOpenModal(false);
     setLoading(false);
-    fetchItems(page, searchTerm, filterField, filterValue);
+    fetchData();
   }
   {/** Loading Update View End */ }
 

@@ -62,8 +62,13 @@
     - Historical maintenance orders retain their assigned technician name seamlessly without breaking UI selections.
 28. **Daily Expenses Maintenance Order Autocomplete Label Prioritization (Ver 3.5.28)**:
     - In Daily Expenses creation and edit forms (`DailyExpenseForm.js`, `DailyExpenseUpdate.js`), the "Maintenance Order" dropdown item formatting must strictly prioritize `itemDescriptionInfo` (e.g. `HILUX`) over `model` (e.g. `OLIVE GREEN`) via `{option.itemDescriptionInfo || option.model || ''}`, matching the item description displayed in the Maintenance Information module.
+29. **Rate View Admin Data Refresh Lifecycle Resolution (Ver 3.5.29)**:
+    - In `RateViewAdmin.js`, data fetching logic `fetchData()` must reside in component scope and be invoked by `handleCloseLoading()` upon modal dismissal. Never invoke un-scoped or foreign handler functions (e.g. `fetchItems`) in views that do not implement paginated server tables.
 
 ## Current Progress Log
+- **Rate Module Modal Close Error Resolution & Scope Refactor (Ver 3.5.29)**:
+  - **Eliminated `ReferenceError: fetchItems is not defined` in `RateViewAdmin.js`**: Lifted `fetchData()` from local `useEffect` scope to top-level component scope and updated `handleCloseLoading()` to call `fetchData()`, ensuring that editing categories, rates, return rates, and payment rates updates the tables smoothly without JavaScript runtime errors.
+  - **Release & Distribution**: Bumped version to `3.5.29`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.29.exe`, and pushed commit to GitHub `origin main`.
 - **Daily Expenses Maintenance Order Item Description Display (Ver 3.5.28)**:
   - **Prioritized Item Description in Autocomplete**: Updated option rendering in `DailyExpenseForm.js` and `DailyExpenseUpdate.js` from `option.model || option.itemDescriptionInfo` to `option.itemDescriptionInfo || option.model`, ensuring maintenance job cards display their appliance/item description (e.g. `HILUX`, `ICE MACHINE`, `SIGNAGE BOARD X2`) in the dropdown list.
   - **Release & Distribution**: Bumped version to `3.5.28`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.28.exe`, and pushed commit to GitHub `origin main`.
