@@ -123,7 +123,9 @@ function ItemInformationVIew() {
     }
     fetchNumber()
   }, [user])
+  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
   const ItemInfoU = grantAccess.filter((row) => row.moduleName === "Item" && row.access.editM === true);
+  const canEditItem = isOwner || ItemInfoU.length > 0;
 
 
   const [itemPurchase, setItemPurchase] = useState([]);
@@ -706,6 +708,10 @@ function ItemInformationVIew() {
 
   const handleExecuteTransfer = async (e) => {
     if (e) e.preventDefault();
+    if (!canEditItem) {
+      toast.error("You do not have permission to transfer items. Item edit access is required.");
+      return;
+    }
     if (!transferToBranch) {
       toast.error("Please select a destination branch");
       return;
@@ -1392,24 +1398,26 @@ function ItemInformationVIew() {
                                       <Typography variant="body1" sx={{ fontWeight: 'bold' }}>{totalTransferIn}</Typography>
                                     </Card>
                                   </div>
-                                  <Button
-                                    variant="contained"
-                                    startIcon={<SwapHorizIcon />}
-                                    onClick={() => setOpenTransferModal(true)}
-                                    disabled={stock <= 0}
-                                    sx={{
-                                      backgroundColor: '#202a5a',
-                                      color: 'white',
-                                      fontWeight: 'bold',
-                                      padding: '8px 20px',
-                                      borderRadius: '8px',
-                                      '&:hover': {
-                                        backgroundColor: '#161e40'
-                                      }
-                                    }}
-                                  >
-                                    Transfer Item
-                                  </Button>
+                                  {canEditItem && (
+                                    <Button
+                                      variant="contained"
+                                      startIcon={<SwapHorizIcon />}
+                                      onClick={() => setOpenTransferModal(true)}
+                                      disabled={stock <= 0}
+                                      sx={{
+                                        backgroundColor: '#202a5a',
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                        padding: '8px 20px',
+                                        borderRadius: '8px',
+                                        '&:hover': {
+                                          backgroundColor: '#161e40'
+                                        }
+                                      }}
+                                    >
+                                      Transfer Item
+                                    </Button>
+                                  )}
                                 </div>
 
                                 <section style={{ display: 'flex', justifyContent: 'flex-end', padding: '5px 0 15px 0' }}>

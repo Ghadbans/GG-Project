@@ -10,7 +10,7 @@ axios.interceptors.request.use((config) => {
   const selectedBranch = localStorage.getItem('selectedBranch') || 'ALL';
   
   if (selectedBranch && selectedBranch !== 'ALL') {
-    const bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory'];
+    const bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory'];
     const url = config.url || '';
     const shouldBypass = bypassEndpoints.some(endpoint => url.includes(endpoint));
 
@@ -87,7 +87,7 @@ axios.interceptors.response.use((response) => {
   const selectedBranch = localStorage.getItem('selectedBranch');
   
   if (selectedBranch && selectedBranch !== 'ALL' && response.data && Array.isArray(response.data.data)) {
-    const bypassEndpoints = ['/companyProfile', '/grantAccess', '/itemCode', '/itemUnit', '/get-employeeuser', '/get-adminuser', '/expensesCategory'];
+    const bypassEndpoints = ['/companyProfile', '/grantAccess', '/itemCode', '/itemUnit', '/get-employeeuser', '/get-adminuser', '/expensesCategory', '/itemTransferHistory', '/transfer-item'];
     const shouldBypass = bypassEndpoints.some(endpoint => url.includes(endpoint));
     
     if (!shouldBypass) {
