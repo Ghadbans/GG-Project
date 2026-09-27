@@ -69,8 +69,23 @@
     - Transfer execution is strictly guarded by the **Grant Access** module: only users with Edit permissions on the Item module (`ItemInfoU` / `access.editM === true`) or system owners (`userName === 'GG'` / `role === 'CEO'`) can view the "Transfer Item" button and perform transfers.
     - Axios request/response branch interceptors in `src/js/index.js` explicitly bypass `/itemTransferHistory` and `/transfer-item`, ensuring transfer history and transfer in/out quantities are never discarded or filtered out when switching between branches (e.g. `HQ` and `GGLUB`).
     - Multi-branch stock calculation in `server/model/stockUtils.js` aggregates incoming transfers across matching branches `{ $or: [{ fromBranchId: branchId }, { toBranchId: branchId }, { branchId }] }` and destination items.
+31. **Used Items Support (Ⓤ) & Newest-First Display Catalog Sorting (Ver 3.5.34)**:
+    - When adding or editing items in the Item Module (`ItemForm.js`, `ItemFormUpdate.js`, `ItemFormClone.js`), checking the **`[x] Used Item (Ⓤ)`** checkbox automatically appends ` Ⓤ` to `itemName` (e.g., `MCB AC 2P Ⓤ`) and sets `isUsed: true` with `condition: 'Used'`.
+    - This allows stock warehouse used items returned from client sites or projects to have an independent inventory record, separate stock tracking, and independent movement histories without causing duplicate name collisions with brand-new counterparts.
+    - Used items behave 100% identically to normal goods across all linked modules (Purchases, Out, Returns, Invoices, Quotations, Maintenance, Projects, POS, Transfers).
+    - In `ItemInformationVIew.js`, used items display a highlighted amber `Ⓤ USED ITEM` badge and condition indicator.
+    - In the 3 store catalog displays (**Point of Sale** / `PointOfSale.js`, **Store Item Display** / `StoreItemDisplay.js`, **Technician Store Catalog** / `TechnicianStoreDisplay.js`), `GET /item-shop` applies strict `.sort({ _id: -1 })` and frontend `.reverse()` calls were removed, guaranteeing that newly added items are always displayed first (newest to oldest).
 
 ## Current Progress Log
+- **Used Items (Ⓤ) Support & Newest-First Display Stores Sorting (Ver 3.5.34)**:
+  - **Used Items (Ⓤ) Architecture (`itemSchema.js`, `itemRoutes.js`, `ItemForm.js`, `ItemFormUpdate.js`, `ItemFormClone.js`, `ItemInformationVIew.js`)**:
+    - Added `isUsed: { type: Boolean, default: false }` and `condition: { type: String, enum: ['New', 'Used'], default: 'New' }` to `itemSchema.js`.
+    - Added interactive `[x] Used Item (Ⓤ)` checkbox beside `Goods` radio in Add, Update, and Clone Item forms. Toggling appends or strips ` Ⓤ` from `itemName` seamlessly.
+    - Highlighted used items with a distinctive `Ⓤ USED ITEM` badge in `ItemInformationVIew.js`.
+  - **Newest-First Display Stores Sorting (`itemRoutes.js`, `PointOfSale.js`, `StoreItemDisplay.js`, `TechnicianStoreDisplay.js`)**:
+    - Added `.sort({ _id: -1 })` to `GET /item-shop` endpoint.
+    - Removed redundant `.reverse()` from `SetItems` in `PointOfSale.js`, `StoreItemDisplay.js`, and `TechnicianStoreDisplay.js`, ensuring page 1 of all store catalogs always lists the most recently created items first.
+  - **Release & Distribution**: Bumped version to `3.5.34`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.34.exe`, and pushed commit to GitHub `origin main`.
 - **Branch Transfer Response Interceptor Bypass & Grant Access Edit Permission Enforcement (Ver 3.5.33)**:
   - **Branch Interceptor Bypass for Transfer History (`src/js/index.js`)**: Added `/itemTransferHistory` and `/transfer-item` to `bypassEndpoints` in both the request and response Axios interceptors. Previously, the response interceptor filtered responses strictly by `item.branchId === selectedBranch`, discarding cross-branch transfer records (`branchId: 'HQ'`) when viewing destination branches (`GGLUB`), which caused `Transfer In` to display 0 and the transfer table to show "No transfer history found".
   - **Grant Access Module Permission for Transfers (`ItemInformationVIew.js`)**: Linked the "Transfer Item" feature strictly to the Grant Access module. Only users with Edit rights on the `Item` module (`access.editM === true`) or system administrators (`GG`/`CEO`) can access the transfer modal or submit transfer requests. If a user lacks edit permissions, the button is hidden and backend execution is blocked with clear feedback.

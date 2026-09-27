@@ -5,7 +5,7 @@ import '../Chartview.css'
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Autocomplete, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Divider } from '@mui/material'
+import { Autocomplete, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Divider } from '@mui/material'
 import axios from 'axios';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
@@ -142,7 +142,21 @@ function ItemFormUpdate() {
   const [unit1, setUnit1] = useState({});
   const [itemUnit, setItemUnit] = useState('');
   const [typeItem, setTypeItem] = useState("");
+  const [isUsed, setIsUsed] = useState(false);
   const [itemName, setItemName] = useState("");
+
+  const handleToggleUsed = (e) => {
+    const checked = e.target.checked;
+    setIsUsed(checked);
+    if (checked) {
+      if (!itemName.includes('Ⓤ')) {
+        const trimmed = itemName.trim();
+        setItemName(trimmed ? `${trimmed} Ⓤ` : 'Ⓤ');
+      }
+    } else {
+      setItemName(prev => prev.replace(/\s*Ⓤ\s*$/, '').trim());
+    }
+  };
   const [itemStore, setItemStore] = useState("");
   const [unit, setUnit] = useState("");
   const [unit2, setUnit2] = useState("");
@@ -181,7 +195,9 @@ function ItemFormUpdate() {
         const itemData = resSingleItem.data.data;
         if (itemData) {
           setTypeItem(itemData.typeItem || "");
-          setItemName(itemData.itemName || "");
+          const itName = itemData.itemName || "";
+          setItemName(itName);
+          setIsUsed(Boolean(itemData.isUsed || itName.includes('Ⓤ') || itemData.condition === 'Used'));
           setItemStore(itemData.itemStore || "");
           setUnit(itemData.unit || "");
           setUnit2(itemData.unit || "");
@@ -356,14 +372,17 @@ function ItemFormUpdate() {
   }
   const handleSubmitEdit = async (e) => {
     e.preventDefault();
+    const itemIsUsed = isUsed || itemName.includes('Ⓤ');
     const data = {
-      typeItem, itemName, itemStore, unit: unit1.itemUnit, itemDimension,
+      typeItem, itemName, itemStore, unit: unit1.itemUnit || unit, itemDimension,
       itemWeight, itemBox, itemManufacturer, itemCategory, updateS: false
       , itemBrand, itemCostPrice, itemUpc: {
         itemNumber,
         newCode
       },
-      itemQuantity: total, itemSellingPrice, itemDescription, stockOnHand: total1
+      itemQuantity: total, itemSellingPrice, itemDescription, stockOnHand: total1,
+      isUsed: itemIsUsed,
+      condition: itemIsUsed ? 'Used' : 'New'
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-item/${id}`, data)
@@ -441,6 +460,27 @@ function ItemFormUpdate() {
               Item Information
             </Typography>
             <Grid container spacing={2}>
+              <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={isUsed}
+                      onChange={handleToggleUsed}
+                      sx={{
+                        color: '#e65100',
+                        '&.Mui-checked': { color: '#e65100' }
+                      }}
+                    />
+                  }
+                  label={
+                    <span style={{ fontWeight: 700, fontSize: '13px', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span>Used Item</span>
+                      <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '0 4px', fontSize: '11px' }}>Ⓤ</span>
+                    </span>
+                  }
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -700,7 +740,7 @@ function ItemFormUpdate() {
             <div>
               <form onSubmit={handleOpenUpdate}>
                 <Grid container style={{ alignItems: 'center', padding: '20px' }} spacing={2} component={Paper}>
-                  <Grid item xs={12}>
+                  <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
                     <FormControl>
                       <FormLabel>Type</FormLabel>
                       <RadioGroup
@@ -712,7 +752,26 @@ function ItemFormUpdate() {
                         <FormControlLabel value='Services' control={<Radio />} label="Services" />
                       </RadioGroup>
                     </FormControl>
-                    <Typography>{typeItem}</Typography>
+                    {typeItem === 'Goods' && (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isUsed}
+                            onChange={handleToggleUsed}
+                            sx={{
+                              color: '#e65100',
+                              '&.Mui-checked': { color: '#e65100' }
+                            }}
+                          />
+                        }
+                        label={
+                          <span style={{ fontWeight: 'bold', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span>Used Item</span>
+                            <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '1px 6px', fontSize: '13px' }}>Ⓤ</span>
+                          </span>
+                        }
+                      />
+                    )}
                   </Grid>
 
                   <Grid item xs={4}>

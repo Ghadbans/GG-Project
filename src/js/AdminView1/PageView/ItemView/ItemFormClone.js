@@ -5,7 +5,7 @@ import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Autocomplete, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Divider } from '@mui/material'
+import { Autocomplete, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Divider, Checkbox } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -137,6 +137,7 @@ function ItemFormClone() {
   }, [dispatch]);
   const [unitInfo, setUnitInfo] = useState([]);
   const [typeItem, setTypeItem] = useState("");
+  const [isUsed, setIsUsed] = useState(false);
   const [itemName, setItemName] = useState("");
   const [itemStore, setItemStore] = useState("");
   const [unit, setUnit] = useState("");
@@ -157,12 +158,28 @@ function ItemFormClone() {
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
   const [itemCode, setItemCode] = useState([]);
   const [message, setMessage] = useState('')
+
+  const handleToggleUsed = (e) => {
+    const checked = e.target.checked;
+    setIsUsed(checked);
+    if (checked) {
+      if (!itemName.includes('Ⓤ')) {
+        setItemName(itemName.trim() ? `${itemName.trim()} Ⓤ` : 'Ⓤ');
+      }
+    } else {
+      setItemName(itemName.replace(/\s*Ⓤ\s*/g, ' ').trim());
+    }
+  };
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`)
         setTypeItem(res.data.data.typeItem);
-        setItemName(res.data.data.itemName);
+        const itName = res.data.data.itemName || "";
+        setItemName(itName);
+        const itemIsUsed = res.data.data.isUsed || itName.includes('Ⓤ');
+        setIsUsed(itemIsUsed);
         setItemStore(res.data.data.itemStore);
         setUnit(res.data.data.unit);
         setItemDimension(res.data.data.itemDimension);
@@ -324,7 +341,9 @@ function ItemFormClone() {
       }, itemManufacturer,
       itemBrand, itemCostPrice,
       itemQuantity, itemSellingPrice, itemDescription,
-      stockOnHand, synced: false
+      stockOnHand, synced: false,
+      isUsed,
+      condition: isUsed ? 'Used' : 'New'
     }
     try {
       const res = await axios.post(`${ENDPOINT_URL}/create-item`, data);
@@ -430,7 +449,7 @@ function ItemFormClone() {
             <div >
               <form onSubmit={handleSubmit}>
                 <Grid container style={{ alignItems: 'center', padding: '20px' }} spacing={2} component={Paper}>
-                  <Grid item xs={12} style={{ display: 'flex' }}>
+                  <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
                     <FormControl>
                       <FormLabel>Type</FormLabel>
                       <RadioGroup
@@ -443,9 +462,26 @@ function ItemFormClone() {
                         <FormControlLabel value='Services' control={<Radio />} label="Services" />
                       </RadioGroup>
                     </FormControl>
-                    <div>
-                      <h2>{typeItem}</h2>
-                    </div>
+                    {typeItem === 'Goods' && (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isUsed}
+                            onChange={handleToggleUsed}
+                            sx={{
+                              color: '#e65100',
+                              '&.Mui-checked': { color: '#e65100' }
+                            }}
+                          />
+                        }
+                        label={
+                          <span style={{ fontWeight: 'bold', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span>Used Item</span>
+                            <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '1px 6px', fontSize: '13px' }}>Ⓤ</span>
+                          </span>
+                        }
+                      />
+                    )}
                   </Grid>
                   <Grid item xs={4}>
                     <TextField

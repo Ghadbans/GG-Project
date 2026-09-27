@@ -235,7 +235,12 @@ Route.route("/item-shop").get(async (req, res) => {
       }));
     }
 
-    const items = await itemSchema.find(query).skip(skip).limit(parseInt(limit)).select('typeItem itemName itemCategory itemQuantity itemDimension itemWeight unit itemUpc itemBrand itemManufacturer itemCostPrice itemSellingPrice itemDescription data contentType').lean();
+    const items = await itemSchema.find(query)
+      .sort({ _id: -1 })
+      .skip(skip)
+      .limit(parseInt(limit))
+      .select('typeItem itemName itemCategory itemQuantity itemDimension itemWeight unit itemUpc itemBrand itemManufacturer itemCostPrice itemSellingPrice itemDescription isUsed condition data contentType')
+      .lean();
     const totalItem = await itemSchema.countDocuments(query);
 
     res.status(200).json({
@@ -268,9 +273,13 @@ Route.route("/create-item").post(async (req, res, next) => {
   itemWeight,itemCategory,itemUpc,itemManufacturer,
   itemBrand,itemCostPrice,
   itemQuantity,itemSellingPrice,itemDescription,
-  stockOnHand,Creates
-, branchId } = req.body
+  stockOnHand,Creates,
+  isUsed,condition,
+  branchId } = req.body
 try {
+  const itemIsUsed = isUsed || (itemName || '').includes('Ⓤ');
+  const itemCondition = condition || (itemIsUsed ? 'Used' : 'New');
+
   if (typeItem === "Product") {
     const matchStage = branchId ? { branchId, itemCategory } : { itemCategory };
     const aggResult = await itemSchema.aggregate([
@@ -283,7 +292,6 @@ try {
     req.body.itemUpc = req.body.itemUpc || {};
     req.body.itemUpc.itemNumber = finalNumber;
   
-  
         await itemSchema.create({
           typeItem,itemName,itemStore,unit,itemDimension,
           itemWeight,itemCategory,itemUpc:{
@@ -293,6 +301,8 @@ try {
           itemBrand,itemCostPrice,
           itemQuantity,itemSellingPrice,itemDescription,
           stockOnHand,Creates,
+          isUsed: itemIsUsed,
+          condition: itemCondition,
           branchId
         }).then((result)=>{
           res.json({ data: result, message: "Data successfully added.", status: 200 });
@@ -307,8 +317,9 @@ try {
       itemWeight,itemCategory,itemUpc,itemManufacturer,
       itemBrand,itemCostPrice,
       itemQuantity,itemSellingPrice,itemDescription,
-      stockOnHand,Creates
-    ,
+      stockOnHand,Creates,
+      isUsed: itemIsUsed,
+      condition: itemCondition,
       branchId}).then((result)=>{
       res.json({
         data: result,

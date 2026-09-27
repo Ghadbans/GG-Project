@@ -832,7 +832,22 @@ function ItemInformationVIew() {
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <div style={{ width: '100%', padding: '10px' }}>
                           <Typography style={{ fontWeight: 'bold', fontSize: '20px' }}>{row.itemName.toUpperCase()}</Typography>
-                          <Typography>{row.typeItem}</Typography>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <Typography>{row.typeItem}</Typography>
+                            {(row.isUsed || row.itemName?.includes('Ⓤ') || row.condition === 'Used') && (
+                              <span style={{
+                                backgroundColor: '#fff3e0',
+                                color: '#e65100',
+                                border: '1px solid #ffe0b2',
+                                borderRadius: '4px',
+                                padding: '2px 8px',
+                                fontSize: '12px',
+                                fontWeight: 'bold'
+                              }}>
+                                Ⓤ USED ITEM
+                              </span>
+                            )}
+                          </div>
                         </div>
                         <Button
                           aria-controls={open ? 'demo-customized-menu' : undefined}
@@ -1004,6 +1019,18 @@ function ItemInformationVIew() {
                                         <tr>
                                           <th align='left' style={{ height: '30px' }}><span >Name</span></th>
                                           <td><span style={{ color: 'gray' }}>{row.itemName.toUpperCase()}</span></td>
+                                        </tr>
+                                        <tr>
+                                          <th align='left' style={{ height: '30px' }}><span >Condition</span></th>
+                                          <td>
+                                            {(row.isUsed || row.itemName?.includes('Ⓤ') || row.condition === 'Used') ? (
+                                              <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '2px 8px', fontSize: '13px', fontWeight: 'bold' }}>
+                                                Ⓤ Used Item
+                                              </span>
+                                            ) : (
+                                              <span style={{ color: 'gray' }}>New</span>
+                                            )}
+                                          </td>
                                         </tr>
                                         <tr>
                                           <th align='left' style={{ height: '30px' }}><span >Store</span></th>

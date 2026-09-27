@@ -86,6 +86,16 @@ const itemSchema = new Schema(
     },
     data: Buffer, 
     contentType:String,
+    isUsed: {
+      type: Boolean,
+      default: false
+    },
+    condition: {
+      type: String,
+      enum: ['New', 'Used'],
+      default: 'New',
+      trim: true
+    },
     Creates: {
     },
     branchId: { type: String, default: 'HQ' },

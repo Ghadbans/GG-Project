@@ -5,7 +5,7 @@ import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { Autocomplete, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Divider } from '@mui/material'
+import { Autocomplete, MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, FormLabel, RadioGroup, FormControlLabel, Radio, Checkbox, Input, OutlinedInput, InputAdornment, Modal, Backdrop, Fade, Box, Divider } from '@mui/material'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -127,8 +127,22 @@ function ItemForm() {
     fetchUser()
   }, [dispatch]);
   const [unitInfo, setUnitInfo] = useState([]);
-  const [typeItem, setTypeItem] = useState("");
+  const [typeItem, setTypeItem] = useState("Goods");
+  const [isUsed, setIsUsed] = useState(false);
   const [itemName, setItemName] = useState("");
+
+  const handleToggleUsed = (e) => {
+    const checked = e.target.checked;
+    setIsUsed(checked);
+    if (checked) {
+      if (!itemName.includes('Ⓤ')) {
+        const trimmed = itemName.trim();
+        setItemName(trimmed ? `${trimmed} Ⓤ` : 'Ⓤ');
+      }
+    } else {
+      setItemName(prev => prev.replace(/\s*Ⓤ\s*$/, '').trim());
+    }
+  };
   const [itemStore, setItemStore] = useState("");
   const [unit, setUnit] = useState({});
   const [itemUnit, setItemUnit] = useState('');
@@ -285,6 +299,7 @@ function ItemForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
+    const itemIsUsed = isUsed || itemName.includes('Ⓤ');
     const data = {
       _id: v4(),
       typeItem, itemName, itemStore, unit: unit.itemUnit
@@ -295,7 +310,10 @@ function ItemForm() {
       }, itemManufacturer,
       itemBrand, itemCostPrice,
       itemQuantity, itemSellingPrice, itemDescription,
-      stockOnHand, synced: false
+      stockOnHand,
+      isUsed: itemIsUsed,
+      condition: itemIsUsed ? 'Used' : 'New',
+      synced: false
     }
     try {
       const res = await axios.post(`${ENDPOINT_URL}/create-item`, data);
@@ -376,6 +394,27 @@ function ItemForm() {
               Item Information
             </Typography>
             <Grid container spacing={2}>
+              <Grid item xs={12} sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      size="small"
+                      checked={isUsed}
+                      onChange={handleToggleUsed}
+                      sx={{
+                        color: '#e65100',
+                        '&.Mui-checked': { color: '#e65100' }
+                      }}
+                    />
+                  }
+                  label={
+                    <span style={{ fontWeight: 700, fontSize: '13px', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <span>Used Item</span>
+                      <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '0 4px', fontSize: '11px' }}>Ⓤ</span>
+                    </span>
+                  }
+                />
+              </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
@@ -632,7 +671,7 @@ function ItemForm() {
             <div >
               <form onSubmit={handleSubmit}>
                 <Grid container style={{ alignItems: 'center', padding: '20px' }} spacing={2} component={Paper}>
-                  <Grid item xs={12} style={{ display: 'flex' }}>
+                  <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
                     <FormControl>
                       <FormLabel>Type</FormLabel>
                       <RadioGroup
@@ -645,9 +684,26 @@ function ItemForm() {
                         <FormControlLabel value='Services' control={<Radio />} label="Services" />
                       </RadioGroup>
                     </FormControl>
-                    <div>
-                      <h2>{typeItem}</h2>
-                    </div>
+                    {typeItem === 'Goods' && (
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={isUsed}
+                            onChange={handleToggleUsed}
+                            sx={{
+                              color: '#e65100',
+                              '&.Mui-checked': { color: '#e65100' }
+                            }}
+                          />
+                        }
+                        label={
+                          <span style={{ fontWeight: 'bold', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                            <span>Used Item</span>
+                            <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '1px 6px', fontSize: '13px' }}>Ⓤ</span>
+                          </span>
+                        }
+                      />
+                    )}
                   </Grid>
                   <Grid item xs={4}>
                     <TextField

@@ -220,7 +220,7 @@ function PointOfSale() {
       resRate.data.data.map((row) => setRate(row.rate))
       const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${page}&limit=60&search=${encodeURIComponent(debouncedSearch)}`)
       setTotalPages(res.data.totalPages)
-      SetItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+      SetItems(res.data.items.filter((row) => row.typeItem === "Goods"))
       setLoadingData(false)
     } catch (error) {
       console.error('Error fetching data:', error);
