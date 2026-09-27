@@ -277,8 +277,13 @@ Route.route("/create-item").post(async (req, res, next) => {
   isUsed,condition,
   branchId } = req.body
 try {
-  const itemIsUsed = isUsed || (itemName || '').includes('Ⓤ');
+  const itemIsUsed = isUsed || (itemName || '').includes('Ⓤ') || condition === 'Used';
   const itemCondition = condition || (itemIsUsed ? 'Used' : 'New');
+  let finalItemName = (itemName || '').trim();
+  if (itemIsUsed) {
+    const clean = finalItemName.replace(/Ⓤ/g, '').trim();
+    finalItemName = clean ? `${clean} Ⓤ` : 'Ⓤ';
+  }
 
   if (typeItem === "Product") {
     const matchStage = branchId ? { branchId, itemCategory } : { itemCategory };
@@ -293,7 +298,7 @@ try {
     req.body.itemUpc.itemNumber = finalNumber;
   
         await itemSchema.create({
-          typeItem,itemName,itemStore,unit,itemDimension,
+          typeItem,itemName: finalItemName,itemStore,unit,itemDimension,
           itemWeight,itemCategory,itemUpc:{
             itemNumber: finalNumber ,
             newCode: itemUpc.newCode
@@ -312,7 +317,7 @@ try {
 
   }else {
     await itemSchema.create({
-      typeItem,itemName,itemStore,unit
+      typeItem,itemName: finalItemName,itemStore,unit
       ,itemDimension,
       itemWeight,itemCategory,itemUpc,itemManufacturer,
       itemBrand,itemCostPrice,
@@ -371,7 +376,16 @@ Route.route("/low-margin-item").get(async (req,res) => {
 // Update single item
 Route.route("/update-item/:id").put(async (req, res, next) => {
   const id = req.params.id
-  const {itemName,itemDescription} = req.body
+  let finalItemName = (req.body.itemName || '').trim();
+  const itemIsUsed = req.body.isUsed || finalItemName.includes('Ⓤ') || req.body.condition === 'Used';
+  if (itemIsUsed && finalItemName) {
+    const clean = finalItemName.replace(/Ⓤ/g, '').trim();
+    finalItemName = clean ? `${clean} Ⓤ` : 'Ⓤ';
+    req.body.itemName = finalItemName;
+    req.body.isUsed = true;
+    req.body.condition = 'Used';
+  }
+  const {itemName = finalItemName, itemDescription} = req.body
   try {
     await Promise.all([
       itemSchema.findByIdAndUpdate(req.params.id, {

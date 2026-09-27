@@ -135,12 +135,24 @@ function ItemForm() {
     const checked = e.target.checked;
     setIsUsed(checked);
     if (checked) {
-      if (!itemName.includes('Ⓤ')) {
-        const trimmed = itemName.trim();
-        setItemName(trimmed ? `${trimmed} Ⓤ` : 'Ⓤ');
+      const clean = itemName.replace(/Ⓤ/g, '').trim();
+      setItemName(clean ? `${clean} Ⓤ` : 'Ⓤ');
+    } else {
+      setItemName(itemName.replace(/\s*Ⓤ\s*/g, ' ').trim());
+    }
+  };
+
+  const handleItemNameChange = (e) => {
+    const val = e.target.value;
+    if (isUsed) {
+      const clean = val.replace(/Ⓤ/g, '').replace(/\s+$/, '');
+      if (clean.length > 0) {
+        setItemName(`${clean} Ⓤ`);
+      } else {
+        setItemName('Ⓤ');
       }
     } else {
-      setItemName(prev => prev.replace(/\s*Ⓤ\s*$/, '').trim());
+      setItemName(val);
     }
   };
   const [itemStore, setItemStore] = useState("");
@@ -299,10 +311,15 @@ function ItemForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
-    const itemIsUsed = isUsed || itemName.includes('Ⓤ');
+    let finalItemName = itemName.trim();
+    if (isUsed) {
+      const clean = finalItemName.replace(/Ⓤ/g, '').trim();
+      finalItemName = clean ? `${clean} Ⓤ` : 'Ⓤ';
+    }
+    const itemIsUsed = isUsed || finalItemName.includes('Ⓤ');
     const data = {
       _id: v4(),
-      typeItem, itemName, itemStore, unit: unit.itemUnit
+      typeItem, itemName: finalItemName, itemStore, unit: unit.itemUnit
       , itemDimension,
       itemWeight, itemCategory, itemUpc: {
         itemNumber,
@@ -422,7 +439,7 @@ function ItemForm() {
                   size="small"
                   label="Item Name *"
                   value={itemName}
-                  onChange={(e) => setItemName(e.target.value)}
+                  onChange={handleItemNameChange}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -671,39 +688,41 @@ function ItemForm() {
             <div >
               <form onSubmit={handleSubmit}>
                 <Grid container style={{ alignItems: 'center', padding: '20px' }} spacing={2} component={Paper}>
-                  <Grid item xs={12} style={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+                  <Grid item xs={12}>
                     <FormControl>
                       <FormLabel>Type</FormLabel>
-                      <RadioGroup
-                        required
-                        row
-                        name="typeItem"
-                        value={typeItem}
-                        onChange={e => setTypeItem(e.target.value)}>
-                        <FormControlLabel value='Goods' control={<Radio />} label="Goods" />
-                        <FormControlLabel value='Services' control={<Radio />} label="Services" />
-                      </RadioGroup>
-                    </FormControl>
-                    {typeItem === 'Goods' && (
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={isUsed}
-                            onChange={handleToggleUsed}
-                            sx={{
-                              color: '#e65100',
-                              '&.Mui-checked': { color: '#e65100' }
-                            }}
+                      <Box sx={{ display: 'flex', alignItems: 'center', gap: '30px' }}>
+                        <RadioGroup
+                          required
+                          row
+                          name="typeItem"
+                          value={typeItem}
+                          onChange={e => setTypeItem(e.target.value)}>
+                          <FormControlLabel value='Goods' control={<Radio />} label="Goods" />
+                          <FormControlLabel value='Services' control={<Radio />} label="Services" />
+                        </RadioGroup>
+                        {typeItem === 'Goods' && (
+                          <FormControlLabel
+                            control={
+                              <Checkbox
+                                checked={isUsed}
+                                onChange={handleToggleUsed}
+                                sx={{
+                                  color: '#e65100',
+                                  '&.Mui-checked': { color: '#e65100' }
+                                }}
+                              />
+                            }
+                            label={
+                              <span style={{ fontWeight: 'bold', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <span>Used Item</span>
+                                <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '1px 6px', fontSize: '13px' }}>Ⓤ</span>
+                              </span>
+                            }
                           />
-                        }
-                        label={
-                          <span style={{ fontWeight: 'bold', color: isUsed ? '#e65100' : '#475569', display: 'flex', alignItems: 'center', gap: '6px' }}>
-                            <span>Used Item</span>
-                            <span style={{ backgroundColor: '#fff3e0', color: '#e65100', border: '1px solid #ffe0b2', borderRadius: '4px', padding: '1px 6px', fontSize: '13px' }}>Ⓤ</span>
-                          </span>
-                        }
-                      />
-                    )}
+                        )}
+                      </Box>
+                    </FormControl>
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
@@ -712,7 +731,7 @@ function ItemForm() {
                       name='itemName'
                       value={itemName}
                       label='Item Name'
-                      onChange={(e) => setItemName(e.target.value)}
+                      onChange={handleItemNameChange}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>
