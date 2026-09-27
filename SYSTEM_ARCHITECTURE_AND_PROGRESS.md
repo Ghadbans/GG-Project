@@ -77,6 +77,13 @@
     - In the 3 store catalog displays (**Point of Sale** / `PointOfSale.js`, **Store Item Display** / `StoreItemDisplay.js`, **Technician Store Catalog** / `TechnicianStoreDisplay.js`), `GET /item-shop` applies strict `.sort({ _id: -1 })` and frontend `.reverse()` calls were removed, guaranteeing that newly added items are always displayed first (newest to oldest).
 
 ## Current Progress Log
+- **Item Deletion Modal Close & State Teardown Fix (Ver 3.5.36)**:
+  - **Resolved Frozen "Data Successfully Deleted" Dialog (`ItemViewAdmin.js`)**:
+    - Fixed state mismatch where `handleCloseModal` called `setLoadingOpenModal(false)` instead of `setModalOpenLoading(false)`.
+    - Because `modalOpenLoading` remained `true`, the success dialog stayed permanently stuck on screen after deleting items, freezing the interface until a full page refresh.
+    - Updated `handleCloseModal` and `handleClose` to explicitly reset `modalOpenLoading(false)`, `loadingOpenModal(false)`, `openReasonDelete(false)`, `openDeleteAll(false)`, `openDeleteMultiple(false)`, `open(false)`, `selectedRows([])`, and `reason('')`.
+    - Updated row-level delete buttons to immediately set `selectedRows([params.row._id])` and open the confirmation dialog cleanly.
+  - **Release & Distribution**: Bumped version to `3.5.36`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.36.exe`, and pushed commit to GitHub `origin main`.
 - **Used Items UI Alignment & Non-Deletable Ⓤ Suffix Enforcement (Ver 3.5.35)**:
   - **Type & Used Item Radio/Checkbox Same-Line Alignment (`ItemForm.js`, `ItemFormUpdate.js`, `ItemFormClone.js`)**: Wrapped `RadioGroup` (Goods / Services) and the `[x] Used Item (Ⓤ)` `FormControlLabel` in a shared horizontal flex box `<Box sx={{ display: 'flex', alignItems: 'center', gap: '30px' }}>` nested under `<FormLabel>Type</FormLabel>`. This guarantees that the checkbox and radio buttons align on the exact same horizontal baseline without vertical offset.
   - **Non-Deletable Ⓤ Suffix Engine (`handleItemNameChange` & server routes)**: Implemented input change interceptors and server sanitation ensuring that as long as `Used Item` is checked, the ` Ⓤ` symbol cannot be removed or accidentally deleted via backspace/editing. When user unchecks the box, ` Ⓤ` is cleanly stripped. Both frontend `handleSubmit` and backend `create-item` / `update-item` enforce that used items always conclude with ` Ⓤ`.

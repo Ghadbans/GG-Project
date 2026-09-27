@@ -321,21 +321,32 @@ function ItemViewAdmin() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
+    setModalOpenLoading(false);
     setOpen(false);
   };
 
   const handleCloseModal = () => {
+    setModalOpenLoading(false);
     setLoadingOpenModal(false);
+    setOpenReasonDelete(false);
     setOpenDeleteAll(false);
     setOpenDeleteMultiple(false);
     setOpen(false);
-    fetchItems(page, searchTerm, filterField, filterValue); // Refresh data without reload
+    setSelectedRows([]);
+    setReason('');
+    fetchItems(page, debouncedSearchTerm || searchTerm, filterField, filterValue); // Refresh data without reload
   };
 
   const handleDelete = async () => {
     try {
       const res = await axios.delete(`${ENDPOINT_URL}/delete-item/${DeleteId}`);
       if (res) {
+        setOpen(false);
+        setOpenReasonDelete(false);
+        setOpenDeleteAll(false);
+        setOpenDeleteMultiple(false);
+        setSelectedRows([]);
+        setReason('');
         handleOpenModal();
       }
     } catch (error) {
@@ -511,7 +522,13 @@ function ItemViewAdmin() {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
-            <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0}>
+            <IconButton
+              onClick={() => {
+                setSelectedRows([params.row._id]);
+                setOpenDeleteAll(true);
+              }}
+              disabled={ItemInfoD.length === 0}
+            >
               <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
             </IconButton>
           </span>
@@ -555,7 +572,13 @@ function ItemViewAdmin() {
       field: 'Delete', headerName: 'Delete', width: 60, minWidth: 60, renderCell: (params) => (
         <DeleteTooltip title="Delete">
           <span>
-            <IconButton onClick={handleOpenAll} disabled={ItemInfoD.length === 0}>
+            <IconButton
+              onClick={() => {
+                setSelectedRows([params.row._id]);
+                setOpenDeleteAll(true);
+              }}
+              disabled={ItemInfoD.length === 0}
+            >
               <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />
             </IconButton>
           </span>
