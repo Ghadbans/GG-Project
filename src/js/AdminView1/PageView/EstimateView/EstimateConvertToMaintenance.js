@@ -881,7 +881,7 @@ function EstimateConvertToMaintenance() {
                         <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                           {children}
                           <div>
-                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={!canCreateItem} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                               ADD NEW CUSTOMER
                             </button>
                           </div>
@@ -1185,7 +1185,7 @@ function EstimateConvertToMaintenance() {
                                                           <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                                                             {children}
                                                             <div>
-                                                              <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                              <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={!canCreateItem} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                 ADD NEW Item
                                                               </button>
                                                             </div>
@@ -1229,7 +1229,7 @@ function EstimateConvertToMaintenance() {
                                                   name='itemRate' id='itemRate'
                                                   value={Item.itemRate}
 
-                                                  disabled={user.data.role !== 'CEO'}
+                                                  disabled={!isOwner}
                                                   onChange={(e) => handleChange(e, i)}
                                                   size="small"
                                                   sx={{ width: '100px', backgroundColor: 'white' }}

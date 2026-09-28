@@ -200,9 +200,20 @@ function MaintenanceOrderViewInformation() {
     fetchNumber()
   }, [user])
 
-  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const isOwner = user?.data?.userName === 'GG';
+  const currentEmployee = (employee || []).find(e => 
+    (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
+  );
+  const isTechnician = !isOwner && (
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+    (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
+    (user?.data?.role || '').toUpperCase() === 'TECHNICIAN'
+  );
+  const canViewCosts = isOwner || !isTechnician;
   const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.editM === true);
 
+  const [employee, setEmployee] = useState([]);
   const [maintenance, setMaintenance] = useState([]);
   const [quotation, setQuotation] = useState([]);
   const [item, SetItems] = useState([]);
@@ -215,10 +226,11 @@ function MaintenanceOrderViewInformation() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [resM, resI, resSingle, resEstimate] = await Promise.all([
+        const [resM, resI, resEmp, resSingle, resEstimate] = await Promise.all([
           // Dynamically fetch technician filtered list for sidebar
           axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?summary=true&limit=1000&technician=${encodeURIComponent(user?.data?.userName || '')}&isOffice=${user?.data?.grantAccess?.some(r => (r.moduleName === "Maintenance" || r.moduleName === "Maintenance-Order") && r.access.readM) || grantAccess?.some(r => (r.moduleName === "Maintenance" || r.moduleName === "Maintenance-Order") && r.access.readM) || user?.data?.role === 'CEO' || user?.data?.userName === 'GG'}`),
           axios.get(`${ENDPOINT_URL}/item`),
+          axios.get(`${ENDPOINT_URL}/employee`),
           axios.get(`${ENDPOINT_URL}/get-maintenance/${id}`),
           axios.get(`${ENDPOINT_URL}/estimation?summary=true`)
         ]);
@@ -226,6 +238,7 @@ function MaintenanceOrderViewInformation() {
         const allMaintenance = resM.data.itemI || resM.data.data;
         setMaintenance(allMaintenance.sort((a,b) => b.serviceNumber - a.serviceNumber));
         SetItems(resI.data.data);
+        setEmployee(resEmp.data?.data || []);
 
         // Process single maintenance record data
         const maintenanceData = resSingle.data.data;
@@ -1104,7 +1117,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                     <Typography>Edit (Converted)</Typography>
                                                   </span>
                                                 ) : (
-                                                  <NavLink to={`/MaintenanceOrderUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                                  <NavLink to={canViewCosts ? `/MaintenanceUpdateView/${row._id}` : `/MaintenanceOrderUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                                     <EditIcon />
                                                     <Typography>Edit</Typography>
                                                   </NavLink>

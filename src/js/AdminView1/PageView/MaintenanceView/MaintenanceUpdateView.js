@@ -239,15 +239,19 @@ function MaintenanceUpdateView() {
     fetchGrant();
   }, [user]);
 
-  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const isOwner = user?.data?.userName === 'GG';
   const currentEmployee = (employee || []).find(e => 
     (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
   );
-  const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
-                       (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
-                       (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
-                       (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
-  const canViewCosts = isOwner || (!isTechnician && costVisibility);
+  const isTechnician = !isOwner && (
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+    (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
+    (user?.data?.role || '').toUpperCase() === 'TECHNICIAN'
+  );
+  const canViewCosts = isOwner || !isTechnician;
+  const canCreateCustomer = isOwner || grantAccess.some(row => row.moduleName === "Customer" && row.access.createM === true);
+  const canCreateItem = isOwner || grantAccess.some(row => row.moduleName === "Item" && row.access.createM === true);
 
   // Side Shop State
   const [sideShopOpen, setSideShopOpen] = useState(false);
@@ -1647,7 +1651,7 @@ function MaintenanceUpdateView() {
                     <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
                       <InputLabel htmlFor="serviceNumber">Service Order Number</InputLabel>
                       <OutlinedInput
-                        disabled={user.data.role !== 'CEO'}
+                        disabled={!isOwner}
 
                         id='serviceNumber'
                         name='serviceNumber'
@@ -1975,7 +1979,7 @@ function MaintenanceUpdateView() {
                                                               {children}
                                                               {canViewCosts && (
                                                                 <div>
-                                                                  <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                  <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={!canCreateItem} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                     ADD NEW Item
                                                                   </button>
                                                                 </div>
@@ -2019,7 +2023,7 @@ function MaintenanceUpdateView() {
                                                     <TextField
                                                       name='itemRate' id='itemRate'
                                                       value={Item.itemRate}
-                                                      disabled={user.data.role !== 'CEO'}
+                                                      disabled={!isOwner}
                                                       onChange={(e) => handleChange(e, Item.idRow)}
                                                       size="small"
                                                       sx={{ width: '100px', backgroundColor: 'white' }}

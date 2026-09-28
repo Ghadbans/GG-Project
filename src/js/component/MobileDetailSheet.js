@@ -169,7 +169,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
   const userName = user?.data?.userName || '';
   const userRole = user?.data?.role || '';
   const userDepartment = user?.data?.department || '';
-  const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
+  const isSuperUser = userName === 'GG';
   const isTechnician = userRole?.toUpperCase() === 'TECHNICIAN' || 
                        userRole?.toUpperCase() === 'TECHNICIEN' || 
                        userDepartment?.toUpperCase() === 'TECHNICIAN' || 

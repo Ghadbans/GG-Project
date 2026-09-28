@@ -243,15 +243,19 @@ function MaintenanceFormView() {
     fetchGrant();
   }, [user]);
 
-  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const isOwner = user?.data?.userName === 'GG';
   const currentEmployee = (employee || []).find(e => 
     (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
   );
-  const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
-                       (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
-                       (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
-                       (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
-  const canViewCosts = isOwner || (!isTechnician && costVisibility);
+  const isTechnician = !isOwner && (
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+    (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
+    (user?.data?.role || '').toUpperCase() === 'TECHNICIAN'
+  );
+  const canViewCosts = isOwner || !isTechnician;
+  const canCreateCustomer = isOwner || grantAccess.some(row => row.moduleName === 'Customer' && row.access.createM === true);
+  const canCreateItem = isOwner || grantAccess.some(row => row.moduleName === 'Item' && row.access.createM === true);
 
   const isEmployedTechnician = (row) => {
     if (!row) return false;
@@ -1240,7 +1244,7 @@ function MaintenanceFormView() {
                         <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                           {children}
                           <div>
-                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={!canCreateItem} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                               ADD NEW CUSTOMER
                             </button>
                           </div>
@@ -1553,7 +1557,7 @@ function MaintenanceFormView() {
                                                             {children}
                                                             {canViewCosts && (
                                                               <div>
-                                                                <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                                                                <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={!canCreateItem} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                                                                   ADD NEW Item
                                                                 </button>
                                                               </div>
@@ -1598,7 +1602,7 @@ function MaintenanceFormView() {
                                                   <TextField
                                                     name='itemRate' id='itemRate'
                                                     value={Item.itemRate}
-                                                    disabled={user.data.role !== 'CEO'}
+                                                    disabled={!isOwner}
                                                     onChange={(e) => handleChange(e, i)}
                                                     size="small"
                                                     sx={{ width: '100px', backgroundColor: 'white' }}

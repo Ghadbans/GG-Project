@@ -1086,7 +1086,7 @@ function MaintenanceFormClone() {
                                                   name='itemRate' id='itemRate'
                                                   value={Item.itemRate}
 
-                                                  disabled={user?.data?.role || '' !== 'CEO'}
+                                                  
                                                   onChange={(e) => handleChange(e, i)}
                                                   size="small"
                                                   sx={{ width: '100px', backgroundColor: 'white' }}

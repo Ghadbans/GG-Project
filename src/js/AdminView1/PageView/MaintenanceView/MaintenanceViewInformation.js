@@ -211,17 +211,19 @@ function MaintenanceViewInformation() {
     fetchGrantAndEmployee();
   }, [user]);
 
-  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const isOwner = user?.data?.userName === 'GG';
   const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.editM === true);
 
   const currentEmployee = (employee || []).find(e => 
     (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
   );
-  const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
-                       (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
-                       (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
-                       (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
-  const canViewCosts = isOwner || (!isTechnician && costVisibility);
+  const isTechnician = !isOwner && (
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+    (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
+    (user?.data?.role || '').toUpperCase() === 'TECHNICIAN'
+  );
+  const canViewCosts = isOwner || !isTechnician;
 
   const [maintenance, setMaintenance] = useState([]);
   const [quotation, setQuotation] = useState([]);

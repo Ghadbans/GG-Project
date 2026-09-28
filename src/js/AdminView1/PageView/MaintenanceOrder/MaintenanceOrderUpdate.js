@@ -1,3 +1,4 @@
+import { cachedGet } from '../../../utils/apiCache';
 import { useDocumentLock } from '../../../hooks/useDocumentLock';
 import React, { useEffect, useState } from 'react';
 import { useIsMobile } from '../../../utils/isMobile';
@@ -1567,7 +1568,7 @@ function MaintenanceOrderUpdate() {
                     <FormControl sx={{ width: '100%', backgroundColor: 'white' }}>
                       <InputLabel htmlFor="serviceNumber">Service Order Number</InputLabel>
                       <OutlinedInput
-                        disabled={user.data.role !== 'CEO'}
+                        disabled={!isOwner}
 
                         id='serviceNumber'
                         name='serviceNumber'
@@ -1765,10 +1766,10 @@ function MaintenanceOrderUpdate() {
                             <tr>
                               <th>#</th>
                               <th>Item</th>
-                              <th style={{ display: 'none' }}>Stock-A</th>
+                              {canViewCosts && <th>Stock-A</th>}
                               <th>Quantity</th>
-                              <th style={{ display: 'none' }}>Rate</th>
-                              <th style={{ display: 'none' }}>Discount</th>
+                              {canViewCosts && <th>Rate</th>}
+                              {canViewCosts && <th>Discount</th>}
                               <th>Action</th>
                             </tr>
                           </thead>
@@ -1889,15 +1890,11 @@ function MaintenanceOrderUpdate() {
                                                     )
                                                   }
                                                 </td>
-                                                <td style={{ display: 'none' }}>
-<TextField name="stock" id='stock'
-                                                    value={Item.stock}
-
-                                                    onChange={(e) => handleChange(e, Item.idRow)}
-                                                    size="small"
-                                                    sx={{ width: '100px', backgroundColor: 'white' }}
-                                                  />
-                                                </td>
+                                                {canViewCosts && (
+                                                  <td>
+                                                    <TextField name='stock' id='stock' disabled value={Item.stock} onChange={(e) => handleChange(e, Item.idRow)} size='small' sx={{ width: '100px', backgroundColor: 'white' }} />
+                                                  </td>
+                                                )}
                                                 <td>
                                                   <TextField
                                                     name='itemQty' id='itemQty'
@@ -1908,26 +1905,16 @@ function MaintenanceOrderUpdate() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </td>
-                                                <td style={{ display: 'none' }}>
-<TextField name="itemRate" id='itemRate'
-                                                    value={Item.itemRate}
-
-                                                    disabled={user.data.role !== 'CEO'}
-                                                    onChange={(e) => handleChange(e, Item.idRow)}
-                                                    size="small"
-                                                    sx={{ width: '100px', backgroundColor: 'white' }}
-                                                  />
-                                                </td>
-                                                <td style={{ display: 'none' }}>
-<TextField name="itemDiscount" id='itemDiscount'
-                                                    value={Item.itemDiscount}
-                                                    onChange={(e) => handleChange(e, Item.idRow)}
-                                                    size="small"
-
-                                                    placeholder='1 to 5 %'
-                                                    sx={{ width: '100px', backgroundColor: 'white' }}
-                                                  />
-                                                </td>
+                                                {canViewCosts && (
+                                                  <td>
+                                                    <TextField name='itemRate' id='itemRate' value={Item.itemRate} onChange={(e) => handleChange(e, Item.idRow)} size='small' sx={{ width: '100px', backgroundColor: 'white' }} />
+                                                  </td>
+                                                )}
+                                                {canViewCosts && (
+                                                  <td>
+                                                    <TextField name='itemDiscount' id='itemDiscount' value={Item.itemDiscount} onChange={(e) => handleChange(e, Item.idRow)} size='small' placeholder='1 to 5 %' sx={{ width: '100px', backgroundColor: 'white' }} />
+                                                  </td>
+                                                )}
                                                 
                                                 <td style={{ textAlign: 'center' }} >
                                                   <span style={{ display: 'flex' }}>
@@ -1999,27 +1986,17 @@ function MaintenanceOrderUpdate() {
                                   sx={{ width: '150px', backgroundColor: 'white' }}
                                 />
                               </td>
-                              <td style={{ display: 'none' }}>
-<TextField id="adjustmentNumber"
-                                  disabled={action === undefined || action === 'Carry-In'}
-                                  size="small"
-                                  placeholder='labor fees'
-                                  name='adjustmentNumber'
-                                  value={adjustmentNumber}
-                                  onChange={(e) => setAdjustmentNumber(e.target.value)}
-                                  sx={{ width: '150px', backgroundColor: 'white' }}
-                                />
-                              </td>
-                              <td style={{ display: 'none' }}>
-<TextField name="laborDiscount" id='laborDiscount'
-                                  size="small"
-                                  value={laborDiscount}
-                                  onChange={(e) => setLaborDiscount(e.target.value)}
-                                  placeholder='Discount'
-                                  sx={{ backgroundColor: 'white' }}
-                                />
-                              </td>
-                              <td style={{ display: 'none' }}></td>
+                              {canViewCosts && (
+                                <td>
+                                  <TextField id='adjustmentNumber' disabled={action === undefined || action === 'Carry-In'} size='small' placeholder='labor fees' name='adjustmentNumber' value={adjustmentNumber} onChange={(e) => setAdjustmentNumber(e.target.value)} sx={{ width: '150px', backgroundColor: 'white' }} />
+                                </td>
+                              )}
+                              {canViewCosts && (
+                                <td>
+                                  <TextField name='laborDiscount' id='laborDiscount' size='small' value={laborDiscount} onChange={(e) => setLaborDiscount(e.target.value)} placeholder='Discount' sx={{ backgroundColor: 'white' }} />
+                                </td>
+                              )}
+                              {canViewCosts && <td></td>}
                             </tr>
                             <tr>
                               <td></td>

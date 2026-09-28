@@ -164,7 +164,7 @@ function MaintenanceOrderAdmin() {
     fetchNumber()
   }, [user])
 
-  const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+  const isOwner = user?.data?.userName === 'GG';
   const MaintenanceInfoC = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.createM === true);
   const MaintenanceInfoV = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.readM === true);
   const MaintenanceInfoU = grantAccess.filter((row) => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.editM === true);

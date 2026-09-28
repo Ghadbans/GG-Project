@@ -29,22 +29,30 @@
 20. **Strict Isolation of Mobile Application Layout from Desktop & Web (Ver 3.5.09)**: The mobile application layout (`MobileLayout`, `MobileCardList`, mobile bottom tabs) must be strictly isolated to native Capacitor mobile environments (`window.Capacitor.isNativePlatform()`), real mobile handheld devices (smartphones/tablets via user-agent), or explicit debug query `?mobile=true`. Desktop executable (.exe / Electron) and desktop browsers MUST NEVER switch to mobile layout when users resize, snap, or minimize windows (`window.innerWidth < 900` fallback completely removed).
 21. **Brand Identity & Icon Preservation**: Root `Icon.png` and `src/js/img/Image1.png` represent the official stylized **GG** (Global Gate) brand logo. Never overwrite them with generic placeholder or mobile generator assets. Always maintain the official Global Gate icon across Electron builds and titlebars.
 22. **Null-Safe Client-Side Search & Filter Expressions (Ver 3.5.11)**: When implementing client-side `.filter()` or `.includes()` searches on collection records, NEVER invoke `.toLowerCase()`, `.toString()`, `.trim()`, or `.includes()` directly on unvalidated object fields (e.g. `row.manufacturerNumber.toLowerCase()`). In MongoDB, historical records or optional fields frequently have `null` or `undefined` values. Always use safe conditional checks or optional chaining (e.g. `(row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false)`). Failing to guard against `null` will throw an unhandled `TypeError: Cannot read properties of null (reading 'toLowerCase')` and trigger an empty white screen crash.
-23. **Technician Financial Privacy & Cost/Rate/Stock Hiding (Ver 3.5.21)**:
-    - Employees registered in the `TECHNICIAN` department (or users with `role: 'TECHNICIAN'`, or with Grant Access `costVisibility: false`) MUST NEVER be exposed to item rates, item costs, service prices, stock quantities (`Stock-A`), labor fee financial charges, discounts, or grand totals in ANY view or edit screen across the system (including `MaintenanceFormView`, `MaintenanceUpdateView`, `MaintenanceViewInformation`, `MaintenanceOrderUpdate`, `MaintenanceOrderViewInformation`, `TechnicianStoreCatalog`, etc.).
+23. **Technician Financial Privacy & Cost/Rate/Stock Hiding vs Universal Grant Access (Ver 3.5.21 & 3.5.38)**:
+    - **Strict Scope:** The restriction to hide item rates, item costs, service prices, stock quantities (`Stock-A`), labor fee financial charges, discounts, and grand totals applies **STRICTLY AND ONLY to TECHNICIANS** (users whose employee department is `TECHNICIAN` / `TECHNICIEN` / contains `TECH` or role is `TECHNICIAN`).
+    - **All Other Users (Grant Access Authority):** All non-technician users (Office, Operations, Accounting, Sales, Admin, etc.) who have Grant Access permissions to Maintenance (`viewM`, `readM`, `editM`, `createM`) **MUST see all costs, rates, discounts, stock, labor fees, and totals identically to CEO**.
+    - **Only Account `GG` Bypasses Grant Access:** Username `GG` is the creator and bypasses Grant Access unconditionally. All other roles (CEO, Admin, User) strictly follow their `grantAccess` module permissions.
     - Universal permission formula across maintenance and technician components:
       ```javascript
-      const isOwner = user?.data?.userName === 'GG' || user?.data?.role === 'CEO';
+      const isOwner = user?.data?.userName === 'GG';
       const currentEmployee = (employee || []).find(e => 
         (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
       );
-      const isTechnician = (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
-                           (user?.data?.role || '').toUpperCase() === 'TECHNICIAN';
-      const canViewCosts = isOwner || (!isTechnician && costVisibility);
+      const isTechnician = !isOwner && (
+        (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+        (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+        (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
+        (user?.data?.role || '').toUpperCase() === 'TECHNICIAN'
+      );
+      const canViewCosts = isOwner || !isTechnician;
       ```
-    - When `!canViewCosts`:
+    - When `!canViewCosts` (Technicians):
       1. In form/update tables: Only display `#`, `Item`, `Quantity`, and `Action`. Completely suppress `Stock-A`, `Rate`, `Discount`, `Amount`, `Labor Fees` financial charge/discount, and `Total Generale`.
       2. In detail/view pages: Render the dedicated 4-column "Items Used" table (`Parts/s Model`, `Description`, `Brand`, `Qty`) with no financial headers, labor totals, or grand totals.
-      3. Technicians can still edit maintenance orders via Grant Access permissions (`Maintenance` / `Maintenance-Order` `editM`), but their edit view must strictly enforce the restricted columns.
+    - When `canViewCosts` (Non-technicians with Grant Access & `GG`):
+      1. Full visibility and editability of all pricing, rates, discounts, stock-A, labor fees, and total generale.
+      2. Edit navigation routes directly to `MaintenanceUpdateView`.
 24. **Global Delete Confirmation Modal Lifecycle & State Teardown (Ver 3.5.22)**:
     - In all admin listing views with single or bulk deletion (`MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `CustomerViewAdmin`, `EstimateViewAdmin`, `ItemViewAdmin`, `ProjectViewAdmin`, `SellShopInvoiceView`, `SupplierAdminView`, `TewmViewAdmin`, `DailyExpenses`, `UserAccount`, `RolePermission`, `EmployeePlaningView`), the delete reason/confirmation modal must NEVER be left open after submission.
     - Handlers (`handleDeleteMany`, `handleDelete`, `handleDeleteUpdate`) MUST explicitly close all associated modal states (`setOpenReasonDelete(false)`, `setOpenDeleteAll(false)`, `setOpenDeleteMultiple(false)` or `handleCloseReasonDelete()`), reset selection models (`setSelectedRows([])`), and clear reason text (`setReason('')`) before opening the deletion success dialog.
@@ -1095,3 +1103,17 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     3. **Backend Robustness & Duplicate Key Handling (`server/routes/supplierRoutes.js`):** Sanitized `POST /create-Supplier` to strip non-ObjectId `_id` values defensively, added `try/catch` with explicit duplicate store name detection (`err.code === 11000` returning `400 "A supplier with this Store Name already exists"`), and eliminated duplicate `mongoose` require declarations.
     4. **Dynamic Error Modal:** Updated `SupplierForm.js` and `SupplierForm2.js` error modals to display the exact server error message to the user rather than a generic error.
   - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), Windows installer built (`dist/Global Gate Setup 3.5.37.exe`).
+
+- **Technician-Only Cost Privacy & Universal Grant Access Alignment (Ver 3.5.38)**:
+  - **Problem Reported:** Non-technician users (e.g. `JUNIOR KAJIKU TSHIYESU`) who were granted Maintenance permissions in the Grant Access module had item prices, stock, labor fees, and totals hidden when viewing/editing maintenance orders, and were improperly routed to the simplified technician screen.
+  - **Core Architectural Rules Re-Enforced:**
+    1. **Only Account `GG` Bypasses Grant Access:** Username `GG` is the creator and bypasses Grant Access unconditionally. All other roles (`CEO`, `ADMIN`, `USER`) strictly follow their `grantAccess` module permissions.
+    2. **Technician Restriction Scope:** The restriction to hide item rates, costs, discounts, amounts, Stock-A, labor fee rates/discounts, and Total Generale applies **STRICTLY AND ONLY to TECHNICIANS** (`department === 'TECHNICIAN' || department === 'TECHNICIEN' || role === 'TECHNICIAN'`).
+    3. **Full Visibility for Authorized Non-Technicians:** Any non-technician user with Grant Access to Maintenance (`viewM`, `readM`, `createM`, `editM`) sees all costs, rates, discounts, stock, labor fees, and total generale identically to CEO.
+  - **Files Updated & Hardened:**
+    1. `MaintenanceUpdateView.js` & `MaintenanceFormView.js`: Fixed `canViewCosts = isOwner || !isTechnician;`, removed legacy `disabled={user.data.role !== 'CEO'}` from `itemRate` inputs, and enabled item addition based on `canCreateItem`.
+    2. `MaintenanceViewInformation.js` & `MaintenanceOrderViewInformation.js`: Fixed `canViewCosts = isOwner || !isTechnician;`, and updated Edit button navigation to route non-technicians directly to `MaintenanceUpdateView` with full financial breakdown.
+    3. `MaintenanceOrderUpdate.js`: Replaced hardcoded `display: 'none'` on `Stock-A`, `Rate`, `Discount`, `Amount`, `Total Generale`, and Labor Fees financials with dynamic `{canViewCosts && ...}` checks, ensuring authorized users opening this view see all financial details.
+    4. `EstimateConvertToMaintenance.js` & `MaintenanceFormClone.js`: Removed restrictive `role !== 'CEO'` constraints on `itemRate`.
+    5. `MobileDetailSheet.js`, `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`: Re-aligned `isOwner` to strictly check `userName === 'GG'`, ensuring all other users follow Grant Access.
+  - **Verification:** AST Babel syntax validation passed across all modified files. Compiled Webpack production & web bundles (`npm run build`), generated Windows desktop installer `dist/Global Gate Setup 3.5.38.exe`, committed and pushed to `origin main` for Railway deployment.
