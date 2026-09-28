@@ -77,6 +77,7 @@ function SupplierForm2({ onCreateOption, onClose }) {
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleOpen = () => {
     setLoadingOpenModal(true);
@@ -85,7 +86,8 @@ function SupplierForm2({ onCreateOption, onClose }) {
       setLoading(false);
     }, 500)
   }
-  const handleError = () => {
+  const handleError = (msg) => {
+    setErrorMessage(msg || "Saving Failed");
     setErrorOpenModal(true);
     setLoading(true);
     setTimeout(() => {
@@ -115,21 +117,35 @@ function SupplierForm2({ onCreateOption, onClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
     const data = {
-      supplierName, storeName, customerPhone1, customerPhone2, address, description, synced: false
+      supplierName,
+      storeName,
+      customerPhone1,
+      customerPhone2,
+      phone: customerPhone1,
+      phone1: customerPhone1,
+      phone2: customerPhone2,
+      address,
+      description,
+      branchId: selectedBranch,
+      synced: false
     };
     try {
       const res = await axios.post(apiUrl, data);
-      if (res) {
+      if (res && (res.status === 200 || res.data?.status === 200)) {
         handleOpen();
-        onCreateOption(res.data.data)
-        const ReferenceInfo = res.data.data._id
-        handleCreateNotification(ReferenceInfo)
+        onCreateOption(res.data.data);
+        const ReferenceInfo = res.data.data?._id;
+        if (ReferenceInfo) {
+          handleCreateNotification(ReferenceInfo);
+        }
+      } else {
+        handleError(res?.data?.message || 'Saving Failed');
       }
     } catch (error) {
-      if (error) {
-        handleError();
-      }
+      const msg = error?.response?.data?.message || error?.message || 'Saving Failed';
+      handleError(msg);
     }
   };
 
@@ -244,7 +260,7 @@ function SupplierForm2({ onCreateOption, onClose }) {
           ) : (
             <div style={{ justifyContent: 'center', textAlign: 'center' }}>
               <p><CancelIcon style={{ color: 'red', height: '40px', width: '40px' }} /></p>
-              <h2 style={{ color: 'red' }}>Saving Failed</h2>
+              <h2 style={{ color: 'red' }}>{errorMessage || 'Saving Failed'}</h2>
               <button className='btnCustomer' onClick={handleCloseError}>
                 Try Again
               </button>

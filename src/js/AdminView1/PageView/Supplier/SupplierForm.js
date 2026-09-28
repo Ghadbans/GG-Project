@@ -200,6 +200,7 @@ function SupplierForm() {
   const [loading, setLoading] = useState(false);
   const [loadingOpenModal, setLoadingOpenModal] = useState(false);
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleOpen = () => {
     setLoadingOpenModal(true);
@@ -208,7 +209,8 @@ function SupplierForm() {
       setLoading(false);
     }, 500)
   }
-  const handleError = () => {
+  const handleError = (msg) => {
+    setErrorMessage(msg || "Data Failed to Saved");
     setErrorOpenModal(true);
     setLoading(true);
     setTimeout(() => {
@@ -255,8 +257,8 @@ function SupplierForm() {
   const handleSubmit = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
     setSaving('true')
+    const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
     const data = {
-      _id: v4(),
       supplierName,
       storeName,
       customerPhone1,
@@ -266,20 +268,25 @@ function SupplierForm() {
       phone2: customerPhone2,
       address,
       description,
+      branchId: selectedBranch,
       synced: false
     };
     try {
       const res = await axios.post(apiUrl, data);
-      if (res) {
-        const ReferenceInfo = res.data.data._id
-        handleCreateNotification(ReferenceInfo)
+      if (res && (res.status === 200 || res.data?.status === 200)) {
+        const ReferenceInfo = res.data.data?._id;
+        if (ReferenceInfo) {
+          handleCreateNotification(ReferenceInfo);
+        }
         handleOpen();
+      } else {
+        setSaving('');
+        handleError(res?.data?.message || 'Data Failed to Saved');
       }
     } catch (error) {
-      if (error) {
-        setSaving('')
-        handleError();
-      }
+      setSaving('');
+      const msg = error?.response?.data?.message || error?.message || 'Data Failed to Saved';
+      handleError(msg);
     }
   };
   if (isMobile) {
@@ -675,7 +682,7 @@ function SupplierForm() {
           ) : (
             <div style={{ justifyContent: 'center', textAlign: 'center' }}>
               <p><CancelIcon style={{ color: 'red', height: '40px', width: '40px' }} /></p>
-              <h2> Data Failed to Saved</h2>
+              <h2 style={{ color: 'red' }}>{errorMessage || 'Data Failed to Saved'}</h2>
               <button className='btnCustomer' onClick={handleCloseError}>
                 Try Again
               </button>

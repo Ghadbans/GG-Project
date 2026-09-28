@@ -1086,3 +1086,12 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     3. **Action & Edit Permission Enforcement (`src/js/component/MobileDetailSheet.js`):** Secured "Edit" and "Convert" actions with strict `canEdit(type)` permission checks against the logged-in user's `grantAccess` modules.
     4. **Technician Financial Privacy Protection (`src/js/component/MobileDetailSheet.js`):** Enforced Rule 23 across all mobile sheets to ensure technician roles/departments (`TECHNICIAN` / `TECHNICIEN`) cannot view prices, stock, rates, or print financial breakdowns.
   - **Verification:** AST syntax checks passed. Compiled Webpack production and web bundles (`dist_web/`) and generated Windows desktop installer `dist/Global Gate Setup 3.5.30.exe`.
+
+- **Fix 500 Error in Create Supplier & Robust Error Feedback (Ver 3.5.37)**:
+  - **Problem Reported:** When creating a new supplier in the "CREATE NEW SUPPLIER" screen (`SupplierForm.js`), clicking "Save" triggered a 500 error (`POST https://api.globalgate.sarl/endpoint/create-Supplier 500`) causing the "Data Failed to Saved" / "Try Again" error modal.
+  - **Root Cause & Resolution:**
+    1. **Invalid UUID _id Casting:** `SupplierForm.js` was generating and passing `_id: v4()` (a UUID string) in the POST request body. Because `SupplierSchema` (`server/model/suppliersSchema.js`) uses MongoDB's default `ObjectId`, Mongoose threw a `CastError: Cast to ObjectId failed` on the string UUID.
+    2. **Frontend Payload Fix (`SupplierForm.js` & `SupplierForm2.js`):** Removed client-side `_id: v4()` so MongoDB automatically generates valid `ObjectId`s. Added `branchId: localStorage.getItem('selectedBranch') || 'HQ'` to ensure supplier records are properly branch-scoped.
+    3. **Backend Robustness & Duplicate Key Handling (`server/routes/supplierRoutes.js`):** Sanitized `POST /create-Supplier` to strip non-ObjectId `_id` values defensively, added `try/catch` with explicit duplicate store name detection (`err.code === 11000` returning `400 "A supplier with this Store Name already exists"`), and eliminated duplicate `mongoose` require declarations.
+    4. **Dynamic Error Modal:** Updated `SupplierForm.js` and `SupplierForm2.js` error modals to display the exact server error message to the user rather than a generic error.
+  - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), Windows installer built (`dist/Global Gate Setup 3.5.37.exe`).

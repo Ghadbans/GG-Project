@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const Route = express.Router();
 
 function branchFilter(req) {
@@ -50,7 +51,6 @@ let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
 
 const { object } = require("joi");
-const { default: mongoose } = require("mongoose");
 
 // const nodemailer = require('nodemailer');
 // const crypto = require('crypto');
@@ -96,18 +96,32 @@ Route.route("/Supplier", cors(corsOptionsDelegate)).get(
 );
 
 Route.route("/create-Supplier").post(async (req, res, next) => {
-  await SupplierSchema
-    .create(req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const payload = { ...req.body };
+    if (payload._id && !mongoose.Types.ObjectId.isValid(payload._id)) {
+      delete payload._id;
+    }
+    const result = await SupplierSchema.create(payload);
+    return res.status(200).json({
+      data: result,
+      message: "Data successfully added.",
+      status: 200,
     });
+  } catch (err) {
+    console.error("Error in /create-Supplier:", err);
+    if (err.code === 11000) {
+      return res.status(400).json({
+        message: "A supplier with this Store Name already exists.",
+        error: err.message,
+        status: 400
+      });
+    }
+    return res.status(500).json({
+      message: err.message || "Failed to create supplier",
+      error: err.message,
+      status: 500
+    });
+  }
 });
 
 Route.route("/get-Supplier/:id").get(async (req, res, next) => {
