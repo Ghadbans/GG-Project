@@ -235,7 +235,7 @@ function ItemPurchaseViewAdmin() {
           if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName;
           if (row.itemName?.itemName) return row.itemName.itemName;
           if (row.itemName?.name) return row.itemName.name;
-          return row.newDescription || row.itemDescription || '';
+          return row.newDescription || '';
         }).filter(Boolean),
         itemDescriptionInfo: (item.items || []).map((row) => row.itemDescription || '').filter(Boolean)
       }));
@@ -947,7 +947,25 @@ function ItemPurchaseViewAdmin() {
                                   return (
                                     <TableRow key={i}>
                                       <TableCell>{row.itemDescription !== undefined ? row.itemDescription : null}</TableCell>
-                                      <TableCell>{typeof row.itemName === 'string' && row.itemName.trim() !== '' ? row.itemName : (row.itemName?.itemName || row.itemName?.name || row.newDescription || '')}</TableCell>
+                                      <TableCell>
+                                        {(() => {
+                                          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') {
+                                            const found = (item || []).find(x => x._id === row.itemName);
+                                            return (found?.itemName || row.itemName).trim();
+                                          }
+                                          if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim();
+                                          if (row.itemName?.name && row.itemName.name.trim() !== '') return row.itemName.name.trim();
+                                          if (row.itemName?._id) {
+                                            const found = (item || []).find(x => x._id === row.itemName._id);
+                                            if (found?.itemName) return found.itemName.trim();
+                                          }
+                                          if (row._id) {
+                                            const found = (item || []).find(x => x._id === row._id);
+                                            if (found?.itemName) return found.itemName.trim();
+                                          }
+                                          return row.newDescription || '';
+                                        })()}
+                                      </TableCell>
                                       <TableCell>{row.itemQty}</TableCell>
                                       <TableCell>${row.itemRate != null ? parseFloat(row.itemRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
                                       <TableCell>{row.Taux != null ? parseFloat(row.Taux).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>

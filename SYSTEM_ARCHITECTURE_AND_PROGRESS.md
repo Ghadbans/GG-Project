@@ -83,13 +83,19 @@
     - Used items behave 100% identically to normal goods across all linked modules (Purchases, Out, Returns, Invoices, Quotations, Maintenance, Projects, POS, Transfers).
     - In `ItemInformationVIew.js`, used items display a highlighted amber `Ⓤ USED ITEM` badge and condition indicator.
     - In the 3 store catalog displays (**Point of Sale** / `PointOfSale.js`, **Store Item Display** / `StoreItemDisplay.js`, **Technician Store Catalog** / `TechnicianStoreDisplay.js`), `GET /item-shop` applies strict `.sort({ _id: -1 })` and frontend `.reverse()` calls were removed, guaranteeing that newly added items are always displayed first (newest to oldest).
-32. **Item Purchase Zero Quantity Preservation & Universal Item Name Display Normalization (Ver 3.5.39)**:
+32. **Item Purchase Zero Quantity Preservation & Universal Item Name Display Normalization (Ver 3.5.39 & Ver 3.5.40)**:
     - Setting an item's quantity to `0` in `ItemPurchaseUpdateForm.js` or `ItemPurchaseViewForm.js` must NEVER blank out, delete, or detach the item's identity (`itemName`, thumbnail, description, rate).
-    - Normalized data loading in `ItemPurchaseUpdateForm.js` guarantees that `itemName` is consistently structured as an object `{ _id, itemName }` regardless of whether MongoDB stored it as a raw string, an object, or an imported legacy record.
-    - Both `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseViewAdmin.js` (DataGrid `itemInfo` and preview modal `TableCell`) utilize robust `getItemDisplayName()` fallback resolution `typeof row.itemName === 'string' ? row.itemName : (row.itemName?.itemName || row.itemName?.name || row.newDescription || row.itemDescription || '')`.
-    - In DataGrid, `itemInfo` mappings do not filter out rows where `parseFloat(itemQty) === 0`, ensuring all purchase items remain visible in the grid regardless of quantity.
+    - Normalized data loading in `ItemPurchaseUpdateForm.js` guarantees that `itemName` is consistently structured as an object `{ _id, itemName }` by resolving the actual item name directly from the loaded `ItemInformation` catalog whenever `itemName` is an ID or object with missing string name.
+    - `getItemDisplayName()` strictly resolves the actual item name from `itemName`, `itemName.itemName`, `itemName.name`, or the item catalog `ItemInformation.find(x => x._id === id).itemName`. It NEVER falls back to `itemDescription`, which contains technical specs (e.g. voltage, serials) and is not the item name.
+    - In DataGrid and modal tables, `itemInfo` and `TableCell` mappings strictly resolve item names via catalog lookups and never conflate item descriptions with item names.
 
 ## Current Progress Log
+- **Item Purchase Item Name & Description Separation & Catalog Resolution Fix (Ver 3.5.40)**:
+  - **Resolved Item Name Conflation with Description (`ItemPurchaseUpdateForm.js`, `ItemPurchaseViewAdmin.js`, `ItemPurchaseViewForm.js`)**:
+    - Completely removed incorrect `itemDescription` fallback in `getItemDisplayName`, preventing technical descriptions (such as `CHARGE VOLTAGE : 56.5V...`) from erroneously replacing the item name (`LITHIUM BATTERY 5.12KWH 100A HI-5`).
+    - Integrated `item-Information` catalog resolution on initial fetch and display in `ItemPurchaseUpdateForm` and `ItemPurchaseViewAdmin` so that whenever an item row contains an ID, its canonical name is reliably populated directly from the item master catalog.
+    - Cleaned up `ItemPurchaseViewAdmin.js` DataGrid `itemInfo` and modal `TableCell` mappings to strictly render the true item name.
+  - **Release & Distribution**: Bumped version to `3.5.40`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.40.exe`, and pushed commit to GitHub `origin main`.
 - **Item Purchase Item Name Preservation & Quantity Zero Normalization (Ver 3.5.39)**:
   - **Resolved Item Name Loss on Edit Quantity to 0 (`ItemPurchaseUpdateForm.js`, `ItemPurchaseViewAdmin.js`, `ItemPurchaseViewForm.js`)**:
     - Fixed issue where setting an item quantity to `0` in `ItemPurchaseUpdateForm` caused the item row to render an empty Autocomplete input and save corrupted or blank item names.

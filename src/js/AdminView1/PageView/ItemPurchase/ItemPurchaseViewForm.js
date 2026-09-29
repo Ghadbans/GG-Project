@@ -976,11 +976,24 @@ const handleQty = async () => {
   }
   const getItemDisplayName = (it) => {
     if (!it) return '';
-    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') return it.itemName;
-    if (it.itemName && typeof it.itemName.itemName === 'string' && it.itemName.itemName.trim() !== '') return it.itemName.itemName;
-    if (it.itemName && typeof it.itemName.name === 'string' && it.itemName.name.trim() !== '') return it.itemName.name;
-    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription;
-    if (typeof it.itemDescription === 'string' && it.itemDescription.trim() !== '') return it.itemDescription;
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+      const found = (ItemInformation || []).find(x => x._id === it.itemName);
+      if (found && found.itemName) return found.itemName.trim();
+      return it.itemName.trim();
+    }
+    if (it.itemName && typeof it.itemName === 'object') {
+      if (it.itemName.itemName && it.itemName.itemName.trim() !== '') return it.itemName.itemName.trim();
+      if (it.itemName.name && it.itemName.name.trim() !== '') return it.itemName.name.trim();
+      if (it.itemName._id) {
+        const found = (ItemInformation || []).find(x => x._id === it.itemName._id);
+        if (found && found.itemName) return found.itemName.trim();
+      }
+    }
+    if (it._id) {
+      const found = (ItemInformation || []).find(x => x._id === it._id);
+      if (found && found.itemName) return found.itemName.trim();
+    }
+    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription.trim();
     return '';
   };
 

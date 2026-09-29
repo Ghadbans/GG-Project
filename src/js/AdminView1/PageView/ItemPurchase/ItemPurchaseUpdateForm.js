@@ -220,14 +220,18 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [resSupplier, resItemPurchase, resProject, resMaintenance, resPurchase, resInvoice] = await Promise.all([
+        const [resSupplier, resItemPurchase, resProject, resMaintenance, resPurchase, resInvoice, resItemInfo] = await Promise.all([
           axios.get(`${ENDPOINT_URL}/Supplier`),
           axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`),
           axios.get(`${ENDPOINT_URL}/projects`),
           axios.get(`${ENDPOINT_URL}/maintenance?summary=true`),
           axios.get(`${ENDPOINT_URL}/purchase?summary=true`),
           axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
+          axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`),
         ]);
+
+        const catalog = Array.isArray(resItemInfo?.data?.itemI) ? resItemInfo.data.itemI : [];
+        setItemInformation(catalog);
 
         setSupplier(Array.isArray(resSupplier?.data?.data) ? [...resSupplier.data.data].reverse() : []);
         setProjects(Array.isArray(resProject?.data?.data) ? [...resProject.data.data].reverse() : []);
@@ -260,9 +264,25 @@ function ItemPurchaseUpdateForm() {
           } else if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
             nameStr = it.itemName;
             idVal = it.itemId || it._id || '';
-          } else if (it.newDescription) {
+          }
+
+          if (idVal) {
+            const found = catalog.find(x => x._id === idVal);
+            if (found && (!nameStr || nameStr === idVal)) {
+              nameStr = found.itemName || nameStr;
+            }
+          } else if (nameStr) {
+            const found = catalog.find(x => x._id === nameStr || x.itemName === nameStr);
+            if (found) {
+              idVal = found._id;
+              nameStr = found.itemName;
+            }
+          }
+
+          if (!nameStr && it.newDescription) {
             nameStr = it.newDescription;
           }
+
           return {
             ...it,
             idRow: it.idRow || v4(),
@@ -290,7 +310,11 @@ function ItemPurchaseUpdateForm() {
   useEffect(() => {
     const fetchDataId = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`)
+        const [res, resItemInfo] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`),
+          axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`)
+        ]);
+        const catalog = Array.isArray(resItemInfo?.data?.itemI) ? resItemInfo.data.itemI : [];
         const rawItems = res.data?.data?.items || [];
         const normalizedOld = rawItems.map((it) => {
           let nameStr = '';
@@ -301,9 +325,25 @@ function ItemPurchaseUpdateForm() {
           } else if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
             nameStr = it.itemName;
             idVal = it.itemId || it._id || '';
-          } else if (it.newDescription) {
+          }
+
+          if (idVal) {
+            const found = catalog.find(x => x._id === idVal);
+            if (found && (!nameStr || nameStr === idVal)) {
+              nameStr = found.itemName || nameStr;
+            }
+          } else if (nameStr) {
+            const found = catalog.find(x => x._id === nameStr || x.itemName === nameStr);
+            if (found) {
+              idVal = found._id;
+              nameStr = found.itemName;
+            }
+          }
+
+          if (!nameStr && it.newDescription) {
             nameStr = it.newDescription;
           }
+
           return {
             ...it,
             idRow: it.idRow || v4(),
@@ -1133,11 +1173,24 @@ function ItemPurchaseUpdateForm() {
   }
   const getItemDisplayName = (it) => {
     if (!it) return '';
-    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') return it.itemName;
-    if (it.itemName && typeof it.itemName.itemName === 'string' && it.itemName.itemName.trim() !== '') return it.itemName.itemName;
-    if (it.itemName && typeof it.itemName.name === 'string' && it.itemName.name.trim() !== '') return it.itemName.name;
-    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription;
-    if (typeof it.itemDescription === 'string' && it.itemDescription.trim() !== '') return it.itemDescription;
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+      const found = (ItemInformation || []).find(x => x._id === it.itemName);
+      if (found && found.itemName) return found.itemName.trim();
+      return it.itemName.trim();
+    }
+    if (it.itemName && typeof it.itemName === 'object') {
+      if (it.itemName.itemName && it.itemName.itemName.trim() !== '') return it.itemName.itemName.trim();
+      if (it.itemName.name && it.itemName.name.trim() !== '') return it.itemName.name.trim();
+      if (it.itemName._id) {
+        const found = (ItemInformation || []).find(x => x._id === it.itemName._id);
+        if (found && found.itemName) return found.itemName.trim();
+      }
+    }
+    if (it._id) {
+      const found = (ItemInformation || []).find(x => x._id === it._id);
+      if (found && found.itemName) return found.itemName.trim();
+    }
+    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription.trim();
     return '';
   };
 
@@ -1156,9 +1209,16 @@ function ItemPurchaseUpdateForm() {
       } else if (typeof item.itemName === 'string' && item.itemName.trim() !== '') {
         nameStr = item.itemName;
         idVal = item.itemId || item._id || '';
-      } else if (item.newDescription) {
+      }
+
+      if (idVal && (!nameStr || nameStr === idVal)) {
+        const found = ItemInformation.find(x => x._id === idVal);
+        if (found && found.itemName) nameStr = found.itemName;
+      }
+      if (!nameStr && item.newDescription) {
         nameStr = item.newDescription;
       }
+
       item.itemName = {
         _id: idVal,
         itemName: nameStr
