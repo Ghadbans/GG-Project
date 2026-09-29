@@ -231,8 +231,13 @@ function ItemPurchaseViewAdmin() {
         dataField: dayjs(item.itemPurchaseDate).format('DD/MM/YYYY'),
         Account: item.projectName !== undefined ? item.projectName.name : item.description,
         referenceInfo: item.manufacturer + ' / ' + item.manufacturerNumber,
-        itemInfo: (item.items || []).filter(row => parseFloat(row.itemQty) > 0 || row.newDescription !== undefined).map((row) => row.itemName?.itemName || row.newDescription || ''),
-        itemDescriptionInfo: (item.items || []).filter(row => parseFloat(row.itemQty) > 0 || row.newDescription !== undefined).map((row) => row.itemDescription || '')
+        itemInfo: (item.items || []).map((row) => {
+          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName;
+          if (row.itemName?.itemName) return row.itemName.itemName;
+          if (row.itemName?.name) return row.itemName.name;
+          return row.newDescription || row.itemDescription || '';
+        }).filter(Boolean),
+        itemDescriptionInfo: (item.items || []).map((row) => row.itemDescription || '').filter(Boolean)
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
       setTotalItemCount(res.data.totalItem || 0); 
@@ -942,7 +947,7 @@ function ItemPurchaseViewAdmin() {
                                   return (
                                     <TableRow key={i}>
                                       <TableCell>{row.itemDescription !== undefined ? row.itemDescription : null}</TableCell>
-                                      <TableCell>{row.itemName !== undefined ? row.itemName.itemName : row.newDescription}</TableCell>
+                                      <TableCell>{typeof row.itemName === 'string' && row.itemName.trim() !== '' ? row.itemName : (row.itemName?.itemName || row.itemName?.name || row.newDescription || '')}</TableCell>
                                       <TableCell>{row.itemQty}</TableCell>
                                       <TableCell>${row.itemRate != null ? parseFloat(row.itemRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
                                       <TableCell>{row.Taux != null ? parseFloat(row.Taux).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>

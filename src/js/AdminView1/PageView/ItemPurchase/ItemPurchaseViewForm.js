@@ -538,7 +538,7 @@ function ItemPurchaseViewForm() {
           ...row,
           itemName: {
             _id: null,
-            itemName: null
+            itemName: ""
           },
           newDescription: undefined,
           itemDescription: "",
@@ -967,27 +967,40 @@ const handleQty = async () => {
   }
   const [sideBar, setSideBar] = React.useState(true);
   const toggleDrawer = () => {
-   setSideBar(!sideBar);
+    setSideBar(!sideBar);
   };
   const [search2,setSearch2] =useState('');
-const handleSearch2 = (e) => {
-  const value = e.target.value
-  setSearch2(value)
-}
-  const newArray2 = search2 !== '' ? items.filter((Item) =>
-    (Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase())) ||
-    (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
-    (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()))
-  ) : items
+  const handleSearch2 = (e) => {
+    const value = e.target.value
+    setSearch2(value)
+  }
+  const getItemDisplayName = (it) => {
+    if (!it) return '';
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') return it.itemName;
+    if (it.itemName && typeof it.itemName.itemName === 'string' && it.itemName.itemName.trim() !== '') return it.itemName.itemName;
+    if (it.itemName && typeof it.itemName.name === 'string' && it.itemName.name.trim() !== '') return it.itemName.name;
+    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription;
+    if (typeof it.itemDescription === 'string' && it.itemDescription.trim() !== '') return it.itemDescription;
+    return '';
+  };
+
+  const newArray2 = search2 !== '' ? items.filter((Item) => {
+    const dName = getItemDisplayName(Item);
+    const desc = Item.itemDescription || '';
+    const newDesc = Item.newDescription || '';
+    const s = search2.toLowerCase();
+    return dName.toLowerCase().includes(s) || desc.toLowerCase().includes(s) || newDesc.toLowerCase().includes(s);
+  }) : items;
 
     const tableRows = reason !== 'Other' ? newArray2.map((Item, i) => {
-      const related = itemArray.find((row) => row.idRow === Item.idRow)
+      const related = itemArray.find((row) => row.idRow === Item.idRow);
+      const displayName = getItemDisplayName(Item);
       return (
         <tr key={Item.idRow}>
           <td ><DragIndicatorRounded /></td>
           <td  >
             {
-              (Item.itemName?.itemName || Item.newDescription) ? (
+              displayName ? (
                 (
                   <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                     <ItemThumbnail
@@ -996,10 +1009,10 @@ const handleSearch2 = (e) => {
                       initialType={Item.contentType}
                     />
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}</Typography>
+                      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{displayName}</Typography>
                       <TextField
                         name='itemDescription' id='itemDescription'
-                        value={Item.itemDescription}
+                        value={Item.itemDescription || ''}
                         multiline
                         placeholder='Description'
                         rows={3}
@@ -1017,152 +1030,153 @@ const handleSearch2 = (e) => {
                       </BlackTooltip>
                     </Box>
                   </Box>)
-              ) : (
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <Autocomplete
-                    disableClearable
-                    options={autocompleteOptions.filter(option => !items.find((row) => option._id === row.itemName?._id))}
-                    getOptionLabel={(option) => (option.itemName || "") + (option.itemBrand ? '/' + option.itemBrand : "")}
-                    renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + (option.itemBrand ? '/' + option.itemBrand : "")}</Box>)}
-                    renderInput={(params) =>
-                      <TextField multiline
-                        rows={4} {...params} required
-                        placeholder="Search Item..."
-                      />}
-                    loading={autocompleteLoading}
-                    onChange={(e, newValue) => {
-                      handleChangeItem(Item.idRow, newValue);
-                      setAutocompleteSearch('');
-                    }}
-                    size="small"
-                    onInputChange={(event, newInputValue) => {
-                      setAutocompleteSearch(newInputValue);
-                    }}
-                    filterOptions={(x) => x} // Disable built-in filtering since we do it on server
-                    PaperComponent={({ children, ...other }) => (
+            ) : (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Autocomplete
+                  disableClearable
+                  options={autocompleteOptions.filter(option => !items.find((row) => option._id === row.itemName?._id))}
+                  getOptionLabel={(option) => (option.itemName || "") + (option.itemBrand ? '/' + option.itemBrand : "")}
+                  renderOption={(props, option) => (<Box {...props} sx={{ backgroundColor: '#f2f2f2' }}>{option.itemName + (option.itemBrand ? '/' + option.itemBrand : "")}</Box>)}
+                  renderInput={(params) =>
+                    <TextField multiline
+                      rows={4} {...params} required
+                      placeholder="Search Item..."
+                    />}
+                  loading={autocompleteLoading}
+                  onChange={(e, newValue) => {
+                    handleChangeItem(Item.idRow, newValue);
+                    setAutocompleteSearch('');
+                  }}
+                  size="small"
+                  onInputChange={(event, newInputValue) => {
+                    setAutocompleteSearch(newInputValue);
+                  }}
+                  filterOptions={(x) => x} // Disable built-in filtering since we do it on server
+                  PaperComponent={({ children, ...other }) => (
 
-                      <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
-                        {children}
-                        <div>
-                          <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
-                            ADD NEW Item
-                          </button>
-                        </div>
-                      </Box>
-                    )}
-                    sx={{ width: '300px', backgroundColor: 'white' }}
-                  />
-                </div>
-              )
-            }
-          </td>
-          <td>
+                    <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
+                      {children}
+                      <div>
+                        <button onClick={(e) => handleOpenOpenAutocomplete2(e)} disabled={user.data.role === 'User'} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                          ADD NEW Item
+                        </button>
+                      </div>
+                    </Box>
+                  )}
+                  sx={{ width: '300px', backgroundColor: 'white' }}
+                />
+              </div>
+            )
+          }
+        </td>
+        <td>
+          <TextField
+            disabled
+            name='need'
+            value={related?.itemQty !== undefined ? related.itemQty : 0}
+            size="small"
+            sx={{ width: '100px', backgroundColor: 'white' }}
+          />
+
+        </td>
+        <td>
             <TextField
-              disabled
-              name='need'
-              value={related?.itemQty !== undefined ? related.itemQty : 0}
-              size="small"
-              sx={{ width: '100px', backgroundColor: 'white' }}
-            />
+              name='itemQty' id='itemQty'
+              label='Qty'
+              value={Item.itemQty}
+              helperText={related ? (related.itemQty - related.itemBuy) : 0}
+            onChange={(e) => handleChange(e, Item.idRow)}
+            size="small"
+            sx={{ width: '100px', backgroundColor: 'white' }}
+          />
 
-          </td>
-          <td>
-              <TextField
-                name='itemQty' id='itemQty'
-                label='Qty'
-                value={Item.itemQty}
-                helperText={related ? (related.itemQty - related.itemBuy) : 0}
-              onChange={(e) => handleChange(e, Item.idRow)}
-              size="small"
-              sx={{ width: '100px', backgroundColor: 'white' }}
-            />
+        </td>
+        <td >
+          <TextField
+            required
+            name='itemRate' id='itemRate'
+            label='Price$'
+            value={Item.itemRate}
+            helperText={'Purchase Cost: $' + Item.cost}
+            onChange={(e) => handleChange(e, Item.idRow)}
+            size="small"
+            sx={{ width: '100px', backgroundColor: 'white' }}
+          />
+        </td>
+        <td style={{ textAlign: 'center' }}>
+          <span style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
 
-          </td>
-          <td >
             <TextField
               required
-              name='itemRate' id='itemRate'
-              label='Price$'
-              value={Item.itemRate}
-              helperText={'Purchase Cost: $' + Item.cost}
+              name='totalAmountFC' id='totalAmountFC'
+              value={Item.totalAmountFC}
+              label='FC'
               onChange={(e) => handleChange(e, Item.idRow)}
               size="small"
               sx={{ width: '100px', backgroundColor: 'white' }}
             />
-          </td>
-          <td style={{ textAlign: 'center' }}>
-            <span style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-
-              <TextField
-                required
-                name='totalAmountFC' id='totalAmountFC'
-                value={Item.totalAmountFC}
-                label='FC'
-                onChange={(e) => handleChange(e, Item.idRow)}
-                size="small"
-                sx={{ width: '100px', backgroundColor: 'white' }}
-              />
-              <TextField
-                required
-                name='Taux' id='Taux'
-                value={Item.Taux}
-                onChange={(e) => handleChange(e, Item.idRow)}
-                size="small"
-                sx={{ width: '100px', backgroundColor: 'white' }}
-              />
-              <TextField
-                required
-                name='totalAmount' id='totalAmount'
-                value={Item.totalAmount}
-                label='$'
-                size="small"
-                onChange={(e) => handleChange(e, Item.idRow)}
-                sx={{ width: '100px', backgroundColor: 'white' }}
-              />
-            </span>
-            <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
-          </td>
-          <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-        </tr>
-      )
-    }) : null
-    const tableRows2 = newArray2.map((Item, i) => {
-      return (
-        <tr key={Item.idRow}>
-          <td ><DragIndicatorRounded /></td>
-          <td  >
-            {
-              (Item.itemName?.itemName || Item.newDescription) ? (
-                (
-                  <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
-                    <ItemThumbnail
-                      itemId={Item.itemName?._id}
-                      initialData={Item.data}
-                      initialType={Item.contentType}
+            <TextField
+              required
+              name='Taux' id='Taux'
+              value={Item.Taux}
+              onChange={(e) => handleChange(e, Item.idRow)}
+              size="small"
+              sx={{ width: '100px', backgroundColor: 'white' }}
+            />
+            <TextField
+              required
+              name='totalAmount' id='totalAmount'
+              value={Item.totalAmount}
+              label='$'
+              size="small"
+              onChange={(e) => handleChange(e, Item.idRow)}
+              sx={{ width: '100px', backgroundColor: 'white' }}
+            />
+          </span>
+          <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+        </td>
+        <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+      </tr>
+    )
+  }) : null
+  const tableRows2 = newArray2.map((Item, i) => {
+    const displayName = getItemDisplayName(Item);
+    return (
+      <tr key={Item.idRow}>
+        <td ><DragIndicatorRounded /></td>
+        <td  >
+          {
+            displayName ? (
+              (
+                <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
+                  <ItemThumbnail
+                    itemId={Item.itemName?._id}
+                    initialData={Item.data}
+                    initialType={Item.contentType}
+                  />
+                  <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{displayName}</Typography>
+                    <TextField
+                      name='itemDescription' id='itemDescription'
+                      value={Item.itemDescription || ''}
+                      multiline
+                      placeholder='Description'
+                      rows={3}
+                      onChange={(e) => handleChange(e, Item.idRow)}
+                      size="small"
+                      disabled={user.data.role === 'User'}
+                      sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
                     />
-                    <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}</Typography>
-                      <TextField
-                        name='itemDescription' id='itemDescription'
-                        value={Item.itemDescription}
-                        multiline
-                        placeholder='Description'
-                        rows={3}
-                        onChange={(e) => handleChange(e, Item.idRow)}
-                        size="small"
-                        disabled={user.data.role === 'User'}
-                        sx={{ width: '300px', backgroundColor: 'white', fontSize: 12 }}
-                      />
-                    </Box>
-                    <Box>
-                      <BlackTooltip title="Clear" placement='top'>
-                        <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
-                          <RemoveCircleOutline style={{ color: '#202a5a' }} />
-                        </IconButton>
-                      </BlackTooltip>
-                    </Box>
-                  </Box>)
-              ) : (
+                  </Box>
+                  <Box>
+                    <BlackTooltip title="Clear" placement='top'>
+                      <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>
+                        <RemoveCircleOutline style={{ color: '#202a5a' }} />
+                      </IconButton>
+                    </BlackTooltip>
+                  </Box>
+                </Box>)
+            ) : (
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <Autocomplete
                     disableClearable

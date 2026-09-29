@@ -249,7 +249,33 @@ function ItemPurchaseUpdateForm() {
         setManufacturer(ipData.manufacturer);
         setManufacturerNumber(ipData.manufacturerNumber || "");
         setDescription(ipData.description);
-        setItems(ipData.items || []);
+        
+        const rawItems = ipData.items || [];
+        const normalizedItems = rawItems.map((it) => {
+          let nameStr = '';
+          let idVal = '';
+          if (it.itemName && typeof it.itemName === 'object') {
+            nameStr = it.itemName.itemName || it.itemName.name || '';
+            idVal = it.itemName._id || '';
+          } else if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+            nameStr = it.itemName;
+            idVal = it.itemId || it._id || '';
+          } else if (it.newDescription) {
+            nameStr = it.newDescription;
+          }
+          return {
+            ...it,
+            idRow: it.idRow || v4(),
+            itemName: {
+              _id: idVal,
+              itemName: nameStr
+            },
+            itemQty: it.itemQty !== undefined && it.itemQty !== null ? it.itemQty : 0
+          };
+        });
+
+        setItems(normalizedItems);
+        setOldItems(JSON.parse(JSON.stringify(normalizedItems)));
         setManufacturerID(ipData.manufacturerID);
         setReason(ipData.reason);
         setProjectName(ipData.projectName || {});
@@ -265,7 +291,29 @@ function ItemPurchaseUpdateForm() {
     const fetchDataId = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${id}`)
-        setOldItems(res.data.data.items);
+        const rawItems = res.data?.data?.items || [];
+        const normalizedOld = rawItems.map((it) => {
+          let nameStr = '';
+          let idVal = '';
+          if (it.itemName && typeof it.itemName === 'object') {
+            nameStr = it.itemName.itemName || it.itemName.name || '';
+            idVal = it.itemName._id || '';
+          } else if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+            nameStr = it.itemName;
+            idVal = it.itemId || it._id || '';
+          } else if (it.newDescription) {
+            nameStr = it.newDescription;
+          }
+          return {
+            ...it,
+            idRow: it.idRow || v4(),
+            itemName: {
+              _id: idVal,
+              itemName: nameStr
+            }
+          };
+        });
+        setOldItems(normalizedOld);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -453,7 +501,7 @@ function ItemPurchaseUpdateForm() {
       ...row,
       itemName: {
         _id: null,
-        itemName: null
+        itemName: ""
       },
       newDescription: undefined,
       itemDescription: "",
@@ -1083,6 +1131,16 @@ function ItemPurchaseUpdateForm() {
       console.log(error)
     }
   }
+  const getItemDisplayName = (it) => {
+    if (!it) return '';
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') return it.itemName;
+    if (it.itemName && typeof it.itemName.itemName === 'string' && it.itemName.itemName.trim() !== '') return it.itemName.itemName;
+    if (it.itemName && typeof it.itemName.name === 'string' && it.itemName.name.trim() !== '') return it.itemName.name;
+    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription;
+    if (typeof it.itemDescription === 'string' && it.itemDescription.trim() !== '') return it.itemDescription;
+    return '';
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const itemsWithoutData = items.map(({ data, contentType, _id, ...rest }) => {
@@ -1090,6 +1148,21 @@ function ItemPurchaseUpdateForm() {
       if (_id && _id !== '') {
         item._id = _id;
       }
+      let nameStr = '';
+      let idVal = '';
+      if (item.itemName && typeof item.itemName === 'object') {
+        nameStr = item.itemName.itemName || item.itemName.name || '';
+        idVal = item.itemName._id || '';
+      } else if (typeof item.itemName === 'string' && item.itemName.trim() !== '') {
+        nameStr = item.itemName;
+        idVal = item.itemId || item._id || '';
+      } else if (item.newDescription) {
+        nameStr = item.newDescription;
+      }
+      item.itemName = {
+        _id: idVal,
+        itemName: nameStr
+      };
       return item;
     });
     const data = {
@@ -1127,19 +1200,22 @@ function ItemPurchaseUpdateForm() {
     const value = e.target.value
     setSearch2(value)
   }
-  const newArray2 = search2 !== '' ? items.filter((Item) =>
-    (Item.itemName && Item.itemName.itemName?.toLowerCase().includes(search2.toLowerCase())) ||
-    (Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase())) ||
-    (Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase()))
-  ) : items
+  const newArray2 = search2 !== '' ? items.filter((Item) => {
+    const dName = getItemDisplayName(Item);
+    const desc = Item.itemDescription || '';
+    const newDesc = Item.newDescription || '';
+    const s = search2.toLowerCase();
+    return dName.toLowerCase().includes(s) || desc.toLowerCase().includes(s) || newDesc.toLowerCase().includes(s);
+  }) : items
 
   const tableRows = reason === 'Project' || reason === 'Maintenance' || reason === 'Invoice' ? newArray2.map((Item, i) => {
+    const displayName = getItemDisplayName(Item);
     return (
       <tr key={Item.idRow}>
         <td ><DragIndicatorRounded /></td>
         <td  >
           {
-            (Item.itemName?.itemName || Item.newDescription) ? (
+            displayName ? (
               (
                 <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                   <ItemThumbnail
@@ -1148,10 +1224,10 @@ function ItemPurchaseUpdateForm() {
                     initialType={Item.contentType}
                   />
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}</Typography>
+                    <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{displayName}</Typography>
                     <TextField
                       name='itemDescription' id='itemDescription'
-                      value={Item.itemDescription}
+                      value={Item.itemDescription || ''}
                       multiline
                       placeholder='Description'
                       rows={3}
@@ -1270,12 +1346,13 @@ function ItemPurchaseUpdateForm() {
   }) : null
 
   const tableRows2 = newArray2.map((Item, i) => {
+    const displayName = getItemDisplayName(Item);
     return (
       <tr key={Item.idRow}>
         <td ><DragIndicatorRounded /></td>
         <td  >
           {
-            (Item.itemName?.itemName || Item.newDescription) ? (
+            displayName ? (
               (
                 <Box sx={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                   <ItemThumbnail
@@ -1285,11 +1362,11 @@ function ItemPurchaseUpdateForm() {
                   />
                   <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                     <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
-                      {Item.itemName?.itemName ? Item.itemName.itemName : Item.newDescription}
+                      {displayName}
                     </Typography>
                     <TextField
                       name='itemDescription' id='itemDescription'
-                      value={Item.itemDescription}
+                      value={Item.itemDescription || ''}
                       multiline
                       placeholder='Description'
                       rows={3}

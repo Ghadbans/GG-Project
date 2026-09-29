@@ -83,8 +83,20 @@
     - Used items behave 100% identically to normal goods across all linked modules (Purchases, Out, Returns, Invoices, Quotations, Maintenance, Projects, POS, Transfers).
     - In `ItemInformationVIew.js`, used items display a highlighted amber `Ⓤ USED ITEM` badge and condition indicator.
     - In the 3 store catalog displays (**Point of Sale** / `PointOfSale.js`, **Store Item Display** / `StoreItemDisplay.js`, **Technician Store Catalog** / `TechnicianStoreDisplay.js`), `GET /item-shop` applies strict `.sort({ _id: -1 })` and frontend `.reverse()` calls were removed, guaranteeing that newly added items are always displayed first (newest to oldest).
+32. **Item Purchase Zero Quantity Preservation & Universal Item Name Display Normalization (Ver 3.5.39)**:
+    - Setting an item's quantity to `0` in `ItemPurchaseUpdateForm.js` or `ItemPurchaseViewForm.js` must NEVER blank out, delete, or detach the item's identity (`itemName`, thumbnail, description, rate).
+    - Normalized data loading in `ItemPurchaseUpdateForm.js` guarantees that `itemName` is consistently structured as an object `{ _id, itemName }` regardless of whether MongoDB stored it as a raw string, an object, or an imported legacy record.
+    - Both `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseViewAdmin.js` (DataGrid `itemInfo` and preview modal `TableCell`) utilize robust `getItemDisplayName()` fallback resolution `typeof row.itemName === 'string' ? row.itemName : (row.itemName?.itemName || row.itemName?.name || row.newDescription || row.itemDescription || '')`.
+    - In DataGrid, `itemInfo` mappings do not filter out rows where `parseFloat(itemQty) === 0`, ensuring all purchase items remain visible in the grid regardless of quantity.
 
 ## Current Progress Log
+- **Item Purchase Item Name Preservation & Quantity Zero Normalization (Ver 3.5.39)**:
+  - **Resolved Item Name Loss on Edit Quantity to 0 (`ItemPurchaseUpdateForm.js`, `ItemPurchaseViewAdmin.js`, `ItemPurchaseViewForm.js`)**:
+    - Fixed issue where setting an item quantity to `0` in `ItemPurchaseUpdateForm` caused the item row to render an empty Autocomplete input and save corrupted or blank item names.
+    - Normalized items on initial fetch in `ItemPurchaseUpdateForm` to guarantee each item has a unique `idRow` and a normalized `{ _id, itemName }` structure.
+    - Standardized `getItemDisplayName` across `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseViewAdmin.js` to seamlessly render item names stored as strings, objects (`{ itemName }` or `{ name }`), or `newDescription`.
+    - Removed `parseFloat(itemQty) > 0` filter in `ItemPurchaseViewAdmin.js` `itemInfo` mapping so items with quantity 0 are accurately displayed in the DataGrid and modal previews.
+  - **Release & Distribution**: Bumped version to `3.5.39`, compiled Webpack electron and web bundles (`dist_web/`), packaged `dist/Global Gate Setup 3.5.39.exe`, and pushed commit to GitHub `origin main`.
 - **Item Deletion Modal Close & State Teardown Fix (Ver 3.5.36)**:
   - **Resolved Frozen "Data Successfully Deleted" Dialog (`ItemViewAdmin.js`)**:
     - Fixed state mismatch where `handleCloseModal` called `setLoadingOpenModal(false)` instead of `setModalOpenLoading(false)`.
