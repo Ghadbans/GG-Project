@@ -205,7 +205,7 @@ Route.route("/item-Information").get(async (req, res) => {
       itemSchema.countDocuments(query),
     ]);
 
-    res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
+    res.status(200).json({ itemI, data: itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) {
     res.status(500).json({ message: "An error occurred while fetching data.", error: error.message });
   }

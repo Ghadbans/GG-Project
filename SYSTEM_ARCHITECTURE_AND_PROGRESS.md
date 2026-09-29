@@ -1144,12 +1144,12 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Problem Reported:** Item purchases were using item descriptions as names or overwriting item names with descriptions on save.
   - **Resolution:** Enforced strict separation between `itemName` and `itemDescription` across `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseViewAdmin.js`, with universal `getItemDisplayName` catalog lookups.
 
-- **Supplier Module ITEM-SUMMARY Historical Purchases Reconciliation (Ver 3.5.41)**:
-  - **Problem Reported:** In the Supplier Module (`SupplierViewInformation.js`) -> `ITEM-SUMMARY` tab, searching for an item (e.g. `LITHIUM BATTERY 5.12KWH 100A HI-5`) showed only 2 units from 1 IP, whereas the Item module's `IN-SUMMARY` tab showed 27 units across all historical purchase orders from that supplier.
+- **Supplier Module ITEM-SUMMARY Catalog Field Parsing & Universal Item Display Fix (Ver 3.5.42)**:
+  - **Problem Reported:** In the Supplier Module (`SupplierViewInformation.js`) -> `ITEM-SUMMARY` tab, item names were rendered as `—` (dash) and searching for `LITHIUM BATTERY 5.12KWH 100A HI-5` returned no results, while searching for description keywords (e.g. `CHARGE VOLTAGE :`) displayed the rows without item names.
   - **Root Cause & Resolution:**
-    1. **Backend Supplier Query Optimization (`server/routes/itemRoutes.js`):** Enhanced `GET /itemPurchase` supplier filter with regex matching for both `supplierName` and `shortName` so that historical purchases with name variations (e.g., `TIMBEAT` vs `TIMBEAT TRADING COMPANY LIMITED`) are included.
-    2. **Supplier Matching Normalization (`SupplierViewInformation.js`):** Updated `isMatchingSupplier` with flexible substring and case-insensitive matching across `manufacturer`, `storeName`, and `supplierName`.
-    3. **Item Catalog & Universal Name Resolver (`SupplierViewInformation.js`):** Added item master catalog fetching (`/item-Information`) and integrated `getItemDisplayName(it)` and `getItemId(it)` to handle string names, object names, catalog `_id`s, and `newDescription` seamlessly.
-    4. **Table & Search Integration:** Updated search filtering (`search4`, `search`) and table row rendering across `TabPanel value="3"` (ITEM-SUMMARY), collapsible `Row` items, and modal preview to display resolved item names, thumbnails, descriptions, and catalog units.
-  - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), and Windows desktop installer generated (`dist/Global Gate Setup 3.5.41.exe`).
+    1. **Catalog Payload Key Mismatch:** The endpoint `/item-Information` returned `{ itemI: [...] }` instead of `{ data: [...] }`. `SupplierViewInformation.js` attempted to read `res.data.data`, leaving `itemInformation` empty.
+    2. **Dual-Key Response & Resilient Parser:** Updated `server/routes/itemRoutes.js` to return both `itemI` and `data: itemI` from `/item-Information`. Updated `SupplierViewInformation.js` to parse `res.data?.itemI || res.data?.data`.
+    3. **Robust ID & String Name Matcher:** Enhanced `getItemDisplayName` and `getItemId` to handle ObjectId string casting, non-hex raw string names, and `it.itemId` references.
+  - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), Windows installer built (`dist/Global Gate Setup 3.5.42.exe`), and changes pushed to `origin main` for Railway deployment.
+
 

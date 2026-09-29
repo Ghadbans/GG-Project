@@ -233,10 +233,9 @@ function SupplierViewInformation() {
   useEffect(() => {
     const fetchItemCatalog = async () => {
       try {
-        const res = await cachedGet(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`);
-        if (res.data && Array.isArray(res.data.data)) {
-          setItemInformation(res.data.data);
-        }
+        const res = await cachedGet(`${ENDPOINT_URL}/item-Information?summary=true&limit=10000`);
+        const list = Array.isArray(res.data?.itemI) ? res.data.itemI : (Array.isArray(res.data?.data) ? res.data.data : (Array.isArray(res.data) ? res.data : []));
+        setItemInformation(list);
       } catch (err) {
         console.error('Error fetching item catalog:', err);
       }
@@ -246,36 +245,54 @@ function SupplierViewInformation() {
 
   const getItemDisplayName = (it) => {
     if (!it) return '';
-    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
-      const found = (itemInformation || []).find(x => x._id === it.itemName);
-      if (found && found.itemName) return found.itemName.trim();
-      return it.itemName.trim();
-    }
+    // 1. Direct object name properties
     if (it.itemName && typeof it.itemName === 'object') {
-      if (it.itemName.itemName && it.itemName.itemName.trim() !== '') return it.itemName.itemName.trim();
-      if (it.itemName.name && it.itemName.name.trim() !== '') return it.itemName.name.trim();
+      if (it.itemName.itemName && typeof it.itemName.itemName === 'string' && it.itemName.itemName.trim() !== '') {
+        return it.itemName.itemName.trim();
+      }
+      if (it.itemName.name && typeof it.itemName.name === 'string' && it.itemName.name.trim() !== '') {
+        return it.itemName.name.trim();
+      }
       if (it.itemName._id) {
-        const found = (itemInformation || []).find(x => x._id === it.itemName._id);
+        const found = (itemInformation || []).find(x => String(x._id) === String(it.itemName._id));
         if (found && found.itemName) return found.itemName.trim();
       }
     }
-    if (it._id) {
-      const found = (itemInformation || []).find(x => x._id === it._id);
+    // 2. Direct string (could be item name or item _id)
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+      const found = (itemInformation || []).find(x => String(x._id) === String(it.itemName.trim()));
+      if (found && found.itemName) return found.itemName.trim();
+      if (!/^[0-9a-fA-F]{24}$/.test(it.itemName.trim())) {
+        return it.itemName.trim();
+      }
+    }
+    // 3. Match by row _id or itemId
+    if (it.itemId) {
+      const found = (itemInformation || []).find(x => String(x._id) === String(it.itemId));
       if (found && found.itemName) return found.itemName.trim();
     }
-    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription.trim();
+    if (it._id) {
+      const found = (itemInformation || []).find(x => String(x._id) === String(it._id));
+      if (found && found.itemName) return found.itemName.trim();
+    }
+    // 4. Fallback to newDescription
+    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') {
+      return it.newDescription.trim();
+    }
     return '';
   };
 
   const getItemId = (it) => {
     if (!it) return null;
-    if (it.itemName && typeof it.itemName === 'object' && it.itemName._id) return it.itemName._id;
-    if (typeof it.itemName === 'string' && (itemInformation || []).some(x => x._id === it.itemName)) return it.itemName;
-    if (it._id && (itemInformation || []).some(x => x._id === it._id)) return it._id;
+    if (it.itemName && typeof it.itemName === 'object' && it.itemName._id) return String(it.itemName._id);
+    if (it.itemId) return String(it.itemId);
     if (typeof it.itemName === 'string') {
-      const found = (itemInformation || []).find(x => x.itemName && x.itemName.trim().toLowerCase() === it.itemName.trim().toLowerCase());
-      if (found) return found._id;
+      const trimmed = it.itemName.trim();
+      if (/^[0-9a-fA-F]{24}$/.test(trimmed)) return trimmed;
+      const found = (itemInformation || []).find(x => x.itemName && x.itemName.trim().toLowerCase() === trimmed.toLowerCase());
+      if (found) return String(found._id);
     }
+    if (it._id && (itemInformation || []).some(x => String(x._id) === String(it._id))) return String(it._id);
     return null;
   };
 
