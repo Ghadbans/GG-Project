@@ -228,6 +228,57 @@ function SupplierViewInformation() {
     fetchItem()
   }, [id])
 
+  const [itemInformation, setItemInformation] = useState([]);
+
+  useEffect(() => {
+    const fetchItemCatalog = async () => {
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`);
+        if (res.data && Array.isArray(res.data.data)) {
+          setItemInformation(res.data.data);
+        }
+      } catch (err) {
+        console.error('Error fetching item catalog:', err);
+      }
+    };
+    fetchItemCatalog();
+  }, []);
+
+  const getItemDisplayName = (it) => {
+    if (!it) return '';
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+      const found = (itemInformation || []).find(x => x._id === it.itemName);
+      if (found && found.itemName) return found.itemName.trim();
+      return it.itemName.trim();
+    }
+    if (it.itemName && typeof it.itemName === 'object') {
+      if (it.itemName.itemName && it.itemName.itemName.trim() !== '') return it.itemName.itemName.trim();
+      if (it.itemName.name && it.itemName.name.trim() !== '') return it.itemName.name.trim();
+      if (it.itemName._id) {
+        const found = (itemInformation || []).find(x => x._id === it.itemName._id);
+        if (found && found.itemName) return found.itemName.trim();
+      }
+    }
+    if (it._id) {
+      const found = (itemInformation || []).find(x => x._id === it._id);
+      if (found && found.itemName) return found.itemName.trim();
+    }
+    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription.trim();
+    return '';
+  };
+
+  const getItemId = (it) => {
+    if (!it) return null;
+    if (it.itemName && typeof it.itemName === 'object' && it.itemName._id) return it.itemName._id;
+    if (typeof it.itemName === 'string' && (itemInformation || []).some(x => x._id === it.itemName)) return it.itemName;
+    if (it._id && (itemInformation || []).some(x => x._id === it._id)) return it._id;
+    if (typeof it.itemName === 'string') {
+      const found = (itemInformation || []).find(x => x.itemName && x.itemName.trim().toLowerCase() === it.itemName.trim().toLowerCase());
+      if (found) return found._id;
+    }
+    return null;
+  };
+
   const isMatchingSupplier = (ip) => {
     if (!ip) return false;
     const currentSupplier = item && item.length > 0 ? item[0] : null;
@@ -239,13 +290,13 @@ function SupplierViewInformation() {
 
     if (!currentSupplier) return false;
 
-    // 2. Strict exact match on storeName or supplierName
+    // 2. Strict / flexible match on storeName or supplierName
     const mName = (ip.manufacturer || '').trim().toLowerCase();
     const sStore = (currentSupplier.storeName || '').trim().toLowerCase();
     const sName = (currentSupplier.supplierName || '').trim().toLowerCase();
 
-    if (sStore && mName === sStore) return true;
-    if (sName && sName !== '.' && mName === sName) return true;
+    if (sStore && (mName === sStore || (mName.length > 3 && (mName.includes(sStore) || sStore.includes(mName))))) return true;
+    if (sName && sName !== '.' && (mName === sName || (mName.length > 3 && (mName.includes(sName) || sName.includes(mName))))) return true;
 
     return false;
   };
@@ -307,9 +358,10 @@ function SupplierViewInformation() {
       if (!item || item.length === 0) return;
       const currentSupplier = item[0];
       const supplierStore = currentSupplier?.storeName || StoreName || '';
+      const supplierShort = currentSupplier?.supplierName || '';
       try {
         const resItemPurchase = await axios.get(
-          `${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${encodeURIComponent(supplierStore)}`
+          `${ENDPOINT_URL}/itemPurchase?summary=true&supplierId=${id}&supplierName=${encodeURIComponent(supplierStore)}&shortName=${encodeURIComponent(supplierShort)}`
         );
         const formatDate = Array.isArray(resItemPurchase.data?.data) ? resItemPurchase.data.data : [];
         const filteredData = formatDate.filter(data => isMatchingSupplier(data));
@@ -527,7 +579,7 @@ function SupplierViewInformation() {
     (row.manufacturer ? row.manufacturer.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.items && Array.isArray(row.items) && row.items.some((Item) => {
-      const name = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName;
+      const name = getItemDisplayName(Item);
       return (name ? name.toLowerCase().includes(search.toLowerCase()) : false) ||
              (Item.itemDescription ? Item.itemDescription.toLowerCase().includes(search.toLowerCase()) : false) ||
              (Item.newDescription ? Item.newDescription.toLowerCase().includes(search.toLowerCase()) : false);
@@ -535,12 +587,10 @@ function SupplierViewInformation() {
     (row.itemPurchaseDate && dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(search))
   ) : itemPurchase
 
-  //const payFc = newArray1.filter((row1)=>  row1.manufacturerID === id || row1.manufacturer === StoreName).reduce((acc, row) => acc + (row.total || 0), 0)
-
   const relatedItemPurchases = itemPurchase.length > 0 ? itemPurchase.reduce((acc, row) => {
     (row.items || []).filter((item) => parseFloat(item.itemQty) >= 0).forEach((item) => {
-      const ItemName = typeof item.itemName === 'string' ? item.itemName : item.itemName?.itemName;
-      const Id = item.itemName?._id;
+      const ItemName = getItemDisplayName(item);
+      const Id = getItemId(item);
       const description = item.itemDescription;
       if (ItemName && !acc[ItemName]) {
         acc[ItemName] = { ItemName, Id, description, total: 0 }
@@ -548,15 +598,21 @@ function SupplierViewInformation() {
     });
     return acc
   }, {}) : null
+
   const relatedItemPurchases2 = []
   itemPurchase.filter((Item) => isMatchingSupplier(Item)).map((Item) => (Item.items || []).filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
 
-  const newArray2 = search4 !== '' ? relatedItemPurchases2.filter((row) =>
-    (row.itemName?.itemName && row.itemName.itemName.toString().includes(search4)) ||
-    (row.itemDescription ? row.itemDescription.toLowerCase().includes(search4.toLowerCase()) : false) ||
-    (row.newDescription ? row.newDescription.toLowerCase().includes(search4.toLowerCase()) : false) ||
-    (row.date && dayjs(row.date).format('DD/MM/YYYY').includes(search4))
-  ) : relatedItemPurchases2
+  const newArray2 = search4 !== '' ? relatedItemPurchases2.filter((row) => {
+    const dName = getItemDisplayName(row);
+    const desc = row.itemDescription || '';
+    const newDesc = row.newDescription || '';
+    const dateStr = row.date ? dayjs(row.date).format('DD/MM/YYYY') : '';
+    const s = search4.toLowerCase();
+    return dName.toLowerCase().includes(s) ||
+           desc.toLowerCase().includes(s) ||
+           newDesc.toLowerCase().includes(s) ||
+           dateStr.includes(search4);
+  }) : relatedItemPurchases2;
 
   function Row(props) {
     const { row, index, filterPaid } = props;
@@ -624,22 +680,25 @@ function SupplierViewInformation() {
                   <tbody>
                     {
                       row.items.filter(row3 => parseFloat(row3.itemQty) > 0 || row3.newDescription !== undefined).map((row3, i) => {
-                        const relatedUnit = item.find((Item1) => Item1._id === row3.itemName?._id)
+                        const dName = getItemDisplayName(row3);
+                        const iId = getItemId(row3);
+                        const catalogItem = (itemInformation || []).find((x) => x._id === iId || (x.itemName && x.itemName === dName));
+                        const unitStr = catalogItem?.unit ? String(catalogItem.unit).toUpperCase() : '';
                         return (
-                          <tr key={row3.idRow}>
+                          <tr key={row3.idRow || i}>
                             <td style={{ border: '1px solid #DDD' }}>{i + 1}</td>
                             {
-                              row3.newDescription !== undefined ?
+                              row3.newDescription !== undefined && !dName ?
                                 <td colSpan={8} align="center" style={{ border: '1px solid #DDD', fontWeight: 'bold' }}>{row3.newDescription}</td>
                                 :
                                 <>
-                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemName?.itemName}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{dName || row3.newDescription || '—'}</td>
                                   <td style={{ border: '1px solid #DDD' }}>{row3.itemDescription}</td>
-                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                  <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {unitStr}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                   <td style={{ border: '1px solid #DDD' }}>FC{row3.totalAmountFC !== undefined ? parseFloat(row3.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                   <td style={{ border: '1px solid #DDD' }}>{row3.Taux !== undefined ? parseFloat(row3.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                  <td style={{ border: '1px solid #DDD' }}>${parseFloat(row3.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                  <td style={{ border: '1px solid #DDD' }}>${parseFloat(row3.totalAmount || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                   <td style={{ border: '1px solid #DDD' }}>{row3.fcConvertToUsdTotal !== undefined ? parseFloat(row3.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                 </>
                             }
@@ -1162,33 +1221,38 @@ function SupplierViewInformation() {
                                             <tbody>
                                               {
                                                 newArray2?.map((row3, i) => {
-                                                  const relatedUnit = item.find((Item1) => Item1._id === row3.itemName._id)
+                                                  const dName = getItemDisplayName(row3);
+                                                  const iId = getItemId(row3);
+                                                  const catalogItem = (itemInformation || []).find((x) => x._id === iId || (x.itemName && x.itemName === dName));
+                                                  const unitStr = catalogItem?.unit ? String(catalogItem.unit).toUpperCase() : '';
                                                   return (
                                                     <tr key={i}>
                                                       <td style={{ border: '1px solid #DDD' }}>{i + 1}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                                                           <ItemThumbnail
-                                                            itemId={row3.itemName?._id}
+                                                            itemId={iId}
                                                             initialData={row3.data}
                                                             initialType={row3.contentType}
                                                           />
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', flexGrow: 1 }}>
-                                                            <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>
-                                                              {row3.itemName.itemName}
+                                                            <Typography sx={{ fontSize: '15px', fontWeight: 'bold' }}>
+                                                              {dName || row3.newDescription || '—'}
                                                             </Typography>
-                                                            <Typography sx={{ fontSize: '11px', color: 'gray' }}>
-                                                              {row3.itemDescription}
-                                                            </Typography>
+                                                            {row3.itemDescription && (
+                                                              <Typography sx={{ fontSize: '11px', color: 'gray' }}>
+                                                                {row3.itemDescription}
+                                                              </Typography>
+                                                            )}
                                                           </Box>
                                                         </Box>
                                                       </td>
                                                       <td style={{ border: '1px solid #DDD' }}>{dayjs(row3.date).format('DD/MM/YYYY')}</td>
-                                                      <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                      <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                      <td style={{ border: '1px solid #DDD' }}>{row3.itemQty} {unitStr}</td>
+                                                      <td style={{ border: '1px solid #DDD' }}>{parseFloat(row3.itemRate || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>FC{row3.totalAmountFC !== undefined ? parseFloat(row3.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>{row3.Taux !== undefined ? parseFloat(row3.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                                      <td style={{ border: '1px solid #DDD' }}>${parseFloat(row3.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                      <td style={{ border: '1px solid #DDD' }}>${parseFloat(row3.totalAmount || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                       <td style={{ border: '1px solid #DDD' }}>{row3.fcConvertToUsdTotal !== undefined ? parseFloat(row3.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                                     </tr>
                                                   )
@@ -1716,19 +1780,23 @@ function SupplierViewInformation() {
                             </TableHead>
                             <TableBody>
                               {
-                                itemPurchaseView.items.filter(row => parseFloat(row.itemQty) > 0).map((row, i) => (
-                                  <TableRow key={row.idRow}>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{i + 1}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemName.itemName}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemDescription}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemQty}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{parseFloat(row.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>FC{row.totalAmountFC !== undefined ? parseFloat(row.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.Taux !== undefined ? parseFloat(row.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>${parseFloat(row.totalAmount).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
-                                    <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.fcConvertToUsdTotal !== undefined ? parseFloat(row.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
-                                  </TableRow>
-                                ))
+                                itemPurchaseView.items.filter(row => parseFloat(row.itemQty) > 0).map((row, i) => {
+                                  const dName = getItemDisplayName(row);
+                                  const iId = getItemId(row);
+                                  return (
+                                    <TableRow key={row.idRow || i}>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{i + 1}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{dName || row.newDescription || '—'}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemDescription}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemQty}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{parseFloat(row.itemRate || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>FC{row.totalAmountFC !== undefined ? parseFloat(row.totalAmountFC).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.Taux !== undefined ? parseFloat(row.Taux).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>${parseFloat(row.totalAmount || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                      <TableCell sx={id === iId ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.fcConvertToUsdTotal !== undefined ? parseFloat(row.fcConvertToUsdTotal).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                                    </TableRow>
+                                  );
+                                })
                               }
                             </TableBody>
                           </Table>

@@ -1135,3 +1135,21 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     4. `EstimateConvertToMaintenance.js` & `MaintenanceFormClone.js`: Removed restrictive `role !== 'CEO'` constraints on `itemRate`.
     5. `MobileDetailSheet.js`, `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`: Re-aligned `isOwner` to strictly check `userName === 'GG'`, ensuring all other users follow Grant Access.
   - **Verification:** AST Babel syntax validation passed across all modified files. Compiled Webpack production & web bundles (`npm run build`), generated Windows desktop installer `dist/Global Gate Setup 3.5.38.exe`, committed and pushed to `origin main` for Railway deployment.
+
+- **Item Purchase Quantity 0 Preservation (Ver 3.5.39)**:
+  - **Problem Reported:** Editing an item's quantity to 0 in an Item Purchase (e.g. `IP-2625`) caused the item to be stripped from display or deleted.
+  - **Resolution:** Updated quantity filters to allow zero quantity lines (`parseFloat(itemQty) >= 0`) across Item Purchase update and view forms.
+
+- **Item Name vs Description Separation in Item Purchases (Ver 3.5.40)**:
+  - **Problem Reported:** Item purchases were using item descriptions as names or overwriting item names with descriptions on save.
+  - **Resolution:** Enforced strict separation between `itemName` and `itemDescription` across `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseViewAdmin.js`, with universal `getItemDisplayName` catalog lookups.
+
+- **Supplier Module ITEM-SUMMARY Historical Purchases Reconciliation (Ver 3.5.41)**:
+  - **Problem Reported:** In the Supplier Module (`SupplierViewInformation.js`) -> `ITEM-SUMMARY` tab, searching for an item (e.g. `LITHIUM BATTERY 5.12KWH 100A HI-5`) showed only 2 units from 1 IP, whereas the Item module's `IN-SUMMARY` tab showed 27 units across all historical purchase orders from that supplier.
+  - **Root Cause & Resolution:**
+    1. **Backend Supplier Query Optimization (`server/routes/itemRoutes.js`):** Enhanced `GET /itemPurchase` supplier filter with regex matching for both `supplierName` and `shortName` so that historical purchases with name variations (e.g., `TIMBEAT` vs `TIMBEAT TRADING COMPANY LIMITED`) are included.
+    2. **Supplier Matching Normalization (`SupplierViewInformation.js`):** Updated `isMatchingSupplier` with flexible substring and case-insensitive matching across `manufacturer`, `storeName`, and `supplierName`.
+    3. **Item Catalog & Universal Name Resolver (`SupplierViewInformation.js`):** Added item master catalog fetching (`/item-Information`) and integrated `getItemDisplayName(it)` and `getItemId(it)` to handle string names, object names, catalog `_id`s, and `newDescription` seamlessly.
+    4. **Table & Search Integration:** Updated search filtering (`search4`, `search`) and table row rendering across `TabPanel value="3"` (ITEM-SUMMARY), collapsible `Row` items, and modal preview to display resolved item names, thumbnails, descriptions, and catalog units.
+  - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), and Windows desktop installer generated (`dist/Global Gate Setup 3.5.41.exe`).
+

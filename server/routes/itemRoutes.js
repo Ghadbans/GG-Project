@@ -859,12 +859,14 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
             const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             conditions.push({ manufacturer: rawName });
             conditions.push({ manufacturer: new RegExp('^' + escapedName + '$', 'i') });
+            conditions.push({ manufacturer: new RegExp(escapedName, 'i') });
           }
           if (req.query.shortName && req.query.shortName !== 'undefined' && req.query.shortName.trim() && req.query.shortName.trim() !== '.') {
             const rawShort = req.query.shortName.trim();
             const escapedShort = rawShort.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             conditions.push({ manufacturer: rawShort });
             conditions.push({ manufacturer: new RegExp('^' + escapedShort + '$', 'i') });
+            conditions.push({ manufacturer: new RegExp(escapedShort, 'i') });
           }
           filter['$or'] = conditions;
         }
