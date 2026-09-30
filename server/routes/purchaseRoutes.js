@@ -82,7 +82,21 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = {};
+      const projection = summary ? {
+        purchaseNumber: 1,
+        purchaseDate: 1,
+        total: 1,
+        totalFC: 1,
+        totalUSD: 1,
+        status: 1,
+        customerName: 1,
+        projectName: 1,
+        items: 1,
+        branchId: 1,
+        _id: 1,
+        supplierName: 1,
+        payments: 1
+      } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       if (req.query.projectId) {
         let objectId = null;

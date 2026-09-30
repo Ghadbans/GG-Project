@@ -19,20 +19,21 @@ async function mongoDbConnection() {
     6000
   );
 }
-mongoDbConnection().then(async () => {
+mongoDbConnection().then(() => {
   console.log("globalgate successfully connected.");
-  try {
-    await mongoose.connection.db.collection('department').dropIndex('department_1');
-    console.log('Dropped old department_1 index');
-  } catch (e) {
-    // Ignore if index doesn't exist
-  }
-  try {
-    await mongoose.connection.db.collection('item').dropIndex('itemName_1');
-    console.log('Dropped old itemName_1 index from item collection');
-  } catch (e) {
-    // Ignore if index doesn't exist
-  }
+
+  // Run background maintenance non-blockingly so server handles user requests immediately
+  setImmediate(async () => {
+    try {
+      await mongoose.connection.db.collection('department').dropIndex('department_1');
+      console.log('Dropped old department_1 index');
+    } catch (e) {}
+
+    try {
+      await mongoose.connection.db.collection('item').dropIndex('itemName_1');
+      console.log('Dropped old itemName_1 index from item collection');
+    } catch (e) {}
+
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;
@@ -40,94 +41,65 @@ mongoDbConnection().then(async () => {
         try {
           const coll = db.collection(collName);
           const indexes = await coll.indexes();
-          console.log(`Checking indexes for ${collName}...`);
           for (const idx of indexes) {
-            console.log(`Found index on ${collName}: ${idx.name} (unique: ${idx.unique})`);
             if (idx.unique && idx.name !== "_id_") {
               if (idx.name === "purchaseNumber_1" || idx.name === "itemPurchaseNumber_1" || idx.name === "projectName.projectName_1" || !idx.name.includes("purchaseNumber")) {
                 try {
                   await coll.dropIndex(idx.name);
-                  console.log(`Dropped unexpected unique index ${idx.name} from ${collName}`);
-                } catch (e) {
-                  console.log(`Failed to drop index ${idx.name} from ${collName}: ${e.message}`);
-                }
+                } catch (e) {}
               }
             }
           }
-          
-          // Force drop it just in case coll.indexes() misses it for some weird reason
           try {
             await coll.dropIndex("projectName.projectName_1");
-            console.log(`Explicitly dropped projectName.projectName_1 from ${collName}`);
-          } catch(e) { }
-          
-        } catch (err) {
-          console.log(`Error processing collection ${collName}: ${err.message}`);
-        }
+          } catch(e) {}
+        } catch (err) {}
       }
-    } catch (err) {
-      console.log("Error in DB cleanup:", err.message);
-    }
+    } catch (err) {}
 
     try {
       const db = mongoose.connection.db;
       await db.collection("itemOut").dropIndex("outNumber_1");
       await db.collection("itemouts").dropIndex("outNumber_1");
-      console.log("Dropped index outNumber_1 from itemOut collection");
-    } catch (err) {
-      console.log("Could not drop index from itemOut:", err.message);
-    }
+    } catch (err) {}
 
-    // Drop the broken estimateName_1 unique index from estimation
     try {
       const db = mongoose.connection.db;
       await db.collection("estimation").dropIndex("estimateName_1");
-      console.log("SUCCESS: Dropped estimateName_1 index from estimation");
-    } catch (err) {
-      console.log("estimateName_1 drop result:", err.message);
-    }
+    } catch (err) {}
 
-    // Automatic migration: rename Home -> Receivables across collections
     try {
       const db = mongoose.connection.db;
-      const r1 = await db.collection("expenseSchema").updateMany(
+      await db.collection("expenseSchema").updateMany(
         { accountName: /^home$/i },
         { $set: { accountName: "Receivables" } }
       );
-      const r2 = await db.collection("expenseSchema").updateMany(
+      await db.collection("expenseSchema").updateMany(
         { "expenseCategory.expensesCategory": /^home$/i },
         { $set: { "expenseCategory.expensesCategory": "Receivables" } }
       );
-      const r3 = await db.collection("expensesCategory").updateMany(
+      await db.collection("expensesCategory").updateMany(
         { expensesCategory: /^home$/i },
         { $set: { expensesCategory: "Receivables" } }
       );
-      const r4 = await db.collection("dailyExpense").updateMany(
+      await db.collection("dailyExpense").updateMany(
         { expenseCategory: /^home$/i },
         { $set: { expenseCategory: "Receivables" } }
       );
-      const r5 = await db.collection("dailyExpense").updateMany(
+      await db.collection("dailyExpense").updateMany(
         { expenseOption: /^home$/i },
         { $set: { expenseOption: "Receivables" } }
       );
-      if (r1.modifiedCount > 0 || r2.modifiedCount > 0 || r3.modifiedCount > 0) {
-        console.log(`Migrated Home -> Receivables: expenseSchema(acc:${r1.modifiedCount}, cat:${r2.modifiedCount}), expensesCategory(${r3.modifiedCount})`);
-      }
-    } catch (err) {
-      console.log("Migration Home -> Receivables check note:", err.message);
-    }
+    } catch (err) {}
 
-    // Auto-reconcile all invoices against recorded payments
     try {
       const { reconcileAllInvoiceBalances } = require("./utils/invoiceBalanceUtils");
       await reconcileAllInvoiceBalances();
-    } catch (err) {
-      console.log("Startup invoice reconciliation note:", err.message);
-    }
-}),
-  (error) => {
-    console.log("Could not connect to database : " + err);
-  };
+    } catch (err) {}
+  });
+}).catch((err) => {
+  console.log("Could not connect to database : " + err);
+});
 
 const authRoutes = require('./routes/AuthRoutes');
 const lockRoutes = require('./routes/lockRoutes');

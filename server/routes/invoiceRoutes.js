@@ -83,7 +83,25 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
   async (req, res, next) => {
     try {
       const summary = req.query.summary === 'true';
-      const projection = {};
+      const projection = summary ? { 
+        invoiceNumber: 1, 
+        invoiceDate: 1, 
+        totalInvoice: 1, 
+        total: 1, 
+        balanceDue: 1, 
+        status: 1, 
+        customerName: 1, 
+        items: 1, 
+        ReferenceName2: 1, 
+        branchId: 1, 
+        _id: 1,
+        totalFC: 1,
+        totalUSD: 1,
+        Rate: 1,
+        Taux: 1,
+        tax: 1,
+        payments: 1
+      } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       if (req.query.projectId || req.query.purchaseIds) {
         let orConditions = [];
