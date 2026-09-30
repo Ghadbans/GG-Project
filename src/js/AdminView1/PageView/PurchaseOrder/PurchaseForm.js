@@ -343,35 +343,43 @@ function PurchaseForm() {
 
   const handleChangeService = (newValue) => {
     const selectedOptions = maintenance.find((option) => option === newValue)
+    const clientName = selectedOptions?.customerName?.customerName || (typeof selectedOptions?.customerName === 'string' ? selectedOptions.customerName : '') || '';
+    const servName = selectedOptions?.serviceName || (selectedOptions?.serviceNumber !== undefined ? `M-${String(selectedOptions.serviceNumber).padStart(6, '0')}` : '');
     setServiceNumber({
       _id: selectedOptions?._id,
       serviceNumber: selectedOptions?.serviceNumber
     });
     setReference({
       _id: selectedOptions?._id,
-      referenceName: selectedOptions?.serviceName + ' / ' + selectedOptions?.customerName.customerName
+      referenceName: servName && clientName ? `${servName} / ${clientName}` : (servName || clientName || '')
     });
   }
   const handleChangeProject = (newValue) => {
     const selectedOptions = projects.find((option) => option === newValue)
+    const pNum = selectedOptions?.projectNumber !== undefined ? `P-${String(selectedOptions.projectNumber).padStart(6, '0')}` : '';
+    const pName = selectedOptions?.projectName || '';
+    const formattedProj = pNum && pName ? `${pNum} / ${pName}` : (pName || pNum || '');
     setProjectName({
       _id: selectedOptions?._id,
       projectName: selectedOptions?.projectName
     });
     setReference({
       _id: selectedOptions?._id,
-      referenceName: selectedOptions?.projectName
+      referenceName: formattedProj
     });
   }
   const handleChangeInvoice = (newValue) => {
     const selectedOptions = invoice.find((option) => option === newValue)
+    const clientName = selectedOptions?.customerName?.customerName || (typeof selectedOptions?.customerName === 'string' ? selectedOptions.customerName : '') || '';
+    const invNum = selectedOptions?.invoiceNumber !== undefined ? 'INV-' + String(selectedOptions.invoiceNumber).padStart(6, '0') : (selectedOptions?.invoiceName || '');
+    const formattedName = invNum && clientName ? `${invNum} / ${clientName}` : (invNum || clientName || '');
     setInvoiceName({
       _id: selectedOptions?._id,
       invoiceNumber: selectedOptions?.invoiceNumber
     });
     setReference({
       _id: selectedOptions?._id,
-      referenceName: selectedOptions?.invoiceName + ' / ' + selectedOptions?.customerName.customerName
+      referenceName: formattedName
     });
   }
 

@@ -357,13 +357,16 @@ function ItemReturnUpdateForm() {
   }
   const handleChangeInvoice = (newValue) => {
     const selectedOptions = invoice.find((option) => option === newValue)
+    const clientName = selectedOptions?.customerName?.customerName || (typeof selectedOptions?.customerName === 'string' ? selectedOptions.customerName : '') || '';
+    const invNum = selectedOptions?.invoiceNumber !== undefined ? 'INV-' + String(selectedOptions.invoiceNumber).padStart(6, '0') : (selectedOptions?.invoiceName || '');
+    const formattedName = invNum && clientName ? `${invNum} / ${clientName}` : (invNum || clientName || '');
     setInvoiceName({
       _id: selectedOptions?._id,
       invoiceNumber: selectedOptions?.invoiceNumber
     });
     setReference({
       _id: selectedOptions?._id,
-      referenceName: selectedOptions?.invoiceName + ' / ' + selectedOptions?.customerName.customerName
+      referenceName: formattedName
     });
   }
 

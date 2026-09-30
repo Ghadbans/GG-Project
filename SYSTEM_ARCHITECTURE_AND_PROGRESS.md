@@ -1144,12 +1144,12 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Problem Reported:** Item purchases were using item descriptions as names or overwriting item names with descriptions on save.
   - **Resolution:** Enforced strict separation between `itemName` and `itemDescription` across `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseViewAdmin.js`, with universal `getItemDisplayName` catalog lookups.
 
-- **Supplier Module ITEM-SUMMARY Catalog Field Parsing & Universal Item Display Fix (Ver 3.5.42)**:
-  - **Problem Reported:** In the Supplier Module (`SupplierViewInformation.js`) -> `ITEM-SUMMARY` tab, item names were rendered as `—` (dash) and searching for `LITHIUM BATTERY 5.12KWH 100A HI-5` returned no results, while searching for description keywords (e.g. `CHARGE VOLTAGE :`) displayed the rows without item names.
+- **Fix undefined Reference Name in Purchase Order & Item Out/Return Direct-Invoice Selection (Ver 3.5.43)**:
+  - **Problem Reported:** In "MAKE NEW PURCHASE ORDER" (`PurchaseForm.js`), when selecting Reason = `Direct-Invoice` and picking an invoice (e.g. `GLOBAL PVA/INV-002567`), the Invoice input field displayed `undefined / GLOBAL PVA`.
   - **Root Cause & Resolution:**
-    1. **Catalog Payload Key Mismatch:** The endpoint `/item-Information` returned `{ itemI: [...] }` instead of `{ data: [...] }`. `SupplierViewInformation.js` attempted to read `res.data.data`, leaving `itemInformation` empty.
-    2. **Dual-Key Response & Resilient Parser:** Updated `server/routes/itemRoutes.js` to return both `itemI` and `data: itemI` from `/item-Information`. Updated `SupplierViewInformation.js` to parse `res.data?.itemI || res.data?.data`.
-    3. **Robust ID & String Name Matcher:** Enhanced `getItemDisplayName` and `getItemId` to handle ObjectId string casting, non-hex raw string names, and `it.itemId` references.
-  - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), Windows installer built (`dist/Global Gate Setup 3.5.42.exe`), and changes pushed to `origin main` for Railway deployment.
+    1. **Legacy Property Reference:** `handleChangeInvoice` in `PurchaseForm.js`, `ItemOutViewForm.js`, and `ItemReturnUpdateForm.js` accessed `selectedOptions?.invoiceName` (which was undefined because MongoDB invoices store `invoiceNumber`).
+    2. **Formatted Identifier Resolution:** Replaced `selectedOptions?.invoiceName` with `invNum = 'INV-' + String(selectedOptions.invoiceNumber).padStart(6, '0')`, ensuring clean formatted display (`INV-002567 / GLOBAL PVA`).
+  - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), Windows installer generated (`dist/Global Gate Setup 3.5.43.exe`), and changes pushed to `origin main` for Railway deployment.
+
 
 
