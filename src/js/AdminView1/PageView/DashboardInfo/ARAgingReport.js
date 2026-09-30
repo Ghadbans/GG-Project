@@ -65,7 +65,8 @@ function ARAgingReport({ onInvoice, onPayment, customers = [] }) {
 
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
-        documentTitle: `Statement_Of_Accounts_${selectedCustomer?.name || 'Customer'}`
+        documentTitle: `Statement_Of_Accounts_${selectedCustomer?.name || 'Customer'}`,
+        pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
     });
 
     const customerInvoices = useMemo(() => {

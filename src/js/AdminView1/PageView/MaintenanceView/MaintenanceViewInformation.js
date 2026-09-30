@@ -517,6 +517,7 @@ function MaintenanceViewInformation() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: `M-${String(serviceNumber).padStart(6, '0')} For ${customerName1}`,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   })
 
 

@@ -185,6 +185,7 @@ const VatAccountView = ({
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: 'VAT Account Statement',
+        pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
     });
 
     const exportToExcel = async () => {

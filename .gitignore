@@ -16,3 +16,4 @@ BACKUP SYSTEM*/
 *.zip
 *.py
 test_*.js
+backup_atlas_prod/

@@ -3,6 +3,7 @@
 ## Architecture Overview
 - **Frontend**: A React application bundled as an Electron executable (desktop app) located in the local directory (`d:\GG\GG-Managment2026\ancient-kepler Pro`).
 - **Backend**: A Node.js/Express application with MongoDB, located in the `server` subdirectory of the local project folder.
+- **Database**: Production database is hosted on the dedicated **Railway MongoDB** service (`globalgatedb`) connected via Railway's high-speed private internal network (`mongodb.railway.internal:27017`), cutting \$200+/month in Atlas cloud costs while providing low latency and zero external exposure.
 - **Deployment**: The backend (`server` folder) is deployed to Railway. All updates made to backend files (such as `server/routes/Routes.js`) MUST be committed to Git and pushed to `origin main` to trigger the Railway deployment.
 - **Version Bumping**: When significant frontend changes are made and an executable `.exe` is to be generated (e.g. via `electron-builder`), always update the version number in `package.json` to prevent overwriting existing release files in `dist/`.
 
@@ -88,8 +89,44 @@
     - Normalized data loading in `ItemPurchaseUpdateForm.js` guarantees that `itemName` is consistently structured as an object `{ _id, itemName }` by resolving the actual item name directly from the loaded `ItemInformation` catalog whenever `itemName` is an ID or object with missing string name.
     - `getItemDisplayName()` strictly resolves the actual item name from `itemName`, `itemName.itemName`, `itemName.name`, or the item catalog `ItemInformation.find(x => x._id === id).itemName`. It NEVER falls back to `itemDescription`, which contains technical specs (e.g. voltage, serials) and is not the item name.
     - In DataGrid and modal tables, `itemInfo` and `TableCell` mappings strictly resolve item names via catalog lookups and never conflate item descriptions with item names.
+33. **Railway Internal MongoDB Infrastructure & Database Operations**:
+    - The production database is hosted on the Railway MongoDB service (`globalgatedb`), connected via Railway's private internal network mesh (`mongodb.railway.internal:27017`).
+    - Standard standalone MongoDB on Railway is fully compatible with the backend architecture (the system does not require replica sets or multi-document ACID transactions).
+    - Public TCP proxy access (`hopper.proxy.rlwy.net`) should remain closed during normal operation for security, and opened only if external administrative database access or manual migrations are required.
+    - Full verified production backups are retained locally in `./backup_atlas_prod` (56 collections, 165,615 documents) and can be restored using `transformBson` scripts to preserve native `ObjectId` and `Date` types.
+34. **Universal Standard A4 Print Engine & Layout Optimization (Ver 3.5.44)**:
+    - **No Artificial Height Forcing:** `useReactToPrint` hooks must NEVER calculate artificial heights using `PAGE_HEIGHT = 1045` and `Math.ceil(height / PAGE_HEIGHT)` inside `onBeforeGetContent`. Doing so causes small documents (e.g. 2-3 items) that slightly exceed 1,045px to forcefully expand to 2,090px (2 full pages) with large empty voids.
+    - **Standardized A4 `@page` & Media Styles:** All printable modules must specify `pageStyle: '@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }'`. In `@media print`, tables, headers, customer cards, and summary total boxes must use `page-break-inside: avoid !important; break-inside: avoid !important;`.
+    - **In-Flow Printable Headers & Footers:** `PrintHeader.js` is constrained to `maxHeight: '65px'` with compact margins, and `PrintFooter.js` flows naturally at the end of documents with clean top borders instead of brittle `position: fixed; bottom: 0;` (which overlaps multi-page document content).
+    - **Thermal POS Print Isolation:** Point of Sale (POS) printing (`SellShopInvoiceView.js` / `ReportPos.js`) uses thermal receipt roll dimensions and is strictly isolated from standard A4 document layouts.
 
 ## Current Progress Log
+- **Universal Professional A4 Print Engine & Multi-Page Layout Optimization (Ver 3.5.44)**:
+  - **Eliminated Artificial Height Forcing & Accidental Multi-Page Spills**:
+    - Completely removed artificial height-forcing calculations (`PAGE_HEIGHT = 1045` & `Math.ceil(height / PAGE_HEIGHT)`) from `useReactToPrint` across all primary modules (`InvoiceViewAdminAll.js`, `EstimateViewAdminAll.js`, `PurchasesViewAdminAll.js`, `PurchaseOrderInfoView.js`, `CustomerInformationView.js`, `ItemOutViewAdmin.js`, `ItemReturnAdminView.js`, `ProjectViewInformation.js`, `PaymentInformationView.js`).
+    - Standardized `pageStyle: '@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }'` across every printable module and dashboard report (`ARAgingReport.js`, `RevenueExpensesAll.js`, `DailyExpensesReportInfo.js`, `ItemPurchaseReportInfo.js`, `PaymentReportInf.js`, `PayRollReportInfo.js`, `VatAccountView.js`, `WorkerPaymentView.js`, `PurchaseOrderViewAdmin.js`, `ItemPurchaseViewAdmin.js`, `MaintenanceViewInformation.js`, `MaintenanceOrderViewInformation.js`, `CategoryViewDailyExpenses.js`, `SupplierViewInformation.js`, `PayRollViewInformation.js`).
+  - **Enhanced Universal Print Stylesheet (`Chartview.css`)**:
+    - Configured standard `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; }` with clean print typography (11px body, 10px table cells, 1.35 line-height).
+    - Added universal `page-break-inside: avoid !important; break-inside: avoid !important;` protection across table rows, summary cards, address blocks, and signature sections.
+    - Standardized compact table padding (`4px 6px`) and subtle borders, ensuring 1-page documents stay squarely on 1 page and multi-page documents break naturally.
+  - **Header & Footer Flow Optimization**:
+    - Optimized `PrintHeader.js` logo height (`65px`) and compact address blocks.
+    - Updated `PrintFooter.js` to render in-flow with clean top border and 9px metadata, preventing fixed-bottom footer overlap on multi-page invoices and statements.
+    - Removed hardcoded `marginLeft: '40px'` offset in `PaymentInformationView.js` for perfect page centering.
+  - **Release & Distribution**: Bumped version to `3.5.44`, compiled Webpack production bundles (`build/` and `dist_web/`), and verified clean build.
+- **Production Database Migration to Railway MongoDB & Infrastructure Cost Optimization**:
+  - **Full Data Migration & Verification (100% Parity Across 56 Collections / 165,615 Documents)**:
+    - Successfully dumped complete live production dataset from MongoDB Atlas to local verified archive (`./backup_atlas_prod`).
+    - Restored all 56 collections into the new dedicated Railway MongoDB cluster (`globalgatedb`) via optimized pipelined streaming.
+    - Preserved 100% BSON fidelity across all collections using recursive `transformBson` casting (restoring native MongoDB `ObjectId` references and native ISO `Date` types for `createdAt`, `updatedAt`, `invoiceDate`, `date`, and `timestamp`).
+    - Built and verified core production database indexes on critical collections (`employeeuserschemas`, `invoice`, `item`, `itemPurchase`, `itemOut`, `customer`, `Supplier`, `projects`).
+    - Independently verified 1:1 exact document counts across all 56 collections (including `notification` 83,588, `employeeAttendance` 26,756, `expenseSchema` 14,581, `Planing` 11,280, `itemOut` 6,947, `itemPurchase` 3,594, `item` 3,253, `invoice` 1,896, `payment` 1,091, `customer` 389, `employee` 338, etc.).
+  - **Backend Railway Internal Network Routing & Security Hardening**:
+    - Configured production environment variables on the `GG-Project` Railway service (`MONGODB_URI` and fallback `MONGO_URL`) to target Railway's high-speed private internal mesh URL:
+      `mongodb://mongo:YfZpVIstFWHIPmHQrceCyeaJfcvMSWVg@mongodb.railway.internal:27017/globalgatedb?authSource=admin`
+    - Redeployed the Express backend cleanly with verified startup logs (`globalgate successfully connected.`).
+    - Closed the public TCP proxy on Railway to prevent external exposure and ensure all database traffic remains isolated within the private network.
+    - Successfully terminated the legacy MongoDB Atlas cluster, eliminating over \$200+/month in ongoing cloud infrastructure costs.
 - **Item Purchase Item Name & Description Separation & Catalog Resolution Fix (Ver 3.5.40)**:
   - **Resolved Item Name Conflation with Description (`ItemPurchaseUpdateForm.js`, `ItemPurchaseViewAdmin.js`, `ItemPurchaseViewForm.js`)**:
     - Completely removed incorrect `itemDescription` fallback in `getItemDisplayName`, preventing technical descriptions (such as `CHARGE VOLTAGE : 56.5V...`) from erroneously replacing the item name (`LITHIUM BATTERY 5.12KWH 100A HI-5`).

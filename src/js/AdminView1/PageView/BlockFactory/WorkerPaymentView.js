@@ -322,10 +322,11 @@ function WorkerPaymentView() {
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
         documentTitle: `Worker_Payroll_${payFrom || ''}_to_${payTo || ''}`,
+        pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
         onBeforeGetContent: () => {
             setIsPrinting(true);
             return new Promise((resolve) => {
-                setTimeout(resolve, 1000); // Give plenty of time for rendering
+                setTimeout(resolve, 500); // Give plenty of time for rendering
             });
         },
         onAfterPrint: () => setIsPrinting(false),

@@ -11,22 +11,22 @@ const PrintFooter = ({ branchId }) => {
   if (!branchInfo) return null;
 
   return (
-    <section style={{ position: 'fixed', bottom: 0, left: 0, right: 0, justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '10px', backgroundColor: 'white', padding: '10px 0' }}>
+    <section className="avoid-page-break" style={{ width: '100%', borderTop: '1px solid #d1d5db', marginTop: '12px', paddingTop: '6px', justifyContent: 'center', display: 'flex', alignItems: 'center', gap: '16px', backgroundColor: 'transparent', fontSize: '9px', color: '#4b5563' }}>
       {branchInfo.email && (
-        <p style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: 0 }}>
-          <span><EmailIcon fontSize="small" /></span>
+        <p style={{ display: 'flex', gap: '4px', alignItems: 'center', margin: 0 }}>
+          <span><EmailIcon sx={{ fontSize: '13px' }} /></span>
           <span>{branchInfo.email}</span>
         </p>
       )}
       {branchInfo.phone && (
-        <p style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: 0 }}>
-          <span><PhoneIcon fontSize="small" /></span>
+        <p style={{ display: 'flex', gap: '4px', alignItems: 'center', margin: 0 }}>
+          <span><PhoneIcon sx={{ fontSize: '13px' }} /></span>
           <span>{branchInfo.phone}</span>
         </p>
       )}
       {branchInfo.website && (
-        <p style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: 0 }}>
-          <span><WebIcon fontSize="small" /></span>
+        <p style={{ display: 'flex', gap: '4px', alignItems: 'center', margin: 0 }}>
+          <span><WebIcon sx={{ fontSize: '13px' }} /></span>
           <span>{branchInfo.website}</span>
         </p>
       )}

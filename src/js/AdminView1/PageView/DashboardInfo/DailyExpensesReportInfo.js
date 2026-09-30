@@ -166,8 +166,9 @@ function DailyExpensesReportInfo({ onMonth, onExpenses, selectedYear }) {
 
   const componentRef = useRef();
   const handlePrint = useReactToPrint({
-    content: () => componentRef.current
-  })
+    content: () => componentRef.current,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
 
   const data = [
     { label: 'Total DailyExpenses', value: TotalDExpenses },

@@ -467,31 +467,8 @@ function PurchasesViewAdminAll() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: 'PUR-' + String(purchaseNumber).padStart(6, '0') + ' For ' + customerName,
-    onBeforeGetContent: () => {
-      const PAGE_HEIGHT = 1045;
-      const printElement = componentRef.current;
-      if (printElement) {
-        printElement.classList.add("temp-class-for-height")
-        const height = printElement.clientHeight
-        const numberOfPage = Math.ceil(height / PAGE_HEIGHT)
-        if (numberOfPage > 1) {
-          const heightWithSingleHeader = numberOfPage * PAGE_HEIGHT
-          let requiredHeight = heightWithSingleHeader
-          const headerHeight = printElement.getElementsByTagName("thead")?.[0]?.clientHeight
-          const footerHeight = printElement.getElementsByTagName("tfoot")?.[0]?.clientHeight
-          requiredHeight -= (numberOfPage - 1) * (headerHeight + footerHeight)
-          printElement.style.height = `${requiredHeight}px`;
-        }
-        printElement.classList.remove("temp-class-for-height")
-      }
-    },
-    onAfterPrint: () => {
-      const printElement = componentRef.current;
-      if (printElement) {
-        printElement.style.height = `auto`
-      }
-    }
-  })
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
   const handleOpenPrint = () => {
     handlePrint()
     setAnchorEl(null);

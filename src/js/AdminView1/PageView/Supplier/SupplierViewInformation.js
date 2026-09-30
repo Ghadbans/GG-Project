@@ -399,6 +399,7 @@ function SupplierViewInformation() {
   const componentRef = useRef(null);
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
     onAfterPrint: () => {
       setAnchorEl(null);
     }
@@ -791,6 +792,7 @@ function SupplierViewInformation() {
   const handlePrintStatement = useReactToPrint({
     content: () => statementPrintRef.current,
     documentTitle: `Statement - ${StoreName || 'Supplier'}`,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
 
   const transactionYears = new Date(startDate).getFullYear();

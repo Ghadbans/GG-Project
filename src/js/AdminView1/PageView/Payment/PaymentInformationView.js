@@ -283,31 +283,8 @@ function PaymentInformationView() {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
-    onBeforeGetContent: () => {
-      const PAGE_HEIGHT = 1045;
-      const printElement = componentRef.current;
-      if (printElement) {
-        printElement.classList.add("temp-class-for-height")
-        const height = printElement.clientHeight
-        const numberOfPage = Math.ceil(height / PAGE_HEIGHT)
-        if (numberOfPage > 1) {
-          const heightWithSingleHeader = numberOfPage * PAGE_HEIGHT
-          let requiredHeight = heightWithSingleHeader
-          const headerHeight = printElement.getElementsByTagName("thead")?.[0]?.clientHeight
-          const footerHeight = printElement.getElementsByTagName("tfoot")?.[0]?.clientHeight
-          requiredHeight -= (numberOfPage - 1) * (headerHeight + footerHeight)
-          printElement.style.height = `${requiredHeight}px`;
-        }
-        printElement.classList.remove("temp-class-for-height")
-      }
-    },
-    onAfterPrint: () => {
-      const printElement = componentRef.current;
-      if (printElement) {
-        printElement.style.height = `auto`
-      }
-    }
-  })
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
 
   const handleOpenPrint = () => {
     handlePrint()
@@ -476,7 +453,7 @@ function PaymentInformationView() {
                                 <hr />
                                 <div style={{ height: 'calc(100vh - 230px)', overflow: 'hidden', overflowY: 'auto', width: '100%', background: 'white' }}>
                                   <div hidden>
-                                    <table ref={componentRef} className='invoicedetails' style={{ position: 'relative', marginLeft: '40px' }}>
+                                    <table ref={componentRef} className='invoicedetails' style={{ position: 'relative', width: '100%', margin: 0 }}>
                                       <thead>
                                         <tr>
                                           <th ></th>

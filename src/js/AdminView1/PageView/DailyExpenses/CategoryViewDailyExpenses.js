@@ -182,6 +182,7 @@ function CategoryViewDailyExpenses() {
   const handlePrintStatement = useReactToPrint({
     content: () => printStatementRef.current,
     documentTitle: `Category_Expenses_Statement_${newCategory || 'Category'}`,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
 
   const [categories, setCategories] = useState([]);
