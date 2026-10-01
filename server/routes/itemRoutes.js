@@ -957,6 +957,114 @@ Route.route("/get-last-saved-itemPurchase").get(async(req,res, next)=>{
     next(error);
   }
 })
+async function sanitizeAndEnrichPurchaseItems(items) {
+  if (!Array.isArray(items)) return items;
+  const enriched = await Promise.all(items.map(async (it) => {
+    if (!it) return it;
+    let idVal = '';
+    let nameVal = '';
+    let descVal = it.itemDescription !== undefined ? it.itemDescription : '';
+
+    if (it.itemName && typeof it.itemName === 'object') {
+      idVal = it.itemName._id ? it.itemName._id.toString() : '';
+      nameVal = it.itemName.itemName || it.itemName.name || '';
+    } else if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+      if (mongoose.Types.ObjectId.isValid(it.itemName.trim())) {
+        idVal = it.itemName.trim();
+      } else {
+        nameVal = it.itemName.trim();
+      }
+    }
+
+    if (!idVal && it.itemId) {
+      idVal = typeof it.itemId === 'object' && it.itemId._id ? it.itemId._id.toString() : it.itemId.toString();
+    }
+
+    if (idVal && mongoose.Types.ObjectId.isValid(idVal)) {
+      if (!nameVal || nameVal.trim() === '' || nameVal === idVal) {
+        try {
+          const itemDoc = await itemSchema.findById(idVal).select('itemName itemDescription');
+          if (itemDoc) {
+            nameVal = itemDoc.itemName;
+            if (!descVal && itemDoc.itemDescription) descVal = itemDoc.itemDescription;
+          }
+        } catch (e) {
+          console.error('Error resolving item in sanitizeAndEnrichPurchaseItems:', e);
+        }
+      }
+    } else if (nameVal && !idVal) {
+      try {
+        const itemDoc = await itemSchema.findOne({ itemName: nameVal }).select('_id itemName itemDescription');
+        if (itemDoc) {
+          idVal = itemDoc._id.toString();
+          if (!descVal && itemDoc.itemDescription) descVal = itemDoc.itemDescription;
+        }
+      } catch (e) {
+        console.error('Error resolving item by name:', e);
+      }
+    }
+
+    return {
+      ...it,
+      itemName: {
+        _id: idVal || undefined,
+        itemName: nameVal || ''
+      },
+      itemDescription: descVal
+    };
+  }));
+  return enriched;
+}
+
+// Auto-repair legacy empty item names in background
+(async () => {
+  try {
+    const docs = await itemPurchaseSchema.find({
+      'items': {
+        $elemMatch: {
+          $or: [
+            { 'itemName.itemName': '' },
+            { 'itemName.itemName': { $exists: false } },
+            { 'itemName': { $type: 'string' } }
+          ]
+        }
+      }
+    });
+    if (docs && docs.length > 0) {
+      for (const doc of docs) {
+        let modified = false;
+        const newItems = await Promise.all((doc.items || []).map(async (it) => {
+          let idVal = it.itemName && it.itemName._id ? it.itemName._id.toString() : (it.itemId ? it.itemId.toString() : '');
+          let nameVal = it.itemName && typeof it.itemName === 'object' ? (it.itemName.itemName || '') : (typeof it.itemName === 'string' ? it.itemName : '');
+          let descVal = it.itemDescription || '';
+
+          if (idVal && (!nameVal || nameVal.trim() === '' || nameVal === idVal)) {
+            const itemDoc = await itemSchema.findById(idVal).select('itemName itemDescription');
+            if (itemDoc) {
+              nameVal = itemDoc.itemName;
+              if (!descVal && itemDoc.itemDescription) descVal = itemDoc.itemDescription;
+              modified = true;
+            }
+          }
+          return {
+            ...it,
+            itemName: {
+              _id: idVal || undefined,
+              itemName: nameVal
+            },
+            itemDescription: descVal
+          };
+        }));
+        if (modified) {
+          await itemPurchaseSchema.updateOne({ _id: doc._id }, { $set: { items: newItems } });
+        }
+      }
+    }
+  } catch (err) {
+    console.error('[SYS] Error in autoRepairEmptyItemPurchases:', err);
+  }
+})();
+
 // Create itemPurchase
 Route.route("/create-itemPurchase").post(async (req, res, next) => {
   const { itemPurchaseDate,POID,itemPurchaseNumber,
@@ -975,10 +1083,13 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
       const finalNumber = (itemPurchaseNumber && itemPurchaseNumber > maxNum) ? itemPurchaseNumber : maxNum + 1;
       req.body.itemPurchaseNumber = finalNumber;
 
-    for( const purchaseItem of items) {
-      if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
-        await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
-      } 
+    if (Array.isArray(items)) {
+      req.body.items = await sanitizeAndEnrichPurchaseItems(items);
+      for( const purchaseItem of req.body.items) {
+        if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
+          await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
+        } 
+      }
     }
     
       await itemPurchaseSchema.create(req.body).then((result)=>{
@@ -996,25 +1107,31 @@ Route.route("/create-itemPurchase").post(async (req, res, next) => {
 });
 
 Route.route("/get-itemPurchase/:id").get(async (req, res, next) => {
-  await itemPurchaseSchema
-    .findById(req.params.id, req.body)
-    .then((result) => {
-      res.json({
-        data: result,
-        message: "Data successfully retrieved.",
-        status: 200,
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const result = await itemPurchaseSchema.findById(req.params.id);
+    if (!result) {
+      return res.status(404).json({ message: "Item Purchase not found", status: 404 });
+    }
+    const doc = result.toObject();
+    if (Array.isArray(doc.items)) {
+      doc.items = await sanitizeAndEnrichPurchaseItems(doc.items);
+    }
+    res.json({
+      data: doc,
+      message: "Data successfully retrieved.",
+      status: 200,
     });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.route("/update-itemPurchase/:id").put(async (req, res, next) => {
   const {items} = req.body
   try {
-    if (items !== undefined){
-      for( const purchaseItem of items) {
+    if (Array.isArray(items)){
+      req.body.items = await sanitizeAndEnrichPurchaseItems(items);
+      for( const purchaseItem of req.body.items) {
         if (purchaseItem.itemRate !== 0 && purchaseItem.itemName && purchaseItem.itemName._id) {
           await itemSchema.updateOne({_id:purchaseItem.itemName._id},{$set: {itemCostPrice : purchaseItem.itemRate}})
         } 
@@ -1023,7 +1140,7 @@ Route.route("/update-itemPurchase/:id").put(async (req, res, next) => {
     await itemPurchaseSchema
     .findByIdAndUpdate(req.params.id, {
       $set: req.body,
-    })
+    }, { new: true })
     .then((result) => {
       res.json({
         data: result,

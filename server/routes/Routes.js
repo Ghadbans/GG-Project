@@ -44,6 +44,7 @@ let departmentSchema = require("../model/departmentSchema");
 let SupplierSchema = require("../model/suppliersSchema");
 let RateReturnSchema = require("../model/rateReturnSchema");
 const { syncInvoiceBalances } = require("../utils/invoiceBalanceUtils");
+const { buildCustomerFilter, applyCustomerFilter } = require("../utils/customerFilterUtils");
 
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
@@ -663,13 +664,8 @@ Route.route("/payment", cors(corsOptionsDelegate)).get(
         const filter = {};
         if (req.query.branchId && req.query.branchId !== 'ALL') filter.branchId = req.query.branchId;
         if (req.query.customerId) {
-          try {
-            const mongoose = require('mongoose');
-            const objectId = new mongoose.Types.ObjectId(req.query.customerId);
-            filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
-          } catch(e) {
-            filter['customerName._id'] = req.query.customerId;
-          }
+          const custFilter = await buildCustomerFilter(req.query.customerId);
+          applyCustomerFilter(filter, custFilter);
         }
         if (req.query.projectId) {
           filter['TotalAmount.id'] = req.query.projectId;
@@ -1079,13 +1075,8 @@ Route.route("/pos", cors(corsOptionsDelegate)).get(
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       if (req.query.customerId) {
-        let objectId = null;
-        try { objectId = new require('mongoose').Types.ObjectId(req.query.customerId); } catch (e) {}
-        if (objectId) {
-          filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
-        } else {
-          filter['customerName._id'] = req.query.customerId;
-        }
+        const custFilter = await buildCustomerFilter(req.query.customerId);
+        applyCustomerFilter(filter, custFilter);
       }
 
 

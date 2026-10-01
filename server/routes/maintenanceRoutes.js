@@ -23,6 +23,7 @@ let invoiceSchema = require("../model/invoiceSchema");
 let commentSchema = require("../model/commentSchema");
 let notificationSchema = require("../model/notificationSchema");
 let expenseSchema = require("../model/ExpenseSchema");
+const { buildCustomerFilter, applyCustomerFilter } = require("../utils/customerFilterUtils");
 
 // CORS OPTIONS
 var whitelist = ["http://localhost:8080", "http://localhost:4000"];
@@ -46,13 +47,8 @@ Route.route("/maintenance", cors(corsOptionsDelegate)).get(
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       if (req.query.customerId) {
-        let objectId = null;
-        try { objectId = new mongoose.Types.ObjectId(req.query.customerId); } catch (e) {}
-        if (objectId) {
-          filter['customerName._id'] = { $in: [req.query.customerId, objectId] };
-        } else {
-          filter['customerName._id'] = req.query.customerId;
-        }
+        const custFilter = await buildCustomerFilter(req.query.customerId);
+        applyCustomerFilter(filter, custFilter);
       }
 
       const result = await maintenanceSchema.find(filter, projection).sort({ _id: -1 }).allowDiskUse(true).lean();

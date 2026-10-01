@@ -1855,7 +1855,9 @@ function ItemInformationVIew() {
                                         :
                                         <>
                                           <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{i + 1}</TableCell>
-                                          <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemName?.itemName} </TableCell>
+                                          <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>
+                                            {row.itemName?.itemName || (row.itemName?._id === id ? rowData?.itemName : '') || row.itemName?.name || (typeof row.itemName === 'string' ? row.itemName : '') || ''}
+                                          </TableCell>
                                           <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemDescription}</TableCell>
                                           <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{row.itemQty}</TableCell>
                                           <TableCell sx={id === row.itemName?._id ? { backgroundColor: '#202a5a', color: 'white' } : null}>{parseFloat(row.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>

@@ -263,34 +263,53 @@ function CustomerInformationView() {
   const [payment, setPayment] = useState([]);
   const [posHistory, setPosHistory] = useState([]);
   const [CustomerInfo, setCustomerInfo] = useState('')
+  const getDisplayCustomerName = (cust) => {
+    if (!cust) return '';
+    if (typeof cust === 'string') return cust.toUpperCase();
+    return (cust.Customer || cust.customerName || cust.customerFullName || cust.companyName || cust.name || '').toUpperCase();
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/get-customer/${id}`)
-        setCustomerInfo(res.data.data.Customer)
-        const estimateResponse = await axios.get(`${ENDPOINT_URL}/estimation?summary=true&customerId=${id}`);
-        setEstimate(estimateResponse.data?.data?.reverse());
-        const invoiceResponse = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&customerId=${id}`);
-        setInvoice(invoiceResponse.data?.data?.reverse());
-        setInvoice1(invoiceResponse.data?.data?.filter((row) => row.status === 'Sent' || row.status === 'Paid' || row.status === 'Partially-Paid'));
-        const purChaseResponse = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&customerId=${id}`);
-        setPurchase(purChaseResponse.data?.data?.reverse());
-        const maintenanceResponse = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true&customerId=${id}`);
-        setMaintenance(maintenanceResponse.data?.data?.reverse());
-        const resPayment = await axios.get(`${ENDPOINT_URL}/payment?customerId=${id}`);
-          const allPayments = resPayment.data?.data || [];
-          setPayment(allPayments.filter(p => (p.customerName && String(p.customerName._id) === String(id)) || String(p.customerName) === String(id)));
-        // Fetch POS
-        const resPos = await axios.get(`${ENDPOINT_URL}/pos?summary=true&customerId=${id}`);
-        if (resPos.data && resPos.data.data) {
-          setPosHistory(resPos.data?.data?.reverse());
-        }
+        const res = await axios.get(`${ENDPOINT_URL}/get-customer/${id}`);
+        const custData = res.data?.data;
+        const custName = custData?.Customer || custData?.customerName || '';
+        setCustomerInfo(custName);
+
+        const [estimateResponse, invoiceResponse, purChaseResponse, maintenanceResponse, resPayment, resPos] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/estimation?summary=true&customerId=${id}`),
+          axios.get(`${ENDPOINT_URL}/invoice?summary=true&customerId=${id}`),
+          axios.get(`${ENDPOINT_URL}/purchase?summary=true&customerId=${id}`),
+          axios.get(`${ENDPOINT_URL}/maintenance?summary=true&customerId=${id}`),
+          axios.get(`${ENDPOINT_URL}/payment?customerId=${id}`),
+          axios.get(`${ENDPOINT_URL}/pos?summary=true&customerId=${id}`)
+        ]);
+
+        const estimates = estimateResponse.data?.data ? [...estimateResponse.data.data].reverse() : [];
+        setEstimate(estimates);
+
+        const invoices = invoiceResponse.data?.data ? [...invoiceResponse.data.data].reverse() : [];
+        setInvoice(invoices);
+        setInvoice1(invoices.filter((row) => row.status === 'Sent' || row.status === 'Paid' || row.status === 'Partially-Paid'));
+
+        const purchases = purChaseResponse.data?.data ? [...purChaseResponse.data.data].reverse() : [];
+        setPurchase(purchases);
+
+        const maintenances = maintenanceResponse.data?.data ? [...maintenanceResponse.data.data].reverse() : [];
+        setMaintenance(maintenances);
+
+        const allPayments = resPayment.data?.data || [];
+        setPayment(allPayments);
+
+        const posList = resPos.data?.data ? [...resPos.data.data].reverse() : [];
+        setPosHistory(posList);
       } catch (error) {
-        console.log(error)
+        console.error('Error fetching customer view data:', error);
       }
-    }
-    fetchData()
-  }, [id])
+    };
+    fetchData();
+  }, [id]);
 
   const [startDate, setStartDate] = useState(() => {
     const storedQuick = JSON.parse(localStorage.getItem('StartDateStatement'))
@@ -1199,7 +1218,7 @@ function CustomerInformationView() {
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.estimateDate).format('DD/MM/YYYY')}</TableCell>
                                                      <TableCell align="center">Q-{String(row.estimateNumber).padStart(6, '0')}</TableCell>
-                                                    <TableCell align="center">{row.customerName.customerName.toUpperCase()}</TableCell>
+                                                    <TableCell align="center">{getDisplayCustomerName(row.customerName)}</TableCell>
                                                     <TableCell align="center">
                                                       <Typography
                                                         color={
@@ -1216,7 +1235,7 @@ function CustomerInformationView() {
                                                       >
                                                         {row.status}
                                                       </Typography></TableCell>
-                                                    <TableCell align="center"> <span data-prefix>$</span> {row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
+                                                    <TableCell align="center"> <span data-prefix>$</span> {parseFloat(row.subTotal || row.totalInvoice || row.total || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
                                                     <TableCell align="center" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                                       <NavLink to={`/EstimateViewAdminAll/${row._id}`} className='LinkName'>
                                                         <ViewTooltip title="View">
@@ -1272,7 +1291,7 @@ function CustomerInformationView() {
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.purchaseDate).format('DD/MM/YYYY')}</TableCell>
                                                      <TableCell align="center">PUR-{String(row.purchaseNumber).padStart(6, '0')}</TableCell>
-                                                    <TableCell align="center">{row.customerName.customerName.toUpperCase()}</TableCell>
+                                                    <TableCell align="center">{getDisplayCustomerName(row.customerName)}</TableCell>
                                                     <TableCell align="center">
                                                       <Typography
                                                         color={
@@ -1290,7 +1309,7 @@ function CustomerInformationView() {
                                                       >
                                                         {row.statusInfo !== undefined ? row.statusInfo : ''}
                                                       </Typography></TableCell>
-                                                    <TableCell align="center"> <span data-prefix>$</span> {row.purchaseAmount1.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
+                                                    <TableCell align="center"> <span data-prefix>$</span> {parseFloat(row.purchaseAmount1 || row.total || row.totalUSD || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
                                                     <TableCell align="center" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                                       <NavLink to={`/PurchasesViewAdminAll/${row._id}`} className='LinkName'>
                                                         <ViewTooltip title="View">
@@ -1346,7 +1365,7 @@ function CustomerInformationView() {
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.serviceDate).format('DD/MM/YYYY')}</TableCell>
                                                      <TableCell align="center">M-{String(row.serviceNumber).padStart(6, '0')}</TableCell>
-                                                    <TableCell align="center">{row.customerName.customerName.toUpperCase()}</TableCell>
+                                                    <TableCell align="center">{getDisplayCustomerName(row.customerName)}</TableCell>
                                                     <TableCell align="center">
                                                       <Typography
                                                         color={
@@ -1364,7 +1383,7 @@ function CustomerInformationView() {
                                                       >
                                                         {row.status}
                                                       </Typography></TableCell>
-                                                    <TableCell align="center"> <span data-prefix>$</span> {row.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
+                                                    <TableCell align="center"> <span data-prefix>$</span> {parseFloat(row.totalInvoice || row.total || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
                                                     <TableCell align="center" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                                       <NavLink to={`/MaintenanceViewInformation/${row._id}`} className='LinkName'>
                                                         <ViewTooltip title="View">
@@ -1420,7 +1439,7 @@ function CustomerInformationView() {
                                                     <TableCell><Checkbox /></TableCell>
                                                     <TableCell align="center">{dayjs(row.invoiceDate).format('DD/MM/YYYY')}</TableCell>
                                                      <TableCell align="center">INV-{String(row.invoiceNumber).padStart(6, '0')}</TableCell>
-                                                    <TableCell >{row.customerName.customerName.toUpperCase()}</TableCell>
+                                                    <TableCell >{getDisplayCustomerName(row.customerName)}</TableCell>
                                                     <TableCell align="center"> <Typography
                                                       color={
                                                         row.status === "Draft"
@@ -1439,7 +1458,7 @@ function CustomerInformationView() {
                                                       {row.status}
                                                     </Typography>
                                                     </TableCell>
-                                                    <TableCell align="center"> <span data-prefix>$</span> {row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
+                                                    <TableCell align="center"> <span data-prefix>$</span> {parseFloat(row.subTotal || row.totalInvoice || row.total || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </TableCell>
                                                     <TableCell align="center" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                                       <NavLink to={`/InvoiceViewAdminAll/${row._id}`} className='LinkName'>
                                                         <ViewTooltip title="View">

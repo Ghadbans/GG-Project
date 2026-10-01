@@ -236,7 +236,7 @@ function ItemPurchaseViewForm() {
             const supplierData = Array.isArray(resSupplier?.data?.data) ? [...resSupplier.data.data].reverse() : [];
             setSupplier(supplierData)
 
-            const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`)
+            const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=10000`)
             const itemInfo = Array.isArray(resItem?.data?.itemI) ? [...resItem.data.itemI].reverse() : [];
             setItemInformation(itemInfo)
 
@@ -461,21 +461,20 @@ function ItemPurchaseViewForm() {
       },[reason,projectName])
       
       const handleChangeItem = (idRow, newValue) => {
-        const selectedOptions = newValue
+        if (!newValue) return;
+        const selectedName = newValue.itemName || newValue.name || '';
         setItems(items => items.map((row) => row.idRow === idRow ? {
           ...row,
           itemName: {
-            _id: selectedOptions?._id,
-            itemName: selectedOptions?.itemName,
+            _id: newValue._id,
+            itemName: selectedName,
           },
-          data: selectedOptions?.data,
-          contentType: selectedOptions?.contentType,
-          itemDescription: selectedOptions?.itemDescription,
-          itemRate: selectedOptions?.itemCostPrice,
-          cost: selectedOptions?.itemCostPrice,
-          fcConvertToUsdTotal: (parseInt(row.itemQty || 0) * (selectedOptions?.itemCostPrice || 0)),
-          data: selectedOptions?.data,
-          contentType: selectedOptions?.contentType,
+          data: newValue.data,
+          contentType: newValue.contentType,
+          itemDescription: newValue.itemDescription !== undefined && newValue.itemDescription !== null ? newValue.itemDescription : row.itemDescription,
+          itemRate: newValue.itemCostPrice || 0,
+          cost: newValue.itemCostPrice || 0,
+          fcConvertToUsdTotal: (parseInt(row.itemQty || 0) * (newValue.itemCostPrice || 0)),
         } : row))
       }
       const handleChange = (e, idRow) => {
@@ -904,6 +903,28 @@ const handleQty = async () => {
       if (_id && _id !== '') {
         item._id = _id;
       }
+      let nameStr = '';
+      let idVal = '';
+      if (item.itemName && typeof item.itemName === 'object') {
+        nameStr = item.itemName.itemName || item.itemName.name || '';
+        idVal = item.itemName._id || '';
+      } else if (typeof item.itemName === 'string' && item.itemName.trim() !== '') {
+        nameStr = item.itemName;
+        idVal = item.itemId || item._id || '';
+      }
+
+      if (idVal && (!nameStr || nameStr.trim() === '' || nameStr === idVal)) {
+        const found = (ItemInformation || []).find(x => x._id === idVal) || (autocompleteOptions || []).find(x => x._id === idVal);
+        if (found && found.itemName) nameStr = found.itemName;
+      }
+      if (!nameStr && item.newDescription) {
+        nameStr = item.newDescription;
+      }
+
+      item.itemName = {
+        _id: idVal,
+        itemName: nameStr
+      };
       return item;
     });
     let currentItemPurchaseNumber = itemPurchaseNumber;
@@ -976,24 +997,23 @@ const handleQty = async () => {
   }
   const getItemDisplayName = (it) => {
     if (!it) return '';
-    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
-      const found = (ItemInformation || []).find(x => x._id === it.itemName);
-      if (found && found.itemName) return found.itemName.trim();
-      return it.itemName.trim();
-    }
     if (it.itemName && typeof it.itemName === 'object') {
       if (it.itemName.itemName && it.itemName.itemName.trim() !== '') return it.itemName.itemName.trim();
       if (it.itemName.name && it.itemName.name.trim() !== '') return it.itemName.name.trim();
       if (it.itemName._id) {
-        const found = (ItemInformation || []).find(x => x._id === it.itemName._id);
+        const found = (ItemInformation || []).find(x => x._id === it.itemName._id) || (autocompleteOptions || []).find(x => x._id === it.itemName._id);
         if (found && found.itemName) return found.itemName.trim();
       }
+    }
+    if (typeof it.itemName === 'string' && it.itemName.trim() !== '') {
+      const found = (ItemInformation || []).find(x => x._id === it.itemName || x.itemName === it.itemName) || (autocompleteOptions || []).find(x => x._id === it.itemName || x.itemName === it.itemName);
+      if (found && found.itemName) return found.itemName.trim();
+      return it.itemName.trim();
     }
     if (it._id) {
       const found = (ItemInformation || []).find(x => x._id === it._id);
       if (found && found.itemName) return found.itemName.trim();
     }
-    if (typeof it.newDescription === 'string' && it.newDescription.trim() !== '') return it.newDescription.trim();
     return '';
   };
 

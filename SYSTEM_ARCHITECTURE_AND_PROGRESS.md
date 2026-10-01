@@ -1188,5 +1188,40 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     2. **Formatted Identifier Resolution:** Replaced `selectedOptions?.invoiceName` with `invNum = 'INV-' + String(selectedOptions.invoiceNumber).padStart(6, '0')`, ensuring clean formatted display (`INV-002567 / GLOBAL PVA`).
   - **Verification:** AST checks passed, Webpack production & web bundles compiled (`npm run build`), Windows installer generated (`dist/Global Gate Setup 3.5.43.exe`), and changes pushed to `origin main` for Railway deployment.
 
+- **Item Purchase Catalog Separation, Auto-Repair & Safe Autocomplete (Ver 3.5.45)**:
+  - **Problem Reported:** In Item Purchase (e.g. `IP-03752`), editing an existing purchase and adding an item with quotes/special characters (such as `MASKING PAPER TAPE 1" INCH`) caused the description to show truncated (`1 INCH`) and the Autocomplete input to appear blank on edit/view.
+  - **Root Cause & Resolution:**
+    1. **Strict Field Enrichment:** Added `sanitizeAndEnrichPurchaseItems()` in `server/routes/itemRoutes.js` across `POST /create-itemPurchase`, `PUT /update-itemPurchase/:id`, and `GET /get-itemPurchase/:id`.
+    2. **Background Self-Healing Auto-Repair:** Automatically repaired existing database records with blank item names on fetch by looking up matching items from catalog and item purchases.
+    3. **Catalog Resolution & Pagination Fix:** Updated `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, `ItemPurchaseViewAdmin.js`, and `ItemInformationVIew.js` to fetch full item catalog (`limit=10000`) and safely resolve display names.
+  - **Verification:** AST checks passed, Webpack production & web bundles compiled, installer `dist/Global Gate Setup 3.5.45.exe` generated.
+
+- **Universal Multi-Format Customer Querying & Customer View Transactions/Statement Fix (Ver 3.5.46)**:
+  - **Problem Reported:** In Customer View (`CustomerInformationView.js`), under the **TRANSACTION** tab, Invoices, Quotations, and Purchase Requests accordions were empty (0 rows) for all customers, while only Maintenance showed rows. Under the **STATEMENT** tab, invoices were completely missing (`Invoiced Amount: $0.00`), while payments were listed, causing false massive negative balances (`Balance Due: -$480,692.84`).
+  - **Root Cause Analysis:**
+    1. **Strict Mixed-Schema Query Flaw:** Backend routes (`/invoice`, `/estimation`, `/purchase`, `/maintenance`, `/payment`, `/pos`) queried `{ 'customerName._id': { $in: [customerId, objectId] } }`. In MongoDB, historical documents store `customerName` in multiple polymorphic formats:
+       - Sub-object with string `_id` (`{ customerName: { _id: "66d...", Customer: "..." } }`)
+       - Direct string customer name (`{ customerName: "PROFESSIONAL CONSTRUCTION PCT" }`)
+       - Direct ObjectId or string ID (`{ customerName: "66d..." }` or `{ customerId: "66d..." }`)
+       - Object with `Customer`, `customerName`, `companyName`, or `customerFullName` without `_id`
+    2. Because Mongoose failed to match direct string names and variations when querying on `customerName._id`, `/invoice?summary=true&customerId=...`, `/estimation`, and `/purchase` returned `[]` (empty array).
+    3. **Frontend Display Crash Guard:** In `CustomerInformationView.js`, table cells accessed `row.customerName.customerName.toUpperCase()`. If `customerName` is a string or has a different structure, this caused runtime `TypeError` crashes.
+  - **Architectural Resolution:**
+    1. **Universal Multi-Format Customer Filter (`server/utils/customerFilterUtils.js`):**
+       - Implemented `buildCustomerFilter(customerId)` and `applyCustomerFilter(filter, custFilter)` utility.
+       - Resolves both `_id` (ObjectId and String), direct ID fields (`customerId`, `customerName`, `customer._id`), and queries `customerSchema` to extract all name variants (`Customer`, `customerName`, `customerFullName`, `companyName`).
+       - Matches all name variations using exact case-insensitive regex (`/^Name$/i`) and literal string equality across `customerName`, `customerName.Customer`, `customerName.customerName`, `customerName.companyName`, `customer`, and `Customer`.
+    2. **Backend Route Hardening:**
+       - Updated `server/routes/invoiceRoutes.js` (`GET /invoice`)
+       - Updated `server/routes/estimationRoutes.js` (`GET /estimation`)
+       - Updated `server/routes/purchaseRoutes.js` (`GET /purchase`)
+       - Updated `server/routes/maintenanceRoutes.js` (`GET /maintenance`)
+       - Updated `server/routes/Routes.js` (`GET /payment` and `GET /pos`)
+    3. **Frontend Performance & Safety (`src/js/AdminView1/PageView/CustomerVIew/CustomerInformationView.js`):**
+       - Replaced sequential waterfalls in `useEffect` with parallel `Promise.all()` across all 6 endpoints.
+       - Implemented `getDisplayCustomerName(cust)` helper for safe, null-resilient customer name rendering.
+       - Wrapped all numeric table totals with `parseFloat(row.subTotal || row.total || 0).toFixed(2)` to eliminate `undefined.toFixed()` crashes.
+  - **Verification:** Webpack production and web bundles compiled cleanly (`npm run build`), desktop installer `dist/Global Gate Setup 3.5.46.exe` built.
+
 
 

@@ -232,9 +232,9 @@ function ItemPurchaseViewAdmin() {
         Account: item.projectName !== undefined ? item.projectName.name : item.description,
         referenceInfo: item.manufacturer + ' / ' + item.manufacturerNumber,
         itemInfo: (item.items || []).map((row) => {
-          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName;
-          if (row.itemName?.itemName) return row.itemName.itemName;
-          if (row.itemName?.name) return row.itemName.name;
+          if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim();
+          if (row.itemName?.name && row.itemName.name.trim() !== '') return row.itemName.name.trim();
+          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName.trim();
           return row.newDescription || '';
         }).filter(Boolean),
         itemDescriptionInfo: (item.items || []).map((row) => row.itemDescription || '').filter(Boolean)
@@ -342,7 +342,7 @@ function ItemPurchaseViewAdmin() {
         try {
           const res = await axios.get(`${ENDPOINT_URL}/get-itemPurchase/${idView}`)
           setItemPurchaseView(res.data.data)
-          const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=1000`)
+          const resItem = await axios.get(`${ENDPOINT_URL}/item-Information?summary=true&limit=10000`)
           SetItems(resItem.data.itemI)
         } catch (error) {
           console.log(error)
@@ -952,21 +952,20 @@ function ItemPurchaseViewAdmin() {
                                       <TableCell>{row.itemDescription !== undefined ? row.itemDescription : null}</TableCell>
                                       <TableCell>
                                         {(() => {
-                                          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') {
-                                            const found = (item || []).find(x => x._id === row.itemName);
-                                            return (found?.itemName || row.itemName).trim();
-                                          }
-                                          if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim();
-                                          if (row.itemName?.name && row.itemName.name.trim() !== '') return row.itemName.name.trim();
-                                          if (row.itemName?._id) {
+                                          let name = '';
+                                          if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') name = row.itemName.itemName.trim();
+                                          else if (row.itemName?.name && row.itemName.name.trim() !== '') name = row.itemName.name.trim();
+                                          else if (typeof row.itemName === 'string' && row.itemName.trim() !== '') {
+                                            const found = (item || []).find(x => x._id === row.itemName || x.itemName === row.itemName);
+                                            name = (found?.itemName || row.itemName).trim();
+                                          } else if (row.itemName?._id) {
                                             const found = (item || []).find(x => x._id === row.itemName._id);
-                                            if (found?.itemName) return found.itemName.trim();
-                                          }
-                                          if (row._id) {
+                                            if (found?.itemName) name = found.itemName.trim();
+                                          } else if (row._id) {
                                             const found = (item || []).find(x => x._id === row._id);
-                                            if (found?.itemName) return found.itemName.trim();
+                                            if (found?.itemName) name = found.itemName.trim();
                                           }
-                                          return row.newDescription || '';
+                                          return name || row.newDescription || '';
                                         })()}
                                       </TableCell>
                                       <TableCell>{row.itemQty}</TableCell>
