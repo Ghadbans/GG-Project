@@ -340,15 +340,20 @@ function CustomerInformationView() {
   {/** Year Statement start */ }
   const statement = [];
   invoice1.forEach(row => {
+    const rawDefect = [row.invoiceDefect, row.invoiceSubject, row.defect, row.subject]
+      .map(v => (v || '').toString().trim())
+      .filter(v => v.length > 0 && v.toLowerCase() !== 'undefined' && v.toLowerCase() !== 'null');
+    const defectInfo = rawDefect.length > 0 ? [...new Set(rawDefect)].join(' / ') : '';
+
     statement.push({
       type: 'Invoice',
       date: row.invoiceDate,
       number: row.invoiceNumber,
-      defect: row.invoiceDefect + ' / ' + row.invoiceSubject,
-      amount: row.totalInvoice,
-      balance: row.balanceDue,
-      paidAmount: row.total,
-      due: row.invoiceDueDate,
+      defect: defectInfo,
+      amount: parseFloat(row.totalInvoice || row.total || row.subTotal || 0),
+      balance: parseFloat(row.balanceDue || 0),
+      paidAmount: parseFloat(row.total || 0),
+      due: row.invoiceDueDate || row.invoiceDate,
       status: row.status
     })
   })
@@ -702,10 +707,10 @@ function CustomerInformationView() {
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
-          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ((row.defect && row.defect.trim() && !row.defect.toLowerCase().includes('undefined') ? 'Ref ' + row.defect + ' ' : '') + 'INV-' + String(row.number).padStart(6, '0') + (row.due ? ' - due on ' + dayjs(row.due).format('DD MMMM YYYY') : ''))}</span>
+          <span>{row.type === 'Payment' && (!row.numberArray || row.numberArray.length === 0) && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.credit) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.payment) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' for payment of ' + row.numberArray.map((row2) => { const r = row2.Ref || row2.invoiceNumber || row2.number; return r ? 'INV-' + String(r).padStart(6, '0') : 'Invoice'; }).join(', ') + (row.defect && row.defect !== 'undefined' ? ' / Mode: ' + row.defect : ''))}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + (row.defect && row.defect !== 'undefined' ? ' - ' + row.defect : ''))}</span>
         </td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
@@ -730,10 +735,10 @@ function CustomerInformationView() {
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
-          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ((row.defect && row.defect.trim() && !row.defect.toLowerCase().includes('undefined') ? 'Ref ' + row.defect + ' ' : '') + 'INV-' + String(row.number).padStart(6, '0') + (row.due ? ' - due on ' + dayjs(row.due).format('DD MMMM YYYY') : ''))}</span>
+          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.credit) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.payment) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' for payment of ' + row.numberArray.map((row2) => { const r = row2.Ref || row2.invoiceNumber || row2.number; return r ? 'INV-' + String(r).padStart(6, '0') : 'Invoice'; }).join(', ') + (row.defect && row.defect !== 'undefined' ? ' / Mode: ' + row.defect : ''))}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + (row.defect && row.defect !== 'undefined' ? ' - ' + row.defect : ''))}</span>
         </td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : `$${(row.paidAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
@@ -756,10 +761,10 @@ function CustomerInformationView() {
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray?.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
-          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ((row.defect && row.defect.trim() && !row.defect.toLowerCase().includes('undefined') ? 'Ref ' + row.defect + ' ' : '') + 'INV-' + String(row.number).padStart(6, '0') + (row.due ? ' - due on ' + dayjs(row.due).format('DD MMMM YYYY') : ''))}</span>
+          <span>{row.type === 'Payment' && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.credit) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.payment) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' for payment of ' + row.numberArray.map((row2) => { const r = row2.Ref || row2.invoiceNumber || row2.number; return r ? 'INV-' + String(r).padStart(6, '0') : 'Invoice'; }).join(', ') + (row.defect && row.defect !== 'undefined' ? ' / Mode: ' + row.defect : ''))}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + (row.defect && row.defect !== 'undefined' ? ' - ' + row.defect : ''))}</span>
         </td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
@@ -783,10 +788,10 @@ function CustomerInformationView() {
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{dayjs(row.date).format('DD/MM/YYYY')}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>
-          <span>{row.type === 'Invoice' && ('Ref ' + row.defect + ' INV-' + String(row.number).padStart(6, '0') + ' - due on ' + dayjs(row.due).format('DD MMMM YYYY'))}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
-          <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + String(row2.Ref).padStart(6, '0')) + ' / Mode: ' + row.defect)}</span>
-          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + ' - ' + row.defect)}</span>
+          <span>{row.type === 'Invoice' && ((row.defect && row.defect.trim() && !row.defect.toLowerCase().includes('undefined') ? 'Ref ' + row.defect + ' ' : '') + 'INV-' + String(row.number).padStart(6, '0') + (row.due ? ' - due on ' + dayjs(row.due).format('DD MMMM YYYY') : ''))}</span>
+          <span>{row.type === 'Payment' && (!row.numberArray || row.numberArray.length === 0) && row.credit > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.credit) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' In Advanced Payment (Credit) ')}</span>
+          <span>{row.type === 'Payment' && row.numberArray && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(6, '0') + ' $' + (parseFloat(row.payment) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' for payment of ' + row.numberArray.map((row2) => { const r = row2.Ref || row2.invoiceNumber || row2.number; return r ? 'INV-' + String(r).padStart(6, '0') : 'Invoice'; }).join(', ') + (row.defect && row.defect !== 'undefined' ? ' / Mode: ' + row.defect : ''))}</span>
+          <span>{row.type === 'POS' && ('POS-' + String(row.number).padStart(6, '0') + (row.defect && row.defect !== 'undefined' ? ' - ' + row.defect : ''))}</span>
         </td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Invoice' || row.type === '***Opening Balance***' || row.type === 'POS' ? `$${(row.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' || row.type === 'POS' ? `$${(row.payment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>

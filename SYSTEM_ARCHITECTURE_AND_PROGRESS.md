@@ -1231,5 +1231,13 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     3. Validated full Babel AST syntax parsing across all 228 modules with 0 errors.
   - **Verification:** Compiled Webpack desktop & web production bundles (`npm run build`), generated Windows desktop installer `dist/Global Gate Setup 3.5.47.exe`, committed and pushed to `origin main` for automated deployment.
 
-
-
+- **Elimination of "Ref undefined / undefined" Statement Artifacts & Enriched Invoice Projection (Ver 3.5.48)**:
+  - **Problem Reported:** In Customer View (`CustomerInformationView.js`), statement line items in the `Details` column were rendering as `Ref undefined / undefined INV-001265 - due on 01 October 2026` because `invoiceDefect` and `invoiceSubject` were omitted from the backend `/invoice?summary=true` projection, resulting in `"undefined / undefined"` string concatenation.
+  - **Architectural Resolution:**
+    1. **Backend Invoice Projection Enrichment (`server/routes/invoiceRoutes.js`):**
+       - Expanded the `summary=true` projection in `GET /invoice` to include `invoiceDefect`, `invoiceSubject`, `invoiceDueDate`, `invoiceName`, `subTotal`, `terms`, `Position`, `ReferenceName`, `noteInfo`, `note`, `adjustment`, `adjustmentNumber`, and `shipping`.
+    2. **Frontend Statement Defect Sanitization (`CustomerInformationView.js`):**
+       - Implemented null/undefined filter in statement data construction: `[row.invoiceDefect, row.invoiceSubject, row.defect, row.subject].filter(v => v && v !== 'undefined' && v !== 'null')`.
+       - Render `Ref [Subject/Defect] INV-XXXXXX` only when a genuine, non-empty defect or subject string is present; otherwise cleanly format as `INV-XXXXXX - due on [Date]`.
+       - Hardened Payment details rendering to map through invoice reference numbers cleanly without undefined values.
+  - **Verification:** Webpack prod & web bundles compiled cleanly (`npm run build`), Windows installer `dist/Global Gate Setup 3.5.48.exe` built.

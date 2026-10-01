@@ -86,13 +86,21 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = summary ? { 
         invoiceNumber: 1, 
+        invoiceName: 1,
         invoiceDate: 1, 
+        invoiceDueDate: 1,
+        invoiceSubject: 1,
+        invoiceDefect: 1,
+        invoicePurchase: 1,
+        invoiceStatus: 1,
         totalInvoice: 1, 
         total: 1, 
+        subTotal: 1,
         balanceDue: 1, 
         status: 1, 
         customerName: 1, 
         items: 1, 
+        ReferenceName: 1,
         ReferenceName2: 1, 
         branchId: 1, 
         _id: 1,
@@ -101,7 +109,14 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         Rate: 1,
         Taux: 1,
         tax: 1,
-        payments: 1
+        payments: 1,
+        terms: 1,
+        noteInfo: 1,
+        note: 1,
+        adjustment: 1,
+        adjustmentNumber: 1,
+        shipping: 1,
+        Position: 1
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
       if (req.query.projectId || req.query.purchaseIds) {
