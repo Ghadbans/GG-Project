@@ -1035,7 +1035,7 @@ function EstimateViewAdminAll() {
                                                           <tr>
                                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Shipping</span></td>
-                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.shipping.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                           </tr>
                                                         )
                                                         : ''
@@ -1046,7 +1046,7 @@ function EstimateViewAdminAll() {
                                                           <tr>
                                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{row.adjustment}</span></td>
-                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                           </tr>
                                                         )
                                                         : ''
@@ -1057,7 +1057,7 @@ function EstimateViewAdminAll() {
                                                           <tr>
                                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>TVA @ 16%</span></td>
-                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax ? row.tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}</span></td>
+                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}</span></td>
                                                           </tr>
                                                         )
                                                         : ''
@@ -1065,7 +1065,7 @@ function EstimateViewAdminAll() {
                                                     <tr>
                                                       <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                       <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Total</span></td>
-                                                      <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.totalInvoice ? row.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
+                                                      <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.totalInvoice ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
                                                     </tr>
                                                     {
                                                       row.total ?
@@ -1073,7 +1073,7 @@ function EstimateViewAdminAll() {
                                                           <tr>
                                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Amount Paid</span></td>
-                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                           </tr>
                                                         )
                                                         : ''
@@ -1081,7 +1081,7 @@ function EstimateViewAdminAll() {
                                                     <tr>
                                                       <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                       <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span>Balance Due</span></td>
-                                                      <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span data-prefix>$</span><span>{row.balanceDue !== undefined ? row.balanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
+                                                      <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span data-prefix>$</span><span>{row.balanceDue !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
                                                     </tr>
                                                     <tr>
                                                       <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
@@ -1319,7 +1319,7 @@ function EstimateViewAdminAll() {
                                                 <tr>
                                                   <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                   <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Shipping</span></td>
-                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.shipping.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                 </tr>
                                               )
                                               : ''
@@ -1330,7 +1330,7 @@ function EstimateViewAdminAll() {
                                                 <tr>
                                                   <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                   <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>{row.adjustment}</span></td>
-                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                 </tr>
                                               )
                                               : ''
@@ -1341,7 +1341,7 @@ function EstimateViewAdminAll() {
                                                 <tr>
                                                   <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                   <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>TVA @ 16%</span></td>
-                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax ? row.tax.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}</span></td>
+                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.tax ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}</span></td>
                                                 </tr>
                                               )
                                               : ''
@@ -1349,7 +1349,7 @@ function EstimateViewAdminAll() {
                                           <tr>
                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Total</span></td>
-                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.totalInvoice ? row.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
+                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.totalInvoice ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
                                           </tr>
                                           {
                                             row.total ?
@@ -1357,7 +1357,7 @@ function EstimateViewAdminAll() {
                                                 <tr>
                                                   <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                   <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Amount Paid</span></td>
-                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                  <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                 </tr>
                                               )
                                               : ''
@@ -1365,7 +1365,7 @@ function EstimateViewAdminAll() {
                                           <tr>
                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                             <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span>Balance Due</span></td>
-                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span data-prefix>$</span><span>{row.balanceDue !== undefined ? row.balanceDue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
+                                            <td style={{ textAlign: 'right', borderBottom: '1px solid #DDD', color: '#093170', fontWeight: 'bold' }} colSpan={2}><span data-prefix>$</span><span>{row.balanceDue !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : ''}</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ textAlign: 'left', width: '200px' }} colSpan={3}></td>

@@ -624,7 +624,7 @@ function PaymentInformationView() {
                                                             <tr>
                                                               <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                               <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Cash Return USD</span></td>
-                                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.returnUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                              <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                             </tr>
                                                           )}
                                                           {row.returnFC > 0 && (
@@ -826,7 +826,7 @@ function PaymentInformationView() {
                                                   <tr>
                                                     <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                     <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Cash Return USD</span></td>
-                                                    <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.returnUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                    <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                   </tr>
                                                 )}
                                                 {row.returnFC > 0 && (
@@ -841,7 +841,7 @@ function PaymentInformationView() {
                                               <tr>
                                                 <td style={{ padding: '10px', textAlign: 'left', width: '200px' }} colSpan={3}></td>
                                                 <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span>Credit</span></td>
-                                                <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.remaining ? row.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
+                                                <td style={{ padding: '10px', textAlign: 'right', borderBottom: '1px solid #DDD' }} colSpan={2}><span data-prefix>$</span><span>{row.remaining ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span></td>
                                               </tr>
                                             )}
                                           </tbody>

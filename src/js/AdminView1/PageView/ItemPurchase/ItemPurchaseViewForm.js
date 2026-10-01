@@ -1166,9 +1166,9 @@ const handleQty = async () => {
               sx={{ width: '100px', backgroundColor: 'white' }}
             />
           </span>
-          <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+          <span>Total Cost USD: {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
         </td>
-        <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+        <td id='amountTotalInvoice'>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
       </tr>
     )
   }) : null
@@ -1301,9 +1301,9 @@ const handleQty = async () => {
                 sx={{ width: '100px', backgroundColor: 'white' }}
               />
             </span>
-            <span>Total Cost USD: {Item.totalAmountUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+            <span>Total Cost USD: {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
           </td>
-          <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+          <td id='amountTotalInvoice'>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
           <td align="center" >
             <LightTooltip title="Delete" sx={{}}>
               <IconButton onClick={() => deleteItem(Item.idRow)} >

@@ -439,7 +439,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
           <TableCell align="right">$ {(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
           <TableCell align="right">$ {(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
           <TableCell align="right">$ {((row.subTotal || 0) - (row.infoCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0} <span></span></TableCell>
+          <TableCell align="right">$ {row.totalLaborFeesGenerale !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
@@ -794,9 +794,9 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                           <TableCell>{row.customerName.customerName}</TableCell>
                           <TableCell>{row.defectDescription}</TableCell>
                           <TableCell align="right">{row.laborQty !== undefined ? row.laborQty : 0}</TableCell>
-                          <TableCell align="right"><span data-prefix>$ </span>{row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
-                          <TableCell align="right"><span data-prefix>% </span>{row.laborDiscount !== undefined ? row.laborDiscount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
-                          <TableCell align="right"><span data-prefix>$ </span>{row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                          <TableCell align="right"><span data-prefix>$ </span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                          <TableCell align="right"><span data-prefix>% </span>{row.laborDiscount !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
+                          <TableCell align="right"><span data-prefix>$ </span>{row.totalLaborFeesGenerale !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</TableCell>
                         </TableRow>
                       ))}
                       <TableRow>

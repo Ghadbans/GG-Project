@@ -159,7 +159,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
           </TableCell>
           <TableCell align="left">{row.customerName.customerName}</TableCell>
           <TableCell align="left">{row.invoiceDefect}</TableCell>
-          <TableCell align="right">$ {row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -211,7 +211,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>{row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
 
                   </tbody>
@@ -247,7 +247,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
           </TableCell>
           <TableCell align="left">{row.customerName.customerName}</TableCell>
           <TableCell align="left">{row.invoiceDefect}</TableCell>
-          <TableCell align="right">$ {row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -297,7 +297,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }} >Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}><span data-prefix>$ </span>{row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={2}><span data-prefix>$ </span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -332,8 +332,8 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
           </TableCell>
           <TableCell align="left">{row.customerName.customerName}</TableCell>
           <TableCell align="left">{row.invoiceDefect}</TableCell>
-          <TableCell align="right">$ {row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
           <TableCell align="right">$ {(row.subTotal - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
@@ -392,9 +392,9 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}>{row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={2}>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
                   </tbody>
                 </table>

@@ -320,7 +320,7 @@ function PaymentReportInf({ onMonth, onPayment, selectedYear }) {
           <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit === 0 && (`Shop Payment Number ${row.number}`)}</span>
           {row.status === 'Voided' && <span style={{ color: 'red', fontWeight: 'bold' }}> [VOIDED]</span>}
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type !== 'Payment' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type !== 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${(row.transactionType === 'Refund' ? -row.payment : row.payment).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>

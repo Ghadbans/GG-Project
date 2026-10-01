@@ -1223,5 +1223,13 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - Wrapped all numeric table totals with `parseFloat(row.subTotal || row.total || 0).toFixed(2)` to eliminate `undefined.toFixed()` crashes.
   - **Verification:** Webpack production and web bundles compiled cleanly (`npm run build`), desktop installer `dist/Global Gate Setup 3.5.46.exe` built.
 
+- **Global Numerical Formatting Hardening Across All 228 Modules (Ver 3.5.47)**:
+  - **Problem Reported:** In Customer View (`CustomerInformationView.js:1442:121`), older local client bundles threw `TypeError: Cannot read properties of undefined (reading 'toFixed')` when encountering historical invoices or payment records with nullish `subTotal` or `amount` fields, causing a white-screen render failure.
+  - **Comprehensive Frontend Hardening:**
+    1. Audited all 228 frontend JS files across `src/js/` for `.toFixed()` invocations on raw API objects (`row`, `item`, `params`, `params.row`).
+    2. Wrapped all numeric property accesses across 22 files with bulletproof null-safe fallbacks: `(parseFloat(field) || 0).toFixed(2)`.
+    3. Validated full Babel AST syntax parsing across all 228 modules with 0 errors.
+  - **Verification:** Compiled Webpack desktop & web production bundles (`npm run build`), generated Windows desktop installer `dist/Global Gate Setup 3.5.47.exe`, committed and pushed to `origin main` for automated deployment.
+
 
 

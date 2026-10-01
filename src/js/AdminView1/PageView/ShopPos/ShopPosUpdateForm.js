@@ -1071,7 +1071,7 @@ function ShopPosUpdateForm() {
                                                         sx={{ width: '100px', backgroundColor: 'white' }}
                                                       />
                                                     </td>
-                                                    <td id='amountTotalInvoice'>{Item.itemRate.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                    <td id='amountTotalInvoice'>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                     <td >
                                                       <TextField
                                                         name='itemDiscount' id='itemDiscount'

@@ -1587,7 +1587,7 @@ function CustomerInformationView() {
                                                                   </span>
                                                                 )}
                                                               </td>
-                                                              <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                              <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>{(parseFloat(row.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                               <td style={{ textAlign: 'left', borderLeft: '1px solid #DDD' }}>
                                                                 {row.TotalAmount?.map((Item, i) => {
                                                                   const relatedInvoice = invoice?.find((row1) => row1._id === Item.id)
@@ -1598,7 +1598,7 @@ function CustomerInformationView() {
                                                                   )
                                                                 })}
                                                               </td>
-                                                              <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.remaining.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                              <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{(parseFloat(row.remaining) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                             </tr>
                                                           )
                                                         })
@@ -2154,7 +2154,7 @@ function CustomerInformationView() {
                                         return (
                                           <div style={{ padding: '10px', textAlign: 'right', backgroundColor: '#f5f5f5', borderRadius: '5px', marginBottom: '10px' }}>
                                             <Typography variant="h6" style={{ color: '#202a5a', fontWeight: 'bold' }}>
-                                              Grand Total: ${grandTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                              Grand Total: ${(parseFloat(grandTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                             </Typography>
                                           </div>
                                         )
@@ -2188,7 +2188,7 @@ function CustomerInformationView() {
                                                       {row.status}
                                                     </span>
                                                   </TableCell>
-                                                  <TableCell>${usdAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
+                                                  <TableCell>${(parseFloat(usdAmount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
                                                 </TableRow>
                                               )
                                             })

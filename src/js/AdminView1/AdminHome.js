@@ -998,12 +998,12 @@ function AdminHome() {
   const columnMaintenance = [
     { field: 'serviceNumber', headerName: 'Service#', width: 80 },
     { field: 'dateField', headerName: 'Service Date', width: 100 },
-    { field: 'customer', headerName: 'Customer Name', width: open ? 200 : 260, valueGetter: (params) => params.row.customerName.customerName },
+    { field: 'customer', headerName: 'Customer Name', width: open ? 200 : 260, valueGetter: (params) => params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : 'No Customer') },
     { field: 'defectDescription', headerName: 'Defect', width: open ? 130 : 200 },
-    { field: 'infoSell', headerName: 'Total Sell', width: 150, renderCell: (params) => `$${parseFloat(params.row.infoSell)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'infoCost', headerName: 'Total Cost', width: 150, renderCell: (params) => `$${params.row.infoCost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'revenue', headerName: 'Revenue', width: 150, renderCell: (params) => `$${parseFloat(parseFloat(params.row.infoSell) - params.row.infoCost)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'totalLaborFeesGenerale', headerName: 'Labor Fees', width: 150, renderCell: (params) => `$${params.row.totalLaborFeesGenerale !== undefined ? params.row.totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'Undefined'}` },
+    { field: 'infoSell', headerName: 'Total Sell', width: 150, renderCell: (params) => `$${(parseFloat(params.row?.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'infoCost', headerName: 'Total Cost', width: 150, renderCell: (params) => `$${(parseFloat(params.row?.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'revenue', headerName: 'Revenue', width: 150, renderCell: (params) => `$${(parseFloat(parseFloat(params.row?.infoSell || 0) - (params.row?.infoCost || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'totalLaborFeesGenerale', headerName: 'Labor Fees', width: 150, renderCell: (params) => `$${params.row?.totalLaborFeesGenerale !== undefined ? (parseFloat(params.row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'Undefined'}` },
     {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">
@@ -1020,13 +1020,13 @@ function AdminHome() {
     }
   ]
   const columnProject = [
-    { field: 'customer', headerName: 'Customer Name', width: open ? 200 : 240, valueGetter: (params) => params.row.customerName?.customerName || 'No Customer' },
+    { field: 'customer', headerName: 'Customer Name', width: open ? 200 : 240, valueGetter: (params) => params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : 'No Customer') },
     { field: 'projectName', headerName: 'Project Name', width: open ? 200 : 240 },
     { field: 'description', headerName: 'Description', width: open ? 150 : 240 },
-    { field: 'sell', headerName: 'Total Sell', width: 150, renderCell: (params) => params.row.relatedPurchase?.map((item) => item.RelatedInvoice ? 'INV-' + item.RelatedInvoice.invoiceNumber + ' / $' + item.RelatedInvoice.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0) },
-    { field: 'cost', headerName: 'Total Item Cost', width: 150, renderCell: (params) => params.row.relatedPurchase?.map((item) => 'PUR-' + item.purchaseNumber + ' / $' + item.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) },
-    { field: 'totalExpenses', headerName: 'Total Expenses', width: 150, renderCell: (params) => `$${params.row.totalExpenses?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'Gain', headerName: 'Revenue', width: 100, renderCell: (params) => params.row.relatedPurchase?.map((item) => item.RelatedInvoice ? '$' + parseFloat(item.RelatedInvoice.totalInvoice - (Number(item.infoCost) + Number(params.row.totalExpenses)))?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0) },
+    { field: 'sell', headerName: 'Total Sell', width: 150, renderCell: (params) => params.row.relatedPurchase?.map((item) => item.RelatedInvoice ? 'INV-' + item.RelatedInvoice.invoiceNumber + ' / $' + (parseFloat(item.RelatedInvoice.totalInvoice) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0) },
+    { field: 'cost', headerName: 'Total Item Cost', width: 150, renderCell: (params) => params.row.relatedPurchase?.map((item) => 'PUR-' + item.purchaseNumber + ' / $' + (parseFloat(item.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) },
+    { field: 'totalExpenses', headerName: 'Total Expenses', width: 150, renderCell: (params) => `$${(parseFloat(params.row?.totalExpenses) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'Gain', headerName: 'Revenue', width: 100, renderCell: (params) => params.row.relatedPurchase?.map((item) => item.RelatedInvoice ? '$' + (parseFloat(parseFloat(item.RelatedInvoice.totalInvoice || 0) - (Number(item.infoCost || 0) + Number(params.row?.totalExpenses || 0))) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0) },
     {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">

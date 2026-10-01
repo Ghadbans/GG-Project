@@ -681,9 +681,9 @@ function SellShopInvoiceView() {
       )
     },
     { field: 'dateField', headerName: 'Date', width: 150 },
-    { field: 'totalInvoice', headerName: 'I-Amount', width: sideBar ? 150 : 200, renderCell: (params) => `FC${params.row.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
-    { field: 'TotalAmountPaid', headerName: 'Total Paid', width: sideBar ? 220 : 230, renderCell: (params) => `FC${params.row.TotalAmountPaid?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ($${(params.row.TotalAmountPaid / params.row.rate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})` },
-    { field: 'balanceDue', headerName: 'B-Due', width: sideBar ? 100 : 120, renderCell: (params) => `FC${(params.row.balanceDue + (params.row.creditFC + (params.row.creditUsd * params.row.rate))).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'totalInvoice', headerName: 'I-Amount', width: sideBar ? 150 : 200, renderCell: (params) => `FC${(parseFloat(params.row?.totalInvoice) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
+    { field: 'TotalAmountPaid', headerName: 'Total Paid', width: sideBar ? 220 : 230, renderCell: (params) => `FC${(parseFloat(params.row?.TotalAmountPaid) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} ($${(parseFloat(params.row?.TotalAmountPaid || 0) / (params.row?.rate || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})` },
+    { field: 'balanceDue', headerName: 'B-Due', width: sideBar ? 100 : 120, renderCell: (params) => `FC${(parseFloat(params.row?.balanceDue || 0) + ((parseFloat(params.row?.creditFC) || 0) + ((parseFloat(params.row?.creditUsd) || 0) * (params.row?.rate || 1)))).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">

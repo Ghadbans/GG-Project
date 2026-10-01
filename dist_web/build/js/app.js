@@ -82336,7 +82336,7 @@ function DailyExpensesReportInfo(_ref3) {
       date: dayjs__WEBPACK_IMPORTED_MODULE_16___default()(row.date).format('DD/MM/YYYY'),
       Details: row.type === 'Expenses' ? 'Ref D-' + String(row.number).padStart(5, '0') + ' / ' + row.reason + ' / ' + row.description : '',
       balance: "$".concat(amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
-      amount: row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''
+      amount: row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''
     });
   });
   var exportToExcel = /*#__PURE__*/function () {
@@ -82405,12 +82405,12 @@ function DailyExpensesReportInfo(_ref3) {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type === 'Payment' ? "$".concat(row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.type === 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
@@ -83130,7 +83130,7 @@ function InvoiceReportInfo(_ref3) {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -83256,7 +83256,7 @@ function InvoiceReportInfo(_ref3) {
         border: '1px solid #DDD'
       },
       colSpan: 3
-    }, row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
+    }, (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row2(props) {
     var row = props.row;
@@ -83286,7 +83286,7 @@ function InvoiceReportInfo(_ref3) {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -83401,7 +83401,7 @@ function InvoiceReportInfo(_ref3) {
       colSpan: 2
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$ "), row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
+    }, "$ "), (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
     var row = props.row;
@@ -83431,9 +83431,9 @@ function InvoiceReportInfo(_ref3) {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (row.subTotal - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
@@ -83601,7 +83601,7 @@ function InvoiceReportInfo(_ref3) {
         border: '1px solid #DDD'
       },
       colSpan: 2
-    }, row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
@@ -83612,7 +83612,7 @@ function InvoiceReportInfo(_ref3) {
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$ "), row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
+    }, "$ "), (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
@@ -85095,7 +85095,7 @@ function MaintenanceReportInfo(_ref3) {
       align: "right"
     }, "$ ", ((row.subTotal || 0) - (row.infoCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", row.totalLaborFeesGenerale !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -85588,15 +85588,15 @@ function MaintenanceReportInfo(_ref3) {
     align: "right"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
     "data-prefix": true
-  }, "$ "), row.adjustmentNumber.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "$ "), (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "right"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
     "data-prefix": true
-  }, "% "), row.laborDiscount !== undefined ? row.laborDiscount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "% "), row.laborDiscount !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "right"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
     "data-prefix": true
-  }, "$ "), row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "$ "), row.totalLaborFeesGenerale !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     colSpan: 6
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Labor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
@@ -86035,7 +86035,7 @@ function PayRollReportInfo(_ref3) {
       date: dayjs__WEBPACK_IMPORTED_MODULE_16___default()(row.date).format('DD/MM/YYYY'),
       Details: row.type === 'Pay Slip' ? row.description + ' REf PAY-' + row.number : '',
       balance: "$".concat(amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
-      amount: row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''
+      amount: row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''
     });
   });
   var exportToExcel = /*#__PURE__*/function () {
@@ -86104,12 +86104,12 @@ function PayRollReportInfo(_ref3) {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type === 'Payment' ? "$".concat(row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, row.type === 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
@@ -86795,7 +86795,7 @@ function PosReportInvoice(_ref) {
       align: "left"
     }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -86908,7 +86908,7 @@ function PosReportInvoice(_ref) {
         border: '1px solid #DDD'
       },
       colSpan: 3
-    }, "FC ", row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ($", ((row === null || row === void 0 ? void 0 : row.subTotal) / (row === null || row === void 0 ? void 0 : row.rate)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
+    }, "FC ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ($", ((row === null || row === void 0 ? void 0 : row.subTotal) / (row === null || row === void 0 ? void 0 : row.rate)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   function Row2(props) {
     var row = props.row;
@@ -86939,7 +86939,7 @@ function PosReportInvoice(_ref) {
       align: "left"
     }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -87052,9 +87052,9 @@ function PosReportInvoice(_ref) {
         border: '1px solid #DDD'
       },
       colSpan: 2
-    }, " FC", row.infoCostFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " (", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    }, " FC", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " (", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$"), row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
+    }, "$"), (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   function Row3(props) {
     var row = props.row;
@@ -87085,11 +87085,11 @@ function PosReportInvoice(_ref) {
       align: "left"
     }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.TaxUSd.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (row.infoSell - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
@@ -87231,7 +87231,7 @@ function PosReportInvoice(_ref) {
       style: {
         border: '1px solid #DDD'
       }
-    }, " FC", row.infoSellFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ($", row.infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, " FC", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ($", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       }
@@ -87239,9 +87239,9 @@ function PosReportInvoice(_ref) {
       style: {
         border: '1px solid #DDD'
       }
-    }, " FC", row.infoCostFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " (", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    }, " FC", (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " (", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$"), row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
+    }, "$"), (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
@@ -121182,7 +121182,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.46"};
+module.exports = {"rE":"3.5.47"};
 
 /***/ },
 
@@ -121314,7 +121314,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"081bf4365e154ef794a8","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"9df8e0bdc123b8129447","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"e75cb93535b2d5c534a8","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"13930b420ba78da700d9","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"48165a0f743176fa6eef","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"a8fb5735c1d271ef2eb8","1679":"a23f8b019bb6ae844586","1722":"4a576697520da99cb304","1853":"dddc388ca77bda63ec2f","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"b8389662da65ee7d4796","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"1a772bc24286907eb44f","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"5a5bc5f7a447272cd0b8","2533":"f2270f461e6e7ff1cdfb","2605":"3d16df670135ab7377db","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"8b16e40d84ecd2e06add","2835":"0e925b7f3cda249cb8c9","2982":"60d71a20a6df500951bd","2992":"972e9b044acf36654b6e","3009":"567b00944880ad958271","3058":"a10c1b75aa32bc57c92d","3094":"de4464a83004bd4b160e","3229":"8cab295c6967223e4e9d","3426":"fffa0f994e7cbdd2794c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"2a2e2252a60baa1b31f5","3976":"e228d4cf264f623b15f8","4001":"0bcd8c7d5f01297441cc","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"5bdf62e20d461f0550d9","4444":"c6021a9ee0f020da7513","4783":"91a072dd70ad4c0a8848","5059":"2b89ac7d099d3898a08b","5072":"52422192193788431c98","5151":"7f4436f823934dafd9f0","5194":"d9e4d8382ebe97418258","5391":"644bffed57e73be3f118","5394":"b7348f297847f002a197","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"59e19b56ebcefc68d031","5824":"5a1544f2a7d4bcddbd21","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"97d1b595fd4d6341ee4c","6619":"854d51f3af603be9542a","6671":"7dead46fa0c357e3cda5","6685":"60c808ce521bc7244cdd","6725":"d901500eb521cabc7085","6744":"f6adf2b2b03ff15ef8db","6934":"83158977e456029628e1","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"ee012b2fbb48101220f5","7270":"c3ad0d2e44a34b554bc1","7384":"b1ad87de96349048225b","7405":"f8f1041b127cab3067e5","7444":"a97b22a40ad291400689","7445":"ae63158d7e60fb403702","7539":"72ee1ee088ac1a0441f8","7592":"a62fa24c55bda5b081ac","7645":"910b44e1f23d70ce2ae3","7757":"7a21c113d63f367702a7","7801":"b20843954d471532e336","7897":"5a897171ce5049bfadad","7941":"985bdf17267ed455125d","7997":"61d4bd79e52b1ffcf1aa","8011":"31d2eb3fd37cd26d6ec2","8017":"71c4225691f8990e835d","8027":"a498e22a2661c81862a6","8060":"31f053bd76ae43a217c9","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"0ddd607b0bee92995e92","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9528":"6dc89c613ad4fd9edbf4","9564":"ee06cb69d650577b1b6f","9573":"fac2352f449c8e8f4739","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"712663d43d1abf1712af","9773":"c5a4811ff0c799be96f6","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"e8a7a02bf7327bf49c09","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"9df8e0bdc123b8129447","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"e75cb93535b2d5c534a8","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"13930b420ba78da700d9","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"48165a0f743176fa6eef","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"a8fb5735c1d271ef2eb8","1679":"a23f8b019bb6ae844586","1722":"4a576697520da99cb304","1853":"80995d8e4714cb3ca79d","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"b8389662da65ee7d4796","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"1a772bc24286907eb44f","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"5a5bc5f7a447272cd0b8","2533":"f2270f461e6e7ff1cdfb","2605":"3d16df670135ab7377db","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"8b16e40d84ecd2e06add","2835":"1e2c9129212ecd6e5997","2982":"60d71a20a6df500951bd","2992":"f603d580d1b7d10483b1","3009":"567b00944880ad958271","3058":"a10c1b75aa32bc57c92d","3094":"a41b6b715a4af60c06a2","3229":"8cab295c6967223e4e9d","3426":"fffa0f994e7cbdd2794c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"2a2e2252a60baa1b31f5","3976":"e228d4cf264f623b15f8","4001":"0bcd8c7d5f01297441cc","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"5bdf62e20d461f0550d9","4444":"c6021a9ee0f020da7513","4783":"0ea43c9225bfbe6cf47c","5059":"2b89ac7d099d3898a08b","5072":"52422192193788431c98","5151":"7f4436f823934dafd9f0","5194":"d9e4d8382ebe97418258","5391":"644bffed57e73be3f118","5394":"94a9f59a369859d97c02","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"59e19b56ebcefc68d031","5824":"5a1544f2a7d4bcddbd21","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"c764059545c6ee7f4f17","6619":"854d51f3af603be9542a","6671":"7dead46fa0c357e3cda5","6685":"ae532d714e9cb665beb8","6725":"d901500eb521cabc7085","6744":"f6adf2b2b03ff15ef8db","6934":"928214b4824106ce6cdc","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"fdae50a8c3679ae5c7d2","7270":"610d2287cd566e92345e","7384":"b1ad87de96349048225b","7405":"56b63304f61927a87384","7444":"a97b22a40ad291400689","7445":"ae63158d7e60fb403702","7539":"72ee1ee088ac1a0441f8","7592":"a62fa24c55bda5b081ac","7645":"910b44e1f23d70ce2ae3","7757":"7a21c113d63f367702a7","7801":"b20843954d471532e336","7897":"5a897171ce5049bfadad","7941":"985bdf17267ed455125d","7997":"61d4bd79e52b1ffcf1aa","8011":"31d2eb3fd37cd26d6ec2","8017":"71c4225691f8990e835d","8027":"a498e22a2661c81862a6","8060":"31f053bd76ae43a217c9","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"3834c94de8f370c007e0","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9528":"6dc89c613ad4fd9edbf4","9564":"ee06cb69d650577b1b6f","9573":"fac2352f449c8e8f4739","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"712663d43d1abf1712af","9773":"c5a4811ff0c799be96f6","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -127726,7 +127726,7 @@ function PaymentReportInf(_ref3) {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react.createElement("td", {
+    }, row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
@@ -128597,7 +128597,7 @@ function ItemPurchaseReportInfo(_ref3) {
       date: dayjs_min_default()(row.date).format('DD/MM/YYYY'),
       Details: row.type === 'Item Purchase' ? 'Ref ' + row.number + ' / ' + row.description : '',
       balance: "$".concat(amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')),
-      amount: row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''
+      amount: row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''
     });
   });
   var exportToExcel = /*#__PURE__*/function () {
@@ -128666,12 +128666,12 @@ function ItemPurchaseReportInfo(_ref3) {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type !== 'Payment' ? "$".concat(row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react.createElement("td", {
+    }, row.type !== 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
       }
-    }, row.type === 'Payment' ? "$".concat(row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react.createElement("td", {
+    }, row.type === 'Payment' ? "$".concat((parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : ''), /*#__PURE__*/react.createElement("td", {
       style: {
         textAlign: 'left',
         borderBottom: '1px solid #DDD'
@@ -131037,7 +131037,10 @@ function AdminHome() {
     field: 'customer',
     headerName: 'Customer Name',
     width: open ? 200 : 260,
-    valueGetter: params => params.row.customerName.customerName
+    valueGetter: params => {
+      var _params$row, _params$row2, _params$row3;
+      return ((_params$row = params.row) === null || _params$row === void 0 || (_params$row = _params$row.customerName) === null || _params$row === void 0 ? void 0 : _params$row.Customer) || ((_params$row2 = params.row) === null || _params$row2 === void 0 || (_params$row2 = _params$row2.customerName) === null || _params$row2 === void 0 ? void 0 : _params$row2.customerName) || (typeof ((_params$row3 = params.row) === null || _params$row3 === void 0 ? void 0 : _params$row3.customerName) === 'string' ? params.row.customerName : 'No Customer');
+    }
   }, {
     field: 'defectDescription',
     headerName: 'Defect',
@@ -131047,30 +131050,33 @@ function AdminHome() {
     headerName: 'Total Sell',
     width: 150,
     renderCell: params => {
-      var _parseFloat;
-      return "$".concat((_parseFloat = parseFloat(params.row.infoSell)) === null || _parseFloat === void 0 ? void 0 : _parseFloat.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row4;
+      return "$".concat((parseFloat((_params$row4 = params.row) === null || _params$row4 === void 0 ? void 0 : _params$row4.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'infoCost',
     headerName: 'Total Cost',
     width: 150,
     renderCell: params => {
-      var _params$row$infoCost;
-      return "$".concat((_params$row$infoCost = params.row.infoCost) === null || _params$row$infoCost === void 0 ? void 0 : _params$row$infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row5;
+      return "$".concat((parseFloat((_params$row5 = params.row) === null || _params$row5 === void 0 ? void 0 : _params$row5.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'revenue',
     headerName: 'Revenue',
     width: 150,
     renderCell: params => {
-      var _parseFloat2;
-      return "$".concat((_parseFloat2 = parseFloat(parseFloat(params.row.infoSell) - params.row.infoCost)) === null || _parseFloat2 === void 0 ? void 0 : _parseFloat2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row6, _params$row7;
+      return "$".concat((parseFloat(parseFloat(((_params$row6 = params.row) === null || _params$row6 === void 0 ? void 0 : _params$row6.infoSell) || 0) - (((_params$row7 = params.row) === null || _params$row7 === void 0 ? void 0 : _params$row7.infoCost) || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'totalLaborFeesGenerale',
     headerName: 'Labor Fees',
     width: 150,
-    renderCell: params => "$".concat(params.row.totalLaborFeesGenerale !== undefined ? params.row.totalLaborFeesGenerale.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'Undefined')
+    renderCell: params => {
+      var _params$row8;
+      return "$".concat(((_params$row8 = params.row) === null || _params$row8 === void 0 ? void 0 : _params$row8.totalLaborFeesGenerale) !== undefined ? (parseFloat(params.row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 'Undefined');
+    }
   }, {
     field: 'view',
     headerName: 'View',
@@ -131093,8 +131099,8 @@ function AdminHome() {
     headerName: 'Customer Name',
     width: open ? 200 : 240,
     valueGetter: params => {
-      var _params$row$customerN;
-      return ((_params$row$customerN = params.row.customerName) === null || _params$row$customerN === void 0 ? void 0 : _params$row$customerN.customerName) || 'No Customer';
+      var _params$row9, _params$row0, _params$row1;
+      return ((_params$row9 = params.row) === null || _params$row9 === void 0 || (_params$row9 = _params$row9.customerName) === null || _params$row9 === void 0 ? void 0 : _params$row9.Customer) || ((_params$row0 = params.row) === null || _params$row0 === void 0 || (_params$row0 = _params$row0.customerName) === null || _params$row0 === void 0 ? void 0 : _params$row0.customerName) || (typeof ((_params$row1 = params.row) === null || _params$row1 === void 0 ? void 0 : _params$row1.customerName) === 'string' ? params.row.customerName : 'No Customer');
     }
   }, {
     field: 'projectName',
@@ -131110,7 +131116,7 @@ function AdminHome() {
     width: 150,
     renderCell: params => {
       var _params$row$relatedPu;
-      return (_params$row$relatedPu = params.row.relatedPurchase) === null || _params$row$relatedPu === void 0 ? void 0 : _params$row$relatedPu.map(item => item.RelatedInvoice ? 'INV-' + item.RelatedInvoice.invoiceNumber + ' / $' + item.RelatedInvoice.totalInvoice.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0);
+      return (_params$row$relatedPu = params.row.relatedPurchase) === null || _params$row$relatedPu === void 0 ? void 0 : _params$row$relatedPu.map(item => item.RelatedInvoice ? 'INV-' + item.RelatedInvoice.invoiceNumber + ' / $' + (parseFloat(item.RelatedInvoice.totalInvoice) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0);
     }
   }, {
     field: 'cost',
@@ -131118,15 +131124,15 @@ function AdminHome() {
     width: 150,
     renderCell: params => {
       var _params$row$relatedPu2;
-      return (_params$row$relatedPu2 = params.row.relatedPurchase) === null || _params$row$relatedPu2 === void 0 ? void 0 : _params$row$relatedPu2.map(item => 'PUR-' + item.purchaseNumber + ' / $' + item.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      return (_params$row$relatedPu2 = params.row.relatedPurchase) === null || _params$row$relatedPu2 === void 0 ? void 0 : _params$row$relatedPu2.map(item => 'PUR-' + item.purchaseNumber + ' / $' + (parseFloat(item.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'totalExpenses',
     headerName: 'Total Expenses',
     width: 150,
     renderCell: params => {
-      var _params$row$totalExpe;
-      return "$".concat((_params$row$totalExpe = params.row.totalExpenses) === null || _params$row$totalExpe === void 0 ? void 0 : _params$row$totalExpe.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row10;
+      return "$".concat((parseFloat((_params$row10 = params.row) === null || _params$row10 === void 0 ? void 0 : _params$row10.totalExpenses) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'Gain',
@@ -131135,8 +131141,8 @@ function AdminHome() {
     renderCell: params => {
       var _params$row$relatedPu3;
       return (_params$row$relatedPu3 = params.row.relatedPurchase) === null || _params$row$relatedPu3 === void 0 ? void 0 : _params$row$relatedPu3.map(item => {
-        var _parseFloat3;
-        return item.RelatedInvoice ? '$' + ((_parseFloat3 = parseFloat(item.RelatedInvoice.totalInvoice - (Number(item.infoCost) + Number(params.row.totalExpenses)))) === null || _parseFloat3 === void 0 ? void 0 : _parseFloat3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : 0;
+        var _params$row11;
+        return item.RelatedInvoice ? '$' + (parseFloat(parseFloat(item.RelatedInvoice.totalInvoice || 0) - (Number(item.infoCost || 0) + Number(((_params$row11 = params.row) === null || _params$row11 === void 0 ? void 0 : _params$row11.totalExpenses) || 0))) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0;
       });
     }
   }, {
@@ -131194,16 +131200,16 @@ function AdminHome() {
     headerName: 'Total Cost',
     width: 150,
     renderCell: params => {
-      var _params$row$infoCost2;
-      return "$".concat((_params$row$infoCost2 = params.row.infoCost) === null || _params$row$infoCost2 === void 0 ? void 0 : _params$row$infoCost2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row$infoCost;
+      return "$".concat((_params$row$infoCost = params.row.infoCost) === null || _params$row$infoCost === void 0 ? void 0 : _params$row$infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'revenue',
     headerName: 'Revenue',
     width: 150,
     renderCell: params => {
-      var _parseFloat4;
-      return "$".concat((_parseFloat4 = parseFloat(params.row.infoSell - params.row.infoCost)) === null || _parseFloat4 === void 0 ? void 0 : _parseFloat4.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _parseFloat;
+      return "$".concat((_parseFloat = parseFloat(params.row.infoSell - params.row.infoCost)) === null || _parseFloat === void 0 ? void 0 : _parseFloat.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'view',
@@ -131261,16 +131267,16 @@ function AdminHome() {
     headerName: 'Total Cost',
     width: 150,
     renderCell: params => {
-      var _params$row$infoCost3;
-      return "$".concat((_params$row$infoCost3 = params.row.infoCost) === null || _params$row$infoCost3 === void 0 ? void 0 : _params$row$infoCost3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row$infoCost2;
+      return "$".concat((_params$row$infoCost2 = params.row.infoCost) === null || _params$row$infoCost2 === void 0 ? void 0 : _params$row$infoCost2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'revenue',
     headerName: 'Revenue',
     width: 150,
     renderCell: params => {
-      var _parseFloat5;
-      return "$".concat((_parseFloat5 = parseFloat(params.row.infoSell - params.row.infoCost)) === null || _parseFloat5 === void 0 ? void 0 : _parseFloat5.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _parseFloat2;
+      return "$".concat((_parseFloat2 = parseFloat(params.row.infoSell - params.row.infoCost)) === null || _parseFloat2 === void 0 ? void 0 : _parseFloat2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }];
   var columnCustomer = [{

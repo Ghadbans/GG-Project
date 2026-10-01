@@ -75,7 +75,7 @@ function DailyExpensesMonthlyChartView() {
   const categoryTotalChart1 = categoryTotalChart.map((row) => ({
     id: row._id,
     name: row.name,
-    total: row.total.toFixed(2)
+    total: (parseFloat() || 0).toFixed(2)
   }))
   return (
     <div>

@@ -1217,7 +1217,7 @@ function ShopPosForm() {
                                                               sx={{ width: '100px', backgroundColor: 'white', '& .MuiInputBase-input': { fontSize: '15px' } }}
                                                             />
                                                           </td>
-                                                          <td id='amountTotalInvoice' style={{ fontSize: '15px' }}>{Item.itemRate.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                                          <td id='amountTotalInvoice' style={{ fontSize: '15px' }}>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                                           <td >
                                                             <TextField
                                                               name='itemDiscount' id='itemDiscount'

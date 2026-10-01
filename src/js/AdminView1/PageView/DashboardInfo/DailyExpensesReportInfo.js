@@ -185,7 +185,7 @@ function DailyExpensesReportInfo({ onMonth, onExpenses, selectedYear }) {
       date: dayjs(row.date).format('DD/MM/YYYY'),
       Details: row.type === 'Expenses' ? ('Ref D-' + String(row.number).padStart(5, '0') + ' / ' + row.reason + ' / ' + row.description) : '',
       balance: `$${amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
-      amount: row.type !== 'Payment' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
+      amount: row.type !== 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
     })
   }
   )
@@ -236,8 +236,8 @@ function DailyExpensesReportInfo({ onMonth, onExpenses, selectedYear }) {
           <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-' + String(row.number).padStart(5, '0') + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + row2.Ref) + ' / Mode: ' + row.defect)}</span>
           <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit === 0 && ('Shop Payment Number ' + row.number)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type !== 'Payment' ? `$${row.amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${row.payment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type !== 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>
     )

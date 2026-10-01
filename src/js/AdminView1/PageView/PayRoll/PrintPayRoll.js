@@ -162,13 +162,13 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
                <td  style={{padding:'5px',border:'1px solid #DDD', color:'black',textAlign:'center'}} colSpan={6}>Total(FC)</td>
              </tr>
              <tr>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}><span>Total Basic:</span> <span> Fc {row.totalActualSalary.toFixed(2)}</span> </td>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}><span>Total Earning:</span> <span> Fc {row.totalActualEarning.toFixed(2)}</span> </td>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}><span>Total Deduction:</span> <span> Fc {row.totalActualDeduction.toFixed(2)}</span> </td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}><span>Total Basic:</span> <span> Fc {(parseFloat() || 0).toFixed(2)}</span> </td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}><span>Total Earning:</span> <span> Fc {(parseFloat() || 0).toFixed(2)}</span> </td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}><span>Total Deduction:</span> <span> Fc {(parseFloat() || 0).toFixed(2)}</span> </td>
              </tr>
              <tr>
                <td style={{border:'1px solid #DDD', color:'black'}} colSpan={2}>Net payable</td>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={4}>FC {row.totalNet.toFixed(2)}</td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={4}>FC {(parseFloat() || 0).toFixed(2)}</td>
              </tr>
              <tr>
                <td style={{border:'1px solid #DDD', color:'black'}} colSpan={2}>Net Words</td>
@@ -176,19 +176,19 @@ const PrintPayRoll = React.forwardRef(({id},ref) => {
              </tr>
              <tr>
                <td style={{border:'1px solid #DDD', color:'black'}} colSpan={2}>Overtime</td>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={4}>FC {row.bonus.toFixed(2)}</td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={4}>FC {(parseFloat() || 0).toFixed(2)}</td>
              </tr>
              <tr>
                <td style={{border:'1px solid #DDD', color:'black'}} colSpan={2}>Total Paid</td>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={4}>FC {row.totalPaid.toFixed(2)}</td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={4}>FC {(parseFloat() || 0).toFixed(2)}</td>
              </tr>
              <tr>
                <td  style={{padding:'5px',border:'1px solid #DDD', color:'black',textAlign:'center'}} colSpan={6}>Total($)</td>
              </tr>
              <tr>
-               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}>Net payable(FC): FC{row.totalNet.toFixed(2)}</td>
+               <td style={{width:'20%',border:'1px solid #DDD', color:'black'}} colSpan={2}>Net payable(FC): FC{(parseFloat() || 0).toFixed(2)}</td>
                <td  style={{padding:'5px',border:'1px solid #DDD', color:'black',textAlign:'center'}}> <span>rate</span>: {row.rate}</td>
-               <td  style={{padding:'5px',border:'1px solid #DDD', color:'black',textAlign:'center'}} colSpan={2}>Net payable($): ${row.totalPaidDollars.toFixed(2)}</td>
+               <td  style={{padding:'5px',border:'1px solid #DDD', color:'black',textAlign:'center'}} colSpan={2}>Net payable($): ${(parseFloat() || 0).toFixed(2)}</td>
              </tr>
            </tbody>
          </table>

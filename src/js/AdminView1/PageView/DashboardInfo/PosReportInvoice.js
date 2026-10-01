@@ -117,7 +117,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
             {dayjs(row.invoiceDate).format('HH:mm')}
           </TableCell>
           <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="right">$ {row.infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -167,7 +167,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>FC {row.subTotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (${(row?.subTotal / row?.rate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>FC {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (${(row?.subTotal / row?.rate).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
                     </tr>
 
                   </tbody>
@@ -205,7 +205,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
             {dayjs(row.invoiceDate).format('HH:mm')}
           </TableCell>
           <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="right">$ {row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -255,7 +255,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }} >Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}> FC{row.infoCostFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (<span data-prefix>$</span>{row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={2}> FC{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (<span data-prefix>$</span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
                     </tr>
                   </tbody>
                 </table>
@@ -292,9 +292,9 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
             {dayjs(row.invoiceDate).format('HH:mm')}
           </TableCell>
           <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="right">$ {row.infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {row.TaxUSd.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
           <TableCell align="right">$ {(row.infoSell - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
@@ -349,9 +349,9 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={3}></td>
                       <td style={{ border: '1px solid #DDD' }}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} > FC{row.infoSellFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (${row.infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
+                      <td style={{ border: '1px solid #DDD' }} > FC{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
                       <td style={{ border: '1px solid #DDD' }} >Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} > FC{row.infoCostFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (<span data-prefix>$</span>{row.infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
+                      <td style={{ border: '1px solid #DDD' }} > FC{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} (<span data-prefix>$</span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')})</td>
                     </tr>
                   </tbody>
                 </table>
