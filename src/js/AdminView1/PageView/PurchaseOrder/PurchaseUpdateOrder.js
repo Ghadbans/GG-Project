@@ -585,7 +585,7 @@ function PurchaseUpdateOrder() {
     setSearch2(value)
   }
   const newArray2 = useMemo(() => search2 !== '' ? itemsQtyArray.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
+    Item.itemName && (typeof Item.itemName === 'object' ? (Item.itemName.itemName || Item.itemName.itemDescription || '') : Item.itemName).toLowerCase().includes(search2.toLowerCase()) ||
     Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
     Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
   ) : itemsQtyArray, [itemsQtyArray, search2])
@@ -888,7 +888,7 @@ function PurchaseUpdateOrder() {
                                                           />
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                                             <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
-                                                              {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                              {Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}
                                                             </Typography>
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'

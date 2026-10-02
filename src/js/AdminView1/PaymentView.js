@@ -283,7 +283,7 @@ function PaymentView() {
              if (res) {
               const ReferenceInfo = res.data.data._id
               const ReferenceInfoNumber = res.data.data.paymentNumber
-              const ReferenceInfoName = res.data.data.customerName.customerName
+              const rawCust = res.data.data.customerName; const ReferenceInfoName = typeof rawCust === 'string' ? rawCust : (rawCust?.Customer || rawCust?.customerName || rawCust?.name || '');
               handleCreateNotificationOffline(ReferenceInfo,ReferenceInfoNumber,ReferenceInfoName)
               handleOpenOffline();
              }

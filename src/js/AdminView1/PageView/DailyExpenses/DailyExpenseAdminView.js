@@ -754,16 +754,12 @@ function DailyExpenseAdminView() {
   }
 
   const newArrayCash = useMemo(() => debouncedSearch2 !== '' ? cash.filter((row) =>
-    row.amount.some((Item) => Item.note && Item.note.toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
+    Array.isArray(row.amount) && row.amount.some((Item) => Item?.note && String(Item.note).toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
     dayjs(row.cashDate).format('DD/MM/YYYY').includes(debouncedSearch2)
   ) : cash, [cash, debouncedSearch2])
 
   const newArray = debouncedSearch !== '' ? expensesFiltered.filter((row) =>
-    row.expenseNumber.toString().includes(debouncedSearch) ||
-    row.accountName.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    row.expenseCategory.expensesCategory.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    row.accountNameInfo.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    row.employeeName.some((Item) => Item.employee.toLowerCase().includes(debouncedSearch.toLowerCase()))
+    (row.expenseNumber ? String(row.expenseNumber).includes(debouncedSearch) : false) || (row.accountName ? String(row.accountName).toLowerCase().includes(debouncedSearch.toLowerCase()) : false) || ((row.expenseCategory?.expensesCategory || (typeof row.expenseCategory === 'string' ? row.expenseCategory : '')) ? String(row.expenseCategory?.expensesCategory || row.expenseCategory).toLowerCase().includes(debouncedSearch.toLowerCase()) : false) || (row.accountNameInfo?.name ? String(row.accountNameInfo.name).toLowerCase().includes(debouncedSearch.toLowerCase()) : false) || (Array.isArray(row.employeeName) ? row.employeeName.some((Item) => Item?.employee && String(Item.employee).toLowerCase().includes(debouncedSearch.toLowerCase())) : false)
   ) : expensesFiltered
 
   const componentRef = useRef();
@@ -930,7 +926,7 @@ function DailyExpenseAdminView() {
                                     D-{String(item.expenseNumber).padStart(6, '0')}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
-                                    {item.expenseCategory.expensesCategory}
+                                    {typeof item.expenseCategory === 'object' ? (item.expenseCategory?.expensesCategory || item.expenseCategory?.name || '') : (item.expenseCategory || '')}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
                                     {item.accountName}

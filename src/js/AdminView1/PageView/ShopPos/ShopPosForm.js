@@ -682,7 +682,7 @@ function ShopPosForm() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'S-00' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
+      reason: 'S-00' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + (typeof customerName === 'string' ? customerName : (customerName?.Customer || customerName?.customerName || '')),
       dateNotification: dateComment
     }
     try {
@@ -699,7 +699,7 @@ function ShopPosForm() {
   } else {
     status = 'Draft'
   }
-  const itemFilter = items.filter((row) => row.itemName.itemName !== '' && row.itemName?._id)
+  const itemFilter = items.filter((row) => (row.itemName && (typeof row.itemName === 'object' ? (row.itemName.itemName || row.itemName._id) : row.itemName)))
   const [saving, setSaving] = useState('')
   const handleQty = async () => {
     try {
@@ -980,7 +980,7 @@ function ShopPosForm() {
                                                               (
                                                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                                   <div >
-                                                                    <span style={{ fontSize: '15px', fontWeight: 'bold', display: 'block', lineHeight: '1' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</span>
+                                                                    <span style={{ fontSize: '15px', fontWeight: 'bold', display: 'block', lineHeight: '1' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                                   </div>
                                                                   <div>
                                                                     <BlackTooltip title="Clear" placement='top'>
@@ -1161,7 +1161,7 @@ function ShopPosForm() {
                                                                 (
                                                                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                                     <div >
-                                                                      <span style={{ fontSize: '15px', fontWeight: 'bold', display: 'block', lineHeight: '1' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</span>
+                                                                      <span style={{ fontSize: '15px', fontWeight: 'bold', display: 'block', lineHeight: '1' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                                     </div>
                                                                     <div>
                                                                       <BlackTooltip title="Clear" placement='top'>

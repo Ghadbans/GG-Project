@@ -202,7 +202,7 @@ function ItemReturnAdminView() {
         id: item._id,
         dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
         referenceInfo: item.reference !== undefined ? item.reference.referenceName : item.description,
-        itemInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemName !== undefined ? row.itemName.itemName : ''),
+        itemInfo: (item.itemsQtyArray || []).filter((row) => row.newItemOut > 0).map((row) => row.itemName ? (typeof row.itemName === 'object' ? (row.itemName.itemName || row.itemName.itemDescription || '') : row.itemName) : ''),
         itemDescriptionInfo: item.itemsQtyArray.filter((row) => row.newItemOut > 0).map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
@@ -846,11 +846,11 @@ function ItemReturnAdminView() {
                                                     {
 
                                                       row.newDescription !== undefined ?
-                                                        <td colSpan={4}>{row.itemName.itemName}</td>
+                                                        <td colSpan={4}>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')}</td>
                                                         :
                                                         <>
                                                           <td>{i + 1}</td>
-                                                          <td>{row.itemName.itemName} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</td>
+                                                          <td>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')} ( {relatedUnit !== undefined ? (relatedUnit?.itemBrand ? String(relatedUnit.itemBrand).toUpperCase() : '') : ''} )</td>
                                                           <td>{row.itemDescription}</td>
                                                           <td>{row.newItemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                         </>
@@ -927,11 +927,11 @@ function ItemReturnAdminView() {
                                       <TableRow key={row.idRow}>
                                         {
                                           row.newDescription !== undefined ?
-                                            <TableCell colSpan={4}>{row.itemName.itemName}</TableCell>
+                                            <TableCell colSpan={4}>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')}</TableCell>
                                             :
                                             <>
                                               <TableCell>{i + 1}</TableCell>
-                                              <TableCell>{row.itemName.itemName} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</TableCell>
+                                              <TableCell>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')} ( {relatedUnit !== undefined ? (relatedUnit?.itemBrand ? String(relatedUnit.itemBrand).toUpperCase() : '') : ''} )</TableCell>
                                               <TableCell>{row.itemDescription}</TableCell>
                                               <TableCell>{row.newItemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
                                             </>

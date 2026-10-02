@@ -534,7 +534,7 @@ function DailyExpenseForm() {
         handleOpen();
         const ReferenceInfo = res.data.data._id
         const ReferenceInfoNumber = res.data.data.expenseNumber
-        const ReferenceInfoCategory = res.data.data.expenseCategory.expensesCategory
+        const ReferenceInfoCategory = res.data.data.expenseCategory?.expensesCategory || (typeof res.data.data.expenseCategory === 'string' ? res.data.data.expenseCategory : '')
         // await db.dailyExpenseSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
         handleCreateNotification(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCategory)
       }

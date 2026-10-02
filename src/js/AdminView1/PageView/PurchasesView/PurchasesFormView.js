@@ -566,7 +566,7 @@ function PurchasesFormView() {
     setDescription(selectedOptions?.description)
     setStatusInfo(selectedOptions?.status)
     setCustomerName(selectedOptions?.customerName)
-    setCustomerName1(selectedOptions?.customerName.customerName)
+    setCustomerName1(typeof selectedOptions?.customerName === 'string' ? selectedOptions.customerName : (selectedOptions?.customerName?.Customer || selectedOptions?.customerName?.customerName || ''))
   }
   {/** Item Info Start */ }
   const handleShowAutocomplete = (idRow) => {
@@ -666,7 +666,7 @@ function PurchasesFormView() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: 'PUR-' + ReferenceInfoNumber + ' For ' + customerName.customerName,
+      reason: 'PUR-' + ReferenceInfoNumber + ' For ' + (typeof customerName === 'string' ? customerName : (customerName?.Customer || customerName?.customerName || '')),
       dateNotification: new Date()
     }
     try {
@@ -963,7 +963,7 @@ function PurchasesFormView() {
                                                         />
                                                         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                                           {
-                                                            Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (<Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>) : null
+                                                            Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (<Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>) : null
                                                           }
                                                           <TextField
                                                             name='itemDescription' id='itemDescription'

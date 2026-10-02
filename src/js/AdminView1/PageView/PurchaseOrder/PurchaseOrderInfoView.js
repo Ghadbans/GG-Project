@@ -362,7 +362,7 @@ function PurchaseOrderInfoView() {
       (row.reason && row.reason.toLowerCase().includes(q)) ||
       (row.reference && row.reference.referenceName && row.reference.referenceName.toLowerCase().includes(q)) ||
       (row.itemsQtyArray && row.itemsQtyArray.some((Item) => 
-        (Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(q)) ||
+        (Item.itemName && (typeof Item.itemName === 'object' ? (Item.itemName.itemName || Item.itemName.itemDescription || '') : Item.itemName).toLowerCase().includes(q)) ||
         (Item.itemBrand && Item.itemBrand.toLowerCase().includes(q)) ||
         (Item.itemDescription && Item.itemDescription.toLowerCase().includes(q)) ||
         (Item.newDescription && Item.newDescription.toLowerCase().includes(q))
@@ -373,7 +373,7 @@ function PurchaseOrderInfoView() {
   const newArray2 = search2 !== '' ? filteredPurchase.filter((Item) => {
     const q = search2.toLowerCase();
     return (
-      (Item.itemName && (Item.itemName.itemName || Item.itemName).toLowerCase().includes(q)) ||
+      (Item.itemName && (typeof Item.itemName === 'object' ? (Item.itemName.itemName || Item.itemName.itemDescription || '') : Item.itemName).toLowerCase().includes(q)) ||
       (Item.itemBrand && Item.itemBrand.toLowerCase().includes(q)) ||
       (Item.itemDescription && Item.itemDescription.toLowerCase().includes(q)) ||
       (Item.newDescription && Item.newDescription.toLowerCase().includes(q))
@@ -718,7 +718,7 @@ function PurchaseOrderInfoView() {
                                                               :
                                                               <>
                                                                 <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{Item.itemName.itemName !== 'empty' ? Item.itemName.itemName : ''}</td>
+                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{typeof Item.itemName === 'object' ? (Item.itemName?.itemName !== 'empty' ? Item.itemName?.itemName : '') : (Item.itemName || '')}</td>
                                                                 <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{Item.itemDescription}</td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy}</td>
@@ -845,7 +845,7 @@ function PurchaseOrderInfoView() {
                                                               :
                                                               <>
                                                                 <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : ''}</span>
+                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}><span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? Item.itemName.itemName === 'empty' : Item.itemName === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                                   <br />
                                                                   <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span></td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
@@ -976,7 +976,7 @@ function PurchaseOrderInfoView() {
                                                     :
                                                     <>
                                                       <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                      <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>                <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : ''}</span>
+                                                      <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>                <span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? Item.itemName.itemName === 'empty' : Item.itemName === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                         <br />
                                                         <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</span></td>
                                                       <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>

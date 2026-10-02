@@ -429,10 +429,7 @@ function ConvertToInvoice() {
   }, [projectId])
   useEffect(() => {
     const categoryTotal = expensesInfo?.reduce((acc, curr) => {
-      if (!acc[curr.expenseCategory.expensesCategory]) {
-        acc[curr.expenseCategory.expensesCategory] = 0
-      }
-      acc[curr.expenseCategory.expensesCategory] += parseFloat(curr.total)
+      const catName = typeof curr.expenseCategory === 'string' ? curr.expenseCategory : (curr.expenseCategory?.expensesCategory || curr.expenseCategory?.name || 'General'); if (!acc[catName]) { acc[catName] = 0; } acc[catName] += (parseFloat(curr.total) || 0);
       return acc
     }, {})
     let newRow = []
@@ -814,7 +811,7 @@ function ConvertToInvoice() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Created ',
-      reason: `INV-${String(ReferenceInfoNumber).padStart(6, '0')} For ${customerName.customerName}`,
+      reason: `INV-${String(ReferenceInfoNumber).padStart(6, '0')} For ${typeof customerName === 'string' ? customerName : (customerName?.Customer || customerName?.customerName || '')}`,
       dateNotification: new Date()
     }
     try {
@@ -890,7 +887,7 @@ function ConvertToInvoice() {
     setSearch2(value)
   }
   const newArray2 = search2 !== '' ? items.filter((Item) =>
-    Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) ||
+    Item.itemName && (typeof Item.itemName === 'object' ? (Item.itemName.itemName || Item.itemName.itemDescription || '') : Item.itemName).toLowerCase().includes(search2.toLowerCase()) ||
     Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
     Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())
   ) : items
@@ -1682,7 +1679,7 @@ function ConvertToInvoice() {
                   {
                     items.map(item => (
                       item.idRow !== selectedRowId && (
-                        <MenuItem key={item.idRow} value={item.idRow}>{item.itemName.itemName}</MenuItem>)
+                        <MenuItem key={item.idRow} value={item.idRow}>{typeof item.itemName === 'object' ? (item.itemName?.itemName || item.itemName?.itemDescription || '') : (item.itemName || '')}</MenuItem>)
                     ))
                   }
                 </Select>

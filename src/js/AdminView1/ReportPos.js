@@ -549,7 +549,7 @@ function ReportPos() {
                                           {item.Create}
                                         </TableCell>
                                         <TableCell style={{ border: '1px solid gray' }}>
-                                          {item.customerName !== undefined ? item.customerName.customerName : ''}
+                                          {typeof item.customerName === 'string' ? item.customerName : (item.customerName?.Customer || item.customerName?.customerName || '')}
                                           {(item.status === 'Refunded' || (item.refundFC > 0 || item.refundUSD > 0)) && (
                                             <span style={{ color: '#d32f2f', fontSize: '11px', marginLeft: '6px', fontWeight: 'bold' }}>
                                               ({item.status === 'Refunded' ? 'Refunded' : 'Partially-Refunded'})

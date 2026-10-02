@@ -1044,7 +1044,7 @@ const handleCreateItem = (newItem)=> {
                      {
               items.map(item=> (
                 item.idRow !== selectedRowId &&(
-                         <MenuItem key={item.idRow} value={item.idRow}>{item.itemName.itemName}</MenuItem>)
+                         <MenuItem key={item.idRow} value={item.idRow}>{typeof item.itemName === 'object' ? (item.itemName?.itemName || item.itemName?.itemDescription || '') : (item.itemName || '')}</MenuItem>)
                          ))
                         }
                   </Select>

@@ -1016,11 +1016,11 @@ function DailyExpenses() {
                               <Table style={{ marginBottom: '5px' }}>
                                 <TableBody>
                                   <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }} colSpan={4}>{expensesView.reason === 'Project' ? expensesView.accountNameInfo.name : 'EMPLOYEE EXPENSE INFORMATION'}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }} colSpan={4}>{expensesView.reason === 'Project' ? (expensesView.accountNameInfo?.name || expensesView.accountNameInfo || '') : 'EMPLOYEE EXPENSE INFORMATION'}</TableCell>
                                   </TableRow>
                                   <TableRow>
                                     <TableCell>Category</TableCell>
-                                    <TableCell colSpan={3}>{expensesView.expenseCategory.expensesCategory}</TableCell>
+                                    <TableCell colSpan={3}>{typeof expensesView.expenseCategory === 'object' ? (expensesView.expenseCategory?.expensesCategory || expensesView.expenseCategory?.name || '') : (expensesView.expenseCategory || '')}</TableCell>
                                   </TableRow>
                                   <TableRow>
                                     <TableCell>Expense Date</TableCell>
@@ -1090,7 +1090,7 @@ function DailyExpenses() {
                                     (<TableBody>
                                       <TableRow>
                                         <TableCell>Category</TableCell>
-                                        <TableCell colSpan={3}>{expensesView.expenseCategory.expensesCategory}</TableCell>
+                                        <TableCell colSpan={3}>{typeof expensesView.expenseCategory === 'object' ? (expensesView.expenseCategory?.expensesCategory || expensesView.expenseCategory?.name || '') : (expensesView.expenseCategory || '')}</TableCell>
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>Account</TableCell>
@@ -1117,7 +1117,7 @@ function DailyExpenses() {
                                     (<TableBody>
                                       <TableRow>
                                         <TableCell>Category</TableCell>
-                                        <TableCell colSpan={3}>{expensesView.expenseCategory.expensesCategory}</TableCell>
+                                        <TableCell colSpan={3}>{typeof expensesView.expenseCategory === 'object' ? (expensesView.expenseCategory?.expensesCategory || expensesView.expenseCategory?.name || '') : (expensesView.expenseCategory || '')}</TableCell>
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>Account</TableCell>
@@ -1129,7 +1129,7 @@ function DailyExpenses() {
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>Project Name</TableCell>
-                                        <TableCell colSpan={3}>{expensesView.accountNameInfo.name}</TableCell>
+                                        <TableCell colSpan={3}>{expensesView.accountNameInfo?.name || expensesView.accountNameInfo || ''}</TableCell>
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>TVA (16%)</TableCell>

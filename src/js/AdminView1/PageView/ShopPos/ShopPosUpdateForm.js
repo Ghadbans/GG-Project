@@ -547,7 +547,7 @@ function ShopPosUpdateForm() {
     const data = {
       idInfo: ReferenceInfo,
       person: user.data.userName + ' Modified ',
-      reason: 'S-00' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
+      reason: 'S-00' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + (typeof customerName === 'string' ? customerName : (customerName?.Customer || customerName?.customerName || '')),
       dateNotification: dateComment
     }
     try {
@@ -564,7 +564,7 @@ function ShopPosUpdateForm() {
   } else {
     status = 'Draft'
   }
-  const itemFilter = items.filter((row) => row.itemName.itemName !== '' && row.itemName?._id)
+  const itemFilter = items.filter((row) => (row.itemName && (typeof row.itemName === 'object' ? (row.itemName.itemName || row.itemName._id) : row.itemName)))
   const [saving, setSaving] = useState('')
   const handleQty = async () => {
     try {
@@ -700,7 +700,7 @@ function ShopPosUpdateForm() {
                     {
                       customerName !== null ? (
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                          <p>{customerName.customerName}</p>
+                          <p>{typeof customerName === 'string' ? customerName : (customerName?.Customer || customerName?.customerName || '')}</p>
                           <BlackTooltip title="Clear" placement='top'>
                             <IconButton onClick={handleClearCustomer} style={{ position: 'relative', float: 'right' }}>
                               <RemoveCircleOutline style={{ color: '#202a5a' }} />
@@ -836,7 +836,7 @@ function ShopPosUpdateForm() {
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>
                                                             </div>
                                                             <div>
                                                               <BlackTooltip title="Clear" placement='top'>
@@ -1016,7 +1016,7 @@ function ShopPosUpdateForm() {
                                                         Item.itemName.itemName ? (
                                                           (
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>
                                                               <div>
                                                                 <BlackTooltip title="Clear" placement='top'>
                                                                   <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>

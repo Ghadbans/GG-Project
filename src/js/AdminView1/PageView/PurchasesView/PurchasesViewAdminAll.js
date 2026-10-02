@@ -387,7 +387,7 @@ function PurchasesViewAdminAll() {
         
         setItems(currentPurchase.items || []);
 
-        setCustomerName(currentPurchase.customerName?.customerName ? currentPurchase.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, '') : '');
+        setCustomerName((typeof currentPurchase.customerName === 'string' ? currentPurchase.customerName : (currentPurchase.customerName?.Customer || currentPurchase.customerName?.customerName || '')).replace(/\s+/g, '_').replace(/\./g, ''));
         const currentPurchaseNo = Number(currentPurchase.purchaseNumber || 0);
         setPurchaseNumber(currentPurchaseNo);
         
@@ -594,8 +594,8 @@ function PurchasesViewAdminAll() {
     const newArray = search !== '' ? purchase.filter((row) =>
       row.purchaseName.toLowerCase().includes(search.toLowerCase()) ||
       (row.description && row.description.toLowerCase().includes(search.toLowerCase())) ||
-      (row.customerName?.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())) ||
-      (row.projectName?.projectName && row.projectName.projectName.toLowerCase().includes(search.toLowerCase())) ||
+      ((typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')).toLowerCase().includes(search.toLowerCase())) ||
+      ((typeof row.projectName === 'string' ? row.projectName : (row.projectName?.projectName || row.projectName?.name || '')).toLowerCase().includes(search.toLowerCase())) ||
       (row.items && row.items.some((Item) => {
         const nameToCheck = typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName || '';
         return nameToCheck.toLowerCase().includes(search.toLowerCase());
@@ -627,8 +627,8 @@ function PurchasesViewAdminAll() {
   }
   const data1 = purchase.filter(row => row._id === id).map((row) => ({
     number: 'PUR-' + String(row.purchaseNumber).padStart(6, '0'),
-    customer: row.customerName.customerName,
-    projectName: row.projectName.projectName,
+    customer: typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || ''),
+    projectName: typeof row.projectName === 'string' ? row.projectName : (row.projectName?.projectName || row.projectName?.name || ''),
     purchaseDate: dayjs(row.purchaseDate).format('DD/MM/YYYY'),
   }))
   const data5 = items.map((Item, i) => {
@@ -805,7 +805,7 @@ function PurchasesViewAdminAll() {
                                 {purchase?.map((row, index) => (
                                   <Tab
                                     key={index}
-                                    label={row.customerName.customerName + ' | ' + row.purchaseName}
+                                    label={(typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')) + ' | ' + (row.purchaseName || '')}
                                     component={Link}
                                     to={`/PurchasesViewAdminAll/${row._id}`}
                                     sx={{
@@ -857,7 +857,7 @@ function PurchasesViewAdminAll() {
                                 {newArray?.map((row, index) => (
                                   <Tab
                                     key={index}
-                                    label={row.customerName.customerName + ' | ' + row.purchaseName}
+                                    label={(typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')) + ' | ' + (row.purchaseName || '')}
                                     component={Link}
                                     to={`/PurchasesViewAdminAll/${row._id}`}
                                     sx={{
@@ -881,7 +881,7 @@ function PurchasesViewAdminAll() {
                               <header style={{ display: 'block', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between' }}>
                                   <section>
-                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px', width: '100%' }}>PUR-{String(row.purchaseNumber).padStart(6, '0')} | {row.projectName.projectName}</Typography>
+                                    <Typography sx={{ fontWeight: 'bold', fontSize: '20px', width: '100%' }}>PUR-{String(row.purchaseNumber).padStart(6, '0')} | {typeof row.projectName === 'string' ? row.projectName : (row.projectName?.projectName || row.projectName?.name || '')}</Typography>
                                   </section>
                                   <Typography
                                     color={
@@ -1066,7 +1066,7 @@ function PurchasesViewAdminAll() {
                                             <div className='content' style={{ marginBottom: '20px', position: 'relative' }}>
                                               <section style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
                                                 <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-                                                  <span style={{ fontWeight: 'bold' }}>{row.projectName.projectName.toUpperCase()}</span>
+                                                  <span style={{ fontWeight: 'bold' }}>{(typeof row.projectName === 'string' ? row.projectName : (row.projectName?.projectName || row.projectName?.name || '')).toUpperCase()}</span>
                                                 </address>
 
                                                 <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px' }}>
@@ -1214,7 +1214,7 @@ function PurchasesViewAdminAll() {
                                         <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
                                           <p style={{}}>
                                             <span style={{ fontWeight: 'bold', fontSize: '18px' }}>
-                                              {row.projectName.projectName.toUpperCase()}
+                                              {(typeof row.projectName === 'string' ? row.projectName : (row.projectName?.projectName || row.projectName?.name || '')).toUpperCase()}
                                             </span>
                                             <br />
                                             <span style={{ fontSize: '13px' }}>

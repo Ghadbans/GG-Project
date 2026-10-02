@@ -221,7 +221,7 @@ function PurchaseOrderViewAdmin() {
         id: item._id,
         dataField: dayjs(item.itemOutDate).format('DD/MM/YYYY'),
         referenceInfo: item.description !== undefined && item.description !== '' ? item.description : (item.reference !== undefined && item.reference !== null ? item.reference.referenceName : ''),
-        itemInfo: item.itemsQtyArray.map((row) => row.itemName !== undefined ? (row.itemName.itemName || row.itemName) : ''),
+        itemInfo: (item.itemsQtyArray || []).map((row) => row.itemName ? (typeof row.itemName === 'object' ? (row.itemName.itemName || row.itemName.itemDescription || '') : row.itemName) : ''),
         itemDescriptionInfo: item.itemsQtyArray.map((row) => row.itemDescription !== undefined ? row.itemDescription : '')
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
@@ -762,7 +762,7 @@ function PurchaseOrderViewAdmin() {
                                                   :
                                                   <>
                                                     <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                    <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{row.itemName.itemName !== 'empty' ? row.itemName.itemName : ''}</td>
+                                                    <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{typeof row.itemName === 'object' ? (row.itemName?.itemName !== 'empty' ? row.itemName?.itemName : '') : (row.itemName || '')}</td>
                                                     <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{row.itemDescription}</td>
                                                     <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                     <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}></td>
@@ -874,7 +874,7 @@ function PurchaseOrderViewAdmin() {
                                             :
                                             <>
                                               <TableCell>{i + 1}</TableCell>
-                                              <TableCell>{row.itemName.itemName !== 'empty' ? row.itemName.itemName : ''}</TableCell>
+                                              <TableCell>{typeof row.itemName === 'object' ? (row.itemName?.itemName !== 'empty' ? row.itemName?.itemName : '') : (row.itemName || '')}</TableCell>
                                               <TableCell>{row.itemDescription}</TableCell>
                                               <TableCell>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
                                               <TableCell>{row.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>

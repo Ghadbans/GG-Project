@@ -598,7 +598,7 @@ function ItemInformationVIew() {
   const newArray = (debouncedSearch !== '' ? itemPurchase.filter((row) =>
     row.itemPurchaseNumber.toString().includes(debouncedSearch) ||
     (row.description?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-    (row.projectName && row.projectName.name.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
+    ((typeof row.projectName === 'object' ? (row.projectName?.projectName || row.projectName?.name || '') : (row.projectName || '')).toLowerCase().includes(debouncedSearch.toLowerCase())) ||
     (row.manufacturer?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     (row.manufacturerNumber?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     row.items.some((Item) => Item.itemName !== undefined && (Item.itemName.itemName?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase())) ||
@@ -629,7 +629,7 @@ function ItemInformationVIew() {
       reason: "Shop",
       reference: {
         _id: '',
-        referenceName: row.customerName.customerName
+        referenceName: typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')
       },
       itemsQtyArray: row.items.map((row1) => ({ ...row1, newItemOut: row1.itemQty }))
     })
@@ -1248,7 +1248,7 @@ function ItemInformationVIew() {
                                           <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.itemPurchaseDate).format('DD/MM/YYYY')}</td>
                                           <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.manufacturer}</td>
                                           <td style={{ textAlign: 'left', width: '50px', borderLeft: '1px solid #DDD' }}>{row.manufacturerNumber}</td>
-                                          <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{row.projectName !== undefined ? row.projectName.name : row.description}</td>
+                                          <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{row.projectName !== undefined ? (typeof row.projectName === 'object' ? (row.projectName.projectName || row.projectName.name || '') : row.projectName) : row.description}</td>
                                           <td style={{ textAlign: 'left', width: '40px', borderLeft: '1px solid #DDD' }}>
                                             {row.items.filter(Item => parseFloat(Item.itemQty) >= 0).map((Item, i) => (
                                               <p key={i}>
@@ -1818,7 +1818,7 @@ function ItemInformationVIew() {
                             </TableRow>
                             <TableRow>
                               <TableCell>Description</TableCell>
-                              <TableCell colSpan={3}>{itemPurchaseView.projectName !== undefined ? itemPurchaseView.projectName.name : itemPurchaseView.description}</TableCell>
+                              <TableCell colSpan={3}>{itemPurchaseView.projectName !== undefined ? (typeof itemPurchaseView.projectName === 'object' ? (itemPurchaseView.projectName.projectName || itemPurchaseView.projectName.name || '') : itemPurchaseView.projectName) : itemPurchaseView.description}</TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Reference</TableCell>

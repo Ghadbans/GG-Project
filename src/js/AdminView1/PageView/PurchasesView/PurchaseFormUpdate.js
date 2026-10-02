@@ -922,7 +922,7 @@ function PurchaseFormUpdate() {
                               disabled
                               name='projectName'
                               label='Project Name'
-                              value={projectName.projectName ? projectName.projectName : ''}
+                              value={typeof projectName === 'string' ? projectName : (projectName?.projectName || projectName?.name || '')}
                               sx={{ width: '100%', backgroundColor: 'white' }}
                             />
                             <BlackTooltip title="Clear" placement='right'>
@@ -996,7 +996,7 @@ function PurchaseFormUpdate() {
                       name='customerName'
                       id='customerName'
                       label='Customer Name'
-                      value={customerName.customerName ? customerName.customerName : ''}
+                      value={typeof customerName === 'string' ? customerName : (customerName?.Customer || customerName?.customerName || '')}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>

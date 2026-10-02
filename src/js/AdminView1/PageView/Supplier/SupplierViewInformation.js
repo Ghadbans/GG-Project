@@ -546,7 +546,7 @@ function SupplierViewInformation() {
   const newArray = search !== '' ? itemPurchase.filter((row) =>
     (row.itemPurchaseNumber !== undefined && row.itemPurchaseNumber !== null ? row.itemPurchaseNumber.toString().includes(search) : false) ||
     (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
-    (row.projectName && row.projectName.name ? row.projectName.name.toLowerCase().includes(search.toLowerCase()) : false) ||
+    ((typeof row.projectName === 'object' ? (row.projectName?.projectName || row.projectName?.name || '') : (row.projectName || '')).toLowerCase().includes(search.toLowerCase())) ||
     (row.manufacturer ? row.manufacturer.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.items && Array.isArray(row.items) && row.items.some((Item) => {
@@ -593,7 +593,7 @@ function SupplierViewInformation() {
     (row.itemPurchaseNumber !== undefined && row.itemPurchaseNumber !== null ? row.itemPurchaseNumber.toString().includes(search) : false) ||
     (row.status ? row.status.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
-    (row.projectName && row.projectName.name ? row.projectName.name.toLowerCase().includes(search.toLowerCase()) : false) ||
+    ((typeof row.projectName === 'object' ? (row.projectName?.projectName || row.projectName?.name || '') : (row.projectName || '')).toLowerCase().includes(search.toLowerCase())) ||
     (row.manufacturer ? row.manufacturer.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.manufacturerNumber ? row.manufacturerNumber.toLowerCase().includes(search.toLowerCase()) : false) ||
     (row.items && Array.isArray(row.items) && row.items.some((Item) => {
@@ -1125,7 +1125,7 @@ function SupplierViewInformation() {
                                                 <tbody>
                                                   <tr>
                                                     <th align='left' style={{ height: '30px' }}><span >Name</span></th>
-                                                    <td><span style={{ color: 'gray' }}>{row.supplierName.toUpperCase()}</span></td>
+                                                    <td><span style={{ color: 'gray' }}>{(typeof row.supplierName === 'string' ? row.supplierName : (row.supplierName?.supplierName || row.supplierName?.name || '')).toUpperCase()}</span></td>
                                                   </tr>
                                                   <tr>
                                                     <th align='left' style={{ height: '30px' }}><span >Store</span></th>
@@ -1355,7 +1355,7 @@ function SupplierViewInformation() {
                                                   <address style={{ fontStyle: 'normal', lineHeight: 1.4 }}>
                                                     <span style={{ fontWeight: 'bold', fontSize: '11px', color: '#666' }}>TO SUPPLIER:</span><br />
                                                     <span style={{ fontWeight: 'bold', fontSize: '16px', color: '#202a5a' }}>{row.storeName.toUpperCase()}</span><br />
-                                                    <span style={{ fontSize: '13px', color: '#444' }}>{row.supplierName.toUpperCase()}</span><br />
+                                                    <span style={{ fontSize: '13px', color: '#444' }}>{(typeof row.supplierName === 'string' ? row.supplierName : (row.supplierName?.supplierName || row.supplierName?.name || '')).toUpperCase()}</span><br />
                                                     <span style={{ fontSize: '12px', color: 'gray' }}>{row.address ? row.address.toUpperCase() : ''}</span><br />
                                                     <span style={{ fontSize: '12px', color: 'gray' }}>{row.customerPhone1 || ''}</span>
                                                   </address>
@@ -1479,7 +1479,7 @@ function SupplierViewInformation() {
                                                             <address style={{ fontStyle: 'normal', lineHeight: 1.4 }}>
                                                               <span style={{ fontWeight: 'bold', fontSize: '11px', color: '#666' }}>TO SUPPLIER:</span><br />
                                                               <span style={{ fontWeight: 'bold', fontSize: '15px', color: '#000' }}>{row.storeName.toUpperCase()}</span><br />
-                                                              <span style={{ fontSize: '12px', color: '#333' }}>{row.supplierName.toUpperCase()}</span><br />
+                                                              <span style={{ fontSize: '12px', color: '#333' }}>{(typeof row.supplierName === 'string' ? row.supplierName : (row.supplierName?.supplierName || row.supplierName?.name || '')).toUpperCase()}</span><br />
                                                               <span style={{ fontSize: '11px', color: 'gray' }}>{row.address ? row.address.toUpperCase() : ''}</span><br />
                                                               <span style={{ fontSize: '11px', color: 'gray' }}>{row.customerPhone1 || ''}</span>
                                                             </address>
@@ -1770,7 +1770,7 @@ function SupplierViewInformation() {
                             </TableRow>
                             <TableRow>
                               <TableCell>Description</TableCell>
-                              <TableCell colSpan={3}>{itemPurchaseView.projectName !== undefined ? itemPurchaseView.projectName.name : itemPurchaseView.description}</TableCell>
+                              <TableCell colSpan={3}>{itemPurchaseView.projectName !== undefined ? (typeof itemPurchaseView.projectName === 'object' ? (itemPurchaseView.projectName.projectName || itemPurchaseView.projectName.name || '') : itemPurchaseView.projectName) : itemPurchaseView.description}</TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Reference</TableCell>
