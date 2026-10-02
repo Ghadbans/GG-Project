@@ -1037,7 +1037,7 @@ const isItemMatch = (item1, item2) => {
         dayjs(item.date).format('DD-MMMM-YYYY'),
         item.category,
         item.description,
-        (parseFloat() || 0).toFixed(2)
+        (parseFloat(item.total) || 0).toFixed(2)
       ]);
     });
 
@@ -1070,8 +1070,8 @@ const isItemMatch = (item1, item2) => {
       workSheet.addRow([
         item.name,
         `${item.workD} days`,
-        (parseFloat() || 0).toFixed(2),
-        (parseFloat() || 0).toFixed(2)
+        (parseFloat(item.dayPay) || 0).toFixed(2),
+        (parseFloat(item.total) || 0).toFixed(2)
       ]);
     });
 
@@ -1329,8 +1329,8 @@ const isItemMatch = (item1, item2) => {
                         <tr key={i}>
                           <td align="left" style={{ textAlign: 'left', border: '1px solid #DDD' }}>{row.name}</td>
                           <td style={{ border: '1px solid #DDD' }} align="left"><span></span><span>{row.workD} days</span></td>
-                          <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                          <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(parseFloat(row.dayPay) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                          <td style={{ border: '1px solid #DDD' }} align="left"><span>$</span><span>{(parseFloat(row.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                         </tr>
                       ))
                     }
@@ -1697,14 +1697,14 @@ const isItemMatch = (item1, item2) => {
                                               <span> Sub Total</span>
                                               {row.CheckTvA ? '' : <><br /><span className='txt1'>(Tax Inclusive)</span></>}
                                             </th>
-                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                           </tr>
                                           {
                                             row.shipping ?
                                               (
                                                 <tr style={{ borderBottom: '1px solid black' }}>
                                                   <th style={{ textAlign: 'center' }}><span>Shipping</span></th>
-                                                  <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                  <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat(row.shipping) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                 </tr>
                                               )
                                               : ''
@@ -1714,26 +1714,26 @@ const isItemMatch = (item1, item2) => {
                                               (
                                                 <tr style={{ borderBottom: '1px solid black' }}>
                                                   <th style={{ textAlign: 'center' }}>{row.adjustment}</th>
-                                                  <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                  <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span>{(parseFloat(row.adjustmentNumber) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                                 </tr>
                                               )
                                               : ''
                                           }
                                           <tr style={{ borderBottom: '1px solid black' }}>
                                             <th style={{ textAlign: 'center' }}><span >Total</span></th>
-                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{(parseFloat(row.totalInvoice) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                           </tr>
                                           {
                                             row.total ? (
                                               <tr style={{ borderBottom: '1px solid black' }}>
                                                 <th style={{ textAlign: 'center' }}><span >Amount Paid</span></th>
-                                                <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                                <td style={{ textAlign: 'right' }}><span data-prefix>$</span><span >{(parseFloat(row.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                               </tr>
                                             ) : ''
                                           }
                                           <tr style={{ borderBottom: '1px solid black' }}>
                                             <th style={{ textAlign: 'center', color: '#2f81b7' }}><span >Balance Due</span></th>
-                                            <td style={{ textAlign: 'right', color: '#2f81b7' }}><span data-prefix>$</span><span>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                            <td style={{ textAlign: 'right', color: '#2f81b7' }}><span data-prefix>$</span><span>{(parseFloat(row.balanceDue) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                           </tr>
                                           <tr>
                                             <th style={{ textAlign: 'center' }}><span >Total In Words</span></th>

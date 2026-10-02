@@ -1005,9 +1005,9 @@ function PurchaseUpdateOrder() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </span>
-                                                <span>Total Cost USD: {Item.totalAmountUSD !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span>
+                                                <span>Total Cost USD: {Item.totalAmountUSD !== undefined ? (parseFloat(Item.totalAmountUSD) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span>
                                               </td>
-                                              <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                              <td id='amountTotalInvoice'>{Item.fcConvertToUsdTotal !== undefined ? (parseFloat(Item.fcConvertToUsdTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                               <td align="center" >  <LightTooltip title="Delete" >
                                                 <IconButton onClick={() => deleteItem(Item.idRow)} >
                                                   <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />

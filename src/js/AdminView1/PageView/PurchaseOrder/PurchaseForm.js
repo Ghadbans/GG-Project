@@ -1313,9 +1313,9 @@ function PurchaseForm() {
                                                     sx={{ width: '100px', backgroundColor: 'white' }}
                                                   />
                                                 </span>
-                                                <span>Total Cost USD: {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                                <span>Total Cost USD: {(parseFloat(Item.totalAmountUSD) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
                                               </td>
-                                              <td id='amountTotalInvoice'>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='amountTotalInvoice'>{(parseFloat(Item.fcConvertToUsdTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               <td style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                                 <LightTooltip title="Delete" >
                                                   <IconButton onClick={() => deleteItem(Item.idRow)} >

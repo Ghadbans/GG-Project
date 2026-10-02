@@ -1241,3 +1241,32 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - Render `Ref [Subject/Defect] INV-XXXXXX` only when a genuine, non-empty defect or subject string is present; otherwise cleanly format as `INV-XXXXXX - due on [Date]`.
        - Hardened Payment details rendering to map through invoice reference numbers cleanly without undefined values.
   - **Verification:** Webpack prod & web bundles compiled cleanly (`npm run build`), Windows installer `dist/Global Gate Setup 3.5.48.exe` built.
+
+- **Restoration & Permanent Hardening of Numeric Formats Across 20 Modules (Ver 3.5.49)**:
+  - **Problem Reported:** In Expenses Daily Information (`DailyExpenseAdminView.js`), the VIEW PER DAY tab showed `$ 0.00` in the Expenses table rows for USD amounts (e.g. `$231.47`), while the bottom summary correctly showed the daily total.
+  - **Root Cause Analysis:**
+    - An empty `parseFloat()` argument without variable capture had been injected into 20 frontend files during numerical hardening, causing `(parseFloat() || 0)` to evaluate to `0`.
+  - **Architectural Resolution:**
+    - Audited and repaired all 20 affected files:
+      1. `DailyExpenseAdminView.js` (`row.totalCash`, `item.amount`, `item.total`, `item.amountTotalFc`, `item.amountTotalUsd`, `item.returnUSD`, `row.returnAmountFC`, `row.returnAmountUSD`, `row.RemainingAmountFC`, `row.RemainingAmountUSD`)
+      2. `DailyExpensesMonthlyChartView.js` (`row.total`)
+      3. `DailyExpensesReportInfo.js` (`row.amount`, `row.payment`)
+      4. `InvoiceReportInfo.js` (`row.subTotal`, `row.infoCost`)
+      5. `ItemPurchaseReportInfo.js` (`row.amount`, `row.payment`)
+      6. `MaintenanceReportInfo.js` (`row.totalLaborFeesGenerale`, `row.adjustmentNumber`, `row.laborDiscount`)
+      7. `PayRollReportInfo.js` (`row.amount`, `row.payment`)
+      8. `PaymentReportInf.js` (`row.amount`)
+      9. `PosReportInvoice.js` (`row.infoSell`, `row.subTotal`, `row.infoCost`, `row.infoCostFC`, `row.TaxUSd`, `row.infoSellFC`)
+      10. `EstimateViewAdminAll.js` (`row.shipping`, `row.adjustmentNumber`, `row.tax`, `row.totalInvoice`, `row.total`, `row.balanceDue`)
+      11. `MakePurchaseConvertToProject.js` (`Item.totalCost`, `Item.totalGenerale`)
+      12. `MakePurchase.js` (`Item.totalCost`, `Item.totalGenerale`)
+      13. `ItemPurchaseViewForm.js` (`Item.totalAmountUSD`, `Item.fcConvertToUsdTotal`)
+      14. `PrintPayRoll.js` (`row.totalActualSalary`, `row.totalActualEarning`, `row.totalActualDeduction`, `row.totalNet`, `row.bonus`, `row.totalPaid`, `row.totalPaidDollars`)
+      15. `PaymentInformationView.js` (`row.returnUSD`, `row.remaining`)
+      16. `ProjectViewInformation.js` (`item.total`, `item.dayPay`, `row.dayPay`, `row.total`, `row.subTotal`, `row.shipping`, `row.adjustmentNumber`, `row.totalInvoice`, `row.balanceDue`)
+      17. `PurchaseForm.js` (`Item.totalAmountUSD`, `Item.fcConvertToUsdTotal`)
+      18. `PurchaseUpdateOrder.js` (`Item.totalAmountUSD`, `Item.fcConvertToUsdTotal`)
+      19. `ShopPosForm.js` (`Item.itemRate`)
+      20. `ShopPosUpdateForm.js` (`Item.itemRate`)
+    - Validated 100% of all 228 frontend JS files for zero empty `parseFloat()` calls.
+  - **Verification:** Compiled Webpack desktop & web production bundles (`npm run build`), generated Windows desktop installer `dist/Global Gate Setup 3.5.49.exe`, committed and pushed to `origin main` for automated cloud deployment.

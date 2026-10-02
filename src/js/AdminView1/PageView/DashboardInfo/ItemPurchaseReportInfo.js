@@ -242,7 +242,7 @@ function ItemPurchaseReportInfo({ onMonth, onItemPurChase, selectedYear }) {
       date: dayjs(row.date).format('DD/MM/YYYY'),
       Details: row.type === 'Item Purchase' ? ('Ref ' + row.number + ' / ' + row.description) : '',
       balance: `$${amount3.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`,
-      amount: row.type !== 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
+      amount: row.type !== 'Payment' ? `${(parseFloat(row.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : '',
     })
   }
   )
@@ -292,8 +292,8 @@ function ItemPurchaseReportInfo({ onMonth, onItemPurChase, selectedYear }) {
           <span>{row.type === 'Payment' && row.numberArray.length === 0 && row.credit > 0 && ('PAY-' + row.number + ' $' + row.credit + ' In Advanced Payment (Credit) ')}</span>
           <span>{row.type === 'Payment' && row.numberArray.length > 0 && ('PAY-' + row.number + ' $' + row.payment + ' for payment of ' + row.numberArray?.map((row2) => 'INV-' + row2.Ref) + ' / Mode: ' + row.defect)}</span>
         </td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type !== 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
-        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `$${(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type !== 'Payment' ? `${(parseFloat(row.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
+        <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{row.type === 'Payment' ? `${(parseFloat(row.payment) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` : ''}</td>
         <td style={{ textAlign: 'left', borderBottom: '1px solid #DDD' }}>{`$${amount2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</td>
       </tr>
     )

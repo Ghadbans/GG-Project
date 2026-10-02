@@ -937,7 +937,7 @@ function MakePurchaseConvertToProject() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='totalPurchase' style={{ width: '100px' }}>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='totalPurchase' style={{ width: '100px' }}>{(parseFloat(Item.totalCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               <td id='totalBuy'>
                                                 <TextField
                                                   name='itemBuy' id='itemBuy'
@@ -948,7 +948,7 @@ function MakePurchaseConvertToProject() {
                                                   sx={{ width: '100px', backgroundColor: 'white' }}
                                                 />
                                               </td>
-                                              <td id='totalGeneralPurchase' style={{ width: '100px' }}>{(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                              <td id='totalGeneralPurchase' style={{ width: '100px' }}>{(parseFloat(Item.totalGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                                               <td align="center" >  <LightTooltip title="Delete" sx={{}}>
                                                 <IconButton onClick={() => deleteItem(Item.idRow)} >
                                                   <DeleteIcon style={{ cursor: 'pointer', color: 'red' }} />

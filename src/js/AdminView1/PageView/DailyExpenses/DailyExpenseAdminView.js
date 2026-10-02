@@ -793,7 +793,7 @@ function DailyExpenseAdminView() {
             {row.Create.person}
           </TableCell>
           <TableCell>
-            {(parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            {(parseFloat(row.totalCash) || 0).toFixed(2)}.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
           </TableCell>
         </TableRow>
         <TableRow>
@@ -960,10 +960,10 @@ function DailyExpenseAdminView() {
                                     {item.description}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
-                                    <span>FC </span>{item.amount !== 0 ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                    <span>FC </span>{item.amount !== 0 ? (parseFloat(item.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
-                                    <span>$ </span>{item.amount === 0 ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                    <span>$ </span>{item.amount === 0 ? (parseFloat(item.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
                                   </td>
                                 </>
                               )
@@ -1102,10 +1102,10 @@ function DailyExpenseAdminView() {
                                         )}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>FC </span>{item.amountTotalFc !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                        <span>FC </span>{item.amountTotalFc !== undefined ? (parseFloat(item.amountTotalFc) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{item.amountTotalUsd !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        <span>$ </span>{item.amountTotalUsd !== undefined ? (parseFloat(item.amountTotalUsd) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : (parseFloat(item.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                       </td>
                                     </>
                                   )
@@ -1165,7 +1165,7 @@ function DailyExpenseAdminView() {
                                         {item.modes !== undefined ? item.modes.toUpperCase() : ''}  {' | ' + (item.description || '')}
                                         {(item.returnUSD > 0 || item.returnFC > 0) && (
                                           <div style={{ fontSize: '11px', color: '#c62828', fontWeight: 'bold' }}>
-                                            Return Change: {item.returnUSD > 0 ? `$${(parseFloat() || 0).toFixed(2)} ` : ''}{item.returnFC > 0 ? `FC ${item.returnFC.toLocaleString()}` : ''}
+                                            Return Change: {item.returnUSD > 0 ? `${(parseFloat(item.returnUSD) || 0).toFixed(2)} ` : ''}{item.returnFC > 0 ? `FC ${item.returnFC.toLocaleString()}` : ''}
                                           </div>
                                         )}
                                       </td>
@@ -1261,8 +1261,8 @@ function DailyExpenseAdminView() {
                                       row.status !== undefined || row.status === 'Closed' ?
                                         <tr>
                                           <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Amount Return</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{row.returnAmountFC !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{row.returnAmountUSD !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{row.returnAmountFC !== undefined ? (parseFloat(row.returnAmountFC) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{row.returnAmountUSD !== undefined ? (parseFloat(row.returnAmountUSD) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                         </tr>
                                         : null
                                     }
@@ -1276,8 +1276,8 @@ function DailyExpenseAdminView() {
                                       row.status !== undefined || row.status === 'Closed' ?
                                         <tr>
                                           <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}>Remaining</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{row.RemainingAmountFC !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
-                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{row.RemainingAmountUSD !== undefined ? (parseFloat() || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>FC </span>{row.RemainingAmountFC !== undefined ? (parseFloat(row.RemainingAmountFC) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                          <td style={{ textAlign: 'left', fontSize: '20px', border: '1px solid black' }}><span>$ </span>{row.RemainingAmountUSD !== undefined ? (parseFloat(row.RemainingAmountUSD) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
                                         </tr>
                                         :
                                         <tr>
