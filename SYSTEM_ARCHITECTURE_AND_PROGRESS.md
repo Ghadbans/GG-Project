@@ -99,6 +99,16 @@
     - **Standardized A4 `@page` & Media Styles:** All printable modules must specify `pageStyle: '@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }'`. In `@media print`, tables, headers, customer cards, and summary total boxes must use `page-break-inside: avoid !important; break-inside: avoid !important;`.
     - **In-Flow Printable Headers & Footers:** `PrintHeader.js` is constrained to `maxHeight: '65px'` with compact margins, and `PrintFooter.js` flows naturally at the end of documents with clean top borders instead of brittle `position: fixed; bottom: 0;` (which overlaps multi-page document content).
     - **Thermal POS Print Isolation:** Point of Sale (POS) printing (`SellShopInvoiceView.js` / `ReportPos.js`) uses thermal receipt roll dimensions and is strictly isolated from standard A4 document layouts.
+35. **Universal Polymorphic Foreign Entity Access Pattern (Ver 3.5.52)**:
+    - In historical MongoDB documents (2021-2023 vs modern), foreign entity references (`customerName`, `projectName`, `itemName`, `supplierName`, `expenseCategory`, `accountNameInfo`, `employeeName`) can be populated subdocuments `{ _id, name }` or flat strings/ObjectIds.
+    - NEVER assume a double-nested structure (e.g., `row.expenseCategory.expensesCategory`, `row.itemName.itemName`, `row.projectName.projectName`, `option.customerName.customerName`) or chain string methods (`.toLowerCase()`, `.toUpperCase()`, `.trim()`, `.replace()`) directly on unvalidated properties.
+    - Always employ defensive resolution guards:
+      - **Customer:** `typeof c === 'string' ? c : (c?.Customer || c?.customerName || c?.name || '')`
+      - **Project:** `typeof p === 'string' ? p : (p?.projectName || p?.name || '')`
+      - **Item:** `typeof i === 'string' ? i : (i?.itemName || i?.itemDescription || i?.name || '')`
+      - **Expense Category:** `typeof ec === 'string' ? ec : (ec?.expensesCategory || ec?.name || '')`
+      - **Supplier:** `typeof s === 'string' ? s : (s?.supplierName || s?.manufacturer || s?.name || '')`
+      - **Employee:** `typeof e === 'string' ? e : (e?.employeeName || e?.employee || e?.name || '')`
 
 ## Current Progress Log
 - **Universal Professional A4 Print Engine & Multi-Page Layout Optimization (Ver 3.5.44)**:
@@ -1301,3 +1311,28 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - `server/routes/expenseRoutes.js`: Expanded project queries to match `accountNameInfo._id`, `accountNameInfo`, `accountNameInfo.name`, `accountName`.
        - `server/routes/itemRoutes.js`: Expanded `itemOut`, `itemReturn`, and `itemPurchase` queries to match `reference._id`, `reference`, `POID`, `projectName._id`, `projectName`, `projectName.projectName`, `projectName.name`.
   - **Verification:** Verified with AST quality gate across 229 files, compiled Webpack production and web bundles (`npm run build`), built Windows installer `dist/Global Gate Setup 3.5.51.exe`, committed and pushed to `origin main`.
+
+- **System-Wide Scan & Polymorphic Schema Hardening Across All Modules (Ver 3.5.52)**:
+  - **Context & Objective:** Following the resolution of polymorphic customer schema issues in Project Information, conducted a deep AST & regex inspection across all 229 frontend files and backend query structures to eradicate any remaining unsafe nested subdocument accesses, unhandled string vs. object polymorphisms, and unvalidated string method calls.
+  - **Comprehensive Hardening Across Modules:**
+    1. **Daily Expenses (`DailyExpenses.js`, `DailyExpenseAdminView.js`, `DailyExpenseForm.js`, `DailyExpenseUpdate.js`):**
+       - Replaced direct `expenseCategory.expensesCategory` and `accountNameInfo.name` table cells with polymorphic type guards `typeof item.expenseCategory === 'object' ? (item.expenseCategory?.expensesCategory || item.expenseCategory?.name || '') : (item.expenseCategory || '')`.
+       - Fortified search filters in `DailyExpenseAdminView.js` across `expenseNumber`, `accountName`, `expenseCategory`, `accountNameInfo`, and `employeeName`.
+       - Added type safety to autocomplete `getOptionLabel` and `renderOption` handlers for projects and employees.
+    2. **Item & Inventory Movements (`ItemOutViewAdmin.js`, `ItemPurchaseViewAdmin.js`, `ItemReturnAdminView.js`, `ItemInformationVIew.js`):**
+       - Guarded table cells, print templates, and Excel exports against non-populated string `itemName` and `projectName` values.
+       - Hardened `itemInfo` array mappings in item movement tables and search filters.
+    3. **Purchase Orders & Purchases (`PurchasesViewAdminAll.js`, `PurchasesFormView.js`, `PurchaseFormUpdate.js`, `PurchaseOrderInfoView.js`, `PurchaseOrderViewAdmin.js`, `PurchaseUpdateOrder.js`):**
+       - Safely extracted polymorphic customer and project references (`customerName.customerName`, `projectName.projectName`, `itemName.itemName`) in master tables, chip labels, reason strings, and autocomplete dropdowns.
+    4. **Convert to Invoice / Estimate (`ConvertToInvoice.js`, `ConvertToEstimate.js`):**
+       - Protected category accumulator calculations and reason string generators against string vs. object `expenseCategory` and `customerName`.
+       - Hardened dropdown menu item displays for item selection.
+    5. **Point of Sale (`ShopPosForm.js`, `ShopPosUpdateForm.js`, `ReportPos.js`):**
+       - Hardened item filtering logic, receipt headers, and customer display in POS receipts and reports.
+    6. **Suppliers & Payments (`SupplierViewInformation.js`, `PaymentView.js`):**
+       - Safely extracted supplier names, customer references, and project descriptions for table rows and payment creation callbacks.
+  - **Verification & Deployment:**
+    - Verified all 229 source files through the Babel AST pre-build quality gate with 0 errors.
+    - Compiled Webpack desktop & web production packages (`npm run build`).
+    - Generated Windows desktop installer `dist/Global Gate Setup 3.5.52.exe`.
+    - Pushed to `origin main` (`576e48de`) for automated Cloudflare Pages and Railway API deployments.
