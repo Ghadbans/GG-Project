@@ -197,33 +197,39 @@ function ProjectViewInformation() {
         axios.get(`${ENDPOINT_URL}/hidden`)
       ]);
 
-      const formatDate = resProjects.data.data.map((p) => ({
+      const formatDate = (resProjects.data?.data || []).map((p) => ({
         ...p,
         id: p._id,
         visitField: dayjs(p.visitDate).format('DD/MM/YYYY'),
         startField: dayjs(p.startDate).format('DD/MM/YYYY'),
       }));
       setProject(formatDate.reverse());
-      setProjectNumber(resProjectSpec.data.data.projectNumber || 0);
-      setProjectName(resProjectSpec.data.data.projectName);
-      setCustomerName1(resProjectSpec.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
-      setHidden(resHidden.data.data);
+      
+      const pSpec = resProjectSpec.data?.data || {};
+      const pNum = pSpec.projectNumber || 0;
+      const pName = pSpec.projectName || '';
+      const rawCust = pSpec.customerName;
+      const custStr = typeof rawCust === 'string' ? rawCust : (rawCust?.customerName || rawCust?.name || rawCust?.Customer || '');
+
+      setProjectNumber(pNum);
+      setProjectName(pName);
+      setCustomerName1(custStr.replace(/\s+/g, '_').replace(/\./g, ''));
+      setHidden(resHidden.data?.data || []);
 
       setLoadingBase(false);
-      setLoadingData(true); // Still true until details are loaded if we want to wait, or false to show UI.
-      // Let's set it to false so header shows up.
       setLoadingData(false);
 
-      // Load all other data in background
-      fetchDetailedData();
+      // Load all other data in background with resolved project values
+      fetchDetailedData(id, pNum, pName);
     } catch (error) {
       console.error('Error fetching priority data:', error);
       setLoadingBase(false);
       setLoadingData(false);
+      fetchDetailedData(id, projectNumber, projectName);
     }
   };
 
-  const fetchDetailedData = async () => {
+  const fetchDetailedData = async (targetId = id, targetPNum = projectNumber, targetPName = projectName) => {
     try {
       const [resAllItems] = await Promise.all([
         axios.get(`${ENDPOINT_URL}/item?summary=true`)
@@ -231,11 +237,11 @@ function ProjectViewInformation() {
       SetItems(resAllItems.data?.data || []);
 
       await Promise.all([
-        fetchInvoicesAndPurchases(),
-        fetchExpenses(),
-        fetchPayments(),
-        fetchTimelineAndStaff(),
-        fetchItemsMovement()
+        fetchInvoicesAndPurchases(targetId, targetPNum, targetPName),
+        fetchExpenses(targetId, targetPName),
+        fetchPayments(targetId),
+        fetchTimelineAndStaff(targetId),
+        fetchItemsMovement(targetId, targetPNum, targetPName)
       ]);
     } catch (error) {
       console.error('Error fetching detailed data:', error);
@@ -243,15 +249,19 @@ function ProjectViewInformation() {
   };
 
   // Tab-Specific Loaders
-  const fetchInvoicesAndPurchases = async () => {
+  const fetchInvoicesAndPurchases = async (targetId = id, targetPNum = projectNumber, targetPName = projectName) => {
     try {
-      const resPurchases = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&projectId=${id}`);
+      const pNameQuery = targetPName ? `&projectName=${encodeURIComponent(targetPName)}` : '';
+      const pNumQuery = targetPNum ? `&projectNumber=${targetPNum}` : '';
+      const resPurchases = await axios.get(`${ENDPOINT_URL}/purchase?summary=true&projectId=${targetId}${pNameQuery}${pNumQuery}`);
       const relatedPurchases = resPurchases.data?.data || [];
       const projectPurchaseIds = relatedPurchases.map(p => p._id);
+      const projectPurchaseNames = relatedPurchases.map(p => p.purchaseName || `PUR-${String(p.purchaseNumber).padStart(6, '0')}`).filter(Boolean);
 
-      // Filter Invoices: linked either via Purchase ID or directly via Project ID
+      // Filter Invoices: linked either via Purchase ID, Purchase Name, or directly via Project ID / Project Name
       const pIdsQuery = projectPurchaseIds.length > 0 ? `&purchaseIds=${projectPurchaseIds.join(',')}` : '';
-      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&projectId=${id}${pIdsQuery}`);
+      const pNamesQuery = projectPurchaseNames.length > 0 ? `&purchaseNames=${encodeURIComponent(projectPurchaseNames.join(','))}` : '';
+      const resInvoices = await axios.get(`${ENDPOINT_URL}/invoice?summary=true&projectId=${targetId}${pIdsQuery}${pNamesQuery}${pNameQuery}${pNumQuery}`);
       const relatedInvoices = resInvoices.data?.data || [];
 
       const allProjectItems = relatedPurchases.flatMap((row) => (row.items || []).map((Item) => ({
@@ -269,16 +279,17 @@ function ProjectViewInformation() {
     }
   };
 
-  const fetchExpenses = async () => {
+  const fetchExpenses = async (targetId = id, targetPName = projectName) => {
     try {
+      const pNameQuery = targetPName ? `&projectName=${encodeURIComponent(targetPName)}` : '';
       const [resExpCat, resExpenses] = await Promise.all([
         axios.get(`${ENDPOINT_URL}/expensesCategory`),
-        axios.get(`${ENDPOINT_URL}/expense?summary=true&projectId=${id}`)
+        axios.get(`${ENDPOINT_URL}/expense?summary=true&projectId=${targetId}${pNameQuery}`)
       ]);
       setCategories(resExpCat.data?.data || []);
       setExpensesInfo((resExpenses.data?.data || []).map((row) => ({
         _id: row._id,
-        category: row.expenseCategory?.expensesCategory,
+        category: row.expenseCategory?.expensesCategory || (typeof row.expenseCategory === 'string' ? row.expenseCategory : ''),
         total: row.total,
         date: row.expenseDate,
         expenseNumber: row.expenseNumber,
@@ -287,9 +298,9 @@ function ProjectViewInformation() {
     } catch (error) { console.error('Error fetching Expenses:', error); }
   };
 
-  const fetchPayments = async () => {
+  const fetchPayments = async (targetId = id) => {
     try {
-      const res = await axios.get(`${ENDPOINT_URL}/payment?projectId=${id}`);
+      const res = await axios.get(`${ENDPOINT_URL}/payment?projectId=${targetId}`);
       setAdvances(res.data?.data || []);
     } catch (error) { console.error('Error fetching Payments:', error); }
   };
@@ -318,21 +329,22 @@ const isItemMatch = (item1, item2) => {
   return false;
 };
 
-  const fetchItemsMovement = async () => {
+  const fetchItemsMovement = async (targetId = id, targetPNum = projectNumber, targetPName = projectName) => {
     try {
+      const pNameQuery = targetPName ? `&projectName=${encodeURIComponent(targetPName)}` : '';
       const [resOut, resReturn, resPrec] = await Promise.all([
-        axios.get(`${ENDPOINT_URL}/itemOut?projectId=${id}`),
-        axios.get(`${ENDPOINT_URL}/itemReturn?projectId=${id}`),
-        axios.get(`${ENDPOINT_URL}/itemPurchase?projectId=${id}`)
+        axios.get(`${ENDPOINT_URL}/itemOut?projectId=${targetId}${pNameQuery}`),
+        axios.get(`${ENDPOINT_URL}/itemReturn?projectId=${targetId}${pNameQuery}`),
+        axios.get(`${ENDPOINT_URL}/itemPurchase?projectId=${targetId}${pNameQuery}`)
       ]);
 
       const isMatchingProjectOrPurchase = (row) => {
         if (!row) return false;
         const refId = String(row.reference?._id || row.reference || row.POID || row.projectName?._id || row.projectName || '');
-        if (refId && String(id) && refId === String(id)) return true;
+        if (refId && String(targetId) && refId === String(targetId)) return true;
 
-        const pName = projectName || '';
-        const pNum = projectNumber || 0;
+        const pName = targetPName || '';
+        const pNum = targetPNum || 0;
 
         const rowPName = String(row.projectName?.projectName || row.projectName?.name || (typeof row.projectName === 'string' ? row.projectName : '') || '');
         if (pName && rowPName && cleanStr(rowPName) === cleanStr(pName)) return true;
@@ -368,11 +380,11 @@ const isItemMatch = (item1, item2) => {
     } catch (error) { console.error('Error fetching Item Movement:', error); }
   };
 
-  const fetchTimelineAndStaff = async () => {
+  const fetchTimelineAndStaff = async (targetId = id) => {
     try {
       const [resNotif, resPlaning] = await Promise.all([
-        axios.get(`${ENDPOINT_URL}/notification?idInfo=${id}`),
-        axios.get(`${ENDPOINT_URL}/planing?projectId=${id}`)
+        axios.get(`${ENDPOINT_URL}/notification?idInfo=${targetId}`),
+        axios.get(`${ENDPOINT_URL}/planing?projectId=${targetId}`)
       ]);
       setNotification(resNotif.data?.data || []);
       setPlaningInfo((resPlaning.data?.data || []).map((row) => ({
@@ -687,13 +699,13 @@ const isItemMatch = (item1, item2) => {
     row.projectName.toLowerCase().includes(search.toLowerCase()) ||
     row.projectNumber.toString().includes(search) ||
     row.description.toLowerCase().includes(search.toLowerCase()) ||
-    row.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())
+    (typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')).toLowerCase().includes(search.toLowerCase())
   ) : project
   const newArray2 = search !== '' ? filteredRows.filter((row) =>
     row.projectName.toLowerCase().includes(search.toLowerCase()) ||
     row.description.toLowerCase().includes(search.toLowerCase()) ||
     row.projectNumber.toString().includes(search) ||
-    row.customerName && row.customerName.customerName.toLowerCase().includes(search.toLowerCase())
+    (typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')).toLowerCase().includes(search.toLowerCase())
   ) : filteredRows
 
   {/** Search end */ }
@@ -865,14 +877,14 @@ const isItemMatch = (item1, item2) => {
 
   const data1 = purchase.map((row) => ({
     number: 'PUR-' + String(row.purchaseNumber).padStart(6, '0'),
-    customer: row.customerName.customerName,
-    projectName: row.projectName.projectName,
+    customer: typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || ''),
+    projectName: row.projectName?.projectName || row.projectName?.name || (typeof row.projectName === 'string' ? row.projectName : '') || '',
     purchaseDate: dayjs(row.purchaseDate).format('DD/MM/YYYY'),
   }))
   const data5 = items.map((Item, i) => {
     return ({
       no: i + 1,
-      item: Item.itemName.itemName,
+      item: Item.itemName?.itemName || (typeof Item.itemName === 'string' ? Item.itemName : ''),
       itemDescription: Item.itemDescription,
       itemQty: Item.itemQty,
       itemCost: '$' + Item.itemCost,
@@ -1588,7 +1600,7 @@ const isItemMatch = (item1, item2) => {
                                         <tbody>
                                           <tr>
                                             <th style={{ textAlign: 'left', width: '200px' }}>Customer Name</th>
-                                            <td style={{ textAlign: 'left' }}>{row.customerName.customerName}</td>
+                                            <td style={{ textAlign: 'left' }}>{typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')}</td>
                                           </tr>
                                         </tbody>
                                       </table>
@@ -1622,9 +1634,9 @@ const isItemMatch = (item1, item2) => {
                                       <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
                                         <address style={{ lineHeight: 1.35, width: '60%' }}>
                                           <p >Bill To<br />
-                                            <span style={{ fontWeight: 'bold' }}>{row.customerName.customerName}</span>
+                                            <span style={{ fontWeight: 'bold' }}>{typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')}</span>
                                             <br />
-                                            {row.customerName.billingAddress},{row.customerName.billingCity}
+                                            {typeof row.customerName === 'object' && (row.customerName?.billingAddress || row.customerName?.billingCity) ? `${row.customerName?.billingAddress || ''}, ${row.customerName?.billingCity || ''}` : ''}
                                           </p>
                                         </address>
 

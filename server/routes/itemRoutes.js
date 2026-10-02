@@ -572,17 +572,33 @@ Route.route("/itemOut", cors(corsOptionsDelegate)).get(
         }
       }
 
-      if (req.query.projectId) {
+      if (req.query.projectId || req.query.projectName) {
         let objectId = null;
         try { objectId = new mongoose.Types.ObjectId(req.query.projectId); } catch (e) {}
-        const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
-        filter['$or'] = [
-          { 'reference._id': { $in: pIds } },
-          { 'reference': { $in: pIds } },
-          { 'POID': { $in: pIds } },
-          { 'projectName._id': { $in: pIds } },
-          { 'projectName': { $in: pIds } }
-        ];
+        const pIds = objectId ? [req.query.projectId, objectId] : (req.query.projectId ? [req.query.projectId] : []);
+        let orConditions = [];
+        if (pIds.length > 0) {
+          orConditions.push(
+            { 'reference._id': { $in: pIds } },
+            { 'reference': { $in: pIds } },
+            { 'POID': { $in: pIds } },
+            { 'projectName._id': { $in: pIds } },
+            { 'projectName': { $in: pIds } }
+          );
+        }
+        if (req.query.projectName) {
+          const rawName = req.query.projectName.trim();
+          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          orConditions.push(
+            { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
+            { 'reference.referenceName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'reference': new RegExp('^' + escapedName + '$', 'i') }
+          );
+        }
+        if (orConditions.length > 0) {
+          filter['$or'] = orConditions;
+        }
       }
 
       const result = await itemOutSchema.find(filter).sort({ _id: -1 }).lean().exec();
@@ -693,17 +709,33 @@ Route.route("/itemReturn", cors(corsOptionsDelegate)).get(
         }
       }
 
-      if (req.query.projectId) {
+      if (req.query.projectId || req.query.projectName) {
         let objectId = null;
         try { objectId = new mongoose.Types.ObjectId(req.query.projectId); } catch (e) {}
-        const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
-        filter['$or'] = [
-          { 'reference._id': { $in: pIds } },
-          { 'reference': { $in: pIds } },
-          { 'POID': { $in: pIds } },
-          { 'projectName._id': { $in: pIds } },
-          { 'projectName': { $in: pIds } }
-        ];
+        const pIds = objectId ? [req.query.projectId, objectId] : (req.query.projectId ? [req.query.projectId] : []);
+        let orConditions = [];
+        if (pIds.length > 0) {
+          orConditions.push(
+            { 'reference._id': { $in: pIds } },
+            { 'reference': { $in: pIds } },
+            { 'POID': { $in: pIds } },
+            { 'projectName._id': { $in: pIds } },
+            { 'projectName': { $in: pIds } }
+          );
+        }
+        if (req.query.projectName) {
+          const rawName = req.query.projectName.trim();
+          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          orConditions.push(
+            { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
+            { 'reference.referenceName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'reference': new RegExp('^' + escapedName + '$', 'i') }
+          );
+        }
+        if (orConditions.length > 0) {
+          filter['$or'] = orConditions;
+        }
       }
 
       const result = await itemReturnSchema.find(filter).sort({ _id: -1 }).lean().exec();
@@ -839,13 +871,29 @@ Route.route("/itemPurchase", cors(corsOptionsDelegate)).get(
     try {
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId) {
+      if (req.query.projectId || req.query.projectName) {
         let objectId = null;
         try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-        if (objectId) {
-          filter['projectName._id'] = { $in: [req.query.projectId, objectId] };
-        } else {
-          filter['projectName._id'] = req.query.projectId;
+        const pIds = objectId ? [req.query.projectId, objectId] : (req.query.projectId ? [req.query.projectId] : []);
+        let orConditions = [];
+        if (pIds.length > 0) {
+          orConditions.push(
+            { 'projectName._id': { $in: pIds } },
+            { 'projectName': { $in: pIds } },
+            { 'POID': { $in: pIds } }
+          );
+        }
+        if (req.query.projectName) {
+          const rawName = req.query.projectName.trim();
+          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          orConditions.push(
+            { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
+            { 'projectName': new RegExp('^' + escapedName + '$', 'i') }
+          );
+        }
+        if (orConditions.length > 0) {
+          filter['$or'] = orConditions;
         }
       }
 

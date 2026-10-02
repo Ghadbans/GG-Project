@@ -99,13 +99,39 @@ Route.route("/purchase", cors(corsOptionsDelegate)).get(
         payments: 1
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId) {
-        let objectId = null;
-        try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-        if (objectId) {
-          filter['projectName._id'] = { $in: [req.query.projectId, objectId] };
-        } else {
-          filter['projectName._id'] = req.query.projectId;
+      if (req.query.projectId || req.query.projectName || req.query.projectNumber) {
+        let pConditions = [];
+        if (req.query.projectId) {
+          let objectId = null;
+          try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
+          const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+          pConditions.push(
+            { 'projectName._id': { $in: pIds } },
+            { 'ReferenceName2': { $in: pIds } },
+            { 'projectName': { $in: pIds } }
+          );
+        }
+        if (req.query.projectName) {
+          const rawName = req.query.projectName.trim();
+          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          pConditions.push(
+            { 'projectName.projectName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'projectName.name': new RegExp('^' + escapedName + '$', 'i') },
+            { 'projectName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') }
+          );
+        }
+        if (req.query.projectNumber) {
+          const pNum = Number(req.query.projectNumber);
+          if (!isNaN(pNum)) {
+            pConditions.push(
+              { 'ReferenceName': 'P-' + String(pNum).padStart(6, '0') },
+              { 'ReferenceName': 'P-' + pNum }
+            );
+          }
+        }
+        if (pConditions.length > 0) {
+          filter['$or'] = pConditions;
         }
       }
 

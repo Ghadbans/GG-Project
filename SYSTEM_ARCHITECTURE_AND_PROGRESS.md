@@ -1282,3 +1282,22 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - Embedded a mandatory pre-build verification hook into `package.json` (`npm run build`, `npm run build:web`, `npm run build:electron`).
        - Parses all 229 JS/JSX source files via Babel AST to catch syntax errors, missing variables, or empty `parseFloat()` / `parseInt()` calls prior to bundle generation.
   - **Verification:** Verified Babel AST across all 229 source files, compiled Webpack production and web bundles (`npm run build`), built Windows installer `dist/Global Gate Setup 3.5.50.exe`.
+
+- **Project Information Module Restoration & Polymorphic Link Fortification (Ver 3.5.51)**:
+  - **Problem Reported:** In Project Information (`ProjectViewInformation.js`), the INVOICE and PURCHASE tabs rendered completely blank, and the OVERVIEW tab showed `$0.00` for Material Expense, Overhead Expense, and Invoiced Profit (e.g. for P-000175 CFAO MOBILITY and P-000176 MR. ERICK TSHILEMB).
+  - **Root Cause Analysis:**
+    1. **Frontend Priority Data Crash:** `resProjectSpec.data.data.customerName.customerName.replace(...)` failed with an unhandled TypeError on string-based customer records (e.g., `"CFAO MOBILITY"`), instantly triggering the `catch` block and aborting `fetchDetailedData()` before invoices, purchases, items, or expenses could be fetched.
+    2. **Stale State Closure in Background Fetch:** `fetchDetailedData` relied on React state `projectName` and `projectNumber`, which were not yet committed during initial render tick, resulting in empty string matches for item movements.
+    3. **Restrictive Backend Project Matching Queries:** Backend endpoints `/purchase`, `/invoice`, `/expense`, `/itemOut`, `/itemReturn`, `/itemPurchase` strictly looked for `projectName._id`, failing to match purchases/invoices linked via `ReferenceName2`, `Ref._id`, `invoicePurchase`, `ReferenceName`, or string names.
+  - **Architectural Resolution:**
+    1. **Frontend `ProjectViewInformation.js`:**
+       - Hardened `fetchPriorityData` to safely extract customer names via polymorphic check `typeof rawCust === 'string' ? rawCust : (rawCust?.customerName || rawCust?.name || rawCust?.Customer || '')`.
+       - Passed resolved project parameters (`id`, `pNum`, `pName`) directly into `fetchDetailedData`, `fetchInvoicesAndPurchases`, `fetchExpenses`, `fetchTimelineAndStaff`, and `fetchItemsMovement`, eliminating stale state closure.
+       - Replaced all unprotected `.customerName.customerName` and `.customerName.billingAddress` references with polymorphic null-safe access throughout the component, search filters, and Excel/print exports.
+       - Hardened advances amount rendering and `.toFixed(2)` calls.
+    2. **Backend Multi-Field Project Link Matching:**
+       - `server/routes/purchaseRoutes.js`: Expanded project queries to match `projectName._id`, `ReferenceName2`, `ReferenceName`, `projectName`, `projectName.projectName`, `projectName.name`.
+       - `server/routes/invoiceRoutes.js`: Expanded project queries to match `ReferenceName2`, `Ref._id`, `invoicePurchase`, `ReferenceName`, `Ref.projectName`.
+       - `server/routes/expenseRoutes.js`: Expanded project queries to match `accountNameInfo._id`, `accountNameInfo`, `accountNameInfo.name`, `accountName`.
+       - `server/routes/itemRoutes.js`: Expanded `itemOut`, `itemReturn`, and `itemPurchase` queries to match `reference._id`, `reference`, `POID`, `projectName._id`, `projectName`, `projectName.projectName`, `projectName.name`.
+  - **Verification:** Verified with AST quality gate across 229 files, compiled Webpack production and web bundles (`npm run build`), built Windows installer `dist/Global Gate Setup 3.5.51.exe`, committed and pushed to `origin main`.

@@ -119,21 +119,57 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
         Position: 1
       } : {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId || req.query.purchaseIds) {
+      if (req.query.projectId || req.query.purchaseIds || req.query.purchaseNames || req.query.projectName || req.query.projectNumber) {
         let orConditions = [];
         if (req.query.projectId) {
-            orConditions.push({ 'ReferenceName2': req.query.projectId });
-            try { orConditions.push({ 'ReferenceName2': new require('mongoose').Types.ObjectId(req.query.projectId) }); } catch (e) {}
+          let objectId = null;
+          try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
+          const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+          orConditions.push(
+            { 'ReferenceName2': { $in: pIds } },
+            { 'Ref._id': { $in: pIds } }
+          );
         }
         if (req.query.purchaseIds) {
-            const pIds = req.query.purchaseIds.split(',');
-            pIds.forEach(id => {
-                orConditions.push({ 'ReferenceName2': id });
-                try { orConditions.push({ 'ReferenceName2': new require('mongoose').Types.ObjectId(id) }); } catch (e) {}
-            });
+          const pIds = req.query.purchaseIds.split(',').map(id => id.trim()).filter(Boolean);
+          const objIds = [];
+          pIds.forEach(id => {
+            try { objIds.push(new require('mongoose').Types.ObjectId(id)); } catch (e) {}
+          });
+          const allPIds = [...pIds, ...objIds];
+          orConditions.push(
+            { 'ReferenceName2': { $in: allPIds } },
+            { 'Ref._id': { $in: allPIds } }
+          );
+        }
+        if (req.query.purchaseNames) {
+          const pNames = req.query.purchaseNames.split(',').map(n => n.trim()).filter(Boolean);
+          if (pNames.length > 0) {
+            orConditions.push(
+              { 'invoicePurchase': { $in: pNames } },
+              { 'ReferenceName': { $in: pNames } }
+            );
+          }
+        }
+        if (req.query.projectName) {
+          const rawName = req.query.projectName.trim();
+          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          orConditions.push(
+            { 'Ref.projectName': new RegExp('^' + escapedName + '$', 'i') },
+            { 'ReferenceName': new RegExp('^' + escapedName + '$', 'i') }
+          );
+        }
+        if (req.query.projectNumber) {
+          const pNum = Number(req.query.projectNumber);
+          if (!isNaN(pNum)) {
+            orConditions.push(
+              { 'ReferenceName': 'P-' + String(pNum).padStart(6, '0') },
+              { 'ReferenceName': 'P-' + pNum }
+            );
+          }
         }
         if (orConditions.length > 0) {
-            filter['$or'] = orConditions;
+          filter['$or'] = orConditions;
         }
       }
 

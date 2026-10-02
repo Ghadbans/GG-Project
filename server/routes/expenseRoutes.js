@@ -262,13 +262,27 @@ Route.route("/expense", cors(corsOptionsDelegate)).get(
       const summary = req.query.summary === 'true';
       const projection = {};
       const filter = req.query.branchId && req.query.branchId !== 'ALL' ? { branchId: req.query.branchId } : {};
-      if (req.query.projectId) {
-        let objectId = null;
-        try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
-        if (objectId) {
-          filter['accountNameInfo._id'] = { $in: [req.query.projectId, objectId] };
-        } else {
-          filter['accountNameInfo._id'] = req.query.projectId;
+      if (req.query.projectId || req.query.projectName) {
+        let eConditions = [];
+        if (req.query.projectId) {
+          let objectId = null;
+          try { objectId = new require('mongoose').Types.ObjectId(req.query.projectId); } catch (e) {}
+          const pIds = objectId ? [req.query.projectId, objectId] : [req.query.projectId];
+          eConditions.push(
+            { 'accountNameInfo._id': { $in: pIds } },
+            { 'accountNameInfo': { $in: pIds } }
+          );
+        }
+        if (req.query.projectName) {
+          const rawName = req.query.projectName.trim();
+          const escapedName = rawName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          eConditions.push(
+            { 'accountNameInfo.name': new RegExp('^' + escapedName + '$', 'i') },
+            { 'accountName': new RegExp('^' + escapedName + '$', 'i') }
+          );
+        }
+        if (eConditions.length > 0) {
+          filter['$or'] = eConditions;
         }
       }
       if (req.query.maintenanceId) {
