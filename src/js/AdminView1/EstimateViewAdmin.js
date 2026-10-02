@@ -588,7 +588,7 @@ function EstimateViewAdmin() {
   };
   const columns = [
     { field: 'estimateDate', headerName: 'Date', minWidth: 100, flex: 1, type: 'date', valueGetter: (params) => new Date(params.row.estimateDate), renderCell: (params) => dayjs(params.row.estimateDate).format('DD/MM/YYYY') },
-    { field: 'customer', headerName: 'Customer Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
+    { field: 'customer', headerName: 'Customer Name', minWidth: 200, flex: 2, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase() },
     { field: 'estimateNumber', headerName: 'Quotation#', minWidth: 100, flex: 1, valueFormatter: (params) => 'Q-' + String(params?.value || '').padStart(6, '0') },
     { field: 'estimateSubject', headerName: 'Subject', minWidth: 150, flex: 1.5 },
     {

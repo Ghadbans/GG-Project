@@ -1268,5 +1268,17 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
       18. `PurchaseUpdateOrder.js` (`Item.totalAmountUSD`, `Item.fcConvertToUsdTotal`)
       19. `ShopPosForm.js` (`Item.itemRate`)
       20. `ShopPosUpdateForm.js` (`Item.itemRate`)
-    - Validated 100% of all 228 frontend JS files for zero empty `parseFloat()` calls.
   - **Verification:** Compiled Webpack desktop & web production bundles (`npm run build`), generated Windows desktop installer `dist/Global Gate Setup 3.5.49.exe`, committed and pushed to `origin main` for automated cloud deployment.
+
+- **System-Wide 4-Layer Architectural Fortification & Pre-Build Quality Gate (Ver 3.5.50)**:
+  - **Context & Objective:** Comprehensive audit and structural fortification across all major operational modules (Store & Inventory, Item Purchase & PO, Suppliers, Employees & Payroll, Grant Access & Settings, Block Factory, and Point of Sale) to prevent regressions, eliminate white-screen crashes on legacy MongoDB records, and enforce pre-build quality checks.
+  - **Architectural Enhancements Implemented:**
+    1. **Centralized Defensive Utility (`src/js/utils/formatUtils.js`):**
+       - Implemented null-safe helper methods (`safeNumber`, `formatUSD`, `formatFC`, `formatDualCurrency`, `formatCustomerName`, `formatSupplierName`, `formatEmployeeName`) handling raw numbers, formatted currency strings, ObjectIds, and polymorphic subdocuments.
+    2. **Hardening of 10 DataGrid Polymorphic ValueGetters:**
+       - Hardened customer and project name getters across `AdminHome.js` (Invoice and POS Invoice grids), `EstimateViewAdmin.js`, `ExpensesViewAdmin.js`, `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`, `PaymentView.js` (Invoices & Payments grids), `PurchasesViewAdmin.js`, and `SellShopInvoiceView.js`.
+       - Replaced direct `customerName.customerName` access with resilient fallbacks: `(params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()`.
+    3. **Automated Pre-Build AST Quality Gate (`scripts/pre-build-check.js`):**
+       - Embedded a mandatory pre-build verification hook into `package.json` (`npm run build`, `npm run build:web`, `npm run build:electron`).
+       - Parses all 229 JS/JSX source files via Babel AST to catch syntax errors, missing variables, or empty `parseFloat()` / `parseInt()` calls prior to bundle generation.
+  - **Verification:** Verified Babel AST across all 229 source files, compiled Webpack production and web bundles (`npm run build`), built Windows installer `dist/Global Gate Setup 3.5.50.exe`.

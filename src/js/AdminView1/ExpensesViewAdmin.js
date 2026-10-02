@@ -177,7 +177,7 @@ const [filterModel, setFilterModel] = React.useState({
 const columns = [
   {field: 'dateField', headerName: 'Date', width:200},
   {field: 'referenceNumber', headerName: 'Reference#', width:150, renderCell: (params)=>( <div> <span>INV-{String(params.row.referenceNumber).padStart(6, '0')}</span> </div> )},
-  {field: 'customer', headerName: 'Customer Name', width:250, valueGetter:(params)=> params.row.customerName!== undefined?params.row.customerName.customerName.toUpperCase():''},
+  {field: 'customer', headerName: 'Customer Name', width:250, valueGetter:(params)=> (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()},
   {field: 'expenseType', headerName: 'Category', width:250},
   {field: 'view', headerName: 'View', width:80, renderCell:(params)=> (
     <ViewTooltip title="View">

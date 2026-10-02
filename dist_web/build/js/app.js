@@ -121182,7 +121182,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.49"};
+module.exports = {"rE":"3.5.50"};
 
 /***/ },
 
@@ -121314,7 +121314,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"9df8e0bdc123b8129447","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"e75cb93535b2d5c534a8","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"13930b420ba78da700d9","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"48165a0f743176fa6eef","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"a8fb5735c1d271ef2eb8","1679":"a23f8b019bb6ae844586","1722":"4a576697520da99cb304","1853":"aa3bc123dc92fbf832d0","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"b8389662da65ee7d4796","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"1a772bc24286907eb44f","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"5a5bc5f7a447272cd0b8","2533":"f2270f461e6e7ff1cdfb","2605":"3d16df670135ab7377db","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"8b16e40d84ecd2e06add","2835":"12821ee0b68666d011bb","2982":"60d71a20a6df500951bd","2992":"4910f420f5449821962a","3009":"567b00944880ad958271","3058":"a10c1b75aa32bc57c92d","3094":"a41b6b715a4af60c06a2","3229":"8cab295c6967223e4e9d","3426":"fffa0f994e7cbdd2794c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"2a2e2252a60baa1b31f5","3976":"e228d4cf264f623b15f8","4001":"0bcd8c7d5f01297441cc","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"5bdf62e20d461f0550d9","4444":"c6021a9ee0f020da7513","4783":"f8baca5ebb5009c37dec","5059":"2b89ac7d099d3898a08b","5072":"52422192193788431c98","5151":"7f4436f823934dafd9f0","5194":"d9e4d8382ebe97418258","5391":"644bffed57e73be3f118","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"59e19b56ebcefc68d031","5824":"5a1544f2a7d4bcddbd21","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"b77893f3cff3cacef420","6619":"854d51f3af603be9542a","6671":"7dead46fa0c357e3cda5","6685":"a23e55adba02af98a96c","6725":"d901500eb521cabc7085","6744":"f6adf2b2b03ff15ef8db","6934":"c142ff1e268dbd01df23","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"a0396a3fa08e7cf33e1f","7270":"f2e0f663a065acd9699e","7384":"b1ad87de96349048225b","7405":"53dd5e5077e4f953ad70","7444":"a97b22a40ad291400689","7445":"ae63158d7e60fb403702","7539":"72ee1ee088ac1a0441f8","7592":"a62fa24c55bda5b081ac","7645":"910b44e1f23d70ce2ae3","7757":"7a21c113d63f367702a7","7801":"b20843954d471532e336","7897":"5a897171ce5049bfadad","7941":"985bdf17267ed455125d","7997":"61d4bd79e52b1ffcf1aa","8011":"31d2eb3fd37cd26d6ec2","8017":"71c4225691f8990e835d","8027":"a498e22a2661c81862a6","8060":"31f053bd76ae43a217c9","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"042ca755fe68b3f8006a","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9528":"6dc89c613ad4fd9edbf4","9564":"ee06cb69d650577b1b6f","9573":"fac2352f449c8e8f4739","9575":"48ecc5f7e88ccf176044","9670":"53fa8ff6afa35d003dbf","9762":"712663d43d1abf1712af","9773":"c5a4811ff0c799be96f6","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"9df8e0bdc123b8129447","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"9363b90162be7c79133b","778":"f8950b7fd584414ccde4","806":"3d3fcc3a5e6398344382","808":"e6ba29f2cadc10b00d20","864":"ac9193b4bf40eb4964a0","885":"13930b420ba78da700d9","956":"0b6eb08805380749f43e","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"bbe2a6c40b259a67d39d","1251":"9da50dc8470bc764d3b6","1364":"48165a0f743176fa6eef","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"a8fb5735c1d271ef2eb8","1679":"a23f8b019bb6ae844586","1722":"4a576697520da99cb304","1853":"aa3bc123dc92fbf832d0","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"b8389662da65ee7d4796","2120":"260136f37f71dde36ba1","2122":"ed17f9f723193b2a34dd","2153":"80f4b0e15e4e39c53934","2410":"1a772bc24286907eb44f","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"5a5bc5f7a447272cd0b8","2533":"f2270f461e6e7ff1cdfb","2605":"3d16df670135ab7377db","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"37e017925354e0aeecaf","2778":"1511b50052fe5eaf5c28","2821":"8b16e40d84ecd2e06add","2835":"12821ee0b68666d011bb","2982":"60d71a20a6df500951bd","2992":"4910f420f5449821962a","3009":"567b00944880ad958271","3058":"8b4ef1b5265bb871224b","3094":"6f8b9181eec3900430f5","3229":"8cab295c6967223e4e9d","3426":"fffa0f994e7cbdd2794c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"2a2e2252a60baa1b31f5","3976":"e228d4cf264f623b15f8","4001":"0bcd8c7d5f01297441cc","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"5bdf62e20d461f0550d9","4444":"c6021a9ee0f020da7513","4783":"f8baca5ebb5009c37dec","5059":"2b89ac7d099d3898a08b","5072":"52422192193788431c98","5151":"55d2328ab6426516bdd2","5194":"d9e4d8382ebe97418258","5391":"85864ae22b06830f1dbf","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"59e19b56ebcefc68d031","5824":"5a1544f2a7d4bcddbd21","5881":"15a022f26eb61def60e8","5910":"c65467f5bbef7c02c438","5919":"e4a3edd0ba5649d98f1a","6155":"b138b520a04a8385cf28","6226":"b77893f3cff3cacef420","6619":"854d51f3af603be9542a","6671":"7dead46fa0c357e3cda5","6685":"a23e55adba02af98a96c","6725":"d901500eb521cabc7085","6744":"f6adf2b2b03ff15ef8db","6934":"c142ff1e268dbd01df23","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"a0396a3fa08e7cf33e1f","7270":"f2e0f663a065acd9699e","7384":"b1ad87de96349048225b","7405":"53dd5e5077e4f953ad70","7444":"a97b22a40ad291400689","7445":"ae63158d7e60fb403702","7539":"72ee1ee088ac1a0441f8","7592":"a62fa24c55bda5b081ac","7645":"910b44e1f23d70ce2ae3","7757":"7a21c113d63f367702a7","7801":"b20843954d471532e336","7897":"5a897171ce5049bfadad","7941":"985bdf17267ed455125d","7997":"61d4bd79e52b1ffcf1aa","8011":"31d2eb3fd37cd26d6ec2","8017":"71c4225691f8990e835d","8027":"a498e22a2661c81862a6","8060":"31f053bd76ae43a217c9","8117":"63d7bbbaf6febdefcc75","8282":"f2ac7643b3be9637f7f0","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"92b2452565aeb88505ee","8849":"d919152300f2d1e2c6fa","8970":"ed2613d35fb1bd738871","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9528":"6dc89c613ad4fd9edbf4","9564":"ee06cb69d650577b1b6f","9573":"546468366495e7fd55f7","9575":"e9bf1fcbb360227bdd13","9670":"53fa8ff6afa35d003dbf","9762":"712663d43d1abf1712af","9773":"c5a4811ff0c799be96f6","9846":"3ba3812f555b24b09899","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -129912,7 +129912,7 @@ var uData = (/* unused pure expression or super */ null && ([4000, 3000, 2000, 2
 var pData = (/* unused pure expression or super */ null && ([2400, 1398, 9800, 3908, 4800, 3800, 4300]));
 var xLabels = (/* unused pure expression or super */ null && (['Page A', 'Page B', 'Page C', 'Page D', 'Page E', 'Page F', 'Page G']));
 function AdminHome() {
-  var _user$data3, _ref24;
+  var _user$data3, _ref23;
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
   var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
   var dispatch = (0,react_redux_es/* useDispatch */.wA)();
@@ -131174,7 +131174,10 @@ function AdminHome() {
     field: 'customer',
     headerName: 'Customer Name',
     width: open ? 200 : 260,
-    valueGetter: params => params.row.customerName.customerName
+    valueGetter: params => {
+      var _params$row12, _params$row13, _params$row14;
+      return ((_params$row12 = params.row) === null || _params$row12 === void 0 || (_params$row12 = _params$row12.customerName) === null || _params$row12 === void 0 ? void 0 : _params$row12.Customer) || ((_params$row13 = params.row) === null || _params$row13 === void 0 || (_params$row13 = _params$row13.customerName) === null || _params$row13 === void 0 ? void 0 : _params$row13.customerName) || (typeof ((_params$row14 = params.row) === null || _params$row14 === void 0 ? void 0 : _params$row14.customerName) === 'string' ? params.row.customerName : '');
+    }
   }, {
     field: 'invoiceSubject',
     headerName: 'Defect',
@@ -131184,32 +131187,32 @@ function AdminHome() {
     headerName: 'A-Paid',
     width: 150,
     renderCell: params => {
-      var _params$row$total;
-      return "$".concat((_params$row$total = params.row.total) === null || _params$row$total === void 0 ? void 0 : _params$row$total.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row15;
+      return "$".concat((parseFloat((_params$row15 = params.row) === null || _params$row15 === void 0 ? void 0 : _params$row15.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'infoSell',
     headerName: 'Total Sell',
     width: 150,
     renderCell: params => {
-      var _params$row$infoSell;
-      return "$".concat((_params$row$infoSell = params.row.infoSell) === null || _params$row$infoSell === void 0 ? void 0 : _params$row$infoSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row16;
+      return "$".concat((parseFloat((_params$row16 = params.row) === null || _params$row16 === void 0 ? void 0 : _params$row16.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'infoCost',
     headerName: 'Total Cost',
     width: 150,
     renderCell: params => {
-      var _params$row$infoCost;
-      return "$".concat((_params$row$infoCost = params.row.infoCost) === null || _params$row$infoCost === void 0 ? void 0 : _params$row$infoCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row17;
+      return "$".concat((parseFloat((_params$row17 = params.row) === null || _params$row17 === void 0 ? void 0 : _params$row17.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'revenue',
     headerName: 'Revenue',
     width: 150,
     renderCell: params => {
-      var _parseFloat;
-      return "$".concat((_parseFloat = parseFloat(params.row.infoSell - params.row.infoCost)) === null || _parseFloat === void 0 ? void 0 : _parseFloat.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row18, _params$row19;
+      return "$".concat(((parseFloat((_params$row18 = params.row) === null || _params$row18 === void 0 ? void 0 : _params$row18.infoSell) || 0) - (parseFloat((_params$row19 = params.row) === null || _params$row19 === void 0 ? void 0 : _params$row19.infoCost) || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'view',
@@ -131245,38 +131248,41 @@ function AdminHome() {
     field: 'customer',
     headerName: 'Customer Name',
     width: open ? 250 : 260,
-    valueGetter: params => params.row.customerName.customerName
+    valueGetter: params => {
+      var _params$row20, _params$row21, _params$row22;
+      return ((_params$row20 = params.row) === null || _params$row20 === void 0 || (_params$row20 = _params$row20.customerName) === null || _params$row20 === void 0 ? void 0 : _params$row20.Customer) || ((_params$row21 = params.row) === null || _params$row21 === void 0 || (_params$row21 = _params$row21.customerName) === null || _params$row21 === void 0 ? void 0 : _params$row21.customerName) || (typeof ((_params$row22 = params.row) === null || _params$row22 === void 0 ? void 0 : _params$row22.customerName) === 'string' ? params.row.customerName : '');
+    }
   }, {
     field: 'totalInvoice',
     headerName: 'Invoice Amount',
     width: 150,
     renderCell: params => {
-      var _ref23;
-      return "$".concat((_ref23 = params.row.totalInvoice / params.row.rate) === null || _ref23 === void 0 ? void 0 : _ref23.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row23, _params$row24;
+      return "$".concat(((parseFloat((_params$row23 = params.row) === null || _params$row23 === void 0 ? void 0 : _params$row23.totalInvoice) || 0) / (parseFloat((_params$row24 = params.row) === null || _params$row24 === void 0 ? void 0 : _params$row24.rate) || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'infoSell',
     headerName: 'Total Paid',
     width: 150,
     renderCell: params => {
-      var _params$row$infoSell2;
-      return "$".concat((_params$row$infoSell2 = params.row.infoSell) === null || _params$row$infoSell2 === void 0 ? void 0 : _params$row$infoSell2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row25;
+      return "$".concat((parseFloat((_params$row25 = params.row) === null || _params$row25 === void 0 ? void 0 : _params$row25.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'infoCost',
     headerName: 'Total Cost',
     width: 150,
     renderCell: params => {
-      var _params$row$infoCost2;
-      return "$".concat((_params$row$infoCost2 = params.row.infoCost) === null || _params$row$infoCost2 === void 0 ? void 0 : _params$row$infoCost2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row26;
+      return "$".concat((parseFloat((_params$row26 = params.row) === null || _params$row26 === void 0 ? void 0 : _params$row26.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }, {
     field: 'revenue',
     headerName: 'Revenue',
     width: 150,
     renderCell: params => {
-      var _parseFloat2;
-      return "$".concat((_parseFloat2 = parseFloat(params.row.infoSell - params.row.infoCost)) === null || _parseFloat2 === void 0 ? void 0 : _parseFloat2.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
+      var _params$row27, _params$row28;
+      return "$".concat(((parseFloat((_params$row27 = params.row) === null || _params$row27 === void 0 ? void 0 : _params$row27.infoSell) || 0) - (parseFloat((_params$row28 = params.row) === null || _params$row28 === void 0 ? void 0 : _params$row28.infoCost) || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','));
     }
   }];
   var columnCustomer = [{
@@ -132689,7 +132695,7 @@ function AdminHome() {
       fontWeight: 'bold',
       color: '#059669'
     }
-  }, "$", (_ref24 = totalMaintenanceRevenue - totalMaintenanceCost) === null || _ref24 === void 0 ? void 0 : _ref24.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, "$", (_ref23 = totalMaintenanceRevenue - totalMaintenanceCost) === null || _ref23 === void 0 ? void 0 : _ref23.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react.createElement(Card/* default */.A, {

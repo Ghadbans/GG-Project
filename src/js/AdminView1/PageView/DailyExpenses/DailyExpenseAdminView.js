@@ -1094,7 +1094,7 @@ function DailyExpenseAdminView() {
                                         S-{String(item.factureNumber).padStart(6, '0')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }} colSpan={4}>
-                                        {item.customerName !== undefined ? item.customerName.customerName : ''}
+                                        {item.customerName ? (item.customerName.Customer || item.customerName.customerName || (typeof item.customerName === 'string' ? item.customerName : '')) : ''}
                                         {(item.status === 'Refunded' || (item.refundFC > 0 || item.refundUSD > 0)) && (
                                           <span style={{ color: '#d32f2f', fontSize: '11px', marginLeft: '6px', fontWeight: 'bold' }}>
                                             ({item.status === 'Refunded' ? 'Refunded' : 'Partially-Refunded'})
@@ -1159,7 +1159,7 @@ function DailyExpenseAdminView() {
                                         PAY-{String(item.paymentNumber).padStart(6, '0')}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
-                                        {item.customerName !== undefined ? item.customerName.customerName : ''}
+                                        {item.customerName ? (item.customerName.Customer || item.customerName.customerName || (typeof item.customerName === 'string' ? item.customerName : '')) : ''}
                                       </td>
                                       <td style={{ border: '1px solid gray' }}>
                                         {item.modes !== undefined ? item.modes.toUpperCase() : ''}  {' | ' + (item.description || '')}

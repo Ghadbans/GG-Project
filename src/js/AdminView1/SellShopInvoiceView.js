@@ -652,7 +652,7 @@ function SellShopInvoiceView() {
   {/** search end */ }
   const columns = [
     { field: 'factureNumber', headerName: 'Invoice#', width: 100, renderCell: (params) => (<div> <span>S-00</span><span>{params.row.factureNumber}</span> </div>) },
-    { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 300, valueGetter: (params) => params.row.customerName.customerName.toUpperCase() },
+    { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 300, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase() },
     {
             field: 'status', headerName: 'Status', width: sideBar ? 100 : 150, renderCell: (params) => (
         <Typography

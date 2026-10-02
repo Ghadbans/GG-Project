@@ -459,8 +459,8 @@ function PurchasesViewAdmin() {
 
   const columns = [
     { field: 'purchaseNumber', headerName: 'P-Number', minWidth: 100, flex: 1, renderCell: (params) => (<div><span>PUR-00{params.row.purchaseNumber}</span> </div>) },
-    { field: 'projectName', headerName: 'Project Name', minWidth: 200, flex: 2, valueGetter: (params) => params.row.projectName.projectName },
-    { field: 'customerName', headerName: 'Customer Name', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.customerName.customerName },
+    { field: 'projectName', headerName: 'Project Name', minWidth: 200, flex: 2, valueGetter: (params) => (params.row?.projectName?.projectName || params.row?.projectName?.name || (typeof params.row?.projectName === 'string' ? params.row.projectName : '') || '') },
+    { field: 'customerName', headerName: 'Customer Name', minWidth: 150, flex: 1.5, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '') },
     { field: 'description', headerName: 'Description', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.description !== undefined ? params.row.description : '' },
     {
       field: 'statusInfo', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => (

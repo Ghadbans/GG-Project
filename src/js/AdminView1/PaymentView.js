@@ -696,7 +696,7 @@ const toggleDrawer = () => {
   const filteredRows = invoicePaymentRow.filter(row=> !hidden.some((row2)=> row2.idRow === row._id))
                           const columns = [
                                     {field: 'invoiceNumber', headerName: 'Invoice#', width:140},
-                                    {field: 'customer', headerName: 'Customer Name', width:sideBar?240:350, valueGetter:(params)=> params.row.customerName.customerName.toUpperCase()},
+                                    {field: 'customer', headerName: 'Customer Name', width:sideBar?240:350, valueGetter:(params)=> (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()},
                                     {field: 'status', headerName: 'Status', width:140, renderCell: (params)=> (
                                       <Typography
                                       color={
@@ -731,7 +731,7 @@ const toggleDrawer = () => {
                                   ]
                  const columnsPayment = [
                                     {field: 'paymentNumber', headerName: 'Payment#', width:130, renderCell: (params)=> `PAY-${String(params.row.paymentNumber).padStart(6, '0')}` },
-                                    {field: 'customer', headerName: 'Customer Name', width:sideBar?360:460, valueGetter:(params)=> params.row.customerName.customerName !== undefined?params.row.customerName.customerName.toUpperCase():null},
+                                    {field: 'customer', headerName: 'Customer Name', width:sideBar?360:460, valueGetter:(params)=> (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()},
                                     {field: 'description', headerName: 'Description', width:sideBar?200:250},
                                     {field: 'dateField', headerName: 'Date', width:140},
                                        {field: 'modes', headerName: 'Mode', width:140, renderCell: (params)=> {

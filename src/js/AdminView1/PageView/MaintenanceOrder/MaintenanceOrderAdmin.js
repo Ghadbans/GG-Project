@@ -511,7 +511,7 @@ function MaintenanceOrderAdmin() {
   };
   const columns = [
     { field: 'serviceNumber', headerName: 'Service#', width: 110 },
-    { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 220, valueGetter: (params) => params.row.customerName.customerName },
+    { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 220, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '') },
     { field: 'brand', headerName: 'Item Brand', width: sideBar ? 100 : 140, },
     {
       field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
