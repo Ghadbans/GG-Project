@@ -401,12 +401,12 @@ function SellShopInvoiceView() {
           width: 100% !important;
           max-width: 100% !important;
           margin: 0 !important;
-          padding: 1mm 1.5mm !important;
+          padding: 1mm 2mm !important;
           background: #ffffff !important;
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
-          font-size: 10px !important;
+          font-size: 9.5px !important;
           line-height: 1.15 !important;
           color: #000000 !important;
         }
@@ -415,19 +415,46 @@ function SellShopInvoiceView() {
           max-width: 100% !important;
           margin: 0 auto !important;
           border-collapse: collapse !important;
-          font-size: 10px !important;
+          font-size: 9.5px !important;
           line-height: 1.15 !important;
           color: #000000 !important;
         }
         th, td {
-          padding: 1px 1px !important;
-          font-size: 10px !important;
+          padding: 1.5px 2px !important;
+          font-size: 9.5px !important;
           line-height: 1.15 !important;
           color: #000000 !important;
           vertical-align: top !important;
         }
+        .col-num {
+          width: 5% !important;
+          text-align: left !important;
+          padding-right: 2px !important;
+        }
+        .col-item {
+          width: 37% !important;
+          text-align: left !important;
+          padding-right: 6px !important;
+        }
+        .col-qty {
+          width: 16% !important;
+          text-align: center !important;
+          padding-right: 6px !important;
+          white-space: nowrap !important;
+        }
+        .col-rate {
+          width: 21% !important;
+          text-align: right !important;
+          padding-right: 8px !important;
+          white-space: nowrap !important;
+        }
+        .col-total {
+          width: 21% !important;
+          text-align: right !important;
+          white-space: nowrap !important;
+        }
         thead th {
-          font-size: 10px !important;
+          font-size: 9.5px !important;
           font-weight: bold !important;
           line-height: 1.15 !important;
         }
@@ -1296,16 +1323,16 @@ function SellShopInvoiceView() {
                       <td colSpan={2}>{posInvoice?.Create}</td>
                     </tr>
                     <tr>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '5%', textAlign: 'left' }}>#</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '45%', textAlign: 'left' }}>Item</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '14%', textAlign: 'center' }}>Qty</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '18%', textAlign: 'right' }}>Rate</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '18%', textAlign: 'right' }}>Total</th>
+                      <th className="col-num" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '5%', textAlign: 'left' }}>#</th>
+                      <th className="col-item" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '37%', textAlign: 'left' }}>Item</th>
+                      <th className="col-qty" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '16%', textAlign: 'center' }}>Qty</th>
+                      <th className="col-rate" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '21%', textAlign: 'right' }}>Rate</th>
+                      <th className="col-total" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '21%', textAlign: 'right' }}>Total</th>
                     </tr>
                     {posInvoice?.items?.map((row, i) => (
                       <tr key={row.idRow || i}>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'left' }}>{i + 1}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'left' }}>
+                        <td className="col-num" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'left' }}>{i + 1}</td>
+                        <td className="col-item" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'left' }}>
                           {(row.itemName?.itemName || row.itemName?.itemDescription || (typeof row.itemName === 'string' ? row.itemName : 'Item')).toUpperCase()}
                           {row.refundedQty > 0 && (
                             <div style={{ color: 'red', fontSize: '9px', fontStyle: 'italic' }}>
@@ -1313,9 +1340,9 @@ function SellShopInvoiceView() {
                             </div>
                           )}
                         </td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'center' }}>{row.itemQty} {row.unit}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{parseFloat(row.itemRate || (row.itemAmount / (row.itemQty || 1)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{parseFloat(row.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                        <td className="col-qty" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'center' }}>{row.itemQty} {row.unit}</td>
+                        <td className="col-rate" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{parseFloat(row.itemRate || (row.itemAmount / (row.itemQty || 1)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                        <td className="col-total" style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{parseFloat(row.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                       </tr>
                     ))}
                     <tr>

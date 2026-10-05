@@ -1371,3 +1371,17 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages built.
     - Windows installer `dist/Global Gate Setup 3.5.55.exe` generated.
 
+- **Point of Sale (POS) Receipt Column Spacing & Number Readability Refinement (Ver 3.5.56)**:
+  - **Problem Reported:** In v3.5.55, the numeric values for QTY, Rate, and Total were clustered too tightly together without adequate horizontal separation, making adjacent numbers difficult to distinguish (e.g. `1 BOX FC180,000.00 FC180,000.00`).
+  - **Root Cause Analysis:**
+    1. Padding on numeric columns was set to 1px with no distinct column-specific gutters, causing right-aligned and center-aligned numeric text blocks to touch each other.
+    2. Missing explicit column classes (`.col-qty`, `.col-rate`, `.col-total`) led to inconsistent column width budgeting across different item name lengths.
+  - **Architectural Resolution:**
+    1. **Column Classes & Width Allocation (`src/js/AdminView1/SellShopInvoiceView.js`):** Allocated distinct proportional widths (5% #, 37% Item, 16% Qty, 21% Rate, 21% Total) with explicit column classes.
+    2. **Horizontal Spacing & Right Gutters:** Added `padding-right: 8px` on Rate and `padding-right: 6px` on Qty with `white-space: nowrap`, establishing a clean visual gap between quantities, unit prices, and line totals.
+    3. **Crisp 9.5px Print Typography:** Maintained the paper-saving 9.5px font size for high-density readability without sacrificing paper economy.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 files (0 errors).
+    - Webpack desktop & web production packages built.
+    - Windows installer `dist/Global Gate Setup 3.5.56.exe` generated.
+
