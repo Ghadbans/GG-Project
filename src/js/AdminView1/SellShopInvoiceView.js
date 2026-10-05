@@ -394,18 +394,20 @@ function SellShopInvoiceView() {
       @media print {
         *, *::before, *::after {
           box-sizing: border-box !important;
+          margin: 0;
+          padding: 0;
         }
         html, body {
           width: 100% !important;
           max-width: 100% !important;
           margin: 0 !important;
-          padding: 1mm 2mm !important;
+          padding: 1mm 1.5mm !important;
           background: #ffffff !important;
           -webkit-print-color-adjust: exact !important;
           print-color-adjust: exact !important;
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
-          font-size: 13px !important;
-          line-height: 1.3 !important;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
           color: #000000 !important;
         }
         .pos-receipt-table, table {
@@ -413,48 +415,37 @@ function SellShopInvoiceView() {
           max-width: 100% !important;
           margin: 0 auto !important;
           border-collapse: collapse !important;
-          font-size: 13px !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
           color: #000000 !important;
         }
         th, td {
-          padding: 3px 2px !important;
-          font-size: 13px !important;
+          padding: 1px 1px !important;
+          font-size: 10px !important;
+          line-height: 1.15 !important;
           color: #000000 !important;
-          line-height: 1.3 !important;
+          vertical-align: top !important;
         }
         thead th {
-          font-size: 13px !important;
+          font-size: 10px !important;
           font-weight: bold !important;
+          line-height: 1.15 !important;
+        }
+        .pos-header-title {
+          font-size: 11px !important;
+          font-weight: bold !important;
+          line-height: 1.2 !important;
+        }
+        .pos-header-sub {
+          font-size: 8.5px !important;
+          line-height: 1.1 !important;
+          font-weight: normal !important;
         }
         .no-print, button, .MuiButtonBase-root {
           display: none !important;
         }
       }
-    `,
-    onBeforeGetContent: () => {
-      const PAGE_HEIGHT = 560; // Adjusted for POS printer roll paper size
-      const printElement = componentRef.current;
-      if (printElement) {
-        printElement.classList.add("temp-class-for-height")
-        const height = printElement.clientHeight
-        const numberOfPage = Math.ceil(height / PAGE_HEIGHT)
-        if (numberOfPage > 1) {
-          const heightWithSingleHeader = numberOfPage * PAGE_HEIGHT
-          let requiredHeight = heightWithSingleHeader
-          const headerHeight = printElement.getElementsByTagName("thead")?.[0]?.clientHeight || 0
-          const footerHeight = printElement.getElementsByTagName("tfoot")?.[0]?.clientHeight || 0
-          requiredHeight -= (numberOfPage - 1) * (headerHeight + footerHeight)
-          printElement.style.height = `${requiredHeight}px`;
-        }
-        printElement.classList.remove("temp-class-for-height")
-      }
-    },
-    onAfterPrint: () => {
-      const printElement = componentRef.current;
-      if (printElement) {
-        printElement.style.height = `auto`
-      }
-    }
+    `
   })
 
   {/** delete multiple && all modal start */ }
@@ -1268,10 +1259,10 @@ function SellShopInvoiceView() {
                 <table className="pos-receipt-table" style={{ width: '100%', fontSize: '12px', color: 'black', margin: '0' }} ref={componentRef}>
                   <thead style={{ textAlign: 'center' }}>
                     <tr>
-                      <th colSpan={6} style={{ fontWeight: 'bold', textAlign: 'center' }}>GLOBAL GATE SARL</th>
+                      <th colSpan={5} className="pos-header-title" style={{ fontWeight: 'bold', textAlign: 'center' }}>GLOBAL GATE SARL</th>
                     </tr>
                     <tr>
-                      <th colSpan={6} style={{ fontWeight: 'normal', textAlign: 'center' }}>
+                      <th colSpan={5} className="pos-header-sub" style={{ fontWeight: 'normal', textAlign: 'center' }}>
                         RCM CD/KWZ/RCCM/22-B-00317 <br />
                         ID NAT 14-H5300N11179P <br />
                         AVENUE SALONGO Q/INDUSTRIEL C/MANIKA <br />
@@ -1279,16 +1270,16 @@ function SellShopInvoiceView() {
                         DR CONGO <br />
                         <span style={{ fontWeight: 'bold' }}>Invoice</span>
                         {posInvoice?.status === 'Refunded' && (
-                          <div style={{ color: 'red', fontWeight: 'bold', fontSize: '13px', marginTop: '3px' }}>*** REFUNDED ***</div>
+                          <div style={{ color: 'red', fontWeight: 'bold', fontSize: '11px', marginTop: '2px' }}>*** REFUNDED ***</div>
                         )}
                         {posInvoice?.status === 'Partially-Refunded' && (
-                          <div style={{ color: 'orange', fontWeight: 'bold', fontSize: '13px', marginTop: '3px' }}>*** PARTIALLY REFUNDED ***</div>
+                          <div style={{ color: 'orange', fontWeight: 'bold', fontSize: '11px', marginTop: '2px' }}>*** PARTIALLY REFUNDED ***</div>
                         )}
                       </th>
                     </tr>
                     <tr>
-                      <th colSpan={1}>Client:</th>
-                      <th colSpan={3}>{posInvoice?.customerName?.customerName}</th>
+                      <th colSpan={1} style={{ textAlign: 'left', fontWeight: 'normal' }}>Client:</th>
+                      <th colSpan={4} style={{ textAlign: 'left', fontWeight: 'bold' }}>{posInvoice?.customerName?.customerName}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -1296,35 +1287,35 @@ function SellShopInvoiceView() {
                       <td>Invoice:</td>
                       <td>{posInvoice?.factureNumber}</td>
                       <td>Time:</td>
-                      <td>{dayjs(posInvoice?.time).format('HH:mm')} H</td>
+                      <td colSpan={2}>{dayjs(posInvoice?.time).format('HH:mm')} H</td>
                     </tr>
                     <tr>
                       <td>Date:</td>
                       <td>{dayjs(posInvoice?.invoiceDate).format('DD-MM-YYYY')}</td>
                       <td>User:</td>
-                      <td>{posInvoice?.Create}</td>
+                      <td colSpan={2}>{posInvoice?.Create}</td>
                     </tr>
                     <tr>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>#</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>Item</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>Qty</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>Rate</th>
-                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>Total</th>
+                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '5%', textAlign: 'left' }}>#</th>
+                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '45%', textAlign: 'left' }}>Item</th>
+                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '14%', textAlign: 'center' }}>Qty</th>
+                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '18%', textAlign: 'right' }}>Rate</th>
+                      <th style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', width: '18%', textAlign: 'right' }}>Total</th>
                     </tr>
                     {posInvoice?.items?.map((row, i) => (
                       <tr key={row.idRow || i}>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>{i + 1}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'left' }}>{i + 1}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'left' }}>
                           {(row.itemName?.itemName || row.itemName?.itemDescription || (typeof row.itemName === 'string' ? row.itemName : 'Item')).toUpperCase()}
                           {row.refundedQty > 0 && (
-                            <div style={{ color: 'red', fontSize: '10px', fontStyle: 'italic' }}>
+                            <div style={{ color: 'red', fontSize: '9px', fontStyle: 'italic' }}>
                               (Refunded: {row.refundedQty} {row.unit || ''})
                             </div>
                           )}
                         </td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>{row.itemQty} {row.unit}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>FC{parseFloat(row.itemRate || (row.itemAmount / (row.itemQty || 1)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
-                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD' }}>FC{parseFloat(row.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'center' }}>{row.itemQty} {row.unit}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{parseFloat(row.itemRate || (row.itemAmount / (row.itemQty || 1)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                        <td style={{ borderTop: '1px solid #DDD', borderBottom: '1px solid #DDD', textAlign: 'right' }}>FC{parseFloat(row.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                       </tr>
                     ))}
                     <tr>

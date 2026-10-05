@@ -1357,3 +1357,17 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production bundles compiled.
     - Updated version to `v3.5.54`.
 
+- **Point of Sale (POS) Paper-Saving Thermal Receipt Layout Optimization (Ver 3.5.55)**:
+  - **Problem Reported:** While v3.5.54 resolved the small/shrunk text scaling on 80mm roll printers, the vertical height of the printed receipt was overly tall and spaced out, consuming nearly twice as much thermal paper as the original receipts.
+  - **Root Cause Analysis:**
+    1. `onBeforeGetContent` previously introduced an artificial multi-page height calculation (`requiredHeight = numberOfPage * PAGE_HEIGHT`) which multiplied container height by 560px, forcing empty vertical white space into continuous roll paper printing.
+    2. The font size (13px) and line height (1.3) combined with excessive cell padding (3px 2px) inflated row heights.
+  - **Architectural Resolution:**
+    1. **Paper-Saving Typography & Padding:** Adjusted font size to sharp 10px, line-height to tight 1.15, and cell padding to 1px 1px.
+    2. **Elimination of Artificial Height Scaling:** Removed the container height multiplier so continuous thermal roll printers cut precisely at the end of the content with zero wasted paper.
+    3. **Column & Header Proportioning:** Aligned header colspans strictly to the 5-column table structure and distributed widths (5% #, 45% Item, 14% Qty, 18% Rate, 18% Total) to prevent unnecessary text wrapping.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 files (0 errors).
+    - Webpack desktop & web production packages built.
+    - Windows installer `dist/Global Gate Setup 3.5.55.exe` generated.
+
