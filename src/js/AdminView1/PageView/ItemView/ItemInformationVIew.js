@@ -6,6 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
+import { normalizeImageDataUrl } from '../../../utils/formatUtils';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -438,43 +439,31 @@ function ItemInformationVIew() {
   const [imagesURL, setImagesURL] = useState(null);
   const [loadingData1, setLoadingData1] = useState(true);
   useEffect(() => {
+    let isMounted = true;
     const fetchEId = async () => {
       try {
         if (id) {
-          const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`)
-          setItemName(res.data.data.itemName)
-          if (res.data.data && res.data.data.data != null) {
-            const raw = res.data.data.data;
-            const ct = res.data.data.contentType || 'image/jpeg';
-            if (typeof raw === 'string') {
-              if (raw.startsWith('data:')) {
-                setImagesURL(raw);
-              } else {
-                setImagesURL(`data:${ct};base64,${raw}`);
-              }
-            } else if (raw.data && Array.isArray(raw.data)) {
-              const buffer = new Uint8Array(raw.data);
-              const bold = new Blob([buffer], { type: ct });
-              const reader = new FileReader();
-              reader.readAsDataURL(bold);
-              reader.onloadend = () => {
-                setImagesURL(reader.result);
-              };
-            } else {
-              setImagesURL(null);
-            }
-          } else {
-            setImagesURL(null);
-          }
+          const res = await axios.get(`${ENDPOINT_URL}/get-item/${id}`);
+          if (!isMounted) return;
+          setItemName(res.data?.data?.itemName || '');
+          const item = res.data?.data;
+          const url = normalizeImageDataUrl(item?.data, item?.contentType);
+          setImagesURL(url);
         }
-        setLoadingData1(false)
+        if (isMounted) setLoadingData1(false);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setLoadingData1(false)
+        if (isMounted) {
+          setImagesURL(null);
+          setLoadingData1(false);
+        }
       }
-    }
-    fetchEId()
-  }, [id])
+    };
+    fetchEId();
+    return () => {
+      isMounted = false;
+    };
+  }, [id]);
   const [images, setImages] = useState(null);
   const [images1, setImages1] = useState(null);
   const [imagesURL1, setImagesURL1] = useState('');
@@ -1071,7 +1060,7 @@ function ItemInformationVIew() {
                                                 imagesURL !== null ?
                                                   (
                                                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                                                      <img src={imagesURL} alt={row.itemName} style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
+                                                      <img src={imagesURL} alt={row.itemName} onError={() => setImagesURL(null)} style={{ maxWidth: '100%', maxHeight: '250px', objectFit: 'contain' }} />
                                                     </div>
                                                   )
                                                   : (

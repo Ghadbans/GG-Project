@@ -18,6 +18,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { normalizeImageDataUrl } from '../utils/formatUtils';
 import { Add } from '@mui/icons-material';
 import Logout from '../component/NetworkLogoutIcon';
 import { useDispatch, useSelector } from "react-redux";
@@ -652,23 +653,13 @@ function ItemViewAdmin() {
           worksheet.getRow(rowIndex).height = 100;
           worksheet.getRow(rowIndex).alignment = { vertical: 'middle', horizontal: 'left', wrapText: true };
 
-          if (itemData.data && itemData.contentType) {
+          if (itemData.data) {
             try {
-              let base64Image;
-              if (typeof itemData.data === 'string') {
-                base64Image = itemData.data;
-              } else if (itemData.data.data) {
-                const uint8Array = new Uint8Array(itemData.data.data);
-                let binary = '';
-                const len = uint8Array.byteLength;
-                for (let j = 0; j < len; j++) binary += String.fromCharCode(uint8Array[j]);
-                base64Image = window.btoa(binary);
-              }
-
-              if (base64Image) {
+              const dataUrl = normalizeImageDataUrl(itemData.data, itemData.contentType);
+              if (dataUrl) {
                 const imageId = workbook.addImage({
-                  base64: `data:${itemData.contentType};base64,${base64Image}`,
-                  extension: itemData.contentType.split('/')[1] || 'png',
+                  base64: dataUrl,
+                  extension: (itemData.contentType || 'image/png').split('/')[1] || 'png',
                 });
 
                 // SQUARE RENDERING & CENTERING (Preserves Aspect Ratio)

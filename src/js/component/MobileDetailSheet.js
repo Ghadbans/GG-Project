@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../features/auth/authSlice';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { normalizeImageDataUrl } from '../utils/formatUtils';
 import {
   Drawer,
   Box,
@@ -60,22 +61,10 @@ function formatMoney(val) {
 
 function getItemImageSrc(item) {
   if (!item) return null;
-  if (item.data && typeof item.data === 'string' && item.data.length > 50) {
-    if (item.data.startsWith('data:')) return item.data;
-    const ct = item.contentType || 'image/jpeg';
-    return `data:${ct};base64,${item.data}`;
-  }
+  const url = normalizeImageDataUrl(item.data, item.contentType);
+  if (url) return url;
   if (item.image && typeof item.image === 'string' && item.image.length > 20) {
-    return item.image;
-  }
-  if (item.data && item.data.data && Array.isArray(item.data.data)) {
-    try {
-      const bytes = new Uint8Array(item.data.data);
-      let binary = '';
-      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-      const b64 = window.btoa(binary);
-      return `data:${item.contentType || 'image/jpeg'};base64,${b64}`;
-    } catch(e) {}
+    return normalizeImageDataUrl(item.image, item.contentType);
   }
   return null;
 }

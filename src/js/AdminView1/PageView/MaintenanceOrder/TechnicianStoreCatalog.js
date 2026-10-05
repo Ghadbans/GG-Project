@@ -25,6 +25,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
+import { normalizeImageDataUrl } from '../../../utils/formatUtils';
 import { Close } from '@mui/icons-material';
 import { Add, MailOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
@@ -218,7 +219,7 @@ function PointOfSale() {
       resRate.data.data.map((row) => setRate(row.rate))
       const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${page}&limit=60&search=${encodeURIComponent(debouncedSearch)}`)
       setTotalPages(res.data.totalPages)
-      SetItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+      SetItems(res.data.items.filter((row) => row.typeItem === "Goods"))
       setLoadingData(false)
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -374,15 +375,15 @@ function PointOfSale() {
                               <Card>
                                 <CardMedia
                                   component="img"
-                                  image={`data:${row.contentType !== undefined ? row.contentType : ''}; base64,${row.data !== undefined ? row.data : ''}`}
-                                  sx={{ height: '200px', cursor: 'pointer' }}
+                                  image={normalizeImageDataUrl(row.data, row.contentType) || ''}
+                                  sx={{ height: '200px', cursor: 'pointer', objectFit: 'contain', backgroundColor: '#f8fafc' }}
                                   onClick={() => handleOpenModal(row._id)}
                                 />
                                 <CardContent>
-                                  <Typography variant="h6" component="div" style={{ display: 'flex', justifyContent: 'space-between' }}> <span>{row.itemUpc.newCode + '-0' + row.itemUpc.itemNumber}</span></Typography>
-                                  <Typography variant="h6" component="div" style={{ display: 'flex', justifyContent: 'space-between' }}><span>{row.itemName.toUpperCase()}</span></Typography>
-                                  <Typography variant="body2" color="text.secondary">Brand: {row.itemBrand.toUpperCase()} | Dimension: {row.itemDimension} | weight: {row.weight}</Typography>
-                                  <Typography variant="body2" color="text.secondary">Description:{row.itemDescription.toUpperCase()}</Typography>
+                                  <Typography variant="h6" component="div" style={{ display: 'flex', justifyContent: 'space-between' }}> <span>{(row.itemUpc?.newCode || '') + '-0' + (row.itemUpc?.itemNumber || '')}</span></Typography>
+                                  <Typography variant="h6" component="div" style={{ display: 'flex', justifyContent: 'space-between' }}><span>{(row.itemName || '').toUpperCase()}</span></Typography>
+                                  <Typography variant="body2" color="text.secondary">Brand: {(row.itemBrand || '').toUpperCase()} | Dimension: {row.itemDimension || ''} | weight: {row.itemWeight || row.weight || ''}</Typography>
+                                  <Typography variant="body2" color="text.secondary">Description:{(row.itemDescription || '').toUpperCase()}</Typography>
                                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '10px' }}>
                                     {row.itemQuantity > 0 ? (
                                       <div></div>
@@ -400,7 +401,7 @@ function PointOfSale() {
                         <Pagination
                           count={totalPages}
                           page={page}
-                          onChange={(e, value) => setPage(value - 1)}
+                          onChange={handlePageChange}
                           color='primary'
                         />
                       </div>
@@ -416,13 +417,13 @@ function PointOfSale() {
       </Box>
       {selectedItem && (
         <Dialog open={openModal} onClose={handleCloseModal}>
-          <DialogTitle>{selectedItem.itemName.toUpperCase()}</DialogTitle>
+          <DialogTitle>{(selectedItem.itemName || '').toUpperCase()}</DialogTitle>
           <DialogContent>
             <Box display="flex" justifyContent="center" alignItems="center">
               <CardMedia
                 component="img"
-                image={`data:${selectedItem.contentType !== undefined ? selectedItem.contentType : ''}; base64,${selectedItem.data !== undefined ? selectedItem.data : ''}`}
-                sx={{ height: '100%', width: '80%', marginBottom: '20px' }}
+                image={normalizeImageDataUrl(selectedItem.data, selectedItem.contentType) || ''}
+                sx={{ height: '100%', width: '80%', marginBottom: '20px', objectFit: 'contain' }}
               />
             </Box>
             <Typography variant="h6">

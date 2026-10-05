@@ -3,75 +3,71 @@ import { Avatar } from '@mui/material';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
+import { normalizeImageDataUrl } from '../utils/formatUtils';
+
+// In-memory module cache to avoid redundant network requests across table rows
+const itemImageCache = new Map();
 
 const ItemThumbnail = ({ itemId, initialData, initialType }) => {
-  const [src, setSrc] = useState(null);
+  const [src, setSrc] = useState(() => {
+    const initialUrl = normalizeImageDataUrl(initialData, initialType);
+    if (initialUrl) {
+      if (itemId) itemImageCache.set(String(itemId), initialUrl);
+      return initialUrl;
+    }
+    if (itemId && itemImageCache.has(String(itemId))) {
+      return itemImageCache.get(String(itemId));
+    }
+    return null;
+  });
 
   useEffect(() => {
+    let isMounted = true;
+    const initialUrl = normalizeImageDataUrl(initialData, initialType);
+    if (initialUrl) {
+      if (itemId) itemImageCache.set(String(itemId), initialUrl);
+      setSrc(initialUrl);
+      return;
+    }
+
+    if (!itemId || itemId === "undefined" || itemId === "null") {
+      setSrc(null);
+      return;
+    }
+
+    const key = String(itemId);
+    if (itemImageCache.has(key)) {
+      setSrc(itemImageCache.get(key));
+      return;
+    }
+
     const fetchImage = async () => {
-      // 1. Check for initialData (passed from search/shop)
-      if (initialData && initialType && initialData !== "undefined" && initialType !== "undefined" && initialData !== "null") {
-        if (typeof initialData === 'string' && initialData.length > 50) {
-           // Check if it's already a data URL
-           if (initialData.startsWith('data:')) {
-              setSrc(initialData);
-           } else {
-              setSrc(`data:${initialType};base64,${initialData}`);
-           }
-           return;
-        } else if (initialData.data) {
-           // Handle buffer object if it's not converted to string yet
-           const buffer = new Uint8Array(initialData.data);
-           const blob = new Blob([buffer], { type: initialType });
-           const reader = new FileReader();
-           reader.onloadend = () => setSrc(reader.result);
-           reader.readAsDataURL(blob);
-           return;
-        }
-      }
-
-      // 2. Fallback to fetch if no initial data or if it was invalid
-      if (!itemId || itemId === "undefined" || itemId === "null") {
-        setSrc(null);
-        return;
-      }
-
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-item/${itemId}`);
-        if (res.data.data && res.data.data.data) {
-          const raw = res.data.data.data;
-          const ct = res.data.data.contentType || 'image/jpeg';
-          if (typeof raw === 'string') {
-            if (raw.startsWith('data:')) {
-              setSrc(raw);
-            } else {
-              setSrc(`data:${ct};base64,${raw}`);
-            }
-          } else if (raw.data && Array.isArray(raw.data)) {
-            const buffer = new Uint8Array(raw.data);
-            const blob = new Blob([buffer], { type: ct });
-            const reader = new FileReader();
-            reader.onloadend = () => setSrc(reader.result);
-            reader.readAsDataURL(blob);
-          } else {
-            setSrc(null);
-          }
-        } else {
+        if (!isMounted) return;
+        const item = res.data?.data;
+        const url = normalizeImageDataUrl(item?.data, item?.contentType);
+        itemImageCache.set(key, url);
+        setSrc(url);
+      } catch (err) {
+        if (isMounted) {
+          itemImageCache.set(key, null);
           setSrc(null);
         }
-      } catch (err) {
-        console.error("Error fetching online image:", err);
-        setSrc(null);
       }
     };
     fetchImage();
-  }, [itemId, initialData, initialType]);
 
+    return () => {
+      isMounted = false;
+    };
+  }, [itemId, initialData, initialType]);
 
   return (
     <Avatar
       variant="rounded"
-      src={src}
+      src={src || undefined}
+      imgProps={{ onError: () => setSrc(null) }}
       sx={{ width: 80, height: 80, backgroundColor: '#f0f0f0', border: '1px solid #ddd' }}
     >
       {!src && <ShoppingCartOutlinedIcon sx={{ fontSize: 40, color: '#999' }} />}

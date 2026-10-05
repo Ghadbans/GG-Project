@@ -54,6 +54,65 @@ export const formatEmployeeName = (e) => {
   return String(name).trim().toUpperCase();
 };
 
+export const normalizeImageDataUrl = (raw, contentType) => {
+  if (!raw) return null;
+  const ct = contentType || 'image/jpeg';
+  if (typeof raw === 'string') {
+    const trimmed = raw.trim();
+    if (trimmed.length < 50 || trimmed === 'undefined' || trimmed === 'null') return null;
+    if (trimmed.startsWith('data:')) return trimmed;
+    return `data:${ct};base64,${trimmed}`;
+  }
+
+  let bytes = null;
+  if (Array.isArray(raw)) {
+    bytes = new Uint8Array(raw);
+  } else if (raw.data && (Array.isArray(raw.data) || raw.data instanceof Uint8Array)) {
+    bytes = new Uint8Array(raw.data);
+  } else if (raw instanceof Uint8Array) {
+    bytes = raw;
+  }
+
+  if (!bytes || bytes.length === 0) return null;
+
+  let text = '';
+  try {
+    if (typeof TextDecoder !== 'undefined') {
+      text = new TextDecoder('utf-8').decode(bytes);
+    } else {
+      let binary = '';
+      const len = Math.min(bytes.byteLength, 1000);
+      for (let i = 0; i < len; i++) {
+        binary += String.fromCharCode(bytes[i]);
+      }
+      text = binary;
+    }
+  } catch (e) {
+    text = '';
+  }
+
+  if (text.startsWith('data:')) {
+    return text.trim();
+  }
+  if (text.startsWith('iVBOR') || text.startsWith('/9j/') || text.startsWith('R0lGOD') || text.startsWith('UklGR')) {
+    return `data:${ct};base64,${text.trim()}`;
+  }
+
+  // Check if true raw binary (PNG / JPEG magic bytes or general binary)
+  try {
+    let binary = '';
+    const len = bytes.byteLength;
+    const chunkSize = 8192;
+    for (let i = 0; i < len; i += chunkSize) {
+      binary += String.fromCharCode.apply(null, bytes.subarray(i, Math.min(i + chunkSize, len)));
+    }
+    const b64 = typeof window !== 'undefined' && window.btoa ? window.btoa(binary) : (typeof Buffer !== 'undefined' ? Buffer.from(bytes).toString('base64') : '');
+    return b64 ? `data:${ct};base64,${b64}` : null;
+  } catch (err) {
+    return null;
+  }
+};
+
 export default {
   safeNumber,
   formatUSD,
@@ -61,5 +120,6 @@ export default {
   formatDualCurrency,
   formatCustomerName,
   formatSupplierName,
-  formatEmployeeName
+  formatEmployeeName,
+  normalizeImageDataUrl
 };

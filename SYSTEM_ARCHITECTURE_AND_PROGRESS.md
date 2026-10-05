@@ -110,6 +110,12 @@
       - **Supplier:** `typeof s === 'string' ? s : (s?.supplierName || s?.manufacturer || s?.name || '')`
       - **Employee:** `typeof e === 'string' ? e : (e?.employeeName || e?.employee || e?.name || '')`
 
+36. **Universal Item Image Data URL Normalization & Catalog Sorting Rule (Ver 3.5.53)**:
+    - **Buffer / UTF-8 Base64 Image Normalization:** In MongoDB, item images are stored in `itemSchema` as `data: Buffer` and `contentType: String`. When serialized over HTTP, Node buffers containing ASCII Base64 strings (`'iVBORw0KGgo...'`, `'/9j/4AAQ...'`) must NEVER be re-encoded using `FileReader` or `btoa` without checking if the buffer already represents a Base64 text string. Doing so creates double-base64 encoded strings (`'data:image/png;base64,aVZCT1J3...'`), which browsers cannot parse, causing broken image icons and failed avatar fallbacks.
+    - **Centralized Helper:** Always route raw image buffer/string conversion through `normalizeImageDataUrl(raw, contentType)` in `src/js/utils/formatUtils.js`.
+    - **In-Memory Image Caching:** In `ItemThumbnail.js`, maintain a module-level in-memory cache to prevent redundant HTTP requests when rendering multiple rows in master-detail tables (e.g. Supplier Item Summary).
+    - **Strict Newest-to-Oldest Catalog Sorting:** In all item store and catalog views (`TechnicianStoreCatalog.js`, `TechnicianStoreDisplay.js`, `StoreItemDisplay.js`, `PointOfSale.js`), `GET /item-shop` returns documents pre-sorted by `{ _id: -1 }`. NEVER apply `.reverse()` on the frontend as this inverts the order back to oldest-first.
+
 ## Current Progress Log
 - **Universal Professional A4 Print Engine & Multi-Page Layout Optimization (Ver 3.5.44)**:
   - **Eliminated Artificial Height Forcing & Accidental Multi-Page Spills**:
