@@ -386,6 +386,51 @@ function SellShopInvoiceView() {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    pageStyle: `
+      @page {
+        size: auto;
+        margin: 0mm !important;
+      }
+      @media print {
+        *, *::before, *::after {
+          box-sizing: border-box !important;
+        }
+        html, body {
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          padding: 1mm 2mm !important;
+          background: #ffffff !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+          font-size: 13px !important;
+          line-height: 1.3 !important;
+          color: #000000 !important;
+        }
+        .pos-receipt-table, table {
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 auto !important;
+          border-collapse: collapse !important;
+          font-size: 13px !important;
+          color: #000000 !important;
+        }
+        th, td {
+          padding: 3px 2px !important;
+          font-size: 13px !important;
+          color: #000000 !important;
+          line-height: 1.3 !important;
+        }
+        thead th {
+          font-size: 13px !important;
+          font-weight: bold !important;
+        }
+        .no-print, button, .MuiButtonBase-root {
+          display: none !important;
+        }
+      }
+    `,
     onBeforeGetContent: () => {
       const PAGE_HEIGHT = 560; // Adjusted for POS printer roll paper size
       const printElement = componentRef.current;
@@ -396,8 +441,8 @@ function SellShopInvoiceView() {
         if (numberOfPage > 1) {
           const heightWithSingleHeader = numberOfPage * PAGE_HEIGHT
           let requiredHeight = heightWithSingleHeader
-          const headerHeight = printElement.getElementsByTagName("thead")?.[0]?.clientHeight
-          const footerHeight = printElement.getElementsByTagName("tfoot")?.[0]?.clientHeight
+          const headerHeight = printElement.getElementsByTagName("thead")?.[0]?.clientHeight || 0
+          const footerHeight = printElement.getElementsByTagName("tfoot")?.[0]?.clientHeight || 0
           requiredHeight -= (numberOfPage - 1) * (headerHeight + footerHeight)
           printElement.style.height = `${requiredHeight}px`;
         }
@@ -1220,7 +1265,7 @@ function SellShopInvoiceView() {
           <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             {
               posInvoice && (
-                <table style={{ width: '100%', marginTop: '-10px', fontSize: '12px', color: 'black', marginTop: '0' }} ref={componentRef}>
+                <table className="pos-receipt-table" style={{ width: '100%', fontSize: '12px', color: 'black', margin: '0' }} ref={componentRef}>
                   <thead style={{ textAlign: 'center' }}>
                     <tr>
                       <th colSpan={6} style={{ fontWeight: 'bold', textAlign: 'center' }}>GLOBAL GATE SARL</th>

@@ -1342,3 +1342,18 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Compiled Webpack desktop & web production packages (`npm run build`).
     - Generated Windows desktop installer `dist/Global Gate Setup 3.5.52.exe`.
     - Pushed to `origin main` (`576e48de`) for automated Cloudflare Pages and Railway API deployments.
+
+- **Point of Sale (POS) Thermal Receipt Printing Restoration (Ver 3.5.54)**:
+  - **Problem Reported:** Following previous system-wide A4 print harmonization, POS thermal receipts printed through POS thermal roll printers (e.g., POS-80C 80mm roll printer) were printing microscopic text clustered in the middle of the paper roll.
+  - **Root Cause Analysis:**
+    1. A top-level global `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; }` rule inside `Chartview.css` forced the browser print pipeline to render the document on a virtual 210mm x 297mm A4 canvas.
+    2. When the receipt was sent to an 80mm thermal receipt printer (`POS-80C`), the print spooler scaled the entire 210mm A4 canvas down to 72mm-80mm (a ~65% size reduction), causing tiny, unreadable text and large blank margins.
+    3. `SellShopInvoiceView.js` lacked an explicit POS-tailored `pageStyle` on `useReactToPrint`.
+  - **Architectural Resolution:**
+    1. **CSS Decoupling (`src/js/AdminView1/PageView/Chartview.css`):** Reverted the global un-scoped root `@page` size restriction back to standard `@page { margin: 5mm; }`. All standard A4 modules (`InvoiceViewAdminAll`, `PurchasesViewAdminAll`, `CustomerInformationView`, etc.) already declare their own dedicated `pageStyle` with `size: A4 portrait`, preserving professional full-page layout without contaminating receipt printing.
+    2. **POS Dedicated Page Style (`src/js/AdminView1/SellShopInvoiceView.js`):** Added explicit `pageStyle` with `@page { size: auto; margin: 0mm !important; }`, 100% width scaling, `max-width: 80mm`, readable font sizing (13px / 12px), clean compact padding, and `pos-receipt-table` styling.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 source files (0 errors).
+    - Webpack desktop & web production bundles compiled.
+    - Updated version to `v3.5.54`.
+
