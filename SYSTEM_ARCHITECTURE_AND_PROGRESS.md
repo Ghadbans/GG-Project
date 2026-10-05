@@ -110,6 +110,12 @@
       - **Supplier:** `typeof s === 'string' ? s : (s?.supplierName || s?.manufacturer || s?.name || '')`
       - **Employee:** `typeof e === 'string' ? e : (e?.employeeName || e?.employee || e?.name || '')`
 
+37. **Thermal POS Receipt Printing & Continuous Roll Layout Architecture (Ver 3.5.54 - 3.5.56)**:
+    - **Isolation of Roll vs. A4 Print Canvas:** Global stylesheets (such as `Chartview.css`) must NEVER enforce root-level `@page { size: A4 portrait; }` as doing so corrupts POS thermal printers (e.g. `POS-80C` 80mm continuous roll), forcing the print driver to shrink 210mm A4 pages down onto 80mm rolls resulting in microscopic text.
+    - **A4 Module Encapsulation:** Standard A4 modules (`InvoiceViewAdminAll`, `PurchasesViewAdminAll`, `ProjectViewInformation`, `CustomerInformationView`, etc.) must declare `size: A4 portrait` inside their own `useReactToPrint` `pageStyle` prop.
+    - **POS Thermal Receipt Styling Standard:** All POS receipt views (`SellShopInvoiceView.js`) must specify dedicated `pageStyle` with `@page { size: auto; margin: 0mm !important; }`, crisp `9.5px` typography, `1.15` line-height, zero external margins, and explicit column widths and right-padding gutters (`.col-num: 5%`, `.col-item: 37%`, `.col-qty: 16%`, `.col-rate: 21%`, `.col-total: 21%`) with `white-space: nowrap` to guarantee clean visual separation between quantities, rates, and line totals without bunching.
+    - **No Container Height Multiplier:** NEVER apply artificial multi-page height multipliers (`PAGE_HEIGHT = 560`) on thermal receipts, as continuous roll printers cut paper precisely at the natural end of the DOM content without feeding blank paper.
+
 36. **Universal Item Image Data URL Normalization & Catalog Sorting Rule (Ver 3.5.53)**:
     - **Buffer / UTF-8 Base64 Image Normalization:** In MongoDB, item images are stored in `itemSchema` as `data: Buffer` and `contentType: String`. When serialized over HTTP, Node buffers containing ASCII Base64 strings (`'iVBORw0KGgo...'`, `'/9j/4AAQ...'`) must NEVER be re-encoded using `FileReader` or `btoa` without checking if the buffer already represents a Base64 text string. Doing so creates double-base64 encoded strings (`'data:image/png;base64,aVZCT1J3...'`), which browsers cannot parse, causing broken image icons and failed avatar fallbacks.
     - **Centralized Helper:** Always route raw image buffer/string conversion through `normalizeImageDataUrl(raw, contentType)` in `src/js/utils/formatUtils.js`.
