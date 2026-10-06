@@ -686,19 +686,20 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
             // Calculate the rate based on this run's sacks/type
             // Priority: Use saved laborPot to derive unitShare (for historical accuracy)
             const weightedCrewCount = workersList.reduce((sum, w) => sum + (w.half ? 0.5 : 1), 0);
-            const calculatedUnit = calculateWorkerShare(run.blockType, run.sacksUsed, 3, false);
-            let unitShare = calculatedUnit;
-            if (run.laborPot) {
-                // Determine if run.laborPot is under the old schema (includes mixer) or new schema (excludes mixer)
-                const oldSchemaDiff = Math.abs(run.laborPot - (weightedCrewCount + 1) * calculatedUnit);
-                const newSchemaDiff = Math.abs(run.laborPot - weightedCrewCount * calculatedUnit);
-                if (newSchemaDiff < oldSchemaDiff) {
+            let unitShare = 0;
+            if (run.laborPot !== undefined && run.laborPot !== null && Number(run.laborPot) > 0) {
+                const calculatedUnit = calculateWorkerShare(run.blockType, run.sacksUsed, 3, false);
+                const oldSchemaDiff = Math.abs(Number(run.laborPot) - (weightedCrewCount + 1) * calculatedUnit);
+                const newSchemaDiff = Math.abs(Number(run.laborPot) - weightedCrewCount * calculatedUnit);
+                if (newSchemaDiff <= oldSchemaDiff) {
                     // New schema: laborPot is crew-only.
-                    unitShare = run.laborPot / Math.max(weightedCrewCount, 0.5);
+                    unitShare = Number(run.laborPot) / Math.max(weightedCrewCount, 0.5);
                 } else {
                     // Old schema: laborPot includes mixer.
-                    unitShare = run.laborPot / (weightedCrewCount + 1);
+                    unitShare = Number(run.laborPot) / (weightedCrewCount + 1);
                 }
+            } else {
+                unitShare = calculateWorkerShare(run.blockType, run.sacksUsed, 3, false);
             }
             
             // 1. Pay Machine Crew
@@ -713,7 +714,7 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
 
         }); // end uniqRuns.forEach
 
-        // Calculate and Distribute Mixer Shares
+        // Calculate and Distribute Mixer Shares (Preserving historical rate snapshots)
         const mixerDays = [...new Set(uniqMixer.map(m => m.date))];
         mixerDays.forEach(dateStr => {
             const dateFormatted = parseDate(dateStr).format('YYYY-MM-DD');
@@ -723,12 +724,13 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
             const mixersOnDate = uniqMixer.filter(m => m.date === dateStr);
             if (mixersOnDate.length === 0) return;
 
-            const mixerRate = config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300;
-
-            // Distribute to individual mixer workers
+            // Distribute to individual mixer workers using per-record snapshot or global config fallback
             mixersOnDate.forEach(w => {
                 const obj = getWorkerObj(w.workerName);
                 if (obj) {
+                    const mixerRate = (w.mixerRatePerSack !== undefined && w.mixerRatePerSack !== null)
+                        ? Number(w.mixerRatePerSack)
+                        : (config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300);
                     const basePayout = totalSacksOnDate * mixerRate;
                     const share = w.halfDay ? basePayout * 0.5 : basePayout;
                     obj.earned += share;
@@ -754,7 +756,10 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
 
             const workersList = [matchRun.operatorName, matchRun.helper1, matchRun.helper2, matchRun.helper3].filter(n => n);
             if (workersList.length === 0) return;
-            const share = ((d.damagedBlocks || 0) * (d.damageRate || 3000)) / workersList.length;
+            const penaltyRate = (d.damageRate !== undefined && d.damageRate !== null)
+                ? Number(d.damageRate)
+                : (config?.damageRate !== undefined ? config.damageRate : 3000);
+            const share = ((d.damagedBlocks || 0) * penaltyRate) / workersList.length;
             workersList.forEach(w => {
                 const obj = getWorkerObj(w);
                 if (obj) {
@@ -827,11 +832,14 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
             if (matchRun) {
                 const workersList = [matchRun.operatorName, matchRun.helper1, matchRun.helper2, matchRun.helper3].filter(n => n);
                 if (workersList.length > 0) {
+                    const penaltyRate = (d.damageRate !== undefined && d.damageRate !== null)
+                        ? Number(d.damageRate)
+                        : (config?.damageRate !== undefined ? config.damageRate : 3000);
                     dmgSummary.push({
                         ...d,
                         workers: workersList,
-                        perPerson: ((d.damagedBlocks || 0) * (d.damageRate || 3000)) / workersList.length,
-                        totalCost: (d.damagedBlocks || 0) * (d.damageRate || 3000)
+                        perPerson: ((d.damagedBlocks || 0) * penaltyRate) / workersList.length,
+                        totalCost: (d.damagedBlocks || 0) * penaltyRate
                     });
                 }
             }

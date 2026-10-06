@@ -432,18 +432,19 @@ function PayRollFormView() {
               { name: run.helper3, half: run.halfDayHelper3 || false },
             ].filter(w => w.name);
 
-            const calculatedUnit = calculateWorkerShare(run.blockType, run.sacksUsed, standardSpots, false);
-            let unitShare = calculatedUnit;
-            
-            if (run.laborPot) {
-              const weightedCrewCount = workersList.reduce((sum, w) => sum + (w.half ? 0.5 : 1), 0);
-              const oldSchemaDiff = Math.abs(run.laborPot - (weightedCrewCount + 1) * calculatedUnit);
-              const newSchemaDiff = Math.abs(run.laborPot - weightedCrewCount * calculatedUnit);
-              if (newSchemaDiff < oldSchemaDiff) {
-                  unitShare = run.laborPot / Math.max(weightedCrewCount, 0.5);
+            const weightedCrewCount = workersList.reduce((sum, w) => sum + (w.half ? 0.5 : 1), 0);
+            let unitShare = 0;
+            if (run.laborPot !== undefined && run.laborPot !== null && Number(run.laborPot) > 0) {
+              const calculatedUnit = calculateWorkerShare(run.blockType, run.sacksUsed, standardSpots, false);
+              const oldSchemaDiff = Math.abs(Number(run.laborPot) - (weightedCrewCount + 1) * calculatedUnit);
+              const newSchemaDiff = Math.abs(Number(run.laborPot) - weightedCrewCount * calculatedUnit);
+              if (newSchemaDiff <= oldSchemaDiff) {
+                  unitShare = Number(run.laborPot) / Math.max(weightedCrewCount, 0.5);
               } else {
-                  unitShare = run.laborPot / (weightedCrewCount + 1);
+                  unitShare = Number(run.laborPot) / (weightedCrewCount + 1);
               }
+            } else {
+              unitShare = calculateWorkerShare(run.blockType, run.sacksUsed, standardSpots, false);
             }
 
             // Direct machine work
@@ -453,9 +454,8 @@ function PayRollFormView() {
             }
           });
 
-            // Calculate and Distribute Mixer Shares
+            // Calculate and Distribute Mixer Shares (Preserving historical rate snapshots)
             const mixerDays = [...new Set(mixerRecords.filter(m => inRange(m.date)).map(m => m.date))];
-            const mixerRate = config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300;
             
             mixerDays.forEach(dateStr => {
                 const dateFormatted = parseDate(dateStr).format('YYYY-MM-DD');
@@ -467,6 +467,9 @@ function PayRollFormView() {
     
                 mixersOnDate.forEach(w => {
                     if (w.workerName && normalize(w.workerName) === targetName) {
+                        const mixerRate = (w.mixerRatePerSack !== undefined && w.mixerRatePerSack !== null)
+                            ? Number(w.mixerRatePerSack)
+                            : (config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300);
                         const basePayout = totalSacksOnDate * mixerRate;
                         const share = w.halfDay ? basePayout * 0.5 : basePayout;
                         myEarned += share;

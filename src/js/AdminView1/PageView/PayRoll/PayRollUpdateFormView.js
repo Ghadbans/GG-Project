@@ -388,18 +388,19 @@ function PayRollUpdateFormView() {
               { n: run.helper3, h: run.halfDayHelper3 }
             ].filter(w => w.n);
 
-            const calculatedUnit = calculateWorkerShare(run.blockType, run.sacksUsed, standardSpots, false);
-            let unitShare = calculatedUnit;
-
-            if (run.laborPot) {
-              const weightedCrewCount = workers.reduce((sum, w) => sum + (w.h ? 0.5 : 1), 0);
-              const oldSchemaDiff = Math.abs(run.laborPot - (weightedCrewCount + 1) * calculatedUnit);
-              const newSchemaDiff = Math.abs(run.laborPot - weightedCrewCount * calculatedUnit);
-              if (newSchemaDiff < oldSchemaDiff) {
-                  unitShare = run.laborPot / Math.max(weightedCrewCount, 0.5);
+            const weightedCrewCount = workers.reduce((sum, w) => sum + (w.h ? 0.5 : 1), 0);
+            let unitShare = 0;
+            if (run.laborPot !== undefined && run.laborPot !== null && Number(run.laborPot) > 0) {
+              const calculatedUnit = calculateWorkerShare(run.blockType, run.sacksUsed, standardSpots, false);
+              const oldSchemaDiff = Math.abs(Number(run.laborPot) - (weightedCrewCount + 1) * calculatedUnit);
+              const newSchemaDiff = Math.abs(Number(run.laborPot) - weightedCrewCount * calculatedUnit);
+              if (newSchemaDiff <= oldSchemaDiff) {
+                  unitShare = Number(run.laborPot) / Math.max(weightedCrewCount, 0.5);
               } else {
-                  unitShare = run.laborPot / (weightedCrewCount + 1);
+                  unitShare = Number(run.laborPot) / (weightedCrewCount + 1);
               }
+            } else {
+              unitShare = calculateWorkerShare(run.blockType, run.sacksUsed, standardSpots, false);
             }
 
             const me = workers.find(w => normalize(w.n) === targetName);
@@ -408,9 +409,8 @@ function PayRollUpdateFormView() {
             }
           });
 
-            // Calculate and Distribute Mixer Shares
+            // Calculate and Distribute Mixer Shares (Preserving historical rate snapshots)
             const mixerDays = [...new Set(mixerRecords.filter(m => inRange(m.date)).map(m => m.date))];
-            const mixerRate = config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300;
             
             mixerDays.forEach(dateStr => {
                 const dateFormatted = dayjs(dateStr).format('YYYY-MM-DD');
@@ -422,6 +422,9 @@ function PayRollUpdateFormView() {
     
                 mixersOnDate.forEach(w => {
                     if (w.workerName && normalize(w.workerName) === targetName) {
+                        const mixerRate = (w.mixerRatePerSack !== undefined && w.mixerRatePerSack !== null)
+                            ? Number(w.mixerRatePerSack)
+                            : (config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300);
                         const basePayout = totalSacksOnDate * mixerRate;
                         const share = w.halfDay ? basePayout * 0.5 : basePayout;
                         earned += share;
@@ -435,7 +438,10 @@ function PayRollUpdateFormView() {
             if (match) {
               const workers = [match.operatorName, match.helper1, match.helper2, match.helper3].filter(n => n);
               if (workers.map(n => normalize(n)).includes(targetName)) {
-                damage += ((d.damagedBlocks * (d.damageRate || 3000)) / workers.length);
+                const penaltyRate = (d.damageRate !== undefined && d.damageRate !== null)
+                    ? Number(d.damageRate)
+                    : (config?.damageRate !== undefined ? config.damageRate : 3000);
+                damage += ((d.damagedBlocks * penaltyRate) / workers.length);
               }
             }
           });

@@ -1391,3 +1391,26 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages built.
     - Windows installer `dist/Global Gate Setup 3.5.56.exe` generated.
 
+- **Block Factory Historical Snapshot Rate Preservation & Accounting Lock Enforcement (Ver 3.5.57)**:
+  - **Problem Reported:** When modifying Market Pricing (cement, concasse, gravel, sand, overheads) and Labor Payment Rates (machine crew tiers, mixer rate per sack, damage penalty rate) in `BlockConfigView`, historical records were being retroactively recalculated, altering past Worker Payment Statements, production block unit costs, and inventory valuations.
+  - **Root Cause Analysis:**
+    1. **Worker Payment Statements (`WorkerPaymentView.js`):** Mixer shares calculated dynamically using `config?.mixerRatePerSack`, retroactively altering past mixer payouts whenever the rate was adjusted. Furthermore, crew unit shares conditionally compared against `calculateWorkerShare` with live rates, potentially shifting past earnings.
+    2. **Production Block Costs (`BlockProductionView.js`):** Material costs checked against `cementThreshold = sacks * config.cementPrice * 0.9`. Raising cement price in config caused historical production material costs to be discarded and re-evaluated at the new market rate.
+    3. **Inventory Valuation & Tracking (`BlockTrackingView.js`):** Overrode saved historical `totalCost` and `totalMatCost` with dynamic runtime calculations using current config overheads and cement thresholds.
+    4. **Mixer Team Schema (`blockMixerSchema.js` / `BlockMixerView.js`):** Mixer worker assignment records did not persist a rate snapshot (`mixerRatePerSack`), relying solely on runtime global config lookup.
+    5. **Payroll Integration (`PayRollFormView.js`, `PayRollUpdateFormView.js`):** Dynamically calculated mixer payouts and crew rates when populating payroll from date ranges.
+  - **Architectural Resolution:**
+    1. **Immutable Mixer Rate Snapshots (`blockMixerSchema.js`, `BlockMixerView.js`):** Extended `blockMixerSchema` to include `mixerRatePerSack: Number`. `BlockMixerView.js` now persists the active `mixerRatePerSack` snapshot directly onto each worker record upon creation.
+    2. **Worker Payment Statement Historical Integrity (`WorkerPaymentView.js`):**
+       - Machine crew earnings prioritize stored `run.laborPot` snapshot (`unitShare = run.laborPot / weightedCrewCount`), preventing live labor rate shifts from altering past payouts.
+       - Mixer earnings prioritize per-record `w.mixerRatePerSack` snapshot.
+       - Damage deductions strictly enforce per-record `d.damageRate` snapshot across list calculations and `dmgSummary`.
+    3. **Production Run Cost Snapshot Locking (`BlockProductionView.js`):** `recentProductions` strictly prioritizes saved `r.totalCost`, `r.totalMatCost`, `r.laborPotUSD`, and `r.overheadSnapshot` without re-evaluating historical records against live config cement thresholds or overhead changes.
+    4. **Inventory & Cost Tracking Snapshot Preservation (`BlockTrackingView.js`):** Preserves `totalCost = parseFloat(r.totalCost)` and historical component snapshots, guaranteeing past production costs and inventory values remain 100% frozen.
+    5. **Payroll Module Synchronization (`PayRollFormView.js`, `PayRollUpdateFormView.js`):** Aligned payroll generation to respect `w.mixerRatePerSack`, `run.laborPot`, and `d.damageRate` snapshots identically to Worker Payment Statements.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.57.exe` generated.
+
+

@@ -5,6 +5,7 @@ const blockMixerSchema = new Schema({
     date: String,
     workerName: String,
     halfDay: Boolean,
+    mixerRatePerSack: Number,
     branchId: { type: String, default: 'HQ' },
 }, { strict: false, collection: "blockMixer" });
 

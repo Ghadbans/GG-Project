@@ -269,6 +269,11 @@ function BlockProductionView() {
         const dailyOverhead = (fixedMonthly + sharedMonthly) / 26;
         
         return filteredProductions.map(r => {
+            // Prioritize stored totalCost snapshot for complete historical integrity
+            if (r.totalCost !== undefined && r.totalCost !== null && parseFloat(r.totalCost) > 0) {
+                return { ...r, totalCost: parseFloat(r.totalCost).toFixed(2) };
+            }
+
             const cM3 = ((r.concasseWheelbarrows || 0) * (r.sacksUsed || 0)) / 15;
             const gM3 = ((r.gravelWheelbarrows || 0) * (r.sacksUsed || 0)) / 15;
             const sM3 = ((r.sandWheelbarrows || 0) * (r.sacksUsed || 0)) / 15;
@@ -297,26 +302,28 @@ function BlockProductionView() {
                 laborFC = fullCrewAndMixerFC;
             }
             
-            // 2. Material Cost (Prioritize saved totalMatCost, but self-correct if abnormally low/zero)
-            const calculatedMatCost = pricing ? (
-                ((r.cementUsed || r.sacksUsed || 0) * (pricing.cementPrice || 0)) +
-                (cM3 * (pricing.concassePrice || 0)) +
-                (gM3 * (pricing.gravelPrice || 0)) +
-                (sM3 * (pricing.sandPrice || 0))
-            ) : 0;
-
-            const cementThreshold = (r.sacksUsed || 1) * (pricing?.cementPrice || 0) * 0.9;
-            const matCost = (r.totalMatCost && r.totalMatCost > cementThreshold) ? r.totalMatCost : calculatedMatCost;
+            // 2. Material Cost (Prioritize saved totalMatCost)
+            let matCost = 0;
+            if (r.totalMatCost !== undefined && r.totalMatCost !== null && parseFloat(r.totalMatCost) > 0) {
+                matCost = parseFloat(r.totalMatCost);
+            } else if (pricing) {
+                matCost = ((r.cementUsed || r.sacksUsed || 0) * (pricing.cementPrice || 0)) +
+                    (cM3 * (pricing.concassePrice || 0)) +
+                    (gM3 * (pricing.gravelPrice || 0)) +
+                    (sM3 * (pricing.sandPrice || 0));
+            }
             
             const baseCost = matCost + (laborFC / posRate);
             
-            // 2. Stable Overhead Allocation (Prioritize saved snapshot for history)
+            // 3. Stable Overhead Allocation (Prioritize saved snapshot for history)
             const machinesOnDate = new Set(rawRecentProductions.filter(rec => rec.date === r.date).map(rec => rec.machineNo));
             const totalMachinesOnDate = machinesOnDate.size || 1;
-            const overheadShare = r.overheadSnapshot || (dailyOverhead / totalMachinesOnDate);
+            const overheadShare = (r.overheadSnapshot !== undefined && r.overheadSnapshot !== null && parseFloat(r.overheadSnapshot) > 0)
+                ? parseFloat(r.overheadSnapshot)
+                : (dailyOverhead / totalMachinesOnDate);
 
             // Final Total Cost (Prioritize saved totalCost if available)
-            const finalTotalCost = r.totalCost || (baseCost + overheadShare);
+            const finalTotalCost = baseCost + overheadShare;
 
             return { ...r, totalCost: parseFloat(finalTotalCost).toFixed(2) };
         });

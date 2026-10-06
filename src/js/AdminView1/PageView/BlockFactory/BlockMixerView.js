@@ -80,6 +80,11 @@ function BlockMixerView() {
         }
     };
 
+    // Online States
+    const [mixerWorkers, setMixerWorkers] = useState([]);
+    const [allRuns, setAllRuns] = useState([]);
+    const [globalConfig, setGlobalConfig] = useState(null);
+
     // Fetch Initial Data
     useEffect(() => {
         const fetchInitialData = async () => {
@@ -94,6 +99,14 @@ function BlockMixerView() {
                         navigate('/SideBlockFactory');
                         return;
                     }
+                }
+
+                // Fetch Config
+                const configRes = await axios.get(`${ENDPOINT_URL}/block-config`);
+                if (configRes.data && configRes.data.data && Array.isArray(configRes.data.data)) {
+                    const configArr = configRes.data.data;
+                    const config = configArr.find(c => c.blockType === "GLOBAL") || configArr[0];
+                    setGlobalConfig(config);
                 }
 
                 // Fetch Employees
@@ -119,12 +132,6 @@ function BlockMixerView() {
         };
         if (user.data.id) fetchInitialData();
     }, [user, navigate, selectedDate]);
-
-    // Online States
-    const [mixerWorkers, setMixerWorkers] = useState([]);
-    const [allRuns, setAllRuns] = useState([]);
-
-
 
     const productionWorkersOnDate = useMemo(() => {
         const runsOnDate = allRuns.filter(r => dayjs(r.date).isSame(dayjs(selectedDate), 'day'));
@@ -159,10 +166,12 @@ function BlockMixerView() {
 
         setIsSubmitting(true);
         try {
+            const currentMixerRate = (globalConfig?.mixerRatePerSack !== undefined) ? globalConfig.mixerRatePerSack : 300;
             const record = {
                 date: selectedDate,
                 workerName,
                 halfDay,
+                mixerRatePerSack: currentMixerRate,
                 synced: false,
                 updateS: true
             };

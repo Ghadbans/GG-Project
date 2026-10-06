@@ -156,19 +156,22 @@ function BlockTrackingView() {
             const gM3 = ((r.gravelWheelbarrows || 0) * (r.sacksUsed || 0)) / wbFactor;
             const sM3 = ((r.sandWheelbarrows || 0) * (r.sacksUsed || 0)) / wbFactor;
             const calculatedMatCost = config ? (
-                (r.cementUsed || r.sacksUsed || 0) * config.cementPrice +
-                cM3 * config.concassePrice +
-                gM3 * config.gravelPrice +
-                sM3 * config.sandPrice
+                (r.cementUsed || r.sacksUsed || 0) * (config.cementPrice || 0) +
+                cM3 * (config.concassePrice || 0) +
+                gM3 * (config.gravelPrice || 0) +
+                sM3 * (config.sandPrice || 0)
             ) : 0;
 
-            if (r.totalMatCost !== undefined) {
-                // Modern structured runs: trust USD components completely, but guard against zero/corrupt material cost
-                const cementThreshold = (r.sacksUsed || 1) * (config?.cementPrice || 0) * 0.9;
-                let matCost = parseFloat(r.totalMatCost || 0);
-                if (matCost < cementThreshold) {
-                    matCost = calculatedMatCost;
-                }
+            if (r.totalCost !== undefined && r.totalCost !== null && parseFloat(r.totalCost) > 0) {
+                // If totalCost was saved on the production record, respect the historical snapshot!
+                const savedTotal = parseFloat(r.totalCost);
+                overheadShare = parseFloat(r.overheadSnapshot || r.overheadShareUSD || 0);
+                baseCost = (r.totalMatCost !== undefined && r.laborPotUSD !== undefined)
+                    ? parseFloat(r.totalMatCost || 0) + parseFloat(r.laborPotUSD || 0)
+                    : (savedTotal - overheadShare);
+            } else if (r.totalMatCost !== undefined && r.totalMatCost !== null && parseFloat(r.totalMatCost) > 0) {
+                // Modern structured runs: trust USD components completely
+                const matCost = parseFloat(r.totalMatCost || 0);
                 baseCost = matCost + parseFloat(r.laborPotUSD || 0);
                 overheadShare = parseFloat(r.overheadSnapshot || r.overheadShareUSD || 0);
             } else if (r.isFinalizedCost) {
@@ -210,6 +213,15 @@ function BlockTrackingView() {
         });
 
         const allProductionsWithCost = allProductionsEnriched.map(p => {
+            // If totalCost was already snapshotted, keep it exact!
+            if (p.totalCost !== undefined && p.totalCost !== null && parseFloat(p.totalCost) > 0) {
+                return {
+                    ...p,
+                    totalCost: parseFloat(p.totalCost).toFixed(2),
+                    totalOverheadShareUSD: parseFloat(p.overheadSnapshot || p.overheadShareUSD || 0).toFixed(2)
+                };
+            }
+
             let shareForThisRun = 0;
             if (p.overheadShareUSD && parseFloat(p.overheadShareUSD) > 0) {
                 shareForThisRun = parseFloat(p.overheadShareUSD);
