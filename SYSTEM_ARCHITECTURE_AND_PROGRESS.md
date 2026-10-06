@@ -123,6 +123,12 @@
     - **Strict Newest-to-Oldest Catalog Sorting:** In all item store and catalog views (`TechnicianStoreCatalog.js`, `TechnicianStoreDisplay.js`, `StoreItemDisplay.js`, `PointOfSale.js`), `GET /item-shop` returns documents pre-sorted by `{ _id: -1 }`. NEVER apply `.reverse()` on the frontend as this inverts the order back to oldest-first.
 
 ## Current Progress Log
+- **Maintenance Module Rate & Price Edit Permissions for CEO & Admin vs USER Level (Ver 3.5.60)**:
+  - **Clarified & Unified Rate/Price Edit Permissions (`MaintenanceUpdateView.js`, `MaintenanceFormView.js`, `ItemUpdateView2.js`)**:
+    - **`CEO` and `ADMIN` (and `GG`)**: Have full authority to change/edit item rates directly in the `itemRate` text field for both catalog items and empty manual custom item description boxes, as well as view and edit `Cost Unit Price` and `Selling Unit Price` inside the item edit modal (`ItemUpdateView2.js`).
+    - **`USER` Level (`USER` / `Employee` / `Technician`)**: Cannot edit item rates in any case (the `itemRate` field remains disabled/read-only for them, and cost/selling unit prices in item edit modals are completely hidden/inaccessible).
+    - **Technician Financial Privacy (Rule 23)**: Maintained strict privacy for technicians (`!canViewCosts`), suppressing the entire Rate, Discount, and Cost columns.
+  - **Release & Distribution**: Bumped version to `3.5.60`, compiled Webpack production bundles (`build/` and `dist_web/`), generated `dist/Global Gate Setup 3.5.60.exe`, and synced to GitHub `origin main` to trigger Railway API and Cloudflare Pages deployments.
 - **Universal Professional A4 Print Engine & Multi-Page Layout Optimization (Ver 3.5.44)**:
   - **Eliminated Artificial Height Forcing & Accidental Multi-Page Spills**:
     - Completely removed artificial height-forcing calculations (`PAGE_HEIGHT = 1045` & `Math.ceil(height / PAGE_HEIGHT)`) from `useReactToPrint` across all primary modules (`InvoiceViewAdminAll.js`, `EstimateViewAdminAll.js`, `PurchasesViewAdminAll.js`, `PurchaseOrderInfoView.js`, `CustomerInformationView.js`, `ItemOutViewAdmin.js`, `ItemReturnAdminView.js`, `ProjectViewInformation.js`, `PaymentInformationView.js`).
@@ -1407,6 +1413,12 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - Damage deductions strictly enforce per-record `d.damageRate` snapshot across list calculations and `dmgSummary`.
     3. **Production Run Cost Snapshot Locking (`BlockProductionView.js`):** `recentProductions` strictly prioritizes saved `r.totalCost`, `r.totalMatCost`, `r.laborPotUSD`, and `r.overheadSnapshot` without re-evaluating historical records against live config cement thresholds or overhead changes.
     4. **Inventory & Cost Tracking Snapshot Preservation (`BlockTrackingView.js`):** Preserves `totalCost = parseFloat(r.totalCost)` and historical component snapshots, guaranteeing past production costs and inventory values remain 100% frozen.
+    5. **Payroll Module Synchronization (`PayRollFormView.js`, `PayRollUpdateFormView.js`):** Aligned payroll generation to respect `w.mixerRatePerSack`, `run.laborPot`, and `d.damageRate` snapshots identically to Worker Payment Statements.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.57.exe` generated.
+
 - **Block Factory Historical Mixer Rate Backfill & Strict Zero-Recalculation Guarantee (Ver 3.5.58)**:
   - **Problem Reported:** After configuring Mixer Rate from 1,000 FC to 600 FC in `BlockConfigView`, historical mixer payouts (e.g. 16/09/26 with 4 sacks) dynamically flipped from +4,000 FC to +2,400 FC.
   - **Root Cause Analysis:**
@@ -1420,6 +1432,20 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Babel AST Quality Gate passed across all 229 source files (0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.58.exe` generated.
+
+- **Maintenance Module Rate Edit Access Alignment for CEO & Non-Technician Roles (Ver 3.5.59)**:
+  - **Problem Reported:** In the Maintenance Module (`MaintenanceUpdateView.js` and `MaintenanceFormView.js`), user `GG` could edit the item Rate field, but non-GG accounts (including `CEO`, `Admin`, and office roles with Grant Access) had the Rate input disabled in light gray.
+  - **Root Cause Analysis:**
+    - The `TextField` component for `itemRate` was hardcoded to `disabled={!isOwner}` (where `isOwner = user?.data?.userName === 'GG'`) instead of `disabled={!canViewCosts}`.
+  - **Architectural Resolution:**
+    - Updated `itemRate` `disabled` prop in both `MaintenanceUpdateView.js` (line 2026) and `MaintenanceFormView.js` (line 1605) to `disabled={!canViewCosts}`.
+    - Non-technicians (`CEO`, `Admin`, Operations, Sales, etc.) with Grant Access permissions can now edit item rates in maintenance orders identically to `GG`, while Technicians (`!canViewCosts`) continue to have the Rate, Discount, and Financial totals hidden according to Rule 23.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.59.exe` generated.
+
+
 
 
 

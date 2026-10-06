@@ -239,7 +239,11 @@ function MaintenanceUpdateView() {
     fetchGrant();
   }, [user]);
 
+  const userRole = (user?.data?.role || '').trim().toUpperCase();
   const isOwner = user?.data?.userName === 'GG';
+  const isCEO = isOwner || userRole === 'CEO';
+  const isAdmin = userRole === 'ADMIN';
+  const canEditRate = isOwner || isCEO || isAdmin;
   const currentEmployee = (employee || []).find(e => 
     (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
   );
@@ -2023,7 +2027,7 @@ function MaintenanceUpdateView() {
                                                     <TextField
                                                       name='itemRate' id='itemRate'
                                                       value={Item.itemRate}
-                                                      disabled={!isOwner}
+                                                      disabled={!canEditRate}
                                                       onChange={(e) => handleChange(e, Item.idRow)}
                                                       size="small"
                                                       sx={{ width: '100px', backgroundColor: 'white' }}

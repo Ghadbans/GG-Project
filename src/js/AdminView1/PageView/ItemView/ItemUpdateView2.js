@@ -60,6 +60,11 @@ function ItemUpdateView2({ id, onClose }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector(selectCurrentUser);
+  const userRole = (user?.data?.role || '').trim().toUpperCase();
+  const isOwner = user?.data?.userName === 'GG';
+  const isCEO = isOwner || userRole === 'CEO';
+  const isAdmin = userRole === 'ADMIN';
+  const canEditPrice = isOwner || isCEO || isAdmin;
 
   useEffect(() => {
     const storesUserId = localStorage.getItem('user');
@@ -507,7 +512,7 @@ function ItemUpdateView2({ id, onClose }) {
           </Grid>
           <Grid item xs={6}>
             {
-              user.data.role === 'CEO' ?
+              canEditPrice ?
                 <FormControl sx={{ width: '100%', backgroundColor: 'white' }} >
                   <InputLabel htmlFor='itemCostPrice'>Cost Unit Price</InputLabel>
                   <OutlinedInput
@@ -525,7 +530,7 @@ function ItemUpdateView2({ id, onClose }) {
           </Grid>
           <Grid item xs={6}>
             {
-              user.data.role === 'CEO' ?
+              canEditPrice ?
                 <FormControl sx={{ width: '100%', backgroundColor: 'white' }} >
                   <InputLabel htmlFor='itemSellingPrice'>Selling Unit Price</InputLabel>
                   <OutlinedInput
@@ -537,7 +542,7 @@ function ItemUpdateView2({ id, onClose }) {
                     onChange={(e) => setItemSellingPrice(e.target.value)}
                     startAdornment={<InputAdornment position='start'>$</InputAdornment>}
                   />
-                </FormControl> : ''
+                </FormControl> : null
             }
 
           </Grid>
