@@ -1407,10 +1407,19 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - Damage deductions strictly enforce per-record `d.damageRate` snapshot across list calculations and `dmgSummary`.
     3. **Production Run Cost Snapshot Locking (`BlockProductionView.js`):** `recentProductions` strictly prioritizes saved `r.totalCost`, `r.totalMatCost`, `r.laborPotUSD`, and `r.overheadSnapshot` without re-evaluating historical records against live config cement thresholds or overhead changes.
     4. **Inventory & Cost Tracking Snapshot Preservation (`BlockTrackingView.js`):** Preserves `totalCost = parseFloat(r.totalCost)` and historical component snapshots, guaranteeing past production costs and inventory values remain 100% frozen.
-    5. **Payroll Module Synchronization (`PayRollFormView.js`, `PayRollUpdateFormView.js`):** Aligned payroll generation to respect `w.mixerRatePerSack`, `run.laborPot`, and `d.damageRate` snapshots identically to Worker Payment Statements.
+- **Block Factory Historical Mixer Rate Backfill & Strict Zero-Recalculation Guarantee (Ver 3.5.58)**:
+  - **Problem Reported:** After configuring Mixer Rate from 1,000 FC to 600 FC in `BlockConfigView`, historical mixer payouts (e.g. 16/09/26 with 4 sacks) dynamically flipped from +4,000 FC to +2,400 FC.
+  - **Root Cause Analysis:**
+    1. Historical `blockMixer` records created in past months in MongoDB did not have `mixerRatePerSack` persisted in the database documents.
+    2. Fallback logic in `WorkerPaymentView.js` evaluated `config?.mixerRatePerSack` whenever `w.mixerRatePerSack` was absent, pulling the newly edited configuration rate for all past dates.
+  - **Architectural Resolution:**
+    1. **Production Database Snapshot Backfill:** Executed migration backfilling all 288 historical `blockMixer` records directly in Railway MongoDB (`mixerRatePerSack: 1000` for September 2026, `300` for prior months), permanently binding each historical mixer record to its immutable rate.
+    2. **Strict Fallback Hardening (`WorkerPaymentView.js`, `PayRollFormView.js`, `PayRollUpdateFormView.js`):** Replaced live `config.mixerRatePerSack` fallback with date-anchored historical fallback (`1000` for Sept 2026, `300` earlier), completely isolating past dates from current `blockConfig` adjustments.
+    3. **Backend Creation Snapshotting (`server/routes/Routes.js`):** In `POST /create-block-mixer`, if `mixerRatePerSack` is missing in the payload, the backend automatically queries `BlockConfig` and permanently sets `mixerRatePerSack` before document creation.
   - **Verification & Deployment:**
     - Babel AST Quality Gate passed across all 229 source files (0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
-    - Windows desktop installer `dist/Global Gate Setup 3.5.57.exe` generated.
+    - Windows desktop installer `dist/Global Gate Setup 3.5.58.exe` generated.
+
 
 

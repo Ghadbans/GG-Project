@@ -724,13 +724,17 @@ saveAs(blob, `Detailed_Payroll_${dayjs().format('YYYY-MM-DD')}.xlsx`);
             const mixersOnDate = uniqMixer.filter(m => m.date === dateStr);
             if (mixersOnDate.length === 0) return;
 
-            // Distribute to individual mixer workers using per-record snapshot or global config fallback
+            // Distribute to individual mixer workers using per-record snapshot or historical date fallback
             mixersOnDate.forEach(w => {
                 const obj = getWorkerObj(w.workerName);
                 if (obj) {
-                    const mixerRate = (w.mixerRatePerSack !== undefined && w.mixerRatePerSack !== null)
-                        ? Number(w.mixerRatePerSack)
-                        : (config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 300);
+                    let mixerRate = 1000;
+                    if (w.mixerRatePerSack !== undefined && w.mixerRatePerSack !== null && Number(w.mixerRatePerSack) > 0) {
+                        mixerRate = Number(w.mixerRatePerSack);
+                    } else {
+                        const rDate = parseDate(dateStr);
+                        mixerRate = (rDate.isValid() && rDate.isBefore(dayjs('2026-09-01'))) ? 300 : 1000;
+                    }
                     const basePayout = totalSacksOnDate * mixerRate;
                     const share = w.halfDay ? basePayout * 0.5 : basePayout;
                     obj.earned += share;

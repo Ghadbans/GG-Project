@@ -2435,8 +2435,13 @@ Route.route("/block-mixer2").get(async (req, res, next) => {
 });
 Route.route("/create-block-mixer").post(async (req, res, next) => {
   try {
-    const branchId = req.body.branchId;
-    const doc = await BlockMixer.create(req.body);
+    const branchId = req.body.branchId || 'HQ';
+    let mixerRatePerSack = req.body.mixerRatePerSack;
+    if (mixerRatePerSack === undefined || mixerRatePerSack === null) {
+      const config = await BlockConfig.findOne({ branchId }).sort({ lastUpdated: -1 }).lean();
+      mixerRatePerSack = config?.mixerRatePerSack !== undefined ? config.mixerRatePerSack : 1000;
+    }
+    const doc = await BlockMixer.create({ ...req.body, mixerRatePerSack });
     if (req.io) req.io.emit('blockDataChanged');
     res.json({ data: doc, status: 200, message: "Saved successfully" });
   } catch (err) { next(err); }
