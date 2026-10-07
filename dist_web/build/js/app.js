@@ -82984,7 +82984,15 @@ function DailyExpensesReportInfo(_ref3) {
 /* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(48484);
 /* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(601);
 /* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(61087);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(8659);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_44__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(85781);
 var _excluded = ["className"];
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -82995,6 +83003,9 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
+
 
 
 
@@ -83195,8 +83206,81 @@ function InvoiceReportInfo(_ref3) {
     setTotalDExpenses(TCost);
     setTotalPayRoll(TSell - TCost);
   }, [FilterInvoiceRevenue]);
+  var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_27__.useReactToPrint)({
+    content: () => componentRef.current,
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+  });
+  var exportToExcel = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_43___default().Workbook)();
+      var workSheet = workbook.addWorksheet('Commercial Invoices');
+      workSheet.columns = [{
+        header: "Invoice #",
+        key: 'number',
+        width: 15
+      }, {
+        header: "Date",
+        key: 'date',
+        width: 15
+      }, {
+        header: "Customer Name",
+        key: 'customer',
+        width: 25
+      }, {
+        header: "Sales Order Ref",
+        key: 'salesOrder',
+        width: 20
+      }, {
+        header: "Total Sell ($)",
+        key: 'sell',
+        width: 18
+      }, {
+        header: "Total Cost ($)",
+        key: 'cost',
+        width: 18
+      }, {
+        header: "Revenue ($)",
+        key: 'revenue',
+        width: 18
+      }];
+      (FilterInvoiceRevenue || []).forEach(row => {
+        var _row$customerName, _row$customerName2;
+        var customerDisplayName = (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+        var sell = row.infoSell !== undefined ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || parseFloat(row.totalInvoice) || 0;
+        var cost = 0;
+        if (row.infoCost !== undefined) {
+          cost = parseFloat(row.infoCost);
+        } else {
+          cost = (row.items || []).reduce((sum, item) => {
+            var qty = parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty) || 0;
+            var c = parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice) || 0;
+            return sum + qty * c;
+          }, 0);
+        }
+        var revenue = sell - cost;
+        workSheet.addRow({
+          number: "INV-".concat(row.invoiceNumber),
+          date: dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD/MM/YYYY'),
+          customer: customerDisplayName,
+          salesOrder: row.salesOrderNumber || '',
+          sell: Number((isNaN(sell) ? 0 : sell).toFixed(2)),
+          cost: Number((isNaN(cost) ? 0 : cost).toFixed(2)),
+          revenue: Number((isNaN(revenue) ? 0 : revenue).toFixed(2))
+        });
+      });
+      var buffer = yield workbook.xlsx.writeBuffer();
+      var blob = new Blob([buffer], {
+        type: 'application/octet-stream'
+      });
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_44__.saveAs)(blob, 'Commercial_Invoices_Report.xlsx');
+    });
+    return function exportToExcel() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
   function Row(props) {
-    var _row$customerName, _row$customerName2;
+    var _row$customerName3, _row$customerName4;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -83220,7 +83304,7 @@ function InvoiceReportInfo(_ref3) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -83353,7 +83437,7 @@ function InvoiceReportInfo(_ref3) {
     }, (parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row2(props) {
-    var _row$customerName3, _row$customerName4;
+    var _row$customerName5, _row$customerName6;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -83377,7 +83461,7 @@ function InvoiceReportInfo(_ref3) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -83499,7 +83583,7 @@ function InvoiceReportInfo(_ref3) {
     }, "$ "), (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
-    var _row$customerName5, _row$customerName6;
+    var _row$customerName7, _row$customerName8;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -83523,7 +83607,7 @@ function InvoiceReportInfo(_ref3) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -83710,7 +83794,22 @@ function InvoiceReportInfo(_ref3) {
       "data-prefix": true
     }, "$ "), (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -83732,13 +83831,7 @@ function InvoiceReportInfo(_ref3) {
     value: "Revenue"
   }, "Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     value: "All"
-  }, "All")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '200px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, "All"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -83835,12 +83928,27 @@ function InvoiceReportInfo(_ref3) {
     value: dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate),
     onChange: date => setEndDate(date),
     format: "DD/MM/YYYY"
-  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Export to Excel"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    onClick: exportToExcel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Print"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    onClick: handlePrint
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: {
       padding: '20px'
     },
     component: _mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    ref: componentRef,
     style: {
       padding: '20px'
     }
@@ -84071,36 +84179,43 @@ function InvoiceReportInfo(_ref3) {
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(29571);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2071);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(73896);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(33198);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(64137);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(96627);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(86798);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(70691);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(43884);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(11848);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(71510);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(58331);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(57240);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(40301);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(95236);
-/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(19873);
-/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(67415);
-/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(41845);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(72761);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_36__);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(33198);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(64137);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(96627);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(86798);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(70691);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(43884);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(11848);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(71510);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(58331);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(57240);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(40301);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(65821);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(95236);
+/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(19873);
+/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(67415);
+/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(41845);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(72761);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_37__);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(8659);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_39___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_39__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_40__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(85781);
 var _excluded = ["className"];
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -84177,10 +84292,13 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_ref => {
+
+
+
+var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -84188,7 +84306,7 @@ var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] 
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'white',
       color: 'black',
       boxShadow: theme.shadows[1],
@@ -84251,7 +84369,7 @@ function ItemReportInfo(_ref3) {
       var _ref4 = _asyncToGenerator(function* () {
         try {
           var _resNotification$data;
-          var resNotification = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_21__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_22__/* .ENDPOINT_URL */ .m, "/notification"));
+          var resNotification = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_22__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_23__/* .ENDPOINT_URL */ .m, "/notification"));
           var fetchData = (_resNotification$data = resNotification.data) === null || _resNotification$data === void 0 || (_resNotification$data = _resNotification$data.data) === null || _resNotification$data === void 0 ? void 0 : _resNotification$data.filter(item => item.person && item.person.endsWith(' Created'));
           setNotification(fetchData || []);
         } catch (error) {
@@ -84270,7 +84388,7 @@ function ItemReportInfo(_ref3) {
       setItem(onItem.filter(row => row.typeItem === 'Goods').map(row => {
         var relatedInvoice = notification.find(item => item.idInfo === row._id);
         return _objectSpread(_objectSpread({}, row), {}, {
-          CreatedDate: row.Creates !== undefined ? row.Creates.dateComment : dayjs__WEBPACK_IMPORTED_MODULE_25___default()(relatedInvoice === null || relatedInvoice === void 0 ? void 0 : relatedInvoice.dateNotification).format('DD/MM/YYYY'),
+          CreatedDate: row.Creates !== undefined ? row.Creates.dateComment : dayjs__WEBPACK_IMPORTED_MODULE_26___default()(relatedInvoice === null || relatedInvoice === void 0 ? void 0 : relatedInvoice.dateNotification).format('DD/MM/YYYY'),
           Person: row.Creates !== undefined ? row.Creates.person : relatedInvoice === null || relatedInvoice === void 0 ? void 0 : relatedInvoice.person
         });
       }));
@@ -84287,7 +84405,7 @@ function ItemReportInfo(_ref3) {
       setFilterItem(item === null || item === void 0 ? void 0 : item.filter(row => row.itemQuantity <= 0));
     } else if (infoOptions === 'Added Today') {
       var date = new Date();
-      var today = dayjs__WEBPACK_IMPORTED_MODULE_25___default()(date).format('DD/MM/YYYY');
+      var today = dayjs__WEBPACK_IMPORTED_MODULE_26___default()(date).format('DD/MM/YYYY');
       setFilterItem(item === null || item === void 0 ? void 0 : item.filter(row => row.CreatedDate === today));
     }
   }, [infoOptions, item, itemCategory]);
@@ -84295,11 +84413,74 @@ function ItemReportInfo(_ref3) {
     setInfoOptions(e.target.value);
   };
   var newArray = search2 !== '' ? FilterItem.filter(row => row.itemName.toLowerCase().includes(search2.toLowerCase()) || row.itemStore.toLowerCase().includes(search2.toLowerCase()) || row.itemBrand.toLowerCase().includes(search2.toLowerCase()) || row.itemDescription.toLowerCase().includes(search2.toLowerCase()) || row.itemManufacturer.toLowerCase().includes(search2.toLowerCase())) : FilterItem;
+  var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_27__.useReactToPrint)({
+    content: () => componentRef.current,
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+  });
+  var exportToExcel = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(function* () {
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_39___default().Workbook)();
+      var workSheet = workbook.addWorksheet('Inventory Items');
+      workSheet.columns = [{
+        header: "UPC / Item Code",
+        key: 'code',
+        width: 20
+      }, {
+        header: "Item Name",
+        key: 'name',
+        width: 25
+      }, {
+        header: "Brand",
+        key: 'brand',
+        width: 20
+      }, {
+        header: "Description",
+        key: 'description',
+        width: 30
+      }, {
+        header: "Category",
+        key: 'category',
+        width: 20
+      }, {
+        header: "Stock Quantity",
+        key: 'stock',
+        width: 18
+      }];
+      newArray.forEach(row => {
+        workSheet.addRow({
+          code: row.itemUpc ? "".concat(row.itemUpc.newCode, "-").concat(row.itemUpc.itemNumber) : 'N/A',
+          name: row.itemName || '',
+          brand: row.itemBrand || '',
+          description: row.itemDescription || '',
+          category: row.itemCategory || '',
+          stock: Number(row.itemQuantity || 0)
+        });
+      });
+      var buffer = yield workbook.xlsx.writeBuffer();
+      var blob = new Blob([buffer], {
+        type: 'application/octet-stream'
+      });
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_40__.saveAs)(blob, 'Inventory_Items_Report.xlsx');
+    });
+    return function exportToExcel() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
     style: {
       display: 'flex',
       alignItems: 'center',
-      gap: '200px'
+      justifyContent: 'space-between',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     sx: {
@@ -84362,12 +84543,27 @@ function ItemReportInfo(_ref3) {
     value: "OTHERS"
   }, "OTHERS (OT)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     value: ""
-  }, "All")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, "All")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Export to Excel"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: exportToExcel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Print"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    onClick: handlePrint
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       padding: '20px'
     },
-    component: _mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A
+    component: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    ref: componentRef,
     style: {
       padding: '20px'
     }
@@ -84383,14 +84579,14 @@ function ItemReportInfo(_ref3) {
       marginTop: '20px',
       marginBottom: '15px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     variant: "h6",
     sx: {
       color: '#093170',
       fontWeight: 'bold',
       fontSize: '16px'
     }
-  }, "Inventory Items Summary (", infoOptions, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Inventory Items Summary (", infoOptions, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     size: "small",
     label: "Search Item",
     id: "search2",
@@ -84399,25 +84595,25 @@ function ItemReportInfo(_ref3) {
     sx: {
       width: '280px'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "left"
-  }, "itemName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "itemName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "left"
-  }, "itemBrand"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "itemBrand"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "left"
-  }, "itemDescription"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "itemDescription"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "right"
-  }, "Stock"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, newArray.map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Stock"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, newArray.map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     key: row._id
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, row.itemUpc ? "".concat(row.itemUpc.newCode, "-").concat(row.itemUpc.itemNumber) : 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, row.itemUpc ? "".concat(row.itemUpc.newCode, "-").concat(row.itemUpc.itemNumber) : 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "left"
-  }, row.itemName || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, row.itemName || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "left"
-  }, row.itemBrand || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, row.itemBrand || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "left"
-  }, row.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, row.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     align: "right"
   }, Number(row.itemQuantity || 0).toLocaleString()))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
     className: "footerinvoice"
@@ -84427,19 +84623,19 @@ function ItemReportInfo(_ref3) {
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Contact@GlobalGate.Sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Contact@GlobalGate.Sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
       display: 'flex',
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "+243 827 722 222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "+243 827 722 222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
       display: 'flex',
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "www.GlobalGate.sarl"))))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "www.GlobalGate.sarl"))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemReportInfo);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
@@ -84498,7 +84694,15 @@ function ItemReportInfo(_ref3) {
 /* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(48484);
 /* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(601);
 /* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(61087);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(8659);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_44___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_44__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(85781);
 var _excluded = ["className"];
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -84509,6 +84713,9 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
+
 
 
 
@@ -84694,14 +84901,84 @@ function MaintenanceReportInfo(_ref3) {
     setTotalPayRoll(TSell - TCost);
     setTotalPayment(TLabor);
   }, [FilterMaintenanceRevenue]);
+  var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_27__.useReactToPrint)({
+    content: () => componentRef.current,
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+  });
+  var exportToExcel = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_43___default().Workbook)();
+      var workSheet = workbook.addWorksheet('Maintenance Operations');
+      workSheet.columns = [{
+        header: "Service #",
+        key: 'number',
+        width: 15
+      }, {
+        header: "Date",
+        key: 'date',
+        width: 15
+      }, {
+        header: "Customer Name",
+        key: 'customer',
+        width: 25
+      }, {
+        header: "Defect Description",
+        key: 'defect',
+        width: 30
+      }, {
+        header: "Total Sell ($)",
+        key: 'sell',
+        width: 18
+      }, {
+        header: "Total Cost ($)",
+        key: 'cost',
+        width: 18
+      }, {
+        header: "Labor Fees ($)",
+        key: 'labor',
+        width: 18
+      }, {
+        header: "Revenue ($)",
+        key: 'revenue',
+        width: 18
+      }];
+      (FilterMaintenanceRevenue || []).forEach(row => {
+        var _row$customerName, _row$customerName2;
+        var customerDisplayName = (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+        var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
+        var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
+        var rowLabor = parseFloat(row.totalLaborFeesGenerale || 0);
+        var rowRevenue = rowSell - rowCost;
+        workSheet.addRow({
+          number: "M-".concat(row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, '')),
+          date: dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD/MM/YYYY'),
+          customer: customerDisplayName,
+          defect: row.defectDescription || row.defect || '',
+          sell: Number(rowSell.toFixed(2)),
+          cost: Number(rowCost.toFixed(2)),
+          labor: Number(rowLabor.toFixed(2)),
+          revenue: Number(rowRevenue.toFixed(2))
+        });
+      });
+      var buffer = yield workbook.xlsx.writeBuffer();
+      var blob = new Blob([buffer], {
+        type: 'application/octet-stream'
+      });
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_44__.saveAs)(blob, 'Maintenance_Operations_Report.xlsx');
+    });
+    return function exportToExcel() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
   function Row(props) {
-    var _row$customerName, _row$customerName2;
+    var _row$customerName3, _row$customerName4;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       open = _React$useState2[0],
       setOpen = _React$useState2[1];
-    var customerDisplayName = (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
     var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
@@ -84853,13 +85130,13 @@ function MaintenanceReportInfo(_ref3) {
     }, "$", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row2(props) {
-    var _row$customerName3, _row$customerName4;
+    var _row$customerName5, _row$customerName6;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       open = _React$useState4[0],
       setOpen = _React$useState4[1];
-    var customerDisplayName = (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
     var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
@@ -85002,13 +85279,13 @@ function MaintenanceReportInfo(_ref3) {
     }, "$ "), rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
-    var _row$customerName5, _row$customerName6;
+    var _row$customerName7, _row$customerName8;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
       open = _React$useState6[0],
       setOpen = _React$useState6[1];
-    var customerDisplayName = (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
     var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
     var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
     var rowRevenue = rowSell - rowCost;
@@ -85221,13 +85498,13 @@ function MaintenanceReportInfo(_ref3) {
     }, "$ "), rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row4(props) {
-    var _row$customerName7, _row$customerName8;
+    var _row$customerName9, _row$customerName0;
     var row = props.row;
     var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState8 = _slicedToArray(_React$useState7, 2),
       open = _React$useState8[0],
       setOpen = _React$useState8[1];
-    var customerDisplayName = (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName9 = row.customerName) === null || _row$customerName9 === void 0 ? void 0 : _row$customerName9.Customer) || (row === null || row === void 0 || (_row$customerName0 = row.customerName) === null || _row$customerName0 === void 0 ? void 0 : _row$customerName0.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
     var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
     var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
     var rowRevenue = rowSell - rowCost;
@@ -85469,7 +85746,22 @@ function MaintenanceReportInfo(_ref3) {
       colSpan: 2
     }, "Total: $", (parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -85491,13 +85783,7 @@ function MaintenanceReportInfo(_ref3) {
     value: "Revenue"
   }, "Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     value: "All"
-  }, "All")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '200px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, "All"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -85594,12 +85880,27 @@ function MaintenanceReportInfo(_ref3) {
     value: dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate),
     onChange: date => setEndDate(date),
     format: "DD/MM/YYYY"
-  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Export to Excel"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    onClick: exportToExcel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Print"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    onClick: handlePrint
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: {
       padding: '20px'
     },
     component: _mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    ref: componentRef,
     style: {
       padding: '20px'
     }
@@ -85808,10 +86109,10 @@ function MaintenanceReportInfo(_ref3) {
   }, "Discount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "right"
   }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, FilterMaintenanceRevenue.map(row => {
-    var _row$customerName9, _row$customerName0;
+    var _row$customerName1, _row$customerName10;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       key: row._id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.serviceNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, (row === null || row === void 0 || (_row$customerName9 = row.customerName) === null || _row$customerName9 === void 0 ? void 0 : _row$customerName9.Customer) || (row === null || row === void 0 || (_row$customerName0 = row.customerName) === null || _row$customerName0 === void 0 ? void 0 : _row$customerName0.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.serviceNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, (row === null || row === void 0 || (_row$customerName1 = row.customerName) === null || _row$customerName1 === void 0 ? void 0 : _row$customerName1.Customer) || (row === null || row === void 0 || (_row$customerName10 = row.customerName) === null || _row$customerName10 === void 0 ? void 0 : _row$customerName10.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
     }, row.laborQty !== undefined ? row.laborQty : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -86950,25 +87251,42 @@ function PayRollReportInfo(_ref3) {
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(64137);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(96627);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(43884);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(92785);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(54972);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(19873);
-/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(67415);
-/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(41845);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(72761);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_26__);
-/* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(48484);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(61087);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(11848);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(92785);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(54972);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_23__);
+/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(19873);
+/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(67415);
+/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(41845);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(72761);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_27___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_27__);
+/* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(48484);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(601);
+/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(61087);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(58331);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(57240);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(8659);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_36__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_37___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_37__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(85781);
+var _excluded = ["className"];
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
 function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
 function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
 
 
@@ -86984,12 +87302,37 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-function PosReportInvoice(_ref) {
+
+
+
+
+
+
+var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_ref => {
+  var className = _ref.className,
+    props = _objectWithoutProperties(_ref, _excluded);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, _extends({}, props, {
+    classes: {
+      popper: className
+    }
+  }));
+})(_ref2 => {
+  var theme = _ref2.theme;
+  return {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.tooltip)]: {
+      backgroundColor: 'white',
+      color: 'black',
+      boxShadow: theme.shadows[1],
+      fontSize: 11
+    }
+  };
+});
+function PosReportInvoice(_ref3) {
   var _row, _data;
-  var onMonth = _ref.onMonth,
-    onInvoice = _ref.onInvoice,
-    onMonthOption = _ref.onMonthOption,
-    OnAllSelection = _ref.OnAllSelection;
+  var onMonth = _ref3.onMonth,
+    onInvoice = _ref3.onInvoice,
+    onMonthOption = _ref3.onMonthOption,
+    OnAllSelection = _ref3.OnAllSelection;
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(''),
     _useState2 = _slicedToArray(_useState, 2),
     month = _useState2[0],
@@ -87057,13 +87400,13 @@ function PosReportInvoice(_ref) {
     setFilterInvoiceRevenue = _useState16[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (selectOptions === 'Month') {
-      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('MMMM') === month));
+      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('MMMM') === month));
     } else if (selectOptions === 'Year') {
-      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_22___default()(startDate).format('YYYY')));
+      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_23___default()(startDate).format('YYYY')));
     } else if (selectOptions === 'Custom') {
       setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => {
-        var itemDate = dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate);
-        return (itemDate.isAfter(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).startOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).startOf('day'))) && (itemDate.isBefore(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).endOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).endOf('day')));
+        var itemDate = dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate);
+        return (itemDate.isAfter(dayjs__WEBPACK_IMPORTED_MODULE_23___default()(fromDate).startOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_23___default()(fromDate).startOf('day'))) && (itemDate.isBefore(dayjs__WEBPACK_IMPORTED_MODULE_23___default()(endDate).endOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_23___default()(endDate).endOf('day')));
       }));
     } else if (selectOptions === 'All') {
       setFilterInvoiceRevenue(invoiceRevenue);
@@ -87101,8 +87444,78 @@ function PosReportInvoice(_ref) {
     setTotalProfit(TPayment - TCost);
     setTotalPayment(TPaymentTax);
   }, [FilterInvoiceRevenue]);
+  var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_34__.useReactToPrint)({
+    content: () => componentRef.current,
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+  });
+  var exportToExcel = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_36___default().Workbook)();
+      var workSheet = workbook.addWorksheet('POS Sales');
+      workSheet.columns = [{
+        header: "POS #",
+        key: 'number',
+        width: 15
+      }, {
+        header: "Date",
+        key: 'date',
+        width: 15
+      }, {
+        header: "Customer Name",
+        key: 'customer',
+        width: 25
+      }, {
+        header: "Sales Type",
+        key: 'type',
+        width: 15
+      }, {
+        header: "Total Sell ($)",
+        key: 'sell',
+        width: 18
+      }, {
+        header: "Total Cost ($)",
+        key: 'cost',
+        width: 18
+      }, {
+        header: "Tax ($)",
+        key: 'tax',
+        width: 18
+      }, {
+        header: "Net Profit ($)",
+        key: 'profit',
+        width: 18
+      }];
+      (FilterInvoiceRevenue || []).forEach(row => {
+        var _row$customerName, _row$customerName2;
+        var customerDisplayName = (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'Walk-in Customer');
+        var sell = parseFloat(row.infoSell) || 0;
+        var cost = parseFloat(row.infoCost) || 0;
+        var tax = parseFloat(row.TaxUSd) || 0;
+        var profit = sell - cost;
+        workSheet.addRow({
+          number: "POS-".concat(row.factureNumber),
+          date: dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('DD/MM/YYYY'),
+          customer: customerDisplayName,
+          type: row.type || 'POS Sale',
+          sell: Number(sell.toFixed(2)),
+          cost: Number(cost.toFixed(2)),
+          tax: Number(tax.toFixed(2)),
+          profit: Number(profit.toFixed(2))
+        });
+      });
+      var buffer = yield workbook.xlsx.writeBuffer();
+      var blob = new Blob([buffer], {
+        type: 'application/octet-stream'
+      });
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_37__.saveAs)(blob, 'POS_Sales_Report.xlsx');
+    });
+    return function exportToExcel() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
   function Row(props) {
-    var _row$customerName, _row$customerName2;
+    var _row$customerName3, _row$customerName4;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -87118,18 +87531,18 @@ function PosReportInvoice(_ref) {
       "aria-label": "expand row",
       size: "small",
       onClick: () => setOpen(!open)
-    }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, "POS-".concat(row.factureNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
@@ -87247,7 +87660,7 @@ function PosReportInvoice(_ref) {
     }, "FC ", (parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ($", ((parseFloat(row === null || row === void 0 ? void 0 : row.subTotal) || 0) / (parseFloat(row === null || row === void 0 ? void 0 : row.rate) || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   function Row2(props) {
-    var _row$customerName3, _row$customerName4;
+    var _row$customerName5, _row$customerName6;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -87263,18 +87676,18 @@ function PosReportInvoice(_ref) {
       "aria-label": "expand row",
       size: "small",
       onClick: () => setOpen(!open)
-    }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, "POS-".concat(row.factureNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
@@ -87394,7 +87807,7 @@ function PosReportInvoice(_ref) {
     }, "$"), (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   function Row3(props) {
-    var _row$customerName5, _row$customerName6;
+    var _row$customerName7, _row$customerName8;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -87410,18 +87823,18 @@ function PosReportInvoice(_ref) {
       "aria-label": "expand row",
       size: "small",
       onClick: () => setOpen(!open)
-    }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, "POS-".concat(row.factureNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
@@ -87581,7 +87994,22 @@ function PosReportInvoice(_ref) {
       "data-prefix": true
     }, "$"), (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -87601,13 +88029,7 @@ function PosReportInvoice(_ref) {
     value: "Revenue"
   }, "Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "All"
-  }, "All")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '200px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, "All"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -87663,14 +88085,14 @@ function PosReportInvoice(_ref) {
     value: "November"
   }, "November"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "December"
-  }, "December"))), selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_27__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_29__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_30__/* .DemoContainer */ .j, {
+  }, "December"))), selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_30__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_31__/* .DemoContainer */ .j, {
     components: ['DatePicker', 'DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_29__/* .DatePicker */ .l, {
     required: true,
     name: "startDate",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_22___default()(startDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_23___default()(startDate),
     onChange: date => setStartDate(date),
     format: "YYYY",
     label: '"year"',
@@ -87682,34 +88104,49 @@ function PosReportInvoice(_ref) {
       justifyContent: 'space-between',
       gap: '20px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_27__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_29__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_30__/* .DemoContainer */ .j, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_30__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_31__/* .DemoContainer */ .j, {
     components: ['DatePicker', 'DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_29__/* .DatePicker */ .l, {
     required: true,
     name: "fromDate",
     label: "From Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_23___default()(fromDate),
     onChange: date => setFromDate(date),
     format: "DD/MM/YYYY"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_27__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_29__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_30__/* .DemoContainer */ .j, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_30__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_31__/* .DemoContainer */ .j, {
     components: ['DatePicker', 'DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_28__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_x_date_pickers__WEBPACK_IMPORTED_MODULE_29__/* .DatePicker */ .l, {
     required: true,
     name: "endDate",
     label: "To Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_23___default()(endDate),
     onChange: date => setEndDate(date),
     format: "DD/MM/YYYY"
-  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Export to Excel"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    onClick: exportToExcel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Print"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    onClick: handlePrint
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     sx: {
       padding: '20px'
     },
     component: _mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    ref: componentRef,
     style: {
       padding: '20px'
     }
@@ -87766,7 +88203,7 @@ function PosReportInvoice(_ref) {
       borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_22___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_23___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_23___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_23___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
@@ -87932,19 +88369,19 @@ function PosReportInvoice(_ref) {
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Contact@GlobalGate.Sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Contact@GlobalGate.Sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
       display: 'flex',
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "+243 827 722 222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "+243 827 722 222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
       display: 'flex',
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "www.GlobalGate.sarl"))))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "www.GlobalGate.sarl"))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PosReportInvoice);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
@@ -88000,12 +88437,20 @@ function PosReportInvoice(_ref) {
 /* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(41845);
 /* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(72761);
 /* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_38___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_38__);
+/* harmony import */ var _mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(8659);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(24974);
+/* harmony import */ var exceljs__WEBPACK_IMPORTED_MODULE_40___default = /*#__PURE__*/__webpack_require__.n(exceljs__WEBPACK_IMPORTED_MODULE_40__);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(4213);
+/* harmony import */ var file_saver__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(file_saver__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(85781);
 var _excluded = ["className"];
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -88016,6 +88461,8 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
+
 
 
 
@@ -88211,8 +88658,92 @@ function ProjectReportInfo(_ref3) {
     setTotalAdvances(projectAdvancesInfo);
     setTotalRevenue(projectRevenue);
   }, [FilterProject, onPayment]);
+  var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
+  var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_28__.useReactToPrint)({
+    content: () => componentRef.current,
+    pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+  });
+  var exportToExcel = /*#__PURE__*/function () {
+    var _ref4 = _asyncToGenerator(function* () {
+      var workbook = new (exceljs__WEBPACK_IMPORTED_MODULE_40___default().Workbook)();
+      var workSheet = workbook.addWorksheet('Projects Summary');
+      workSheet.columns = [{
+        header: "Project #",
+        key: 'number',
+        width: 15
+      }, {
+        header: "Customer Name",
+        key: 'customer',
+        width: 25
+      }, {
+        header: "Project Name",
+        key: 'name',
+        width: 25
+      }, {
+        header: "Description",
+        key: 'description',
+        width: 30
+      }, {
+        header: "Total Sell ($)",
+        key: 'sell',
+        width: 18
+      }, {
+        header: "Material Cost ($)",
+        key: 'cost',
+        width: 18
+      }, {
+        header: "Expenses ($)",
+        key: 'expenses',
+        width: 18
+      }, {
+        header: "Advances ($)",
+        key: 'advances',
+        width: 18
+      }, {
+        header: "Net Profit ($)",
+        key: 'profit',
+        width: 18
+      }];
+      (FilterProject || []).forEach(row => {
+        var _row$customerName, _row$customerName2;
+        var customerDisplayName = (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A');
+        var relatedCost = (row.relatedPurchase || []).reduce((sum, item) => sum + Number(item.infoCost || 0), 0);
+        var relatedExpenses = (row.expenses || []).reduce((sum, item) => sum + Number(item.total || 0), 0);
+        var relatedSell = (row.relatedPurchase || []).filter(item => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + Number(item.RelatedInvoice.totalInvoice || 0), 0);
+        var projectPayments = (onPayment || []).filter(pay => {
+          var _pay$TotalAmount3;
+          return pay.status !== 'Voided' && ((_pay$TotalAmount3 = pay.TotalAmount) === null || _pay$TotalAmount3 === void 0 ? void 0 : _pay$TotalAmount3.some(item => item.id === row._id));
+        });
+        var advances = projectPayments.reduce((s, pay) => {
+          var _pay$TotalAmount4;
+          var amtValue = ((_pay$TotalAmount4 = pay.TotalAmount) === null || _pay$TotalAmount4 === void 0 || (_pay$TotalAmount4 = _pay$TotalAmount4.find(i => i.id === row._id)) === null || _pay$TotalAmount4 === void 0 ? void 0 : _pay$TotalAmount4.total) || 0;
+          return s + (pay.transactionType === 'Refund' ? -Number(amtValue) : Number(amtValue));
+        }, 0);
+        var profit = relatedSell + advances - (relatedCost + relatedExpenses);
+        workSheet.addRow({
+          number: row.projectNumber || '',
+          customer: customerDisplayName,
+          name: row.projectName || '',
+          description: row.description || '',
+          sell: Number(relatedSell.toFixed(2)),
+          cost: Number(relatedCost.toFixed(2)),
+          expenses: Number(relatedExpenses.toFixed(2)),
+          advances: Number(advances.toFixed(2)),
+          profit: Number(profit.toFixed(2))
+        });
+      });
+      var buffer = yield workbook.xlsx.writeBuffer();
+      var blob = new Blob([buffer], {
+        type: 'application/octet-stream'
+      });
+      (0,file_saver__WEBPACK_IMPORTED_MODULE_41__.saveAs)(blob, 'Projects_Report.xlsx');
+    });
+    return function exportToExcel() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
   function Row(props) {
-    var _row$customerName, _row$customerName2, _row$relatedPurchase, _row$relatedPurchase2;
+    var _row$customerName3, _row$customerName4, _row$relatedPurchase, _row$relatedPurchase2;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -88234,7 +88765,7 @@ function ProjectReportInfo(_ref3) {
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -88491,7 +89022,7 @@ function ProjectReportInfo(_ref3) {
     }, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, (row1.RelatedInvoice.balanceDue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))) : '')))))));
   }
   function Row2(props) {
-    var _row$customerName3, _row$customerName4, _row$expenses;
+    var _row$customerName5, _row$customerName6, _row$expenses;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -88513,7 +89044,7 @@ function ProjectReportInfo(_ref3) {
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -88620,7 +89151,7 @@ function ProjectReportInfo(_ref3) {
     }, "$ ", (row.totalExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
-    var _row$customerName5, _row$customerName6, _row$relatedPurchase3, _row$relatedPurchase4;
+    var _row$customerName7, _row$customerName8, _row$relatedPurchase3, _row$relatedPurchase4;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -88642,7 +89173,7 @@ function ProjectReportInfo(_ref3) {
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -88768,7 +89299,22 @@ function ProjectReportInfo(_ref3) {
       }
     }, "$ ", (row.totalItemCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))))));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px',
+      flexWrap: 'wrap'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -88788,13 +89334,7 @@ function ProjectReportInfo(_ref3) {
     value: "Item Cost"
   }, "Item Cost"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     value: "Revenue"
-  }, "Revenue")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      gap: '200px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, "Revenue"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -88815,12 +89355,27 @@ function ProjectReportInfo(_ref3) {
     id: "search2",
     value: search2,
     onChange: handleSearch2
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+    style: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Export to Excel"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    onClick: exportToExcel
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(PrintTooltip, {
+    title: "Print"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    onClick: handlePrint
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_LocalPrintshop__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: {
       padding: '20px'
     },
     component: _mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+    ref: componentRef,
     style: {
       padding: '20px'
     }
@@ -89022,11 +89577,11 @@ function ProjectReportInfo(_ref3) {
     align: "right"
   }, "Total Advances"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null, FilterProject.map(row => {
     var projectAdvances = (onPayment || []).filter(pay => {
-      var _pay$TotalAmount3;
-      return pay.status !== 'Voided' && ((_pay$TotalAmount3 = pay.TotalAmount) === null || _pay$TotalAmount3 === void 0 ? void 0 : _pay$TotalAmount3.some(item => item.id === row._id));
+      var _pay$TotalAmount5;
+      return pay.status !== 'Voided' && ((_pay$TotalAmount5 = pay.TotalAmount) === null || _pay$TotalAmount5 === void 0 ? void 0 : _pay$TotalAmount5.some(item => item.id === row._id));
     }).reduce((s, pay) => {
-      var _pay$TotalAmount4;
-      var amt = ((_pay$TotalAmount4 = pay.TotalAmount) === null || _pay$TotalAmount4 === void 0 || (_pay$TotalAmount4 = _pay$TotalAmount4.find(i => i.id === row._id)) === null || _pay$TotalAmount4 === void 0 ? void 0 : _pay$TotalAmount4.total) || 0;
+      var _pay$TotalAmount6;
+      var amt = ((_pay$TotalAmount6 = pay.TotalAmount) === null || _pay$TotalAmount6 === void 0 || (_pay$TotalAmount6 = _pay$TotalAmount6.find(i => i.id === row._id)) === null || _pay$TotalAmount6 === void 0 ? void 0 : _pay$TotalAmount6.total) || 0;
       return s + (pay.transactionType === 'Refund' ? -Number(amt) : Number(amt));
     }, 0);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(Row, {
@@ -89082,13 +89637,13 @@ function ProjectReportInfo(_ref3) {
   }, "Total Expenses"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "right"
   }, "Net Profit"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null, FilterProject.map(row => {
-    var _row$customerName7, _row$customerName8;
+    var _row$customerName9, _row$customerName0;
     var projectAdvances = (onPayment || []).filter(pay => {
-      var _pay$TotalAmount5;
-      return pay.status !== 'Voided' && ((_pay$TotalAmount5 = pay.TotalAmount) === null || _pay$TotalAmount5 === void 0 ? void 0 : _pay$TotalAmount5.some(item => item.id === row._id));
+      var _pay$TotalAmount7;
+      return pay.status !== 'Voided' && ((_pay$TotalAmount7 = pay.TotalAmount) === null || _pay$TotalAmount7 === void 0 ? void 0 : _pay$TotalAmount7.some(item => item.id === row._id));
     }).reduce((s, pay) => {
-      var _pay$TotalAmount6;
-      var amt = ((_pay$TotalAmount6 = pay.TotalAmount) === null || _pay$TotalAmount6 === void 0 || (_pay$TotalAmount6 = _pay$TotalAmount6.find(i => i.id === row._id)) === null || _pay$TotalAmount6 === void 0 ? void 0 : _pay$TotalAmount6.total) || 0;
+      var _pay$TotalAmount8;
+      var amt = ((_pay$TotalAmount8 = pay.TotalAmount) === null || _pay$TotalAmount8 === void 0 || (_pay$TotalAmount8 = _pay$TotalAmount8.find(i => i.id === row._id)) === null || _pay$TotalAmount8 === void 0 ? void 0 : _pay$TotalAmount8.total) || 0;
       return s + (pay.transactionType === 'Refund' ? -Number(amt) : Number(amt));
     }, 0);
     var totalInv = (row.relatedPurchase || []).filter(item => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + Number(item.RelatedInvoice.totalInvoice || 0), 0);
@@ -89100,7 +89655,7 @@ function ProjectReportInfo(_ref3) {
       scope: "row"
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName9 = row.customerName) === null || _row$customerName9 === void 0 ? void 0 : _row$customerName9.Customer) || (row === null || row === void 0 || (_row$customerName0 = row.customerName) === null || _row$customerName0 === void 0 ? void 0 : _row$customerName0.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -121670,7 +122225,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.62"};
+module.exports = {"rE":"3.5.63"};
 
 /***/ },
 

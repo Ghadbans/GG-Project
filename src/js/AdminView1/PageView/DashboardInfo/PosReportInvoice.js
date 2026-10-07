@@ -13,6 +13,23 @@ import Image from '../../../img/images.png'
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import ReactToPrint, { useReactToPrint } from 'react-to-print';
+import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+import { Explicit } from '@mui/icons-material';
+
+const PrintTooltip = styled(({ className, ...props }) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: 'white',
+    color: 'black',
+    boxShadow: theme.shadows[1],
+    fontSize: 11,
+  },
+}));
 
 function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection }) {
   const [month, setMonth] = useState('');
@@ -94,6 +111,50 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
     setTotalProfit(TPayment - TCost);
     setTotalPayment(TPaymentTax);
   }, [FilterInvoiceRevenue]);
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
+
+  const exportToExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const workSheet = workbook.addWorksheet('POS Sales');
+    workSheet.columns = [
+      { header: "POS #", key: 'number', width: 15 },
+      { header: "Date", key: 'date', width: 15 },
+      { header: "Customer Name", key: 'customer', width: 25 },
+      { header: "Sales Type", key: 'type', width: 15 },
+      { header: "Total Sell ($)", key: 'sell', width: 18 },
+      { header: "Total Cost ($)", key: 'cost', width: 18 },
+      { header: "Tax ($)", key: 'tax', width: 18 },
+      { header: "Net Profit ($)", key: 'profit', width: 18 },
+    ];
+
+    (FilterInvoiceRevenue || []).forEach(row => {
+      const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'Walk-in Customer');
+      const sell = parseFloat(row.infoSell) || 0;
+      const cost = parseFloat(row.infoCost) || 0;
+      const tax = parseFloat(row.TaxUSd) || 0;
+      const profit = sell - cost;
+
+      workSheet.addRow({
+        number: `POS-${row.factureNumber}`,
+        date: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
+        customer: customerDisplayName,
+        type: row.type || 'POS Sale',
+        sell: Number(sell.toFixed(2)),
+        cost: Number(cost.toFixed(2)),
+        tax: Number(tax.toFixed(2)),
+        profit: Number(profit.toFixed(2))
+      });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'POS_Sales_Report.xlsx');
+  };
 
   function Row(props) {
     const { row } = props;
@@ -369,116 +430,127 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
 
   return (
     <div>
-      <section>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="Options">Options</InputLabel>
-          <Select
-            id="infoOptions"
-            value={infoOptions}
-            onChange={(e) => handleChangeSelected(e)}
-            name="infoOptions"
-            label="Options"
-          >
-            <MenuItem value="Sell">Sell</MenuItem>
-            <MenuItem value="Cost">Cost</MenuItem>
-            <MenuItem value="Revenue">Revenue</MenuItem>
-            <MenuItem value="All">All</MenuItem>
-          </Select>
-        </FormControl>
-      </section>
-      <br />
-      <section style={{ display: 'flex', alignItems: 'center', gap: '200px' }}>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="select">select</InputLabel>
-          <Select
-            id="selectOptions"
-            value={selectOptions}
-            onChange={(e) => setSelectOptions(e.target.value)}
-            name="selectOptions"
-            label="select"
-          >
-            <MenuItem value="Year">Year</MenuItem>
-            <MenuItem value="Month">Month</MenuItem>
-            <MenuItem value="Custom">Custom</MenuItem>
-            <MenuItem value="All">All</MenuItem>
-          </Select>
-        </FormControl>
-        {
-          selectOptions === "Month" && (
-            <FormControl sx={{ width: '200px' }}>
-              <InputLabel id="month">month</InputLabel>
-              <Select
-                id="month"
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-                name="month"
-                label="month"
-              >
-                <MenuItem value="January">January</MenuItem>
-                <MenuItem value="February">February</MenuItem>
-                <MenuItem value="March">March</MenuItem>
-                <MenuItem value="April">April</MenuItem>
-                <MenuItem value="May">May</MenuItem>
-                <MenuItem value="June">June</MenuItem>
-                <MenuItem value="July">July</MenuItem>
-                <MenuItem value="August">August</MenuItem>
-                <MenuItem value="September">September</MenuItem>
-                <MenuItem value="October">October</MenuItem>
-                <MenuItem value="November">November</MenuItem>
-                <MenuItem value="December">December</MenuItem>
-              </Select>
-            </FormControl>
-          )
-        }
-        {
-          selectOptions === 'Year' && (
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['DatePicker', 'DatePicker']}>
-                <DatePicker
-                  required
-                  name='startDate'
-                  value={dayjs(startDate)}
-                  onChange={(date) => setStartDate(date)}
-                  format='YYYY'
-                  label={'"year"'} views={['year']}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
-          )
-        }
-        {
-          selectOptions === 'Custom' && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+      <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="Options">Options</InputLabel>
+            <Select
+              id="infoOptions"
+              value={infoOptions}
+              onChange={(e) => handleChangeSelected(e)}
+              name="infoOptions"
+              label="Options"
+            >
+              <MenuItem value="Sell">Sell</MenuItem>
+              <MenuItem value="Cost">Cost</MenuItem>
+              <MenuItem value="Revenue">Revenue</MenuItem>
+              <MenuItem value="All">All</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="select">select</InputLabel>
+            <Select
+              id="selectOptions"
+              value={selectOptions}
+              onChange={(e) => setSelectOptions(e.target.value)}
+              name="selectOptions"
+              label="select"
+            >
+              <MenuItem value="Year">Year</MenuItem>
+              <MenuItem value="Month">Month</MenuItem>
+              <MenuItem value="Custom">Custom</MenuItem>
+              <MenuItem value="All">All</MenuItem>
+            </Select>
+          </FormControl>
+          {
+            selectOptions === "Month" && (
+              <FormControl sx={{ width: '200px' }}>
+                <InputLabel id="month">month</InputLabel>
+                <Select
+                  id="month"
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  name="month"
+                  label="month"
+                >
+                  <MenuItem value="January">January</MenuItem>
+                  <MenuItem value="February">February</MenuItem>
+                  <MenuItem value="March">March</MenuItem>
+                  <MenuItem value="April">April</MenuItem>
+                  <MenuItem value="May">May</MenuItem>
+                  <MenuItem value="June">June</MenuItem>
+                  <MenuItem value="July">July</MenuItem>
+                  <MenuItem value="August">August</MenuItem>
+                  <MenuItem value="September">September</MenuItem>
+                  <MenuItem value="October">October</MenuItem>
+                  <MenuItem value="November">November</MenuItem>
+                  <MenuItem value="December">December</MenuItem>
+                </Select>
+              </FormControl>
+            )
+          }
+          {
+            selectOptions === 'Year' && (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DatePicker', 'DatePicker']}>
                   <DatePicker
                     required
-                    name='fromDate'
-                    label='From Date'
-                    value={dayjs(fromDate)}
-                    onChange={(date) => setFromDate(date)}
-                    format='DD/MM/YYYY'
+                    name='startDate'
+                    value={dayjs(startDate)}
+                    onChange={(date) => setStartDate(date)}
+                    format='YYYY'
+                    label={'"year"'} views={['year']}
                   />
                 </DemoContainer>
               </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker', 'DatePicker']}>
-                  <DatePicker
-                    required
-                    name='endDate'
-                    label='To Date'
-                    value={dayjs(endDate)}
-                    onChange={(date) => setEndDate(date)}
-                    format='DD/MM/YYYY'
-                  />
-                </DemoContainer>
-              </LocalizationProvider>
-            </div>
-          )
-        }
+            )
+          }
+          {
+            selectOptions === 'Custom' && (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker', 'DatePicker']}>
+                    <DatePicker
+                      required
+                      name='fromDate'
+                      label='From Date'
+                      value={dayjs(fromDate)}
+                      onChange={(date) => setFromDate(date)}
+                      format='DD/MM/YYYY'
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker', 'DatePicker']}>
+                    <DatePicker
+                      required
+                      name='endDate'
+                      label='To Date'
+                      value={dayjs(endDate)}
+                      onChange={(date) => setEndDate(date)}
+                      format='DD/MM/YYYY'
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+            )
+          }
+        </div>
+        <section style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <PrintTooltip title="Export to Excel">
+            <IconButton onClick={exportToExcel}>
+              <Explicit />
+            </IconButton>
+          </PrintTooltip>
+          <PrintTooltip title="Print">
+            <IconButton onClick={handlePrint}>
+              <LocalPrintshop />
+            </IconButton>
+          </PrintTooltip>
+        </section>
       </section>
       <Box sx={{ padding: '20px' }} component={Paper}>
-        <div style={{ padding: '20px' }}>
+        <div ref={componentRef} style={{ padding: '20px' }}>
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>

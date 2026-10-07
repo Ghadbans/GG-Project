@@ -58,6 +58,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 import { PieChart } from '@mui/x-charts';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+import { Explicit } from '@mui/icons-material';
 
 const PrintTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -143,59 +146,106 @@ function ItemReportInfo({ onMonth, onItem }) {
     row.itemManufacturer.toLowerCase().includes(search2.toLowerCase())
   ) : FilterItem
 
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
+
+  const exportToExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const workSheet = workbook.addWorksheet('Inventory Items');
+    workSheet.columns = [
+      { header: "UPC / Item Code", key: 'code', width: 20 },
+      { header: "Item Name", key: 'name', width: 25 },
+      { header: "Brand", key: 'brand', width: 20 },
+      { header: "Description", key: 'description', width: 30 },
+      { header: "Category", key: 'category', width: 20 },
+      { header: "Stock Quantity", key: 'stock', width: 18 },
+    ];
+
+    newArray.forEach(row => {
+      workSheet.addRow({
+        code: row.itemUpc ? `${row.itemUpc.newCode}-${row.itemUpc.itemNumber}` : 'N/A',
+        name: row.itemName || '',
+        brand: row.itemBrand || '',
+        description: row.itemDescription || '',
+        category: row.itemCategory || '',
+        stock: Number(row.itemQuantity || 0)
+      });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'Inventory_Items_Report.xlsx');
+  };
 
   return (
     <div>
-      <section style={{ display: 'flex', alignItems: 'center', gap: '200px' }}>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="Options">Options</InputLabel>
-          <Select
-            id="infoOptions"
-            value={infoOptions}
-            onChange={(e) => handleChangeSelected(e)}
-            name="infoOptions"
-            label="Options"
-          >
-            <MenuItem value="Category">Category</MenuItem>
-            <MenuItem value="Out of Stock">Out of Stock</MenuItem>
-            <MenuItem value="Item Value">Item Value</MenuItem>
-            <MenuItem value="Added Today">Added Today</MenuItem>
-          </Select>
-        </FormControl>
-        {
-          infoOptions === 'Category' && (
-            <FormControl sx={{ width: '250px' }}>
-              <InputLabel id="unit">Category</InputLabel>
-              <Select
-                required
-                id="itemCategory"
-                value={itemCategory}
-                onChange={(e) => setItemCategory(e.target.value)}
-                name="itemCategory"
-                label="Category"
-              >
-                <MenuItem value="HA">HA (HA)</MenuItem>
-                <MenuItem value="ELECTRICITY">ELECTRICITY (EL)</MenuItem>
-                <MenuItem value="SOLAR SYSTEM">SOLAR SYSTEM (SS)</MenuItem>
-                <MenuItem value="IT">IT (IT)</MenuItem>
-                <MenuItem value="PLUMBING">PLUMBING (PL)</MenuItem>
-                <MenuItem value="ELECTRONIC">ELECTRONIC (ELN)</MenuItem>
-                <MenuItem value="FENCE ELECTRIC">FENCE ELECTRIC (FE)</MenuItem>
-                <MenuItem value="ACCESSORY">ACCESSORY (ACC)</MenuItem>
-                <MenuItem value="WELDING">WELDING (WLN)</MenuItem>
-                <MenuItem value="GENERATOR">GENERATOR (GA)</MenuItem>
-                <MenuItem value="TOOLS">TOOLS (TL)</MenuItem>
-                <MenuItem value="CONSTRUCTION">CONSTRUCTION (CTN)</MenuItem>
-                <MenuItem value="OTHERS">OTHERS (OT)</MenuItem>
-                <MenuItem value="">All</MenuItem>
-              </Select>
-            </FormControl>
-          )
-        }
+      <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="Options">Options</InputLabel>
+            <Select
+              id="infoOptions"
+              value={infoOptions}
+              onChange={(e) => handleChangeSelected(e)}
+              name="infoOptions"
+              label="Options"
+            >
+              <MenuItem value="Category">Category</MenuItem>
+              <MenuItem value="Out of Stock">Out of Stock</MenuItem>
+              <MenuItem value="Item Value">Item Value</MenuItem>
+              <MenuItem value="Added Today">Added Today</MenuItem>
+            </Select>
+          </FormControl>
+          {
+            infoOptions === 'Category' && (
+              <FormControl sx={{ width: '250px' }}>
+                <InputLabel id="unit">Category</InputLabel>
+                <Select
+                  required
+                  id="itemCategory"
+                  value={itemCategory}
+                  onChange={(e) => setItemCategory(e.target.value)}
+                  name="itemCategory"
+                  label="Category"
+                >
+                  <MenuItem value="HA">HA (HA)</MenuItem>
+                  <MenuItem value="ELECTRICITY">ELECTRICITY (EL)</MenuItem>
+                  <MenuItem value="SOLAR SYSTEM">SOLAR SYSTEM (SS)</MenuItem>
+                  <MenuItem value="IT">IT (IT)</MenuItem>
+                  <MenuItem value="PLUMBING">PLUMBING (PL)</MenuItem>
+                  <MenuItem value="ELECTRONIC">ELECTRONIC (ELN)</MenuItem>
+                  <MenuItem value="FENCE ELECTRIC">FENCE ELECTRIC (FE)</MenuItem>
+                  <MenuItem value="ACCESSORY">ACCESSORY (ACC)</MenuItem>
+                  <MenuItem value="WELDING">WELDING (WLN)</MenuItem>
+                  <MenuItem value="GENERATOR">GENERATOR (GA)</MenuItem>
+                  <MenuItem value="TOOLS">TOOLS (TL)</MenuItem>
+                  <MenuItem value="CONSTRUCTION">CONSTRUCTION (CTN)</MenuItem>
+                  <MenuItem value="OTHERS">OTHERS (OT)</MenuItem>
+                  <MenuItem value="">All</MenuItem>
+                </Select>
+              </FormControl>
+            )
+          }
+        </div>
+        <section style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <PrintTooltip title="Export to Excel">
+            <IconButton onClick={exportToExcel}>
+              <Explicit />
+            </IconButton>
+          </PrintTooltip>
+          <PrintTooltip title="Print">
+            <IconButton onClick={handlePrint}>
+              <LocalPrintshop />
+            </IconButton>
+          </PrintTooltip>
+        </section>
       </section>
       <br />
       <Box sx={{ padding: '20px' }} component={Paper}>
-        <div style={{ padding: '20px' }}>
+        <div ref={componentRef} style={{ padding: '20px' }}>
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>

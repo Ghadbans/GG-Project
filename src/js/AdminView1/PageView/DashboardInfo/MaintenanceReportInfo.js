@@ -56,6 +56,9 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 import { PieChart } from '@mui/x-charts';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+import { Explicit } from '@mui/icons-material';
 
 const PrintTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -150,6 +153,50 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
     setTotalPayRoll(TSell - TCost);
     setTotalPayment(TLabor);
   }, [FilterMaintenanceRevenue]);
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
+
+  const exportToExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const workSheet = workbook.addWorksheet('Maintenance Operations');
+    workSheet.columns = [
+      { header: "Service #", key: 'number', width: 15 },
+      { header: "Date", key: 'date', width: 15 },
+      { header: "Customer Name", key: 'customer', width: 25 },
+      { header: "Defect Description", key: 'defect', width: 30 },
+      { header: "Total Sell ($)", key: 'sell', width: 18 },
+      { header: "Total Cost ($)", key: 'cost', width: 18 },
+      { header: "Labor Fees ($)", key: 'labor', width: 18 },
+      { header: "Revenue ($)", key: 'revenue', width: 18 },
+    ];
+
+    (FilterMaintenanceRevenue || []).forEach(row => {
+      const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : '');
+      const rowSell = (row.infoSell !== undefined && !isNaN(row.infoSell)) ? parseFloat(row.infoSell) : (parseFloat(row.subTotal) || 0);
+      const rowCost = (row.infoCost !== undefined && !isNaN(row.infoCost)) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + ((parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : (item.costPrice || item.itemCostPrice || 0))) || 0), 0);
+      const rowLabor = parseFloat(row.totalLaborFeesGenerale || 0);
+      const rowRevenue = rowSell - rowCost;
+
+      workSheet.addRow({
+        number: `M-${row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, '')}`,
+        date: dayjs(row.serviceDate).format('DD/MM/YYYY'),
+        customer: customerDisplayName,
+        defect: row.defectDescription || row.defect || '',
+        sell: Number(rowSell.toFixed(2)),
+        cost: Number(rowCost.toFixed(2)),
+        labor: Number(rowLabor.toFixed(2)),
+        revenue: Number(rowRevenue.toFixed(2))
+      });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'Maintenance_Operations_Report.xlsx');
+  };
 
   function Row(props) {
     const { row } = props;
@@ -555,118 +602,129 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
 
   return (
     <div>
-      <section>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="Options">Options</InputLabel>
-          <Select
-            id="infoOptions"
-            value={infoOptions}
-            onChange={(e) => handleChangeSelected(e)}
-            name="infoOptions"
-            label="Options"
-          >
-            <MenuItem value="Sell">Sell</MenuItem>
-            <MenuItem value="Cost">Cost</MenuItem>
-            <MenuItem value="Labor">Labor Fees</MenuItem>
-            <MenuItem value="Revenue">Revenue</MenuItem>
-            <MenuItem value="All">All</MenuItem>
-          </Select>
-        </FormControl>
-      </section>
-      <br />
-      <section style={{ display: 'flex', alignItems: 'center', gap: '200px' }}>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="select">select</InputLabel>
-          <Select
-            id="selectOptions"
-            value={selectOptions}
-            onChange={(e) => setSelectOptions(e.target.value)}
-            name="selectOptions"
-            label="select"
-          >
-            <MenuItem value="Year">Year</MenuItem>
-            <MenuItem value="Month">Month</MenuItem>
-            <MenuItem value="Custom">Custom</MenuItem>
-            <MenuItem value="All">All</MenuItem>
-          </Select>
-        </FormControl>
-        {
-          selectOptions === "Month" && (
-            <FormControl sx={{ width: '200px' }}>
-              <InputLabel id="month">month</InputLabel>
-              <Select
-                id="month"
-                value={month}
-                onChange={(e) => setMonth(e.target.value)}
-                name="month"
-                label="month"
-              >
-                <MenuItem value="January">January</MenuItem>
-                <MenuItem value="February">February</MenuItem>
-                <MenuItem value="March">March</MenuItem>
-                <MenuItem value="April">April</MenuItem>
-                <MenuItem value="May">May</MenuItem>
-                <MenuItem value="June">June</MenuItem>
-                <MenuItem value="July">July</MenuItem>
-                <MenuItem value="August">August</MenuItem>
-                <MenuItem value="September">September</MenuItem>
-                <MenuItem value="October">October</MenuItem>
-                <MenuItem value="November">November</MenuItem>
-                <MenuItem value="December">December</MenuItem>
-              </Select>
-            </FormControl>
-          )
-        }
-        {
-          selectOptions === 'Year' && (
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DemoContainer components={['DatePicker', 'DatePicker']}>
-                <DatePicker
-                  required
-                  name='startDate'
-                  value={dayjs(startDate)}
-                  onChange={(date) => setStartDate(date)}
-                  format='YYYY'
-                  label={'"year"'} views={['year']}
-                />
-              </DemoContainer>
-            </LocalizationProvider>
-          )
-        }
-        {
-          selectOptions === 'Custom' && (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+      <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="Options">Options</InputLabel>
+            <Select
+              id="infoOptions"
+              value={infoOptions}
+              onChange={(e) => handleChangeSelected(e)}
+              name="infoOptions"
+              label="Options"
+            >
+              <MenuItem value="Sell">Sell</MenuItem>
+              <MenuItem value="Cost">Cost</MenuItem>
+              <MenuItem value="Labor">Labor Fees</MenuItem>
+              <MenuItem value="Revenue">Revenue</MenuItem>
+              <MenuItem value="All">All</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="select">select</InputLabel>
+            <Select
+              id="selectOptions"
+              value={selectOptions}
+              onChange={(e) => setSelectOptions(e.target.value)}
+              name="selectOptions"
+              label="select"
+            >
+              <MenuItem value="Year">Year</MenuItem>
+              <MenuItem value="Month">Month</MenuItem>
+              <MenuItem value="Custom">Custom</MenuItem>
+              <MenuItem value="All">All</MenuItem>
+            </Select>
+          </FormControl>
+          {
+            selectOptions === "Month" && (
+              <FormControl sx={{ width: '200px' }}>
+                <InputLabel id="month">month</InputLabel>
+                <Select
+                  id="month"
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  name="month"
+                  label="month"
+                >
+                  <MenuItem value="January">January</MenuItem>
+                  <MenuItem value="February">February</MenuItem>
+                  <MenuItem value="March">March</MenuItem>
+                  <MenuItem value="April">April</MenuItem>
+                  <MenuItem value="May">May</MenuItem>
+                  <MenuItem value="June">June</MenuItem>
+                  <MenuItem value="July">July</MenuItem>
+                  <MenuItem value="August">August</MenuItem>
+                  <MenuItem value="September">September</MenuItem>
+                  <MenuItem value="October">October</MenuItem>
+                  <MenuItem value="November">November</MenuItem>
+                  <MenuItem value="December">December</MenuItem>
+                </Select>
+              </FormControl>
+            )
+          }
+          {
+            selectOptions === 'Year' && (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['DatePicker', 'DatePicker']}>
                   <DatePicker
                     required
-                    name='fromDate'
-                    label='From Date'
-                    value={dayjs(fromDate)}
-                    onChange={(date) => setFromDate(date)}
-                    format='DD/MM/YYYY'
+                    name='startDate'
+                    value={dayjs(startDate)}
+                    onChange={(date) => setStartDate(date)}
+                    format='YYYY'
+                    label={'"year"'} views={['year']}
                   />
                 </DemoContainer>
               </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['DatePicker', 'DatePicker']}>
-                  <DatePicker
-                    required
-                    name='endDate'
-                    label='To Date'
-                    value={dayjs(endDate)}
-                    onChange={(date) => setEndDate(date)}
-                    format='DD/MM/YYYY'
-                  />
-                </DemoContainer>
-              </LocalizationProvider>
-            </div>
-          )
-        }
+            )
+          }
+          {
+            selectOptions === 'Custom' && (
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px' }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker', 'DatePicker']}>
+                    <DatePicker
+                      required
+                      name='fromDate'
+                      label='From Date'
+                      value={dayjs(fromDate)}
+                      onChange={(date) => setFromDate(date)}
+                      format='DD/MM/YYYY'
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DemoContainer components={['DatePicker', 'DatePicker']}>
+                    <DatePicker
+                      required
+                      name='endDate'
+                      label='To Date'
+                      value={dayjs(endDate)}
+                      onChange={(date) => setEndDate(date)}
+                      format='DD/MM/YYYY'
+                    />
+                  </DemoContainer>
+                </LocalizationProvider>
+              </div>
+            )
+          }
+        </div>
+        <section style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <PrintTooltip title="Export to Excel">
+            <IconButton onClick={exportToExcel}>
+              <Explicit />
+            </IconButton>
+          </PrintTooltip>
+          <PrintTooltip title="Print">
+            <IconButton onClick={handlePrint}>
+              <LocalPrintshop />
+            </IconButton>
+          </PrintTooltip>
+        </section>
       </section>
 
       <Box sx={{ padding: '20px' }} component={Paper}>
-        <div style={{ padding: '20px' }}>
+        <div ref={componentRef} style={{ padding: '20px' }}>
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>

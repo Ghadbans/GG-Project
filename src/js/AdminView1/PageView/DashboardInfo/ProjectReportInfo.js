@@ -55,7 +55,9 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
-import { PieChart } from '@mui/x-charts';
+import ExcelJS from 'exceljs';
+import { saveAs } from 'file-saver';
+import { Explicit } from '@mui/icons-material';
 
 const PrintTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -150,6 +152,62 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
     setTotalAdvances(projectAdvancesInfo)
     setTotalRevenue(projectRevenue)
   }, [FilterProject, onPayment]);
+
+  const componentRef = useRef();
+  const handlePrint = useReactToPrint({
+    content: () => componentRef.current,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
+  });
+
+  const exportToExcel = async () => {
+    const workbook = new ExcelJS.Workbook();
+    const workSheet = workbook.addWorksheet('Projects Summary');
+    workSheet.columns = [
+      { header: "Project #", key: 'number', width: 15 },
+      { header: "Customer Name", key: 'customer', width: 25 },
+      { header: "Project Name", key: 'name', width: 25 },
+      { header: "Description", key: 'description', width: 30 },
+      { header: "Total Sell ($)", key: 'sell', width: 18 },
+      { header: "Material Cost ($)", key: 'cost', width: 18 },
+      { header: "Expenses ($)", key: 'expenses', width: 18 },
+      { header: "Advances ($)", key: 'advances', width: 18 },
+      { header: "Net Profit ($)", key: 'profit', width: 18 },
+    ];
+
+    (FilterProject || []).forEach(row => {
+      const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A');
+      const relatedCost = (row.relatedPurchase || []).reduce((sum, item) => sum + Number(item.infoCost || 0), 0);
+      const relatedExpenses = (row.expenses || []).reduce((sum, item) => sum + Number(item.total || 0), 0);
+      const relatedSell = (row.relatedPurchase || [])
+        .filter((item) => item.RelatedInvoice !== undefined)
+        .reduce((sum, item) => sum + Number(item.RelatedInvoice.totalInvoice || 0), 0);
+      const projectPayments = (onPayment || []).filter(pay =>
+        pay.status !== 'Voided' &&
+        pay.TotalAmount?.some(item => item.id === row._id)
+      );
+      const advances = projectPayments.reduce((s, pay) => {
+        const amtValue = pay.TotalAmount?.find(i => i.id === row._id)?.total || 0;
+        return s + (pay.transactionType === 'Refund' ? -Number(amtValue) : Number(amtValue));
+      }, 0);
+      const profit = (relatedSell + advances) - (relatedCost + relatedExpenses);
+
+      workSheet.addRow({
+        number: row.projectNumber || '',
+        customer: customerDisplayName,
+        name: row.projectName || '',
+        description: row.description || '',
+        sell: Number(relatedSell.toFixed(2)),
+        cost: Number(relatedCost.toFixed(2)),
+        expenses: Number(relatedExpenses.toFixed(2)),
+        advances: Number(advances.toFixed(2)),
+        profit: Number(profit.toFixed(2))
+      });
+    });
+
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/octet-stream' });
+    saveAs(blob, 'Projects_Report.xlsx');
+  };
 
   function Row(props) {
     const { row } = props;
@@ -472,52 +530,63 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
 
   return (
     <div>
-      <section>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="Options">Options</InputLabel>
-          <Select
-            id="infoOptions"
-            value={infoOptions}
-            onChange={(e) => handleChangeSelected(e)}
-            name="infoOptions"
-            label="Options"
-          >
-            <MenuItem value="Sell">Sell</MenuItem>
-            <MenuItem value="Expenses">Expenses</MenuItem>
-            <MenuItem value="Item Cost">Item Cost</MenuItem>
-            <MenuItem value="Revenue">Revenue</MenuItem>
-          </Select>
-        </FormControl>
-      </section>
-      <br />
-      <section style={{ display: 'flex', alignItems: 'center', gap: '200px' }}>
-        <FormControl sx={{ width: '200px' }}>
-          <InputLabel id="select">select</InputLabel>
-          <Select
-            id="selectOptions"
-            value={selectOptions}
-            onChange={(e) => setSelectOptions(e.target.value)}
-            name="selectOptions"
-            label="select"
-          >
-            <MenuItem value="By Project">By Project</MenuItem>
-            <MenuItem value="All">All</MenuItem>
-          </Select>
-        </FormControl>
-        {
-          selectOptions === 'By Project' &&
-          (
-            <TextField
-              label='Search'
-              id='search2'
-              value={search2}
-              onChange={handleSearch2}
-            />
-          )
-        }
+      <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '20px', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px', flexWrap: 'wrap' }}>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="Options">Options</InputLabel>
+            <Select
+              id="infoOptions"
+              value={infoOptions}
+              onChange={(e) => handleChangeSelected(e)}
+              name="infoOptions"
+              label="Options"
+            >
+              <MenuItem value="Sell">Sell</MenuItem>
+              <MenuItem value="Expenses">Expenses</MenuItem>
+              <MenuItem value="Item Cost">Item Cost</MenuItem>
+              <MenuItem value="Revenue">Revenue</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ width: '200px' }}>
+            <InputLabel id="select">select</InputLabel>
+            <Select
+              id="selectOptions"
+              value={selectOptions}
+              onChange={(e) => setSelectOptions(e.target.value)}
+              name="selectOptions"
+              label="select"
+            >
+              <MenuItem value="By Project">By Project</MenuItem>
+              <MenuItem value="All">All</MenuItem>
+            </Select>
+          </FormControl>
+          {
+            selectOptions === 'By Project' &&
+            (
+              <TextField
+                label='Search'
+                id='search2'
+                value={search2}
+                onChange={handleSearch2}
+              />
+            )
+          }
+        </div>
+        <section style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <PrintTooltip title="Export to Excel">
+            <IconButton onClick={exportToExcel}>
+              <Explicit />
+            </IconButton>
+          </PrintTooltip>
+          <PrintTooltip title="Print">
+            <IconButton onClick={handlePrint}>
+              <LocalPrintshop />
+            </IconButton>
+          </PrintTooltip>
+        </section>
       </section>
       <Box sx={{ padding: '20px' }} component={Paper}>
-        <div style={{ padding: '20px' }}>
+        <div ref={componentRef} style={{ padding: '20px' }}>
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>
