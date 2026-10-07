@@ -126,6 +126,17 @@
     - **Universal Print & Excel Export Integration:** Every dashboard report drilldown must include the standard action pair:
       1. **Excel Export (`[ E ]` / `Explicit` icon):** Generates structured `.xlsx` workbooks via `ExcelJS` and downloads with `file-saver` (e.g. `Maintenance_Operations_Report.xlsx`, `Commercial_Invoices_Report.xlsx`, `POS_Sales_Report.xlsx`, `Projects_Report.xlsx`, `Inventory_Items_Report.xlsx`).
       2. **Print (`[ 🖨️ ]` / `LocalPrintshop` icon):** Invokes `react-to-print` on `componentRef` attached to the printable paper layout, including `PrintHeader` and `PrintFooter`.
+39. **Commercial Invoices Status Summary Filter Cards & Aggregations (Ver 3.5.64)**:
+    - **8 Standard Status Filter Cards:** In `InvoiceViewAdmin.js`, the top status summary cards grid must always render all 8 standard statuses:
+      1. `ALL ORDERS` (`#30368a`, `AssignmentIcon`, `key: 'ALL'`)
+      2. `PAID` (`#16a34a`, `CheckCircleIcon`, `key: 'Paid'`)
+      3. `PARTIALLY-PAID` (`#d97706`, `PaymentsIcon`, `key: 'Partially-Paid'`)
+      4. `DRAFT` (`#78909c`, `EditNoteIcon`, `key: 'Draft'`)
+      5. `SENT` (`#1976d2`, `SendIcon`, `key: 'Sent'`)
+      6. `PENDING` (`#801313`, `HourglassEmptyIcon`, `key: 'Pending'`)
+      7. `DECLINE` (`#d32f2f`, `CancelIcon`, `key: 'Decline'`)
+      8. `FREE OF CHARGE` (`#9c27b0`, `CardGiftcardIcon`, `key: 'Free of Charge'`)
+    - **Backend Match & Aggregation (`server/routes/invoiceRoutes.js`):** In `GET /invoice-Information`, the `status` query filter and MongoDB `$group` status aggregation must support `paid` (`/^paid$/i`) and `partially-paid` (`/^partially[- ]?paid$/i`) to ensure accurate card counts and instant single-click server-side DataGrid filtering.
 
 ## Current Progress Log
 - **Maintenance Module Rate & Price Edit Permissions for CEO & Admin vs USER Level (Ver 3.5.60)**:
