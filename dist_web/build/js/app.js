@@ -82570,60 +82570,98 @@ function DailyExpensesReportInfo(_ref3) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
   }, "Statement of Accounts - Daily Expenses"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
   }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month, " ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(startDate).format('YYYY'))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Daily Expenses Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Transactions")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Transactions")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, filterMonthExpenses.length, " Records"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, filterMonthExpenses.length, " Records"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderTop: '1px solid black',
+      padding: '7px 14px',
       fontWeight: 'bold',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderTop: '1px solid black',
+      padding: '7px 14px',
       fontWeight: 'bold',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#dc2626'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
     style: {}
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "secondTable",
@@ -82708,71 +82746,111 @@ function DailyExpensesReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
   }, "Statement of Accounts - Daily Expenses"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
   }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month, " ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(startDate).format('YYYY'))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Daily Expenses Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Transactions")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Transactions")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, filterMonthExpenses.length, " Records"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, filterMonthExpenses.length, " Records"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderTop: '1px solid black',
+      padding: '7px 14px',
       fontWeight: 'bold',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderTop: '1px solid black',
+      padding: '7px 14px',
       fontWeight: 'bold',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#dc2626'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "secondTable",
     style: {
       fontSize: '70%',
@@ -83774,81 +83852,133 @@ function InvoiceReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Statement of Accounts - Commercial Invoices"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Commercial Invoices Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Sell")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Sell")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Cost")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Cost")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Revenue")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Revenue")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -83943,33 +84073,34 @@ function InvoiceReportInfo(_ref3) {
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(73896);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(69067);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(33198);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(64137);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(96627);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(86798);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(70691);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(43884);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(11848);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(71510);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(58331);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_24___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_24__);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(57240);
-/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_25__);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(40301);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(65821);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(95236);
-/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(19873);
-/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(67415);
-/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(41845);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(72761);
-/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_35__);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(33198);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(64137);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(96627);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(86798);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(70691);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(43884);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(11848);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(71510);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(58331);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_25___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_25__);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(57240);
+/* harmony import */ var react_to_print__WEBPACK_IMPORTED_MODULE_26___default = /*#__PURE__*/__webpack_require__.n(react_to_print__WEBPACK_IMPORTED_MODULE_26__);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(40301);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(65821);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(95236);
+/* harmony import */ var _mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(19873);
+/* harmony import */ var _mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(67415);
+/* harmony import */ var _mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(41845);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(72761);
+/* harmony import */ var _img_images_png__WEBPACK_IMPORTED_MODULE_36___default = /*#__PURE__*/__webpack_require__.n(_img_images_png__WEBPACK_IMPORTED_MODULE_36__);
 var _excluded = ["className"];
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -84046,10 +84177,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_ref => {
+var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -84057,7 +84188,7 @@ var PrintTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] 
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'white',
       color: 'black',
       boxShadow: theme.shadows[1],
@@ -84120,7 +84251,7 @@ function ItemReportInfo(_ref3) {
       var _ref4 = _asyncToGenerator(function* () {
         try {
           var _resNotification$data;
-          var resNotification = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_20__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_21__/* .ENDPOINT_URL */ .m, "/notification"));
+          var resNotification = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_21__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_22__/* .ENDPOINT_URL */ .m, "/notification"));
           var fetchData = (_resNotification$data = resNotification.data) === null || _resNotification$data === void 0 || (_resNotification$data = _resNotification$data.data) === null || _resNotification$data === void 0 ? void 0 : _resNotification$data.filter(item => item.person && item.person.endsWith(' Created'));
           setNotification(fetchData || []);
         } catch (error) {
@@ -84139,7 +84270,7 @@ function ItemReportInfo(_ref3) {
       setItem(onItem.filter(row => row.typeItem === 'Goods').map(row => {
         var relatedInvoice = notification.find(item => item.idInfo === row._id);
         return _objectSpread(_objectSpread({}, row), {}, {
-          CreatedDate: row.Creates !== undefined ? row.Creates.dateComment : dayjs__WEBPACK_IMPORTED_MODULE_24___default()(relatedInvoice === null || relatedInvoice === void 0 ? void 0 : relatedInvoice.dateNotification).format('DD/MM/YYYY'),
+          CreatedDate: row.Creates !== undefined ? row.Creates.dateComment : dayjs__WEBPACK_IMPORTED_MODULE_25___default()(relatedInvoice === null || relatedInvoice === void 0 ? void 0 : relatedInvoice.dateNotification).format('DD/MM/YYYY'),
           Person: row.Creates !== undefined ? row.Creates.person : relatedInvoice === null || relatedInvoice === void 0 ? void 0 : relatedInvoice.person
         });
       }));
@@ -84156,7 +84287,7 @@ function ItemReportInfo(_ref3) {
       setFilterItem(item === null || item === void 0 ? void 0 : item.filter(row => row.itemQuantity <= 0));
     } else if (infoOptions === 'Added Today') {
       var date = new Date();
-      var today = dayjs__WEBPACK_IMPORTED_MODULE_24___default()(date).format('DD/MM/YYYY');
+      var today = dayjs__WEBPACK_IMPORTED_MODULE_25___default()(date).format('DD/MM/YYYY');
       setFilterItem(item === null || item === void 0 ? void 0 : item.filter(row => row.CreatedDate === today));
     }
   }, [infoOptions, item, itemCategory]);
@@ -84248,47 +84379,45 @@ function ItemReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'center',
+      marginTop: '20px',
+      marginBottom: '15px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
-    style: {
-      position: 'relative',
-      lineHeight: 1.35,
-      width: '60%'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "h6",
+    sx: {
+      color: '#093170',
+      fontWeight: 'bold',
+      fontSize: '16px'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
-    className: "firstTable",
-    style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
-      pageBreakInside: 'auto'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    label: "Search",
+  }, "Inventory Items Summary (", infoOptions, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    size: "small",
+    label: "Search Item",
     id: "search2",
     value: search2,
-    onChange: handleSearch2
-  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    onChange: handleSearch2,
+    sx: {
+      width: '280px'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "left"
-  }, "itemName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "itemName"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "left"
-  }, "itemBrand"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "itemBrand"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "left"
-  }, "itemDescription"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "itemDescription"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "right"
-  }, "Stock"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, newArray.map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  }, "Stock"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, newArray.map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     key: row._id
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, row.itemUpc ? "".concat(row.itemUpc.newCode, "-").concat(row.itemUpc.itemNumber) : 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, row.itemUpc ? "".concat(row.itemUpc.newCode, "-").concat(row.itemUpc.itemNumber) : 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "left"
-  }, row.itemName || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, row.itemName || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "left"
-  }, row.itemBrand || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, row.itemBrand || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "left"
-  }, row.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, row.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     align: "right"
   }, Number(row.itemQuantity || 0).toLocaleString()))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
     className: "footerinvoice"
@@ -84298,19 +84427,19 @@ function ItemReportInfo(_ref3) {
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Contact@GlobalGate.Sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Email__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Contact@GlobalGate.Sarl")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
       display: 'flex',
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "+243 827 722 222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Phone__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "+243 827 722 222")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
       display: 'flex',
       gap: '5px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "www.GlobalGate.sarl"))))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_Web__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "www.GlobalGate.sarl"))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemReportInfo);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
@@ -85482,93 +85611,157 @@ function MaintenanceReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Statement of Accounts - Maintenance Operations"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Maintenance Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Sell")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Sell")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Cost")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Cost")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Revenue")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Revenue")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Labor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Labor")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Labor' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, (infoOptions === 'Labor' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#059669'
+    }
+  }, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -86324,70 +86517,120 @@ function PayRollReportInfo(_ref3) {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Statement of Accounts - Payroll"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "PayRoll Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total PayRoll")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total PayRoll")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Item Purchase")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalItemPurchase || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
     style: {}
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "secondTable",
@@ -86472,81 +86715,133 @@ function PayRollReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Statement of Accounts - Payroll"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_16___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_16___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "PayRoll Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total PayRoll")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total PayRoll")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Item Purchase")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalItemPurchase || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Daily Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "secondTable",
     style: {
       fontSize: '70%',
@@ -87426,93 +87721,157 @@ function PosReportInvoice(_ref) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Statement of Accounts - POS Sales"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_22___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_22___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "POS Sales Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Sell")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Sell")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Cost")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Cost")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Profit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Profit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalProfit || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalProfit || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Tax")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Tax")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#059669'
+    }
+  }, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     align: "left"
@@ -88473,105 +88832,181 @@ function ProjectReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Statement of Accounts - Projects"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_27___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_27___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_27___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_27___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_27___default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_27___default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, dayjs__WEBPACK_IMPORTED_MODULE_27___default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs__WEBPACK_IMPORTED_MODULE_27___default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "For ", month)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Project Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Invoiced")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Invoiced")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Advances Received")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Advances Received")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalAdvances || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalAdvances || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Expenses")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, "       ", (infoOptions === 'Expenses' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "       ", (infoOptions === 'Expenses' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Item Purchase")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Item Cost' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalItemPurchase || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Item Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalItemPurchase || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Net Profit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Net Profit")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -121235,7 +121670,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.61"};
+module.exports = {"rE":"3.5.62"};
 
 /***/ },
 
@@ -127944,103 +128379,147 @@ function PaymentReportInf(_ref3) {
   }), /*#__PURE__*/react.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react.createElement("thead", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, "Statement of Accounts - Payments Received"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
   }, selectOptions === 'Year' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs_min_default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs_min_default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react.createElement("span", null, "For ", month)))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
-  }, "Transaction Summary")), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, "Payment & Revenue Summary")), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total PayRoll")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Payment")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Expenses")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
-      backgroundColor: 'white',
-      border: 'none',
+      backgroundColor: '#f0fdf4',
+      padding: '8px 14px',
+      fontSize: '13px',
+      fontWeight: 'bold',
+      color: '#166534',
+      borderBottom: '1px solid #bbf7d0',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Revenue")), /*#__PURE__*/react.createElement("td", {
     style: {
-      backgroundColor: 'white',
-      border: 'none',
+      backgroundColor: '#f0fdf4',
+      padding: '8px 14px',
+      fontSize: '13px',
+      fontWeight: 'bold',
+      color: '#166534',
+      borderBottom: '1px solid #bbf7d0',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react.createElement("section", {
@@ -128155,103 +128634,147 @@ function PaymentReportInf(_ref3) {
   })), /*#__PURE__*/react.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react.createElement("thead", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, "Statement of Accounts - Payments Received"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
   }, selectOptions === 'Year' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs_min_default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs_min_default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react.createElement("span", null, "For ", month)))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
-  }, "Transaction Summary")), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, "Payment & Revenue Summary")), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total PayRoll")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Payment")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Total Expenses")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      padding: '7px 14px',
+      fontSize: '13px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
-      backgroundColor: 'white',
-      border: 'none',
+      backgroundColor: '#f0fdf4',
+      padding: '8px 14px',
+      fontSize: '13px',
+      fontWeight: 'bold',
+      color: '#166534',
+      borderBottom: '1px solid #bbf7d0',
       textAlign: 'left'
     }
   }, /*#__PURE__*/react.createElement("span", null, "Revenue")), /*#__PURE__*/react.createElement("td", {
     style: {
-      backgroundColor: 'white',
-      border: 'none',
+      backgroundColor: '#f0fdf4',
+      padding: '8px 14px',
+      fontSize: '13px',
+      fontWeight: 'bold',
+      color: '#166534',
+      borderBottom: '1px solid #bbf7d0',
       textAlign: 'right'
     }
   }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react.createElement("table", {
@@ -128884,70 +129407,120 @@ function ItemPurchaseReportInfo(_ref3) {
   }), /*#__PURE__*/react.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react.createElement("thead", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, "Statement of Accounts - Item Purchases"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs_min_default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs_min_default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react.createElement("span", null, "For ", month)))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs_min_default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs_min_default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react.createElement("span", null, "For ", month)))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Item Purchase Summary")), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "Total PayRoll")), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Item Purchase")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalItemPurchase || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total PayRoll")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Daily Expenses")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react.createElement("section", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react.createElement("section", {
     style: {}
   }, /*#__PURE__*/react.createElement("table", {
     className: "secondTable",
@@ -129032,81 +129605,133 @@ function ItemPurchaseReportInfo(_ref3) {
     style: {
       display: 'flex',
       justifyContent: 'space-between',
-      marginTop: '25px'
+      alignItems: 'flex-start',
+      marginTop: '25px',
+      marginBottom: '15px'
     }
   }, /*#__PURE__*/react.createElement("address", {
     style: {
       position: 'relative',
       lineHeight: 1.35,
-      width: '60%'
+      width: '50%'
     }
   }), /*#__PURE__*/react.createElement("table", {
     className: "firstTable",
     style: {
-      position: 'relative',
-      fontSize: '70%',
-      left: '83px',
-      marginBottom: '10px',
+      minWidth: '360px',
+      fontSize: '13px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      marginBottom: '15px',
       pageBreakInside: 'auto'
     }
   }, /*#__PURE__*/react.createElement("thead", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("th", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
-      textAlign: 'left'
+      backgroundColor: '#093170',
+      color: '#ffffff',
+      padding: '9px 14px',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      textAlign: 'left',
+      letterSpacing: '0.3px'
     }
-  }, "Statement of Accounts"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, "Statement of Accounts - Item Purchases"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
-      backgroundColor: 'white',
-      borderBottom: '1px solid black',
+      backgroundColor: '#f8fafc',
+      color: '#475569',
+      padding: '7px 14px',
+      fontSize: '12px',
+      fontWeight: 600,
+      borderBottom: '1px solid #e2e8f0',
       textAlign: 'right'
     }
-  }, selectOptions === 'Year' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs_min_default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs_min_default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react.createElement("span", null, "All Transaction"), selectOptions === 'Month' && /*#__PURE__*/react.createElement("span", null, "For ", month)))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, selectOptions === 'Year' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY'), " To ", dayjs_min_default()(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')), selectOptions === 'Custom' && /*#__PURE__*/react.createElement("span", null, dayjs_min_default()(fromDate).format('DD/MM/YYYY'), " To ", dayjs_min_default()(endDate).format('DD/MM/YYYY')), selectOptions === 'All' && /*#__PURE__*/react.createElement("span", null, "All Transactions"), selectOptions === 'Month' && /*#__PURE__*/react.createElement("span", null, "For ", month)))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     colSpan: 2,
     style: {
       backgroundColor: '#e8f7fe',
-      border: 'none',
+      color: '#0369a1',
+      padding: '7px 14px',
+      fontSize: '12.5px',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd',
       textAlign: 'left'
     }
   }, "Item Purchase Summary")), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "Total PayRoll")), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Item Purchase")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 700,
+      color: '#093170'
+    }
+  }, "$".concat((TotalItemPurchase || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "Total Item Purchase")), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total PayRoll")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
+      borderBottom: '1px solid #f1f5f9',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalItemPurchase.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "Total Daily Expenses")), /*#__PURE__*/react.createElement("td", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 500,
+      color: '#334155'
+    }
+  }, "Total Daily Expenses")), /*#__PURE__*/react.createElement("td", {
     style: {
       backgroundColor: 'white',
-      border: 'none',
+      padding: '7px 14px',
       textAlign: 'right'
     }
-  }, /*#__PURE__*/react.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react.createElement("table", {
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
+      fontWeight: 600,
+      color: '#0f172a'
+    }
+  }, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), /*#__PURE__*/react.createElement("table", {
     className: "secondTable",
     style: {
       fontSize: '70%',

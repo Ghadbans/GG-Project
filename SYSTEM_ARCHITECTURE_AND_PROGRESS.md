@@ -1468,6 +1468,33 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.61.exe` generated.
 
+- **Dashboard Statement of Accounts Professional Layout & Module Branding Standardization (Ver 3.5.62)**:
+  - **Problem Reported:**
+    1. Across all Dashboard Statement of Accounts drilldowns, the top-right Statement table was cramped, difficult to read, and compressed (`fontSize: '70%'`, `left: '83px'`).
+    2. All Statement tables used the generic and ambiguous title "Statement of Accounts" instead of distinguishing which module's statement was being viewed.
+    3. User requested a professional layout overhaul across all dashboard Statement of Accounts cards with clear typography, consistent branding, appropriate spacing, and specific titles (e.g. `Statement of Accounts - Commercial Invoices`, `Statement of Accounts - Maintenance Operations`, `Statement of Accounts - POS Sales`, etc.).
+  - **Architectural Resolution:**
+    1. **Design System & Typography Standardization:**
+       - Replaced cramped inline offsets with structured card containers (`minWidth: '360px'`, `fontSize: '13px'`, `borderCollapse: 'collapse'`, `border: '1px solid #cbd5e1'`, `borderRadius: '6px'`, `boxShadow: '0 2px 4px rgba(0,0,0,0.05)'`).
+       - Implemented branded table header rows (`backgroundColor: '#093170'`, `color: '#ffffff'`, `padding: '9px 14px'`, `fontSize: '13.5px'`, `fontWeight: 'bold'`, `letterSpacing: '0.3px'`).
+       - Standardized section banner styles (`backgroundColor: '#e8f7fe'`, `color: '#0369a1'`, `padding: '7px 14px'`, `fontSize: '12.5px'`, `fontWeight: 'bold'`, `borderBottom: '1px solid #bae6fd'`).
+       - Highlighted bottom total and net revenue rows with clean green accents (`backgroundColor: '#f0fdf4'`, `color: '#166534'`, `fontWeight: 'bold'`).
+    2. **Module-Specific Statement Titles Updated Across All Reports (Print & Screen):**
+       - `InvoiceReportInfo.js`: `Statement of Accounts - Commercial Invoices` + `Commercial Invoices Summary`
+       - `MaintenanceReportInfo.js`: `Statement of Accounts - Maintenance Operations` + `Maintenance Summary`
+       - `PosReportInvoice.js`: `Statement of Accounts - POS Sales` + `POS Sales Summary`
+       - `ProjectReportInfo.js`: `Statement of Accounts - Projects` + `Project Summary`
+       - `DailyExpensesReportInfo.js`: `Statement of Accounts - Daily Expenses` + `Expenses Summary`
+       - `ItemPurchaseReportInfo.js`: `Statement of Accounts - Item Purchases` + `Item Purchases Summary`
+       - `PayRollReportInfo.js`: `Statement of Accounts - Payroll` + `Payroll Summary`
+       - `PaymentReportInf.js`: `Statement of Accounts - Payments Received` + `Payment & Revenue Summary`
+       - `ItemReportInfo.js`: Modernized header and search bar (`Inventory Items Summary`).
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.62.exe` generated.
+
+
 
 
 

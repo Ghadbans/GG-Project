@@ -482,19 +482,19 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>
-            <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
-              <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
+            <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginTop: '25px', marginBottom: '15px' }}>
+              <address style={{ position: 'relative', lineHeight: 1.35, width: '50%' }}>
 
               </address>
-              <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
+              <table className="firstTable" style={{ minWidth: '360px', fontSize: '13px', borderCollapse: 'collapse', border: '1px solid #cbd5e1', borderRadius: '6px', overflow: 'hidden', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', marginBottom: '15px', pageBreakInside: 'auto' }}>
                 <thead>
                   <tr>
-                    <th colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'left' }}>Statement of Accounts</th>
+                    <th colSpan={2} style={{ backgroundColor: '#093170', color: '#ffffff', padding: '9px 14px', fontSize: '13.5px', fontWeight: 'bold', textAlign: 'left', letterSpacing: '0.3px' }}>Statement of Accounts - POS Sales</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td colSpan={2} style={{ backgroundColor: 'white', borderBottom: '1px solid black', textAlign: 'right' }}>
+                    <td colSpan={2} style={{ backgroundColor: '#f8fafc', color: '#475569', padding: '7px 14px', fontSize: '12px', fontWeight: 600, borderBottom: '1px solid #e2e8f0', textAlign: 'right' }}>
                       {
                         selectOptions === 'Year' && (<span>
                           {dayjs(new Date(transactionYears, 0, 1)).format('DD/MM/YYYY')} To {dayjs(new Date(transactionYears, 11, 31)).format('DD/MM/YYYY')}
@@ -507,7 +507,7 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                       }
                       {
                         selectOptions === 'All' && (<span>
-                          All Transaction
+                          All Transactions
                         </span>)
                       }
                       {
@@ -520,40 +520,40 @@ function PosReportInvoice({ onMonth, onInvoice, onMonthOption, OnAllSelection })
                 </tbody>
                 <tbody>
                   <tr>
-                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>POS Sales Summary</td>
+                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', color: '#0369a1', padding: '7px 14px', fontSize: '12.5px', fontWeight: 'bold', borderBottom: '1px solid #bae6fd', textAlign: 'left' }}>POS Sales Summary</td>
                   </tr>
                   <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Sell</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', borderBottom: '1px solid #f1f5f9', textAlign: 'left' }}><span style={{ fontWeight: 500, color: '#334155' }}>Total Sell</span></td>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', borderBottom: '1px solid #f1f5f9', textAlign: 'right' }}>
                       {
                         (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && (
-                          <span >{`$${(TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                          <span style={{ fontWeight: 600, color: '#0f172a' }}>{`$${(TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                         )}</td>
 
                   </tr>
                   <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Cost</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>       {
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', borderBottom: '1px solid #f1f5f9', textAlign: 'left' }}><span style={{ fontWeight: 500, color: '#334155' }}>Total Cost</span></td>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', borderBottom: '1px solid #f1f5f9', textAlign: 'right' }}>       {
                       (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && (
-                        <span >{`$${(TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                        <span style={{ fontWeight: 600, color: '#0f172a' }}>{`$${(TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                       )}</td>
                   </tr>
                   <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Profit</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', borderBottom: '1px solid #f1f5f9', textAlign: 'left' }}><span style={{ fontWeight: 500, color: '#334155' }}>Total Profit</span></td>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', borderBottom: '1px solid #f1f5f9', textAlign: 'right' }}>
                       {
                         (infoOptions === 'Revenue' || infoOptions === 'All') && (
-                          <span >{`$${(TotalProfit || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                          <span style={{ fontWeight: 700, color: '#093170' }}>{`$${(TotalProfit || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                         )
                       }</td>
 
                   </tr>
                   <tr>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Tax</span></td>
-                    <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', textAlign: 'left' }}><span style={{ fontWeight: 500, color: '#334155' }}>Total Tax</span></td>
+                    <td style={{ backgroundColor: 'white', padding: '7px 14px', textAlign: 'right' }}>
                       {
                         (infoOptions === 'Revenue' || infoOptions === 'All') && (
-                          <span >{`$${(TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                          <span style={{ fontWeight: 600, color: '#059669' }}>{`$${(TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                         )
                       }</td>
                   </tr>

@@ -199,26 +199,18 @@ function ItemReportInfo({ onMonth, onItem }) {
           <PrintHeader branchId={typeof row !== "undefined" ? row?.branchId : typeof data !== "undefined" ? data?.branchId : ""} />
           <hr /><p className='invoicehr'></p>
           <article>
-            <section style={{ display: 'flex', justifyContent: 'space-between', marginTop: '25px' }}>
-              <address style={{ position: 'relative', lineHeight: 1.35, width: '60%' }}>
-
-              </address>
-              <table className="firstTable" style={{ position: 'relative', fontSize: '70%', left: '83px', marginBottom: '10px', pageBreakInside: 'auto' }}>
-                <tbody>
-                  <tr>
-                    <th></th>
-                    <td>
-                      <TextField
-                        label='Search'
-                        id='search2'
-                        value={search2}
-                        onChange={handleSearch2}
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-
-              </table>
+            <section style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '20px', marginBottom: '15px' }}>
+              <Typography variant="h6" sx={{ color: '#093170', fontWeight: 'bold', fontSize: '16px' }}>
+                Inventory Items Summary ({infoOptions})
+              </Typography>
+              <TextField
+                size="small"
+                label="Search Item"
+                id="search2"
+                value={search2}
+                onChange={handleSearch2}
+                sx={{ width: '280px' }}
+              />
             </section>
             <TableContainer >
               <Table aria-label="collapsible table">
