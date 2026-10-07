@@ -219,6 +219,10 @@ Route.route("/invoice-Information").get(async (req, res) => {
         query.status = { $regex: /^decline$/i };
       } else if (s === 'free of charge') {
         query.status = { $regex: /^free of charge$/i };
+      } else if (s === 'paid') {
+        query.status = { $regex: /^paid$/i };
+      } else if (s === 'partially-paid' || s === 'partially paid' || s === 'partiallypaid') {
+        query.status = { $regex: /^partially[- ]?paid$/i };
       } else {
         query.status = new RegExp(`^${status.trim()}$`, 'i');
       }
@@ -382,7 +386,9 @@ Route.route("/invoice-Information").get(async (req, res) => {
       sent: 0,
       pending: 0,
       decline: 0,
-      freeOfCharge: 0
+      freeOfCharge: 0,
+      paid: 0,
+      partiallyPaid: 0
     };
 
     statusAggregation.forEach(item => {
@@ -394,6 +400,8 @@ Route.route("/invoice-Information").get(async (req, res) => {
       else if (key === 'pending') statusCounts.pending += cnt;
       else if (key === 'decline') statusCounts.decline += cnt;
       else if (key === 'free of charge') statusCounts.freeOfCharge += cnt;
+      else if (key === 'paid') statusCounts.paid += cnt;
+      else if (key === 'partially-paid' || key === 'partially paid' || key === 'partiallypaid') statusCounts.partiallyPaid += cnt;
     });
 
     res.status(200).json({ itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)), statusCounts });

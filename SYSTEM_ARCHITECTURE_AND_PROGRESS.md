@@ -1517,6 +1517,24 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.63.exe` generated.
 
+- **Commercial Invoices Paid & Partially-Paid Status Filter Cards & Backend Aggregation (Ver 3.5.64)**:
+  - **Problem Reported:**
+    1. In the Commercial Invoices listing view (`InvoiceViewAdmin.js`), the top summary card row previously contained: `ALL ORDERS`, `DRAFT`, `SENT`, `PENDING`, `DECLINE`, and `FREE OF CHARGE`.
+    2. The user requested adding two new status cards: **`PAID`** and **`PARTIALLY-PAID`** to show the total invoice count for each status and allow one-click filtering to display only matching invoices.
+  - **Architectural Resolution:**
+    1. **Frontend (`InvoiceViewAdmin.js`):**
+       - Extended `statusCounts` state to track `paid` and `partiallyPaid` counts.
+       - Added `PAID` (`#16a34a` green badge with `CheckCircleIcon`, key: `'Paid'`) and `PARTIALLY-PAID` (`#d97706` amber badge with `PaymentsIcon`, key: `'Partially-Paid'`) filter cards.
+       - Adjusted responsive grid layout to `xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)', md: 'repeat(8, 1fr)'` so all 8 cards align smoothly across top navigation.
+       - Clicking either card instantly filters the server-side queried invoice DataGrid list.
+    2. **Backend (`server/routes/invoiceRoutes.js`):**
+       - Updated `GET /invoice-Information` status parameter filter to match `paid` (`/^paid$/i`) and `partially-paid` (`/^partially[- ]?paid$/i`).
+       - Updated the MongoDB `$group` status aggregation logic to compute `statusCounts.paid` and `statusCounts.partiallyPaid` across all branch-scoped invoices.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 229 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.64.exe` generated.
+
 
 
 

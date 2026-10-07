@@ -26,7 +26,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
-import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon } from '@mui/icons-material';
+import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, HourglassEmpty as HourglassEmptyIcon, Cancel as CancelIcon, CardGiftcard as CardGiftcardIcon, Payments as PaymentsIcon, CheckCircleOutline as CheckCircleOutlineIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -192,7 +192,9 @@ function InvoiceViewAdmin() {
     sent: 0,
     pending: 0,
     decline: 0,
-    freeOfCharge: 0
+    freeOfCharge: 0,
+    paid: 0,
+    partiallyPaid: 0,
   });
 
   const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
@@ -828,8 +830,8 @@ function InvoiceViewAdmin() {
                 display: 'grid',
                 gridTemplateColumns: {
                   xs: 'repeat(2, 1fr)',
-                  sm: 'repeat(3, 1fr)',
-                  md: 'repeat(6, 1fr)',
+                  sm: 'repeat(4, 1fr)',
+                  md: 'repeat(8, 1fr)',
                 },
                 gap: 1,
                 mb: 0.75,
@@ -838,6 +840,8 @@ function InvoiceViewAdmin() {
             >
               {[
                 { key: 'ALL', label: 'ALL ORDERS', count: statusCounts.all, color: '#30368a', bgLight: '#eef2ff', icon: <AssignmentIcon sx={{ fontSize: 15, color: '#30368a' }} /> },
+                { key: 'Paid', label: 'PAID', count: statusCounts.paid, color: '#16a34a', bgLight: '#dcfce7', icon: <CheckCircleIcon sx={{ fontSize: 15, color: '#16a34a' }} /> },
+                { key: 'Partially-Paid', label: 'PARTIALLY-PAID', count: statusCounts.partiallyPaid, color: '#d97706', bgLight: '#fef3c7', icon: <PaymentsIcon sx={{ fontSize: 15, color: '#d97706' }} /> },
                 { key: 'Draft', label: 'DRAFT', count: statusCounts.draft, color: '#78909c', bgLight: '#eceff1', icon: <EditNoteIcon sx={{ fontSize: 15, color: '#78909c' }} /> },
                 { key: 'Sent', label: 'SENT', count: statusCounts.sent, color: '#1976d2', bgLight: '#e3f2fd', icon: <SendIcon sx={{ fontSize: 15, color: '#1976d2' }} /> },
                 { key: 'Pending', label: 'PENDING', count: statusCounts.pending, color: '#801313', bgLight: '#fbe9e7', icon: <HourglassEmptyIcon sx={{ fontSize: 15, color: '#801313' }} /> },
