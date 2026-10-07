@@ -90,38 +90,33 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
   const [maintenanceRevenue, setMaintenanceRevenue] = useState([]);
 
   useEffect(() => {
+    if (onMaintenance) {
+      setMaintenanceRevenue(onMaintenance);
+    }
     if (onMonth) {
       setInfoOptions(onMonth);
-      setMaintenanceRevenue(onMaintenance);
     }
   }, [onMonth, onMaintenance]);
 
-  const [filteredData, setFilteredData] = useState([]);
-
+  const [FilterMaintenanceRevenue, setFilterMaintenanceRevenue] = useState([]);
   useEffect(() => {
-    const headers = [];
-    const currentDate = new Date(fromDate);
-    while (currentDate <= endDate) {
-      headers.push(currentDate.toDateString());
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    setFilteredData(headers)
-  }, [fromDate, endDate])
-
-  const [FilterMaintenanceRevenue, setFilterMaintenanceRevenue] = useState([])
-  useEffect(() => {
-    if (selectOptions === 'Month') {
-      setFilterMaintenanceRevenue(maintenanceRevenue?.filter((row) => dayjs(row.serviceDate).format('MMMM') === month))
+    if (!selectOptions || selectOptions === 'All') {
+      setFilterMaintenanceRevenue(maintenanceRevenue || []);
+    } else if (selectOptions === 'Month') {
+      setFilterMaintenanceRevenue((maintenanceRevenue || []).filter((row) => dayjs(row.serviceDate).format('MMMM') === month && (dayjs(row.serviceDate).format('YYYY') === dayjs(startDate).format('YYYY'))));
     } else if (selectOptions === 'Year') {
-      setFilterMaintenanceRevenue(maintenanceRevenue?.filter((row) => dayjs(row.serviceDate).format('YYYY') === dayjs(startDate).format('YYYY')))
+      setFilterMaintenanceRevenue((maintenanceRevenue || []).filter((row) => dayjs(row.serviceDate).format('YYYY') === dayjs(startDate).format('YYYY')));
+    } else if (selectOptions === 'Custom') {
+      const start = dayjs(fromDate).startOf('day');
+      const end = dayjs(endDate).endOf('day');
+      const isBetween = (d) => {
+        if (!d) return false;
+        const day = dayjs(d);
+        return (day.isAfter(start) || day.isSame(start)) && (day.isBefore(end) || day.isSame(end));
+      };
+      setFilterMaintenanceRevenue((maintenanceRevenue || []).filter((row) => isBetween(row.serviceDate)));
     }
-    else if (selectOptions === 'Custom') {
-      setFilterMaintenanceRevenue(maintenanceRevenue?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.serviceDate).format('DD/MM/YYYY'))))
-    }
-    else if (selectOptions === 'All') {
-      setFilterMaintenanceRevenue(maintenanceRevenue)
-    }
-  }, [selectOptions, month, startDate, filteredData, maintenanceRevenue])
+  }, [selectOptions, month, startDate, fromDate, endDate, maintenanceRevenue]);
 
   const handleChangeSelected = (e) => {
     setInfoOptions(e.target.value);
@@ -132,19 +127,35 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
   const [TotalPayRoll, setTotalPayRoll] = useState(0);
   const [TotalPayment, setTotalPayment] = useState(0);
   const [TotalRevenue, setTotalRevenue] = useState(0);
+
   useEffect(() => {
-    const TPayment = FilterMaintenanceRevenue.length > 0 ? FilterMaintenanceRevenue.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + parseFloat(item.itemAmount), 0) }, 0) : 0
-    const TCost = FilterMaintenanceRevenue.length > 0 ? FilterMaintenanceRevenue.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + parseFloat(item.totalCostInfo), 0) }, 0) : 0
-    const TLabor = FilterMaintenanceRevenue.length > 0 ? FilterMaintenanceRevenue.filter((row) => row.totalLaborFeesGenerale !== undefined).reduce((sum, row) => sum + row.totalLaborFeesGenerale, 0) : 0
-    setTotalRevenue(TPayment)
-    setTotalDExpenses(TCost)
-    setTotalPayRoll(TPayment - TCost)
-    setTotalPayment(TLabor)
+    const TSell = (FilterMaintenanceRevenue || []).reduce((acc, row) => {
+      const rowSell = (row.infoSell !== undefined && !isNaN(row.infoSell))
+        ? parseFloat(row.infoSell)
+        : ((parseFloat(row.subTotal) || 0) || (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemAmount) || (parseFloat(item.itemQty || 0) * parseFloat(item.itemRate || 0)) || 0), 0));
+      return acc + (isFinite(rowSell) ? rowSell : 0);
+    }, 0);
+
+    const TCost = (FilterMaintenanceRevenue || []).reduce((acc, row) => {
+      const rowCost = (row.infoCost !== undefined && !isNaN(row.infoCost))
+        ? parseFloat(row.infoCost)
+        : (row.items || []).reduce((sum, item) => sum + ((parseFloat(item.itemOut !== undefined ? item.itemOut : (item.itemQty || 0)) * parseFloat(item.itemCost !== undefined ? item.itemCost : (item.costPrice || item.itemCostPrice || 0))) || 0), 0);
+      return acc + (isFinite(rowCost) ? rowCost : 0);
+    }, 0);
+
+    const TLabor = (FilterMaintenanceRevenue || []).reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0);
+
+    setTotalRevenue(TSell);
+    setTotalDExpenses(TCost);
+    setTotalPayRoll(TSell - TCost);
+    setTotalPayment(TLabor);
   }, [FilterMaintenanceRevenue]);
 
   function Row(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : '');
+    const rowSell = (row.infoSell !== undefined && !isNaN(row.infoSell)) ? parseFloat(row.infoSell) : (parseFloat(row.subTotal) || 0);
 
     return (
       <React.Fragment>
@@ -159,14 +170,14 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {`M-${row.serviceNumber}`}
+            {`M-${row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, '')}`}
           </TableCell>
           <TableCell component="th" scope="row">
             {dayjs(row.serviceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="left">{row.defectDescription}</TableCell>
-          <TableCell align="right">$ {(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="left">{customerDisplayName}</TableCell>
+          <TableCell align="left">{row.defectDescription || row.defect || ''}</TableCell>
+          <TableCell align="right">$ {rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -188,25 +199,25 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                   </thead>
                   <tbody>
                     {
-                      row.items.map((Item, i) => {
+                      (row.items || []).map((Item, i) => {
                         return (
-                          <tr key={Item.idRow}>
+                          <tr key={Item.idRow || i}>
                             {
                               Item.newDescription !== undefined ?
                                 (
                                   <>
-                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
+                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={6}>{Item.newDescription}</td>
                                   </>
                                 )
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
-                                    <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
-                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
-                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span>{Item.itemName?.itemName ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')}</span></td>
+                                    <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription || ''}</td>
+                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemQty || 0} </td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{(parseFloat(Item.itemRate) || 0).toFixed(2)}</td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount || 0}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(parseFloat(Item.itemAmount) || (parseFloat(Item.itemQty || 0) * parseFloat(Item.itemRate || 0)) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>
                                 )
                             }
@@ -218,7 +229,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>{(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>${rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
 
                   </tbody>
@@ -233,6 +244,8 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
   function Row2(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : '');
+    const rowCost = (row.infoCost !== undefined && !isNaN(row.infoCost)) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + ((parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : (item.costPrice || item.itemCostPrice || 0))) || 0), 0);
 
     return (
       <React.Fragment>
@@ -247,14 +260,14 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {`M-${row.serviceNumber}`}
+            {`M-${row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, '')}`}
           </TableCell>
           <TableCell component="th" scope="row">
             {dayjs(row.serviceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="left">{row.defectDescription}</TableCell>
-          <TableCell align="right">$ {(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="left">{customerDisplayName}</TableCell>
+          <TableCell align="left">{row.defectDescription || row.defect || ''}</TableCell>
+          <TableCell align="right">$ {rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -275,9 +288,11 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                   </thead>
                   <tbody>
                     {
-                      row.items.map((Item, i) => {
+                      (row.items || []).map((Item, i) => {
+                        const itQty = parseFloat(Item.itemOut !== undefined ? Item.itemOut : Item.itemQty) || 0;
+                        const itCost = parseFloat(Item.itemCost !== undefined ? Item.itemCost : (Item.costPrice || Item.itemCostPrice)) || 0;
                         return (
-                          <tr key={Item.idRow}>
+                          <tr key={Item.idRow || i}>
                             {
                               Item.newDescription !== undefined ?
                                 (
@@ -288,11 +303,11 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
-                                    <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
-                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemOut} </td>
-                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemCost}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{((Item.itemOut || 0) * (Item.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span>{Item.itemName?.itemName ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')}</span></td>
+                                    <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription || ''}</td>
+                                    <td style={{ border: '1px solid #DDD' }}>{itQty} </td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{itCost.toFixed(2)}</td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(itQty * itCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>
                                 )
                             }
@@ -304,7 +319,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
                       <td style={{ border: '1px solid #DDD' }} >Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}><span data-prefix>$ </span>{(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={2}><span data-prefix>$ </span>{rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -318,6 +333,10 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
   function Row3(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : '');
+    const rowSell = (row.infoSell !== undefined && !isNaN(row.infoSell)) ? parseFloat(row.infoSell) : (parseFloat(row.subTotal) || 0);
+    const rowCost = (row.infoCost !== undefined && !isNaN(row.infoCost)) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + ((parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : (item.costPrice || item.itemCostPrice || 0))) || 0), 0);
+    const rowRevenue = rowSell - rowCost;
 
     return (
       <React.Fragment>
@@ -332,23 +351,23 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {`M-${row.serviceNumber}`}
+            {`M-${row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, '')}`}
           </TableCell>
           <TableCell component="th" scope="row">
             {dayjs(row.serviceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="left">{row.defectDescription}</TableCell>
-          <TableCell align="right">$ {(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {((row.subTotal || 0) - (row.infoCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="left">{customerDisplayName}</TableCell>
+          <TableCell align="left">{row.defectDescription || row.defect || ''}</TableCell>
+          <TableCell align="right">$ {rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {rowRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  Item
+                  Item Details
                 </Typography>
                 <table className="secondTable" style={{ fontSize: '80%', marginBottom: '0px', border: '1px solid #DDD' }}>
                   <thead>
@@ -358,36 +377,41 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Qty</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Rate</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Discount</th>
-                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total</th>
+                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total Sell</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Qty Out</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Rate Cost</th>
-                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total</th>
+                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total Cost</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      row.items.map((Item, i) => {
+                      (row.items || []).map((Item, i) => {
+                        const itQty = parseFloat(Item.itemQty) || 0;
+                        const itRate = parseFloat(Item.itemRate) || 0;
+                        const itAmount = parseFloat(Item.itemAmount) || (itQty * itRate) || 0;
+                        const itOut = parseFloat(Item.itemOut !== undefined ? Item.itemOut : Item.itemQty) || 0;
+                        const itCost = parseFloat(Item.itemCost !== undefined ? Item.itemCost : (Item.costPrice || Item.itemCostPrice)) || 0;
                         return (
-                          <tr key={Item.idRow}>
+                          <tr key={Item.idRow || i}>
                             {
                               Item.newDescription !== undefined ?
                                 (
                                   <>
-                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
+                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={9}>{Item.newDescription}</td>
                                   </>
                                 )
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
-                                    <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
-                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
-                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemOut} </td>
-                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemCost}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{((Item.itemOut || 0) * (Item.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span>{Item.itemName?.itemName ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')}</span></td>
+                                    <td style={{ border: '1px solid #DDD', width: '180px' }}>{Item.itemDescription || ''}</td>
+                                    <td style={{ border: '1px solid #DDD' }}>{itQty} </td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{itRate.toFixed(2)}</td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount || 0}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{itAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}>{itOut} </td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{itCost.toFixed(2)}</td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(itOut * itCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>
                                 )
                             }
@@ -397,11 +421,11 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                       )
                     }
                     <tr>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={3}></td>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}>{(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }}>${rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -415,6 +439,11 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
   function Row4(props) {
     const { row } = props;
     const [open, setOpen] = React.useState(false);
+    const customerDisplayName = row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : '');
+    const rowSell = (row.infoSell !== undefined && !isNaN(row.infoSell)) ? parseFloat(row.infoSell) : (parseFloat(row.subTotal) || 0);
+    const rowCost = (row.infoCost !== undefined && !isNaN(row.infoCost)) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + ((parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : (item.costPrice || item.itemCostPrice || 0))) || 0), 0);
+    const rowRevenue = rowSell - rowCost;
+    const laborFees = parseFloat(row.totalLaborFeesGenerale) || 0;
 
     return (
       <React.Fragment>
@@ -429,24 +458,24 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
             </IconButton>
           </TableCell>
           <TableCell component="th" scope="row">
-            {`M-${row.serviceNumber}`}
+            {`M-${row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, '')}`}
           </TableCell>
           <TableCell component="th" scope="row">
             {dayjs(row.serviceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
-          <TableCell align="left">{row.defectDescription}</TableCell>
-          <TableCell align="right">$ {(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {((row.subTotal || 0) - (row.infoCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {row.totalLaborFeesGenerale !== undefined ? (parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0} <span></span></TableCell>
+          <TableCell align="left">{customerDisplayName}</TableCell>
+          <TableCell align="left">{row.defectDescription || row.defect || ''}</TableCell>
+          <TableCell align="right">$ {rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {rowRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {laborFees.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
-          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={9}>
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h6" gutterBottom component="div">
-                  Item
+                  Item Details & Labor
                 </Typography>
                 <table className="secondTable" style={{ fontSize: '80%', marginBottom: '0px', border: '1px solid #DDD' }}>
                   <thead>
@@ -456,36 +485,41 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Qty</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Rate</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Discount</th>
-                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total</th>
+                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total Sell</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Qty Out</th>
                       <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Rate Cost</th>
-                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total</th>
+                      <th style={{ padding: '5px', border: '1px solid #DDD', color: 'black', backgroundColor: '#e8f7fe' }}>Total Cost</th>
                     </tr>
                   </thead>
                   <tbody>
                     {
-                      row.items.map((Item, i) => {
+                      (row.items || []).map((Item, i) => {
+                        const itQty = parseFloat(Item.itemQty) || 0;
+                        const itRate = parseFloat(Item.itemRate) || 0;
+                        const itAmount = parseFloat(Item.itemAmount) || (itQty * itRate) || 0;
+                        const itOut = parseFloat(Item.itemOut !== undefined ? Item.itemOut : Item.itemQty) || 0;
+                        const itCost = parseFloat(Item.itemCost !== undefined ? Item.itemCost : (Item.costPrice || Item.itemCostPrice)) || 0;
                         return (
-                          <tr key={Item.idRow}>
+                          <tr key={Item.idRow || i}>
                             {
                               Item.newDescription !== undefined ?
                                 (
                                   <>
-                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
+                                    <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={9}>{Item.newDescription}</td>
                                   </>
                                 )
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
-                                    <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
-                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
-                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
-                                    <td style={{ border: '1px solid #DDD' }}>{Item.itemOut} </td>
-                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemCost}</td>
-                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{((Item.itemOut || 0) * (Item.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span>{Item.itemName?.itemName ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')}</span></td>
+                                    <td style={{ border: '1px solid #DDD', width: '180px' }}>{Item.itemDescription || ''}</td>
+                                    <td style={{ border: '1px solid #DDD' }}>{itQty} </td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{itRate.toFixed(2)}</td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span><span>{Item.itemDiscount || 0}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{itAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}>{itOut} </td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{itCost.toFixed(2)}</td>
+                                    <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span><span id='totalItemService'>{(itOut * itCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span></td>
                                   </>
                                 )
                             }
@@ -495,19 +529,19 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                       )
                     }
                     <tr>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={3}></td>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Sell</td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={2}>{(row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }}>${rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Cost</td>
-                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{(row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
                     <tr>
                       <td style={{ border: '1px solid #DDD' }} colSpan={2}></td>
-                      <td style={{ border: '1px solid #DDD' }} colSpan={3}>Labor Fees</td>
-                      <td style={{ border: '1px solid #DDD' }} >{row.laborQty !== undefined ? row.laborQty : 0}</td>
-                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{row.adjustmentNumber}</td>
-                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>% </span>{row.laborDiscount !== undefined ? row.laborDiscount : 0}</td>
-                      <td style={{ border: '1px solid #DDD' }} ><span data-prefix>$ </span>{row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale : 0}</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={2}>Labor Fees</td>
+                      <td style={{ border: '1px solid #DDD' }} >Qty: {row.laborQty !== undefined ? row.laborQty : 0}</td>
+                      <td style={{ border: '1px solid #DDD' }} >Rate: ${(parseFloat(row.adjustmentNumber) || 0).toFixed(2)}</td>
+                      <td style={{ border: '1px solid #DDD' }} >Disc: {row.laborDiscount || 0}%</td>
+                      <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total: ${(parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -674,7 +708,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                 </tbody>
                 <tbody>
                   <tr>
-                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
+                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Maintenance Summary</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Sell</span></td>
@@ -791,7 +825,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                         <TableRow key={row._id}>
                           <TableCell>{row.serviceNumber}</TableCell>
                           <TableCell>{dayjs(row.serviceDate).format('DD-MMMM-YYYY')}</TableCell>
-                          <TableCell>{row.customerName.customerName}</TableCell>
+                          <TableCell>{row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row?.customerName : '')}</TableCell>
                           <TableCell>{row.defectDescription}</TableCell>
                           <TableCell align="right">{row.laborQty !== undefined ? row.laborQty : 0}</TableCell>
                           <TableCell align="right"><span data-prefix>$ </span>{(parseFloat(row.adjustmentNumber) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>
@@ -802,7 +836,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                       <TableRow>
                         <TableCell colSpan={6}></TableCell>
                         <TableCell >Total Labor</TableCell>
-                        <TableCell ><span >{`$${TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
+                        <TableCell ><span >{`$${(TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -832,7 +866,7 @@ function MaintenanceReportInfo({ onMonth, onMaintenance }) {
                       <TableRow>
                         <TableCell colSpan={6}></TableCell>
                         <TableCell >Total Revenue</TableCell>
-                        <TableCell ><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
+                        <TableCell ><span >{`$${(TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>

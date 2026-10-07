@@ -483,8 +483,8 @@ function AdminHome() {
             id: row._id,
             maintenanceNumber: "M-" + (row.maintenanceNumber || row.serviceNumber || "").toString().padStart(6, '0'),
             dateField: dayjs(row.serviceDate).format('DD/MM/YYYY'),
-            infoSell: row.subTotal,
-            infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+            infoSell: (parseFloat(row.subTotal) || 0) || (row.items || []).reduce((sum, ITem) => sum + (parseFloat(ITem.itemAmount) || (parseFloat(ITem.itemQty || 0) * parseFloat(ITem.itemRate || 0)) || 0), 0),
+            infoCost: (row.items || []).reduce((sum, ITem) => sum + ((parseFloat(ITem.itemOut !== undefined ? ITem.itemOut : (ITem.itemQty || 0)) * parseFloat(ITem.itemCost !== undefined ? ITem.itemCost : (ITem.costPrice || ITem.itemCostPrice || 0))) || 0), 0),
           })).reverse());
           setRelatedMaintenance(resMaintenance.data.data);
         });
@@ -625,9 +625,9 @@ function AdminHome() {
   const projectRevenue = projectSellInfo - (projectCostInfo + projectExpensesInfo)
 
 
-  const totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + (parseFloat(item.itemAmount) || 0), 0) }, 0) : 0
-  const totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + (parseFloat(item.totalCostInfo) || 0), 0) }, 0) : 0
-  const totalMaintenanceLaborFees = maintenance.filter((row) => row.totalLaborFeesGenerale !== undefined).reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0)
+  const totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoSell) || 0), 0) : 0
+  const totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoCost) || 0), 0) : 0
+  const totalMaintenanceLaborFees = maintenance.reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0)
 
 
   const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -2206,6 +2206,7 @@ function AdminHome() {
                             <ProjectReportInfo
                               onMonth={infoName}
                               onProjectName={projectWithAll}
+                              onPayment={payment}
                             />
                           </div>
                           : ''

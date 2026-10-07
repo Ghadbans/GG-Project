@@ -84,6 +84,8 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
   useEffect(() => {
     if (onMonth) {
       setInfoOptions(onMonth);
+    }
+    if (onProjectName) {
       setProject(onProjectName);
     }
   }, [onMonth, onProjectName]);
@@ -91,11 +93,12 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
   const [FilterProject, setFilterProject] = useState([]);
   useEffect(() => {
     if (selectOptions === 'By Project') {
-      const filterO = search2 !== '' ? project.filter((Item) =>
-        Item.customerName && Item.customerName.customerName.toLowerCase().includes(search2.toLowerCase()) ||
-        Item.description && Item.description.toLowerCase().includes(search2.toLowerCase()) ||
-        Item.projectName && Item.projectName.toLowerCase().includes(search2.toLowerCase())
-      ) : project
+      const filterO = search2 !== '' ? project.filter((Item) => {
+        const cust = Item?.customerName?.Customer || Item?.customerName?.customerName || (typeof Item?.customerName === 'string' ? Item.customerName : '');
+        return (cust && cust.toLowerCase().includes(search2.toLowerCase())) ||
+          (Item.description && Item.description.toLowerCase().includes(search2.toLowerCase())) ||
+          (Item.projectName && Item.projectName.toLowerCase().includes(search2.toLowerCase()));
+      }) : project
       setFilterProject(filterO)
     } else if (selectOptions === 'All') {
       setFilterProject(project)
@@ -168,7 +171,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
             {row.projectNumber}
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.customerName?.customerName || 'N/A'}
+            {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
           </TableCell>
           <TableCell align="left">{row.projectName}</TableCell>
           <TableCell align="left">{row.description}</TableCell>
@@ -321,7 +324,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
             {row.projectNumber}
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.customerName.customerName}
+            {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
           </TableCell>
           <TableCell align="left">{row.projectName}</TableCell>
           <TableCell align="left">{row.description}</TableCell>
@@ -391,7 +394,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
             {row.projectNumber}
           </TableCell>
           <TableCell component="th" scope="row">
-            {row.customerName.customerName}
+            {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
           </TableCell>
           <TableCell align="left">{row.projectName}</TableCell>
           <TableCell align="left">{row.description}</TableCell>
@@ -556,7 +559,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
                 </tbody>
                 <tbody>
                   <tr>
-                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
+                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Project Summary</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Invoiced</span></td>
@@ -722,7 +725,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
                                 {row.projectNumber}
                               </TableCell>
                               <TableCell align="left">
-                                {row.customerName?.customerName || 'N/A'}
+                                {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
                               </TableCell>
                               <TableCell align="left">{row.projectName}</TableCell>
                               <TableCell align="left">{row.description}</TableCell>

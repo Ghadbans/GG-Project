@@ -83037,6 +83037,8 @@ function InvoiceReportInfo(_ref3) {
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (onMonth) {
       setInfoOptions(onMonth);
+    }
+    if (onInvoice) {
       setInvoiceRevenue(onInvoice);
     }
   }, [onMonth, onInvoice]);
@@ -83063,11 +83065,14 @@ function InvoiceReportInfo(_ref3) {
     } else if (selectOptions === 'Year') {
       setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_26___default()(startDate).format('YYYY')));
     } else if (selectOptions === 'Custom') {
-      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => filteredData.find(Item => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(Item).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD/MM/YYYY'))));
+      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => {
+        var itemDate = dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate);
+        return (itemDate.isAfter(dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).startOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).startOf('day'))) && (itemDate.isBefore(dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).endOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).endOf('day')));
+      }));
     } else if (selectOptions === 'All') {
       setFilterInvoiceRevenue(invoiceRevenue);
     }
-  }, [selectOptions, month, startDate, filteredData, invoiceRevenue]);
+  }, [selectOptions, month, startDate, fromDate, endDate, invoiceRevenue]);
   var handleChangeSelected = e => {
     setInfoOptions(e.target.value);
   };
@@ -83092,17 +83097,28 @@ function InvoiceReportInfo(_ref3) {
     TotalRevenue = _useState26[0],
     setTotalRevenue = _useState26[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    var TPayment = FilterInvoiceRevenue.length > 0 ? FilterInvoiceRevenue.reduce((acc, row) => {
-      return acc + row.items.reduce((sum, item) => sum + parseFloat(item.itemAmount), 0);
-    }, 0) : 0;
-    var TCost = FilterInvoiceRevenue.length > 0 ? FilterInvoiceRevenue.reduce((acc, row) => {
-      return acc + row.items.reduce((sum, item) => sum + parseFloat(item.totalCostInfo), 0);
-    }, 0) : 0;
-    setTotalRevenue(TPayment);
+    var TSell = (FilterInvoiceRevenue || []).reduce((acc, row) => {
+      var sell = row.infoSell !== undefined ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || parseFloat(row.totalInvoice) || 0;
+      return acc + (isNaN(sell) ? 0 : sell);
+    }, 0);
+    var TCost = (FilterInvoiceRevenue || []).reduce((acc, row) => {
+      if (row.infoCost !== undefined) {
+        var cost = parseFloat(row.infoCost);
+        return acc + (isNaN(cost) ? 0 : cost);
+      }
+      var itemsCost = (row.items || []).reduce((sum, item) => {
+        var qty = parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty) || 0;
+        var c = parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice) || 0;
+        return sum + qty * c;
+      }, 0);
+      return acc + itemsCost;
+    }, 0);
+    setTotalRevenue(TSell);
     setTotalDExpenses(TCost);
-    setTotalPayRoll(TPayment - TCost);
+    setTotalPayRoll(TSell - TCost);
   }, [FilterInvoiceRevenue]);
   function Row(props) {
+    var _row$customerName, _row$customerName2;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -83126,7 +83142,7 @@ function InvoiceReportInfo(_ref3) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -83259,6 +83275,7 @@ function InvoiceReportInfo(_ref3) {
     }, (parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row2(props) {
+    var _row$customerName3, _row$customerName4;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -83282,7 +83299,7 @@ function InvoiceReportInfo(_ref3) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -83404,6 +83421,7 @@ function InvoiceReportInfo(_ref3) {
     }, "$ "), (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
+    var _row$customerName5, _row$customerName6;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -83427,15 +83445,15 @@ function InvoiceReportInfo(_ref3) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.invoiceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.invoiceDefect), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.subTotal - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", ((parseFloat(row.subTotal) || 0) - (parseFloat(row.infoCost) || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -83794,7 +83812,7 @@ function InvoiceReportInfo(_ref3) {
       border: 'none',
       textAlign: 'left'
     }
-  }, "Expenses Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Commercial Invoices Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -83806,7 +83824,7 @@ function InvoiceReportInfo(_ref3) {
       border: 'none',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -83818,7 +83836,7 @@ function InvoiceReportInfo(_ref3) {
       border: 'none',
       textAlign: 'right'
     }
-  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -83830,7 +83848,7 @@ function InvoiceReportInfo(_ref3) {
       border: 'none',
       textAlign: 'right'
     }
-  }, infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -83845,7 +83863,7 @@ function InvoiceReportInfo(_ref3) {
     row: row
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     colSpan: 4
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Cost' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Cost' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -83860,7 +83878,7 @@ function InvoiceReportInfo(_ref3) {
     row: row
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     colSpan: 4
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Cost"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Cost"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -83879,7 +83897,7 @@ function InvoiceReportInfo(_ref3) {
     row: row
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     colSpan: 6
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
     className: "footerinvoice"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
@@ -84480,81 +84498,82 @@ function MaintenanceReportInfo(_ref3) {
     maintenanceRevenue = _useState12[0],
     setMaintenanceRevenue = _useState12[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (onMaintenance) {
+      setMaintenanceRevenue(onMaintenance);
+    }
     if (onMonth) {
       setInfoOptions(onMonth);
-      setMaintenanceRevenue(onMaintenance);
     }
   }, [onMonth, onMaintenance]);
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
     _useState14 = _slicedToArray(_useState13, 2),
-    filteredData = _useState14[0],
-    setFilteredData = _useState14[1];
+    FilterMaintenanceRevenue = _useState14[0],
+    setFilterMaintenanceRevenue = _useState14[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    var headers = [];
-    var currentDate = new Date(fromDate);
-    while (currentDate <= endDate) {
-      headers.push(currentDate.toDateString());
-      currentDate.setDate(currentDate.getDate() + 1);
-    }
-    setFilteredData(headers);
-  }, [fromDate, endDate]);
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)([]),
-    _useState16 = _slicedToArray(_useState15, 2),
-    FilterMaintenanceRevenue = _useState16[0],
-    setFilterMaintenanceRevenue = _useState16[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    if (selectOptions === 'Month') {
-      setFilterMaintenanceRevenue(maintenanceRevenue === null || maintenanceRevenue === void 0 ? void 0 : maintenanceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('MMMM') === month));
+    if (!selectOptions || selectOptions === 'All') {
+      setFilterMaintenanceRevenue(maintenanceRevenue || []);
+    } else if (selectOptions === 'Month') {
+      setFilterMaintenanceRevenue((maintenanceRevenue || []).filter(row => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('MMMM') === month && dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_26___default()(startDate).format('YYYY')));
     } else if (selectOptions === 'Year') {
-      setFilterMaintenanceRevenue(maintenanceRevenue === null || maintenanceRevenue === void 0 ? void 0 : maintenanceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_26___default()(startDate).format('YYYY')));
+      setFilterMaintenanceRevenue((maintenanceRevenue || []).filter(row => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_26___default()(startDate).format('YYYY')));
     } else if (selectOptions === 'Custom') {
-      setFilterMaintenanceRevenue(maintenanceRevenue === null || maintenanceRevenue === void 0 ? void 0 : maintenanceRevenue.filter(row => filteredData.find(Item => dayjs__WEBPACK_IMPORTED_MODULE_26___default()(Item).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD/MM/YYYY'))));
-    } else if (selectOptions === 'All') {
-      setFilterMaintenanceRevenue(maintenanceRevenue);
+      var start = dayjs__WEBPACK_IMPORTED_MODULE_26___default()(fromDate).startOf('day');
+      var end = dayjs__WEBPACK_IMPORTED_MODULE_26___default()(endDate).endOf('day');
+      var isBetween = d => {
+        if (!d) return false;
+        var day = dayjs__WEBPACK_IMPORTED_MODULE_26___default()(d);
+        return (day.isAfter(start) || day.isSame(start)) && (day.isBefore(end) || day.isSame(end));
+      };
+      setFilterMaintenanceRevenue((maintenanceRevenue || []).filter(row => isBetween(row.serviceDate)));
     }
-  }, [selectOptions, month, startDate, filteredData, maintenanceRevenue]);
+  }, [selectOptions, month, startDate, fromDate, endDate, maintenanceRevenue]);
   var handleChangeSelected = e => {
     setInfoOptions(e.target.value);
   };
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
+    _useState16 = _slicedToArray(_useState15, 2),
+    TotalExpenses = _useState16[0],
+    setTotalExpenses = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
     _useState18 = _slicedToArray(_useState17, 2),
-    TotalExpenses = _useState18[0],
-    setTotalExpenses = _useState18[1];
+    TotalDExpenses = _useState18[0],
+    setTotalDExpenses = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
     _useState20 = _slicedToArray(_useState19, 2),
-    TotalDExpenses = _useState20[0],
-    setTotalDExpenses = _useState20[1];
+    TotalPayRoll = _useState20[0],
+    setTotalPayRoll = _useState20[1];
   var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
     _useState22 = _slicedToArray(_useState21, 2),
-    TotalPayRoll = _useState22[0],
-    setTotalPayRoll = _useState22[1];
+    TotalPayment = _useState22[0],
+    setTotalPayment = _useState22[1];
   var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
     _useState24 = _slicedToArray(_useState23, 2),
-    TotalPayment = _useState24[0],
-    setTotalPayment = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(0),
-    _useState26 = _slicedToArray(_useState25, 2),
-    TotalRevenue = _useState26[0],
-    setTotalRevenue = _useState26[1];
+    TotalRevenue = _useState24[0],
+    setTotalRevenue = _useState24[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    var TPayment = FilterMaintenanceRevenue.length > 0 ? FilterMaintenanceRevenue.reduce((acc, row) => {
-      return acc + row.items.reduce((sum, item) => sum + parseFloat(item.itemAmount), 0);
-    }, 0) : 0;
-    var TCost = FilterMaintenanceRevenue.length > 0 ? FilterMaintenanceRevenue.reduce((acc, row) => {
-      return acc + row.items.reduce((sum, item) => sum + parseFloat(item.totalCostInfo), 0);
-    }, 0) : 0;
-    var TLabor = FilterMaintenanceRevenue.length > 0 ? FilterMaintenanceRevenue.filter(row => row.totalLaborFeesGenerale !== undefined).reduce((sum, row) => sum + row.totalLaborFeesGenerale, 0) : 0;
-    setTotalRevenue(TPayment);
+    var TSell = (FilterMaintenanceRevenue || []).reduce((acc, row) => {
+      var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0 || (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemAmount) || parseFloat(item.itemQty || 0) * parseFloat(item.itemRate || 0) || 0), 0);
+      return acc + (isFinite(rowSell) ? rowSell : 0);
+    }, 0);
+    var TCost = (FilterMaintenanceRevenue || []).reduce((acc, row) => {
+      var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
+      return acc + (isFinite(rowCost) ? rowCost : 0);
+    }, 0);
+    var TLabor = (FilterMaintenanceRevenue || []).reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0);
+    setTotalRevenue(TSell);
     setTotalDExpenses(TCost);
-    setTotalPayRoll(TPayment - TCost);
+    setTotalPayRoll(TSell - TCost);
     setTotalPayment(TLabor);
   }, [FilterMaintenanceRevenue]);
   function Row(props) {
+    var _row$customerName, _row$customerName2;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       open = _React$useState2[0],
       setOpen = _React$useState2[1];
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         '& > *': {
@@ -84568,16 +84587,16 @@ function MaintenanceReportInfo(_ref3) {
     }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, "M-".concat(row.serviceNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "M-".concat(row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, customerDisplayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, row.defectDescription || row.defect || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -84644,43 +84663,42 @@ function MaintenanceReportInfo(_ref3) {
         color: 'black',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, row.items.map((Item, i) => {
+    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (row.items || []).map((Item, i) => {
+      var _Item$itemName;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
-        key: Item.idRow
+        key: Item.idRow || i
       }, Item.newDescription !== undefined ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
           border: '1px solid #DDD'
         },
-        colSpan: 5
+        colSpan: 6
       }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? Item.itemName.itemName === 'empty' : ''
-      }, Item.itemName.itemName.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, (_Item$itemName = Item.itemName) !== null && _Item$itemName !== void 0 && _Item$itemName.itemName ? Item.itemName.itemName.toUpperCase() : typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD',
           width: '200px'
         }
-      }, Item.itemDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, Item.itemQty, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemQty || 0, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "$ "), Item.itemRate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$ "), (parseFloat(Item.itemRate) || 0).toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "% "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDiscount)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "% "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDiscount || 0)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
@@ -84688,7 +84706,7 @@ function MaintenanceReportInfo(_ref3) {
         "data-prefix": true
       }, "$ "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         id: "totalItemService"
-      }, (Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
+      }, (parseFloat(Item.itemAmount) || parseFloat(Item.itemQty || 0) * parseFloat(Item.itemRate || 0) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
@@ -84703,14 +84721,17 @@ function MaintenanceReportInfo(_ref3) {
         border: '1px solid #DDD'
       },
       colSpan: 3
-    }, (row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
+    }, "$", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row2(props) {
+    var _row$customerName3, _row$customerName4;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
       open = _React$useState4[0],
       setOpen = _React$useState4[1];
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         '& > *': {
@@ -84724,16 +84745,16 @@ function MaintenanceReportInfo(_ref3) {
     }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, "M-".concat(row.serviceNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "M-".concat(row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, customerDisplayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, row.defectDescription || row.defect || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -84793,9 +84814,12 @@ function MaintenanceReportInfo(_ref3) {
         color: 'black',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, row.items.map((Item, i) => {
+    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (row.items || []).map((Item, i) => {
+      var _Item$itemName2;
+      var itQty = parseFloat(Item.itemOut !== undefined ? Item.itemOut : Item.itemQty) || 0;
+      var itCost = parseFloat(Item.itemCost !== undefined ? Item.itemCost : Item.costPrice || Item.itemCostPrice) || 0;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
-        key: Item.idRow
+        key: Item.idRow || i
       }, Item.newDescription !== undefined ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
@@ -84806,24 +84830,22 @@ function MaintenanceReportInfo(_ref3) {
         style: {
           border: '1px solid #DDD'
         }
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? Item.itemName.itemName === 'empty' : ''
-      }, Item.itemName.itemName.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, (_Item$itemName2 = Item.itemName) !== null && _Item$itemName2 !== void 0 && _Item$itemName2.itemName ? Item.itemName.itemName.toUpperCase() : typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD',
           width: '200px'
         }
-      }, Item.itemDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, Item.itemOut, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itQty, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "$ "), Item.itemCost), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$ "), itCost.toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
@@ -84831,7 +84853,7 @@ function MaintenanceReportInfo(_ref3) {
         "data-prefix": true
       }, "$ "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         id: "totalItemService"
-      }, ((Item.itemOut || 0) * (Item.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
+      }, (itQty * itCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
@@ -84848,14 +84870,19 @@ function MaintenanceReportInfo(_ref3) {
       colSpan: 2
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$ "), (row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
+    }, "$ "), rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
+    var _row$customerName5, _row$customerName6;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
       open = _React$useState6[0],
       setOpen = _React$useState6[1];
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
+    var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
+    var rowRevenue = rowSell - rowCost;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         '& > *': {
@@ -84869,20 +84896,20 @@ function MaintenanceReportInfo(_ref3) {
     }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, "M-".concat(row.serviceNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "M-".concat(row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, customerDisplayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, row.defectDescription || row.defect || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", ((row.subTotal || 0) - (row.infoCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -84900,7 +84927,7 @@ function MaintenanceReportInfo(_ref3) {
       variant: "h6",
       gutterBottom: true,
       component: "div"
-    }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
+    }, "Item Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       className: "secondTable",
       style: {
         fontSize: '80%',
@@ -84949,7 +84976,7 @@ function MaintenanceReportInfo(_ref3) {
         color: 'black',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+    }, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         padding: '5px',
         border: '1px solid #DDD',
@@ -84970,43 +84997,47 @@ function MaintenanceReportInfo(_ref3) {
         color: 'black',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, row.items.map((Item, i) => {
+    }, "Total Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (row.items || []).map((Item, i) => {
+      var _Item$itemName3;
+      var itQty = parseFloat(Item.itemQty) || 0;
+      var itRate = parseFloat(Item.itemRate) || 0;
+      var itAmount = parseFloat(Item.itemAmount) || itQty * itRate || 0;
+      var itOut = parseFloat(Item.itemOut !== undefined ? Item.itemOut : Item.itemQty) || 0;
+      var itCost = parseFloat(Item.itemCost !== undefined ? Item.itemCost : Item.costPrice || Item.itemCostPrice) || 0;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
-        key: Item.idRow
+        key: Item.idRow || i
       }, Item.newDescription !== undefined ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
           border: '1px solid #DDD'
         },
-        colSpan: 5
+        colSpan: 9
       }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? Item.itemName.itemName === 'empty' : ''
-      }, Item.itemName.itemName.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, (_Item$itemName3 = Item.itemName) !== null && _Item$itemName3 !== void 0 && _Item$itemName3.itemName ? Item.itemName.itemName.toUpperCase() : typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD',
-          width: '200px'
+          width: '180px'
         }
-      }, Item.itemDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, Item.itemQty, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itQty, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "$ "), Item.itemRate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$ "), itRate.toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "% "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDiscount)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "% "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDiscount || 0)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
@@ -85014,17 +85045,17 @@ function MaintenanceReportInfo(_ref3) {
         "data-prefix": true
       }, "$ "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         id: "totalItemService"
-      }, (Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, Item.itemOut, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itOut, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "$ "), Item.itemCost), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$ "), itCost.toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
@@ -85032,12 +85063,12 @@ function MaintenanceReportInfo(_ref3) {
         "data-prefix": true
       }, "$ "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         id: "totalItemService"
-      }, ((Item.itemOut || 0) * (Item.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
+      }, (itOut * itCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
-      colSpan: 2
+      colSpan: 3
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
@@ -85046,9 +85077,8 @@ function MaintenanceReportInfo(_ref3) {
     }, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
-      },
-      colSpan: 2
-    }, (row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }
+    }, "$", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
@@ -85059,14 +85089,20 @@ function MaintenanceReportInfo(_ref3) {
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$ "), (row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
+    }, "$ "), rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row4(props) {
+    var _row$customerName7, _row$customerName8;
     var row = props.row;
     var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState8 = _slicedToArray(_React$useState7, 2),
       open = _React$useState8[0],
       setOpen = _React$useState8[1];
+    var customerDisplayName = (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : '');
+    var rowSell = row.infoSell !== undefined && !isNaN(row.infoSell) ? parseFloat(row.infoSell) : parseFloat(row.subTotal) || 0;
+    var rowCost = row.infoCost !== undefined && !isNaN(row.infoCost) ? parseFloat(row.infoCost) : (row.items || []).reduce((sum, item) => sum + (parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty || 0) * parseFloat(item.itemCost !== undefined ? item.itemCost : item.costPrice || item.itemCostPrice || 0) || 0), 0);
+    var rowRevenue = rowSell - rowCost;
+    var laborFees = parseFloat(row.totalLaborFeesGenerale) || 0;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         '& > *': {
@@ -85080,27 +85116,27 @@ function MaintenanceReportInfo(_ref3) {
     }, open ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, "M-".concat(row.serviceNumber)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "M-".concat(row.serviceNumber || (row.maintenanceNumber || '').replace(/\D/g, ''))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, customerDisplayName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, row.defectDescription || row.defect || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", ((row.subTotal || 0) - (row.infoCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", rowRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", row.totalLaborFeesGenerale !== undefined ? (parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "$ ", laborFees.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
       },
-      colSpan: 8
+      colSpan: 9
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       in: open,
       timeout: "auto",
@@ -85113,7 +85149,7 @@ function MaintenanceReportInfo(_ref3) {
       variant: "h6",
       gutterBottom: true,
       component: "div"
-    }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
+    }, "Item Details & Labor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("table", {
       className: "secondTable",
       style: {
         fontSize: '80%',
@@ -85162,7 +85198,7 @@ function MaintenanceReportInfo(_ref3) {
         color: 'black',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
+    }, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("th", {
       style: {
         padding: '5px',
         border: '1px solid #DDD',
@@ -85183,43 +85219,47 @@ function MaintenanceReportInfo(_ref3) {
         color: 'black',
         backgroundColor: '#e8f7fe'
       }
-    }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, row.items.map((Item, i) => {
+    }, "Total Cost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tbody", null, (row.items || []).map((Item, i) => {
+      var _Item$itemName4;
+      var itQty = parseFloat(Item.itemQty) || 0;
+      var itRate = parseFloat(Item.itemRate) || 0;
+      var itAmount = parseFloat(Item.itemAmount) || itQty * itRate || 0;
+      var itOut = parseFloat(Item.itemOut !== undefined ? Item.itemOut : Item.itemQty) || 0;
+      var itCost = parseFloat(Item.itemCost !== undefined ? Item.itemCost : Item.costPrice || Item.itemCostPrice) || 0;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
-        key: Item.idRow
+        key: Item.idRow || i
       }, Item.newDescription !== undefined ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'center',
           border: '1px solid #DDD'
         },
-        colSpan: 5
+        colSpan: 9
       }, Item.newDescription)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-        hidden: Item.itemName ? Item.itemName.itemName === 'empty' : ''
-      }, Item.itemName.itemName.toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, (_Item$itemName4 = Item.itemName) !== null && _Item$itemName4 !== void 0 && _Item$itemName4.itemName ? Item.itemName.itemName.toUpperCase() : typeof Item.itemName === 'string' && Item.itemName !== 'empty' ? Item.itemName.toUpperCase() : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD',
-          width: '200px'
+          width: '180px'
         }
-      }, Item.itemDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemDescription || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, Item.itemQty, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itQty, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "$ "), Item.itemRate), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$ "), itRate.toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "% "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDiscount)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "% "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, Item.itemDiscount || 0)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
@@ -85227,17 +85267,17 @@ function MaintenanceReportInfo(_ref3) {
         "data-prefix": true
       }, "$ "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         id: "totalItemService"
-      }, (Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itAmount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
-      }, Item.itemOut, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, itOut, " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
       }, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         "data-prefix": true
-      }, "$ "), Item.itemCost), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, "$ "), itCost.toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           border: '1px solid #DDD'
         }
@@ -85245,12 +85285,12 @@ function MaintenanceReportInfo(_ref3) {
         "data-prefix": true
       }, "$ "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
         id: "totalItemService"
-      }, ((Item.itemOut || 0) * (Item.itemCost || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
+      }, (itOut * itCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))));
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
-      colSpan: 2
+      colSpan: 3
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
@@ -85259,9 +85299,8 @@ function MaintenanceReportInfo(_ref3) {
     }, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
-      },
-      colSpan: 2
-    }, (row.subTotal || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }
+    }, "$", rowSell.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
@@ -85272,7 +85311,7 @@ function MaintenanceReportInfo(_ref3) {
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
       "data-prefix": true
-    }, "$ "), (row.infoCost || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "$ "), rowCost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       },
@@ -85281,30 +85320,25 @@ function MaintenanceReportInfo(_ref3) {
       style: {
         border: '1px solid #DDD'
       },
-      colSpan: 3
+      colSpan: 2
     }, "Labor Fees"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       }
-    }, row.laborQty !== undefined ? row.laborQty : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Qty: ", row.laborQty !== undefined ? row.laborQty : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-      "data-prefix": true
-    }, "$ "), row.adjustmentNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Rate: $", (parseFloat(row.adjustmentNumber) || 0).toFixed(2)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-      "data-prefix": true
-    }, "% "), row.laborDiscount !== undefined ? row.laborDiscount : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+    }, "Disc: ", row.laborDiscount || 0, "%"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
       style: {
         border: '1px solid #DDD'
-      }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-      "data-prefix": true
-    }, "$ "), row.totalLaborFeesGenerale !== undefined ? row.totalLaborFeesGenerale : 0)))))))));
+      },
+      colSpan: 2
+    }, "Total: $", (parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
@@ -85486,7 +85520,7 @@ function MaintenanceReportInfo(_ref3) {
       border: 'none',
       textAlign: 'left'
     }
-  }, "Expenses Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Maintenance Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -85580,25 +85614,28 @@ function MaintenanceReportInfo(_ref3) {
     align: "right"
   }, "Discount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "right"
-  }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, FilterMaintenanceRevenue.map(row => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    key: row._id
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.serviceNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    align: "right"
-  }, row.laborQty !== undefined ? row.laborQty : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    align: "right"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-    "data-prefix": true
-  }, "$ "), (parseFloat(row.adjustmentNumber) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    align: "right"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-    "data-prefix": true
-  }, "% "), row.laborDiscount !== undefined ? (parseFloat(row.laborDiscount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    align: "right"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
-    "data-prefix": true
-  }, "$ "), row.totalLaborFeesGenerale !== undefined ? (parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "Total"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, FilterMaintenanceRevenue.map(row => {
+    var _row$customerName9, _row$customerName0;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      key: row._id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.serviceNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, dayjs__WEBPACK_IMPORTED_MODULE_26___default()(row.serviceDate).format('DD-MMMM-YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, (row === null || row === void 0 || (_row$customerName9 = row.customerName) === null || _row$customerName9 === void 0 ? void 0 : _row$customerName9.Customer) || (row === null || row === void 0 || (_row$customerName0 = row.customerName) === null || _row$customerName0 === void 0 ? void 0 : _row$customerName0.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, row.defectDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+      align: "right"
+    }, row.laborQty !== undefined ? row.laborQty : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+      align: "right"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+      "data-prefix": true
+    }, "$ "), (parseFloat(row.adjustmentNumber) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+      align: "right"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+      "data-prefix": true
+    }, "% "), row.laborDiscount !== undefined ? (parseFloat(row.laborDiscount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+      align: "right"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
+      "data-prefix": true
+    }, "$ "), row.totalLaborFeesGenerale !== undefined ? (parseFloat(row.totalLaborFeesGenerale) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0));
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     colSpan: 6
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Labor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Labor"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -85617,7 +85654,7 @@ function MaintenanceReportInfo(_ref3) {
     row: row
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     colSpan: 6
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Total Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'All' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "left"
@@ -86729,11 +86766,14 @@ function PosReportInvoice(_ref) {
     } else if (selectOptions === 'Year') {
       setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_22___default()(startDate).format('YYYY')));
     } else if (selectOptions === 'Custom') {
-      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => filteredData.find(Item => dayjs__WEBPACK_IMPORTED_MODULE_22___default()(Item).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('DD/MM/YYYY'))));
+      setFilterInvoiceRevenue(invoiceRevenue === null || invoiceRevenue === void 0 ? void 0 : invoiceRevenue.filter(row => {
+        var itemDate = dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate);
+        return (itemDate.isAfter(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).startOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(fromDate).startOf('day'))) && (itemDate.isBefore(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).endOf('day')) || itemDate.isSame(dayjs__WEBPACK_IMPORTED_MODULE_22___default()(endDate).endOf('day')));
+      }));
     } else if (selectOptions === 'All') {
       setFilterInvoiceRevenue(invoiceRevenue);
     }
-  }, [selectOptions, month, startDate, filteredData, invoiceRevenue]);
+  }, [selectOptions, month, startDate, fromDate, endDate, invoiceRevenue]);
   var handleChangeSelected = e => {
     setInfoOptions(e.target.value);
   };
@@ -86758,15 +86798,16 @@ function PosReportInvoice(_ref) {
     TotalRevenue = _useState26[0],
     setTotalRevenue = _useState26[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
-    var TPayment = (FilterInvoiceRevenue === null || FilterInvoiceRevenue === void 0 ? void 0 : FilterInvoiceRevenue.length) > 0 ? FilterInvoiceRevenue.reduce((sum, item) => sum + parseFloat(item.infoSell), 0) : 0;
-    var TPaymentTax = (FilterInvoiceRevenue === null || FilterInvoiceRevenue === void 0 ? void 0 : FilterInvoiceRevenue.length) > 0 ? FilterInvoiceRevenue.reduce((sum, item) => sum + parseFloat(item.TaxUSd), 0) : 0;
-    var TCost = (FilterInvoiceRevenue === null || FilterInvoiceRevenue === void 0 ? void 0 : FilterInvoiceRevenue.length) > 0 ? FilterInvoiceRevenue.reduce((sum, item) => sum + parseFloat(item.infoCost), 0) : 0;
+    var TPayment = (FilterInvoiceRevenue || []).reduce((sum, item) => sum + (parseFloat(item.infoSell) || 0), 0);
+    var TPaymentTax = (FilterInvoiceRevenue || []).reduce((sum, item) => sum + (parseFloat(item.TaxUSd) || 0), 0);
+    var TCost = (FilterInvoiceRevenue || []).reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0);
     setTotalRevenue(TPayment);
     setTotalDExpenses(TCost);
     setTotalProfit(TPayment - TCost);
     setTotalPayment(TPaymentTax);
   }, [FilterInvoiceRevenue]);
   function Row(props) {
+    var _row$customerName, _row$customerName2;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -86793,7 +86834,7 @@ function PosReportInvoice(_ref) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
@@ -86911,6 +86952,7 @@ function PosReportInvoice(_ref) {
     }, "FC ", (parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ($", ((parseFloat(row === null || row === void 0 ? void 0 : row.subTotal) || 0) / (parseFloat(row === null || row === void 0 ? void 0 : row.rate) || 1)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   function Row2(props) {
+    var _row$customerName3, _row$customerName4;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -86937,7 +86979,7 @@ function PosReportInvoice(_ref) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
@@ -87057,6 +87099,7 @@ function PosReportInvoice(_ref) {
     }, "$"), (parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), ")")))))))));
   }
   function Row3(props) {
+    var _row$customerName5, _row$customerName6;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -87083,7 +87126,7 @@ function PosReportInvoice(_ref) {
       scope: "row"
     }, dayjs__WEBPACK_IMPORTED_MODULE_22___default()(row.invoiceDate).format('HH:mm')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "left"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row === null || row === void 0 ? void 0 : row.customerName : '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
     }, "$ ", (parseFloat(row.infoSell) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
@@ -87091,7 +87134,7 @@ function PosReportInvoice(_ref) {
       align: "right"
     }, "$ ", (parseFloat(row.TaxUSd) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       align: "right"
-    }, "$ ", (row.infoSell - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "$ ", ((parseFloat(row.infoSell) || 0) - (parseFloat(row.infoCost) || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         paddingBottom: 0,
         paddingTop: 0
@@ -87261,7 +87304,9 @@ function PosReportInvoice(_ref) {
     value: "Cost"
   }, "Cost"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Revenue"
-  }, "Revenue")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
+  }, "Revenue"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "All"
+  }, "All")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("section", {
     style: {
       display: 'flex',
       alignItems: 'center',
@@ -87285,7 +87330,9 @@ function PosReportInvoice(_ref) {
     value: "Month"
   }, "Month"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Custom"
-  }, "Custom"))), selectOptions === "Month" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, "Custom"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "All"
+  }, "All"))), selectOptions === "Month" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       width: '200px'
     }
@@ -87417,7 +87464,7 @@ function PosReportInvoice(_ref) {
       border: 'none',
       textAlign: 'left'
     }
-  }, "Expenses Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "POS Sales Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -87429,7 +87476,7 @@ function PosReportInvoice(_ref) {
       border: 'none',
       textAlign: 'right'
     }
-  }, (infoOptions === 'Sell' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Sell' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -87441,7 +87488,7 @@ function PosReportInvoice(_ref) {
       border: 'none',
       textAlign: 'right'
     }
-  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "       ", (infoOptions === 'Cost' || infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -87453,7 +87500,7 @@ function PosReportInvoice(_ref) {
       border: 'none',
       textAlign: 'right'
     }
-  }, infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalProfit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalProfit || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -87465,7 +87512,7 @@ function PosReportInvoice(_ref) {
       border: 'none',
       textAlign: 'right'
     }
-  }, infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, (infoOptions === 'Revenue' || infoOptions === 'All') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalPayment || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Sell' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     align: "left"
@@ -87480,7 +87527,7 @@ function PosReportInvoice(_ref) {
     row: row
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     colSpan: 4
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Cost' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Total Sell"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Cost' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     align: "left"
@@ -87495,7 +87542,7 @@ function PosReportInvoice(_ref) {
     row: row
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     colSpan: 4
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Total Cost"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Total Cost"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))), infoOptions === 'Revenue' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     "aria-label": "collapsible table"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     align: "left"
@@ -87518,7 +87565,7 @@ function PosReportInvoice(_ref) {
     colSpan: 7
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Total Profit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     align: "right"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat(TotalProfit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$".concat((TotalProfit || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
     className: "footerinvoice"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("p", {
     style: {
@@ -87729,6 +87776,8 @@ function ProjectReportInfo(_ref3) {
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (onMonth) {
       setInfoOptions(onMonth);
+    }
+    if (onProjectName) {
       setProject(onProjectName);
     }
   }, [onMonth, onProjectName]);
@@ -87738,7 +87787,11 @@ function ProjectReportInfo(_ref3) {
     setFilterProject = _useState16[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     if (selectOptions === 'By Project') {
-      var filterO = search2 !== '' ? project.filter(Item => Item.customerName && Item.customerName.customerName.toLowerCase().includes(search2.toLowerCase()) || Item.description && Item.description.toLowerCase().includes(search2.toLowerCase()) || Item.projectName && Item.projectName.toLowerCase().includes(search2.toLowerCase())) : project;
+      var filterO = search2 !== '' ? project.filter(Item => {
+        var _Item$customerName, _Item$customerName2;
+        var cust = (Item === null || Item === void 0 || (_Item$customerName = Item.customerName) === null || _Item$customerName === void 0 ? void 0 : _Item$customerName.Customer) || (Item === null || Item === void 0 || (_Item$customerName2 = Item.customerName) === null || _Item$customerName2 === void 0 ? void 0 : _Item$customerName2.customerName) || (typeof (Item === null || Item === void 0 ? void 0 : Item.customerName) === 'string' ? Item.customerName : '');
+        return cust && cust.toLowerCase().includes(search2.toLowerCase()) || Item.description && Item.description.toLowerCase().includes(search2.toLowerCase()) || Item.projectName && Item.projectName.toLowerCase().includes(search2.toLowerCase());
+      }) : project;
       setFilterProject(filterO);
     } else if (selectOptions === 'All') {
       setFilterProject(project);
@@ -87800,7 +87853,7 @@ function ProjectReportInfo(_ref3) {
     setTotalRevenue(projectRevenue);
   }, [FilterProject, onPayment]);
   function Row(props) {
-    var _row$customerName, _row$relatedPurchase, _row$relatedPurchase2;
+    var _row$customerName, _row$customerName2, _row$relatedPurchase, _row$relatedPurchase2;
     var row = props.row;
     var _React$useState = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState2 = _slicedToArray(_React$useState, 2),
@@ -87822,7 +87875,7 @@ function ProjectReportInfo(_ref3) {
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, ((_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.customerName) || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName = row.customerName) === null || _row$customerName === void 0 ? void 0 : _row$customerName.Customer) || (row === null || row === void 0 || (_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -88079,7 +88132,7 @@ function ProjectReportInfo(_ref3) {
     }, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, (row1.RelatedInvoice.balanceDue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))) : '')))))));
   }
   function Row2(props) {
-    var _row$expenses;
+    var _row$customerName3, _row$customerName4, _row$expenses;
     var row = props.row;
     var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState4 = _slicedToArray(_React$useState3, 2),
@@ -88101,7 +88154,7 @@ function ProjectReportInfo(_ref3) {
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -88208,7 +88261,7 @@ function ProjectReportInfo(_ref3) {
     }, "$ ", (row.totalExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))))))))));
   }
   function Row3(props) {
-    var _row$relatedPurchase3, _row$relatedPurchase4;
+    var _row$customerName5, _row$customerName6, _row$relatedPurchase3, _row$relatedPurchase4;
     var row = props.row;
     var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
       _React$useState6 = _slicedToArray(_React$useState5, 2),
@@ -88230,7 +88283,7 @@ function ProjectReportInfo(_ref3) {
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       component: "th",
       scope: "row"
-    }, row.customerName.customerName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -88458,7 +88511,7 @@ function ProjectReportInfo(_ref3) {
       border: 'none',
       textAlign: 'left'
     }
-  }, "Expenses Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+  }, "Project Summary")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
     style: {
       backgroundColor: 'white',
       border: 'none',
@@ -88594,7 +88647,7 @@ function ProjectReportInfo(_ref3) {
   }, "Total Expenses"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     align: "right"
   }, "Net Profit"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null, FilterProject.map(row => {
-    var _row$customerName2;
+    var _row$customerName7, _row$customerName8;
     var projectAdvances = (onPayment || []).filter(pay => {
       var _pay$TotalAmount5;
       return pay.status !== 'Voided' && ((_pay$TotalAmount5 = pay.TotalAmount) === null || _pay$TotalAmount5 === void 0 ? void 0 : _pay$TotalAmount5.some(item => item.id === row._id));
@@ -88612,7 +88665,7 @@ function ProjectReportInfo(_ref3) {
       scope: "row"
     }, row.projectNumber), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, ((_row$customerName2 = row.customerName) === null || _row$customerName2 === void 0 ? void 0 : _row$customerName2.customerName) || 'N/A'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -121182,7 +121235,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.60"};
+module.exports = {"rE":"3.5.61"};
 
 /***/ },
 
@@ -130365,8 +130418,8 @@ function AdminHome() {
               id: row._id,
               maintenanceNumber: "M-" + (row.maintenanceNumber || row.serviceNumber || "").toString().padStart(6, '0'),
               dateField: dayjs_min_default()(row.serviceDate).format('DD/MM/YYYY'),
-              infoSell: row.subTotal,
-              infoCost: row.items.reduce((sum, ITem) => sum + ITem.itemOut * ITem.itemCost, 0)
+              infoSell: parseFloat(row.subTotal) || 0 || (row.items || []).reduce((sum, ITem) => sum + (parseFloat(ITem.itemAmount) || parseFloat(ITem.itemQty || 0) * parseFloat(ITem.itemRate || 0) || 0), 0),
+              infoCost: (row.items || []).reduce((sum, ITem) => sum + (parseFloat(ITem.itemOut !== undefined ? ITem.itemOut : ITem.itemQty || 0) * parseFloat(ITem.itemCost !== undefined ? ITem.itemCost : ITem.costPrice || ITem.itemCostPrice || 0) || 0), 0)
             })).reverse());
             setRelatedMaintenance(resMaintenance.data.data);
           });
@@ -130502,13 +130555,9 @@ function AdminHome() {
     return acc + row.relatedPurchase.filter(item => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice.totalInvoice) || 0), 0);
   }, 0) : 0;
   var projectRevenue = projectSellInfo - (projectCostInfo + projectExpensesInfo);
-  var totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((acc, row) => {
-    return acc + row.items.reduce((sum, item) => sum + (parseFloat(item.itemAmount) || 0), 0);
-  }, 0) : 0;
-  var totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((acc, row) => {
-    return acc + row.items.reduce((sum, item) => sum + (parseFloat(item.totalCostInfo) || 0), 0);
-  }, 0) : 0;
-  var totalMaintenanceLaborFees = maintenance.filter(row => row.totalLaborFeesGenerale !== undefined).reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0);
+  var totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoSell) || 0), 0) : 0;
+  var totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoCost) || 0), 0) : 0;
+  var totalMaintenanceLaborFees = maintenance.reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0);
   var monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   //Month Payment Start
   var TotalMonthPayment = payment ? payment.filter(item => {
@@ -133626,7 +133675,8 @@ function AdminHome() {
     }
   })), /*#__PURE__*/react.createElement(ProjectReportInfo/* default */.A, {
     onMonth: infoName,
-    onProjectName: projectWithAll
+    onProjectName: projectWithAll,
+    onPayment: payment
   })) : '', showInfo === 9 ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("section", {
     style: {
       position: 'relative',

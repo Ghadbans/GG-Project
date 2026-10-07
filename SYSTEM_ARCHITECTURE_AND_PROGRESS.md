@@ -1433,17 +1433,41 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.58.exe` generated.
 
-- **Maintenance Module Rate Edit Access Alignment for CEO & Non-Technician Roles (Ver 3.5.59)**:
-  - **Problem Reported:** In the Maintenance Module (`MaintenanceUpdateView.js` and `MaintenanceFormView.js`), user `GG` could edit the item Rate field, but non-GG accounts (including `CEO`, `Admin`, and office roles with Grant Access) had the Rate input disabled in light gray.
+- **Dashboard Operations & Commercial Invoices Statement of Accounts Accuracy Fixes (Ver 3.5.61)**:
+  - **Problem Reported:** In the Dashboard:
+    1. **Maintenance Operations:** Top overview card showed Total Cost `$0.00` (despite table rows having item costs), causing Operating Gain to equal Total Sell. In the drilldown Statement of Accounts (`MaintenanceReportInfo.js`), Total Cost and Total Revenue rendered as `$0.00`, Total Labor was omitted from the Statement card, and the box header incorrectly displayed "Expenses Summary".
+    2. **Commercial Invoices:** In the Statement of Accounts drilldown (`InvoiceReportInfo.js`), Total Cost and Total Revenue rendered as `$NaN`, the table footer displayed `$NaN`, the Total Cost column in `Row3` mistakenly rendered `row.subTotal` instead of `row.infoCost`, and the box header said "Expenses Summary".
+    3. User requested a comprehensive mathematical calculation and layout audit across all dashboard modules (Maintenance, Commercial Invoices, POS Sales, Projects, Expenses, Payroll, Payments) without disrupting cross-collection links.
   - **Root Cause Analysis:**
-    - The `TextField` component for `itemRate` was hardcoded to `disabled={!isOwner}` (where `isOwner = user?.data?.userName === 'GG'`) instead of `disabled={!canViewCosts}`.
+    1. **Maintenance `$0.00` Cost Bug:** `AdminHome.js` and `MaintenanceReportInfo.js` attempted to read `item.totalCostInfo`, an undefined property on maintenance items. The true item cost is `item.itemCost` (or `item.costPrice` / `item.itemCostPrice`) multiplied by `item.itemOut || item.itemQty`.
+    2. **Commercial Invoices `$NaN` Bug:** In `InvoiceReportInfo.js`, `TCost` reduced non-existent `item.totalCostInfo`, producing `NaN` and poisoning `TotalRevenue`, `TotalDExpenses`, and `TotalPayRoll`.
+    3. **Commercial Invoices Column Swap:** `Row3` line 336 rendered `row.subTotal` inside the Total Cost column instead of `row.infoCost`.
+    4. **Copy-Pasted Headers & Unsafe Customer Name Lookups:** Multiple report drilldowns had hardcoded "Expenses Summary" headers and `row.customerName.customerName` lookups vulnerable to non-object strings or undefined values.
   - **Architectural Resolution:**
-    - Updated `itemRate` `disabled` prop in both `MaintenanceUpdateView.js` (line 2026) and `MaintenanceFormView.js` (line 1605) to `disabled={!canViewCosts}`.
-    - Non-technicians (`CEO`, `Admin`, Operations, Sales, etc.) with Grant Access permissions can now edit item rates in maintenance orders identically to `GG`, while Technicians (`!canViewCosts`) continue to have the Rate, Discount, and Financial totals hidden according to Rule 23.
+    1. **Dashboard Overview Calculations (`AdminHome.js`):**
+       - Updated `safeGet('/maintenance?summary=true')` mapping to reliably calculate `infoSell`, `infoCost`, and `totalLaborFeesGenerale`.
+       - Summed `totalMaintenanceRevenue` (`sum + row.infoSell`), `totalMaintenanceCost` (`sum + row.infoCost`), and `totalMaintenanceLaborFees` (`sum + row.totalLaborFeesGenerale`), resolving the `$0.00` Total Cost card and restoring accurate pie chart slices.
+       - Passed `onPayment={payment}` to `<ProjectReportInfo />`.
+    2. **Maintenance Statement of Accounts (`MaintenanceReportInfo.js`):**
+       - Fixed data loading to accept `onMaintenance` regardless of `onMonth` value.
+       - Replaced fragile date matching with `dayjs.isBetween` (`startOf('day')` / `endOf('day')`) for custom date ranges.
+       - Fixed totals calculations (`TotalRevenue`, `TotalDExpenses`, `TotalPayRoll`, `TotalPayment`) to accurately aggregate item sales, costs, operating gain, and labor fees.
+       - Updated section title to "Maintenance Summary", used polymorphic customer names (`row?.customerName?.Customer || row?.customerName?.customerName || ...`), and secured number formatting across all table footers.
+    3. **Commercial Invoices Statement of Accounts (`InvoiceReportInfo.js`):**
+       - Fixed `useEffect` data loading (`if (onInvoice) setInvoiceRevenue(onInvoice)`).
+       - Replaced `item.totalCostInfo` with robust fallback calculation (`item.itemCost || item.costPrice || item.itemCostPrice`), eliminating all `$NaN` instances.
+       - Fixed `Row3` Total Cost column to display `row.infoCost` and Revenue column to display `row.subTotal - row.infoCost`.
+       - Updated section title to "Commercial Invoices Summary" and applied polymorphic customer names.
+    4. **POS Sales Statement of Accounts (`PosReportInvoice.js`):**
+       - Standardized custom date range filtering with `dayjs` `isBetween`.
+       - Renamed section title to "POS Sales Summary", added polymorphic customer names, and guarded against `NaN` in totals and footers.
+    5. **Project Summary Report (`ProjectReportInfo.js`):**
+       - Renamed section title to "Project Summary", applied polymorphic customer names across all views, and aligned search and payment calculations.
   - **Verification & Deployment:**
     - Babel AST Quality Gate passed across all 229 source files (0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
-    - Windows desktop installer `dist/Global Gate Setup 3.5.59.exe` generated.
+    - Windows desktop installer `dist/Global Gate Setup 3.5.61.exe` generated.
+
 
 
 

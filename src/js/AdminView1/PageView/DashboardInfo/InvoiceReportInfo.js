@@ -89,6 +89,8 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
   useEffect(() => {
     if (onMonth) {
       setInfoOptions(onMonth);
+    }
+    if (onInvoice) {
       setInvoiceRevenue(onInvoice);
     }
   }, [onMonth, onInvoice]);
@@ -112,12 +114,16 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
       setFilterInvoiceRevenue(invoiceRevenue?.filter((row) => dayjs(row.invoiceDate).format('YYYY') === dayjs(startDate).format('YYYY')))
     }
     else if (selectOptions === 'Custom') {
-      setFilterInvoiceRevenue(invoiceRevenue?.filter((row) => filteredData.find((Item) => dayjs(Item).format('DD/MM/YYYY') === dayjs(row.invoiceDate).format('DD/MM/YYYY'))))
+      setFilterInvoiceRevenue(invoiceRevenue?.filter((row) => {
+        const itemDate = dayjs(row.invoiceDate);
+        return (itemDate.isAfter(dayjs(fromDate).startOf('day')) || itemDate.isSame(dayjs(fromDate).startOf('day'))) &&
+               (itemDate.isBefore(dayjs(endDate).endOf('day')) || itemDate.isSame(dayjs(endDate).endOf('day')));
+      }))
     }
     else if (selectOptions === 'All') {
       setFilterInvoiceRevenue(invoiceRevenue)
     }
-  }, [selectOptions, month, startDate, filteredData, invoiceRevenue])
+  }, [selectOptions, month, startDate, fromDate, endDate, invoiceRevenue])
 
   const handleChangeSelected = (e) => {
     setInfoOptions(e.target.value);
@@ -128,11 +134,25 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
   const [TotalPayment, setTotalPayment] = useState(0);
   const [TotalRevenue, setTotalRevenue] = useState(0);
   useEffect(() => {
-    const TPayment = FilterInvoiceRevenue.length > 0 ? FilterInvoiceRevenue.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + parseFloat(item.itemAmount), 0) }, 0) : 0
-    const TCost = FilterInvoiceRevenue.length > 0 ? FilterInvoiceRevenue.reduce((acc, row) => { return acc + row.items.reduce((sum, item) => sum + parseFloat(item.totalCostInfo), 0) }, 0) : 0
-    setTotalRevenue(TPayment)
-    setTotalDExpenses(TCost)
-    setTotalPayRoll(TPayment - TCost)
+    const TSell = (FilterInvoiceRevenue || []).reduce((acc, row) => {
+      const sell = row.infoSell !== undefined ? parseFloat(row.infoSell) : (parseFloat(row.subTotal) || parseFloat(row.totalInvoice) || 0);
+      return acc + (isNaN(sell) ? 0 : sell);
+    }, 0);
+    const TCost = (FilterInvoiceRevenue || []).reduce((acc, row) => {
+      if (row.infoCost !== undefined) {
+        const cost = parseFloat(row.infoCost);
+        return acc + (isNaN(cost) ? 0 : cost);
+      }
+      const itemsCost = (row.items || []).reduce((sum, item) => {
+        const qty = parseFloat(item.itemOut !== undefined ? item.itemOut : item.itemQty) || 0;
+        const c = parseFloat(item.itemCost !== undefined ? item.itemCost : (item.costPrice || item.itemCostPrice)) || 0;
+        return sum + (qty * c);
+      }, 0);
+      return acc + itemsCost;
+    }, 0);
+    setTotalRevenue(TSell);
+    setTotalDExpenses(TCost);
+    setTotalPayRoll(TSell - TCost);
   }, [FilterInvoiceRevenue]);
 
   function Row(props) {
@@ -157,7 +177,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
           <TableCell component="th" scope="row">
             {dayjs(row.invoiceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
+          <TableCell align="left">{row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row?.customerName : '')}</TableCell>
           <TableCell align="left">{row.invoiceDefect}</TableCell>
           <TableCell align="right">$ {(parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
@@ -245,7 +265,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
           <TableCell component="th" scope="row">
             {dayjs(row.invoiceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
+          <TableCell align="left">{row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row?.customerName : '')}</TableCell>
           <TableCell align="left">{row.invoiceDefect}</TableCell>
           <TableCell align="right">$ {(parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
@@ -330,11 +350,11 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
           <TableCell component="th" scope="row">
             {dayjs(row.invoiceDate).format('DD-MMMM-YYYY')}
           </TableCell>
-          <TableCell align="left">{row.customerName.customerName}</TableCell>
+          <TableCell align="left">{row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row?.customerName : '')}</TableCell>
           <TableCell align="left">{row.invoiceDefect}</TableCell>
           <TableCell align="right">$ {(parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {(parseFloat(row.subTotal) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
-          <TableCell align="right">$ {(row.subTotal - row.infoCost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {(parseFloat(row.infoCost) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
+          <TableCell align="right">$ {((parseFloat(row.subTotal) || 0) - (parseFloat(row.infoCost) || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
         <TableRow>
           <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={8}>
@@ -560,14 +580,14 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                 </tbody>
                 <tbody>
                   <tr>
-                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Expenses Summary</td>
+                    <td colSpan={2} style={{ backgroundColor: '#e8f7fe', border: 'none', textAlign: 'left' }}>Commercial Invoices Summary</td>
                   </tr>
                   <tr>
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Sell</span></td>
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>
                       {
                         (infoOptions === 'Sell' || infoOptions === 'Revenue') && (
-                          <span >{`$${TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                          <span >{`$${(TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                         )}</td>
 
                   </tr>
@@ -575,7 +595,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'left' }}><span >Total Cost</span></td>
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>       {
                       (infoOptions === 'Cost' || infoOptions === 'Revenue') && (
-                        <span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                        <span >{`$${(TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                       )}</td>
                   </tr>
                   <tr>
@@ -583,7 +603,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                     <td style={{ backgroundColor: 'white', border: 'none', textAlign: 'right' }}>
                       {
                         (infoOptions === 'Revenue') && (
-                          <span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
+                          <span >{`$${(TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span>
                         )
                       }</td>
                   </tr>
@@ -611,7 +631,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                       <TableRow>
                         <TableCell colSpan={4}></TableCell>
                         <TableCell >Total Sell</TableCell>
-                        <TableCell ><span >{`$${TotalRevenue.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
+                        <TableCell ><span >{`$${(TotalRevenue || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -639,7 +659,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                       <TableRow>
                         <TableCell colSpan={4}></TableCell>
                         <TableCell >Total Cost</TableCell>
-                        <TableCell ><span >{`$${TotalDExpenses.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
+                        <TableCell ><span >{`$${(TotalDExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
@@ -670,7 +690,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                       <TableRow>
                         <TableCell colSpan={6}></TableCell>
                         <TableCell >Total Revenue</TableCell>
-                        <TableCell ><span >{`$${TotalPayRoll.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
+                        <TableCell ><span >{`$${(TotalPayRoll || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</span></TableCell>
                       </TableRow>
                     </TableBody>
                   </Table>
