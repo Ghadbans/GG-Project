@@ -217,9 +217,31 @@ Route.route("/notification", cors(corsOptionsDelegate)).get(
         filter.idInfo = req.query.projectId;
       }
 
-      let query = notificationSchema.find(filter).sort({ _id: -1 });
-      if (!req.query.idInfo && !req.query.projectId && !req.query.all) {
-        query = query.limit(100);
+      if (req.query.startDate && req.query.endDate) {
+        const start = new Date(req.query.startDate);
+        const end = new Date(req.query.endDate);
+        if (!isNaN(start.getTime()) && !isNaN(end.getTime())) {
+          filter.dateNotification = { $gte: start, $lte: end };
+        }
+      }
+
+      if (req.query.search && req.query.search.trim()) {
+        const sRegex = new RegExp(req.query.search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+        filter.$or = [
+          { person: sRegex },
+          { reason: sRegex },
+          { branchId: sRegex }
+        ];
+      }
+
+      let query = notificationSchema.find(filter).sort({ dateNotification: -1, _id: -1 });
+      if (req.query.limit) {
+        const limitNum = parseInt(req.query.limit, 10);
+        if (!isNaN(limitNum) && limitNum > 0) {
+          query = query.limit(limitNum);
+        }
+      } else if (!req.query.idInfo && !req.query.projectId && req.query.all !== 'true') {
+        query = query.limit(300);
       }
 
       const result = await query.lean().exec();

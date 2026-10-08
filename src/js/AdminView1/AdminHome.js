@@ -57,6 +57,7 @@ import InvoiceReportInfo from './PageView/DashboardInfo/InvoiceReportInfo';
 import ItemReportInfo from './PageView/DashboardInfo/ItemReportInfo';
 import PosReportInvoice from './PageView/DashboardInfo/PosReportInvoice';
 import VatAccountView from './PageView/DashboardInfo/VatAccountView';
+import NotificationReportInfo from './PageView/DashboardInfo/NotificationReportInfo';
 
 const ViewTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -2055,10 +2056,32 @@ function AdminHome() {
                             </Grid>
 
                             <Grid item xs={12} lg={4}>
-                              <Card sx={{ borderRadius: '16px', border: '1px solid #e2e8f0', p: 2, height: '400px', backgroundColor: '#ffffff' }}>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
-                                  <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a' }}>HR Announcements</Typography>
-                                  <NotificationAdd sx={{ color: '#2563eb' }} />
+                              <Card 
+                                sx={{ 
+                                  borderRadius: '16px', 
+                                  border: '1px solid #e2e8f0', 
+                                  p: 2, 
+                                  height: '400px', 
+                                  backgroundColor: '#ffffff',
+                                  transition: 'all 0.2s ease',
+                                  '&:hover': {
+                                    boxShadow: '0 4px 12px rgba(37, 99, 235, 0.08)',
+                                    borderColor: '#93c5fd'
+                                  }
+                                }}
+                              >
+                                <div 
+                                  onClick={() => handleClick(12, '')} 
+                                  style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1, cursor: 'pointer' }}
+                                >
+                                  <Typography sx={{ fontSize: '1.1rem', fontWeight: 'bold', color: '#0f172a', display: 'flex', alignItems: 'center', gap: 1, '&:hover': { color: '#2563eb' } }}>
+                                    HR Announcements
+                                  </Typography>
+                                  <ViewTooltip title="Open Full Notification & Activity Report">
+                                    <IconButton size="small" sx={{ color: '#2563eb', backgroundColor: '#eff6ff', '&:hover': { backgroundColor: '#dbeafe' } }}>
+                                      <Visibility sx={{ fontSize: '18px' }} />
+                                    </IconButton>
+                                  </ViewTooltip>
                                 </div>
                                 <Divider sx={{ my: 1 }} />
                                 <div style={{ height: '320px', overflowY: 'auto', paddingRight: '6px' }}>
@@ -2246,6 +2269,19 @@ function AdminHome() {
                             <ItemReportInfo
                               onMonth={infoName}
                               onItem={item}
+                            />
+                          </div>
+                          : ''
+                      }
+                      {
+                        showInfo === 12 ?
+                          <div>
+                            <section style={{ position: 'relative', float: 'right', margin: '10px' }}>
+                              <Close onClick={() => handleClick(1, '')} className='btnCustomer' style={{ fontSize: '40px' }} />
+                            </section>
+                            <NotificationReportInfo
+                              onMonth={infoName}
+                              onNotification={notification}
                             />
                           </div>
                           : ''

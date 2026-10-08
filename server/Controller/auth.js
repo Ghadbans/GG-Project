@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const crypto =require("crypto");
 const nodemailer=require("nodemailer");
 const User = require("../model/employeeUserSchema");
+const notificationSchema = require("../model/notificationSchema");
 const { setgroups } = require('process');
 
 
@@ -58,6 +59,24 @@ const register = async (req, res, next) => {
     const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
       expiresIn: '1 hour'
     });
+
+    // Automatically record Login Notification in database and emit real-time event
+    try {
+      const loginNotification = new notificationSchema({
+        idInfo: String(user._id),
+        person: `${user.employeeName} Logged In`,
+        reason: `User ${user.employeeName} (${user.role || 'Staff'}) successfully logged into the system`,
+        dateNotification: new Date(),
+        branchId: req.body.branchId || 'HQ'
+      });
+      await loginNotification.save();
+      if (req.io) {
+        req.io.emit('newNotification', loginNotification);
+      }
+    } catch (notifErr) {
+      console.error("Error saving login notification:", notifErr);
+    }
+
     res.json({ token });
     } catch (error) {
       // If an error occurs during the login process, pass the error to the error-handling middleware

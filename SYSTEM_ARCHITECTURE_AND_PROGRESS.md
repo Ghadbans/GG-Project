@@ -137,6 +137,10 @@
       7. `DECLINE` (`#d32f2f`, `CancelIcon`, `key: 'Decline'`)
       8. `FREE OF CHARGE` (`#9c27b0`, `CardGiftcardIcon`, `key: 'Free of Charge'`)
     - **Backend Match & Aggregation (`server/routes/invoiceRoutes.js`):** In `GET /invoice-Information`, the `status` query filter and MongoDB `$group` status aggregation must support `paid` (`/^paid$/i`) and `partially-paid` (`/^partially[- ]?paid$/i`) to ensure accurate card counts and instant single-click server-side DataGrid filtering.
+40. **User Login Notifications & Notification Activity Audit Log Architecture (Ver 3.5.65)**:
+    - **Automatic Login Auditing:** On every user login (`server/Controller/auth.js:login`), a notification record is automatically stored in `notificationSchema` (`person: '${user.employeeName} Logged In'`, `reason: 'User ${user.employeeName} (${user.role}) successfully logged into the system'`) and broadcast in real-time via `req.io.emit('newNotification')`.
+    - **Permanent History:** Notifications are stored permanently in MongoDB with zero automatic TTL or deletion.
+    - **Interactive Dashboard Drilldown:** In `AdminHome.js`, clicking the "HR Announcements" card opens the full `NotificationReportInfo` drilldown (`showInfo === 12`) with search, type filters, custom date pickers, summary metrics, print engine, and Excel export.
 
 ## Current Progress Log
 - **Maintenance Module Rate & Price Edit Permissions for CEO & Admin vs USER Level (Ver 3.5.60)**:
@@ -1545,6 +1549,28 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Babel AST Quality Gate passed across all 229 source files (0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.64.exe` generated.
+
+- **User Login Notifications & HR Announcements Full Audit History Drilldown (Ver 3.5.65)**:
+  - **Problem Reported:**
+    1. User requested real-time login notifications showing who logged in and at what time, recorded into the permanent notification history ("ALL" tab).
+    2. User inquired why "HR Announcements" on the Dashboard could not be clicked or opened as a full report to inspect historical notifications, and asked about notification retention and lifecycle.
+  - **Architectural Resolution:**
+    1. **Backend Login Audit Logging (`server/Controller/auth.js`):**
+       - Automatically creates a new `notificationSchema` entry upon successful authentication (`person: '${user.employeeName} Logged In'`, `reason: 'User ${user.employeeName} (${user.role}) successfully logged into the system'`).
+       - Broadcasts the event in real-time to all connected active clients via `req.io.emit('newNotification', loginNotification)`.
+    2. **Enhanced Notification Queries (`server/routes/Routes.js`):**
+       - Updated `GET /notification` with support for `startDate`, `endDate`, `search`, and unconstrained historical querying via `all=true`.
+    3. **Full Activity & Login Audit Report (`NotificationReportInfo.js`):**
+       - Created dedicated drilldown report view with search bar, activity type selector (`ALL`, `LOGINS`, `CREATIONS`, `MODIFICATIONS`, `DELETIONS`, `EXPENSES`, `INVOICES`, `MAINTENANCE`), date range selector (`ALL`, `TODAY`, `THIS_WEEK`, `THIS_MONTH`, `THIS_YEAR`, `CUSTOM`), and custom date pickers.
+       - Implemented Rule 38 Statement of Accounts card header (`#093170`) displaying total activities, total logins, total modifications, and unique staff members logged.
+       - Integrated standard `useReactToPrint` engine (`GlobalGate_Notification_Activity_Log`) and `ExcelJS` export (`GlobalGate_Notification_Activity_Log_YYYY-MM-DD.xlsx`).
+    4. **Dashboard Integration (`AdminHome.js`):**
+       - Connected "HR Announcements" dashboard card click handler (`handleClick(12, '')`) with hover styling, visibility button, and tooltip.
+       - Rendered `<NotificationReportInfo />` under `showInfo === 12`.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 230 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.65.exe` generated.
 
 
 

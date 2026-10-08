@@ -3028,6 +3028,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 31330
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8"
+}), 'AddCircleOutline');
+
+/***/ },
+
 /***/ 40221
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3456,6 +3477,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 81730
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6zM8 9h8v10H8zm7.5-5-1-1h-5l-1 1H5v2h14V4z"
+}), 'DeleteOutline');
+
+/***/ },
+
 /***/ 58071
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3516,6 +3558,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.9959.9959 0 0 0-1.41 0l-1.83 1.83 3.75 3.75z"
 }), 'Edit');
+
+/***/ },
+
+/***/ 3689
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"
+}), 'EditNote');
 
 /***/ },
 
@@ -3645,6 +3708,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 57296
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m15.1 19.37 1 1.74c-.96.44-2.01.73-3.1.84v-2.02c.74-.09 1.44-.28 2.1-.56M4.07 13H2.05c.11 1.1.4 2.14.84 3.1l1.74-1c-.28-.66-.47-1.36-.56-2.1M15.1 4.63l1-1.74c-.96-.44-2-.73-3.1-.84v2.02c.74.09 1.44.28 2.1.56M19.93 11h2.02c-.11-1.1-.4-2.14-.84-3.1l-1.74 1c.28.66.47 1.36.56 2.1M8.9 19.37l-1 1.74c.96.44 2.01.73 3.1.84v-2.02c-.74-.09-1.44-.28-2.1-.56M11 4.07V2.05c-1.1.11-2.14.4-3.1.84l1 1.74c.66-.28 1.36-.47 2.1-.56m7.36 3.1 1.74-1.01c-.63-.87-1.4-1.64-2.27-2.27l-1.01 1.74c.59.45 1.1.96 1.54 1.54M4.63 8.9l-1.74-1c-.44.96-.73 2-.84 3.1h2.02c.09-.74.28-1.44.56-2.1m15.3 4.1c-.09.74-.28 1.44-.56 2.1l1.74 1c.44-.96.73-2.01.84-3.1zm-3.1 5.36 1.01 1.74c.87-.63 1.64-1.4 2.27-2.27l-1.74-1.01c-.45.59-.96 1.1-1.54 1.54M7.17 5.64l-1-1.75c-.88.64-1.64 1.4-2.27 2.28l1.74 1.01c.44-.59.95-1.1 1.53-1.54M5.64 16.83l-1.74 1c.63.87 1.4 1.64 2.27 2.27l1.01-1.74c-.59-.44-1.1-.95-1.54-1.53M13 7h-2v5.41l4.29 4.29 1.41-1.41-3.7-3.7z"
+}), 'HistoryToggleOff');
+
+/***/ },
+
 /***/ 3965
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -3726,6 +3810,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2m-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2m3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1z"
 }), 'Lock');
+
+/***/ },
+
+/***/ 28800
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M11 7 9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8z"
+}), 'Login');
 
 /***/ },
 
@@ -3852,6 +3957,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2m6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1z"
 }), 'Notifications');
+
+/***/ },
+
+/***/ 32683
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M7.58 4.08 6.15 2.65C3.75 4.48 2.17 7.3 2.03 10.5h2c.15-2.65 1.51-4.97 3.55-6.42m12.39 6.42h2c-.15-3.2-1.73-6.02-4.12-7.85l-1.42 1.43c2.02 1.45 3.39 3.77 3.54 6.42M18 11c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-6 11c.14 0 .27-.01.4-.04.65-.14 1.18-.58 1.44-1.18.1-.24.15-.5.15-.78h-4c.01 1.1.9 2 2.01 2"
+}), 'NotificationsActive');
 
 /***/ },
 
@@ -4090,6 +4216,27 @@ var _default = exports.A = (0, _createSvgIcon.default)([/*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 42702
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z"
+}), 'Refresh');
+
+/***/ },
+
 /***/ 58856
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -4150,6 +4297,27 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M14 11.26V6h3v4h2V4h-5V3H5v16H3v2h9.26c-.79-1.13-1.26-2.51-1.26-4 0-2.38 1.19-4.47 3-5.74M10 11h2v2h-2zm11.69 5.37 1.14-1-1-1.73-1.45.49c-.32-.27-.68-.48-1.08-.63L19 12h-2l-.3 1.49c-.4.15-.76.36-1.08.63l-1.45-.49-1 1.73 1.14 1c-.08.5-.08.76 0 1.26l-1.14 1 1 1.73 1.45-.49c.32.27.68.48 1.08.63L17 22h2l.3-1.49c.4-.15.76-.36 1.08-.63l1.45.49 1-1.73-1.14-1c.08-.51.08-.77 0-1.27M18 19c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2"
 }), 'RoomPreferences');
+
+/***/ },
+
+/***/ 64745
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
+}), 'Search');
 
 /***/ },
 
@@ -122225,7 +122393,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.64"};
+module.exports = {"rE":"3.5.65"};
 
 /***/ },
 
@@ -122357,7 +122525,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"330fe98687ab60c00035","327":"c88df084641bfac45cdc","441":"3ca7f4edaec7352b6475","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"a240bd636f8bf7ea4dce","778":"f8950b7fd584414ccde4","806":"d97c06e4a4c7fb87dacd","808":"5d1d5d897f1f026553ba","864":"ac9193b4bf40eb4964a0","885":"3296cb1f8a5548fc4260","956":"d7447441214ab2034ef1","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"2d70cd5ae822476da424","1251":"9da50dc8470bc764d3b6","1364":"c52e115a8ecbff4e1332","1390":"d068203d76b14fda80ff","1500":"ba5de24276c1ade128c6","1624":"e087efe6d5dca00bd5a7","1645":"31e2aa4b127c90be3cd7","1679":"29e37e6247a6c6cf7f66","1722":"64a825cf89210c4f5730","1853":"db24c7f2a64da0f77d0b","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"15f84046f8f77c08fe99","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"ea32c7241fb84bb07eb5","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"37e017925354e0aeecaf","2778":"f293ce4a1f22a0d622e1","2821":"01a54997982101e25afd","2835":"4fa5f50cab8055ebf263","2982":"c1408d551f269bc041b7","2992":"a9467be9ce8e9cb261c3","3009":"567b00944880ad958271","3058":"20cc2119f76d5f47538b","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"e73a81092b4bdfd0f13e","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"2c640c6931e08fcf9b6a","4184":"2c492a6541a3724e3e26","4237":"ae9e77c6d4f5a70c297a","4270":"af1f59b22164cd31deb0","4444":"1e5075cee8d0c0cd3076","4783":"af87d7ac9632101d1ac4","5059":"2b89ac7d099d3898a08b","5151":"5a36076a0f707a43f109","5194":"d9e4d8382ebe97418258","5391":"9f8395b2e0878a827562","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"3321f4ce3345b118d333","5824":"5a1544f2a7d4bcddbd21","5881":"c96c2ad58bd4c057a210","5910":"6707b21bda340d85f399","5919":"db49efeaa6a74d046b06","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"d37d158b6202dd88c4ca","6744":"17ccaa2a0f1a1b8b6c58","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"6ebd1f8c06d7690dec58","7405":"53dd5e5077e4f953ad70","7444":"a97b22a40ad291400689","7445":"f2a2b9186674de3f9003","7539":"72ee1ee088ac1a0441f8","7592":"3f3a5a54ff0c05a069b6","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"3e11b6f6b4d1c2d7a78b","7897":"a1e03e56ca01f4a452c7","7941":"edaf6fa94aa0faebb435","7997":"61d4bd79e52b1ffcf1aa","8011":"0e1fd69e444050f4adde","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"8eac3d05b7a84f93a0d1","8354":"2ae7fb5178a94693fdeb","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"1a745e1a9f3082110df5","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"5b0c1eb6fa7a1e80c1e3","9528":"6dc89c613ad4fd9edbf4","9564":"4c20410cd72828190b9f","9573":"8e81f9c5c883495d25d3","9575":"e9bf1fcbb360227bdd13","9670":"53fa8ff6afa35d003dbf","9762":"3bf9d41c3e823d684593","9773":"bd77a72447d8b56490c3","9846":"8c88ace851a350f2d752","9971":"30822343396a58b84cbc"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ccf376d4d12ded7e9811","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"1709f9ea5b7a0506abd3","778":"f8950b7fd584414ccde4","806":"6ce4ec6b47da37c0fa39","808":"97ed4a698ba8660fc06b","864":"ac9193b4bf40eb4964a0","885":"3296cb1f8a5548fc4260","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"2d70cd5ae822476da424","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"9f998c4a0f364795b1c1","1679":"38cd27b1d1f28378049b","1722":"64a825cf89210c4f5730","1853":"7ec2d990adbaf6414fac","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"bff4d62db8261aeefd44","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"ea32c7241fb84bb07eb5","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"f293ce4a1f22a0d622e1","2821":"01a54997982101e25afd","2835":"4fa5f50cab8055ebf263","2982":"aa26293f6393a292ec42","2992":"2adb966510ec0f951971","3009":"567b00944880ad958271","3058":"0ae4cbc1898b717e8cf8","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"cf41a87f5d4c010118f1","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"547a0c111bfa6c44a2ff","4444":"f0679f5e171afdd1cc01","4783":"af87d7ac9632101d1ac4","5059":"2b89ac7d099d3898a08b","5151":"225f403f2f02626f24d9","5194":"d9e4d8382ebe97418258","5391":"b680dac866e742017f9d","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"3321f4ce3345b118d333","5824":"5a1544f2a7d4bcddbd21","5881":"cacc950a54386795a0a3","5910":"6707b21bda340d85f399","5919":"db49efeaa6a74d046b06","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"60b960fe7a1d58359a63","6744":"17ccaa2a0f1a1b8b6c58","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"6ebd1f8c06d7690dec58","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"7f236cd7e6f256235668","7539":"72ee1ee088ac1a0441f8","7592":"287b28ec01f0edb0741e","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"3e11b6f6b4d1c2d7a78b","7897":"b091cc7abad14f8aa87b","7941":"00850469d4148ac7a7a3","7997":"2e21126ab3301ab4a2fa","8011":"0e1fd69e444050f4adde","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"fb81e26d4a926f33e29f","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"6ce1ec20223b6eab80e2","9528":"4dd9c43eb666c40b578c","9564":"4c20410cd72828190b9f","9573":"019ee55ed2f564604629","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3bf9d41c3e823d684593","9773":"fa9682413cbc11af8687","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -127744,14 +127912,6 @@ var Storefront = __webpack_require__(78325);
 /* harmony default export */ const GroupRemove = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
   d: "M24 9v2h-6V9zM8 4C5.79 4 4 5.79 4 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4m0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4m4.51-8.95C13.43 5.11 14 6.49 14 8s-.57 2.89-1.49 3.95C14.47 11.7 16 10.04 16 8s-1.53-3.7-3.49-3.95m4.02 9.78C17.42 14.66 18 15.7 18 17v3h2v-3c0-1.45-1.59-2.51-3.47-3.17"
 }), 'GroupRemove'));
-;// ./node_modules/@mui/icons-material/esm/NotificationAdd.js
-"use client";
-
-
-
-/* harmony default export */ const NotificationAdd = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M10 20h4c0 1.1-.9 2-2 2s-2-.9-2-2m4-11c0 2.61 1.67 4.83 4 5.66V17h2v2H4v-2h2v-7c0-2.79 1.91-5.14 4.5-5.8v-.7c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v.7c.71.18 1.36.49 1.95.9C14.54 6.14 14 7.51 14 9m10-1h-3V5h-2v3h-3v2h3v3h2v-3h3z"
-}), 'NotificationAdd'));
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
 var Close = __webpack_require__(17809);
 // EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
@@ -130956,6 +131116,843 @@ var VatAccountView = _ref => {
   }))));
 };
 /* harmony default export */ const DashboardInfo_VatAccountView = (VatAccountView);
+// EXTERNAL MODULE: ./node_modules/@mui/material/CircularProgress/CircularProgress.js + 1 modules
+var CircularProgress = __webpack_require__(73357);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Search.js
+var Search = __webpack_require__(64745);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Refresh.js
+var Refresh = __webpack_require__(42702);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/NotificationsActive.js
+var NotificationsActive = __webpack_require__(32683);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Login.js
+var icons_material_Login = __webpack_require__(28800);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/EditNote.js
+var EditNote = __webpack_require__(3689);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/AddCircleOutline.js
+var AddCircleOutline = __webpack_require__(31330);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/DeleteOutline.js
+var DeleteOutline = __webpack_require__(81730);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/HistoryToggleOff.js
+var HistoryToggleOff = __webpack_require__(57296);
+;// ./src/js/AdminView1/PageView/DashboardInfo/NotificationReportInfo.js
+var NotificationReportInfo_excluded = ["className"];
+function NotificationReportInfo_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function NotificationReportInfo_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { NotificationReportInfo_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { NotificationReportInfo_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function NotificationReportInfo_slicedToArray(r, e) { return NotificationReportInfo_arrayWithHoles(r) || NotificationReportInfo_iterableToArrayLimit(r, e) || NotificationReportInfo_unsupportedIterableToArray(r, e) || NotificationReportInfo_nonIterableRest(); }
+function NotificationReportInfo_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function NotificationReportInfo_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return NotificationReportInfo_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? NotificationReportInfo_arrayLikeToArray(r, a) : void 0; } }
+function NotificationReportInfo_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function NotificationReportInfo_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function NotificationReportInfo_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function NotificationReportInfo_extends() { return NotificationReportInfo_extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, NotificationReportInfo_extends.apply(null, arguments); }
+function NotificationReportInfo_objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = NotificationReportInfo_objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function NotificationReportInfo_objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var NotificationReportInfo_PrintTooltip = (0,styled/* default */.Ay)(_ref => {
+  var className = _ref.className,
+    props = NotificationReportInfo_objectWithoutProperties(_ref, NotificationReportInfo_excluded);
+  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, NotificationReportInfo_extends({}, props, {
+    classes: {
+      popper: className
+    }
+  }));
+})(_ref2 => {
+  var theme = _ref2.theme;
+  return {
+    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+      backgroundColor: 'white',
+      color: 'black',
+      boxShadow: theme.shadows[1],
+      fontSize: 11
+    }
+  };
+});
+function getNotificationCategory() {
+  var person = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var reason = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  var p = (person || '').toLowerCase();
+  var r = (reason || '').toLowerCase();
+  if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
+    return {
+      label: 'User Login',
+      color: '#16a34a',
+      bg: '#dcfce7',
+      icon: /*#__PURE__*/react.createElement(icons_material_Login/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  if (p.includes('delete') || r.includes('delete') || p.includes('decline')) {
+    return {
+      label: 'Deletion / Decline',
+      color: '#dc2626',
+      bg: '#fee2e2',
+      icon: /*#__PURE__*/react.createElement(DeleteOutline/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  if (p.includes('modify') || p.includes('update') || r.includes('update') || r.includes('modified')) {
+    return {
+      label: 'Modification',
+      color: '#d97706',
+      bg: '#fef3c7',
+      icon: /*#__PURE__*/react.createElement(EditNote/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  if (p.includes('create') || p.includes('created') || p.includes('new') || r.includes('create')) {
+    return {
+      label: 'Creation',
+      color: '#2563eb',
+      bg: '#dbeafe',
+      icon: /*#__PURE__*/react.createElement(AddCircleOutline/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  if (p.includes('expense') || r.includes('expense')) {
+    return {
+      label: 'Expense',
+      color: '#c026d3',
+      bg: '#fae8ff',
+      icon: /*#__PURE__*/react.createElement(NotificationsActive/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  if (p.includes('invoice') || r.includes('invoice')) {
+    return {
+      label: 'Invoice',
+      color: '#0284c7',
+      bg: '#e0f2fe',
+      icon: /*#__PURE__*/react.createElement(NotificationsActive/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  if (p.includes('maintenance') || r.includes('maintenance')) {
+    return {
+      label: 'Maintenance',
+      color: '#7c3aed',
+      bg: '#ede9fe',
+      icon: /*#__PURE__*/react.createElement(NotificationsActive/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
+  return {
+    label: 'System Activity',
+    color: '#475569',
+    bg: '#f1f5f9',
+    icon: /*#__PURE__*/react.createElement(NotificationsActive/* default */.A, {
+      sx: {
+        fontSize: 13
+      }
+    })
+  };
+}
+function NotificationReportInfo(_ref3) {
+  var onMonth = _ref3.onMonth,
+    onNotification = _ref3.onNotification;
+  var _useState = (0,react.useState)(onNotification || []),
+    _useState2 = NotificationReportInfo_slicedToArray(_useState, 2),
+    notifications = _useState2[0],
+    setNotifications = _useState2[1];
+  var _useState3 = (0,react.useState)(false),
+    _useState4 = NotificationReportInfo_slicedToArray(_useState3, 2),
+    loading = _useState4[0],
+    setLoading = _useState4[1];
+  var _useState5 = (0,react.useState)(''),
+    _useState6 = NotificationReportInfo_slicedToArray(_useState5, 2),
+    search = _useState6[0],
+    setSearch = _useState6[1];
+  var _useState7 = (0,react.useState)('ALL'),
+    _useState8 = NotificationReportInfo_slicedToArray(_useState7, 2),
+    typeFilter = _useState8[0],
+    setTypeFilter = _useState8[1];
+  var _useState9 = (0,react.useState)('ALL'),
+    _useState0 = NotificationReportInfo_slicedToArray(_useState9, 2),
+    dateRangeFilter = _useState0[0],
+    setDateRangeFilter = _useState0[1];
+  var _useState1 = (0,react.useState)(dayjs_min_default()().startOf('month').format('YYYY-MM-DD')),
+    _useState10 = NotificationReportInfo_slicedToArray(_useState1, 2),
+    customFromDate = _useState10[0],
+    setCustomFromDate = _useState10[1];
+  var _useState11 = (0,react.useState)(dayjs_min_default()().format('YYYY-MM-DD')),
+    _useState12 = NotificationReportInfo_slicedToArray(_useState11, 2),
+    customToDate = _useState12[0],
+    setCustomToDate = _useState12[1];
+  var _useState13 = (0,react.useState)(0),
+    _useState14 = NotificationReportInfo_slicedToArray(_useState13, 2),
+    page = _useState14[0],
+    setPage = _useState14[1];
+  var _useState15 = (0,react.useState)(50),
+    _useState16 = NotificationReportInfo_slicedToArray(_useState15, 2),
+    rowsPerPage = _useState16[0],
+    setRowsPerPage = _useState16[1];
+  var componentRef = (0,react.useRef)();
+  var fetchLiveNotifications = /*#__PURE__*/function () {
+    var _ref4 = NotificationReportInfo_asyncToGenerator(function* () {
+      try {
+        setLoading(true);
+        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/notification?all=true"));
+        if (res.data && res.data.data) {
+          setNotifications(res.data.data);
+        }
+      } catch (err) {
+        console.error('Error fetching notification audit log:', err);
+      } finally {
+        setLoading(false);
+      }
+    });
+    return function fetchLiveNotifications() {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  (0,react.useEffect)(() => {
+    fetchLiveNotifications();
+  }, []);
+  var handlePrint = (0,lib.useReactToPrint)({
+    content: () => componentRef.current,
+    documentTitle: 'GlobalGate_Notification_Activity_Log',
+    pageStyle: "@page { size: A4 landscape; margin: 8mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
+  });
+  var filteredNotifications = (0,react.useMemo)(() => {
+    return (notifications || []).filter(item => {
+      // 1. Search Query Filter
+      if (search && search.trim() !== '') {
+        var q = search.trim().toLowerCase();
+        var p = (item.person || '').toLowerCase();
+        var r = (item.reason || '').toLowerCase();
+        var b = (item.branchId || '').toLowerCase();
+        var d = item.dateNotification ? dayjs_min_default()(item.dateNotification).format('DD/MM/YYYY HH:mm:ss').toLowerCase() : '';
+        if (!p.includes(q) && !r.includes(q) && !b.includes(q) && !d.includes(q)) {
+          return false;
+        }
+      }
+
+      // 2. Type Filter
+      if (typeFilter !== 'ALL') {
+        var _p = (item.person || '').toLowerCase();
+        var _r = (item.reason || '').toLowerCase();
+        if (typeFilter === 'LOGINS') {
+          if (!_p.includes('login') && !_p.includes('logged in') && !_r.includes('logged into')) return false;
+        } else if (typeFilter === 'CREATIONS') {
+          if (!_p.includes('create') && !_p.includes('created')) return false;
+        } else if (typeFilter === 'MODIFICATIONS') {
+          if (!_p.includes('modify') && !_p.includes('update') && !_r.includes('update')) return false;
+        } else if (typeFilter === 'DELETIONS') {
+          if (!_p.includes('delete') && !_p.includes('decline')) return false;
+        } else if (typeFilter === 'EXPENSES') {
+          if (!_p.includes('expense') && !_r.includes('expense')) return false;
+        } else if (typeFilter === 'INVOICES') {
+          if (!_p.includes('invoice') && !_r.includes('invoice') && !_p.includes('inv-')) return false;
+        } else if (typeFilter === 'MAINTENANCE') {
+          if (!_p.includes('maintenance') && !_r.includes('maintenance')) return false;
+        }
+      }
+
+      // 3. Date Range Filter
+      if (dateRangeFilter !== 'ALL' && item.dateNotification) {
+        var itemDate = dayjs_min_default()(item.dateNotification);
+        var today = dayjs_min_default()();
+        if (dateRangeFilter === 'TODAY') {
+          if (!itemDate.isSame(today, 'day')) return false;
+        } else if (dateRangeFilter === 'THIS_WEEK') {
+          if (!itemDate.isSame(today, 'week')) return false;
+        } else if (dateRangeFilter === 'THIS_MONTH') {
+          if (!itemDate.isSame(today, 'month')) return false;
+        } else if (dateRangeFilter === 'THIS_YEAR') {
+          if (!itemDate.isSame(today, 'year')) return false;
+        } else if (dateRangeFilter === 'CUSTOM') {
+          var from = dayjs_min_default()(customFromDate).startOf('day');
+          var to = dayjs_min_default()(customToDate).endOf('day');
+          if (itemDate.isBefore(from) || itemDate.isAfter(to)) return false;
+        }
+      }
+      return true;
+    });
+  }, [notifications, search, typeFilter, dateRangeFilter, customFromDate, customToDate]);
+
+  // Summary Metrics
+  var summaryMetrics = (0,react.useMemo)(() => {
+    var totalLogins = 0;
+    var totalCreations = 0;
+    var totalModifications = 0;
+    var totalDeletions = 0;
+    var staffSet = new Set();
+    (filteredNotifications || []).forEach(n => {
+      var p = (n.person || '').toLowerCase();
+      var r = (n.reason || '').toLowerCase();
+      if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
+        totalLogins += 1;
+      } else if (p.includes('create') || p.includes('created')) {
+        totalCreations += 1;
+      } else if (p.includes('modify') || p.includes('update')) {
+        totalModifications += 1;
+      } else if (p.includes('delete') || p.includes('decline')) {
+        totalDeletions += 1;
+      }
+
+      // Extract user name token
+      var match = (n.person || '').match(/^([^\s]+)/);
+      if (match && match[1]) {
+        staffSet.add(match[1].toUpperCase());
+      }
+    });
+    return {
+      total: filteredNotifications.length,
+      totalLogins,
+      totalCreations,
+      totalModifications,
+      totalDeletions,
+      uniqueStaff: staffSet.size
+    };
+  }, [filteredNotifications]);
+  var exportExcel = /*#__PURE__*/function () {
+    var _ref5 = NotificationReportInfo_asyncToGenerator(function* () {
+      var workbook = new (exceljs_min_default()).Workbook();
+      var worksheet = workbook.addWorksheet('Notification Activity Log');
+      worksheet.columns = [{
+        header: '#',
+        key: 'index',
+        width: 8
+      }, {
+        header: 'Date & Time',
+        key: 'date',
+        width: 22
+      }, {
+        header: 'Category',
+        key: 'category',
+        width: 18
+      }, {
+        header: 'Action / User',
+        key: 'person',
+        width: 30
+      }, {
+        header: 'Details & Description',
+        key: 'reason',
+        width: 55
+      }, {
+        header: 'Branch',
+        key: 'branch',
+        width: 12
+      }];
+      worksheet.getRow(1).font = {
+        bold: true,
+        color: {
+          argb: 'FFFFFFFF'
+        }
+      };
+      worksheet.getRow(1).fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: {
+          argb: 'FF093170'
+        }
+      };
+      filteredNotifications.forEach((row, i) => {
+        var cat = getNotificationCategory(row.person, row.reason);
+        worksheet.addRow({
+          index: i + 1,
+          date: row.dateNotification ? dayjs_min_default()(row.dateNotification).format('DD/MM/YYYY HH:mm:ss') : '',
+          category: cat.label,
+          person: row.person || '',
+          reason: row.reason || '',
+          branch: row.branchId || 'HQ'
+        });
+      });
+      var buffer = yield workbook.xlsx.writeBuffer();
+      (0,FileSaver_min.saveAs)(new Blob([buffer]), "GlobalGate_Notification_Activity_Log_".concat(dayjs_min_default()().format('YYYY-MM-DD'), ".xlsx"));
+    });
+    return function exportExcel() {
+      return _ref5.apply(this, arguments);
+    };
+  }();
+  var paginatedRows = (0,react.useMemo)(() => {
+    return filteredNotifications.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
+  }, [filteredNotifications, page, rowsPerPage]);
+  return /*#__PURE__*/react.createElement("div", {
+    style: {
+      width: '100%',
+      minHeight: '100vh',
+      backgroundColor: '#f8fafc',
+      padding: '16px'
+    }
+  }, /*#__PURE__*/react.createElement(Card/* default */.A, {
+    sx: {
+      borderRadius: '12px',
+      border: '1px solid #e2e8f0',
+      p: 2,
+      mb: 2,
+      boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+    }
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    container: true,
+    spacing: 1.5,
+    alignItems: "center"
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 3.5
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    size: "small",
+    placeholder: "Search user, action, details...",
+    value: search,
+    onChange: e => {
+      setSearch(e.target.value);
+      setPage(0);
+    },
+    InputProps: {
+      startAdornment: /*#__PURE__*/react.createElement(Search/* default */.A, {
+        sx: {
+          color: '#64748b',
+          fontSize: 20,
+          mr: 1
+        }
+      })
+    }
+  })), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 6,
+    sm: 3,
+    md: 2
+  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
+    fullWidth: true,
+    size: "small"
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, null, "Activity Type"), /*#__PURE__*/react.createElement(Select/* default */.A, {
+    value: typeFilter,
+    label: "Activity Type",
+    onChange: e => {
+      setTypeFilter(e.target.value);
+      setPage(0);
+    }
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "ALL"
+  }, "All Activities"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "LOGINS"
+  }, "User Logins Only"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "CREATIONS"
+  }, "New Creations"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "MODIFICATIONS"
+  }, "Modifications"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "DELETIONS"
+  }, "Deletions / Declines"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "EXPENSES"
+  }, "Expenses"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "INVOICES"
+  }, "Invoices"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "MAINTENANCE"
+  }, "Maintenance")))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 6,
+    sm: 3,
+    md: 2
+  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
+    fullWidth: true,
+    size: "small"
+  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, null, "Date Range"), /*#__PURE__*/react.createElement(Select/* default */.A, {
+    value: dateRangeFilter,
+    label: "Date Range",
+    onChange: e => {
+      setDateRangeFilter(e.target.value);
+      setPage(0);
+    }
+  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "ALL"
+  }, "All Time"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "TODAY"
+  }, "Today"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "THIS_WEEK"
+  }, "This Week"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "THIS_MONTH"
+  }, "This Month"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "THIS_YEAR"
+  }, "This Year"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "CUSTOM"
+  }, "Custom Range")))), dateRangeFilter === 'CUSTOM' && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 6,
+    sm: 3,
+    md: 1.5
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    size: "small",
+    type: "date",
+    label: "From Date",
+    value: customFromDate,
+    onChange: e => {
+      setCustomFromDate(e.target.value);
+      setPage(0);
+    },
+    InputLabelProps: {
+      shrink: true
+    }
+  })), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 6,
+    sm: 3,
+    md: 1.5
+  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+    fullWidth: true,
+    size: "small",
+    type: "date",
+    label: "To Date",
+    value: customToDate,
+    onChange: e => {
+      setCustomToDate(e.target.value);
+      setPage(0);
+    },
+    InputLabelProps: {
+      shrink: true
+    }
+  }))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: dateRangeFilter === 'CUSTOM' ? 1.5 : 4.5,
+    sx: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(NotificationReportInfo_PrintTooltip, {
+    title: "Export to Excel (.xlsx)"
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    onClick: exportExcel,
+    sx: {
+      backgroundColor: '#f0fdf4',
+      color: '#16a34a',
+      border: '1px solid #bbf7d0',
+      '&:hover': {
+        backgroundColor: '#dcfce7'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Explicit/* default */.A, {
+    sx: {
+      fontSize: 20
+    }
+  }))), /*#__PURE__*/react.createElement(NotificationReportInfo_PrintTooltip, {
+    title: "Print Activity Report"
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    onClick: handlePrint,
+    sx: {
+      backgroundColor: '#eff6ff',
+      color: '#2563eb',
+      border: '1px solid #bfdbfe',
+      '&:hover': {
+        backgroundColor: '#dbeafe'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(LocalPrintshop/* default */.A, {
+    sx: {
+      fontSize: 20
+    }
+  }))), /*#__PURE__*/react.createElement(NotificationReportInfo_PrintTooltip, {
+    title: "Refresh Live Notifications"
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    onClick: fetchLiveNotifications,
+    sx: {
+      backgroundColor: '#f1f5f9',
+      color: '#475569',
+      border: '1px solid #e2e8f0',
+      '&:hover': {
+        backgroundColor: '#e2e8f0'
+      }
+    }
+  }, loading ? /*#__PURE__*/react.createElement(CircularProgress/* default */.A, {
+    size: 20
+  }) : /*#__PURE__*/react.createElement(Refresh/* default */.A, {
+    sx: {
+      fontSize: 20
+    }
+  })))))), /*#__PURE__*/react.createElement("div", {
+    ref: componentRef,
+    style: {
+      width: '100%',
+      backgroundColor: '#ffffff',
+      borderRadius: '12px',
+      border: '1px solid #e2e8f0',
+      padding: '16px'
+    }
+  }, /*#__PURE__*/react.createElement(PrintHeader/* default */.A, {
+    title: "ACTIVITY AUDIT & NOTIFICATION REPORT"
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      mb: 2,
+      mt: 1
+    }
+  }, /*#__PURE__*/react.createElement("table", {
+    style: {
+      width: '100%',
+      maxWidth: '850px',
+      borderCollapse: 'collapse',
+      border: '1px solid #cbd5e1',
+      borderRadius: '6px',
+      overflow: 'hidden',
+      boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+      fontSize: '13px'
+    }
+  }, /*#__PURE__*/react.createElement("thead", null, /*#__PURE__*/react.createElement("tr", {
+    style: {
+      backgroundColor: '#093170',
+      color: '#ffffff'
+    }
+  }, /*#__PURE__*/react.createElement("th", {
+    colSpan: "4",
+    style: {
+      padding: '9px 14px',
+      textAlign: 'left',
+      fontSize: '13.5px',
+      fontWeight: 'bold',
+      letterSpacing: '0.3px'
+    }
+  }, "Statement of Accounts - Notification & Activity Audit Log"))), /*#__PURE__*/react.createElement("tbody", null, /*#__PURE__*/react.createElement("tr", {
+    style: {
+      backgroundColor: '#e8f7fe',
+      color: '#0369a1',
+      fontWeight: 'bold',
+      borderBottom: '1px solid #bae6fd'
+    }
+  }, /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '7px 14px'
+    }
+  }, "Total Filtered Activities"), /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '7px 14px',
+      textAlign: 'center'
+    }
+  }, "User Logins"), /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '7px 14px',
+      textAlign: 'center'
+    }
+  }, "Creations & Modifications"), /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '7px 14px',
+      textAlign: 'center'
+    }
+  }, "Unique Staff Logged")), /*#__PURE__*/react.createElement("tr", {
+    style: {
+      borderBottom: '1px solid #e2e8f0',
+      backgroundColor: '#ffffff'
+    }
+  }, /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '8px 14px',
+      fontWeight: 'bold',
+      fontSize: '15px',
+      color: '#0f172a'
+    }
+  }, summaryMetrics.total.toLocaleString(), " Records"), /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '8px 14px',
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: '15px',
+      color: '#16a34a'
+    }
+  }, summaryMetrics.totalLogins.toLocaleString()), /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '8px 14px',
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: '15px',
+      color: '#2563eb'
+    }
+  }, (summaryMetrics.totalCreations + summaryMetrics.totalModifications).toLocaleString()), /*#__PURE__*/react.createElement("td", {
+    style: {
+      padding: '8px 14px',
+      textAlign: 'center',
+      fontWeight: 'bold',
+      fontSize: '15px',
+      color: '#7c3aed'
+    }
+  }, summaryMetrics.uniqueStaff, " Staff Members"))))), /*#__PURE__*/react.createElement(TableContainer/* default */.A, {
+    component: Paper/* default */.A,
+    elevation: 0,
+    sx: {
+      border: '1px solid #e2e8f0',
+      borderRadius: '8px',
+      overflowX: 'auto'
+    }
+  }, /*#__PURE__*/react.createElement(Table/* default */.A, {
+    size: "small",
+    sx: {
+      minWidth: 700
+    }
+  }, /*#__PURE__*/react.createElement(TableHead/* default */.A, null, /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+    sx: {
+      backgroundColor: '#093170'
+    }
+  }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      color: '#ffffff',
+      fontWeight: 'bold',
+      width: '50px'
+    }
+  }, "#"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      color: '#ffffff',
+      fontWeight: 'bold',
+      width: '180px'
+    }
+  }, "Date & Time"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      color: '#ffffff',
+      fontWeight: 'bold',
+      width: '140px'
+    }
+  }, "Category"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      color: '#ffffff',
+      fontWeight: 'bold',
+      width: '220px'
+    }
+  }, "Activity / Performed By"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      color: '#ffffff',
+      fontWeight: 'bold'
+    }
+  }, "Details & Description"), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    sx: {
+      color: '#ffffff',
+      fontWeight: 'bold',
+      width: '90px'
+    }
+  }, "Branch"))), /*#__PURE__*/react.createElement(TableBody/* default */.A, null, paginatedRows.length > 0 ? paginatedRows.map((row, idx) => {
+    var cat = getNotificationCategory(row.person, row.reason);
+    return /*#__PURE__*/react.createElement(TableRow/* default */.A, {
+      key: row._id || idx,
+      hover: true,
+      sx: {
+        '&:nth-of-type(even)': {
+          backgroundColor: '#f8fafc'
+        }
+      }
+    }, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '12px',
+        color: '#64748b'
+      }
+    }, page * rowsPerPage + idx + 1), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '12px',
+        fontWeight: 600,
+        color: '#1e293b',
+        whiteSpace: 'nowrap'
+      }
+    }, row.dateNotification ? dayjs_min_default()(row.dateNotification).format('DD/MM/YYYY - HH:mm:ss') : '-'), /*#__PURE__*/react.createElement(TableCell/* default */.A, null, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      size: "small",
+      icon: cat.icon,
+      label: cat.label,
+      sx: {
+        backgroundColor: cat.bg,
+        color: cat.color,
+        fontWeight: 700,
+        fontSize: '11px',
+        height: '22px',
+        '& .MuiChip-icon': {
+          color: cat.color
+        }
+      }
+    })), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '12.5px',
+        fontWeight: 700,
+        color: '#0f172a'
+      }
+    }, row.person || '-'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '12px',
+        color: '#334155',
+        lineHeight: 1.4
+      }
+    }, row.reason || '-'), /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+      sx: {
+        fontSize: '12px',
+        fontWeight: 600,
+        color: '#64748b'
+      }
+    }, row.branchId || 'HQ'));
+  }) : /*#__PURE__*/react.createElement(TableRow/* default */.A, null, /*#__PURE__*/react.createElement(TableCell/* default */.A, {
+    colSpan: 6,
+    sx: {
+      textAlign: 'center',
+      py: 4,
+      color: '#64748b'
+    }
+  }, /*#__PURE__*/react.createElement(HistoryToggleOff/* default */.A, {
+    sx: {
+      fontSize: 40,
+      opacity: 0.4,
+      mb: 1,
+      display: 'block',
+      margin: '0 auto'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: '14px',
+      fontWeight: 600
+    }
+  }, "No matching notifications or activity logs found.")))))), /*#__PURE__*/react.createElement(TablePagination/* default */.A, {
+    rowsPerPageOptions: [25, 50, 100, 200],
+    component: "div",
+    count: filteredNotifications.length,
+    rowsPerPage: rowsPerPage,
+    page: page,
+    onPageChange: (e, newPage) => setPage(newPage),
+    onRowsPerPageChange: e => {
+      setRowsPerPage(parseInt(e.target.value, 10));
+      setPage(0);
+    },
+    sx: {
+      borderTop: '1px solid #e2e8f0',
+      mt: 1
+    }
+  }), /*#__PURE__*/react.createElement(PrintFooter/* default */.A, null)));
+}
+/* harmony default export */ const DashboardInfo_NotificationReportInfo = (NotificationReportInfo);
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/js/AdminView1/Dashboard.css
 var Dashboard = __webpack_require__(34997);
 ;// ./src/js/AdminView1/Dashboard.css
@@ -131006,6 +132003,7 @@ function AdminHome_extends() { return AdminHome_extends = Object.assign ? Object
 function AdminHome_objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = AdminHome_objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function AdminHome_objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -134635,26 +135633,50 @@ function AdminHome() {
       border: '1px solid #e2e8f0',
       p: 2,
       height: '400px',
-      backgroundColor: '#ffffff'
+      backgroundColor: '#ffffff',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        boxShadow: '0 4px 12px rgba(37, 99, 235, 0.08)',
+        borderColor: '#93c5fd'
+      }
     }
   }, /*#__PURE__*/react.createElement("div", {
+    onClick: () => handleClick(12, ''),
     style: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
-      mb: 1
+      mb: 1,
+      cursor: 'pointer'
     }
   }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     sx: {
       fontSize: '1.1rem',
       fontWeight: 'bold',
-      color: '#0f172a'
+      color: '#0f172a',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      '&:hover': {
+        color: '#2563eb'
+      }
     }
-  }, "HR Announcements"), /*#__PURE__*/react.createElement(NotificationAdd, {
+  }, "HR Announcements"), /*#__PURE__*/react.createElement(ViewTooltip, {
+    title: "Open Full Notification & Activity Report"
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
     sx: {
-      color: '#2563eb'
+      color: '#2563eb',
+      backgroundColor: '#eff6ff',
+      '&:hover': {
+        backgroundColor: '#dbeafe'
+      }
     }
-  })), /*#__PURE__*/react.createElement(Divider/* default */.A, {
+  }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
+    sx: {
+      fontSize: '18px'
+    }
+  })))), /*#__PURE__*/react.createElement(Divider/* default */.A, {
     sx: {
       my: 1
     }
@@ -134902,6 +135924,21 @@ function AdminHome() {
   })), /*#__PURE__*/react.createElement(ItemReportInfo/* default */.A, {
     onMonth: infoName,
     onItem: item
+  })) : '', showInfo === 12 ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("section", {
+    style: {
+      position: 'relative',
+      float: 'right',
+      margin: '10px'
+    }
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+    onClick: () => handleClick(1, ''),
+    className: "btnCustomer",
+    style: {
+      fontSize: '40px'
+    }
+  })), /*#__PURE__*/react.createElement(DashboardInfo_NotificationReportInfo, {
+    onMonth: infoName,
+    onNotification: notification
   })) : '', showInfo === 15 ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("section", {
     style: {
       position: 'relative',
