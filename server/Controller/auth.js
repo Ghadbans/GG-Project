@@ -141,7 +141,14 @@ const register = async (req, res, next) => {
         } else {
           res.status(401).json({ message: 'Invalid Password' });    
         }
-      }else{
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (error) {
+      next(error);
+    }
+  };
+
   const logout = async (req, res, next) => {
     try {
       const { employeeName, role, branchId, userId } = req.body;
