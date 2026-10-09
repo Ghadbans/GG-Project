@@ -35,6 +35,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
+import { canAccessModule } from '../utils/permissionUtils';
 import { ENDPOINT_URL } from '../apiConfig';
 
 function formatCurrency(val) {
@@ -152,7 +153,28 @@ function MobileDashboardContent() {
   });
 
   const [anchorEl, setAnchorEl] = useState(null);
+  const [grantAccess, setGrantAccess] = useState([]);
   const fabMenuOpen = Boolean(anchorEl);
+
+  useEffect(() => {
+    let isMounted = true;
+    const fetchAccess = async () => {
+      if (!user?.data?.id) return;
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
+        const userAccess = res?.data?.data?.find(row => row.userID === user?.data?.id);
+        if (isMounted && userAccess && Array.isArray(userAccess.modules)) {
+          setGrantAccess(userAccess.modules);
+        }
+      } catch (err) {
+        console.error('Error loading grantAccess in MobileDashboard:', err);
+      }
+    };
+    fetchAccess();
+    return () => { isMounted = false; };
+  }, [user]);
+
+  const canCreate = (mod) => canAccessModule(user?.data, grantAccess, mod, 'create');
 
   useEffect(() => {
     let isMounted = true;
@@ -560,52 +582,64 @@ function MobileDashboardContent() {
       </Card>
 
       {/* ── 4. FLOATING ACTION BUTTON (FAB +) WITH QUICK CREATE MENU ── */}
-      <Fab
-        color="primary"
-        aria-label="add"
-        onClick={(e) => setAnchorEl(e.currentTarget)}
-        sx={{
-          position: 'fixed',
-          bottom: 75,
-          right: 20,
-          backgroundColor: '#30368a',
-          '&:hover': { backgroundColor: '#202a5a' },
-          boxShadow: '0 4px 16px rgba(48, 54, 138, 0.4)',
-          zIndex: 1200
-        }}
-      >
-        <AddIcon />
-      </Fab>
+      {(canCreate('Invoice') || canCreate('Customer') || canCreate('Expenses') || canCreate('Maintenance')) && (
+        <>
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+            sx={{
+              position: 'fixed',
+              bottom: 75,
+              right: 20,
+              backgroundColor: '#30368a',
+              '&:hover': { backgroundColor: '#202a5a' },
+              boxShadow: '0 4px 16px rgba(48, 54, 138, 0.4)',
+              zIndex: 1200
+            }}
+          >
+            <AddIcon />
+          </Fab>
 
-      <Menu
-        anchorEl={anchorEl}
-        open={fabMenuOpen}
-        onClose={() => setAnchorEl(null)}
-        PaperProps={{
-          sx: {
-            borderRadius: 3,
-            minWidth: 200,
-            boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
-          }
-        }}
-      >
-        <MenuItem onClick={() => { setAnchorEl(null); navigate('/InvoiceForm'); }}>
-          <ListItemIcon><ReceiptIcon fontSize="small" sx={{ color: '#30368a' }} /></ListItemIcon>
-          <ListItemText primary="New Invoice" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
-        </MenuItem>
-        <MenuItem onClick={() => { setAnchorEl(null); navigate('/CustomerForm'); }}>
-          <ListItemIcon><PersonAddIcon fontSize="small" sx={{ color: '#10B981' }} /></ListItemIcon>
-          <ListItemText primary="New Customer" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
-        </MenuItem>
-        <MenuItem onClick={() => { setAnchorEl(null); navigate('/DailyExpensesForm'); }}>
-          <ListItemIcon><ShoppingBagIcon fontSize="small" sx={{ color: '#EF4444' }} /></ListItemIcon>
-          <ListItemText primary="New Expense" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
-        </MenuItem>
-        <MenuItem onClick={() => { setAnchorEl(null); navigate('/MaintenanceForm'); }}>
-          <ListItemIcon><BuildIcon fontSize="small" sx={{ color: '#F59E0B' }} /></ListItemIcon>
-          <ListItemText primary="New Maintenance" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
-        </MenuItem>
-      </Menu>
+          <Menu
+            anchorEl={anchorEl}
+            open={fabMenuOpen}
+            onClose={() => setAnchorEl(null)}
+            PaperProps={{
+              sx: {
+                borderRadius: 3,
+                minWidth: 200,
+                boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+              }
+            }}
+          >
+            {canCreate('Invoice') && (
+              <MenuItem onClick={() => { setAnchorEl(null); navigate('/InvoiceForm'); }}>
+                <ListItemIcon><ReceiptIcon fontSize="small" sx={{ color: '#30368a' }} /></ListItemIcon>
+                <ListItemText primary="New Invoice" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+              </MenuItem>
+            )}
+            {canCreate('Customer') && (
+              <MenuItem onClick={() => { setAnchorEl(null); navigate('/CustomerForm'); }}>
+                <ListItemIcon><PersonAddIcon fontSize="small" sx={{ color: '#10B981' }} /></ListItemIcon>
+                <ListItemText primary="New Customer" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+              </MenuItem>
+            )}
+            {canCreate('Expenses') && (
+              <MenuItem onClick={() => { setAnchorEl(null); navigate('/DailyExpenseForm'); }}>
+                <ListItemIcon><ShoppingBagIcon fontSize="small" sx={{ color: '#EF4444' }} /></ListItemIcon>
+                <ListItemText primary="New Expense" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+              </MenuItem>
+            )}
+            {canCreate('Maintenance') && (
+              <MenuItem onClick={() => { setAnchorEl(null); navigate('/MaintenanceFormView'); }}>
+                <ListItemIcon><BuildIcon fontSize="small" sx={{ color: '#F59E0B' }} /></ListItemIcon>
+                <ListItemText primary="New Maintenance" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+              </MenuItem>
+            )}
+          </Menu>
+        </>
+      )}
 
       {/* ── 5. INTERACTIVE MONTH & YEAR PICKER MODAL ── */}
       <Dialog

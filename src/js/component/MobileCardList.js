@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../features/auth/authSlice';
 import { cachedGet } from '../utils/apiCache';
+import { canAccessModule } from '../utils/permissionUtils';
 import { ENDPOINT_URL } from '../apiConfig';
 import { normalizeImageDataUrl } from '../utils/formatUtils';
 import {
@@ -154,27 +155,24 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
   const userName = user?.data?.userName || '';
   const userRole = user?.data?.role || '';
-  const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
 
   const canCreate = (t) => {
-    if (isSuperUser) return true;
     const typeToModule = {
       invoices: 'Invoice',
       quotations: 'Estimate',
       estimates: 'Estimate',
       customers: 'Customer',
-      items: 'Store',
+      items: 'Item',
       maintenance: 'Maintenance',
       maintenance_orders: 'Maintenance-Order',
       payments: 'Payment',
       expenses: 'Expenses',
       projects: 'Project',
       employees: 'Employee',
-      suppliers: 'Purchase'
+      suppliers: 'Supplier'
     };
-    const modName = typeToModule[t] || '';
-    const mod = grantAccess.find(m => m.moduleName?.toLowerCase() === modName?.toLowerCase() || m.name?.toLowerCase() === modName?.toLowerCase());
-    return Boolean(mod?.access?.createM);
+    const modName = typeToModule[t] || t || '';
+    return canAccessModule(user?.data, grantAccess, modName, 'create');
   };
 
   const safeData = Array.isArray(data) ? data : [];

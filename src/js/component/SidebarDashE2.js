@@ -141,7 +141,7 @@ function SidebarDashE2({ onView }) {
             </ListItemIcon>
             <ListItemText primary="PayRoll" />
           </ListItemButton>
-          <ListItemButton disabled={user.data.role !== 'CEO'} sx={{ color: 'gray' }} component={NavLink} to="/UserAccount" style={isActive('/UserAccount') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data.role !== 'CEO' && user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/UserAccount" style={isActive('/UserAccount') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/UserAccount') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <AccountBox />
             </ListItemIcon>
@@ -159,7 +159,7 @@ function SidebarDashE2({ onView }) {
             </ListItemIcon>
             <ListItemText primary="User Profile" />
           </ListItemButton>
-          <ListItemButton disabled={user.data.role !== 'CEO'} sx={{ color: 'gray' }} component={NavLink} to="/CompanyProfile" style={isActive('/CompanyProfile') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data.role !== 'CEO' && user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/CompanyProfile" style={isActive('/CompanyProfile') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/CompanyProfile') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <StoreIcon />
             </ListItemIcon>

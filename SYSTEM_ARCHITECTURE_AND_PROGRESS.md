@@ -145,6 +145,10 @@
     - **User Logout Auditing:** Whenever any user logs out (or triggers logout), the frontend invokes `handleUserLogout` in `src/js/utils/authUtils.js`, which sends a `POST /auth/logout` payload. The backend creates a `notificationSchema` record (`person: '${name} Logged Out'`, `reason: 'User ${name} (${role}) logged out of the system'`) and broadcasts it in real-time via `req.io.emit('newNotification')`.
     - **Newest-First Chronological Order:** Because the backend `GET /notification` sorts by `{ dateNotification: -1, _id: -1 }`, frontend components (`NotificationVIewInfo.js`, `NotificationReportInfo.js`, etc.) must NEVER apply `.reverse()`. Socket additions must prepend (`[newNotification, ...prev]`) so that the most recent activities always appear at the top.
     - **Dashboard HR Announcements Scope:** The HR Announcements timeline card on `AdminHome.js` is strictly scoped to today's date (`dayjs(row.dateNotification).format('YYYY-MM-DD') === todayISO`) with color-coded status dots (`green` for login, `warning/orange` for logout, `primary/blue` for system actions) and compact timestamps (`HH:mm`), while full historical notifications remain accessible through the Notification Center / Report drilldown.
+42. **Universal Grant Access Route Guarding & Platform-Wide Permission Standard (Ver 3.5.67)**:
+    - **Single Superuser Principle:** In ALL applications (Desktop `.exe`, Web Application, and Capacitor Mobile App), ONLY `userName === 'GG'` is superuser bypass. All other users (including `Admin`, `CEO`, `Manager`, `Staff`, `Technician`) MUST strictly follow their explicit module permissions in the `grantAccess` database schema.
+    - **Universal Route Guard (`RequireAuth.js` & `permissionUtils.js`):** Every protected route evaluates `getRoutePermission(location.pathname)` against `canAccessModule(user.data, grantAccess, module, action)`. Unauthorized access attempts are blocked and redirected to `/AdminHome` with an explicit "Access Denied" toast notification.
+    - **Hierarchical Sidebar & Submenu Locking (`SidebarDash.js`, `SidebarDashE2.js`, `SideMaintenance.js`, `MobileDrawer.js`):** Parent buttons (e.g. Store, Maintenance, More) dynamically disable if the user lacks permissions for all underlying submodules. Quick Action FAB menus (`MobileDashboard.js`, `MobileCardList.js`) only render create options for modules where `createM === true`.
 
 ## Current Progress Log
 - **Maintenance Module Rate & Price Edit Permissions for CEO & Admin vs USER Level (Ver 3.5.60)**:
@@ -1602,6 +1606,33 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Node backend syntax check verified across all server modules (`node -c`, 0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.66.exe` generated.
+
+- **Universal Grant Access Route Security Guarding & Platform-Wide Permissions Standard (Ver 3.5.67)**:
+  - **Problem Reported:**
+    1. Users could potentially access unauthorized modules via direct URL manipulation or links because `RequireAuth.js` previously only verified login status without module-level route authorization.
+    2. Mobile components (`MobileDrawer.js`, `MobileLayout.js`, `MobileDetailSheet.js`, `MobileCardList.js`) treated `Admin` and `CEO` as superusers who bypassed permission checks, whereas the desktop system requires all users except `userName === 'GG'` to follow `grantAccess`.
+    3. Sidebar navigation buttons (e.g. "Store", "More") did not check if users had permissions to any child submodules before enabling the parent drawer button.
+    4. Mobile Dashboard Quick Action FAB menu exposed buttons for modules the user might not have `createM` permissions for.
+  - **Architectural Resolution:**
+    1. **Universal Permission Utility (`src/js/utils/permissionUtils.js`):**
+       - Implemented `canAccessModule(user, grantAccess, moduleName, action)` with single superuser bypass (`userName === 'GG'`) and robust module name normalization.
+       - Built comprehensive `ROUTE_PERMISSION_MAP` mapping every application route pattern to its required module and action (`read`, `view`, `create`, `edit`).
+       - Added `fetchUserGrantAccess(userId)` for high-performance cached permission retrieval.
+    2. **Universal Route Guard (`src/js/RequireAuth.js`):**
+       - Intercepts all route transitions, evaluates route requirements against the user's `grantAccess` array, and immediately redirects unauthorized requests to `/AdminHome` with an explicit "Access Denied" toast notification.
+       - Restricts `RolePermission` / `Grant-Access` strictly to superuser `GG`, and `UserAccount` / `CompanyProfile` to `CEO` and `GG`.
+    3. **Mobile Platform Permission Hardening:**
+       - Removed role-based bypasses across `MobileDrawer.js`, `MobileLayout.js`, `MobileDetailSheet.js`, and `MobileCardList.js`.
+       - Filtered bottom navigation tabs, slide-over drawer lists, and FAB Quick Create menus strictly based on active `grantAccess` records.
+       - Corrected action routes in Mobile Dashboard (`/DailyExpenseForm` and `/MaintenanceFormView`).
+    4. **Sidebar Navigation Permission Gaps Sealed (`SidebarDash.js` & `SidebarDashE2.js`):**
+       - Parent buttons ("Store", "More") dynamically check permissions across all child submodules (`Item`, `Supplier`, `Item-Out`, `Item-Return`, `Item-Purchase`, `Purchase-Order`, `Rate`, `Fleet Management`, `Employee`, `Pay-Roll`) before enabling.
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 232 source files (0 errors).
+    - Node backend syntax check verified across all server modules (`node -c`, 0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.67.exe` generated.
+
 
 
 

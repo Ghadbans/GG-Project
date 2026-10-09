@@ -93342,7 +93342,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 function SidebarDash(_ref) {
-  var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7, _user$data8, _user$data9, _user$data0, _user$data1;
+  var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7, _user$data8, _user$data9, _user$data0, _user$data1, _user$data10, _user$data11, _user$data12;
   var onView2 = _ref.onView2,
     onView3 = _ref.onView3,
     onView4 = _ref.onView4;
@@ -93452,6 +93452,8 @@ function SidebarDash(_ref) {
   var PRollInfo = grantAccess.filter(row => row.moduleName === "Pay-Roll" && row.access.readM === true);
   var BlockFactoryInfo = grantAccess.filter(row => row.moduleName === "Block-Factory" && row.access.readM === true);
   var POSInfo = grantAccess.filter(row => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
+  var StoreInfo = grantAccess.filter(row => (row.moduleName === "Item" || row.moduleName === "Supplier" || row.moduleName === "Item-Out" || row.moduleName === "Item-Return" || row.moduleName === "Item-Purchase" || row.moduleName === "Purchase-Order") && row.access.readM === true);
+  var MoreInfo = grantAccess.filter(row => (row.moduleName === "Rate" || row.moduleName === "Fleet Management" || row.moduleName === "Employee" || row.moduleName === "Pay-Roll") && row.access.readM === true);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
@@ -93496,6 +93498,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PermIdentity__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Customer"
   })), parseInt(onView3) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    disabled: loadingAccess || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) !== 'GG' && StoreInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93507,7 +93510,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ListAlt__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Store"
   })), parseInt(onView4) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) !== 'GG' && POSInfo.length === 0,
+    disabled: loadingAccess || ((_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) !== 'GG' && POSInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93519,7 +93522,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "POS"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) !== 'GG' && BlockFactoryInfo.length === 0,
+    disabled: loadingAccess || ((_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) !== 'GG' && BlockFactoryInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93531,7 +93534,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Category__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Block Factory"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) !== 'GG' && estimationInfo.length === 0,
+    disabled: loadingAccess || ((_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) !== 'GG' && estimationInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93553,7 +93556,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RequestQuote__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Quotation"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) !== 'GG' && InvoiceInfo.length === 0,
+    disabled: loadingAccess || ((_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.userName) !== 'GG' && InvoiceInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93575,7 +93578,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Description__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Invoice"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.userName) !== 'GG' && PaymentInfo.length === 0,
+    disabled: loadingAccess || ((_user$data7 = user.data) === null || _user$data7 === void 0 ? void 0 : _user$data7.userName) !== 'GG' && PaymentInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93597,7 +93600,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Payment"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data7 = user.data) === null || _user$data7 === void 0 ? void 0 : _user$data7.userName) !== 'GG' && DailyEInfo.length === 0,
+    disabled: loadingAccess || ((_user$data8 = user.data) === null || _user$data8 === void 0 ? void 0 : _user$data8.userName) !== 'GG' && DailyEInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93619,7 +93622,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Daily Expenses"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data8 = user.data) === null || _user$data8 === void 0 ? void 0 : _user$data8.userName) !== 'GG' && ProjectInfo.length === 0,
+    disabled: loadingAccess || ((_user$data9 = user.data) === null || _user$data9 === void 0 ? void 0 : _user$data9.userName) !== 'GG' && ProjectInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93641,7 +93644,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RoomPreferences__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Project"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data9 = user.data) === null || _user$data9 === void 0 ? void 0 : _user$data9.userName) !== 'GG' && PurchaseInfo.length === 0,
+    disabled: loadingAccess || ((_user$data0 = user.data) === null || _user$data0 === void 0 ? void 0 : _user$data0.userName) !== 'GG' && PurchaseInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93663,7 +93666,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Receipt__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Purchases Request"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data0 = user.data) === null || _user$data0 === void 0 ? void 0 : _user$data0.userName) !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0,
+    disabled: loadingAccess || ((_user$data1 = user.data) === null || _user$data1 === void 0 ? void 0 : _user$data1.userName) !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93675,7 +93678,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Engineering__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Maintenance"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data1 = user.data) === null || _user$data1 === void 0 ? void 0 : _user$data1.userName) !== 'GG' && ReportsInfo.length === 0,
+    disabled: loadingAccess || ((_user$data10 = user.data) === null || _user$data10 === void 0 ? void 0 : _user$data10.userName) !== 'GG' && ReportsInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -93697,6 +93700,7 @@ function SidebarDash(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Moving__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Reports"
   })), parseInt(onView2) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    disabled: loadingAccess || ((_user$data11 = user.data) === null || _user$data11 === void 0 ? void 0 : _user$data11.userName) !== 'GG' && ((_user$data12 = user.data) === null || _user$data12 === void 0 ? void 0 : _user$data12.role) !== 'CEO' && MoreInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -94063,7 +94067,7 @@ function SidebarDashE2(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Payment__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "PayRoll"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: user.data.role !== 'CEO',
+    disabled: user.data.role !== 'CEO' && user.data.userName !== 'GG',
     sx: {
       color: 'gray'
     },
@@ -94125,7 +94129,7 @@ function SidebarDashE2(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Contacts__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "User Profile"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: user.data.role !== 'CEO',
+    disabled: user.data.role !== 'CEO' && user.data.userName !== 'GG',
     sx: {
       color: 'gray'
     },
@@ -94758,6 +94762,576 @@ var useIsMobile = () => {
   return mobile;
 };
 /* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && (isNativeMobile)));
+
+/***/ },
+
+/***/ 13266
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   jI: () => (/* binding */ canAccessModule),
+/* harmony export */   ru: () => (/* binding */ getRoutePermission),
+/* harmony export */   wN: () => (/* binding */ fetchUserGrantAccess)
+/* harmony export */ });
+/* unused harmony export normalizeModuleName */
+/* harmony import */ var _apiCache__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(71510);
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+;
+
+
+/**
+ * Normalizes module names to handle variations (e.g. 'Pay-Roll' vs 'payroll', 'Point-Of-Sell' vs 'pos')
+ */
+function normalizeModuleName() {
+  var name = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var n = String(name).trim().toLowerCase().replace(/[\s_-]+/g, '');
+  if (n === 'pos' || n === 'pointofsell' || n === 'pointofsale') return 'point-of-sell';
+  if (n === 'payroll' || n === 'proll') return 'pay-roll';
+  if (n === 'fleet' || n === 'fleetmanagement') return 'fleet management';
+  if (n === 'maintenanceorder' || n === 'maintenanceorders') return 'maintenance-order';
+  if (n === 'blockfactory' || n === 'block') return 'block-factory';
+  if (n === 'blockmixer') return 'block-mixer';
+  if (n === 'itempurchase' || n === 'ipurchase') return 'item-purchase';
+  if (n === 'itemout') return 'item-out';
+  if (n === 'itemreturn') return 'item-return';
+  if (n === 'purchaseorder' || n === 'po') return 'purchase-order';
+  if (n === 'grantaccess' || n === 'rolepermission') return 'grant-access';
+  if (n === 'dailyexpense' || n === 'dailyexpenses' || n === 'expenses' || n === 'expense') return 'expenses';
+  return name.trim();
+}
+
+/**
+ * Check if the user has permission to perform an action on a module.
+ * 
+ * STRICT ACCESS CONTROL RULE:
+ * - Superuser: ONLY userName === 'GG' bypasses permissions.
+ * - ALL other users (including Admin, CEO, Manager, Technician, Staff) MUST
+ *   have explicit permission granted in the Grant Access module.
+ * 
+ * @param {Object} user - Redux currentUser object (user.data)
+ * @param {Array} grantAccessModules - Array of module access objects for the user
+ * @param {String} moduleName - Target module (e.g. 'Customer', 'Invoice', 'Item')
+ * @param {String} action - 'read' | 'view' | 'create' | 'edit' | 'delete'
+ * @returns {Boolean}
+ */
+function canAccessModule(user) {
+  var _user$data;
+  var grantAccessModules = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var moduleName = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '';
+  var action = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'read';
+  if (!user) return false;
+  var userName = user.userName || ((_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '';
+  if (userName === 'GG') return true;
+  if (!moduleName) return true;
+  if (!Array.isArray(grantAccessModules) || grantAccessModules.length === 0) return false;
+  var targetNormalized = normalizeModuleName(moduleName).toLowerCase();
+  var mod = grantAccessModules.find(m => {
+    var currentNormalized = normalizeModuleName(m.moduleName || m.name || '').toLowerCase();
+    return currentNormalized === targetNormalized;
+  });
+  if (!mod || !mod.access) return false;
+  var act = String(action).toLowerCase();
+  if (act === 'read' || act === 'view') {
+    return Boolean(mod.access.readM || mod.access.viewM);
+  }
+  if (act === 'create') {
+    return Boolean(mod.access.createM);
+  }
+  if (act === 'edit' || act === 'update') {
+    return Boolean(mod.access.editM);
+  }
+  if (act === 'delete') {
+    return Boolean(mod.access.deleteM);
+  }
+  return Boolean(mod.access.readM || mod.access.viewM);
+}
+
+/**
+ * Route to Module & Action Mapping
+ */
+var ROUTE_PERMISSION_MAP = [
+// Customers
+{
+  pattern: /^\/customerviewadmin/i,
+  module: 'Customer',
+  action: 'read'
+}, {
+  pattern: /^\/customerformupdate/i,
+  module: 'Customer',
+  action: 'edit'
+}, {
+  pattern: /^\/customerinformationview/i,
+  module: 'Customer',
+  action: 'view'
+}, {
+  pattern: /^\/customerform/i,
+  module: 'Customer',
+  action: 'create'
+},
+// Items & Store
+{
+  pattern: /^\/itemviewadmin/i,
+  module: 'Item',
+  action: 'read'
+}, {
+  pattern: /^\/storeitemdisplay/i,
+  module: 'Item',
+  action: 'read'
+}, {
+  pattern: /^\/itemformupdate/i,
+  module: 'Item',
+  action: 'edit'
+}, {
+  pattern: /^\/itemformclone/i,
+  module: 'Item',
+  action: 'create'
+}, {
+  pattern: /^\/iteminfo/i,
+  module: 'Item',
+  action: 'view'
+}, {
+  pattern: /^\/itemcommentform/i,
+  module: 'Item',
+  action: 'edit'
+}, {
+  pattern: /^\/itemform/i,
+  module: 'Item',
+  action: 'create'
+},
+// Item Out / Return / Purchase / PO
+{
+  pattern: /^\/itemoutviewform/i,
+  module: 'Item-Out',
+  action: 'create'
+}, {
+  pattern: /^\/itemoutviewupdate/i,
+  module: 'Item-Out',
+  action: 'edit'
+}, {
+  pattern: /^\/itemoutviewadmin/i,
+  module: 'Item-Out',
+  action: 'read'
+}, {
+  pattern: /^\/itemreturnviewform/i,
+  module: 'Item-Return',
+  action: 'create'
+}, {
+  pattern: /^\/itemreturnupdateform/i,
+  module: 'Item-Return',
+  action: 'edit'
+}, {
+  pattern: /^\/itemreturnadminview/i,
+  module: 'Item-Return',
+  action: 'read'
+}, {
+  pattern: /^\/itempurchaseviewform/i,
+  module: 'Item-Purchase',
+  action: 'create'
+}, {
+  pattern: /^\/itempurchaseupdateform/i,
+  module: 'Item-Purchase',
+  action: 'edit'
+}, {
+  pattern: /^\/itempurchaseviewadmin/i,
+  module: 'Item-Purchase',
+  action: 'read'
+}, {
+  pattern: /^\/convertpo/i,
+  module: 'Purchase-Order',
+  action: 'edit'
+}, {
+  pattern: /^\/purchaseupdateorder/i,
+  module: 'Purchase-Order',
+  action: 'edit'
+}, {
+  pattern: /^\/purchaseorderinfoview/i,
+  module: 'Purchase-Order',
+  action: 'view'
+}, {
+  pattern: /^\/purchaseorder/i,
+  module: 'Purchase-Order',
+  action: 'create'
+}, {
+  pattern: /^\/purchaseorderviewadmin/i,
+  module: 'Purchase-Order',
+  action: 'read'
+},
+// Quotations / Estimates
+{
+  pattern: /^\/estimateinvoiceformupdate/i,
+  module: 'Estimate',
+  action: 'edit'
+}, {
+  pattern: /^\/estimateinvoiceform/i,
+  module: 'Estimate',
+  action: 'create'
+}, {
+  pattern: /^\/estimateformclone/i,
+  module: 'Estimate',
+  action: 'create'
+}, {
+  pattern: /^\/estimateviewadminall/i,
+  module: 'Estimate',
+  action: 'view'
+}, {
+  pattern: /^\/estimateviewadmin/i,
+  module: 'Estimate',
+  action: 'read'
+},
+// Invoices
+{
+  pattern: /^\/invoiceformupdate/i,
+  module: 'Invoice',
+  action: 'edit'
+}, {
+  pattern: /^\/invoiceform/i,
+  module: 'Invoice',
+  action: 'create'
+}, {
+  pattern: /^\/invoiceviewadminall/i,
+  module: 'Invoice',
+  action: 'view'
+}, {
+  pattern: /^\/invoiceviewadmin/i,
+  module: 'Invoice',
+  action: 'read'
+}, {
+  pattern: /^\/recuringinvoiceviewadmin/i,
+  module: 'Invoice',
+  action: 'read'
+}, {
+  pattern: /^\/retainerinvoiceview/i,
+  module: 'Invoice',
+  action: 'read'
+},
+// Payments
+{
+  pattern: /^\/paymentinformationform/i,
+  module: 'Payment',
+  action: 'create'
+}, {
+  pattern: /^\/paymentinformationupdate/i,
+  module: 'Payment',
+  action: 'edit'
+}, {
+  pattern: /^\/paymentinformationview/i,
+  module: 'Payment',
+  action: 'view'
+}, {
+  pattern: /^\/paymentview/i,
+  module: 'Payment',
+  action: 'read'
+},
+// Projects
+{
+  pattern: /^\/projectupdateview/i,
+  module: 'Project',
+  action: 'edit'
+}, {
+  pattern: /^\/projectviewinformation/i,
+  module: 'Project',
+  action: 'view'
+}, {
+  pattern: /^\/projectform/i,
+  module: 'Project',
+  action: 'create'
+}, {
+  pattern: /^\/projectphase/i,
+  module: 'Project',
+  action: 'view'
+}, {
+  pattern: /^\/projectviewadmin/i,
+  module: 'Project',
+  action: 'read'
+},
+// Purchases Request
+{
+  pattern: /^\/purchaseformupdate/i,
+  module: 'Purchase',
+  action: 'edit'
+}, {
+  pattern: /^\/purchasesformview/i,
+  module: 'Purchase',
+  action: 'create'
+}, {
+  pattern: /^\/purchasesviewadminall/i,
+  module: 'Purchase',
+  action: 'view'
+}, {
+  pattern: /^\/purchasesviewadmin/i,
+  module: 'Purchase',
+  action: 'read'
+},
+// Maintenance & Maintenance Orders
+{
+  pattern: /^\/maintenanceorderupdate/i,
+  module: 'Maintenance-Order',
+  action: 'edit'
+}, {
+  pattern: /^\/maintenanceorderviewinformation/i,
+  module: 'Maintenance-Order',
+  action: 'view'
+}, {
+  pattern: /^\/technicianstorecatalog/i,
+  module: 'Maintenance-Order',
+  action: 'read'
+}, {
+  pattern: /^\/technicianstoredisplay/i,
+  module: 'Maintenance-Order',
+  action: 'read'
+}, {
+  pattern: /^\/maintenanceorderadmin/i,
+  module: 'Maintenance-Order',
+  action: 'read'
+}, {
+  pattern: /^\/maintenanceupdateview/i,
+  module: 'Maintenance',
+  action: 'edit'
+}, {
+  pattern: /^\/maintenanceviewinformation/i,
+  module: 'Maintenance',
+  action: 'view'
+}, {
+  pattern: /^\/maintenanceformclone/i,
+  module: 'Maintenance',
+  action: 'create'
+}, {
+  pattern: /^\/maintenanceformview/i,
+  module: 'Maintenance',
+  action: 'create'
+}, {
+  pattern: /^\/maintenanceviewadmin/i,
+  module: 'Maintenance',
+  action: 'read'
+},
+// Daily Expenses
+{
+  pattern: /^\/dailyexpenseupdate/i,
+  module: 'Expenses',
+  action: 'edit'
+}, {
+  pattern: /^\/dailyexpenseform/i,
+  module: 'Expenses',
+  action: 'create'
+}, {
+  pattern: /^\/dailyexpenses/i,
+  module: 'Expenses',
+  action: 'read'
+}, {
+  pattern: /^\/expensesviewadmin/i,
+  module: 'Expenses',
+  action: 'read'
+},
+// Rates
+{
+  pattern: /^\/rateviewadmin/i,
+  module: 'Rate',
+  action: 'read'
+},
+// Employees
+{
+  pattern: /^\/employeeattendance/i,
+  module: 'Employee',
+  action: 'read'
+}, {
+  pattern: /^\/employeeupdateview/i,
+  module: 'Employee',
+  action: 'edit'
+}, {
+  pattern: /^\/employeeformview/i,
+  module: 'Employee',
+  action: 'create'
+}, {
+  pattern: /^\/employeeplaning/i,
+  module: 'Employee',
+  action: 'read'
+}, {
+  pattern: /^\/employeeviewadminall/i,
+  module: 'Employee',
+  action: 'read'
+}, {
+  pattern: /^\/tewmviewadmin/i,
+  module: 'Employee',
+  action: 'read'
+},
+// Payroll
+{
+  pattern: /^\/payrollupdateformview/i,
+  module: 'Pay-Roll',
+  action: 'edit'
+}, {
+  pattern: /^\/payrollviewinformation/i,
+  module: 'Pay-Roll',
+  action: 'view'
+}, {
+  pattern: /^\/payrollformview/i,
+  module: 'Pay-Roll',
+  action: 'create'
+}, {
+  pattern: /^\/payrollviewadmin/i,
+  module: 'Pay-Roll',
+  action: 'read'
+},
+// Suppliers
+{
+  pattern: /^\/supplierformupdate/i,
+  module: 'Supplier',
+  action: 'edit'
+}, {
+  pattern: /^\/supplierviewinformation/i,
+  module: 'Supplier',
+  action: 'view'
+}, {
+  pattern: /^\/supplierform/i,
+  module: 'Supplier',
+  action: 'create'
+}, {
+  pattern: /^\/supplieradminview/i,
+  module: 'Supplier',
+  action: 'read'
+},
+// POS
+{
+  pattern: /^\/shopposupdateform/i,
+  module: 'Point-Of-Sell',
+  action: 'edit'
+}, {
+  pattern: /^\/shopposform/i,
+  module: 'Point-Of-Sell',
+  action: 'create'
+}, {
+  pattern: /^\/sellshopinvoiceview/i,
+  module: 'Point-Of-Sell',
+  action: 'view'
+}, {
+  pattern: /^\/reportpos/i,
+  module: 'Point-Of-Sell',
+  action: 'read'
+}, {
+  pattern: /^\/pointofsale/i,
+  module: 'Point-Of-Sell',
+  action: 'read'
+},
+// Reports
+{
+  pattern: /^\/reportsviewadmin/i,
+  module: 'Reports',
+  action: 'read'
+},
+// Block Factory & Mixer
+{
+  pattern: /^\/blockproduction/i,
+  module: 'Block-Factory',
+  action: 'read'
+}, {
+  pattern: /^\/blocksales/i,
+  module: 'Block-Factory',
+  action: 'read'
+}, {
+  pattern: /^\/blocktracking/i,
+  module: 'Block-Factory',
+  action: 'read'
+}, {
+  pattern: /^\/blockconfig/i,
+  module: 'Block-Factory',
+  action: 'read'
+}, {
+  pattern: /^\/workerpayment/i,
+  module: 'Block-Factory',
+  action: 'read'
+}, {
+  pattern: /^\/blockdamage/i,
+  module: 'Block-Factory',
+  action: 'read'
+}, {
+  pattern: /^\/blockmixer/i,
+  module: 'Block-Mixer',
+  action: 'read'
+}, {
+  pattern: /^\/blockfactorylayout/i,
+  module: 'Block-Factory',
+  action: 'read'
+},
+// Fleet Management
+{
+  pattern: /^\/fleetformupdate/i,
+  module: 'Fleet Management',
+  action: 'edit'
+}, {
+  pattern: /^\/fleetformview/i,
+  module: 'Fleet Management',
+  action: 'create'
+}, {
+  pattern: /^\/fleetviewadmin/i,
+  module: 'Fleet Management',
+  action: 'read'
+},
+// Settings & Access Control
+{
+  pattern: /^\/rolepermission/i,
+  module: 'Grant-Access',
+  action: 'read',
+  ggOnly: true
+}, {
+  pattern: /^\/grantaccess/i,
+  module: 'Grant-Access',
+  action: 'read',
+  ggOnly: true
+}, {
+  pattern: /^\/useraccount/i,
+  module: 'User Account',
+  action: 'read',
+  ceoOnly: true
+}, {
+  pattern: /^\/companyprofile/i,
+  module: 'Company Profile',
+  action: 'read',
+  ceoOnly: true
+}, {
+  pattern: /^\/branchmanagement/i,
+  module: 'Branch Management',
+  action: 'read',
+  ceoOnly: true
+}];
+
+/**
+ * Returns required permission rule for a given pathname
+ */
+function getRoutePermission() {
+  var pathname = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+  var cleanPath = '/' + String(pathname).replace(/^[/#]+/, '').toLowerCase();
+  for (var rule of ROUTE_PERMISSION_MAP) {
+    if (rule.pattern.test(cleanPath)) {
+      return rule;
+    }
+  }
+  return null;
+}
+
+/**
+ * Load user's grantAccess modules array
+ */
+function fetchUserGrantAccess(_x) {
+  return _fetchUserGrantAccess.apply(this, arguments);
+}
+function _fetchUserGrantAccess() {
+  _fetchUserGrantAccess = _asyncToGenerator(function* (userId) {
+    if (!userId) return [];
+    try {
+      var _res$data;
+      var res = yield (0,_apiCache__WEBPACK_IMPORTED_MODULE_0__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_1__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+      var userAccess = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => row.userID === userId);
+      return Array.isArray(userAccess === null || userAccess === void 0 ? void 0 : userAccess.modules) ? userAccess.modules : [];
+    } catch (err) {
+      console.error('Error fetching grantAccess in permissionUtils:', err);
+      return [];
+    }
+  });
+  return _fetchUserGrantAccess.apply(this, arguments);
+}
 
 /***/ },
 
@@ -122393,7 +122967,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.66"};
+module.exports = {"rE":"3.5.67"};
 
 /***/ },
 
@@ -122525,7 +123099,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ccf376d4d12ded7e9811","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"1709f9ea5b7a0506abd3","778":"f8950b7fd584414ccde4","806":"6ce4ec6b47da37c0fa39","808":"97ed4a698ba8660fc06b","864":"ac9193b4bf40eb4964a0","885":"3296cb1f8a5548fc4260","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"2d70cd5ae822476da424","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"9f998c4a0f364795b1c1","1679":"38cd27b1d1f28378049b","1722":"64a825cf89210c4f5730","1853":"7ec2d990adbaf6414fac","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"bff4d62db8261aeefd44","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"ea32c7241fb84bb07eb5","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"f293ce4a1f22a0d622e1","2821":"01a54997982101e25afd","2835":"4fa5f50cab8055ebf263","2982":"aa26293f6393a292ec42","2992":"2adb966510ec0f951971","3009":"567b00944880ad958271","3058":"0ae4cbc1898b717e8cf8","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"cf41a87f5d4c010118f1","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"547a0c111bfa6c44a2ff","4444":"f0679f5e171afdd1cc01","4783":"af87d7ac9632101d1ac4","5059":"2b89ac7d099d3898a08b","5151":"225f403f2f02626f24d9","5194":"d9e4d8382ebe97418258","5391":"b680dac866e742017f9d","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"3321f4ce3345b118d333","5824":"5a1544f2a7d4bcddbd21","5881":"cacc950a54386795a0a3","5910":"6707b21bda340d85f399","5919":"db49efeaa6a74d046b06","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"60b960fe7a1d58359a63","6744":"17ccaa2a0f1a1b8b6c58","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"6ebd1f8c06d7690dec58","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"7f236cd7e6f256235668","7539":"72ee1ee088ac1a0441f8","7592":"287b28ec01f0edb0741e","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"3e11b6f6b4d1c2d7a78b","7897":"b091cc7abad14f8aa87b","7941":"00850469d4148ac7a7a3","7997":"2e21126ab3301ab4a2fa","8011":"0e1fd69e444050f4adde","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"fb81e26d4a926f33e29f","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"6ce1ec20223b6eab80e2","9528":"4dd9c43eb666c40b578c","9564":"4c20410cd72828190b9f","9573":"019ee55ed2f564604629","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3bf9d41c3e823d684593","9773":"fa9682413cbc11af8687","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ccf376d4d12ded7e9811","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"1709f9ea5b7a0506abd3","778":"f8950b7fd584414ccde4","806":"f92b4586bc35931f2f17","808":"97ed4a698ba8660fc06b","864":"ac9193b4bf40eb4964a0","885":"3296cb1f8a5548fc4260","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"2d70cd5ae822476da424","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"e00e500279ad6a1efc46","1679":"38cd27b1d1f28378049b","1722":"64a825cf89210c4f5730","1853":"7ec2d990adbaf6414fac","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"ec6732fda0b2981a1cc1","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"ea32c7241fb84bb07eb5","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"f293ce4a1f22a0d622e1","2821":"01a54997982101e25afd","2835":"4fa5f50cab8055ebf263","2982":"aa26293f6393a292ec42","2992":"2adb966510ec0f951971","3009":"567b00944880ad958271","3058":"07caab8261caccd37b15","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"cca7411d7f8e1a213982","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"b5044f10eecf51fd69aa","4444":"a9c90ecb8b7b68079423","4783":"af87d7ac9632101d1ac4","5059":"2b89ac7d099d3898a08b","5151":"bdc04104ae1cadb77e7b","5194":"d9e4d8382ebe97418258","5391":"11907d874fea1a278245","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"3321f4ce3345b118d333","5824":"5a1544f2a7d4bcddbd21","5881":"cacc950a54386795a0a3","5910":"6707b21bda340d85f399","5919":"db49efeaa6a74d046b06","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"60b960fe7a1d58359a63","6744":"17ccaa2a0f1a1b8b6c58","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"6ebd1f8c06d7690dec58","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"9868ad655e02850e44a2","7539":"72ee1ee088ac1a0441f8","7592":"287b28ec01f0edb0741e","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"3e11b6f6b4d1c2d7a78b","7897":"cc17f3e7968dc8a4f827","7941":"00850469d4148ac7a7a3","7997":"2e21126ab3301ab4a2fa","8011":"0e1fd69e444050f4adde","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"fb81e26d4a926f33e29f","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"d70b49070891e860f8d4","9528":"4dd9c43eb666c40b578c","9564":"4c20410cd72828190b9f","9573":"00d91ec5152c3af49166","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3bf9d41c3e823d684593","9773":"3f40e7ab5d577e90cc05","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -126794,6 +127368,8 @@ var ExpandMore = __webpack_require__(72048);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
 var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
+// EXTERNAL MODULE: ./src/js/utils/permissionUtils.js
+var permissionUtils = __webpack_require__(13266);
 ;// ./src/js/component/MobileDashboard.js
 function MobileDashboard_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function MobileDashboard_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { MobileDashboard_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { MobileDashboard_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -126804,6 +127380,7 @@ function MobileDashboard_arrayLikeToArray(r, a) { (null == a || a > r.length) &&
 function MobileDashboard_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function MobileDashboard_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
 
 
 
@@ -127009,11 +127586,45 @@ function MobileDashboardContent() {
     _useState10 = MobileDashboard_slicedToArray(_useState1, 2),
     anchorEl = _useState10[0],
     setAnchorEl = _useState10[1];
+  var _useState11 = (0,react.useState)([]),
+    _useState12 = MobileDashboard_slicedToArray(_useState11, 2),
+    grantAccess = _useState12[0],
+    setGrantAccess = _useState12[1];
   var fabMenuOpen = Boolean(anchorEl);
   (0,react.useEffect)(() => {
     var isMounted = true;
-    var fetchDashboardData = /*#__PURE__*/function () {
+    var fetchAccess = /*#__PURE__*/function () {
       var _ref2 = MobileDashboard_asyncToGenerator(function* () {
+        var _user$data;
+        if (!(user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id)) return;
+        try {
+          var _res$data;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var userAccess = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => {
+            var _user$data2;
+            return row.userID === (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.id);
+          });
+          if (isMounted && userAccess && Array.isArray(userAccess.modules)) {
+            setGrantAccess(userAccess.modules);
+          }
+        } catch (err) {
+          console.error('Error loading grantAccess in MobileDashboard:', err);
+        }
+      });
+      return function fetchAccess() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+    fetchAccess();
+    return () => {
+      isMounted = false;
+    };
+  }, [user]);
+  var canCreate = mod => (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, mod, 'create');
+  (0,react.useEffect)(() => {
+    var isMounted = true;
+    var fetchDashboardData = /*#__PURE__*/function () {
+      var _ref3 = MobileDashboard_asyncToGenerator(function* () {
         try {
           var _resInvoice$data, _resExpense$data, _resPayment$data;
           var _yield$Promise$all = yield Promise.all([(0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice?summary=true")).catch(() => ({
@@ -127053,7 +127664,7 @@ function MobileDashboardContent() {
         }
       });
       return function fetchDashboardData() {
-        return _ref2.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       };
     }();
     fetchDashboardData();
@@ -127115,14 +127726,14 @@ function MobileDashboardContent() {
       recentInvoices: recent
     });
   }, [rawData, selectedMonth, viewMode]);
-  var _useState11 = (0,react.useState)(false),
-    _useState12 = MobileDashboard_slicedToArray(_useState11, 2),
-    pickerOpen = _useState12[0],
-    setPickerOpen = _useState12[1];
-  var _useState13 = (0,react.useState)(dayjs_min_default()().year()),
+  var _useState13 = (0,react.useState)(false),
     _useState14 = MobileDashboard_slicedToArray(_useState13, 2),
-    pickerYear = _useState14[0],
-    setPickerYear = _useState14[1];
+    pickerOpen = _useState14[0],
+    setPickerOpen = _useState14[1];
+  var _useState15 = (0,react.useState)(dayjs_min_default()().year()),
+    _useState16 = MobileDashboard_slicedToArray(_useState15, 2),
+    pickerYear = _useState16[0],
+    setPickerYear = _useState16[1];
   var monthsList = [{
     label: 'Jan',
     full: 'January',
@@ -127636,7 +128247,7 @@ function MobileDashboardContent() {
     sx: {
       color: '#94a3b8'
     }
-  }, "No recent invoices recorded.")))), /*#__PURE__*/react.createElement(Fab/* default */.A, {
+  }, "No recent invoices recorded.")))), (canCreate('Invoice') || canCreate('Customer') || canCreate('Expenses') || canCreate('Maintenance')) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Fab/* default */.A, {
     color: "primary",
     "aria-label": "add",
     onClick: e => setAnchorEl(e.currentTarget),
@@ -127662,7 +128273,7 @@ function MobileDashboardContent() {
         boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
       }
     }
-  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, canCreate('Invoice') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: () => {
       setAnchorEl(null);
       navigate('/InvoiceForm');
@@ -127678,7 +128289,7 @@ function MobileDashboardContent() {
       fontWeight: 600,
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  })), canCreate('Customer') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: () => {
       setAnchorEl(null);
       navigate('/CustomerForm');
@@ -127694,10 +128305,10 @@ function MobileDashboardContent() {
       fontWeight: 600,
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  })), canCreate('Expenses') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: () => {
       setAnchorEl(null);
-      navigate('/DailyExpensesForm');
+      navigate('/DailyExpenseForm');
     }
   }, /*#__PURE__*/react.createElement(ListItemIcon/* default */.A, null, /*#__PURE__*/react.createElement(ShoppingBag/* default */.A, {
     fontSize: "small",
@@ -127710,10 +128321,10 @@ function MobileDashboardContent() {
       fontWeight: 600,
       fontSize: '0.9rem'
     }
-  })), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  })), canCreate('Maintenance') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: () => {
       setAnchorEl(null);
-      navigate('/MaintenanceForm');
+      navigate('/MaintenanceFormView');
     }
   }, /*#__PURE__*/react.createElement(ListItemIcon/* default */.A, null, /*#__PURE__*/react.createElement(Build/* default */.A, {
     fontSize: "small",
@@ -127726,7 +128337,7 @@ function MobileDashboardContent() {
       fontWeight: 600,
       fontSize: '0.9rem'
     }
-  }))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
+  })))), /*#__PURE__*/react.createElement(Dialog/* default */.A, {
     open: pickerOpen,
     onClose: () => setPickerOpen(false),
     PaperProps: {
@@ -136114,25 +136725,138 @@ function AdminHome() {
   }, /*#__PURE__*/react.createElement("h2", null, " Today's Rate: $ 1 = FC ", systemRate, " "), /*#__PURE__*/react.createElement(CurrencyExchange/* default */.A, null))))))))))));
 }
 /* harmony default export */ const AdminView1_AdminHome = (AdminHome);
+// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
+var react_toastify_esm = __webpack_require__(99571);
 ;// ./src/js/RequireAuth.js
+function RequireAuth_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function RequireAuth_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { RequireAuth_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { RequireAuth_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function RequireAuth_slicedToArray(r, e) { return RequireAuth_arrayWithHoles(r) || RequireAuth_iterableToArrayLimit(r, e) || RequireAuth_unsupportedIterableToArray(r, e) || RequireAuth_nonIterableRest(); }
+function RequireAuth_nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function RequireAuth_unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return RequireAuth_arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? RequireAuth_arrayLikeToArray(r, a) : void 0; } }
+function RequireAuth_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function RequireAuth_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function RequireAuth_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
 
 
 
 
 var RequireAuth = () => {
+  var _user$data, _user$data2, _user$data3, _user$data4;
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   var location = (0,react_router_dist/* useLocation */.zy)();
-  return user && user.data ? /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null) : /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
-    to: "/",
-    state: {
-      from: location
-    },
-    replace: true
-  });
+  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var _useState = (0,react.useState)(null),
+    _useState2 = RequireAuth_slicedToArray(_useState, 2),
+    grantAccess = _useState2[0],
+    setGrantAccess = _useState2[1];
+  var _useState3 = (0,react.useState)(true),
+    _useState4 = RequireAuth_slicedToArray(_useState3, 2),
+    checking = _useState4[0],
+    setChecking = _useState4[1];
+  var userName = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || "";
+  var userRole = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || "";
+  var userId = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.id) || (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4._id) || "";
+  (0,react.useEffect)(() => {
+    var isMounted = true;
+    var checkPermissions = /*#__PURE__*/function () {
+      var _ref = RequireAuth_asyncToGenerator(function* () {
+        if (!userId) {
+          if (isMounted) setChecking(false);
+          return;
+        }
+
+        // GG Superuser bypass
+        if (userName === "GG") {
+          if (isMounted) {
+            setGrantAccess([]);
+            setChecking(false);
+          }
+          return;
+        }
+        try {
+          var modules = yield (0,permissionUtils/* fetchUserGrantAccess */.wN)(userId);
+          if (isMounted) {
+            setGrantAccess(modules);
+            setChecking(false);
+          }
+        } catch (err) {
+          console.error("Error verifying route permissions:", err);
+          if (isMounted) {
+            setGrantAccess([]);
+            setChecking(false);
+          }
+        }
+      });
+      return function checkPermissions() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    checkPermissions();
+    return () => {
+      isMounted = false;
+    };
+  }, [userId, userName]);
+
+  // 1. Authentication Check
+  if (!user || !user.data) {
+    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+      to: "/",
+      state: {
+        from: location
+      },
+      replace: true
+    });
+  }
+
+  // 2. While fetching access permissions for non-GG users
+  if (checking && userName !== "GG") {
+    return /*#__PURE__*/react.createElement(Loader/* default */.A, null);
+  }
+
+  // 3. Superuser 'GG' bypass
+  if (userName === "GG") {
+    return /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null);
+  }
+
+  // 4. Evaluate Route Permission Rule
+  var routePerm = (0,permissionUtils/* getRoutePermission */.ru)(location.pathname);
+
+  // Unrestricted logged-in routes (e.g. /AdminHome, /SettingsViewAdmin)
+  if (!routePerm) {
+    return /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null);
+  }
+
+  // Special restrictions
+  if (routePerm.ggOnly && userName !== "GG") {
+    react_toastify_esm/* toast */.oR.error("Access Denied: Grant Access is restricted to Super Administrator.");
+    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+      to: "/AdminHome",
+      replace: true
+    });
+  }
+  if (routePerm.ceoOnly && userRole !== "CEO" && userName !== "GG") {
+    react_toastify_esm/* toast */.oR.error("Access Denied: This module requires CEO authorization.");
+    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+      to: "/AdminHome",
+      replace: true
+    });
+  }
+
+  // Standard Module Permission Check
+  var hasAccess = (0,permissionUtils/* canAccessModule */.jI)(user.data, grantAccess || [], routePerm.module, routePerm.action);
+  if (!hasAccess) {
+    react_toastify_esm/* toast */.oR.error("Access Denied: You do not have permission for the ".concat(routePerm.module, " module."));
+    return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+      to: "/AdminHome",
+      replace: true
+    });
+  }
+  return /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null);
 };
 /* harmony default export */ const js_RequireAuth = (RequireAuth);
-// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
-var react_toastify_esm = __webpack_require__(99571);
 // EXTERNAL MODULE: ./node_modules/react-toastify/dist/ReactToastify.css
 var ReactToastify = __webpack_require__(12717);
 // EXTERNAL MODULE: ./src/js/hooks/useLayoutConfig.js
@@ -136210,6 +136934,7 @@ function MobileDrawer_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function MobileDrawer(_ref) {
   var _user$data3, _user$data4;
   var open = _ref.open,
@@ -136258,15 +136983,8 @@ function MobileDrawer(_ref) {
   }, [open, user]);
   var userName = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || 'Global Gate User';
   var userRole = (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.role) || 'Staff';
-  var isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
   var canAccess = moduleName => {
-    var _mod$access, _mod$access2;
-    if (isSuperUser) return true;
-    var mod = grantAccess.find(m => {
-      var _m$moduleName, _m$name;
-      return ((_m$moduleName = m.moduleName) === null || _m$moduleName === void 0 ? void 0 : _m$moduleName.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase()) || ((_m$name = m.name) === null || _m$name === void 0 ? void 0 : _m$name.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase());
-    });
-    return Boolean((mod === null || mod === void 0 || (_mod$access = mod.access) === null || _mod$access === void 0 ? void 0 : _mod$access.readM) || (mod === null || mod === void 0 || (_mod$access2 = mod.access) === null || _mod$access2 === void 0 ? void 0 : _mod$access2.viewM));
+    return (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, moduleName, 'read');
   };
   var handleNav = path => {
     navigate(path);
@@ -136613,7 +137331,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.85rem'
     }
-  }))))), (canAccess('Pay-Roll') || canAccess('Employee') || isSuperUser) && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  }))))), canAccess('Employee') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/EmployeeViewAdminAll'),
     sx: {
       py: 1,
@@ -136631,7 +137349,7 @@ function MobileDrawer(_ref) {
     primaryTypographyProps: {
       fontSize: '0.9rem'
     }
-  })), (canAccess('Purchase') || canAccess('Suppliers') || isSuperUser) && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  })), canAccess('Supplier') && /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     onClick: () => handleNav('/SupplierAdminView'),
     sx: {
       py: 1,
@@ -136722,6 +137440,7 @@ function MobileLayout_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
   if (pathname.includes('Invoice')) return 'Invoices';
@@ -136787,15 +137506,8 @@ function MobileLayout(_ref) {
   }, [user]);
   var userName = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || '';
   var userRole = (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.role) || '';
-  var isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
   var canAccess = moduleName => {
-    var _mod$access, _mod$access2;
-    if (isSuperUser) return true;
-    var mod = grantAccess.find(m => {
-      var _m$moduleName, _m$name;
-      return ((_m$moduleName = m.moduleName) === null || _m$moduleName === void 0 ? void 0 : _m$moduleName.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase()) || ((_m$name = m.name) === null || _m$name === void 0 ? void 0 : _m$name.toLowerCase()) === (moduleName === null || moduleName === void 0 ? void 0 : moduleName.toLowerCase());
-    });
-    return Boolean((mod === null || mod === void 0 || (_mod$access = mod.access) === null || _mod$access === void 0 ? void 0 : _mod$access.readM) || (mod === null || mod === void 0 || (_mod$access2 = mod.access) === null || _mod$access2 === void 0 ? void 0 : _mod$access2.viewM));
+    return (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, moduleName, 'read');
   };
   var touchStartXRef = react.useRef(null);
   var touchStartYRef = react.useRef(null);

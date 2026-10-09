@@ -120,11 +120,13 @@ function SidebarDash({ onView2, onView3, onView4 }) {
   const ProjectInfo = grantAccess.filter((row) => row.moduleName === "Project" && row.access.readM === true);
   const PurchaseInfo = grantAccess.filter((row) => row.moduleName === "Purchase" && row.access.readM === true);
   const MaintenanceInfo = grantAccess.filter((row) => row.moduleName === "Maintenance" && row.access.readM === true);
-    const MaintenanceOrderInfo = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
+  const MaintenanceOrderInfo = grantAccess.filter((row) => row.moduleName === "Maintenance-Order" && row.access.readM === true);
   const ReportsInfo = grantAccess.filter((row) => row.moduleName === "Reports" && row.access.readM === true);
   const PRollInfo = grantAccess.filter((row) => row.moduleName === "Pay-Roll" && row.access.readM === true);
   const BlockFactoryInfo = grantAccess.filter((row) => row.moduleName === "Block-Factory" && row.access.readM === true);
   const POSInfo = grantAccess.filter((row) => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
+  const StoreInfo = grantAccess.filter((row) => (row.moduleName === "Item" || row.moduleName === "Supplier" || row.moduleName === "Item-Out" || row.moduleName === "Item-Return" || row.moduleName === "Item-Purchase" || row.moduleName === "Purchase-Order") && row.access.readM === true);
+  const MoreInfo = grantAccess.filter((row) => (row.moduleName === "Rate" || row.moduleName === "Fleet Management" || row.moduleName === "Employee" || row.moduleName === "Pay-Roll") && row.access.readM === true);
   return (
     <>
       {show1 === 1 ?
@@ -143,7 +145,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
           </ListItemButton>
           {
             parseInt(onView3) === 2 ? null : (
-              <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(3)}>
+              <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && StoreInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(3)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <ListAltIcon />
                 </ListItemIcon>
@@ -221,7 +223,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
 
           {
             parseInt(onView2) === 2 ? null : (
-              <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
+              <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && user.data?.role !== 'CEO' && MoreInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
                 </ListItemIcon>

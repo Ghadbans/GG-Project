@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logOut } from '../features/auth/authSlice';
 import { handleUserLogout } from '../utils/authUtils';
+import { canAccessModule } from '../utils/permissionUtils';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
@@ -66,12 +67,9 @@ function MobileDrawer({ open, onClose }) {
 
   const userName = user?.data?.userName || 'Global Gate User';
   const userRole = user?.data?.role || 'Staff';
-  const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
 
   const canAccess = (moduleName) => {
-    if (isSuperUser) return true;
-    const mod = grantAccess.find(m => m.moduleName?.toLowerCase() === moduleName?.toLowerCase() || m.name?.toLowerCase() === moduleName?.toLowerCase());
-    return Boolean(mod?.access?.readM || mod?.access?.viewM);
+    return canAccessModule(user?.data, grantAccess, moduleName, 'read');
   };
 
   const handleNav = (path) => {
@@ -279,7 +277,7 @@ function MobileDrawer({ open, onClose }) {
           )}
 
           {/* 9. Employees */}
-          {(canAccess('Pay-Roll') || canAccess('Employee') || isSuperUser) && (
+          {canAccess('Employee') && (
             <ListItemButton onClick={() => handleNav('/EmployeeViewAdminAll')} sx={{ py: 1, px: 2 }}>
               <ListItemIcon sx={{ minWidth: 38, color: '#64748b' }}>
                 <BadgeIcon fontSize="small" />
@@ -289,7 +287,7 @@ function MobileDrawer({ open, onClose }) {
           )}
 
           {/* 10. Suppliers */}
-          {(canAccess('Purchase') || canAccess('Suppliers') || isSuperUser) && (
+          {canAccess('Supplier') && (
             <ListItemButton onClick={() => handleNav('/SupplierAdminView')} sx={{ py: 1, px: 2 }}>
               <ListItemIcon sx={{ minWidth: 38, color: '#64748b' }}>
                 <BusinessIcon fontSize="small" />

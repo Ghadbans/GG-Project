@@ -3,6 +3,7 @@ import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logOut } from '../features/auth/authSlice';
 import { handleUserLogout } from '../utils/authUtils';
+import { canAccessModule } from '../utils/permissionUtils';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import {
@@ -102,12 +103,9 @@ function MobileLayout({ children }) {
 
   const userName = user?.data?.userName || '';
   const userRole = user?.data?.role || '';
-  const isSuperUser = userName === 'GG' || userRole === 'Admin' || userRole === 'CEO';
 
   const canAccess = (moduleName) => {
-    if (isSuperUser) return true;
-    const mod = grantAccess.find(m => m.moduleName?.toLowerCase() === moduleName?.toLowerCase() || m.name?.toLowerCase() === moduleName?.toLowerCase());
-    return Boolean(mod?.access?.readM || mod?.access?.viewM);
+    return canAccessModule(user?.data, grantAccess, moduleName, 'read');
   };
 
   const touchStartXRef = React.useRef(null);
