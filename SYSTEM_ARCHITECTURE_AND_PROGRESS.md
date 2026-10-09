@@ -1599,6 +1599,7 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
        - Updated Statement of Accounts summary table to track both Logins and Logouts side-by-side (`In / Out`).
   - **Verification & Deployment:**
     - Babel AST Quality Gate passed across all 231 source files (0 errors).
+    - Node backend syntax check verified across all server modules (`node -c`, 0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.66.exe` generated.
 
