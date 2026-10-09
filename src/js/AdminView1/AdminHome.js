@@ -58,6 +58,7 @@ import ItemReportInfo from './PageView/DashboardInfo/ItemReportInfo';
 import PosReportInvoice from './PageView/DashboardInfo/PosReportInvoice';
 import VatAccountView from './PageView/DashboardInfo/VatAccountView';
 import NotificationReportInfo from './PageView/DashboardInfo/NotificationReportInfo';
+import { handleUserLogout } from '../utils/authUtils';
 
 const ViewTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -223,9 +224,7 @@ function AdminHome() {
   }, [user?.data?.userName]);
 
   const doLogout = () => {
-    localStorage.removeItem('user');
-    dispatch(logOut());
-    navigate('/');
+    handleUserLogout(dispatch, navigate, user?.data);
   };
 
   const handleLogout = () => {
@@ -507,7 +506,11 @@ function AdminHome() {
         });
 
         safeGet(`${ENDPOINT_URL}/notification`).then(resNotification => {
-          setNotification(resNotification.data?.data?.filter(row => dayjs(row.dateNotification).format('DD/MM/YYYY') === dayjs(date).format('DD/MM/YYYY')).reverse());
+          const todayISO = dayjs().format('YYYY-MM-DD');
+          const todayList = (resNotification.data?.data || []).filter(row => 
+            dayjs(row.dateNotification).format('YYYY-MM-DD') === todayISO
+          );
+          setNotification(todayList);
         });
 
       } catch (error) {
@@ -2085,20 +2088,40 @@ function AdminHome() {
                                 </div>
                                 <Divider sx={{ my: 1 }} />
                                 <div style={{ height: '320px', overflowY: 'auto', paddingRight: '6px' }}>
-                                  {notification?.map((row) => (
-                                    <Timeline key={row._id} sx={{ [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 } }}>
-                                      <TimelineItem>
-                                        <TimelineSeparator>
-                                          <TimelineDot color="primary" />
-                                          <TimelineConnector />
-                                        </TimelineSeparator>
-                                        <TimelineContent>
-                                          <Typography sx={{ fontSize: '13px', fontWeight: 'bold', color: '#0f172a' }}>{row.person}</Typography>
-                                          <Typography sx={{ fontSize: '12px', color: '#64748b' }}>{row.reason}</Typography>
-                                        </TimelineContent>
-                                      </TimelineItem>
-                                    </Timeline>
-                                  ))}
+                                  {notification && notification.length > 0 ? (
+                                    notification.map((row) => {
+                                      const isLogout = (row.person || '').toLowerCase().includes('logged out');
+                                      const isLogin = (row.person || '').toLowerCase().includes('logged in');
+                                      const dotColor = isLogout ? 'warning' : (isLogin ? 'success' : 'primary');
+                                      return (
+                                        <Timeline key={row._id} sx={{ [`& .${timelineItemClasses.root}:before`]: { flex: 0, padding: 0 } }}>
+                                          <TimelineItem>
+                                            <TimelineSeparator>
+                                              <TimelineDot color={dotColor} sx={{ p: '4px' }} />
+                                              <TimelineConnector />
+                                            </TimelineSeparator>
+                                            <TimelineContent sx={{ py: '4px', px: 1.5 }}>
+                                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px' }}>
+                                                <Typography sx={{ fontSize: '12.5px', fontWeight: 'bold', color: '#0f172a' }}>
+                                                  {row.person}
+                                                </Typography>
+                                                <Typography sx={{ fontSize: '10.5px', fontWeight: 700, color: '#475569', backgroundColor: '#f1f5f9', px: 0.8, py: 0.2, borderRadius: '4px', whiteSpace: 'nowrap' }}>
+                                                  {row.dateNotification ? dayjs(row.dateNotification).format('HH:mm') : ''}
+                                                </Typography>
+                                              </div>
+                                              <Typography sx={{ fontSize: '11.5px', color: '#64748b', mt: 0.25, lineHeight: 1.35 }}>
+                                                {row.reason}
+                                              </Typography>
+                                            </TimelineContent>
+                                          </TimelineItem>
+                                        </Timeline>
+                                      );
+                                    })
+                                  ) : (
+                                    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '260px', color: '#94a3b8' }}>
+                                      <Typography sx={{ fontSize: '13px', fontWeight: 500 }}>No announcements recorded for today</Typography>
+                                    </Box>
+                                  )}
                                 </div>
                               </Card>
                             </Grid>

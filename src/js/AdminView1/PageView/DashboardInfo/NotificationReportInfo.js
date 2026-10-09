@@ -31,6 +31,7 @@ import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 import { Explicit } from '@mui/icons-material';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
 import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -58,6 +59,9 @@ function getNotificationCategory(person = '', reason = '') {
   const p = (person || '').toLowerCase();
   const r = (reason || '').toLowerCase();
 
+  if (p.includes('logout') || p.includes('logged out') || r.includes('logged out')) {
+    return { label: 'User Logout', color: '#ea580c', bg: '#ffedd5', icon: <LogoutIcon sx={{ fontSize: 13 }} /> };
+  }
   if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
     return { label: 'User Login', color: '#16a34a', bg: '#dcfce7', icon: <LoginIcon sx={{ fontSize: 13 }} /> };
   }
@@ -139,7 +143,9 @@ function NotificationReportInfo({ onMonth, onNotification }) {
         const p = (item.person || '').toLowerCase();
         const r = (item.reason || '').toLowerCase();
         if (typeFilter === 'LOGINS') {
-          if (!p.includes('login') && !p.includes('logged in') && !r.includes('logged into')) return false;
+          if ((!p.includes('login') && !p.includes('logged in') && !r.includes('logged into')) || p.includes('logout') || p.includes('logged out') || r.includes('logged out')) return false;
+        } else if (typeFilter === 'LOGOUTS') {
+          if (!p.includes('logout') && !p.includes('logged out') && !r.includes('logged out')) return false;
         } else if (typeFilter === 'CREATIONS') {
           if (!p.includes('create') && !p.includes('created')) return false;
         } else if (typeFilter === 'MODIFICATIONS') {
@@ -182,6 +188,7 @@ function NotificationReportInfo({ onMonth, onNotification }) {
   // Summary Metrics
   const summaryMetrics = useMemo(() => {
     let totalLogins = 0;
+    let totalLogouts = 0;
     let totalCreations = 0;
     let totalModifications = 0;
     let totalDeletions = 0;
@@ -191,7 +198,9 @@ function NotificationReportInfo({ onMonth, onNotification }) {
       const p = (n.person || '').toLowerCase();
       const r = (n.reason || '').toLowerCase();
 
-      if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
+      if (p.includes('logout') || p.includes('logged out') || r.includes('logged out')) {
+        totalLogouts += 1;
+      } else if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
         totalLogins += 1;
       } else if (p.includes('create') || p.includes('created')) {
         totalCreations += 1;
@@ -211,6 +220,7 @@ function NotificationReportInfo({ onMonth, onNotification }) {
     return {
       total: filteredNotifications.length,
       totalLogins,
+      totalLogouts,
       totalCreations,
       totalModifications,
       totalDeletions,
@@ -294,6 +304,7 @@ function NotificationReportInfo({ onMonth, onNotification }) {
               >
                 <MenuItem value="ALL">All Activities</MenuItem>
                 <MenuItem value="LOGINS">User Logins Only</MenuItem>
+                <MenuItem value="LOGOUTS">User Logouts Only</MenuItem>
                 <MenuItem value="CREATIONS">New Creations</MenuItem>
                 <MenuItem value="MODIFICATIONS">Modifications</MenuItem>
                 <MenuItem value="DELETIONS">Deletions / Declines</MenuItem>
@@ -411,7 +422,7 @@ function NotificationReportInfo({ onMonth, onNotification }) {
             <tbody>
               <tr style={{ backgroundColor: '#e8f7fe', color: '#0369a1', fontWeight: 'bold', borderBottom: '1px solid #bae6fd' }}>
                 <td style={{ padding: '7px 14px' }}>Total Filtered Activities</td>
-                <td style={{ padding: '7px 14px', textAlign: 'center' }}>User Logins</td>
+                <td style={{ padding: '7px 14px', textAlign: 'center' }}>User Logins / Logouts</td>
                 <td style={{ padding: '7px 14px', textAlign: 'center' }}>Creations & Modifications</td>
                 <td style={{ padding: '7px 14px', textAlign: 'center' }}>Unique Staff Logged</td>
               </tr>
@@ -419,8 +430,10 @@ function NotificationReportInfo({ onMonth, onNotification }) {
                 <td style={{ padding: '8px 14px', fontWeight: 'bold', fontSize: '15px', color: '#0f172a' }}>
                   {summaryMetrics.total.toLocaleString()} Records
                 </td>
-                <td style={{ padding: '8px 14px', textAlign: 'center', fontWeight: 'bold', fontSize: '15px', color: '#16a34a' }}>
-                  {summaryMetrics.totalLogins.toLocaleString()}
+                <td style={{ padding: '8px 14px', textAlign: 'center', fontWeight: 'bold', fontSize: '15px' }}>
+                  <span style={{ color: '#16a34a' }}>{summaryMetrics.totalLogins.toLocaleString()} In</span>
+                  <span style={{ color: '#94a3b8', margin: '0 4px' }}>/</span>
+                  <span style={{ color: '#ea580c' }}>{summaryMetrics.totalLogouts.toLocaleString()} Out</span>
                 </td>
                 <td style={{ padding: '8px 14px', textAlign: 'center', fontWeight: 'bold', fontSize: '15px', color: '#2563eb' }}>
                   {(summaryMetrics.totalCreations + summaryMetrics.totalModifications).toLocaleString()}

@@ -43,7 +43,7 @@ function NotificationVIewInfo() {
     const fetchNotification = async () => {
       try {
         const notificationResponse = await axios.get(`${ENDPOINT_URL}/notification`);
-        setNotificationAll(notificationResponse.data.data.reverse())
+        setNotificationAll(notificationResponse.data.data || []);
       } catch (error) {
         console.log(error)
       }

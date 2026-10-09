@@ -141,6 +141,10 @@
     - **Automatic Login Auditing:** On every user login (`server/Controller/auth.js:login`), a notification record is automatically stored in `notificationSchema` (`person: '${user.employeeName} Logged In'`, `reason: 'User ${user.employeeName} (${user.role}) successfully logged into the system'`) and broadcast in real-time via `req.io.emit('newNotification')`.
     - **Permanent History:** Notifications are stored permanently in MongoDB with zero automatic TTL or deletion.
     - **Interactive Dashboard Drilldown:** In `AdminHome.js`, clicking the "HR Announcements" card opens the full `NotificationReportInfo` drilldown (`showInfo === 12`) with search, type filters, custom date pickers, summary metrics, print engine, and Excel export.
+41. **User Logout Recording, Chronological Sorting & Today's Scope Standard (Ver 3.5.66)**:
+    - **User Logout Auditing:** Whenever any user logs out (or triggers logout), the frontend invokes `handleUserLogout` in `src/js/utils/authUtils.js`, which sends a `POST /auth/logout` payload. The backend creates a `notificationSchema` record (`person: '${name} Logged Out'`, `reason: 'User ${name} (${role}) logged out of the system'`) and broadcasts it in real-time via `req.io.emit('newNotification')`.
+    - **Newest-First Chronological Order:** Because the backend `GET /notification` sorts by `{ dateNotification: -1, _id: -1 }`, frontend components (`NotificationVIewInfo.js`, `NotificationReportInfo.js`, etc.) must NEVER apply `.reverse()`. Socket additions must prepend (`[newNotification, ...prev]`) so that the most recent activities always appear at the top.
+    - **Dashboard HR Announcements Scope:** The HR Announcements timeline card on `AdminHome.js` is strictly scoped to today's date (`dayjs(row.dateNotification).format('YYYY-MM-DD') === todayISO`) with color-coded status dots (`green` for login, `warning/orange` for logout, `primary/blue` for system actions) and compact timestamps (`HH:mm`), while full historical notifications remain accessible through the Notification Center / Report drilldown.
 
 ## Current Progress Log
 - **Maintenance Module Rate & Price Edit Permissions for CEO & Admin vs USER Level (Ver 3.5.60)**:
@@ -1571,6 +1575,33 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Babel AST Quality Gate passed across all 230 source files (0 errors).
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.65.exe` generated.
+
+- **User Logout Audit Tracking, Chronological Newest-First Order & Today's Announcements Scope (Ver 3.5.66)**:
+  - **Problem Reported:**
+    1. System recorded user logins but did not capture user logout events in notifications or the audit trail.
+    2. Notifications popover ("ALL" tab) and HR Announcements dashboard card displayed entries in inverted order (oldest at the top, newest at the bottom).
+    3. User requested that the Dashboard HR Announcements card show only the current day's (today's) announcements/notifications sorted newest to oldest, while full history remains accessible in the Notification Center report.
+  - **Architectural Resolution:**
+    1. **Backend Logout Auditing (`server/Controller/auth.js` & `server/routes/AuthRoutes.js`):**
+       - Added `logout` controller and `POST /auth/logout` endpoint that creates a `notificationSchema` entry (`person: '${name} Logged Out'`, `reason: 'User ${name} (${role}) logged out of the system'`) and broadcasts it live via Socket.IO (`req.io.emit('newNotification')`).
+    2. **Centralized Auth Logout Utility (`src/js/utils/authUtils.js`):**
+       - Created `handleUserLogout(dispatch, navigate, currentUser)` to reliably send `POST /auth/logout`, clean local storage, clear Redux state (`logOut()`), and redirect to root `/`.
+       - Integrated `handleUserLogout` across `AdminHome.js`, `MobileDrawer.js`, and `MobileLayout.js`.
+    3. **Chronological Sorting Fix (Newest to Oldest):**
+       - Removed inverted `.reverse()` calls in `NotificationVIewInfo.js` and `AdminHome.js`, letting the backend's native `{ dateNotification: -1, _id: -1 }` sort dictate the order.
+       - Ensured socket event handlers prepend incoming entries (`[newNotification, ...prev]`) so newest entries appear directly at the top.
+    4. **Dashboard HR Announcements Today's Scope (`AdminHome.js`):**
+       - Filtered HR Announcements to today's date (`dayjs(row.dateNotification).format('YYYY-MM-DD') === todayISO`).
+       - Added color-coded status dots (`success/green` for login, `warning/orange` for logout, `primary/blue` for system events), compact timestamp badges (`HH:mm`), and empty state fallback.
+    5. **Notification & Audit Report Enhancement (`NotificationReportInfo.js`):**
+       - Added `User Logout` category with `#ea580c` badge and `LogoutIcon`.
+       - Added `User Logouts Only` to the `typeFilter` dropdown.
+       - Updated Statement of Accounts summary table to track both Logins and Logouts side-by-side (`In / Out`).
+  - **Verification & Deployment:**
+    - Babel AST Quality Gate passed across all 231 source files (0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Windows desktop installer `dist/Global Gate Setup 3.5.66.exe` generated.
+
 
 
 

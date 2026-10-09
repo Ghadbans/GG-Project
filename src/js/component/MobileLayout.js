@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logOut } from '../features/auth/authSlice';
+import { handleUserLogout } from '../utils/authUtils';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import {
@@ -152,11 +153,7 @@ function MobileLayout({ children }) {
   const isAuthPage = pathname === '/' || pathname === '/Loginadmin' || pathname === '/Loginemployee' || pathname === '';
 
   const handleLogout = () => {
-    dispatch(logOut());
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/');
+    handleUserLogout(dispatch, navigate, user);
   };
 
   if (isAuthPage) {

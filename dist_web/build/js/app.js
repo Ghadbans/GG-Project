@@ -81967,7 +81967,7 @@ function NotificationVIewInfo() {
       var _ref = _asyncToGenerator(function* () {
         try {
           var notificationResponse = yield axios__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_15__/* .ENDPOINT_URL */ .m, "/notification"));
-          setNotificationAll(notificationResponse.data.data.reverse());
+          setNotificationAll(notificationResponse.data.data || []);
         } catch (error) {
           console.log(error);
         }
@@ -122393,7 +122393,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.65"};
+module.exports = {"rE":"3.5.66"};
 
 /***/ },
 
@@ -131126,6 +131126,8 @@ var Refresh = __webpack_require__(42702);
 var NotificationsActive = __webpack_require__(32683);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Login.js
 var icons_material_Login = __webpack_require__(28800);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Logout.js
+var Logout = __webpack_require__(45423);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/EditNote.js
 var EditNote = __webpack_require__(3689);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/AddCircleOutline.js
@@ -131148,6 +131150,7 @@ function NotificationReportInfo_extends() { return NotificationReportInfo_extend
 function NotificationReportInfo_objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = NotificationReportInfo_objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function NotificationReportInfo_objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -131193,6 +131196,18 @@ function getNotificationCategory() {
   var reason = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
   var p = (person || '').toLowerCase();
   var r = (reason || '').toLowerCase();
+  if (p.includes('logout') || p.includes('logged out') || r.includes('logged out')) {
+    return {
+      label: 'User Logout',
+      color: '#ea580c',
+      bg: '#ffedd5',
+      icon: /*#__PURE__*/react.createElement(Logout/* default */.A, {
+        sx: {
+          fontSize: 13
+        }
+      })
+    };
+  }
   if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
     return {
       label: 'User Login',
@@ -131373,7 +131388,9 @@ function NotificationReportInfo(_ref3) {
         var _p = (item.person || '').toLowerCase();
         var _r = (item.reason || '').toLowerCase();
         if (typeFilter === 'LOGINS') {
-          if (!_p.includes('login') && !_p.includes('logged in') && !_r.includes('logged into')) return false;
+          if (!_p.includes('login') && !_p.includes('logged in') && !_r.includes('logged into') || _p.includes('logout') || _p.includes('logged out') || _r.includes('logged out')) return false;
+        } else if (typeFilter === 'LOGOUTS') {
+          if (!_p.includes('logout') && !_p.includes('logged out') && !_r.includes('logged out')) return false;
         } else if (typeFilter === 'CREATIONS') {
           if (!_p.includes('create') && !_p.includes('created')) return false;
         } else if (typeFilter === 'MODIFICATIONS') {
@@ -131414,6 +131431,7 @@ function NotificationReportInfo(_ref3) {
   // Summary Metrics
   var summaryMetrics = (0,react.useMemo)(() => {
     var totalLogins = 0;
+    var totalLogouts = 0;
     var totalCreations = 0;
     var totalModifications = 0;
     var totalDeletions = 0;
@@ -131421,7 +131439,9 @@ function NotificationReportInfo(_ref3) {
     (filteredNotifications || []).forEach(n => {
       var p = (n.person || '').toLowerCase();
       var r = (n.reason || '').toLowerCase();
-      if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
+      if (p.includes('logout') || p.includes('logged out') || r.includes('logged out')) {
+        totalLogouts += 1;
+      } else if (p.includes('login') || p.includes('logged in') || r.includes('logged into')) {
         totalLogins += 1;
       } else if (p.includes('create') || p.includes('created')) {
         totalCreations += 1;
@@ -131440,6 +131460,7 @@ function NotificationReportInfo(_ref3) {
     return {
       total: filteredNotifications.length,
       totalLogins,
+      totalLogouts,
       totalCreations,
       totalModifications,
       totalDeletions,
@@ -131571,6 +131592,8 @@ function NotificationReportInfo(_ref3) {
   }, "All Activities"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "LOGINS"
   }, "User Logins Only"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    value: "LOGOUTS"
+  }, "User Logouts Only"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "CREATIONS"
   }, "New Creations"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     value: "MODIFICATIONS"
@@ -131762,7 +131785,7 @@ function NotificationReportInfo(_ref3) {
       padding: '7px 14px',
       textAlign: 'center'
     }
-  }, "User Logins"), /*#__PURE__*/react.createElement("td", {
+  }, "User Logins / Logouts"), /*#__PURE__*/react.createElement("td", {
     style: {
       padding: '7px 14px',
       textAlign: 'center'
@@ -131789,10 +131812,22 @@ function NotificationReportInfo(_ref3) {
       padding: '8px 14px',
       textAlign: 'center',
       fontWeight: 'bold',
-      fontSize: '15px',
+      fontSize: '15px'
+    }
+  }, /*#__PURE__*/react.createElement("span", {
+    style: {
       color: '#16a34a'
     }
-  }, summaryMetrics.totalLogins.toLocaleString()), /*#__PURE__*/react.createElement("td", {
+  }, summaryMetrics.totalLogins.toLocaleString(), " In"), /*#__PURE__*/react.createElement("span", {
+    style: {
+      color: '#94a3b8',
+      margin: '0 4px'
+    }
+  }, "/"), /*#__PURE__*/react.createElement("span", {
+    style: {
+      color: '#ea580c'
+    }
+  }, summaryMetrics.totalLogouts.toLocaleString(), " Out")), /*#__PURE__*/react.createElement("td", {
     style: {
       padding: '8px 14px',
       textAlign: 'center',
@@ -131953,6 +131988,54 @@ function NotificationReportInfo(_ref3) {
   }), /*#__PURE__*/react.createElement(PrintFooter/* default */.A, null)));
 }
 /* harmony default export */ const DashboardInfo_NotificationReportInfo = (NotificationReportInfo);
+;// ./src/js/utils/authUtils.js
+function authUtils_asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function authUtils_asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { authUtils_asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { authUtils_asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+;
+
+
+
+/**
+ * Centrally handle user logout with audit trail recording
+ * @param {Function} dispatch - Redux dispatch
+ * @param {Function} navigate - React Router navigate
+ * @param {Object} currentUser - Current user object from redux (optional)
+ */
+var handleUserLogout = /*#__PURE__*/function () {
+  var _ref = authUtils_asyncToGenerator(function* (dispatch, navigate) {
+    var _currentUser$data, _currentUser$data2, _currentUser$data3, _currentUser$data4;
+    var currentUser = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var userName = (currentUser === null || currentUser === void 0 ? void 0 : currentUser.userName) || (currentUser === null || currentUser === void 0 || (_currentUser$data = currentUser.data) === null || _currentUser$data === void 0 ? void 0 : _currentUser$data.userName) || localStorage.getItem('currentUserName') || '';
+    var role = (currentUser === null || currentUser === void 0 ? void 0 : currentUser.role) || (currentUser === null || currentUser === void 0 || (_currentUser$data2 = currentUser.data) === null || _currentUser$data2 === void 0 ? void 0 : _currentUser$data2.role) || '';
+    var userId = (currentUser === null || currentUser === void 0 ? void 0 : currentUser.id) || (currentUser === null || currentUser === void 0 || (_currentUser$data3 = currentUser.data) === null || _currentUser$data3 === void 0 ? void 0 : _currentUser$data3.id) || localStorage.getItem('user') || '';
+    var branchId = (currentUser === null || currentUser === void 0 ? void 0 : currentUser.selectedBranch) || (currentUser === null || currentUser === void 0 || (_currentUser$data4 = currentUser.data) === null || _currentUser$data4 === void 0 ? void 0 : _currentUser$data4.selectedBranch) || localStorage.getItem('selectedBranch') || 'HQ';
+    try {
+      if (userName) {
+        yield axios/* default */.A.post("".concat(apiConfig/* API_BASE_URL */.J, "/auth/logout"), {
+          employeeName: userName,
+          role: role,
+          userId: userId,
+          branchId: branchId
+        });
+      }
+    } catch (err) {
+      console.error('Failed to notify logout to backend:', err);
+    } finally {
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      localStorage.removeItem('currentUserName');
+      if (dispatch) {
+        dispatch((0,authSlice/* logOut */.je)());
+      }
+      if (navigate) {
+        navigate('/');
+      }
+    }
+  });
+  return function handleUserLogout(_x, _x2) {
+    return _ref.apply(this, arguments);
+  };
+}();
 // EXTERNAL MODULE: ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/dist/cjs.js!./src/js/AdminView1/Dashboard.css
 var Dashboard = __webpack_require__(34997);
 ;// ./src/js/AdminView1/Dashboard.css
@@ -132003,6 +132086,7 @@ function AdminHome_extends() { return AdminHome_extends = Object.assign ? Object
 function AdminHome_objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = AdminHome_objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function AdminHome_objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -132246,9 +132330,7 @@ function AdminHome() {
     }
   }, [user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName]);
   var doLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,authSlice/* logOut */.je)());
-    navigate('/');
+    handleUserLogout(dispatch, navigate, user === null || user === void 0 ? void 0 : user.data);
   };
   var handleLogout = () => {
     if (hasBackupAccess) {
@@ -132617,7 +132699,9 @@ function AdminHome() {
           });
           safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/notification")).then(resNotification => {
             var _resNotification$data;
-            setNotification((_resNotification$data = resNotification.data) === null || _resNotification$data === void 0 || (_resNotification$data = _resNotification$data.data) === null || _resNotification$data === void 0 ? void 0 : _resNotification$data.filter(row => dayjs_min_default()(row.dateNotification).format('DD/MM/YYYY') === dayjs_min_default()(date).format('DD/MM/YYYY')).reverse());
+            var todayISO = dayjs_min_default()().format('YYYY-MM-DD');
+            var todayList = (((_resNotification$data = resNotification.data) === null || _resNotification$data === void 0 ? void 0 : _resNotification$data.data) || []).filter(row => dayjs_min_default()(row.dateNotification).format('YYYY-MM-DD') === todayISO);
+            setNotification(todayList);
           });
         } catch (error) {
           console.error('Error fetching dashboard data:', error);
@@ -135686,28 +135770,75 @@ function AdminHome() {
       overflowY: 'auto',
       paddingRight: '6px'
     }
-  }, notification === null || notification === void 0 ? void 0 : notification.map(row => /*#__PURE__*/react.createElement(Timeline_Timeline, {
-    key: row._id,
-    sx: {
-      ["& .".concat(TimelineItem_timelineItemClasses.root, ":before")]: {
-        flex: 0,
-        padding: 0
+  }, notification && notification.length > 0 ? notification.map(row => {
+    var isLogout = (row.person || '').toLowerCase().includes('logged out');
+    var isLogin = (row.person || '').toLowerCase().includes('logged in');
+    var dotColor = isLogout ? 'warning' : isLogin ? 'success' : 'primary';
+    return /*#__PURE__*/react.createElement(Timeline_Timeline, {
+      key: row._id,
+      sx: {
+        ["& .".concat(TimelineItem_timelineItemClasses.root, ":before")]: {
+          flex: 0,
+          padding: 0
+        }
       }
+    }, /*#__PURE__*/react.createElement(TimelineItem_TimelineItem, null, /*#__PURE__*/react.createElement(TimelineSeparator_TimelineSeparator, null, /*#__PURE__*/react.createElement(TimelineDot_TimelineDot, {
+      color: dotColor,
+      sx: {
+        p: '4px'
+      }
+    }), /*#__PURE__*/react.createElement(TimelineConnector_TimelineConnector, null)), /*#__PURE__*/react.createElement(TimelineContent_TimelineContent, {
+      sx: {
+        py: '4px',
+        px: 1.5
+      }
+    }, /*#__PURE__*/react.createElement("div", {
+      style: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '8px'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '12.5px',
+        fontWeight: 'bold',
+        color: '#0f172a'
+      }
+    }, row.person), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '10.5px',
+        fontWeight: 700,
+        color: '#475569',
+        backgroundColor: '#f1f5f9',
+        px: 0.8,
+        py: 0.2,
+        borderRadius: '4px',
+        whiteSpace: 'nowrap'
+      }
+    }, row.dateNotification ? dayjs_min_default()(row.dateNotification).format('HH:mm') : '')), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      sx: {
+        fontSize: '11.5px',
+        color: '#64748b',
+        mt: 0.25,
+        lineHeight: 1.35
+      }
+    }, row.reason))));
+  }) : /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: '260px',
+      color: '#94a3b8'
     }
-  }, /*#__PURE__*/react.createElement(TimelineItem_TimelineItem, null, /*#__PURE__*/react.createElement(TimelineSeparator_TimelineSeparator, null, /*#__PURE__*/react.createElement(TimelineDot_TimelineDot, {
-    color: "primary"
-  }), /*#__PURE__*/react.createElement(TimelineConnector_TimelineConnector, null)), /*#__PURE__*/react.createElement(TimelineContent_TimelineContent, null, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
     sx: {
       fontSize: '13px',
-      fontWeight: 'bold',
-      color: '#0f172a'
+      fontWeight: 500
     }
-  }, row.person), /*#__PURE__*/react.createElement(Typography/* default */.A, {
-    sx: {
-      fontSize: '12px',
-      color: '#64748b'
-    }
-  }, row.reason)))))))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, "No announcements recorded for today"))))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     item: true,
     xs: 12,
     lg: 8
@@ -136078,6 +136209,7 @@ function MobileDrawer_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function MobileDrawer(_ref) {
   var _user$data3, _user$data4;
   var open = _ref.open,
@@ -136141,12 +136273,8 @@ function MobileDrawer(_ref) {
     onClose();
   };
   var handleLogout = () => {
-    dispatch((0,authSlice/* logOut */.je)());
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/');
     onClose();
+    handleUserLogout(dispatch, navigate, user);
   };
   return /*#__PURE__*/react.createElement(Drawer/* default */.Ay, {
     anchor: "left",
@@ -136593,6 +136721,7 @@ function MobileLayout_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
   if (pathname.includes('Invoice')) return 'Invoices';
@@ -136706,11 +136835,7 @@ function MobileLayout(_ref) {
   var pathname = location.pathname;
   var isAuthPage = pathname === '/' || pathname === '/Loginadmin' || pathname === '/Loginemployee' || pathname === '';
   var handleLogout = () => {
-    dispatch((0,authSlice/* logOut */.je)());
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/');
+    handleUserLogout(dispatch, navigate, user);
   };
   if (isAuthPage) {
     return /*#__PURE__*/react.createElement(react.Fragment, null, children);

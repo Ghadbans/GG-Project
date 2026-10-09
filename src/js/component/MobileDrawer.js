@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCurrentUser, logOut } from '../features/auth/authSlice';
+import { handleUserLogout } from '../utils/authUtils';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
@@ -79,12 +80,8 @@ function MobileDrawer({ open, onClose }) {
   };
 
   const handleLogout = () => {
-    dispatch(logOut());
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    navigate('/');
     onClose();
+    handleUserLogout(dispatch, navigate, user);
   };
 
   return (

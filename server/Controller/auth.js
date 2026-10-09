@@ -142,10 +142,29 @@ const register = async (req, res, next) => {
           res.status(401).json({ message: 'Invalid Password' });    
         }
       }else{
-        res.status(400).json({ message: 'User Not Found' });
+  const logout = async (req, res, next) => {
+    try {
+      const { employeeName, role, branchId, userId } = req.body;
+      const name = (employeeName || '').trim() || 'User';
+      const userRole = (role || '').trim() || 'Staff';
+      const bId = branchId || 'HQ';
+
+      const logoutNotification = new notificationSchema({
+        idInfo: userId ? String(userId) : '',
+        person: `${name} Logged Out`,
+        reason: `User ${name} (${userRole}) logged out of the system`,
+        dateNotification: new Date(),
+        branchId: bId
+      });
+      await logoutNotification.save();
+      if (req.io) {
+        req.io.emit('newNotification', logoutNotification);
       }
+      res.status(200).json({ message: 'Logout recorded successfully' });
     } catch (error) {
-      next(error);
+      console.error('Error logging logout notification:', error);
+      res.status(500).json({ message: 'Error recording logout' });
     }
   };
-  module.exports = { register, login,requestPasswordReset, resetPassword};
+
+  module.exports = { register, login, logout, requestPasswordReset, resetPassword };
