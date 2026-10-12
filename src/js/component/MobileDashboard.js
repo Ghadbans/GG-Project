@@ -20,7 +20,8 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Button
+  Button,
+  Avatar
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import ReceiptIcon from '@mui/icons-material/Receipt';
@@ -32,6 +33,15 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import PeopleIcon from '@mui/icons-material/People';
+import RequestQuoteIcon from '@mui/icons-material/RequestQuote';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import BadgeIcon from '@mui/icons-material/Badge';
+import AssignmentIcon from '@mui/icons-material/Assignment';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
@@ -136,10 +146,29 @@ function MobileDashboardContent() {
   const navigate = useNavigate();
   const user = useSelector(selectCurrentUser);
 
+  const userName = user?.data?.userName || '';
+  const userRole = user?.data?.role || '';
+  const isSuperOrCEO = userRole === 'CEO' || userName === 'GG';
+
   const [loading, setLoading] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(dayjs());
   const [viewMode, setViewMode] = useState('monthly'); // 'monthly' | 'yearly'
   const [rawData, setRawData] = useState({ invoices: [], expenses: [], payments: [] });
+
+  const [systemRate, setSystemRate] = useState(() => {
+    try {
+      const local = localStorage.getItem('Rate');
+      if (local) {
+        const parsed = JSON.parse(local);
+        const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+        const branchRate = parsed.find(r => r.branchId === selectedBranch) || parsed.find(r => r.branchId === 'HQ') || parsed[0];
+        return branchRate?.rate || 1;
+      }
+    } catch (e) {}
+    return 1;
+  });
+
+  const [maintenanceStats, setMaintenanceStats] = useState({ open: 0, pending: 0, converted: 0 });
 
   const [metrics, setMetrics] = useState({
     totalRevenue: 0,
@@ -174,9 +203,52 @@ function MobileDashboardContent() {
     return () => { isMounted = false; };
   }, [user]);
 
+  // Fetch live system exchange rate
+  useEffect(() => {
+    const fetchRate = async () => {
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/rate`);
+        const rateData = res?.data?.data;
+        if (Array.isArray(rateData) && rateData.length > 0) {
+          const selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+          const branchRate = rateData.find(r => r.branchId === selectedBranch) || rateData.find(r => r.branchId === 'HQ') || rateData[0];
+          const fetchedRate = branchRate?.rate || rateData[0]?.rate;
+          if (fetchedRate) setSystemRate(parseFloat(fetchedRate));
+        }
+      } catch (e) {}
+    };
+    fetchRate();
+  }, []);
+
+  // For non-CEO users: fetch operational maintenance orders count without financial data
+  useEffect(() => {
+    if (!isSuperOrCEO) {
+      const fetchMaint = async () => {
+        try {
+          const res = await cachedGet(`${ENDPOINT_URL}/maintenance-order`);
+          const orders = Array.isArray(res?.data?.data) ? res.data.data : [];
+          const activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
+          const branchOrders = orders.filter(o => !o?.branch || activeBranch === 'HQ' || o.branch === activeBranch);
+          setMaintenanceStats({
+            open: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'open').length,
+            pending: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'pending').length,
+            converted: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'converted' || String(o.status || '').toLowerCase() === 'close').length,
+          });
+        } catch (e) {}
+      };
+      fetchMaint();
+    }
+  }, [isSuperOrCEO]);
+
   const canCreate = (mod) => canAccessModule(user?.data, grantAccess, mod, 'create');
 
+  // ONLY fetch executive financial collections (invoices, expenses, payments) for CEO or Superuser!
   useEffect(() => {
+    if (!isSuperOrCEO) {
+      setLoading(false);
+      return;
+    }
+
     let isMounted = true;
     const fetchDashboardData = async () => {
       try {
@@ -207,7 +279,7 @@ function MobileDashboardContent() {
 
     fetchDashboardData();
     return () => { isMounted = false; };
-  }, []);
+  }, [isSuperOrCEO]);
 
   useEffect(() => {
     const isCurrentPeriod = (item) => {
@@ -318,6 +390,305 @@ function MobileDashboardContent() {
 
   const periodLabel = viewMode === 'monthly' ? selectedMonth.format('MMMM YYYY') : `${selectedMonth.year()} FY`;
 
+  // ── NON-CEO / STANDARD STAFF DASHBOARD (STRICT GRANT ACCESS ENFORCEMENT) ──
+  if (!isSuperOrCEO) {
+    const activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
+    const permittedCards = [
+      {
+        module: 'Maintenance-Order',
+        altModule: 'Maintenance',
+        title: 'Maintenance & Orders',
+        desc: 'Job cards, service orders & equipment repair',
+        icon: <BuildIcon sx={{ fontSize: 26, color: '#D97706' }} />,
+        path: '/MaintenanceOrderAdmin',
+        color: '#FEF3C7',
+        badge: maintenanceStats.open > 0 ? `${maintenanceStats.open} Open` : null
+      },
+      {
+        module: 'Item',
+        altModule: 'Store',
+        title: 'Items & Store',
+        desc: 'Stock catalog, parts inventory & items lookup',
+        icon: <InventoryIcon sx={{ fontSize: 26, color: '#30368a' }} />,
+        path: '/ItemViewAdmin',
+        color: '#E0E7FF'
+      },
+      {
+        module: 'Customer',
+        title: 'Customers Directory',
+        desc: 'Client records, contacts & statements',
+        icon: <PeopleIcon sx={{ fontSize: 26, color: '#059669' }} />,
+        path: '/CustomerViewAdmin',
+        color: '#D1FAE5'
+      },
+      {
+        module: 'Invoice',
+        title: 'Invoices',
+        desc: 'Invoicing records and client billings',
+        icon: <ReceiptIcon sx={{ fontSize: 26, color: '#2563EB' }} />,
+        path: '/InvoiceViewAdmin',
+        color: '#DBEAFE'
+      },
+      {
+        module: 'Estimate',
+        title: 'Quotations',
+        desc: 'Price estimations and client proposals',
+        icon: <RequestQuoteIcon sx={{ fontSize: 26, color: '#7C3AED' }} />,
+        path: '/EstimateViewAdmin',
+        color: '#EDE9FE'
+      },
+      {
+        module: 'Expenses',
+        title: 'Daily Expenses',
+        desc: 'Expense entries & petty cash requests',
+        icon: <MonetizationOnIcon sx={{ fontSize: 26, color: '#DB2777' }} />,
+        path: '/DailyExpenses',
+        color: '#FCE7F3'
+      },
+      {
+        module: 'Point-Of-Sell',
+        title: 'Point of Sale (POS)',
+        desc: 'Retail counter sales and shop receipts',
+        icon: <StorefrontIcon sx={{ fontSize: 26, color: '#0D9488' }} />,
+        path: '/ReportPos',
+        color: '#CCFBF1'
+      },
+      {
+        module: 'Project',
+        title: 'Projects',
+        desc: 'Field projects, tasks and phases',
+        icon: <AccountTreeIcon sx={{ fontSize: 26, color: '#4F46E5' }} />,
+        path: '/ProjectViewAdmin',
+        color: '#EEF2FF'
+      },
+      {
+        module: 'Employee',
+        title: 'Employees & Attendance',
+        desc: 'Staff directory & work check-in',
+        icon: <BadgeIcon sx={{ fontSize: 26, color: '#0284C7' }} />,
+        path: '/EmployeeViewAdminAll',
+        color: '#E0F2FE'
+      }
+    ].filter(c => canAccessModule(user?.data, grantAccess, c.module, 'read') || (c.altModule && canAccessModule(user?.data, grantAccess, c.altModule, 'read')));
+
+    return (
+      <Box sx={{ width: '100%', pb: 3, boxSizing: 'border-box' }}>
+        {/* 1. STAFF PROFILE & BRANCH WELCOME */}
+        <Card
+          sx={{
+            borderRadius: 4,
+            backgroundColor: '#ffffff',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+            mb: 2,
+            p: 2.5
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+            <Avatar
+              sx={{
+                bgcolor: '#30368a',
+                color: '#ffffff',
+                fontWeight: 800,
+                width: 52,
+                height: 52,
+                fontSize: '1.4rem'
+              }}
+            >
+              {userName ? userName.charAt(0).toUpperCase() : 'U'}
+            </Avatar>
+            <Box sx={{ flex: 1, minWidth: 0 }}>
+              <Typography variant="h6" sx={{ fontWeight: 800, color: '#1E293B', lineHeight: 1.2 }} noWrap>
+                Welcome, {userName || 'Staff Member'}
+              </Typography>
+              <Box sx={{ display: 'flex', gap: 0.8, mt: 0.6, flexWrap: 'wrap' }}>
+                <Chip
+                  label={userRole || 'Staff'}
+                  size="small"
+                  sx={{ backgroundColor: '#EEF2FF', color: '#30368a', fontWeight: 700, fontSize: '0.75rem' }}
+                />
+                <Chip
+                  label={`Branch: ${activeBranch}`}
+                  size="small"
+                  sx={{ backgroundColor: '#F1F5F9', color: '#64748B', fontWeight: 600, fontSize: '0.75rem' }}
+                />
+              </Box>
+            </Box>
+          </Box>
+        </Card>
+
+        {/* 2. TODAY'S SYSTEM EXCHANGE RATE */}
+        <Card
+          sx={{
+            borderRadius: 3.5,
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            boxShadow: '0 4px 16px rgba(48, 54, 138, 0.25)',
+            mb: 2.5,
+            p: 2,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <CurrencyExchangeIcon sx={{ fontSize: 28, color: '#60A5FA' }} />
+            <Box>
+              <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.8)', fontWeight: 600, display: 'block' }}>
+                TODAY'S EXCHANGE RATE
+              </Typography>
+              <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#ffffff', mt: 0.2 }}>
+                $ 1 = FC {systemRate}
+              </Typography>
+            </Box>
+          </Box>
+          <Chip
+            label="Standard Rate"
+            size="small"
+            sx={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#ffffff', fontWeight: 700, fontSize: '0.7rem' }}
+          />
+        </Card>
+
+        {/* 3. ASSIGNED MAINTENANCE STATUS (if maintenance permitted) */}
+        {(canAccessModule(user?.data, grantAccess, 'Maintenance', 'read') || canAccessModule(user?.data, grantAccess, 'Maintenance-Order', 'read')) && (
+          <Card sx={{ borderRadius: 3.5, backgroundColor: '#ffffff', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', mb: 2.5, p: 2 }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', mb: 1.5, display: 'flex', alignItems: 'center', gap: 1 }}>
+              <AssignmentIcon sx={{ color: '#F59E0B', fontSize: 20 }} /> Maintenance Orders Status
+            </Typography>
+            <Grid container spacing={1}>
+              <Grid item xs={4}>
+                <Box sx={{ p: 1.2, backgroundColor: '#FEF3C7', borderRadius: 2.5, textAlign: 'center' }}>
+                  <Typography variant="caption" sx={{ color: '#D97706', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Open</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#92400E', mt: 0.2 }}>{maintenanceStats.open}</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box sx={{ p: 1.2, backgroundColor: '#EFF6FF', borderRadius: 2.5, textAlign: 'center' }}>
+                  <Typography variant="caption" sx={{ color: '#2563EB', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Pending</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#1E40AF', mt: 0.2 }}>{maintenanceStats.pending}</Typography>
+                </Box>
+              </Grid>
+              <Grid item xs={4}>
+                <Box sx={{ p: 1.2, backgroundColor: '#ECFDF5', borderRadius: 2.5, textAlign: 'center' }}>
+                  <Typography variant="caption" sx={{ color: '#059669', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Converted</Typography>
+                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#065F46', mt: 0.2 }}>{maintenanceStats.converted}</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </Card>
+        )}
+
+        {/* 4. PERMITTED MODULES DIRECTORY */}
+        <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#64748B', mb: 1, textTransform: 'uppercase', letterSpacing: 0.5, fontSize: '0.8rem', px: 0.5 }}>
+          Authorized Workspace Modules ({permittedCards.length})
+        </Typography>
+
+        <Grid container spacing={1.5}>
+          {permittedCards.map((card, idx) => (
+            <Grid item xs={12} sm={6} key={idx}>
+              <Card
+                onClick={() => navigate(card.path)}
+                sx={{
+                  borderRadius: 3.5,
+                  backgroundColor: '#ffffff',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                  p: 2,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  cursor: 'pointer',
+                  transition: 'all 0.15s ease',
+                  border: '1px solid #F1F5F9',
+                  '&:active': { transform: 'scale(0.98)', backgroundColor: '#F8FAFC' }
+                }}
+              >
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.8, minWidth: 0, flex: 1 }}>
+                  <Box sx={{ width: 48, height: 48, borderRadius: 3, backgroundColor: card.color, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                    {card.icon}
+                  </Box>
+                  <Box sx={{ minWidth: 0, flex: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.92rem' }} noWrap>
+                        {card.title}
+                      </Typography>
+                      {card.badge && (
+                        <Chip label={card.badge} size="small" sx={{ height: 18, fontSize: '0.65rem', fontWeight: 700, backgroundColor: '#FEF3C7', color: '#D97706' }} />
+                      )}
+                    </Box>
+                    <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }} noWrap>
+                      {card.desc}
+                    </Typography>
+                  </Box>
+                </Box>
+                <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#94A3B8', ml: 1 }} />
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+
+        {/* 5. FLOATING ACTION BUTTON (FAB +) FILTERED TO AUTHORIZED CREATE ACTIONS */}
+        {(canCreate('Invoice') || canCreate('Customer') || canCreate('Expenses') || canCreate('Maintenance')) && (
+          <>
+            <Fab
+              color="primary"
+              aria-label="add"
+              onClick={(e) => setAnchorEl(e.currentTarget)}
+              sx={{
+                position: 'fixed',
+                bottom: 75,
+                right: 20,
+                backgroundColor: '#30368a',
+                '&:hover': { backgroundColor: '#202a5a' },
+                boxShadow: '0 4px 16px rgba(48, 54, 138, 0.4)',
+                zIndex: 1200
+              }}
+            >
+              <AddIcon />
+            </Fab>
+
+            <Menu
+              anchorEl={anchorEl}
+              open={fabMenuOpen}
+              onClose={() => setAnchorEl(null)}
+              PaperProps={{
+                sx: {
+                  borderRadius: 3,
+                  minWidth: 200,
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+                }
+              }}
+            >
+              {canCreate('Invoice') && (
+                <MenuItem onClick={() => { setAnchorEl(null); navigate('/InvoiceForm'); }}>
+                  <ListItemIcon><ReceiptIcon fontSize="small" sx={{ color: '#30368a' }} /></ListItemIcon>
+                  <ListItemText primary="New Invoice" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+                </MenuItem>
+              )}
+              {canCreate('Customer') && (
+                <MenuItem onClick={() => { setAnchorEl(null); navigate('/CustomerForm'); }}>
+                  <ListItemIcon><PersonAddIcon fontSize="small" sx={{ color: '#10B981' }} /></ListItemIcon>
+                  <ListItemText primary="New Customer" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+                </MenuItem>
+              )}
+              {canCreate('Expenses') && (
+                <MenuItem onClick={() => { setAnchorEl(null); navigate('/DailyExpenseForm'); }}>
+                  <ListItemIcon><ShoppingBagIcon fontSize="small" sx={{ color: '#EF4444' }} /></ListItemIcon>
+                  <ListItemText primary="New Expense" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+                </MenuItem>
+              )}
+              {canCreate('Maintenance') && (
+                <MenuItem onClick={() => { setAnchorEl(null); navigate('/MaintenanceFormView'); }}>
+                  <ListItemIcon><BuildIcon fontSize="small" sx={{ color: '#F59E0B' }} /></ListItemIcon>
+                  <ListItemText primary="New Maintenance" primaryTypographyProps={{ fontWeight: 600, fontSize: '0.9rem' }} />
+                </MenuItem>
+              )}
+            </Menu>
+          </>
+        )}
+      </Box>
+    );
+  }
+
+  // ── EXECUTIVE CEO DASHBOARD (WITH FINANCIAL METRICS & DONUT CHART) ──
   return (
     <Box sx={{ width: '100%', pb: 3, boxSizing: 'border-box' }}>
       {/* ── MONTH SELECTOR / DATE FILTER ── */}

@@ -158,7 +158,7 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
         @media print {
           @page {
             size: A4 portrait;
-            margin: 0;
+            margin: 0mm;
           }
           html, body {
             background: #ffffff !important;
@@ -168,70 +168,63 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
             padding: 0 !important;
             width: 100% !important;
             height: auto !important;
+            min-height: 100% !important;
             overflow: visible !important;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
-          /* Hide EVERYTHING in the DOM outside our modal */
-          #root,
-          .MuiDrawer-root,
-          .MuiBackdrop-root,
-          .no-print,
-          header,
-          nav,
-          [role="presentation"]:not(.MuiDialog-root) {
-            display: none !important;
-            visibility: hidden !important;
+          /* Hide non-printable elements using visibility rather than display:none on parents */
+          body * {
+            visibility: hidden;
           }
-          /* Modal Dialog Container override for print */
-          .MuiDialog-root {
-            position: absolute !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background: #ffffff !important;
-          }
-          .MuiDialog-container {
-            display: block !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            width: 100% !important;
-            height: auto !important;
-          }
-          .MuiDialog-paper, .MuiPaper-root {
-            position: static !important;
-            display: block !important;
-            background: #ffffff !important;
-            background-color: #ffffff !important;
-            box-shadow: none !important;
-            width: 100% !important;
-            max-width: 100% !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            border: none !important;
-          }
-          .MuiDialogContent-root {
-            padding: 10mm 14mm !important;
-            margin: 0 !important;
-            display: block !important;
-            overflow: visible !important;
-            background: #ffffff !important;
+          /* Ensure printable sheet and all of its descendants are fully visible */
+          #printable-document-sheet,
+          #printable-document-sheet * {
+            visibility: visible !important;
           }
           #printable-document-sheet {
-            box-shadow: none !important;
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
             width: 100% !important;
             max-width: 100% !important;
             min-height: auto !important;
-            padding: 0 !important;
             margin: 0 !important;
+            padding: 8mm 10mm !important;
+            box-sizing: border-box !important;
             background: #ffffff !important;
+            box-shadow: none !important;
+            border: none !important;
             page-break-after: avoid !important;
             page-break-inside: avoid !important;
           }
+          /* Completely hide app chrome and overlays */
+          .no-print,
+          .MuiBackdrop-root,
+          .MuiDrawer-root,
+          .MobileLayout-appBar,
+          .MobileLayout-bottomNav,
+          header,
+          nav {
+            display: none !important;
+          }
+          /* Reset MUI Dialog containers for clean printing */
+          .MuiDialog-root,
+          .MuiDialog-container,
+          .MuiDialog-paper,
+          .MuiDialogContent-root {
+            position: static !important;
+            display: block !important;
+            background: transparent !important;
+            box-shadow: none !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            overflow: visible !important;
+          }
           table {
             width: 100% !important;
+            min-width: 100% !important;
             border-collapse: collapse !important;
           }
         }

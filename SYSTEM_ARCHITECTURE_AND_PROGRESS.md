@@ -1741,3 +1741,30 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Capacitor synced to Android native project (`npx cap sync android`).
     - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk`.
 
+- **Mobile Grant Access Strict Security Enforcement & PDF Print Blank Screen Fix (Ver 3.5.72)**:
+  - **Problem Reported:**
+    1. **Strict Grant Access Enforcement on Mobile:** In the mobile application, non-CEO users (technicians, storekeepers, staff) could see all company-wide dashboard calculations, financial cards (Total Receivables, Revenue, Expenses, Cash In, Cash Out, Net Income), financial charts, and invoices with dollar amounts, violating the Grant Access permissions model established in the desktop `.exe` and web portal.
+    2. **PDF Blank White Screen:** When tapping "Print / PDF" and selecting "Save as PDF" on mobile, the output was a 100% white blank page.
+    3. **Top and Bottom Bar Fit:** The mobile navigation bars had padding and inset conflicts causing visual gaps on mobile devices.
+  - **Root Cause & Architectural Resolution:**
+    1. **Mobile Security & Grant Access Enforcement (`MobileDashboard.js`):**
+       - Identically to desktop `AdminHome.js`, executive financial calculations (Total Receivables, multi-metric Donut Chart, Total Revenue, Expenses, Cash In/Out, Net Income, and Recent Invoices list with dollar amounts) are restricted **strictly to CEO and Superuser (`GG`)**.
+       - For all standard users and staff (`userRole !== 'CEO' && userName !== 'GG'`), heavy financial endpoints (`/invoice`, `/expense`, `/payment`) are skipped to optimize loading speed and prevent data leakage.
+       - A dedicated **Staff Dashboard** is rendered displaying:
+         - Staff Profile Header (greeting, role badge, selected branch).
+         - Live System Exchange Rate Card (`$ 1 = FC {systemRate}`).
+         - Assigned Maintenance Orders operational status summary (Open, Pending, Converted counts) with zero financial numbers.
+         - Authorized Workspace Modules Directory dynamically filtered via `canAccessModule(user, grantAccess, module, 'read')`.
+         - Quick Create Floating Action Button (FAB +) strictly showing actions the user has explicit `createM` permission for.
+    2. **PDF Print White Screen Fix (`MobileDocumentPrintModal.js`):**
+       - Identified that setting `display: none !important` on `#root` and `[role="presentation"]:not(.MuiDialog-root)` matched the MUI Dialog container `<div role="presentation" class="MuiDialog-container">`, hiding the document sheet from layout and rendering a 100% white page.
+       - Replaced with the standard CSS print isolation pattern: `body * { visibility: hidden; }` and `#printable-document-sheet, #printable-document-sheet * { visibility: visible !important; }` positioned at `position: absolute; left: 0; top: 0; width: 100%`.
+       - Chrome overlays (`.no-print`, `.MuiBackdrop-root`, `.MuiDrawer-root`, `.MobileLayout-appBar`, `.MobileLayout-bottomNav`) are cleanly hidden with `display: none !important`.
+    3. **Mobile Layout Fit & Dynamic Bottom Tabs (`MobileLayout.js`):**
+       - Bottom navigation bar integrated into flex column layout (`flexShrink: 0`, `minHeight: 56px`), eliminating viewport overlap and gap jitter.
+       - Bottom tabs dynamically prioritize modules the user has permissions for (`Dashboard`, `Invoices`, `Customers`, `Maintenance`, `Store`, `Expenses`).
+  - **Verification & Deployment:**
+    - Pre-build AST safety check passed (0 errors across 232 files).
+    - Web bundle compiled (`dist_web/`).
+    - Capacitor synced and native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk`.
+

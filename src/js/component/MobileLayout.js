@@ -29,6 +29,8 @@ import PeopleIcon from '@mui/icons-material/People';
 import BuildIcon from '@mui/icons-material/Build';
 import AppsIcon from '@mui/icons-material/Apps';
 import ArrowBack from '@mui/icons-material/ArrowBack';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import MonetizationOnIcon from '@mui/icons-material/MonetizationOn';
 import LogoutIcon from '../component/NetworkLogoutIcon';
 import BranchSwitcher from './BranchSwitcher';
 import NotificationVIewInfo from '../AdminView1/NotificationVIewInfo';
@@ -175,14 +177,19 @@ function MobileLayout({ children }) {
 
   const pageTitle = getTitleFromPath(pathname);
 
-  const allTabs = [
-    { label: 'Dashboard', path: '/AdminHome', icon: <DashboardIcon fontSize="small" />, module: 'Dashboard' },
+  const candidateTabs = [
+    { label: 'Dashboard', path: '/AdminHome', icon: <DashboardIcon fontSize="small" />, module: 'Dashboard', always: true },
     { label: 'Invoices', path: '/InvoiceViewAdmin', icon: <ReceiptIcon fontSize="small" />, module: 'Invoice' },
     { label: 'Customers', path: '/CustomerViewAdmin', icon: <PeopleIcon fontSize="small" />, module: 'Customer' },
     { label: 'Maintenance', path: '/MaintenanceViewAdmin', icon: <BuildIcon fontSize="small" />, module: 'Maintenance' },
+    { label: 'Store', path: '/ItemViewAdmin', icon: <InventoryIcon fontSize="small" />, module: 'Item' },
+    { label: 'Expenses', path: '/DailyExpenses', icon: <MonetizationOnIcon fontSize="small" />, module: 'Expenses' },
   ];
 
-  const bottomTabs = allTabs.filter(t => t.module === 'Dashboard' || canAccess(t.module));
+  const isSuperOrCEO = userRole === 'CEO' || userName === 'GG';
+  const bottomTabs = candidateTabs
+    .filter(t => t.always || isSuperOrCEO || canAccess(t.module))
+    .slice(0, 4);
 
   return (
     <Box
@@ -209,7 +216,8 @@ function MobileLayout({ children }) {
           backgroundColor: '#30368a',
           zIndex: 1200,
           boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-          pt: 'env(safe-area-inset-top, 0px)'
+          minHeight: '52px !important',
+          height: 52
         }}
       >
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 1, minHeight: '52px !important', height: 52 }}>
@@ -259,7 +267,7 @@ function MobileLayout({ children }) {
           overflowX: 'hidden',
           boxSizing: 'border-box',
           p: 1.5,
-          pb: 'calc(80px + env(safe-area-inset-bottom, 0px))'
+          pb: 2
         }}
       >
         {children}
@@ -267,13 +275,11 @@ function MobileLayout({ children }) {
 
       {/* ── 3. NATIVE BOTTOM NAVIGATION BAR ── */}
       <Box
+        className="MobileLayout-bottomNav"
         sx={{
-          position: 'fixed',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 'calc(58px + env(safe-area-inset-bottom, 0px))',
-          pb: 'env(safe-area-inset-bottom, 0px)',
+          flexShrink: 0,
+          height: 56,
+          minHeight: 56,
           backgroundColor: '#ffffff',
           borderTop: '1px solid #e2e8f0',
           display: 'flex',

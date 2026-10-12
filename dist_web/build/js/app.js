@@ -3133,6 +3133,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 42376
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2m-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1m2 14H7v-2h7zm3-4H7v-2h10zm0-4H7V7h10z"
+}), 'Assignment');
+
+/***/ },
+
 /***/ 12478
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -122986,7 +123007,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.71"};
+module.exports = {"rE":"3.5.72"};
 
 /***/ },
 
@@ -123118,7 +123139,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ff352033dcca7c23d04b","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"837b90a01b7c7896166c","778":"f8950b7fd584414ccde4","806":"883a2773faa4858de012","808":"d8f0362bf8e704419cb0","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"4178a5c19a2a618f164a","1679":"74f1a4c2f02dc08d4c60","1722":"64a825cf89210c4f5730","1853":"4404e10dd0a06664a690","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"870328a17de4eb41c99e","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"6eec083cd839f330b7db","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"475541fe695f660e915a","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"4d5ad1331e928d45bdac","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"647c534dc26028385c19","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"db6387ab5c5d3b602484","4444":"b5d93eb85ffc09671030","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"5eaa7ee7c541cbb1259e","5194":"d9e4d8382ebe97418258","5391":"7abeb305e0617659677d","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"67cd99b87d0f9e297c31","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"afbb66b92ae7a3def6fd","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"b32a53444f9637cb1943","7539":"72ee1ee088ac1a0441f8","7592":"3327bce62ecd01a8e080","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"d818e372ecfb238db242","7941":"e5a63ce8cf6f9930d444","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"ddc6d45afbcbc6bf570e","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"c64cc26e1897ba44cee7","9528":"4dd9c43eb666c40b578c","9564":"eee8b6766c2885a603a6","9573":"e2af65a952eadc4d33de","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"27fe3ac697181e2f4c18","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ff352033dcca7c23d04b","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"837b90a01b7c7896166c","778":"f8950b7fd584414ccde4","806":"9193b67a01183084ef86","808":"d8f0362bf8e704419cb0","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"468b116ae22d5a6af445","1679":"74f1a4c2f02dc08d4c60","1722":"64a825cf89210c4f5730","1853":"4404e10dd0a06664a690","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"c31301dbc771d4c07fe4","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"6eec083cd839f330b7db","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"475541fe695f660e915a","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"ca8a6540365fbfd5deae","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"b3d8960e9008116e9e0e","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"801bd721440677205ead","4444":"727795f437c13c12d20f","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"2c7577122b0ff1b9d0af","5194":"d9e4d8382ebe97418258","5391":"2d52079dd1414cb9f104","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"67cd99b87d0f9e297c31","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"afbb66b92ae7a3def6fd","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"65bad2b5d4e3e062bef8","7539":"72ee1ee088ac1a0441f8","7592":"3327bce62ecd01a8e080","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"0fba5ac14ae1223565d7","7941":"e5a63ce8cf6f9930d444","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"ddc6d45afbcbc6bf570e","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"293b931d82c0bdd0c0f3","9528":"4dd9c43eb666c40b578c","9564":"eee8b6766c2885a603a6","9573":"315abf687f962cdeb4dc","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"a4d10a016f030d21ecba","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -127346,10 +127367,10 @@ var Tooltip = __webpack_require__(56655);
 var tooltipClasses = __webpack_require__(58331);
 // EXTERNAL MODULE: ./src/js/utils/isMobile.js
 var utils_isMobile = __webpack_require__(2650);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Avatar/Avatar.js + 2 modules
+var Avatar = __webpack_require__(81385);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
 var Chip = __webpack_require__(82022);
-// EXTERNAL MODULE: ./node_modules/@mui/material/CardContent/CardContent.js + 1 modules
-var CardContent = __webpack_require__(37636);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Fab/Fab.js + 1 modules
 var Fab = __webpack_require__(87992);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Menu/Menu.js + 1 modules
@@ -127358,6 +127379,8 @@ var Menu_Menu = __webpack_require__(94405);
 var ListItemIcon = __webpack_require__(57873);
 // EXTERNAL MODULE: ./node_modules/@mui/material/ListItemText/ListItemText.js
 var ListItemText = __webpack_require__(82241);
+// EXTERNAL MODULE: ./node_modules/@mui/material/CardContent/CardContent.js + 1 modules
+var CardContent = __webpack_require__(37636);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Dialog/Dialog.js
 var Dialog = __webpack_require__(77037);
 // EXTERNAL MODULE: ./node_modules/@mui/material/DialogTitle/DialogTitle.js
@@ -127384,6 +127407,22 @@ var ChevronRight = __webpack_require__(27562);
 var CalendarMonth = __webpack_require__(18329);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ExpandMore.js
 var ExpandMore = __webpack_require__(72048);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Inventory.js
+var Inventory = __webpack_require__(3965);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/People.js
+var People = __webpack_require__(2710);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/RequestQuote.js
+var RequestQuote = __webpack_require__(82574);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/MonetizationOn.js
+var MonetizationOn = __webpack_require__(56841);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Storefront.js
+var Storefront = __webpack_require__(18737);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/AccountTree.js
+var AccountTree = __webpack_require__(53274);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Badge.js
+var Badge = __webpack_require__(12478);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Assignment.js
+var Assignment = __webpack_require__(42376);
 // EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
 var dayjs_min = __webpack_require__(74353);
 var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
@@ -127399,6 +127438,15 @@ function MobileDashboard_arrayLikeToArray(r, a) { (null == a || a > r.length) &&
 function MobileDashboard_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function MobileDashboard_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
+
+
+
+
+
+
+
+
 
 
 
@@ -127566,8 +127614,12 @@ function parseItemDate(item) {
   return parsed.isValid() ? parsed : null;
 }
 function MobileDashboardContent() {
+  var _user$data, _user$data2;
   var navigate = (0,react_router_dist/* useNavigate */.Zp)();
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
+  var userName = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '';
+  var userRole = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || '';
+  var isSuperOrCEO = userRole === 'CEO' || userName === 'GG';
   var _useState = (0,react.useState)(true),
     _useState2 = MobileDashboard_slicedToArray(_useState, 2),
     loading = _useState2[0],
@@ -127588,7 +127640,30 @@ function MobileDashboardContent() {
     _useState8 = MobileDashboard_slicedToArray(_useState7, 2),
     rawData = _useState8[0],
     setRawData = _useState8[1];
-  var _useState9 = (0,react.useState)({
+  var _useState9 = (0,react.useState)(() => {
+      try {
+        var local = localStorage.getItem('Rate');
+        if (local) {
+          var parsed = JSON.parse(local);
+          var selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+          var branchRate = parsed.find(r => r.branchId === selectedBranch) || parsed.find(r => r.branchId === 'HQ') || parsed[0];
+          return (branchRate === null || branchRate === void 0 ? void 0 : branchRate.rate) || 1;
+        }
+      } catch (e) {}
+      return 1;
+    }),
+    _useState0 = MobileDashboard_slicedToArray(_useState9, 2),
+    systemRate = _useState0[0],
+    setSystemRate = _useState0[1];
+  var _useState1 = (0,react.useState)({
+      open: 0,
+      pending: 0,
+      converted: 0
+    }),
+    _useState10 = MobileDashboard_slicedToArray(_useState1, 2),
+    maintenanceStats = _useState10[0],
+    setMaintenanceStats = _useState10[1];
+  var _useState11 = (0,react.useState)({
       totalRevenue: 0,
       totalExpenses: 0,
       currentReceivables: 0,
@@ -127598,30 +127673,30 @@ function MobileDashboardContent() {
       netIncome: 0,
       recentInvoices: []
     }),
-    _useState0 = MobileDashboard_slicedToArray(_useState9, 2),
-    metrics = _useState0[0],
-    setMetrics = _useState0[1];
-  var _useState1 = (0,react.useState)(null),
-    _useState10 = MobileDashboard_slicedToArray(_useState1, 2),
-    anchorEl = _useState10[0],
-    setAnchorEl = _useState10[1];
-  var _useState11 = (0,react.useState)([]),
     _useState12 = MobileDashboard_slicedToArray(_useState11, 2),
-    grantAccess = _useState12[0],
-    setGrantAccess = _useState12[1];
+    metrics = _useState12[0],
+    setMetrics = _useState12[1];
+  var _useState13 = (0,react.useState)(null),
+    _useState14 = MobileDashboard_slicedToArray(_useState13, 2),
+    anchorEl = _useState14[0],
+    setAnchorEl = _useState14[1];
+  var _useState15 = (0,react.useState)([]),
+    _useState16 = MobileDashboard_slicedToArray(_useState15, 2),
+    grantAccess = _useState16[0],
+    setGrantAccess = _useState16[1];
   var fabMenuOpen = Boolean(anchorEl);
   (0,react.useEffect)(() => {
     var isMounted = true;
     var fetchAccess = /*#__PURE__*/function () {
       var _ref2 = MobileDashboard_asyncToGenerator(function* () {
-        var _user$data;
-        if (!(user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id)) return;
+        var _user$data3;
+        if (!(user !== null && user !== void 0 && (_user$data3 = user.data) !== null && _user$data3 !== void 0 && _user$data3.id)) return;
         try {
           var _res$data;
           var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
           var userAccess = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.find(row => {
-            var _user$data2;
-            return row.userID === (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.id);
+            var _user$data4;
+            return row.userID === (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.id);
           });
           if (isMounted && userAccess && Array.isArray(userAccess.modules)) {
             setGrantAccess(userAccess.modules);
@@ -127639,11 +127714,67 @@ function MobileDashboardContent() {
       isMounted = false;
     };
   }, [user]);
-  var canCreate = mod => (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, mod, 'create');
+
+  // Fetch live system exchange rate
   (0,react.useEffect)(() => {
+    var fetchRate = /*#__PURE__*/function () {
+      var _ref3 = MobileDashboard_asyncToGenerator(function* () {
+        try {
+          var _res$data2;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/rate"));
+          var rateData = res === null || res === void 0 || (_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.data;
+          if (Array.isArray(rateData) && rateData.length > 0) {
+            var _rateData$;
+            var selectedBranch = localStorage.getItem('selectedBranch') || 'HQ';
+            var branchRate = rateData.find(r => r.branchId === selectedBranch) || rateData.find(r => r.branchId === 'HQ') || rateData[0];
+            var fetchedRate = (branchRate === null || branchRate === void 0 ? void 0 : branchRate.rate) || ((_rateData$ = rateData[0]) === null || _rateData$ === void 0 ? void 0 : _rateData$.rate);
+            if (fetchedRate) setSystemRate(parseFloat(fetchedRate));
+          }
+        } catch (e) {}
+      });
+      return function fetchRate() {
+        return _ref3.apply(this, arguments);
+      };
+    }();
+    fetchRate();
+  }, []);
+
+  // For non-CEO users: fetch operational maintenance orders count without financial data
+  (0,react.useEffect)(() => {
+    if (!isSuperOrCEO) {
+      var fetchMaint = /*#__PURE__*/function () {
+        var _ref4 = MobileDashboard_asyncToGenerator(function* () {
+          try {
+            var _res$data3;
+            var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/maintenance-order"));
+            var orders = Array.isArray(res === null || res === void 0 || (_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) ? res.data.data : [];
+            var activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
+            var branchOrders = orders.filter(o => !(o !== null && o !== void 0 && o.branch) || activeBranch === 'HQ' || o.branch === activeBranch);
+            setMaintenanceStats({
+              open: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'open').length,
+              pending: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'pending').length,
+              converted: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'converted' || String(o.status || '').toLowerCase() === 'close').length
+            });
+          } catch (e) {}
+        });
+        return function fetchMaint() {
+          return _ref4.apply(this, arguments);
+        };
+      }();
+      fetchMaint();
+    }
+  }, [isSuperOrCEO]);
+  var canCreate = mod => (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, mod, 'create');
+
+  // ONLY fetch executive financial collections (invoices, expenses, payments) for CEO or Superuser!
+  (0,react.useEffect)(() => {
+    if (!isSuperOrCEO) {
+      setLoading(false);
+      return;
+    }
     var isMounted = true;
     var fetchDashboardData = /*#__PURE__*/function () {
-      var _ref3 = MobileDashboard_asyncToGenerator(function* () {
+      var _ref5 = MobileDashboard_asyncToGenerator(function* () {
         try {
           var _resInvoice$data, _resExpense$data, _resPayment$data;
           var _yield$Promise$all = yield Promise.all([(0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/invoice?summary=true")).catch(() => ({
@@ -127683,14 +127814,14 @@ function MobileDashboardContent() {
         }
       });
       return function fetchDashboardData() {
-        return _ref3.apply(this, arguments);
+        return _ref5.apply(this, arguments);
       };
     }();
     fetchDashboardData();
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [isSuperOrCEO]);
   (0,react.useEffect)(() => {
     var isCurrentPeriod = item => {
       var d = parseItemDate(item);
@@ -127745,14 +127876,14 @@ function MobileDashboardContent() {
       recentInvoices: recent
     });
   }, [rawData, selectedMonth, viewMode]);
-  var _useState13 = (0,react.useState)(false),
-    _useState14 = MobileDashboard_slicedToArray(_useState13, 2),
-    pickerOpen = _useState14[0],
-    setPickerOpen = _useState14[1];
-  var _useState15 = (0,react.useState)(dayjs_min_default()().year()),
-    _useState16 = MobileDashboard_slicedToArray(_useState15, 2),
-    pickerYear = _useState16[0],
-    setPickerYear = _useState16[1];
+  var _useState17 = (0,react.useState)(false),
+    _useState18 = MobileDashboard_slicedToArray(_useState17, 2),
+    pickerOpen = _useState18[0],
+    setPickerOpen = _useState18[1];
+  var _useState19 = (0,react.useState)(dayjs_min_default()().year()),
+    _useState20 = MobileDashboard_slicedToArray(_useState19, 2),
+    pickerYear = _useState20[0],
+    setPickerYear = _useState20[1];
   var monthsList = [{
     label: 'Jan',
     full: 'January',
@@ -127838,6 +127969,529 @@ function MobileDashboardContent() {
     color: '#F59E0B'
   }];
   var periodLabel = viewMode === 'monthly' ? selectedMonth.format('MMMM YYYY') : "".concat(selectedMonth.year(), " FY");
+
+  // ── NON-CEO / STANDARD STAFF DASHBOARD (STRICT GRANT ACCESS ENFORCEMENT) ──
+  if (!isSuperOrCEO) {
+    var activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
+    var permittedCards = [{
+      module: 'Maintenance-Order',
+      altModule: 'Maintenance',
+      title: 'Maintenance & Orders',
+      desc: 'Job cards, service orders & equipment repair',
+      icon: /*#__PURE__*/react.createElement(Build/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#D97706'
+        }
+      }),
+      path: '/MaintenanceOrderAdmin',
+      color: '#FEF3C7',
+      badge: maintenanceStats.open > 0 ? "".concat(maintenanceStats.open, " Open") : null
+    }, {
+      module: 'Item',
+      altModule: 'Store',
+      title: 'Items & Store',
+      desc: 'Stock catalog, parts inventory & items lookup',
+      icon: /*#__PURE__*/react.createElement(Inventory/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#30368a'
+        }
+      }),
+      path: '/ItemViewAdmin',
+      color: '#E0E7FF'
+    }, {
+      module: 'Customer',
+      title: 'Customers Directory',
+      desc: 'Client records, contacts & statements',
+      icon: /*#__PURE__*/react.createElement(People/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#059669'
+        }
+      }),
+      path: '/CustomerViewAdmin',
+      color: '#D1FAE5'
+    }, {
+      module: 'Invoice',
+      title: 'Invoices',
+      desc: 'Invoicing records and client billings',
+      icon: /*#__PURE__*/react.createElement(Receipt/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#2563EB'
+        }
+      }),
+      path: '/InvoiceViewAdmin',
+      color: '#DBEAFE'
+    }, {
+      module: 'Estimate',
+      title: 'Quotations',
+      desc: 'Price estimations and client proposals',
+      icon: /*#__PURE__*/react.createElement(RequestQuote/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#7C3AED'
+        }
+      }),
+      path: '/EstimateViewAdmin',
+      color: '#EDE9FE'
+    }, {
+      module: 'Expenses',
+      title: 'Daily Expenses',
+      desc: 'Expense entries & petty cash requests',
+      icon: /*#__PURE__*/react.createElement(MonetizationOn/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#DB2777'
+        }
+      }),
+      path: '/DailyExpenses',
+      color: '#FCE7F3'
+    }, {
+      module: 'Point-Of-Sell',
+      title: 'Point of Sale (POS)',
+      desc: 'Retail counter sales and shop receipts',
+      icon: /*#__PURE__*/react.createElement(Storefront/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#0D9488'
+        }
+      }),
+      path: '/ReportPos',
+      color: '#CCFBF1'
+    }, {
+      module: 'Project',
+      title: 'Projects',
+      desc: 'Field projects, tasks and phases',
+      icon: /*#__PURE__*/react.createElement(AccountTree/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#4F46E5'
+        }
+      }),
+      path: '/ProjectViewAdmin',
+      color: '#EEF2FF'
+    }, {
+      module: 'Employee',
+      title: 'Employees & Attendance',
+      desc: 'Staff directory & work check-in',
+      icon: /*#__PURE__*/react.createElement(Badge/* default */.A, {
+        sx: {
+          fontSize: 26,
+          color: '#0284C7'
+        }
+      }),
+      path: '/EmployeeViewAdminAll',
+      color: '#E0F2FE'
+    }].filter(c => (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, c.module, 'read') || c.altModule && (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, c.altModule, 'read'));
+    return /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        width: '100%',
+        pb: 3,
+        boxSizing: 'border-box'
+      }
+    }, /*#__PURE__*/react.createElement(Card/* default */.A, {
+      sx: {
+        borderRadius: 4,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
+        mb: 2,
+        p: 2.5
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 2
+      }
+    }, /*#__PURE__*/react.createElement(Avatar/* default */.A, {
+      sx: {
+        bgcolor: '#30368a',
+        color: '#ffffff',
+        fontWeight: 800,
+        width: 52,
+        height: 52,
+        fontSize: '1.4rem'
+      }
+    }, userName ? userName.charAt(0).toUpperCase() : 'U'), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        flex: 1,
+        minWidth: 0
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#1E293B',
+        lineHeight: 1.2
+      },
+      noWrap: true
+    }, "Welcome, ", userName || 'Staff Member'), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        gap: 0.8,
+        mt: 0.6,
+        flexWrap: 'wrap'
+      }
+    }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: userRole || 'Staff',
+      size: "small",
+      sx: {
+        backgroundColor: '#EEF2FF',
+        color: '#30368a',
+        fontWeight: 700,
+        fontSize: '0.75rem'
+      }
+    }), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: "Branch: ".concat(activeBranch),
+      size: "small",
+      sx: {
+        backgroundColor: '#F1F5F9',
+        color: '#64748B',
+        fontWeight: 600,
+        fontSize: '0.75rem'
+      }
+    }))))), /*#__PURE__*/react.createElement(Card/* default */.A, {
+      sx: {
+        borderRadius: 3.5,
+        backgroundColor: '#30368a',
+        color: '#ffffff',
+        boxShadow: '0 4px 16px rgba(48, 54, 138, 0.25)',
+        mb: 2.5,
+        p: 2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1.5
+      }
+    }, /*#__PURE__*/react.createElement(CurrencyExchange/* default */.A, {
+      sx: {
+        fontSize: 28,
+        color: '#60A5FA'
+      }
+    }), /*#__PURE__*/react.createElement(Box/* default */.A, null, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: 'rgba(255,255,255,0.8)',
+        fontWeight: 600,
+        display: 'block'
+      }
+    }, "TODAY'S EXCHANGE RATE"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "subtitle1",
+      sx: {
+        fontWeight: 800,
+        color: '#ffffff',
+        mt: 0.2
+      }
+    }, "$ 1 = FC ", systemRate))), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: "Standard Rate",
+      size: "small",
+      sx: {
+        backgroundColor: 'rgba(255,255,255,0.15)',
+        color: '#ffffff',
+        fontWeight: 700,
+        fontSize: '0.7rem'
+      }
+    })), ((0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, 'Maintenance', 'read') || (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, 'Maintenance-Order', 'read')) && /*#__PURE__*/react.createElement(Card/* default */.A, {
+      sx: {
+        borderRadius: 3.5,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+        mb: 2.5,
+        p: 2
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#1E293B',
+        mb: 1.5,
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Assignment/* default */.A, {
+      sx: {
+        color: '#F59E0B',
+        fontSize: 20
+      }
+    }), " Maintenance Orders Status"), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      container: true,
+      spacing: 1
+    }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      item: true,
+      xs: 4
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        p: 1.2,
+        backgroundColor: '#FEF3C7',
+        borderRadius: 2.5,
+        textAlign: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#D97706',
+        fontWeight: 700,
+        fontSize: '0.75rem',
+        display: 'block'
+      }
+    }, "Open"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#92400E',
+        mt: 0.2
+      }
+    }, maintenanceStats.open))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      item: true,
+      xs: 4
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        p: 1.2,
+        backgroundColor: '#EFF6FF',
+        borderRadius: 2.5,
+        textAlign: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#2563EB',
+        fontWeight: 700,
+        fontSize: '0.75rem',
+        display: 'block'
+      }
+    }, "Pending"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#1E40AF',
+        mt: 0.2
+      }
+    }, maintenanceStats.pending))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      item: true,
+      xs: 4
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        p: 1.2,
+        backgroundColor: '#ECFDF5',
+        borderRadius: 2.5,
+        textAlign: 'center'
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#059669',
+        fontWeight: 700,
+        fontSize: '0.75rem',
+        display: 'block'
+      }
+    }, "Converted"), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 800,
+        color: '#065F46',
+        mt: 0.2
+      }
+    }, maintenanceStats.converted))))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#64748B',
+        mb: 1,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
+        fontSize: '0.8rem',
+        px: 0.5
+      }
+    }, "Authorized Workspace Modules (", permittedCards.length, ")"), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      container: true,
+      spacing: 1.5
+    }, permittedCards.map((card, idx) => /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+      item: true,
+      xs: 12,
+      sm: 6,
+      key: idx
+    }, /*#__PURE__*/react.createElement(Card/* default */.A, {
+      onClick: () => navigate(card.path),
+      sx: {
+        borderRadius: 3.5,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+        p: 2,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        cursor: 'pointer',
+        transition: 'all 0.15s ease',
+        border: '1px solid #F1F5F9',
+        '&:active': {
+          transform: 'scale(0.98)',
+          backgroundColor: '#F8FAFC'
+        }
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1.8,
+        minWidth: 0,
+        flex: 1
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        width: 48,
+        height: 48,
+        borderRadius: 3,
+        backgroundColor: card.color,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexShrink: 0
+      }
+    }, card.icon), /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        minWidth: 0,
+        flex: 1
+      }
+    }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1
+      }
+    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "subtitle2",
+      sx: {
+        fontWeight: 800,
+        color: '#1E293B',
+        fontSize: '0.92rem'
+      },
+      noWrap: true
+    }, card.title), card.badge && /*#__PURE__*/react.createElement(Chip/* default */.A, {
+      label: card.badge,
+      size: "small",
+      sx: {
+        height: 18,
+        fontSize: '0.65rem',
+        fontWeight: 700,
+        backgroundColor: '#FEF3C7',
+        color: '#D97706'
+      }
+    })), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        display: 'block',
+        mt: 0.2
+      },
+      noWrap: true
+    }, card.desc))), /*#__PURE__*/react.createElement(ArrowForwardIos/* default */.A, {
+      sx: {
+        fontSize: 14,
+        color: '#94A3B8',
+        ml: 1
+      }
+    }))))), (canCreate('Invoice') || canCreate('Customer') || canCreate('Expenses') || canCreate('Maintenance')) && /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Fab/* default */.A, {
+      color: "primary",
+      "aria-label": "add",
+      onClick: e => setAnchorEl(e.currentTarget),
+      sx: {
+        position: 'fixed',
+        bottom: 75,
+        right: 20,
+        backgroundColor: '#30368a',
+        '&:hover': {
+          backgroundColor: '#202a5a'
+        },
+        boxShadow: '0 4px 16px rgba(48, 54, 138, 0.4)',
+        zIndex: 1200
+      }
+    }, /*#__PURE__*/react.createElement(Add/* default */.A, null)), /*#__PURE__*/react.createElement(Menu_Menu/* default */.A, {
+      anchorEl: anchorEl,
+      open: fabMenuOpen,
+      onClose: () => setAnchorEl(null),
+      PaperProps: {
+        sx: {
+          borderRadius: 3,
+          minWidth: 200,
+          boxShadow: '0 4px 20px rgba(0,0,0,0.15)'
+        }
+      }
+    }, canCreate('Invoice') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+      onClick: () => {
+        setAnchorEl(null);
+        navigate('/InvoiceForm');
+      }
+    }, /*#__PURE__*/react.createElement(ListItemIcon/* default */.A, null, /*#__PURE__*/react.createElement(Receipt/* default */.A, {
+      fontSize: "small",
+      sx: {
+        color: '#30368a'
+      }
+    })), /*#__PURE__*/react.createElement(ListItemText/* default */.A, {
+      primary: "New Invoice",
+      primaryTypographyProps: {
+        fontWeight: 600,
+        fontSize: '0.9rem'
+      }
+    })), canCreate('Customer') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+      onClick: () => {
+        setAnchorEl(null);
+        navigate('/CustomerForm');
+      }
+    }, /*#__PURE__*/react.createElement(ListItemIcon/* default */.A, null, /*#__PURE__*/react.createElement(PersonAdd/* default */.A, {
+      fontSize: "small",
+      sx: {
+        color: '#10B981'
+      }
+    })), /*#__PURE__*/react.createElement(ListItemText/* default */.A, {
+      primary: "New Customer",
+      primaryTypographyProps: {
+        fontWeight: 600,
+        fontSize: '0.9rem'
+      }
+    })), canCreate('Expenses') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+      onClick: () => {
+        setAnchorEl(null);
+        navigate('/DailyExpenseForm');
+      }
+    }, /*#__PURE__*/react.createElement(ListItemIcon/* default */.A, null, /*#__PURE__*/react.createElement(ShoppingBag/* default */.A, {
+      fontSize: "small",
+      sx: {
+        color: '#EF4444'
+      }
+    })), /*#__PURE__*/react.createElement(ListItemText/* default */.A, {
+      primary: "New Expense",
+      primaryTypographyProps: {
+        fontWeight: 600,
+        fontSize: '0.9rem'
+      }
+    })), canCreate('Maintenance') && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+      onClick: () => {
+        setAnchorEl(null);
+        navigate('/MaintenanceFormView');
+      }
+    }, /*#__PURE__*/react.createElement(ListItemIcon/* default */.A, null, /*#__PURE__*/react.createElement(Build/* default */.A, {
+      fontSize: "small",
+      sx: {
+        color: '#F59E0B'
+      }
+    })), /*#__PURE__*/react.createElement(ListItemText/* default */.A, {
+      primary: "New Maintenance",
+      primaryTypographyProps: {
+        fontWeight: 600,
+        fontSize: '0.9rem'
+      }
+    })))));
+  }
+
+  // ── EXECUTIVE CEO DASHBOARD (WITH FINANCIAL METRICS & DONUT CHART) ──
   return /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       width: '100%',
@@ -128513,7 +129167,7 @@ var ShoppingBagOutlined = __webpack_require__(24457);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Receipt.js
 var esm_Receipt = __webpack_require__(79381);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Storefront.js
-var Storefront = __webpack_require__(78325);
+var esm_Storefront = __webpack_require__(78325);
 ;// ./node_modules/@mui/icons-material/esm/GroupOutlined.js
 "use client";
 
@@ -128564,8 +129218,6 @@ var LineElement = __webpack_require__(80335);
 var markElementClasses = __webpack_require__(9933);
 // EXTERNAL MODULE: ./node_modules/@mui/x-charts/PieChart/PieChart.js + 8 modules
 var PieChart = __webpack_require__(17925);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/MonetizationOn.js
-var MonetizationOn = __webpack_require__(56841);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Store.js
 var Store = __webpack_require__(10420);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Payment.js
@@ -136034,7 +136686,7 @@ function AdminHome() {
       marginTop: '16px',
       marginBottom: '8px'
     }
-  }, /*#__PURE__*/react.createElement(Storefront/* default */.A, {
+  }, /*#__PURE__*/react.createElement(esm_Storefront/* default */.A, {
     sx: {
       color: '#0f172a',
       fontSize: '26px'
@@ -136888,16 +137540,12 @@ var ReactToastify = __webpack_require__(12717);
 var useLayoutConfig = __webpack_require__(99076);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Dashboard.js
 var icons_material_Dashboard = __webpack_require__(15985);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/People.js
-var People = __webpack_require__(2710);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Apps.js
 var Apps = __webpack_require__(40221);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ArrowBack.js
 var icons_material_ArrowBack = __webpack_require__(92659);
 // EXTERNAL MODULE: ./src/js/component/BranchSwitcher.js
 var BranchSwitcher = __webpack_require__(43581);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Avatar/Avatar.js + 2 modules
-var Avatar = __webpack_require__(81385);
 // EXTERNAL MODULE: ./node_modules/@mui/material/ListItemButton/ListItemButton.js
 var ListItemButton = __webpack_require__(37211);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Collapse/Collapse.js + 1 modules
@@ -136906,20 +137554,10 @@ var Collapse = __webpack_require__(52848);
 var icons_material_Close = __webpack_require__(39781);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ExpandLess.js
 var ExpandLess = __webpack_require__(31656);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Inventory.js
-var Inventory = __webpack_require__(3965);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/ShoppingCart.js
 var icons_material_ShoppingCart = __webpack_require__(68311);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/RequestQuote.js
-var RequestQuote = __webpack_require__(82574);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Engineering.js
 var Engineering = __webpack_require__(72350);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/AccountTree.js
-var AccountTree = __webpack_require__(53274);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Badge.js
-var Badge = __webpack_require__(12478);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Storefront.js
-var icons_material_Storefront = __webpack_require__(18737);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/Business.js
 var Business = __webpack_require__(78883);
 // EXTERNAL MODULE: ./package.json
@@ -137349,7 +137987,7 @@ function MobileDrawer(_ref) {
       minWidth: 30,
       color: '#94a3b8'
     }
-  }, /*#__PURE__*/react.createElement(icons_material_Storefront/* default */.A, {
+  }, /*#__PURE__*/react.createElement(Storefront/* default */.A, {
     fontSize: "small"
   })), /*#__PURE__*/react.createElement(ListItemText/* default */.A, {
     primary: "Technician Store",
@@ -137444,6 +138082,8 @@ function MobileLayout_arrayLikeToArray(r, a) { (null == a || a > r.length) && (a
 function MobileLayout_iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
 function MobileLayout_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
+
 
 
 
@@ -137597,13 +138237,14 @@ function MobileLayout(_ref) {
     }));
   }
   var pageTitle = getTitleFromPath(pathname);
-  var allTabs = [{
+  var candidateTabs = [{
     label: 'Dashboard',
     path: '/AdminHome',
     icon: /*#__PURE__*/react.createElement(icons_material_Dashboard/* default */.A, {
       fontSize: "small"
     }),
-    module: 'Dashboard'
+    module: 'Dashboard',
+    always: true
   }, {
     label: 'Invoices',
     path: '/InvoiceViewAdmin',
@@ -137625,8 +138266,23 @@ function MobileLayout(_ref) {
       fontSize: "small"
     }),
     module: 'Maintenance'
+  }, {
+    label: 'Store',
+    path: '/ItemViewAdmin',
+    icon: /*#__PURE__*/react.createElement(Inventory/* default */.A, {
+      fontSize: "small"
+    }),
+    module: 'Item'
+  }, {
+    label: 'Expenses',
+    path: '/DailyExpenses',
+    icon: /*#__PURE__*/react.createElement(MonetizationOn/* default */.A, {
+      fontSize: "small"
+    }),
+    module: 'Expenses'
   }];
-  var bottomTabs = allTabs.filter(t => t.module === 'Dashboard' || canAccess(t.module));
+  var isSuperOrCEO = userRole === 'CEO' || userName === 'GG';
+  var bottomTabs = candidateTabs.filter(t => t.always || isSuperOrCEO || canAccess(t.module)).slice(0, 4);
   return /*#__PURE__*/react.createElement(Box/* default */.A, {
     onTouchStart: handleTouchStart,
     onTouchMove: handleTouchMove,
@@ -137649,7 +138305,8 @@ function MobileLayout(_ref) {
       backgroundColor: '#30368a',
       zIndex: 1200,
       boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-      pt: 'env(safe-area-inset-top, 0px)'
+      minHeight: '52px !important',
+      height: 52
     }
   }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
@@ -137734,16 +138391,14 @@ function MobileLayout(_ref) {
       overflowX: 'hidden',
       boxSizing: 'border-box',
       p: 1.5,
-      pb: 'calc(80px + env(safe-area-inset-bottom, 0px))'
+      pb: 2
     }
   }, children), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    className: "MobileLayout-bottomNav",
     sx: {
-      position: 'fixed',
-      bottom: 0,
-      left: 0,
-      right: 0,
-      height: 'calc(58px + env(safe-area-inset-bottom, 0px))',
-      pb: 'env(safe-area-inset-bottom, 0px)',
+      flexShrink: 0,
+      height: 56,
+      minHeight: 56,
       backgroundColor: '#ffffff',
       borderTop: '1px solid #e2e8f0',
       display: 'flex',
