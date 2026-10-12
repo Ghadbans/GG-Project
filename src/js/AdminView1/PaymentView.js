@@ -806,7 +806,12 @@ const toggleDrawer = () => {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="payments" data={payment} searchPlaceholder="Search payments..." />
+        <MobileCardList
+          type="payments"
+          data={payment}
+          searchPlaceholder="Search payments, clients, modes, amounts..."
+          totalCount={payment.length}
+        />
       </Box>
     );
   }
@@ -970,7 +975,12 @@ const toggleDrawer = () => {
           </section>
             <Box sx={{ height: isNativeMobile() ? 'auto' : 560, width: '100%' }}>
               {isNativeMobile() ? (
-                <MobileCardList type="payments" data={payment} />
+                <MobileCardList
+                  type="payments"
+                  data={payment}
+                  searchPlaceholder="Search payments, clients, modes, amounts..."
+                  totalCount={payment.length}
+                />
               ) : (
                 <DataGrid
                   rows={user.data.role === 'CEO' ? invoicePaymentRow : filteredRows}

@@ -790,7 +790,12 @@ function EmployeeViewAdminAll() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="employees" data={employee} searchPlaceholder="Search employees..." />
+        <MobileCardList
+          type="employees"
+          data={employee}
+          searchPlaceholder="Search employees by name, role, department..."
+          totalCount={employee.length}
+        />
       </Box>
     );
   }
@@ -876,7 +881,12 @@ function EmployeeViewAdminAll() {
                   <Loader />
                 </div>
               </div> : isNativeMobile() ? (
-                <MobileCardList type="employees" data={employee} />
+                <MobileCardList
+                  type="employees"
+                  data={employee}
+                  searchPlaceholder="Search employees by name, role, department..."
+                  totalCount={employee.length}
+                />
               ) : (
                 <div >
                   <Grid container spacing={2}>

@@ -205,6 +205,7 @@ function SupplierAdminView() {
       }));
       setCustomer(formatDate);
       SetTotalPage(res.data.totalPages);
+      setTotalItemCount(res.data.totalItem || 0);
       setLoadingData(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -465,7 +466,17 @@ function SupplierAdminView() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="suppliers" data={customer} searchPlaceholder="Search suppliers..." />
+        <MobileCardList
+          type="suppliers"
+          data={customer}
+          searchPlaceholder="Search suppliers by name, company, contact, phone..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+        />
       </Box>
     );
   }
@@ -564,7 +575,17 @@ function SupplierAdminView() {
                     </section>
                     <Box sx={{ height: isNativeMobile() ? 'auto' : 600, width: '100%' }}>
                       {isNativeMobile() ? (
-                        <MobileCardList type="suppliers" data={customer} />
+                        <MobileCardList
+                          type="suppliers"
+                          data={customer}
+                          searchPlaceholder="Search suppliers by name, company, contact, phone..."
+                          searchValue={searchTerm}
+                          onSearchChange={setSearchTerm}
+                          page={page}
+                          totalCount={totalItemCount}
+                          onPageChange={setPage}
+                          loading={loadingData}
+                        />
                       ) : (
                         <>
                           {customer.length > 0 ? (

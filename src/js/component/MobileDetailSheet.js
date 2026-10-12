@@ -62,10 +62,28 @@ function formatMoney(val) {
 
 function getItemImageSrc(item) {
   if (!item) return null;
-  const url = normalizeImageDataUrl(item.data, item.contentType);
-  if (url) return url;
-  if (item.image && typeof item.image === 'string' && item.image.length > 20) {
-    return normalizeImageDataUrl(item.image, item.contentType);
+  const candidates = [
+    item.data,
+    item.image,
+    item.img,
+    item.picture,
+    item.photo,
+    item.itemImage,
+    item.imageUrl,
+    item.imageURL,
+    item.imagesURL
+  ];
+  for (const cand of candidates) {
+    if (!cand) continue;
+    const url = normalizeImageDataUrl(cand, item.contentType);
+    if (url) return url;
+    if (typeof cand === 'string') {
+      const trimmed = cand.trim();
+      if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+      if (trimmed.startsWith('/') || trimmed.startsWith('uploads/') || trimmed.startsWith('images/')) {
+        return `${ENDPOINT_URL}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`;
+      }
+    }
   }
   return null;
 }

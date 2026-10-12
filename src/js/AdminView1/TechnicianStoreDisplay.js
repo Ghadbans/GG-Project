@@ -293,7 +293,14 @@ function PointOfSale() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="tech_store" data={item} searchPlaceholder="Search technician catalog..." />
+        <MobileCardList
+          type="tech_store"
+          data={item}
+          searchPlaceholder="Search technician catalog by name, code, brand..."
+          searchValue={search}
+          onSearchChange={setSearch}
+          totalCount={item.length}
+        />
       </Box>
     );
   }
@@ -366,11 +373,19 @@ function PointOfSale() {
           <Toolbar />
           <Container maxWidth="none" sx={{ mt: 2 }}>
             {
-              loadingData ?
+              loadingData ? (
                 <div style={{ position: 'relative', top: '120px' }}>
                   <Loader />
-                </div> : isNativeMobile() ? (
-                  <MobileCardList type="tech_store" data={item} />
+                </div>
+              ) : isNativeMobile() ? (
+                  <MobileCardList
+                    type="tech_store"
+                    data={item}
+                    searchPlaceholder="Search technician catalog by name, code, brand..."
+                    searchValue={search}
+                    onSearchChange={setSearch}
+                    totalCount={item.length}
+                  />
                 ) : (
                 <div>
                   <Grid container spacing={2} component={Paper} sx={{ marginTop: '10px' }}>

@@ -1633,12 +1633,38 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Windows desktop installer `dist/Global Gate Setup 3.5.67.exe` generated.
 
-
-
-
-
-
-
-
-
-
+- **Mobile Universal Search Accuracy, Multi-Field Deep Filtering, Item Image Decoding & Native APK Compilation (Ver 3.5.68)**:
+  - **Problem Reported:**
+    1. Search across mobile modules (Invoices, Quotations, Maintenance Orders, Items, Customers, Suppliers, Payments, Expenses) was inaccurate and failed to find records.
+    2. In the Item module on mobile, search only checked item names, ignoring supplier, brand, description, category, and other key attributes.
+    3. Item images were not displaying properly on mobile devices.
+  - **Architectural Resolution:**
+    1. **Client-Side Isolated Search vs Server Synchronization:**
+       - Previously, parent components fetched only page 1 (100 items), and mobile views rendered `<MobileCardList data={items} />` without passing `onSearchChange`, `searchValue`, or pagination. Typing in the search bar only filtered the 100 in-memory items and never queried MongoDB.
+       - Connected `searchValue`, `onSearchChange`, `page`, `totalCount`, `onPageChange`, `statusFilter`, `onStatusFilterChange`, and `statusCounts` props to `MobileCardList`. Typing triggers debounced (300ms) server-side search across the entire database.
+       - Connected mobile parent views: `InvoiceViewAdmin`, `EstimateViewAdmin`, `ItemViewAdmin`, `MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `CustomerViewAdmin`, `SupplierAdminView`, `PaymentView`, `DailyExpenses`, `ProjectViewAdmin`, `EmployeeViewAdminAll`, `TechnicianStoreDisplay`, and `MobileDetailSheet`.
+    2. **Multi-Field Tokenized Deep Client Filter (`src/js/component/MobileCardList.js`):**
+       - **Items & Tech Store:** Matches `itemName`, `itemCode`, `itemUpc`, `itemBrand`, `itemDescription`, `itemCategory`, `itemStore`, `itemSupplier`, `itemManufacturer`, `condition`, `unit`, `ItemNumber`.
+       - **Invoices:** Matches formatted invoice number (`INV-000439`), raw number, customer name, phone, email, subject, status, dates, and nested line items (`itemInfo`).
+       - **Quotations:** Matches formatted number (`Q-000120`, `EST-`, `QUO-`), raw number, customer, subject, status, dates, and line items (`itemInfo`).
+       - **Maintenance / Maintenance Orders:** Matches `M-000001`, `MO-`, defect, customer, technician, brand, model, serialNo, status, and dates.
+       - **Customers & Suppliers:** Matches name, company, phone, email, address, and contact person.
+       - **Payments & Expenses:** Matches payment numbers, categories, paidTo, descriptions, and amounts.
+    3. **Android WebView Binary Image Decoding Fix (`src/js/utils/formatUtils.js` & `MobileCardList.js`):**
+       - `formatUtils.js`: Replaced `TextDecoder` (which corrupted binary JPEG/PNG bytes) and large 8192-byte chunks (which caused `RangeError: Maximum call stack size exceeded` in Android WebView) with a stack-safe 1024-byte chunking converter.
+       - Added magic-byte inspection (JPEG `0xFF 0xD8`, PNG `0x89 0x50`, GIF `0x47 0x49`, WEBP `0x52 0x49`) for accurate MIME type detection.
+       - `MobileCardList.js`: Enhanced `getItemImageSrc(item)` to scan all candidate image properties (`data`, `image`, `img`, `picture`, `photo`, `itemImage`, `imageUrl`, `imageURL`, `imagesURL`) and resolve relative URLs against `ENDPOINT_URL`. Added lazy loading and fallback icon gracefully on error.
+    4. **Backend Search Route Prefix Normalization:**
+       - `server/routes/itemRoutes.js`: Expanded `$or` search to include `itemStore`, `itemSupplier`, `unit`, `condition`, `typeItem`, and `itemDimension`.
+       - `server/routes/estimationRoutes.js`: Updated regex to strip `Q-`, `QUO-`, and `EST-` prefixes so queries like `Q-000120` match `estimateNumber: 120`.
+       - `server/routes/maintenanceRoutes.js`: Updated regex to strip `M-`, `MO-`, and `SER-` so queries like `M-000001` match `serviceNumber: 1`.
+       - `server/routes/Routes.js`: Enhanced `payment-Information` route with customer name lookup and `PAY-` prefix stripping.
+    5. **Mobile Status Filter Chips Bar & Pagination:**
+       - Added horizontal scrollable status filter chips bar with record counts in `MobileCardList`.
+       - Added `"Load More (Showing X of Y)"` button when `totalCount > safeData.length`.
+  - **Verification & Deployment:**
+    - Pre-build AST Safety verification passed across all 232 source files (0 errors).
+    - Node backend syntax check verified across all server modules (`node -c`, 0 errors).
+    - Webpack desktop & web production packages compiled (`npm run build`).
+    - Webpack web bundle (`dist_web/`) compiled successfully.
+    - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk` (92.53 MB).

@@ -748,7 +748,20 @@ function InvoiceViewAdmin() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="invoices" data={invoice} searchPlaceholder="Search invoices..." />
+        <MobileCardList
+          type="invoices"
+          data={invoice}
+          searchPlaceholder="Search invoices, clients, items, amounts..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+          statusFilter={statusFilter}
+          onStatusFilterChange={handleStatusClick}
+          statusCounts={statusCounts}
+        />
       </Box>
     );
   }
@@ -967,7 +980,20 @@ function InvoiceViewAdmin() {
                   <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                     {
                       isNativeMobile() ? (
-                        <MobileCardList type="invoices" data={invoice} />
+                        <MobileCardList
+                          type="invoices"
+                          data={invoice}
+                          searchPlaceholder="Search invoices, clients, items, amounts..."
+                          searchValue={searchTerm}
+                          onSearchChange={setSearchTerm}
+                          page={page}
+                          totalCount={totalItemCount}
+                          onPageChange={setPage}
+                          loading={loadingData}
+                          statusFilter={statusFilter}
+                          onStatusFilterChange={handleStatusClick}
+                          statusCounts={statusCounts}
+                        />
                       ) : user.data.role === 'CEO' ? (
                         <>
                           <DataGrid

@@ -2572,7 +2572,28 @@ Route.route("/payment-Information").get(async (req, res) => {
     if (search) {
       const escapedSearch = search.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       const regex = new RegExp(escapedSearch, 'i');
-      query.$or = [{ description: regex }, { paymentNumber: regex }];
+      const numClean = search.trim().replace(/^([Pp][Aa][Yy]|[-_\s])*/, '');
+      const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
+      
+      let matchingCustomerIds = [];
+      try {
+        const matchingCustomers = await customerSchema.find({
+          $or: [
+            { Customer: regex },
+            { customerName: regex },
+            { customerFullName: regex },
+            { companyName: regex }
+          ]
+        }, '_id').lean();
+        matchingCustomerIds = matchingCustomers.map(c => c._id);
+      } catch (err) {}
+
+      query.$or = [
+        { description: regex },
+        { paymentNumber: regex },
+        ...(searchNum !== null ? [{ paymentNumber: searchNum }] : []),
+        ...(matchingCustomerIds.length > 0 ? [{ customerName: { $in: matchingCustomerIds } }] : [])
+      ];
     }
     const itemI = await paymentSchema.find(query).sort({ _id: -1 }).skip(skip).limit(Number(limit)).populate('customerName');
     const totalItem = await paymentSchema.countDocuments(query);

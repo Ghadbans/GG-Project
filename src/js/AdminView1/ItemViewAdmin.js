@@ -715,7 +715,17 @@ function ItemViewAdmin() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="items" data={item} searchPlaceholder="Search items..." />
+        <MobileCardList
+          type="items"
+          data={item}
+          searchPlaceholder="Search by name, brand, description, supplier, code..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+        />
       </Box>
     );
   }
@@ -895,7 +905,17 @@ function ItemViewAdmin() {
                             </>
                           )}
                           {isNativeMobile() ? (
-                            <MobileCardList type="items" data={item} />
+                            <MobileCardList
+                              type="items"
+                              data={item}
+                              searchPlaceholder="Search by name, brand, description, supplier, code..."
+                              searchValue={searchTerm}
+                              onSearchChange={setSearchTerm}
+                              page={page}
+                              totalCount={totalItemCount}
+                              onPageChange={setPage}
+                              loading={loadingData}
+                            />
                           ) : (
                             <>
                               <DataGrid

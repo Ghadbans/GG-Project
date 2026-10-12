@@ -597,7 +597,17 @@ function ProjectViewAdmin() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="projects" data={project} searchPlaceholder="Search projects..." />
+        <MobileCardList
+          type="projects"
+          data={project}
+          searchPlaceholder="Search projects by name, client, description..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+        />
       </Box>
     );
   }
@@ -812,7 +822,17 @@ function ProjectViewAdmin() {
 
                   <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                     {isNativeMobile() ? (
-                      <MobileCardList type="projects" data={project} />
+                      <MobileCardList
+                        type="projects"
+                        data={project}
+                        searchPlaceholder="Search projects by name, client, description..."
+                        searchValue={searchTerm}
+                        onSearchChange={setSearchTerm}
+                        page={page}
+                        totalCount={totalItemCount}
+                        onPageChange={setPage}
+                        loading={loadingData}
+                      />
                     ) : (
                       <>
                         {

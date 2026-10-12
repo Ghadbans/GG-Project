@@ -209,6 +209,7 @@ function CustomerViewAdmin() {
       }));
       setCustomer(formatDate);
       SetTotalPage(res.data.totalPages);
+      setTotalItemCount(res.data.totalItem || 0);
       setLoadingData(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -471,7 +472,17 @@ function CustomerViewAdmin() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="customers" data={customer} searchPlaceholder="Search customers..." />
+        <MobileCardList
+          type="customers"
+          data={customer}
+          searchPlaceholder="Search customers by name, phone, email, company..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+        />
       </Box>
     );
   }
@@ -570,7 +581,17 @@ function CustomerViewAdmin() {
                     </section>
                     <Box sx={{ height: isNativeMobile() ? 'auto' : 600, width: '100%' }}>
                       {isNativeMobile() ? (
-                        <MobileCardList type="customers" data={customer} />
+                        <MobileCardList
+                          type="customers"
+                          data={customer}
+                          searchPlaceholder="Search customers by name, phone, email, company..."
+                          searchValue={searchTerm}
+                          onSearchChange={setSearchTerm}
+                          page={page}
+                          totalCount={totalItemCount}
+                          onPageChange={setPage}
+                          loading={loadingData}
+                        />
                       ) : (
                         <>
                           {customer.length > 0 ? (

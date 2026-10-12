@@ -56,10 +56,28 @@ function formatMoney(val) {
 
 function getItemImageSrc(item) {
   if (!item) return null;
-  const url = normalizeImageDataUrl(item.data, item.contentType);
-  if (url) return url;
-  if (item.image && typeof item.image === 'string' && item.image.length > 20) {
-    return normalizeImageDataUrl(item.image, item.contentType);
+  const candidates = [
+    item.data,
+    item.image,
+    item.img,
+    item.picture,
+    item.photo,
+    item.itemImage,
+    item.imageUrl,
+    item.imageURL,
+    item.imagesURL
+  ];
+  for (const cand of candidates) {
+    if (!cand) continue;
+    const url = normalizeImageDataUrl(cand, item.contentType);
+    if (url) return url;
+    if (typeof cand === 'string') {
+      const trimmed = cand.trim();
+      if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+      if (trimmed.startsWith('/') || trimmed.startsWith('uploads/') || trimmed.startsWith('images/')) {
+        return `${ENDPOINT_URL}${trimmed.startsWith('/') ? '' : '/'}${trimmed}`;
+      }
+    }
   }
   return null;
 }
@@ -130,12 +148,43 @@ function getStatusChip(status, balanceDue, totalAmount) {
   );
 }
 
-function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Search records...' }) {
+function MobileCardList({
+  type = 'invoices',
+  data = [],
+  searchPlaceholder = 'Search records...',
+  searchValue = '',
+  onSearchChange = null,
+  page = 0,
+  totalCount = null,
+  onPageChange = null,
+  loading = false,
+  statusFilter = 'ALL',
+  onStatusFilterChange = null,
+  statusCounts = null
+}) {
   const navigate = useNavigate();
   const user = useSelector(selectCurrentUser);
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState(searchValue || '');
   const [selectedRecord, setSelectedRecord] = useState(null);
   const [grantAccess, setGrantAccess] = useState([]);
+
+  // Sync internal search state when external searchValue changes
+  useEffect(() => {
+    if (searchValue !== undefined && searchValue !== null && searchValue !== search) {
+      setSearch(searchValue);
+    }
+  }, [searchValue]);
+
+  // Debounce notification to parent onSearchChange for server-side queries
+  useEffect(() => {
+    if (!onSearchChange) return;
+    const timer = setTimeout(() => {
+      if (search !== searchValue) {
+        onSearchChange(search);
+      }
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
 
   useEffect(() => {
     const fetchAccess = async () => {
@@ -179,85 +228,123 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
 
   const filtered = safeData.filter((item) => {
     if (!item) return false;
-    if (!search.trim()) return true;
-    const q = search.trim().toLowerCase();
+    const trimmed = search.trim().toLowerCase();
+    if (!trimmed) return true;
+    const tokens = trimmed.split(/\s+/).filter(Boolean);
 
     if (type === 'invoices') {
-      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName?.Customer || item.customerName || item.customer).toLowerCase();
       const num = safeText(item.invoiceNumber).toLowerCase();
       const numFmt = `inv-${String(item.invoiceNumber || '').padStart(6, '0')}`.toLowerCase();
-      const subj = safeText(item.invoiceSubject).toLowerCase();
-      return cust.includes(q) || num.includes(q) || numFmt.includes(q) || subj.includes(q);
+      const numClean = safeText(item.invoiceNumber).replace(/^0+/, '');
+      const subj = safeText(item.invoiceSubject || item.subject).toLowerCase();
+      const stat = safeText(item.status).toLowerCase();
+      const date = safeText(item.dateField || item.invoiceDate).toLowerCase();
+      const itemsText = (Array.isArray(item.itemInfo) ? item.itemInfo : []).map(it => `${safeText(it.itemName?.itemName || it.itemName)} ${safeText(it.itemDescription)}`).join(' ').toLowerCase();
+      const allText = `${cust} ${num} ${numFmt} ${numClean} ${subj} ${stat} ${date} ${itemsText}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'quotations' || type === 'estimates') {
-      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName?.Customer || item.customerName || item.customer).toLowerCase();
       const num = safeText(item.estimateNumber).toLowerCase();
       const numFmt = `q-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
       const numFmtEst = `est-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
       const numFmtQuo = `quo-${String(item.estimateNumber || '').padStart(6, '0')}`.toLowerCase();
-      return cust.includes(q) || num.includes(q) || numFmt.includes(q) || numFmtEst.includes(q) || numFmtQuo.includes(q);
+      const numClean = safeText(item.estimateNumber).replace(/^0+/, '');
+      const subj = safeText(item.estimateName || item.estimateSubject || item.subject).toLowerCase();
+      const stat = safeText(item.status).toLowerCase();
+      const date = safeText(item.dateField || item.estimateDate).toLowerCase();
+      const itemsText = (Array.isArray(item.itemInfo) ? item.itemInfo : []).map(it => `${safeText(it.itemName?.itemName || it.itemName)} ${safeText(it.itemDescription)}`).join(' ').toLowerCase();
+      const allText = `${cust} ${num} ${numFmt} ${numFmtEst} ${numFmtQuo} ${numClean} ${subj} ${stat} ${date} ${itemsText}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'customers') {
-      const name = safeText(item.customerName || item.Customer).toLowerCase();
-      const phone = safeText(item.phone || item.phone1 || item.contact || item.customerCompanyPhone).toLowerCase();
-      const email = safeText(item.email).toLowerCase();
-      return name.includes(q) || phone.includes(q) || email.includes(q);
+      const name = safeText(item.customerName || item.Customer || item.customerFullName).toLowerCase();
+      const comp = safeText(item.companyName).toLowerCase();
+      const phone = safeText(item.phone || item.phone1 || item.contact || item.customerCompanyPhone || item.customerPhone).toLowerCase();
+      const email = safeText(item.email || item.customerEmail).toLowerCase();
+      const addr = safeText(item.billingAddress || item.address).toLowerCase();
+      const allText = `${name} ${comp} ${phone} ${email} ${addr}`;
+      return tokens.every(tok => allText.includes(tok));
     }
-    if (type === 'maintenance') {
-      const defect = safeText(item.defectDescription || item.defect || item.itemDescriptionInfo).toLowerCase();
-      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
-      const num = safeText(item.serviceNumber).toLowerCase();
-      const numFmt = `m-${String(item.serviceNumber || '').padStart(6, '0')}`.toLowerCase();
+
+    if (type === 'maintenance' || type === 'maintenance_orders') {
+      const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName?.Customer || item.customerName || item.customer).toLowerCase();
+      const num = safeText(item.serviceNumber || item.orderNumber || item.maintenanceNumber).toLowerCase();
+      const numFmt = `m-${String(item.serviceNumber || item.orderNumber || '').padStart(6, '0')}`.toLowerCase();
+      const numFmtMo = `mo-${String(item.serviceNumber || item.orderNumber || '').padStart(6, '0')}`.toLowerCase();
       const tech = safeText(item.technicianAssign || item.technicianName || item.technician).toLowerCase();
       const brand = safeText(item.brand).toLowerCase();
       const model = safeText(item.model).toLowerCase();
       const serial = safeText(item.serialNo).toLowerCase();
-      return defect.includes(q) || cust.includes(q) || num.includes(q) || numFmt.includes(q) || tech.includes(q) || brand.includes(q) || model.includes(q) || serial.includes(q);
+      const stat = safeText(item.status).toLowerCase();
+      const date = safeText(item.dateField || item.serviceDate || item.visit).toLowerCase();
+      const allText = `${defect} ${cust} ${num} ${numFmt} ${numFmtMo} ${tech} ${brand} ${model} ${serial} ${stat} ${date}`;
+      return tokens.every(tok => allText.includes(tok));
     }
-    if (type === 'maintenance_orders') {
-      const num = safeText(item.serviceNumber || item.orderNumber || item.maintenanceNumber).toLowerCase();
-      const numFmt = `m-${String(item.serviceNumber || item.orderNumber || '').padStart(6, '0')}`.toLowerCase();
-      const tech = safeText(item.technicianAssign || item.technicianName || item.technician).toLowerCase();
-      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
-      const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect || item.brand).toLowerCase();
-      const brand = safeText(item.brand).toLowerCase();
-      const serial = safeText(item.serialNo).toLowerCase();
-      return num.includes(q) || numFmt.includes(q) || tech.includes(q) || cust.includes(q) || defect.includes(q) || brand.includes(q) || serial.includes(q);
-    }
+
     if (type === 'items' || type === 'tech_store') {
       const name = safeText(item.itemName || item.name).toLowerCase();
-      const code = safeText(item.itemCode || item.code || item.itemUpc?.newCode || item.itemUpc).toLowerCase();
-      return name.includes(q) || code.includes(q);
+      const code = safeText(item.itemCode || item.code || item.itemUpc?.newCode || item.itemUpc || item.ItemNumber).toLowerCase();
+      const codeNum = safeText(item.itemUpc?.itemNumber).toLowerCase();
+      const brand = safeText(item.itemBrand || item.brand).toLowerCase();
+      const desc = safeText(item.itemDescription || item.description).toLowerCase();
+      const cat = safeText(item.itemCategory || item.category).toLowerCase();
+      const store = safeText(item.itemStore || item.store).toLowerCase();
+      const sup = safeText(item.itemSupplier || item.supplier || item.supplierName).toLowerCase();
+      const mfg = safeText(item.itemManufacturer || item.manufacturer).toLowerCase();
+      const cond = safeText(item.condition || item.typeItem).toLowerCase();
+      const unit = safeText(item.unit).toLowerCase();
+      const allText = `${name} ${code} ${codeNum} ${brand} ${desc} ${cat} ${store} ${sup} ${mfg} ${cond} ${unit}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'payments') {
-      const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
+      const cust = safeText(item.customerName?.customerName || item.customerName?.Customer || item.customerName || item.customer).toLowerCase();
       const num = safeText(item.paymentNumber).toLowerCase();
       const numFmt = `pay-${String(item.paymentNumber || '').padStart(6, '0')}`.toLowerCase();
       const desc = safeText(item.description).toLowerCase();
       const mode = safeText(item.modes || item.mode).toLowerCase();
-      return cust.includes(q) || num.includes(q) || numFmt.includes(q) || desc.includes(q) || mode.includes(q);
+      const amt = safeText(item.amount || item.amountPaid).toLowerCase();
+      const allText = `${cust} ${num} ${numFmt} ${desc} ${mode} ${amt}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'expenses') {
       const cat = safeText(item.expenseCategory?.expensesCategory || item.expenseCategory || item.category).toLowerCase();
       const note = safeText(item.description || item.expenseDescription).toLowerCase();
-      return cat.includes(q) || note.includes(q);
+      const paid = safeText(item.paidTo || item.name).toLowerCase();
+      const amt = safeText(item.totalCash || item.amount).toLowerCase();
+      const allText = `${cat} ${note} ${paid} ${amt}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'projects') {
       const proj = safeText(item.projectName || item.project).toLowerCase();
       const cust = safeText(item.customerName?.customerName || item.customerName || item.customer).toLowerCase();
-      return proj.includes(q) || cust.includes(q);
+      const desc = safeText(item.description).toLowerCase();
+      const allText = `${proj} ${cust} ${desc}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'employees') {
       const emp = safeText(item.employeeName || item.name).toLowerCase();
       const pos = safeText(item.position || item.role || item.status || item.department).toLowerCase();
-      return emp.includes(q) || pos.includes(q);
+      const allText = `${emp} ${pos}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     if (type === 'suppliers') {
       const sup = safeText(item.supplierName || item.storeName || item.companyName || item.name || item.contactPerson).toLowerCase();
       const phone = safeText(item.phone || item.phone1 || item.contact || item.address || item.description).toLowerCase();
       const email = safeText(item.email).toLowerCase();
-      return sup.includes(q) || phone.includes(q) || email.includes(q);
+      const allText = `${sup} ${phone} ${email}`;
+      return tokens.every(tok => allText.includes(tok));
     }
+
     return true;
   });
 
@@ -319,6 +406,42 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
           }}
         />
       </Box>
+
+      {/* ── STATUS FILTER PILLS (IF PROVIDED BY PARENT) ── */}
+      {statusCounts && onStatusFilterChange && (
+        <Box
+          sx={{
+            display: 'flex',
+            gap: 1,
+            overflowX: 'auto',
+            pb: 1.2,
+            mb: 1,
+            '::-webkit-scrollbar': { display: 'none' }
+          }}
+        >
+          {Object.entries(statusCounts).map(([key, count]) => {
+            const labelKey = key === 'all' ? 'ALL' : (key === 'freeOfCharge' ? 'Free of Charge' : (key === 'partiallyPaid' ? 'Partially-Paid' : key.toUpperCase()));
+            const isSelected = (statusFilter || 'ALL').toUpperCase() === labelKey.toUpperCase();
+            return (
+              <Chip
+                key={key}
+                label={`${labelKey} (${count || 0})`}
+                size="small"
+                onClick={() => onStatusFilterChange(labelKey === 'ALL' ? 'ALL' : key)}
+                sx={{
+                  fontWeight: isSelected ? 800 : 600,
+                  fontSize: '0.72rem',
+                  backgroundColor: isSelected ? '#30368a' : '#f1f5f9',
+                  color: isSelected ? '#ffffff' : '#475569',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  '&:active': { transform: 'scale(0.96)' }
+                }}
+              />
+            );
+          })}
+        </Box>
+      )}
 
       {/* ── CARD LIST ITEMS ── */}
       {filtered.length > 0 ? (
@@ -495,15 +618,19 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                   '&:active': { transform: 'scale(0.99)' }
                 }}
               >
-                {/* 48x48 Image Thumbnail */}
+                {/* Image Thumbnail with robust fallback */}
                 {imgSrc ? (
                   <Box
                     component="img"
                     src={imgSrc}
                     alt={name}
+                    loading="lazy"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
                     sx={{
-                      width: 48,
-                      height: 48,
+                      width: 50,
+                      height: 50,
                       borderRadius: 2,
                       objectFit: 'contain',
                       backgroundColor: '#f8fafc',
@@ -514,8 +641,8 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                 ) : (
                   <Box
                     sx={{
-                      width: 48,
-                      height: 48,
+                      width: 50,
+                      height: 50,
                       borderRadius: 2,
                       backgroundColor: '#EEF2FF',
                       display: 'flex',
@@ -532,8 +659,10 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.92rem' }} noWrap>
                     {name}
                   </Typography>
-                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }}>
+                  <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }} noWrap>
                     {isTechStore ? `Code: ${code}` : `Code: ${code} • Stock: ${qty}`}
+                    {item.itemBrand ? ` • ${item.itemBrand}` : ''}
+                    {item.itemCategory ? ` • ${item.itemCategory}` : ''}
                   </Typography>
                 </Box>
 
@@ -860,6 +989,36 @@ function MobileCardList({ type = 'invoices', data = [], searchPlaceholder = 'Sea
           <Typography variant="body2" sx={{ color: '#94a3b8' }}>
             No records found.
           </Typography>
+        </Box>
+      )}
+
+      {/* ── PAGINATION & LOAD MORE ── */}
+      {onPageChange && totalCount > safeData.length && (
+        <Box sx={{ mt: 2.5, mb: 4, display: 'flex', justifyContent: 'center' }}>
+          <Box
+            component="button"
+            type="button"
+            onClick={() => onPageChange(page + 1)}
+            disabled={loading}
+            sx={{
+              backgroundColor: '#30368a',
+              color: '#ffffff',
+              border: 'none',
+              borderRadius: 3,
+              py: 1.2,
+              px: 3,
+              fontWeight: 700,
+              fontSize: '0.85rem',
+              cursor: 'pointer',
+              boxShadow: '0 4px 14px rgba(48,54,138,0.25)',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 1,
+              '&:active': { transform: 'scale(0.98)' }
+            }}
+          >
+            {loading ? 'Loading...' : `Load More (${safeData.length} of ${totalCount})`}
+          </Box>
         </Box>
       )}
 

@@ -688,7 +688,20 @@ function EstimateViewAdmin() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="quotations" data={estimate} searchPlaceholder="Search quotations..." />
+        <MobileCardList
+          type="quotations"
+          data={estimate}
+          searchPlaceholder="Search quotations, clients, items, amounts..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+          statusFilter={statusFilter}
+          onStatusFilterChange={handleStatusClick}
+          statusCounts={statusCounts}
+        />
       </Box>
     );
   }
@@ -903,7 +916,20 @@ function EstimateViewAdmin() {
 
                   <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                     {isNativeMobile() ? (
-                      <MobileCardList type="quotations" data={estimate} />
+                      <MobileCardList
+                        type="quotations"
+                        data={estimate}
+                        searchPlaceholder="Search quotations, clients, items, amounts..."
+                        searchValue={searchTerm}
+                        onSearchChange={setSearchTerm}
+                        page={page}
+                        totalCount={totalItemCount}
+                        onPageChange={setPage}
+                        loading={loadingData}
+                        statusFilter={statusFilter}
+                        onStatusFilterChange={handleStatusClick}
+                        statusCounts={statusCounts}
+                      />
                     ) : (
                       <>
                         {

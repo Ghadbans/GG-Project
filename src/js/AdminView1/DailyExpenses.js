@@ -671,7 +671,17 @@ function DailyExpenses() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="expenses" data={expenses} searchPlaceholder="Search expenses..." />
+        <MobileCardList
+          type="expenses"
+          data={expenses}
+          searchPlaceholder="Search expenses by category, note, amount..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+        />
       </Box>
     );
   }
@@ -805,7 +815,17 @@ function DailyExpenses() {
 
                   <Box sx={{ height: isNativeMobile() ? 'auto' : 600, width: '100%' }} >
                     {isNativeMobile() ? (
-                      <MobileCardList type="expenses" data={expenses} />
+                      <MobileCardList
+                        type="expenses"
+                        data={expenses}
+                        searchPlaceholder="Search expenses by category, note, amount..."
+                        searchValue={searchTerm}
+                        onSearchChange={setSearchTerm}
+                        page={page}
+                        totalCount={totalItemCount}
+                        onPageChange={setPage}
+                        loading={loadingData}
+                      />
                     ) : (
                       <>
                         <DataGrid

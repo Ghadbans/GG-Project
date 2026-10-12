@@ -215,7 +215,7 @@ Route.route("/maintenance-Information").get(async (req, res) => {
       const regex = tokens.length > 1 
         ? new RegExp(tokens.map(t => `(?=.*${t})`).join(''), 'i')
         : new RegExp(tokens[0] || '', 'i');
-      const numClean = search.trim().replace(/^[Ss][Ee][Rr][-_\s]*/, '');
+      const numClean = search.trim().replace(/^([Mm][Oo]?|[Ss][Ee][Rr])[-_\s]*/, '');
       const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(search)) ? Number(search) : null);
 
       const searchConditions = [

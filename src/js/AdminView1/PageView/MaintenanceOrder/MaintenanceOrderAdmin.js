@@ -594,7 +594,17 @@ function MaintenanceOrderAdmin() {
       </div>
     ) : (
       <Box sx={{ width: '100%', py: 1 }}>
-        <MobileCardList type="maintenance_orders" data={maintenance} searchPlaceholder="Search maintenance orders..." />
+        <MobileCardList
+          type="maintenance_orders"
+          data={maintenance}
+          searchPlaceholder="Search maintenance orders, technicians, defects..."
+          searchValue={searchTerm}
+          onSearchChange={setSearchTerm}
+          page={page}
+          totalCount={totalItemCount}
+          onPageChange={setPage}
+          loading={loadingData}
+        />
       </Box>
     );
   }
@@ -808,7 +818,17 @@ function MaintenanceOrderAdmin() {
 
                   <Box sx={{ height: isNativeMobile() ? 'auto' : 'calc(100vh - 200px)', minHeight: 380, width: '100%' }}>
                     {isNativeMobile() ? (
-                      <MobileCardList type="maintenance_orders" data={maintenance} />
+                      <MobileCardList
+                        type="maintenance_orders"
+                        data={maintenance}
+                        searchPlaceholder="Search maintenance orders, technicians, defects..."
+                        searchValue={searchTerm}
+                        onSearchChange={setSearchTerm}
+                        page={page}
+                        totalCount={totalItemCount}
+                        onPageChange={setPage}
+                        loading={loadingData}
+                      />
                     ) : (
                       <>
                         <DataGrid

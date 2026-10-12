@@ -59,8 +59,9 @@ export const normalizeImageDataUrl = (raw, contentType) => {
   const ct = contentType || 'image/jpeg';
   if (typeof raw === 'string') {
     const trimmed = raw.trim();
-    if (trimmed.length < 50 || trimmed === 'undefined' || trimmed === 'null') return null;
+    if (trimmed.length < 10 || trimmed === 'undefined' || trimmed === 'null') return null;
     if (trimmed.startsWith('data:')) return trimmed;
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
     return `data:${ct};base64,${trimmed}`;
   }
 
@@ -71,44 +72,63 @@ export const normalizeImageDataUrl = (raw, contentType) => {
     bytes = new Uint8Array(raw.data);
   } else if (raw instanceof Uint8Array) {
     bytes = raw;
+  } else if (raw.buffer && raw.buffer instanceof ArrayBuffer) {
+    bytes = new Uint8Array(raw.buffer);
   }
 
   if (!bytes || bytes.length === 0) return null;
 
-  let text = '';
-  try {
-    if (typeof TextDecoder !== 'undefined') {
-      text = new TextDecoder('utf-8').decode(bytes);
-    } else {
-      let binary = '';
-      const len = Math.min(bytes.byteLength, 1000);
-      for (let i = 0; i < len; i++) {
-        binary += String.fromCharCode(bytes[i]);
-      }
-      text = binary;
+  // Auto-detect MIME type from magic bytes if possible
+  let detectedType = ct;
+  if (bytes.length >= 4) {
+    if (bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF) {
+      detectedType = 'image/jpeg';
+    } else if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47) {
+      detectedType = 'image/png';
+    } else if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) {
+      detectedType = 'image/gif';
+    } else if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46) {
+      detectedType = 'image/webp';
     }
-  } catch (e) {
-    text = '';
   }
 
-  if (text.startsWith('data:')) {
-    return text.trim();
-  }
-  if (text.startsWith('iVBOR') || text.startsWith('/9j/') || text.startsWith('R0lGOD') || text.startsWith('UklGR')) {
-    return `data:${ct};base64,${text.trim()}`;
+  // Quick ASCII header check (avoid full UTF-8 decoding on large binary buffers)
+  let asciiHead = '';
+  const headLen = Math.min(bytes.length, 32);
+  for (let i = 0; i < headLen; i++) {
+    asciiHead += String.fromCharCode(bytes[i]);
   }
 
-  // Check if true raw binary (PNG / JPEG magic bytes or general binary)
+  if (asciiHead.startsWith('data:')) {
+    try {
+      const fullStr = new TextDecoder('utf-8').decode(bytes);
+      return fullStr.trim();
+    } catch (e) {}
+  } else if (
+    asciiHead.startsWith('iVBOR') ||
+    asciiHead.startsWith('/9j/') ||
+    asciiHead.startsWith('R0lGOD') ||
+    asciiHead.startsWith('UklGR')
+  ) {
+    try {
+      const fullStr = new TextDecoder('utf-8').decode(bytes);
+      return `data:${detectedType};base64,${fullStr.trim()}`;
+    } catch (e) {}
+  }
+
+  // Robust, stack-safe binary to base64 conversion (1024 chunk size works on all Android WebViews)
   try {
     let binary = '';
-    const len = bytes.byteLength;
-    const chunkSize = 8192;
+    const len = bytes.byteLength || bytes.length;
+    const chunkSize = 1024;
     for (let i = 0; i < len; i += chunkSize) {
-      binary += String.fromCharCode.apply(null, bytes.subarray(i, Math.min(i + chunkSize, len)));
+      const sub = bytes.subarray ? bytes.subarray(i, Math.min(i + chunkSize, len)) : bytes.slice(i, Math.min(i + chunkSize, len));
+      binary += String.fromCharCode.apply(null, sub);
     }
     const b64 = typeof window !== 'undefined' && window.btoa ? window.btoa(binary) : (typeof Buffer !== 'undefined' ? Buffer.from(bytes).toString('base64') : '');
-    return b64 ? `data:${ct};base64,${b64}` : null;
+    return b64 ? `data:${detectedType};base64,${b64}` : null;
   } catch (err) {
+    console.error('Error converting image binary:', err);
     return null;
   }
 };

@@ -305,7 +305,7 @@ Route.route("/estimation-Information").get(async (req, res) => {
       const combinedRegex = tokens.length > 1 ? new RegExp(tokens.join('.*'), 'i') : fullRegex;
       const reverseCombinedRegex = tokens.length > 1 ? new RegExp(tokens.slice().reverse().join('.*'), 'i') : fullRegex;
 
-      const numClean = trimmedSearch.replace(/^[Ee][Ss][Tt][-_\s]*/, '');
+      const numClean = trimmedSearch.replace(/^([Ee][Ss][Tt]|[Qq][Uu][Oo]|[Qq])[-_\s]*/, '');
       const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(trimmedSearch)) ? Number(trimmedSearch) : null);
 
       let matchingCustomerIds = [];
