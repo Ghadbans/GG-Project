@@ -89,9 +89,16 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
   const dueDate = safeText(record?.dueDate || record?.due || 'Upon Receipt');
   const subject = safeText(record?.invoiceSubject || record?.subject || record?.defectDescription || record?.reason || '');
 
-  const lineItems = Array.isArray(record?.itemInfo) ? record.itemInfo : (Array.isArray(record?.items) ? record.items : []);
+  const lineItems = Array.isArray(record?.items) && record.items.length > 0
+    ? record.items
+    : (Array.isArray(record?.itemInfo) && record.itemInfo.length > 0 ? record.itemInfo : (record?.items || record?.itemInfo || []));
 
-  const calcSubTotal = lineItems.reduce((acc, it) => acc + (Number(it.itemTotal) || (Number(it.itemQuantity || it.quantity || 1) * Number(it.itemSellingPrice || it.rate || it.price || 0))), 0);
+  const calcSubTotal = lineItems.reduce((acc, it) => {
+    const qty = Number(it?.itemQty ?? it?.itemQuantity ?? it?.quantity ?? 1);
+    const rate = Number(it?.itemRate ?? it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0);
+    const itTotal = Number(it?.itemAmount ?? it?.itemTotal ?? (qty * rate));
+    return acc + itTotal;
+  }, 0);
   const subTotal = Number(record?.subTotal ?? record?.subtotal ?? calcSubTotal);
   const discount = Number(record?.discount ?? 0);
   const shipping = Number(record?.shippingFee ?? record?.shipping ?? 0);
@@ -146,97 +153,202 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
   };
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      fullScreen
-      PaperProps={{
-        sx: {
-          backgroundColor: '#525659',
-          m: 0,
-          p: 0,
-          display: 'flex',
-          flexDirection: 'column'
+    <>
+      <style>{`
+        @media print {
+          @page {
+            size: A4 portrait;
+            margin: 0;
+          }
+          html, body {
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+          }
+          /* Hide EVERYTHING in the DOM outside our modal */
+          #root,
+          .MuiDrawer-root,
+          .MuiBackdrop-root,
+          .no-print,
+          header,
+          nav,
+          [role="presentation"]:not(.MuiDialog-root) {
+            display: none !important;
+            visibility: hidden !important;
+          }
+          /* Modal Dialog Container override for print */
+          .MuiDialog-root {
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            background: #ffffff !important;
+          }
+          .MuiDialog-container {
+            display: block !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            width: 100% !important;
+            height: auto !important;
+          }
+          .MuiDialog-paper, .MuiPaper-root {
+            position: static !important;
+            display: block !important;
+            background: #ffffff !important;
+            background-color: #ffffff !important;
+            box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            border: none !important;
+          }
+          .MuiDialogContent-root {
+            padding: 10mm 14mm !important;
+            margin: 0 !important;
+            display: block !important;
+            overflow: visible !important;
+            background: #ffffff !important;
+          }
+          #printable-document-sheet {
+            box-shadow: none !important;
+            width: 100% !important;
+            max-width: 100% !important;
+            min-height: auto !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: #ffffff !important;
+            page-break-after: avoid !important;
+            page-break-inside: avoid !important;
+          }
+          table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+          }
         }
-      }}
-    >
-      {/* ── TOP ACTION BAR ── */}
-      <Box
-        className="no-print"
-        sx={{
-          backgroundColor: '#30368a',
-          color: '#ffffff',
-          px: 2,
-          py: 1.5,
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-          zIndex: 10
-        }}
-      >
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <IconButton onClick={onClose} size="small" sx={{ color: '#ffffff' }}>
-            <CloseIcon />
-          </IconButton>
-          <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#ffffff' }}>
-            {docTitle} - {refNumber}
-          </Typography>
-        </Box>
-
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-          <Button
-            variant="contained"
-            size="small"
-            onClick={handleNativePrint}
-            startIcon={<PrintIcon />}
-            sx={{
-              backgroundColor: '#10B981',
-              color: '#ffffff',
-              fontWeight: 700,
-              textTransform: 'none',
-              '&:hover': { backgroundColor: '#059669' }
-            }}
-          >
-            Print / PDF
-          </Button>
-
-          <IconButton onClick={handleWhatsAppShare} sx={{ color: '#25D366', backgroundColor: 'rgba(255,255,255,0.1)' }} title="Share via WhatsApp">
-            <WhatsAppIcon fontSize="small" />
-          </IconButton>
-
-          <IconButton onClick={handleEmailShare} sx={{ color: '#ffffff', backgroundColor: 'rgba(255,255,255,0.1)' }} title="Share via Email">
-            <EmailIcon fontSize="small" />
-          </IconButton>
-        </Box>
-      </Box>
-
-      {/* ── DOCUMENT SHEET (A4 WHITE PAPER CANVAS) ── */}
-      <DialogContent sx={{ p: { xs: 0.5, sm: 3 }, display: 'flex', justifyContent: 'center', overflowY: 'auto' }}>
-        <Box
-          ref={printContentRef}
-          id="printable-document-sheet"
-          sx={{
-            width: '100%',
-            maxWidth: '820px',
-            minHeight: '1050px',
-            backgroundColor: '#ffffff',
-            boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
-            p: { xs: 1.5, sm: 5 },
-            boxSizing: 'border-box',
-            fontFamily: '"Helvetica Neue", Arial, sans-serif',
-            color: '#1e293b',
+      `}</style>
+      <Dialog
+        open={open}
+        onClose={onClose}
+        fullScreen
+        PaperProps={{
+          sx: {
+            backgroundColor: '#525659',
+            m: 0,
+            p: 0,
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-between',
             '@media print': {
-              boxShadow: 'none',
+              backgroundColor: '#ffffff !important',
+              boxShadow: 'none !important',
+              m: 0,
+              p: 0
+            }
+          }
+        }}
+      >
+        {/* ── TOP ACTION BAR ── */}
+        <Box
+          className="no-print"
+          sx={{
+            backgroundColor: '#30368a',
+            color: '#ffffff',
+            px: 2,
+            py: 1.5,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+            zIndex: 10
+          }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton onClick={onClose} size="small" sx={{ color: '#ffffff' }}>
+              <CloseIcon />
+            </IconButton>
+            <Typography variant="subtitle1" sx={{ fontWeight: 800, color: '#ffffff' }}>
+              {docTitle} - {refNumber}
+            </Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={handleNativePrint}
+              startIcon={<PrintIcon />}
+              sx={{
+                backgroundColor: '#10B981',
+                color: '#ffffff',
+                fontWeight: 700,
+                textTransform: 'none',
+                '&:hover': { backgroundColor: '#059669' }
+              }}
+            >
+              Print / PDF
+            </Button>
+
+            <IconButton onClick={handleWhatsAppShare} sx={{ color: '#25D366', backgroundColor: 'rgba(255,255,255,0.1)' }} title="Share via WhatsApp">
+              <WhatsAppIcon fontSize="small" />
+            </IconButton>
+
+            <IconButton onClick={handleEmailShare} sx={{ color: '#ffffff', backgroundColor: 'rgba(255,255,255,0.1)' }} title="Share via Email">
+              <EmailIcon fontSize="small" />
+            </IconButton>
+          </Box>
+        </Box>
+
+        {/* ── DOCUMENT SHEET (A4 WHITE PAPER CANVAS) ── */}
+        <DialogContent
+          sx={{
+            p: { xs: 0.5, sm: 3 },
+            display: 'flex',
+            justifyContent: 'center',
+            overflowY: 'auto',
+            '@media print': {
               p: 0,
               m: 0,
-              maxWidth: '100%'
+              overflow: 'visible !important',
+              display: 'block !important',
+              backgroundColor: '#ffffff !important'
             }
           }}
         >
+          <Box
+            ref={printContentRef}
+            id="printable-document-sheet"
+            sx={{
+              width: '100%',
+              maxWidth: '820px',
+              minHeight: '1050px',
+              backgroundColor: '#ffffff',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
+              p: { xs: 1.5, sm: 5 },
+              boxSizing: 'border-box',
+              fontFamily: '"Helvetica Neue", Arial, sans-serif',
+              color: '#1e293b',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              '@media print': {
+                boxShadow: 'none !important',
+                p: 0,
+                m: 0,
+                maxWidth: '100% !important',
+                minHeight: 'auto !important',
+                backgroundColor: '#ffffff !important'
+              }
+            }}
+          >
           <Box>
             {/* ── 1. HEADER (LOGO LEFT, COMPANY DETAILS RIGHT) ── */}
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 3 }}>
@@ -358,12 +470,17 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
                 <tbody>
                   {lineItems.length > 0 ? (
                     lineItems.map((it, idx) => {
-                      const itName = safeText(it.itemName || it.name || it.description, `Item ${idx + 1}`);
-                      const itDesc = safeText(it.itemDescription || it.newDescription || it.description || '');
-                      const qty = Number(it.itemQuantity || it.quantity || 1);
-                      const rate = Number(it.itemSellingPrice || it.rate || it.price || 0);
-                      const itDisc = it.discount ? `${it.discount}%` : '%0';
-                      const itTotal = Number(it.itemTotal || (qty * rate));
+                      const itName = safeText(it?.itemName?.itemName || it?.itemName?.name || it?.itemName || it?.name || it?.description || it?.newDescription, `Item ${idx + 1}`);
+                      const itDesc = safeText(it?.itemDescription || it?.newDescription || it?.description || '');
+                      const qty = Number(it?.itemQty ?? it?.itemQuantity ?? it?.quantity ?? 1);
+                      let rate = Number(it?.itemRate ?? it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0);
+                      const itDisc = it?.discount || it?.itemDiscount ? `${it.discount || it.itemDiscount}%` : '%0';
+                      let itTotal = Number(it?.itemAmount ?? it?.itemTotal ?? 0);
+                      if (!itTotal && rate > 0) itTotal = qty * rate;
+                      if (!itTotal && !rate && lineItems.length === 1 && subTotal > 0) {
+                        itTotal = subTotal;
+                        rate = subTotal / qty;
+                      }
 
                       return (
                         <tr key={idx} style={{ borderBottom: '1px solid #e2e8f0' }}>
@@ -511,5 +628,6 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
         </Box>
       </DialogContent>
     </Dialog>
+    </>
   );
 }

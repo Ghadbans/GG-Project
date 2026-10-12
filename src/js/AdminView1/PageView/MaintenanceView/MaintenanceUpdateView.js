@@ -1408,7 +1408,14 @@ function MaintenanceUpdateView() {
                       <IconButton
                         size="small"
                         onClick={() => {
-                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemQty: Math.max(1, (Number(itemRow.itemQty) || 1) - 1) } : itemRow));
+                          SetItems(prev => prev.map(itemRow => {
+                            if (itemRow.idRow === it.idRow) {
+                              const newQty = Math.max(1, (Number(itemRow.itemQty) || 1) - 1);
+                              const r = Number(itemRow.itemRate || 0);
+                              return { ...itemRow, itemQty: newQty, itemAmount: newQty * r, totalAmount: newQty * r };
+                            }
+                            return itemRow;
+                          }));
                         }}
                       >
                         -
@@ -1419,7 +1426,14 @@ function MaintenanceUpdateView() {
                       <IconButton
                         size="small"
                         onClick={() => {
-                          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? { ...itemRow, itemQty: (Number(itemRow.itemQty) || 1) + 1 } : itemRow));
+                          SetItems(prev => prev.map(itemRow => {
+                            if (itemRow.idRow === it.idRow) {
+                              const newQty = (Number(itemRow.itemQty) || 1) + 1;
+                              const r = Number(itemRow.itemRate || 0);
+                              return { ...itemRow, itemQty: newQty, itemAmount: newQty * r, totalAmount: newQty * r };
+                            }
+                            return itemRow;
+                          }));
                         }}
                       >
                         +
@@ -1435,33 +1449,34 @@ function MaintenanceUpdateView() {
               <Autocomplete
                 size="small"
                 options={ItemInformation || []}
-                getOptionLabel={(option) => option.itemName || option.name || ''}
+                getOptionLabel={(option) => option.itemName ? `${option.itemName}${option.itemBrand ? ' / ' + option.itemBrand : ''}` : (option.name || '')}
                 onChange={(e, val) => {
                   if (val) {
+                    const rate = Number(val.itemSellingPrice || 0);
                     SetItems(prev => [...prev, {
                       idRow: v4(),
                       itemName: { _id: val._id, itemName: val.itemName },
                       itemDescription: val.itemDescription || '',
                       itemQty: 1,
                       itemDiscount: 0,
-                      itemRate: 0,
-                      itemAmount: 0,
-                      itemCost: 0,
-                      totalAmount: 0,
+                      itemRate: rate,
+                      itemAmount: rate,
+                      itemCost: Number(val.itemCostPrice || 0),
+                      totalAmount: rate,
                       discount: 0,
                       percentage: 0,
                       itemBuy: 0,
-                      itemWeight: '',
+                      itemWeight: val.itemWeight || '',
                       totalGenerale: 0,
-                      totalCost: 0,
-                      stock: val.stock || 0,
+                      totalCost: Number(val.itemCostPrice || 0),
+                      stock: val.itemQuantity || val.stock || 0,
                       itemOut: 0,
                       newItemOut: 0,
                     }]);
                   }
                 }}
                 renderInput={(params) => (
-                  <TextField {...params} placeholder="+ Add Part from Inventory..." size="small" />
+                  <TextField {...params} placeholder="+ Add Part / Item from Inventory..." size="small" />
                 )}
               />
             </Box>

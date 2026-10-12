@@ -1719,6 +1719,25 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Verification & Deployment:**
     - Pre-build AST Safety verification passed across all 232 source files (0 errors).
     - Webpack web bundle (`dist_web/`) compiled successfully.
+    - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk` (96.64 MB).
+
+- **Mobile Maintenance Parts / Items Used Full Addition & Android PDF Print Layout Isolation Fix (Ver 3.5.71)**:
+  - **Problem Reported:**
+    1. In the Maintenance module on mobile (`New Maintenance Job`), there was no "Parts / Items Used" section to add parts/equipment used on job cards.
+    2. When printing/downloading PDF on mobile, the printed document looked bad: Page 1 had grey Dialog borders, line item rates and totals showed `$0.00` while subtotal was correct, and Page 2 printed the underlying `MobileDetailSheet` drawer and background app screens.
+  - **Root Cause & Architectural Resolution:**
+    1. **Mobile Maintenance Job Card Parts / Items Used Section (`MaintenanceFormView.js`):**
+       - Integrated Card 4: "Parts / Items Used" directly into the mobile view (`if (isMobile)`).
+       - Includes Autocomplete selector connected to inventory (`ItemInformation`), adding items with description, catalog selling price (`itemRate`), cost price, and stock levels.
+       - Embedded interactive quantity increment/decrement controls and deletion buttons that automatically sync `items`, `SetItems`, `subTotal`, and `totalInvoice`.
+       - Synced `MaintenanceUpdateView.js` to ensure parts added in update mode also retain `itemRate` and `itemAmount` from inventory selling prices.
+    2. **Android WebView PDF Print Layout Isolation (`MobileDocumentPrintModal.js` & `MainActivity.java`):**
+       - **Print DOM Leakage Fix:** In Android WebViews, `createPrintDocumentAdapter` prints the entire DOM. Without strict `@media print` isolation, `#root`, the Drawer from `MobileDetailSheet`, and the Dialog's dark grey backdrop (`#525659`) were being captured across 2 pages. Added a scoped `@media print` stylesheet that completely hides `#root`, `.MuiDrawer-root`, `.MuiBackdrop-root`, `.no-print`, `header`, and `nav`. The Dialog Paper and Container are reset to transparent/white with 0 margin, and `#printable-document-sheet` is centered as a crisp single-page A4 document with `page-break-after: avoid`.
+       - **Hardware Margin Override:** Configured `MainActivity.java` with `.setMinMargins(PrintAttributes.Margins.NO_MARGINS)`, allowing CSS `@page { size: A4 portrait; margin: 0; }` and WebView padding to render edge-to-edge without Android OS print clipping.
+       - **Rate & Total Field Normalization:** MongoDB invoice and estimate line items use `itemRate`, `itemAmount`, and `itemQty`. `MobileDocumentPrintModal.js` and `MobileDetailSheet.js` were previously checking only `itemSellingPrice` and `itemTotal`, defaulting to `0` / `$0.00`. Updated field resolution to `it?.itemRate ?? it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0`, `it?.itemAmount ?? it?.itemTotal ?? (qty * rate)`, and `it?.itemQty ?? it?.itemQuantity ?? 1`, with a graceful fallback for single-item invoices, restoring accurate rates and totals in both the detail drawer and the generated PDF.
+  - **Verification & Deployment:**
+    - Pre-build AST Safety verification passed across all 232 source files (0 errors).
+    - Webpack web bundle (`dist_web/`) compiled successfully.
     - Capacitor synced to Android native project (`npx cap sync android`).
     - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk`.
 

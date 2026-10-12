@@ -32,6 +32,7 @@ public class MainActivity extends BridgeActivity {
                                 android.print.PrintDocumentAdapter printAdapter = getBridge().getWebView().createPrintDocumentAdapter(jobName);
                                 printManager.print(jobName, printAdapter, new android.print.PrintAttributes.Builder()
                                     .setMediaSize(android.print.PrintAttributes.MediaSize.ISO_A4)
+                                    .setMinMargins(android.print.PrintAttributes.Margins.NO_MARGINS)
                                     .build());
                             }
                         } catch (Exception e) {

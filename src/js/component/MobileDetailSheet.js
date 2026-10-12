@@ -217,8 +217,14 @@ function MobileDetailSheet({ open, onClose, record, type }) {
     let refNum = '';
     let customerName = safeText(record?.customerName?.customerName || record?.customerName || record?.customer || record?.Customer || record?.clientName);
 
-    const lineItems = Array.isArray(record?.itemInfo) ? record.itemInfo : (Array.isArray(record?.items) ? record.items : []);
-    const calcLineTotal = lineItems.reduce((acc, it) => acc + (Number(it?.itemTotal) || (Number(it?.itemQuantity || it?.quantity || 1) * Number(it?.itemSellingPrice || it?.rate || it?.price || 0))), 0);
+    const lineItems = Array.isArray(record?.items) && record.items.length > 0
+      ? record.items
+      : (Array.isArray(record?.itemInfo) && record.itemInfo.length > 0 ? record.itemInfo : (record?.items || record?.itemInfo || []));
+    const calcLineTotal = lineItems.reduce((acc, it) => {
+      const qty = Number(it?.itemQty ?? it?.itemQuantity ?? it?.quantity ?? 1);
+      const rate = Number(it?.itemRate ?? it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0);
+      return acc + (Number(it?.itemAmount) || Number(it?.itemTotal) || (qty * rate));
+    }, 0);
 
     let totalAmount = Number(record?.totalInvoice ?? record?.totalAmount ?? record?.totalEstimate ?? record?.total ?? record?.amount ?? (calcLineTotal > 0 ? calcLineTotal : 0));
     let balanceDue = Number(record?.balanceDue ?? (type === 'invoices' ? totalAmount : 0));
@@ -898,10 +904,15 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                     Items & Services ({lineItems.length})
                   </Typography>
                   {lineItems.map((it, idx) => {
-                    const itName = safeText(it?.itemName || it?.description, `Item #${idx + 1}`);
-                    const qty = Number(it?.itemQuantity ?? it?.quantity ?? 1);
-                    const rate = Number(it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0);
-                    const itTotal = Number(it?.itemTotal ?? (qty * rate));
+                    const itName = safeText(it?.itemName?.itemName || it?.itemName?.name || it?.itemName || it?.description, `Item #${idx + 1}`);
+                    const qty = Number(it?.itemQty ?? it?.itemQuantity ?? it?.quantity ?? 1);
+                    let rate = Number(it?.itemRate ?? it?.itemSellingPrice ?? it?.rate ?? it?.price ?? 0);
+                    let itTotal = Number(it?.itemAmount ?? it?.itemTotal ?? 0);
+                    if (!itTotal && rate > 0) itTotal = qty * rate;
+                    if (!itTotal && !rate && lineItems.length === 1 && totalAmount > 0) {
+                      itTotal = totalAmount;
+                      rate = totalAmount / qty;
+                    }
                     return (
                       <Box key={idx} sx={{ py: 1, borderBottom: idx < lineItems.length - 1 ? '1px solid #F1F5F9' : 'none' }}>
                         <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
