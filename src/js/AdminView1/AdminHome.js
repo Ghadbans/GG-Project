@@ -443,10 +443,12 @@ function AdminHome() {
         });
 
         safeGet(`${ENDPOINT_URL}/item`).then(resItem => {
-          const ItemInfo = resItem.data.data.map(item => ({
+          const ItemInfo = (resItem?.data?.data || []).map(item => ({
             ...item,
             id: item._id,
-            ItemNumber: item.itemUpc.newCode + '-' + item.itemUpc.itemNumber.toString().padStart(6, '0')
+            ItemNumber: item.itemUpc?.newCode 
+              ? `${item.itemUpc.newCode}-${(item.itemUpc.itemNumber ?? '').toString().padStart(6, '0')}`
+              : (item.itemCode || item.code || item.ItemNumber || '')
           }));
           setItem(ItemInfo.reverse());
         });
@@ -523,10 +525,12 @@ function AdminHome() {
   const fetchValue = async () => {
     try {
       const resItemOutItemReturn = await axios.get(`${ENDPOINT_URL}/item-usage`)
-      setItemValue(resItemOutItemReturn.data?.map((item) => ({
+      setItemValue((resItemOutItemReturn.data || []).map((item) => ({
         ...item,
         id: item.itemId,
-        ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber
+        ItemNumber: item.itemUpc?.newCode 
+          ? `${item.itemUpc.newCode}-0${item.itemUpc.itemNumber ?? ''}`
+          : (item.itemCode || item.code || item.ItemNumber || '')
       })))
     } catch (error) {
       console.log(error)

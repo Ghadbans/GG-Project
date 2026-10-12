@@ -228,6 +228,24 @@ function MobileCardList({
 
   const filtered = safeData.filter((item) => {
     if (!item) return false;
+
+    // Status chip filter
+    if (statusFilter && statusFilter !== 'ALL') {
+      const rawStat = safeText(item.status).toLowerCase();
+      const statTarget = statusFilter.toLowerCase();
+      if (statTarget === 'paid' && rawStat !== 'paid') return false;
+      if (statTarget === 'pending' && rawStat !== 'pending') return false;
+      if (statTarget === 'open' && rawStat !== 'open') return false;
+      if (statTarget === 'close' && rawStat !== 'close') return false;
+    }
+
+    // If server-side search is enabled (onSearchChange provided),
+    // safeData is already the authoritative search result returned by the backend query!
+    // Do not filter out valid server results with mismatched client regex.
+    if (onSearchChange) {
+      return true;
+    }
+
     const trimmed = search.trim().toLowerCase();
     if (!trimmed) return true;
     const tokens = trimmed.split(/\s+/).filter(Boolean);
@@ -298,7 +316,11 @@ function MobileCardList({
       const mfg = safeText(item.itemManufacturer || item.manufacturer).toLowerCase();
       const cond = safeText(item.condition || item.typeItem).toLowerCase();
       const unit = safeText(item.unit).toLowerCase();
-      const allText = `${name} ${code} ${codeNum} ${brand} ${desc} ${cat} ${store} ${sup} ${mfg} ${cond} ${unit}`;
+      const dim = safeText(item.itemDimension || item.dimension).toLowerCase();
+      const wt = safeText(item.itemWeight || item.weight).toLowerCase();
+      const price = safeText(item.itemSellingPrice || item.price).toLowerCase();
+      const cost = safeText(item.itemCostPrice || item.cost).toLowerCase();
+      const allText = `${name} ${code} ${codeNum} ${brand} ${desc} ${cat} ${store} ${sup} ${mfg} ${cond} ${unit} ${dim} ${wt} ${price} ${cost}`;
       return tokens.every(tok => allText.includes(tok));
     }
 

@@ -1668,3 +1668,28 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Webpack desktop & web production packages compiled (`npm run build`).
     - Webpack web bundle (`dist_web/`) compiled successfully.
     - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk` (92.53 MB).
+
+- **Mobile Items Search Full Restoration, UPC Null-Safety, and Android System Bars Edge-to-Edge Layout Fit (Ver 3.5.69)**:
+  - **Problem Reported:**
+    1. In the ITEMS module on mobile, searching for terms like "Block 20" or "Orva" returned "No records found" while the button showed "Load More (0 of 17)" or "(0 of 99)".
+    2. The top app bar and bottom navigation bar did not fit properly on mobile screens. The Android status bar (clock, wifi, battery, notifications) overlapped the top bar, hamburger menu, and title (truncating "Items & Store" to "Ite..."). The Android bottom navigation buttons (`|||`, `O`, `<`) overlapped directly over the bottom navigation tabs.
+  - **Root Cause & Architectural Resolution:**
+    1. **Items Search Crash on Null `itemUpc`:**
+       - In `ItemViewAdmin.js` line 231 (`fetchItems`), the code did `item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber` without null-checks. When an item returned by MongoDB had `itemUpc: null`, this threw an uncaught `TypeError: Cannot read properties of undefined (reading 'newCode')`.
+       - Because the exception occurred right after setting `setTotalItemCount(17)` but before `SetItems(formatDate)`, `SetItems` was skipped, leaving the items array empty `[]` while `totalItemCount` was 17 (or 99).
+       - Fixed with optional chaining across `ItemViewAdmin.js`, `AdminHome.js`, and DataGrid column `renderCell`s:
+         `ItemNumber: item.itemUpc?.newCode ? `${item.itemUpc.newCode}-0${item.itemUpc.itemNumber ?? ''}` : (item.itemCode || item.code || item.ItemNumber || '')`.
+    2. **MobileCardList Server Search Integrity:**
+       - In `MobileCardList.js`, when `onSearchChange` is provided, the parent executes server-side queries across MongoDB. `MobileCardList` was erroneously running a second, strict client-side regex filter that lacked `itemDimension`, `itemWeight`, and other attributes, wiping out valid server results.
+       - Updated `MobileCardList.js` so that when `onSearchChange` is active, server search results are passed through directly. Also added `dim`, `weight`, `price`, and `cost` to the client-side search fallback.
+    3. **Android Status Bar & Navigation Bar Native Edge-to-Edge Insets:**
+       - **Native Android (`MainActivity.java`):** Added `ViewCompat.setOnApplyWindowInsetsListener` on the window decor view to automatically pad the WebView by the status bar's top inset and the navigation bar's bottom inset.
+       - **Native Theme (`styles.xml`):** Added `android:fitsSystemWindows="true"`, `android:statusBarColor="#30368a"`, `android:navigationBarColor="#ffffff"`, and `android:windowLightNavigationBar="true"`.
+       - **React MobileLayout (`MobileLayout.js`):** Added `pt: 'env(safe-area-inset-top, 0px)'` to the AppBar, `height: 'calc(58px + env(safe-area-inset-bottom, 0px))'` and `pb: 'env(safe-area-inset-bottom, 0px)'` to the bottom bar, and shortened titles (`'Items'`, `'Expenses'`, `'Blocks'`) to eliminate text clipping.
+       - **BranchSwitcher (`BranchSwitcher.js`):** Made width responsive (`minWidth: { xs: 52, sm: 120 }`, `mr: { xs: 0.5, sm: 2 }`, `fontSize: '12px'`) to reclaim ~70px of header space on mobile phones.
+  - **Verification & Deployment:**
+    - Pre-build AST Safety verification passed across all 232 source files (0 errors).
+    - Webpack web bundle (`dist_web/`) compiled successfully.
+    - Capacitor synced to Android native project (`npx cap sync android`).
+    - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk` (93.72 MB).
+

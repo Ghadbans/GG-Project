@@ -40,14 +40,14 @@ function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
   if (pathname.includes('Invoice')) return 'Invoices';
   if (pathname.includes('Maintenance')) return 'Maintenance';
-  if (pathname.includes('Item')) return 'Items & Store';
+  if (pathname.includes('Item')) return 'Items';
   if (pathname.includes('Estimate')) return 'Quotations';
   if (pathname.includes('Payment')) return 'Payments';
-  if (pathname.includes('DailyExpense')) return 'Daily Expenses';
+  if (pathname.includes('DailyExpense')) return 'Expenses';
   if (pathname.includes('Project')) return 'Projects';
   if (pathname.includes('Purchase')) return 'Purchases';
   if (pathname.includes('ShopPos') || pathname.includes('Pos')) return 'POS';
-  if (pathname.includes('Block')) return 'Block Factory';
+  if (pathname.includes('Block')) return 'Blocks';
   if (pathname.includes('Report')) return 'Reports';
   if (pathname.includes('Employee')) return 'Employees';
   if (pathname.includes('Fleet')) return 'Fleet';
@@ -208,31 +208,30 @@ function MobileLayout({ children }) {
           flexShrink: 0,
           backgroundColor: '#30368a',
           zIndex: 1200,
-          boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+          boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+          pt: 'env(safe-area-inset-top, 0px)'
         }}
       >
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 1, minHeight: '54px !important', height: 54 }}>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 1, minHeight: '52px !important', height: 52 }}>
           {/* Left: Back (if not home) + Hamburger + Title */}
           <Box sx={{ display: 'flex', alignItems: 'center', minWidth: 0, flex: 1, gap: 0.5 }}>
             {pathname.toLowerCase() !== '/adminhome' && (
               <IconButton color="inherit" size="small" onClick={() => navigate(-1)} sx={{ p: 0.5 }} title="Go Back">
-                <ArrowBack sx={{ fontSize: 22 }} />
+                <ArrowBack sx={{ fontSize: 20 }} />
               </IconButton>
             )}
             <IconButton color="inherit" size="small" onClick={() => setDrawerOpen(true)} sx={{ p: 0.5 }} title="Menu">
-              <MenuIcon sx={{ fontSize: 24 }} />
+              <MenuIcon sx={{ fontSize: 22 }} />
             </IconButton>
             <Typography
               variant="subtitle1"
+              noWrap
               sx={{
                 fontWeight: 700,
                 color: '#ffffff',
-                whiteSpace: 'nowrap',
-                textOverflow: 'ellipsis',
-                overflow: 'hidden',
-                maxWidth: 160,
-                fontSize: '1rem',
-                ml: 0.5
+                fontSize: '0.95rem',
+                ml: 0.5,
+                lineHeight: 1.2
               }}
             >
               {pageTitle}
@@ -240,11 +239,11 @@ function MobileLayout({ children }) {
           </Box>
 
           {/* Right: Notifications, Mail, Logout */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, flexShrink: 0 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.25, flexShrink: 0 }}>
             <NotificationVIewInfo />
             <MessageAdminView name={user?.data?.userName || ''} role={user?.data?.role || ''} />
             <IconButton color="inherit" size="small" onClick={handleLogout} title="Logout" sx={{ p: 0.5 }}>
-              <LogoutIcon sx={{ color: 'white', fontSize: 20 }} />
+              <LogoutIcon sx={{ color: 'white', fontSize: 19 }} />
             </IconButton>
           </Box>
         </Toolbar>
@@ -273,7 +272,8 @@ function MobileLayout({ children }) {
           bottom: 0,
           left: 0,
           right: 0,
-          height: '58px',
+          height: 'calc(58px + env(safe-area-inset-bottom, 0px))',
+          pb: 'env(safe-area-inset-bottom, 0px)',
           backgroundColor: '#ffffff',
           borderTop: '1px solid #e2e8f0',
           display: 'flex',

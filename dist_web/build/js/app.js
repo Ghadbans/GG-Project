@@ -91809,11 +91809,17 @@ function BranchSwitcher() {
     var _availableBranches$;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
       sx: {
-        mr: 2,
+        mr: {
+          xs: 0.5,
+          sm: 2
+        },
         color: 'white',
         display: 'flex',
         alignItems: 'center',
-        fontSize: '14px',
+        fontSize: {
+          xs: '12px',
+          sm: '14px'
+        },
         fontWeight: 'bold'
       }
     }, ((_availableBranches$ = availableBranches[0]) === null || _availableBranches$ === void 0 ? void 0 : _availableBranches$.branchId) || 'HQ');
@@ -91821,8 +91827,14 @@ function BranchSwitcher() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     variant: "standard",
     sx: {
-      mr: 2,
-      minWidth: 120
+      mr: {
+        xs: 0.5,
+        sm: 2
+      },
+      minWidth: {
+        xs: 52,
+        sm: 120
+      }
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     value: selectedBranch,
@@ -91830,7 +91842,11 @@ function BranchSwitcher() {
     sx: {
       color: 'white',
       '& .MuiSelect-icon': {
-        color: 'white'
+        color: 'white',
+        right: {
+          xs: -4,
+          sm: 0
+        }
       },
       '&:before': {
         borderBottom: 'none'
@@ -91841,7 +91857,10 @@ function BranchSwitcher() {
       '&:after': {
         borderBottom: 'none'
       },
-      fontSize: '14px',
+      fontSize: {
+        xs: '12px',
+        sm: '14px'
+      },
       fontWeight: 'bold'
     },
     renderValue: selected => selected
@@ -122967,7 +122986,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.68"};
+module.exports = {"rE":"3.5.69"};
 
 /***/ },
 
@@ -123099,7 +123118,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"3dc77d60b30271852976","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"837b90a01b7c7896166c","778":"f8950b7fd584414ccde4","806":"2166141e307082903919","808":"d8f0362bf8e704419cb0","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"06c2deb50d34e3c90c04","1679":"74f1a4c2f02dc08d4c60","1722":"64a825cf89210c4f5730","1853":"4404e10dd0a06664a690","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"c78cabe03a3a4cac5c73","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"6eec083cd839f330b7db","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"4495adee16b1c520d538","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"992d7dd3922220c36036","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"1466cce2be72438eb219","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"140fec92cf50ab1401a9","4444":"4057219a6df69a0189e1","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"e64d1f19889761fe21c5","5194":"d9e4d8382ebe97418258","5391":"d3ba6391863831a920bc","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"67cd99b87d0f9e297c31","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"afbb66b92ae7a3def6fd","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"50b7d9c417b9149c8d15","7539":"72ee1ee088ac1a0441f8","7592":"3327bce62ecd01a8e080","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"a21950b86fa6c39b9829","7941":"e5a63ce8cf6f9930d444","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"ddc6d45afbcbc6bf570e","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"297086bc090c717b33e7","9528":"4dd9c43eb666c40b578c","9564":"eee8b6766c2885a603a6","9573":"64527a00b2ac011a87f9","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"d0c30e2848868885f901","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"3dc77d60b30271852976","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"837b90a01b7c7896166c","778":"f8950b7fd584414ccde4","806":"64b6344dcf961522d2e5","808":"d8f0362bf8e704419cb0","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"dd1bcd34c581287cb5d2","1679":"74f1a4c2f02dc08d4c60","1722":"64a825cf89210c4f5730","1853":"4404e10dd0a06664a690","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"af556219b62e6a48afdb","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"6eec083cd839f330b7db","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"4495adee16b1c520d538","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"47949dc66c18285c5bcd","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"da11b4f595bf2fd10f9b","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"439f5799680494545815","4444":"caee0f43f1f135d12d63","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"33736563b7d646ac0f41","5194":"d9e4d8382ebe97418258","5391":"f5e1fce27393da350ef2","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"67cd99b87d0f9e297c31","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"afbb66b92ae7a3def6fd","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"a67d036a94e3c80edf62","7539":"72ee1ee088ac1a0441f8","7592":"3327bce62ecd01a8e080","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"5648dab9546285dc14fd","7941":"e5a63ce8cf6f9930d444","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"ddc6d45afbcbc6bf570e","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"40b9eafde3481a75a733","9528":"4dd9c43eb666c40b578c","9564":"eee8b6766c2885a603a6","9573":"12a8c3ddd8c966cee990","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"8834ecef943e9c14be07","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -133253,10 +133272,14 @@ function AdminHome() {
             })).reverse());
           });
           safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/item")).then(resItem => {
-            var ItemInfo = resItem.data.data.map(item => AdminHome_objectSpread(AdminHome_objectSpread({}, item), {}, {
-              id: item._id,
-              ItemNumber: item.itemUpc.newCode + '-' + item.itemUpc.itemNumber.toString().padStart(6, '0')
-            }));
+            var _resItem$data;
+            var ItemInfo = ((resItem === null || resItem === void 0 || (_resItem$data = resItem.data) === null || _resItem$data === void 0 ? void 0 : _resItem$data.data) || []).map(item => {
+              var _item$itemUpc, _item$itemUpc$itemNum;
+              return AdminHome_objectSpread(AdminHome_objectSpread({}, item), {}, {
+                id: item._id,
+                ItemNumber: (_item$itemUpc = item.itemUpc) !== null && _item$itemUpc !== void 0 && _item$itemUpc.newCode ? "".concat(item.itemUpc.newCode, "-").concat(((_item$itemUpc$itemNum = item.itemUpc.itemNumber) !== null && _item$itemUpc$itemNum !== void 0 ? _item$itemUpc$itemNum : '').toString().padStart(6, '0')) : item.itemCode || item.code || item.ItemNumber || ''
+              });
+            });
             setItem(ItemInfo.reverse());
           });
           safeGet("".concat(apiConfig/* ENDPOINT_URL */.m, "/itemCode")).then(resCode => {
@@ -133327,12 +133350,14 @@ function AdminHome() {
   var fetchValue = /*#__PURE__*/function () {
     var _ref12 = AdminHome_asyncToGenerator(function* () {
       try {
-        var _resItemOutItemReturn;
         var resItemOutItemReturn = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/item-usage"));
-        setItemValue((_resItemOutItemReturn = resItemOutItemReturn.data) === null || _resItemOutItemReturn === void 0 ? void 0 : _resItemOutItemReturn.map(item => AdminHome_objectSpread(AdminHome_objectSpread({}, item), {}, {
-          id: item.itemId,
-          ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber
-        })));
+        setItemValue((resItemOutItemReturn.data || []).map(item => {
+          var _item$itemUpc2, _item$itemUpc$itemNum2;
+          return AdminHome_objectSpread(AdminHome_objectSpread({}, item), {}, {
+            id: item.itemId,
+            ItemNumber: (_item$itemUpc2 = item.itemUpc) !== null && _item$itemUpc2 !== void 0 && _item$itemUpc2.newCode ? "".concat(item.itemUpc.newCode, "-0").concat((_item$itemUpc$itemNum2 = item.itemUpc.itemNumber) !== null && _item$itemUpc$itemNum2 !== void 0 ? _item$itemUpc$itemNum2 : '') : item.itemCode || item.code || item.ItemNumber || ''
+          });
+        }));
       } catch (error) {
         console.log(error);
       }
@@ -137445,14 +137470,14 @@ function getTitleFromPath(pathname) {
   if (pathname.includes('Customer')) return 'Customers';
   if (pathname.includes('Invoice')) return 'Invoices';
   if (pathname.includes('Maintenance')) return 'Maintenance';
-  if (pathname.includes('Item')) return 'Items & Store';
+  if (pathname.includes('Item')) return 'Items';
   if (pathname.includes('Estimate')) return 'Quotations';
   if (pathname.includes('Payment')) return 'Payments';
-  if (pathname.includes('DailyExpense')) return 'Daily Expenses';
+  if (pathname.includes('DailyExpense')) return 'Expenses';
   if (pathname.includes('Project')) return 'Projects';
   if (pathname.includes('Purchase')) return 'Purchases';
   if (pathname.includes('ShopPos') || pathname.includes('Pos')) return 'POS';
-  if (pathname.includes('Block')) return 'Block Factory';
+  if (pathname.includes('Block')) return 'Blocks';
   if (pathname.includes('Report')) return 'Reports';
   if (pathname.includes('Employee')) return 'Employees';
   if (pathname.includes('Fleet')) return 'Fleet';
@@ -137623,7 +137648,8 @@ function MobileLayout(_ref) {
       flexShrink: 0,
       backgroundColor: '#30368a',
       zIndex: 1200,
-      boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+      boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+      pt: 'env(safe-area-inset-top, 0px)'
     }
   }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
     sx: {
@@ -137631,8 +137657,8 @@ function MobileLayout(_ref) {
       justifyContent: 'space-between',
       alignItems: 'center',
       px: 1,
-      minHeight: '54px !important',
-      height: 54
+      minHeight: '52px !important',
+      height: 52
     }
   }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
@@ -137652,7 +137678,7 @@ function MobileLayout(_ref) {
     title: "Go Back"
   }, /*#__PURE__*/react.createElement(icons_material_ArrowBack/* default */.A, {
     sx: {
-      fontSize: 22
+      fontSize: 20
     }
   })), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     color: "inherit",
@@ -137664,25 +137690,23 @@ function MobileLayout(_ref) {
     title: "Menu"
   }, /*#__PURE__*/react.createElement(Menu/* default */.A, {
     sx: {
-      fontSize: 24
+      fontSize: 22
     }
   })), /*#__PURE__*/react.createElement(Typography/* default */.A, {
     variant: "subtitle1",
+    noWrap: true,
     sx: {
       fontWeight: 700,
       color: '#ffffff',
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
-      maxWidth: 160,
-      fontSize: '1rem',
-      ml: 0.5
+      fontSize: '0.95rem',
+      ml: 0.5,
+      lineHeight: 1.2
     }
   }, pageTitle)), /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
-      gap: 0.5,
+      gap: 0.25,
       flexShrink: 0
     }
   }, /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
@@ -137699,7 +137723,7 @@ function MobileLayout(_ref) {
   }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
     sx: {
       color: 'white',
-      fontSize: 20
+      fontSize: 19
     }
   }))))), /*#__PURE__*/react.createElement(Box/* default */.A, {
     component: "main",
@@ -137718,7 +137742,8 @@ function MobileLayout(_ref) {
       bottom: 0,
       left: 0,
       right: 0,
-      height: '58px',
+      height: 'calc(58px + env(safe-area-inset-bottom, 0px))',
+      pb: 'env(safe-area-inset-bottom, 0px)',
       backgroundColor: '#ffffff',
       borderTop: '1px solid #e2e8f0',
       display: 'flex',

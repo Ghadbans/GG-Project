@@ -225,10 +225,12 @@ function ItemViewAdmin() {
       setLoadingData(false);
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
       setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
-      const formatDate = res.data.itemI.map((item) => ({
+      const formatDate = (res.data.itemI || []).map((item) => ({
         ...item,
         id: item._id,
-        ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber,
+        ItemNumber: item.itemUpc?.newCode 
+          ? `${item.itemUpc.newCode}-0${item.itemUpc.itemNumber ?? ''}`
+          : (item.itemCode || item.code || item.ItemNumber || ''),
       }));
       SetItems(formatDate);
     } catch (error) {
@@ -256,10 +258,12 @@ function ItemViewAdmin() {
     e.preventDefault();
     try {
       const resLow = await axios.get(`${ENDPOINT_URL}/low-margin-item`);
-      setLowMargin(resLow.data.data.map((item) => ({
+      setLowMargin((resLow?.data?.data || []).map((item) => ({
         ...item,
         id: item._id,
-        ItemNumber: item.itemUpc.newCode + '-0' + item.itemUpc.itemNumber,
+        ItemNumber: item.itemUpc?.newCode 
+          ? `${item.itemUpc.newCode}-0${item.itemUpc.itemNumber ?? ''}`
+          : (item.itemCode || item.code || item.ItemNumber || ''),
       })));
       setLoadingData1(false);
     } catch (error) {
@@ -491,12 +495,12 @@ function ItemViewAdmin() {
 
   const columns = [
     { field: 'ItemNumber', headerName: 'Item Number', minWidth: 90, flex: 0.8 },
-    { field: 'itemName', headerName: 'Item Name', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemName.toUpperCase() },
+    { field: 'itemName', headerName: 'Item Name', minWidth: 200, flex: 2, renderCell: (params) => (params.row.itemName || '').toUpperCase() },
     { field: 'itemCategory', headerName: 'Category', minWidth: 100, flex: 1 },
     { field: 'itemBrand', headerName: 'itemBrand', minWidth: 100, flex: 1 },
-    { field: 'itemDescription', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemDescription.toUpperCase() },
-    { field: 'itemSellingPrice', headerName: 'Price', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.itemSellingPrice}` },
-    { field: 'itemQuantity', headerName: 'Stock', minWidth: 100, flex: 1, renderCell: (params) => `${params.row.itemQuantity + ' ' + params.row.unit?.toUpperCase()}` },
+    { field: 'itemDescription', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => (params.row.itemDescription || '').toUpperCase() },
+    { field: 'itemSellingPrice', headerName: 'Price', minWidth: 100, flex: 1, renderCell: (params) => `$${params.row.itemSellingPrice ?? ''}` },
+    { field: 'itemQuantity', headerName: 'Stock', minWidth: 100, flex: 1, renderCell: (params) => `${(params.row.itemQuantity ?? '') + ' ' + (params.row.unit || '').toUpperCase()}` },
     {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">
@@ -541,12 +545,12 @@ function ItemViewAdmin() {
   const columns2 = [
     { field: 'ItemNumber', headerName: 'Item Number', minWidth: 90, flex: 0.8 },
     { field: 'typeItem', headerName: 'Type', minWidth: 70, flex: 0.5 },
-    { field: 'itemName', headerName: 'Item Name', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemName.toUpperCase() },
+    { field: 'itemName', headerName: 'Item Name', minWidth: 200, flex: 2, renderCell: (params) => (params.row.itemName || '').toUpperCase() },
     { field: 'itemCategory', headerName: 'Category', minWidth: 100, flex: 1 },
     { field: 'itemBrand', headerName: 'itemBrand', minWidth: 100, flex: 1 },
-    { field: 'itemDescription', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => params.row.itemDescription.toUpperCase() },
+    { field: 'itemDescription', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => (params.row.itemDescription || '').toUpperCase() },
     { field: 'itemSellingPrice', headerName: 'Price', minWidth: 100, flex: 1, renderCell: (params) => { parseFloat(params.row.itemSellingPrice)?.toFixed(2) } },
-    { field: 'itemQuantity', headerName: 'Stock', minWidth: 100, flex: 1, renderCell: (params) => `${params.row.itemQuantity + ' ' + params.row.unit?.toUpperCase()}` },
+    { field: 'itemQuantity', headerName: 'Stock', minWidth: 100, flex: 1, renderCell: (params) => `${(params.row.itemQuantity ?? '') + ' ' + (params.row.unit || '').toUpperCase()}` },
     {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (
         <ViewTooltip title="View">

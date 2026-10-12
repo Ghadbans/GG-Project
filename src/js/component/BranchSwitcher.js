@@ -96,24 +96,24 @@ function BranchSwitcher() {
 
   if (availableBranches.length <= 1) {
     return (
-      <Box sx={{ mr: 2, color: 'white', display: 'flex', alignItems: 'center', fontSize: '14px', fontWeight: 'bold' }}>
+      <Box sx={{ mr: { xs: 0.5, sm: 2 }, color: 'white', display: 'flex', alignItems: 'center', fontSize: { xs: '12px', sm: '14px' }, fontWeight: 'bold' }}>
         {availableBranches[0]?.branchId || 'HQ'}
       </Box>
     );
   }
 
   return (
-    <FormControl variant="standard" sx={{ mr: 2, minWidth: 120 }}>
+    <FormControl variant="standard" sx={{ mr: { xs: 0.5, sm: 2 }, minWidth: { xs: 52, sm: 120 } }}>
       <Select
         value={selectedBranch}
         onChange={handleChange}
         sx={{
           color: 'white',
-          '& .MuiSelect-icon': { color: 'white' },
+          '& .MuiSelect-icon': { color: 'white', right: { xs: -4, sm: 0 } },
           '&:before': { borderBottom: 'none' },
           '&:hover:not(.Mui-disabled):before': { borderBottom: 'none' },
           '&:after': { borderBottom: 'none' },
-          fontSize: '14px',
+          fontSize: { xs: '12px', sm: '14px' },
           fontWeight: 'bold'
         }}
         renderValue={(selected) => selected}
