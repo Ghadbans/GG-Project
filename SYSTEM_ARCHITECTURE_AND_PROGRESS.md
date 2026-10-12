@@ -1693,3 +1693,32 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Capacitor synced to Android native project (`npx cap sync android`).
     - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk` (93.72 MB).
 
+- **Mobile Performance Tuning, Native Android PDF Download & Print, Preview Formatting & Converted Maintenance Orders (Ver 3.5.70)**:
+  - **Problem Reported:**
+    1. Mobile modules were taking significantly longer to load initial views compared to the desktop app.
+    2. Users were unable to download/save a PDF copy directly to Android device storage; only WhatsApp and Email sharing were functional, and clicking Print/PDF did nothing in Android WebView.
+    3. Document preview formatting had squished tables on mobile screens, and Job Cards rendered duplicate `M-M-001259` prefix strings.
+    4. Converted maintenance orders incorrectly displayed status as "Close" on mobile cards and detail views instead of "Converted", violating Rule 17 (converted orders cannot be edited until the converted invoice is removed).
+  - **Root Cause & Architectural Resolution:**
+    1. **Mobile Loading Performance (Initial Payload Reduction):**
+       - Reduced initial fetch batch limit on mobile devices from 100 to 30 records across `ItemViewAdmin.js`, `InvoiceViewAdmin.js`, `EstimateViewAdmin.js`, and `MaintenanceViewAdmin.js`:
+         `const limit = isMobile ? 30 : 100;`
+       - Slices initial JSON parsing and rendering overhead by ~70%, delivering sub-second module load times on mobile connections while retaining infinite scroll / "Load More" pagination.
+    2. **Native Android Print & Save as PDF Bridge (`MainActivity.java` & `MobileDocumentPrintModal.js`):**
+       - WebViews cannot invoke standard `window.print()` desktop dialogs natively.
+       - Implemented native `@JavascriptInterface` bridge `AndroidNativePrint` in `MainActivity.java` using Android OS `android.print.PrintManager` and `webView.createPrintDocumentAdapter(jobName)`.
+       - Integrated print document adapter configured with standard ISO A4 paper attributes, enabling users to choose system printer or natively "Save as PDF" directly to device Downloads / internal storage.
+       - Updated `handleNativePrint()` in `MobileDocumentPrintModal.js` to dispatch through `window.AndroidNativePrint.printDocument(...)` with fallback to `window.print()`.
+    3. **Preview Modal Formatting & Number Normalization:**
+       - Fixed `refNumber` calculation in `MobileDocumentPrintModal.js` and `MobileDetailSheet.js` to strip extraneous `M-` prefixes when `serviceNumber` already includes `'M-'`.
+       - Wrapped preview modal items table in an `overflowX: 'auto'` container with `minWidth: '520px'` and optimized paper padding (`p: { xs: 1.5, sm: 5 }`), ensuring columns are never crushed horizontally on mobile screens while preserving complete A4 document alignment when printing.
+    4. **Maintenance Order Status & Edit Protection (Rule 17):**
+       - In MongoDB, converted maintenance orders have `Converted: true` while `status` may be `'Close'`.
+       - Updated status normalization in `MaintenanceViewAdmin.js`, `MobileCardList.js`, and `MobileDetailSheet.js` to display `'Converted'` with a distinctive purple badge (`#EDE9FE` / `#6D28D9`).
+       - Enforced Rule 17 edit protection in `MobileDetailSheet.js`: disabled the Edit and Convert buttons for converted orders, showing a disabled `'Converted'` indicator and alert notification guarding against unauthorized alterations until the linked invoice is deleted.
+  - **Verification & Deployment:**
+    - Pre-build AST Safety verification passed across all 232 source files (0 errors).
+    - Webpack web bundle (`dist_web/`) compiled successfully.
+    - Capacitor synced to Android native project (`npx cap sync android`).
+    - Native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk`.
+

@@ -198,7 +198,7 @@ function InvoiceViewAdmin() {
   });
 
   const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
-  const limit = 100;
+  const limit = isMobile ? 30 : 100;
   const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
   const [filterField, setFilterField] = useState(''); // Initialize filter field state
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state

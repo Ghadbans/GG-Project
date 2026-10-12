@@ -99,9 +99,12 @@ function getStatusChip(status, balanceDue, totalAmount) {
   switch (stat) {
     case 'paid':
     case 'close':
-    case 'converted':
       bg = '#DCFCE7';
       color = '#15803D';
+      break;
+    case 'converted':
+      bg = '#EDE9FE';
+      color = '#6D28D9';
       break;
     case 'open':
     case 'sent':
@@ -221,8 +224,9 @@ function MobileDetailSheet({ open, onClose, record, type }) {
     let balanceDue = Number(record?.balanceDue ?? (type === 'invoices' ? totalAmount : 0));
 
     if (type === 'invoices') {
-      refNum = typeof record?.invoiceNumber === 'number' ? `INV-${String(record.invoiceNumber).padStart(6, '0')}` : safeText(record?.invoiceNumber, 'INV');
+      refNum = typeof record?.invoiceNumber === 'number' ? `INV-${String(record.invoiceNumber).padStart(6, '0')}` : safeText(record?.invoiceNumber, 'INV-000000');
       title = refNum;
+    } else if (type === 'quotations' || type === 'estimates') {
       refNum = typeof record?.estimateNumber === 'number'
         ? `Q-${String(record.estimateNumber).padStart(6, '0')}`
         : (String(record?.estimateNumber || record?.estimateName || '').replace(/^(EST|QUO|QT|Q)\s*-?/i, 'Q-') || 'Q-000000');
@@ -248,8 +252,15 @@ function MobileDetailSheet({ open, onClose, record, type }) {
       title = safeText(record?.supplierName || record?.name, 'Supplier');
     }
 
+    const isMaintenanceOrder = type === 'maintenance' || type === 'maintenance_orders';
+    const isConverted = isMaintenanceOrder && (record?.Converted === true || record?.status === 'Converted');
+
     // Handle Edit Navigation
     const handleEdit = () => {
+      if (isConverted) {
+        alert("This maintenance order has been converted to an invoice. You cannot edit it until the converted invoice is deleted.");
+        return;
+      }
       onClose();
       if (type === 'invoices') navigate(`/InvoiceFormUpdate/${id}`);
       else if (type === 'quotations' || type === 'estimates') navigate(`/EstimateInvoiceFormUpdate/${id}`);
@@ -265,6 +276,10 @@ function MobileDetailSheet({ open, onClose, record, type }) {
 
     // Handle Convert Action
     const handleConvert = () => {
+      if (isConverted) {
+        alert("This maintenance order has already been converted to an invoice.");
+        return;
+      }
       onClose();
       if (type === 'quotations' || type === 'estimates') navigate(`/EstimateViewConvertToInvoice/${id}`);
       else if (type === 'invoices') navigate(`/PaymentInformationForm/${id}`);
@@ -342,24 +357,25 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                   size="small"
                   variant="contained"
                   onClick={handleEdit}
+                  disabled={isConverted}
                   startIcon={<EditIcon sx={{ fontSize: '15px !important' }} />}
                   sx={{
-                    backgroundColor: 'rgba(255,255,255,0.22)',
-                    color: '#ffffff',
+                    backgroundColor: isConverted ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.22)',
+                    color: isConverted ? 'rgba(255,255,255,0.5)' : '#ffffff',
                     fontSize: '0.8rem',
                     fontWeight: 700,
                     textTransform: 'none',
                     px: 1.2,
                     py: 0.5,
                     borderRadius: 2,
-                    '&:hover': { backgroundColor: 'rgba(255,255,255,0.35)' }
+                    '&:hover': { backgroundColor: isConverted ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.35)' }
                   }}
                 >
-                  Edit
+                  {isConverted ? 'Converted' : 'Edit'}
                 </Button>
               )}
 
-              {canEdit(type) && (type === 'quotations' || type === 'estimates' || type === 'invoices' || type === 'maintenance') && (
+              {canEdit(type) && !isConverted && (type === 'quotations' || type === 'estimates' || type === 'invoices' || type === 'maintenance') && (
                 <IconButton
                   size="small"
                   onClick={handleConvert}
@@ -477,7 +493,7 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                       {title}
                     </Typography>
                   </Box>
-                  {getStatusChip(record?.status || 'Open', 0, 0)}
+                  {getStatusChip(isConverted ? 'Converted' : (record?.status || 'Open'), 0, 0)}
                 </Box>
 
                 <Divider sx={{ my: 1.5 }} />

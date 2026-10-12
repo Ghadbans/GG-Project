@@ -200,7 +200,7 @@ function ItemViewAdmin() {
   const [totalPage, SetTotalPage] = useState(0);
   const [totalItemCount, setTotalItemCount] = useState(0);
   const [page, setPage] = useState(0); // Initialize page state to 0 (0-based index)
-  const limit = 100;
+  const limit = isMobile ? 30 : 100;
   const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
   const [filterField, setFilterField] = useState(''); // Initialize filter field state

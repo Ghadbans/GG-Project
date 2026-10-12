@@ -189,7 +189,7 @@ function MaintenanceViewAdmin() {
     reschedule: 0,
     cancel: 0
   });
-  const limit = 100;
+  const limit = isMobile ? 30 : 100;
   const [searchTerm, setSearchTerm] = useState(''); // Initialize search term state
   const [filterField, setFilterField] = useState(''); // Initialize filter field state
   const [filterValue, setFilterValue] = useState(''); // Initialize filter value state
@@ -200,13 +200,18 @@ function MaintenanceViewAdmin() {
     try {
       const statusParam = statusFilter && statusFilter !== 'ALL' ? `&status=${encodeURIComponent(statusFilter)}` : '';
       const res = await axios.get(`${ENDPOINT_URL}/maintenance-Information?page=${page + 1}&limit=${limit}&search=${encodeURIComponent((searchTerm || '').trim())}&filterField=${encodeURIComponent((filterField || '').trim())}&filterValue=${encodeURIComponent((filterValue || '').trim())}${statusParam}`);
-      const formatDate = res.data.itemI.map((item) => ({
-        ...item,
-        id: item._id,
-        serviceNumber: "M-00" + item.serviceNumber,
-        dateField: dayjs(item.serviceDate).format('DD/MM/YYYY'),
-        visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
-      }));
+      const formatDate = (res.data.itemI || []).map((item) => {
+        const isConverted = (item.status === 'Close' && (item.Converted === true || item.Converted === 'true')) || item.status === 'Converted' || (item.Converted === true || item.Converted === 'true');
+        const rawNum = String(item.serviceNumber || '').replace(/^M-0*/i, '');
+        return {
+          ...item,
+          id: item._id,
+          status: isConverted ? 'Converted' : item.status,
+          serviceNumber: "M-00" + rawNum,
+          dateField: dayjs(item.serviceDate).format('DD/MM/YYYY'),
+          visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
+        };
+      });
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
       setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
       if (res.data.statusCounts) {

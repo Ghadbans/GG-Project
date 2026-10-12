@@ -73,7 +73,13 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
     ? (typeof record.invoiceNumber === 'number' ? `INV-${String(record.invoiceNumber).padStart(6, '0')}` : safeText(record.invoiceNumber, 'INV-000000'))
     : (isEstimate
       ? (typeof record.estimateNumber === 'number' ? `Q-${String(record.estimateNumber).padStart(6, '0')}` : safeText(record.estimateNumber, 'Q-000000'))
-      : (isPayment ? `PAY-${safeText(record.paymentNumber || record._id?.substring(0,6) || '001')}` : `M-${safeText(record.serviceNumber || '000000')}`));
+      : (isPayment
+        ? `PAY-${safeText(record.paymentNumber || record._id?.substring(0,6) || '001')}`
+        : (() => {
+            const raw = safeText(record.serviceNumber || '000000');
+            return raw.startsWith('M-') ? raw : `M-${raw.padStart(6, '0')}`;
+          })()
+        ));
 
   const customerName = safeText(record?.customerName?.customerName || record?.customerName || record?.customer || record?.Customer || 'VALUED CLIENT');
   const customerAddress = safeText(record?.customerAddress || record?.address || record?.customerName?.address || 'KOLWEZI, DRC');
@@ -94,6 +100,14 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
   const totalInWords = safeText(record?.totalW || record?.totalInWords || '');
 
   const handleNativePrint = () => {
+    if (window.AndroidNativePrint && typeof window.AndroidNativePrint.printDocument === 'function') {
+      try {
+        window.AndroidNativePrint.printDocument(`${docTitle}_${refNumber}`);
+        return;
+      } catch (e) {
+        console.error('AndroidNativePrint error:', e);
+      }
+    }
     window.print();
   };
 
@@ -198,7 +212,7 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
       </Box>
 
       {/* ── DOCUMENT SHEET (A4 WHITE PAPER CANVAS) ── */}
-      <DialogContent sx={{ p: { xs: 1, sm: 3 }, display: 'flex', justifyContent: 'center', overflowY: 'auto' }}>
+      <DialogContent sx={{ p: { xs: 0.5, sm: 3 }, display: 'flex', justifyContent: 'center', overflowY: 'auto' }}>
         <Box
           ref={printContentRef}
           id="printable-document-sheet"
@@ -208,7 +222,7 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
             minHeight: '1050px',
             backgroundColor: '#ffffff',
             boxShadow: '0 4px 20px rgba(0,0,0,0.35)',
-            p: { xs: 2.5, sm: 5 },
+            p: { xs: 1.5, sm: 5 },
             boxSizing: 'border-box',
             fontFamily: '"Helvetica Neue", Arial, sans-serif',
             color: '#1e293b',
@@ -328,8 +342,8 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
             </Box>
 
             {/* ── 4. ITEMS TABLE ── */}
-            <Box sx={{ mb: 3 }}>
-              <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+            <Box sx={{ mb: 3, overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+              <table style={{ width: '100%', minWidth: '520px', borderCollapse: 'collapse', fontSize: '12px' }}>
                 <thead>
                   <tr style={{ backgroundColor: '#f8fafc', borderTop: '1px solid #cbd5e1', borderBottom: '1.5px solid #0f172a' }}>
                     <th style={{ padding: '8px 6px', textAlign: 'center', width: '35px', fontWeight: 700, color: '#0f172a' }}>#</th>

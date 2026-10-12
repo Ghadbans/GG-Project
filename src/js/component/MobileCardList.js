@@ -97,9 +97,12 @@ function getStatusChip(status, balanceDue, totalAmount) {
       break;
     case 'paid':
     case 'close':
-    case 'converted':
       bg = '#DCFCE7';
       color = '#15803D';
+      break;
+    case 'converted':
+      bg = '#EDE9FE';
+      color = '#6D28D9';
       break;
     case 'open':
     case 'sent':
@@ -706,6 +709,8 @@ function MobileCardList({
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Client');
             const servNum = item.serviceNumber ? (String(item.serviceNumber).startsWith('M-') ? item.serviceNumber : `M-${String(item.serviceNumber).padStart(6, '0')}`) : `M-00${idx + 1}`;
             const date = safeText(item.dateField || item.date, '2026');
+            const isOrderConverted = item.Converted === true || item.status === 'Converted';
+            const displayStatus = isOrderConverted ? 'Converted' : (item.status || 'Open');
 
             return (
               <Card
@@ -732,7 +737,7 @@ function MobileCardList({
                     {servNum} • {customer} • {date}
                   </Typography>
                   <Box sx={{ mt: 0.8 }}>
-                    {getStatusChip(item.status || 'Open', 0, 0)}
+                    {getStatusChip(displayStatus, 0, 0)}
                   </Box>
                 </Box>
                 <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
@@ -749,6 +754,8 @@ function MobileCardList({
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, '');
             const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect || item.brand, 'Service Order');
             const date = safeText(item.dateField || item.date || item.visit, '2026');
+            const isOrderConverted = item.Converted === true || item.status === 'Converted';
+            const displayStatus = isOrderConverted ? 'Converted' : (item.status || 'Open');
 
             return (
               <Card
@@ -785,7 +792,7 @@ function MobileCardList({
                     Tech: {tech} • {date}
                   </Typography>
                   <Box sx={{ mt: 0.8 }}>
-                    {getStatusChip(item.status || 'Open', 0, 0)}
+                    {getStatusChip(displayStatus, 0, 0)}
                   </Box>
                 </Box>
                 <Box sx={{ textAlign: 'right', flexShrink: 0 }}>

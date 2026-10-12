@@ -188,7 +188,7 @@ function EstimateViewAdmin() {
   });
 
   const [page, setPage] = useState(0);
-  const limit = 100;
+  const limit = isMobile ? 30 : 100;
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [filterField, setFilterField] = useState("");
