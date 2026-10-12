@@ -195,23 +195,31 @@ function PaymentInformationForm() {
   const [invoice, setInvoice] = useState([]);
   const [project, setProject] = useState([]);
   const [oldInvoice, setOldInvoice] = useState([]);
-  const [customerId, setCustomerId] = useState(null)
+  const [customerId, setCustomerId] = useState(null);
   const handleChangeCustomer = (newValue) => {
     if (!newValue) {
       handleClear();
       return;
     }
-    const selectedOptions = customer.find((option) => option === newValue || option._id === newValue?._id || option.Customer === newValue?.Customer || option.customerName === newValue?.customerName);
-    const resolvedId = selectedOptions?._id || newValue?._id;
-    const resolvedName = selectedOptions?.Customer || selectedOptions?.customerName || newValue?.Customer || newValue?.customerName;
+    const valId = newValue._id || newValue.id;
+    const valName = newValue.Customer || newValue.customerName;
+    const selectedOptions = (customer || []).find((option) => {
+      if (!option) return false;
+      if (valId && (option._id === valId || option.id === valId)) return true;
+      if (valName && (option.Customer === valName || option.customerName === valName)) return true;
+      return false;
+    }) || newValue;
+
+    const resolvedId = selectedOptions._id || selectedOptions.id || valId || null;
+    const resolvedName = selectedOptions.Customer || selectedOptions.customerName || valName || '';
     setCustomerName({
       _id: resolvedId,
       customerName: resolvedName,
-      billingAddress: selectedOptions?.billingAddress || newValue?.billingAddress,
-      billingCity: selectedOptions?.billingCity || newValue?.billingCity
+      billingAddress: selectedOptions.billingAddress || '',
+      billingCity: selectedOptions.billingCity || ''
     });
     setCustomerId(resolvedId);
-  }
+  };
   const handleClear = () => {
     setCustomerName({
       _id: null,
@@ -674,8 +682,15 @@ function PaymentInformationForm() {
                 <Autocomplete
                   size="small"
                   options={customer || []}
-                  getOptionLabel={(option) => option?.customerName || option?.Customer || ''}
-                  value={customer?.find(c => (c._id === customerId) || (c.Customer === customerName?.customerName)) || (customerName?.customerName ? customerName : null)}
+                  getOptionLabel={(option) => {
+                    if (!option) return '';
+                    return option.Customer || option.customerName || option.customerFullName || '';
+                  }}
+                  isOptionEqualToValue={(opt, val) => {
+                    if (!opt || !val) return false;
+                    return (opt._id && val._id && opt._id === val._id) || (opt.Customer && val.customerName && opt.Customer === val.customerName);
+                  }}
+                  value={(customer || []).find(c => customerId && c._id === customerId) || (customerName?.customerName ? { Customer: customerName.customerName, _id: customerId } : null)}
                   onChange={(e, val) => handleChangeCustomer(val)}
                   renderInput={(params) => (
                     <TextField {...params} label="Select Customer *" size="small" fullWidth />

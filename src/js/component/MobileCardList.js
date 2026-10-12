@@ -242,6 +242,19 @@ function MobileCardList({
       if (statTarget === 'close' && rawStat !== 'close') return false;
     }
 
+    // Strictly enforce technician scope: Technicians can ONLY see Open or Pending orders
+    if ((type === 'maintenance' || type === 'maintenance_orders') && userName !== 'GG') {
+      const isTech = userRole?.toUpperCase() === 'TECHNICIAN' || 
+                     userRole?.toUpperCase() === 'TECHNICIEN' || 
+                     user?.data?.department?.toUpperCase() === 'TECHNICIAN' ||
+                     !grantAccess.some(row => row.moduleName === "Maintenance" && row.access.readM);
+      if (isTech) {
+        const isConverted = item.Converted === true || item.Converted === 'true' || String(item.status || '').toLowerCase() === 'converted';
+        const isClosed = String(item.status || '').toLowerCase() === 'close' || String(item.status || '').toLowerCase() === 'closed';
+        if (isConverted || isClosed) return false;
+      }
+    }
+
     // If server-side search is enabled (onSearchChange provided),
     // safeData is already the authoritative search result returned by the backend query!
     // Do not filter out valid server results with mismatched client regex.

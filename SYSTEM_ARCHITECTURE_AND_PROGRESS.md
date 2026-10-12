@@ -151,6 +151,13 @@
     - **Hierarchical Sidebar & Submenu Locking (`SidebarDash.js`, `SidebarDashE2.js`, `SideMaintenance.js`, `MobileDrawer.js`):** Parent buttons (e.g. Store, Maintenance, More) dynamically disable if the user lacks permissions for all underlying submodules. Quick Action FAB menus (`MobileDashboard.js`, `MobileCardList.js`) only render create options for modules where `createM === true`.
 
 ## Current Progress Log
+- **Technician Scope Strict Isolation, Dashboard Maintenance Status Real Counts & Payment Autocomplete Fix (Ver 3.5.74)**:
+  - **Issues Resolved**:
+    1. **Customer Autocomplete Selection Jump in Payment**: When selecting a customer like "GLOBAL PVA" from the dropdown in `PaymentInformationForm.js`, the component inadvertently jumped to "Mr. JUNIOR NUMBI". Root cause: `customer.find` contained `option.customerName === newValue?.customerName` where `customerName` was `undefined` on non-schema fields, matching the first record in the array that also had `customerName === undefined`. Fixed by checking defined `_id` and name fields explicitly and adding strict `isOptionEqualToValue`.
+    2. **Technician Seeing Converted Maintenance Orders**: In `maintenanceRoutes.js` (`/technician-maintenance-Information`), orders that had `status: 'Open'` but `Converted: true` were not excluded because `baseScopeQuery` only checked `status: { $nin: ['Close', 'Converted', 'Cancel'] }`. Added `Converted: { $nin: [true, 'true'] }` to `baseScopeQuery` and added client-side filters in `MaintenanceOrderAdmin.js` and `MobileCardList.js` so technicians strictly only see Open or Pending orders.
+    3. **Dashboard Maintenance Order Status Showing Zeros**: `MobileDashboard.js` was querying the non-existent `/maintenance-order` endpoint, which returned 404 and left counts at 0. Updated to use `/maintenance?summary=true`, respecting branch and technician assignment scoping, while hiding the Converted card for pure technician users so they only see their actionable Open and Pending orders.
+  - **Release & Distribution**: Bumped version to `3.5.74`, verified pre-build AST checks, compiled web bundles, synced Capacitor, and built Android debug APK.
+
 - **Payment Module Invoice Display & Mobile Payment Allocation (Ver 3.5.73)**:
   - **Issue Resolved**: When recording or updating payments in the mobile app, selecting a customer failed to display any unpaid invoices to apply payments against.
   - **Root Cause & Technical Fixes**:

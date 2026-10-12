@@ -225,20 +225,56 @@ function MobileDashboardContent() {
     if (!isSuperOrCEO) {
       const fetchMaint = async () => {
         try {
-          const res = await cachedGet(`${ENDPOINT_URL}/maintenance-order`);
+          const res = await cachedGet(`${ENDPOINT_URL}/maintenance?summary=true`);
           const orders = Array.isArray(res?.data?.data) ? res.data.data : [];
           const activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
-          const branchOrders = orders.filter(o => !o?.branch || activeBranch === 'HQ' || o.branch === activeBranch);
-          setMaintenanceStats({
-            open: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'open').length,
-            pending: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'pending').length,
-            converted: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'converted' || String(o.status || '').toLowerCase() === 'close').length,
+          
+          // If technician has specific assignment, filter to their assigned orders
+          const userTechOrders = orders.filter(o => {
+            if (!o) return false;
+            const matchesBranch = !o.branchId || activeBranch === 'ALL' || o.branchId === activeBranch;
+            if (!matchesBranch) return false;
+            // If technician, scope to their assigned orders
+            if (userName && userName !== 'GG') {
+              const assigned = String(o.technicianAssign || '').trim().toLowerCase();
+              const current = String(userName).trim().toLowerCase();
+              if (assigned && assigned !== current) return false;
+            }
+            return true;
           });
-        } catch (e) {}
+
+          // Open: status === 'Open' and not converted
+          const openCount = userTechOrders.filter(o => {
+            const st = String(o.status || '').toLowerCase();
+            const isConverted = o.Converted === true || o.Converted === 'true' || st === 'converted';
+            return st === 'open' && !isConverted;
+          }).length;
+
+          // Pending: status === 'Pending' and not converted
+          const pendingCount = userTechOrders.filter(o => {
+            const st = String(o.status || '').toLowerCase();
+            const isConverted = o.Converted === true || o.Converted === 'true' || st === 'converted';
+            return st === 'pending' && !isConverted;
+          }).length;
+
+          // Converted / Closed: Converted or Close
+          const convertedCount = userTechOrders.filter(o => {
+            const st = String(o.status || '').toLowerCase();
+            return o.Converted === true || o.Converted === 'true' || st === 'converted' || st === 'close';
+          }).length;
+
+          setMaintenanceStats({
+            open: openCount,
+            pending: pendingCount,
+            converted: convertedCount,
+          });
+        } catch (e) {
+          console.error('Error fetching maintenance stats in MobileDashboard:', e);
+        }
       };
       fetchMaint();
     }
-  }, [isSuperOrCEO]);
+  }, [isSuperOrCEO, userName]);
 
   const canCreate = (mod) => canAccessModule(user?.data, grantAccess, mod, 'create');
 
@@ -555,24 +591,26 @@ function MobileDashboardContent() {
               <AssignmentIcon sx={{ color: '#F59E0B', fontSize: 20 }} /> Maintenance Orders Status
             </Typography>
             <Grid container spacing={1}>
-              <Grid item xs={4}>
+              <Grid item xs={grantAccess.some(r => r.moduleName === "Maintenance" && r.access.readM) || isSuperOrCEO ? 4 : 6}>
                 <Box sx={{ p: 1.2, backgroundColor: '#FEF3C7', borderRadius: 2.5, textAlign: 'center' }}>
                   <Typography variant="caption" sx={{ color: '#D97706', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Open</Typography>
                   <Typography variant="h6" sx={{ fontWeight: 800, color: '#92400E', mt: 0.2 }}>{maintenanceStats.open}</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={grantAccess.some(r => r.moduleName === "Maintenance" && r.access.readM) || isSuperOrCEO ? 4 : 6}>
                 <Box sx={{ p: 1.2, backgroundColor: '#EFF6FF', borderRadius: 2.5, textAlign: 'center' }}>
                   <Typography variant="caption" sx={{ color: '#2563EB', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Pending</Typography>
                   <Typography variant="h6" sx={{ fontWeight: 800, color: '#1E40AF', mt: 0.2 }}>{maintenanceStats.pending}</Typography>
                 </Box>
               </Grid>
-              <Grid item xs={4}>
-                <Box sx={{ p: 1.2, backgroundColor: '#ECFDF5', borderRadius: 2.5, textAlign: 'center' }}>
-                  <Typography variant="caption" sx={{ color: '#059669', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Converted</Typography>
-                  <Typography variant="h6" sx={{ fontWeight: 800, color: '#065F46', mt: 0.2 }}>{maintenanceStats.converted}</Typography>
-                </Box>
-              </Grid>
+              {(grantAccess.some(r => r.moduleName === "Maintenance" && r.access.readM) || isSuperOrCEO) && (
+                <Grid item xs={4}>
+                  <Box sx={{ p: 1.2, backgroundColor: '#ECFDF5', borderRadius: 2.5, textAlign: 'center' }}>
+                    <Typography variant="caption" sx={{ color: '#059669', fontWeight: 700, fontSize: '0.75rem', display: 'block' }}>Converted</Typography>
+                    <Typography variant="h6" sx={{ fontWeight: 800, color: '#065F46', mt: 0.2 }}>{maintenanceStats.converted}</Typography>
+                  </Box>
+                </Grid>
+              )}
             </Grid>
           </Card>
         )}

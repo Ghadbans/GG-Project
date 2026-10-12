@@ -200,15 +200,23 @@ function MaintenanceOrderAdmin() {
       const isOffice = (user?.data?.role === 'CEO' || hasMainMaintenance);
       const statusParam = statusFilter && statusFilter !== 'ALL' ? `&status=${encodeURIComponent(statusFilter)}` : '';
       const res = await axios.get(`${ENDPOINT_URL}/technician-maintenance-Information?technician=${encodeURIComponent(user?.data?.userName || '')}&isOffice=${isOffice}&page=${page + 1}&limit=${limit}&search=${encodeURIComponent((searchTerm || '').trim())}${statusParam}`);
-      const formatDate = res.data.itemI.map((item) => ({
+      const formatDate = (res.data.itemI || []).filter((item) => {
+        if (!item) return false;
+        if (!isOffice) {
+          const isConverted = item.Converted === true || item.Converted === 'true' || String(item.status || '').toLowerCase() === 'converted';
+          const isClosed = String(item.status || '').toLowerCase() === 'close' || String(item.status || '').toLowerCase() === 'closed';
+          if (isConverted || isClosed) return false;
+        }
+        return true;
+      }).map((item) => ({
         ...item,
         id: item._id,
         serviceNumber: "M-00" + item.serviceNumber,
         dateField: dayjs(item.serviceDate).format('DD/MM/YYYY'),
         visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
       }));
-      SetTotalPage(Math.ceil(res.data.totalItem / limit));
-      setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
+      SetTotalPage(Math.ceil((res.data.totalItem || 0) / limit));
+      setTotalItemCount(formatDate.length);
       setMaintenance(formatDate);
       if (res.data.statusCounts) {
         setStatusCounts(res.data.statusCounts);

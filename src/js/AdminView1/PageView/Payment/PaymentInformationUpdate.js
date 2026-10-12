@@ -240,15 +240,29 @@ function PaymentInformationUpdate() {
   // get Invoice 
   const [oldInvoice, setOldInvoice] = useState([]);
   const handleChangeCustomer = (newValue) => {
-    const selectedOptions = customer.find((option) => option === newValue)
+    if (!newValue) {
+      handleClear();
+      return;
+    }
+    const valId = newValue._id || newValue.id;
+    const valName = newValue.Customer || newValue.customerName;
+    const selectedOptions = (customer || []).find((option) => {
+      if (!option) return false;
+      if (valId && (option._id === valId || option.id === valId)) return true;
+      if (valName && (option.Customer === valName || option.customerName === valName)) return true;
+      return false;
+    }) || newValue;
+
+    const resolvedId = selectedOptions._id || selectedOptions.id || valId || null;
+    const resolvedName = selectedOptions.Customer || selectedOptions.customerName || valName || '';
     setCustomerName({
-      _id: selectedOptions?._id,
-      customerName: selectedOptions?.Customer,
-      billingAddress: selectedOptions?.billingAddress,
-      billingCity: selectedOptions?.billingCity
+      _id: resolvedId,
+      customerName: resolvedName,
+      billingAddress: selectedOptions.billingAddress || '',
+      billingCity: selectedOptions.billingCity || ''
     });
-    setCustomerId(selectedOptions?._id)
-  }
+    setCustomerId(resolvedId);
+  };
   const handleClear = () => {
     setCustomerName({
       _id: null,

@@ -65,7 +65,10 @@ Route.route('/technician-maintenance-Information').get(async (req, res) => {
     const { page = 1, limit = 100, search = '', technician, isOffice, status } = req.query;
     const skip = (Number(page) - 1) * Number(limit);
 
-    const baseScopeQuery = { status: { $nin: ['Close', 'Converted', 'Cancel'] } };
+    const baseScopeQuery = {
+      status: { $nin: ['Close', 'Converted', 'Cancel'] },
+      Converted: { $nin: [true, 'true'] }
+    };
     if (isOffice !== 'true' && technician) {
       baseScopeQuery.technicianAssign = technician;
     }
