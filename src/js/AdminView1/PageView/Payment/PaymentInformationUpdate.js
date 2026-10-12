@@ -37,7 +37,7 @@ import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { useIsMobile } from '../../../utils/isMobile';
-import { Button, Card } from '@mui/material';
+import { Button, Card, Chip } from '@mui/material';
 import { invalidateCache } from '../../../utils/apiCache';
 
 import { parse } from 'uuid';
@@ -262,39 +262,71 @@ function PaymentInformationUpdate() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
-        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
-        if (customerId !== null) {
-          if (reason === "Invoice") {
-            const filterData = res.data?.data?.filter((row) => row.customerName._id === customerId);
-            setOldInvoice(filterData)
-            const exInvoice = filterData?.filter((row) => row.status === 'Sent' || row.status === 'Partially-Paid' && !invoice1.some((row1) => row1.id === row._id))
-              .map((row) => ({
+        const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`);
+        const resProject = await axios.get(`${ENDPOINT_URL}/projects`).catch(() => ({ data: { data: [] } }));
+        if (customerId !== null && customerId !== undefined) {
+          if (reason === "Invoice" || !reason) {
+            const filterData = (res.data?.data || []).filter((row) => {
+              if (!row) return false;
+              const rowCustId = row.customerName?._id || row.customerName?.id || row.customerId || (typeof row.customerName === 'string' && row.customerName.length === 24 ? row.customerName : null);
+              if (rowCustId && customerId && String(rowCustId) === String(customerId)) return true;
+
+              const rowCustName = String(row.customerName?.customerName || row.customerName?.Customer || row.customerName || row.Customer || '').trim().toLowerCase();
+              const targetCustName = String(customerName?.customerName || customerName?.Customer || '').trim().toLowerCase();
+              if (rowCustName && targetCustName && rowCustName === targetCustName) return true;
+
+              return false;
+            });
+            setOldInvoice(filterData);
+
+            // Invoices awaiting payment or already attached to this payment
+            const exInvoice = filterData.filter((row) => {
+              if (!row) return false;
+              const isAlreadyAttached = (invoice1 || []).some((row1) => String(row1.id || row1._id) === String(row._id));
+              if (isAlreadyAttached) return false;
+
+              const st = String(row.status || '').trim().toLowerCase();
+              if (st === 'paid' || st === 'void' || st === 'decline' || st === 'free of charge') return false;
+              const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
+              const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
+              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : (totalInv - currentPaid));
+              return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+            }).map((row) => {
+              const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
+              const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
+              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
+              return {
                 id: row._id,
                 customerName: row.customerName,
                 total: 0,
                 amountPaidFC: 0,
                 amountPaidUSD: 0,
-                rateChange: rate,
+                rateChange: rate || 1,
                 totalConverted: 0,
                 Ref: row.invoiceNumber,
                 prefix: (row.ReferenceName2 || row.invoicePurchase === 'Purchased') ? "P-" : "INV-",
-                balanceDue: row.balanceDue,
-                invoiceAmount: row.totalInvoice,
-                status: row.status,
+                balanceDue: bal,
+                invoiceAmount: totalInv,
+                status: row.status || 'Draft',
                 invoiceDate: row.invoiceDate
-              }))
-            setInvoice([...invoice1, ...exInvoice])
+              };
+            });
+            setInvoice([...(invoice1 || []), ...exInvoice]);
           } else if (reason === "Project") {
-            const filterData2 = resProject.data?.data?.filter((row) => row.customerName?._id === customerId && row.status === "On-Going");
-            const exProject = filterData2.filter((row) => !invoice1.some((row1) => row1.id === row._id))
+            const filterData2 = (resProject.data?.data || []).filter((row) => {
+              const rowCustId = row.customerName?._id || row.customerName?.id || row.customerId;
+              const matchId = rowCustId && customerId && String(rowCustId) === String(customerId);
+              const matchName = String(row.customerName?.customerName || row.customerName || '').trim().toLowerCase() === String(customerName?.customerName || '').trim().toLowerCase();
+              return (matchId || matchName) && row.status === "On-Going";
+            });
+            const exProject = filterData2.filter((row) => !(invoice1 || []).some((row1) => row1.id === row._id))
               .map((row) => ({
                 id: row._id,
                 customerName: row.customerName,
                 total: 0,
                 amountPaidFC: 0,
                 amountPaidUSD: 0,
-                rateChange: rate,
+                rateChange: rate || 1,
                 totalConverted: 0,
                 Ref: row.projectNumber,
                 prefix: "P-",
@@ -302,16 +334,16 @@ function PaymentInformationUpdate() {
                 invoiceAmount: row.budget !== undefined ? row.budget : 0,
                 status: "",
                 invoiceDate: row.startDate
-              }))
-            setInvoice([...invoice1, ...exProject])
+              }));
+            setInvoice([...(invoice1 || []), ...exProject]);
           }
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
-    fetchData()
-  }, [customerId, invoice1, reason])
+    };
+    fetchData();
+  }, [customerId, customerName?.customerName, invoice1, reason]);
 
   const handleChangeCEO = (e, idRow) => {
     const { name, value } = e.target;
@@ -697,6 +729,137 @@ function PaymentInformationUpdate() {
               </Grid>
             </Grid>
           </Card>
+
+          {/* Card 2: Invoices / Payment Allocation */}
+          {reason === 'Invoice' && (
+            <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                <Box>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', textTransform: 'uppercase', fontSize: '0.82rem' }}>
+                    Invoices ({invoice?.length || 0})
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#64748B' }}>
+                    {customerName?.customerName || customerName?.customerFullName || customerName?.Customer || 'Customer Invoices'}
+                  </Typography>
+                </Box>
+                {invoice && invoice.length > 0 && Number(amount) > 0 && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={handlePayment}
+                    sx={{ textTransform: 'none', fontWeight: 700, fontSize: '0.75rem', borderColor: '#30368a', color: '#30368a' }}
+                  >
+                    Auto-Allocate
+                  </Button>
+                )}
+              </Box>
+
+              {(!invoice || invoice.length === 0) ? (
+                <Box sx={{ p: 2.5, textAlign: 'center', backgroundColor: '#F8FAFC', borderRadius: 2 }}>
+                  <Typography variant="body2" sx={{ color: '#64748B', fontWeight: 500 }}>
+                    No invoices attached or awaiting payment.
+                  </Typography>
+                </Box>
+              ) : (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  {invoice.map((row, idx) => {
+                    const balDue = Number(row.balanceDue || 0);
+                    const paidUSD = Number(row.amountPaidUSD || 0);
+                    const refDisplay = `${row.prefix || 'INV-'}${String(row.Ref || '').padStart(6, '0')}`;
+                    return (
+                      <Box
+                        key={row.id || idx}
+                        sx={{
+                          p: 1.75,
+                          borderRadius: 2.5,
+                          backgroundColor: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 1
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <Box>
+                            <Typography variant="body2" sx={{ fontWeight: 700, color: '#0F172A' }}>
+                              {refDisplay}
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#64748B' }}>
+                              {row.invoiceDate ? dayjs(row.invoiceDate).format('DD/MM/YYYY') : 'No date'}
+                            </Typography>
+                          </Box>
+                          <Chip
+                            label={row.status || 'Draft'}
+                            size="small"
+                            sx={{
+                              height: 22,
+                              fontSize: '0.7rem',
+                              fontWeight: 700,
+                              backgroundColor: row.status === 'Sent' ? '#DBEAFE' : row.status === 'Partially-Paid' ? '#FEF3C7' : '#F1F5F9',
+                              color: row.status === 'Sent' ? '#1E40AF' : row.status === 'Partially-Paid' ? '#92400E' : '#475569'
+                            }}
+                          />
+                        </Box>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <Typography variant="caption" sx={{ color: '#64748B' }}>
+                            Total: <strong style={{ color: '#0F172A' }}>${Number(row.invoiceAmount || 0).toFixed(2)}</strong>
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#DC2626', fontWeight: 700 }}>
+                            Due: ${balDue.toFixed(2)}
+                          </Typography>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mt: 0.5 }}>
+                          <TextField
+                            size="small"
+                            type="number"
+                            label="Pay Amount ($)"
+                            value={row.amountPaidUSD || ''}
+                            name="amountPaidUSD"
+                            onChange={(e) => {
+                              handleChangeCEO(e, row.id);
+                              setTimeout(() => {
+                                const currentTotal = invoice.reduce((sum, item) => sum + (item.id === row.id ? (Number(e.target.value) || 0) : Number(item.amountPaidUSD || 0)), 0);
+                                if (!amount || Number(amount) < currentTotal) {
+                                  setAmount(currentTotal);
+                                }
+                              }, 0);
+                            }}
+                            sx={{ flex: 1, backgroundColor: '#ffffff', borderRadius: 1 }}
+                            inputProps={{ min: 0, step: 'any' }}
+                          />
+                          <Button
+                            size="small"
+                            variant="text"
+                            onClick={() => {
+                              const syntheticEvent = { target: { name: 'amountPaidUSD', value: balDue } };
+                              handleChangeCEO(syntheticEvent, row.id);
+                              setTimeout(() => {
+                                const currentTotal = invoice.reduce((sum, item) => sum + (item.id === row.id ? balDue : Number(item.amountPaidUSD || 0)), 0);
+                                if (!amount || Number(amount) < currentTotal) {
+                                  setAmount(currentTotal);
+                                }
+                              }, 0);
+                            }}
+                            sx={{
+                              textTransform: 'none',
+                              fontWeight: 700,
+                              fontSize: '0.75rem',
+                              color: '#30368a',
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            Pay Full
+                          </Button>
+                        </Box>
+                      </Box>
+                    );
+                  })}
+                </Box>
+              )}
+            </Card>
+          )}
 
           {/* Bottom Save Button */}
           <Button

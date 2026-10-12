@@ -151,6 +151,16 @@
     - **Hierarchical Sidebar & Submenu Locking (`SidebarDash.js`, `SidebarDashE2.js`, `SideMaintenance.js`, `MobileDrawer.js`):** Parent buttons (e.g. Store, Maintenance, More) dynamically disable if the user lacks permissions for all underlying submodules. Quick Action FAB menus (`MobileDashboard.js`, `MobileCardList.js`) only render create options for modules where `createM === true`.
 
 ## Current Progress Log
+- **Payment Module Invoice Display & Mobile Payment Allocation (Ver 3.5.73)**:
+  - **Issue Resolved**: When recording or updating payments in the mobile app, selecting a customer failed to display any unpaid invoices to apply payments against.
+  - **Root Cause & Technical Fixes**:
+    - **Mobile Customer Selection (`PaymentInformationForm.js`)**: Fixed mobile `Autocomplete` `onChange` to invoke `handleChangeCustomer(val)` rather than solely setting local object state. This ensures `customerId` is correctly resolved and triggers the invoice fetch `useEffect`.
+    - **Payment Reason Defaulting**: Initialized `reason` state to `'Invoice'` and added a mobile `Payment Reason` dropdown selector (`Invoice`, `Project`, `Customer Credit`), ensuring invoice data queries are executed upon customer selection.
+    - **Resilient Customer Matching**: Replaced brittle `row.customerName._id === customerId` matching with multi-attribute fallback checking `rowCustId === customerId` or matching normalized customer names, supporting invoices created across web, desktop, and mobile.
+    - **Inclusive Unpaid Status Filter**: Expanded invoice filtering beyond strict `'Sent'` / `'Partially-Paid'` to include newly created `'Draft'` and `'Pending'` invoices with `balanceDue > 0`, while excluding finalized (`'Paid'`, `'Void'`, `'Decline'`, `'Free of Charge'`).
+    - **Dedicated Mobile Invoices Allocation Card (Card 2)**: Added an interactive Card 2 on mobile in both `PaymentInformationForm.js` and `PaymentInformationUpdate.js` showing all unpaid invoices with reference code (`INV-000xxx`), invoice date, status chip, original total, balance due, per-invoice payment amount input, "Pay Full" button, and an "Auto-Allocate" button.
+  - **Release & Distribution**: Bumped version to `3.5.73`, compiled production web assets, synced to native mobile platform via Capacitor, and compiled Android debug APK.
+
 - **Maintenance Module Rate & Price Edit Permissions for CEO & Admin vs USER Level (Ver 3.5.60)**:
   - **Clarified & Unified Rate/Price Edit Permissions (`MaintenanceUpdateView.js`, `MaintenanceFormView.js`, `ItemUpdateView2.js`)**:
     - **`CEO` and `ADMIN` (and `GG`)**: Have full authority to change/edit item rates directly in the `itemRate` text field for both catalog items and empty manual custom item description boxes, as well as view and edit `Cost Unit Price` and `Selling Unit Price` inside the item edit modal (`ItemUpdateView2.js`).

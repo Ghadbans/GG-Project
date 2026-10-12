@@ -4,9 +4,7 @@ import '../../view.css';
 import '../Chartview.css';
 import SearchIcon from '@mui/icons-material/Search';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, TableContainer, OutlinedInput, InputAdornment, Modal, Backdrop, Divider } from '@mui/material'
-import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
+import { MenuItem, Grid, IconButton, Paper, TextField, FormControl, InputLabel, Select, Typography, styled, Box, Autocomplete, TableContainer, OutlinedInput, InputAdornment, Modal, Backdrop, Divider, Chip } from '@mui/material'
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -166,8 +164,8 @@ function PaymentInformationForm() {
     billingCity: null
   });
   const [bankCharge, setBankCharge] = useState(0);
-  const [modes, setModes] = useState('');
-  const [reason, setReason] = useState('');
+  const [modes, setModes] = useState('Cash');
+  const [reason, setReason] = useState('Invoice');
   const [paymentDate, setPaymentDate] = useState(() => {
     const date = new Date()
     return date
@@ -199,14 +197,20 @@ function PaymentInformationForm() {
   const [oldInvoice, setOldInvoice] = useState([]);
   const [customerId, setCustomerId] = useState(null)
   const handleChangeCustomer = (newValue) => {
-    const selectedOptions = customer.find((option) => option === newValue)
+    if (!newValue) {
+      handleClear();
+      return;
+    }
+    const selectedOptions = customer.find((option) => option === newValue || option._id === newValue?._id || option.Customer === newValue?.Customer || option.customerName === newValue?.customerName);
+    const resolvedId = selectedOptions?._id || newValue?._id;
+    const resolvedName = selectedOptions?.Customer || selectedOptions?.customerName || newValue?.Customer || newValue?.customerName;
     setCustomerName({
-      _id: selectedOptions?._id,
-      customerName: selectedOptions?.Customer,
-      billingAddress: selectedOptions?.billingAddress,
-      billingCity: selectedOptions?.billingCity
+      _id: resolvedId,
+      customerName: resolvedName,
+      billingAddress: selectedOptions?.billingAddress || newValue?.billingAddress,
+      billingCity: selectedOptions?.billingCity || newValue?.billingCity
     });
-    setCustomerId(selectedOptions?._id)
+    setCustomerId(resolvedId);
   }
   const handleClear = () => {
     setCustomerName({
@@ -221,41 +225,74 @@ function PaymentInformationForm() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`)
-        const resProject = await axios.get(`${ENDPOINT_URL}/projects`)
-        const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
-        if (customerId !== null) {
-          if (reason === "Invoice") {
-            const filterData = res.data?.data?.filter((row) => row.customerName._id === customerId);
-            setOldInvoice(filterData)
+        const [res, resProject, resPurchase] = await Promise.all([
+          axios.get(`${ENDPOINT_URL}/invoice?summary=true`),
+          axios.get(`${ENDPOINT_URL}/projects`).catch(() => ({ data: { data: [] } })),
+          axios.get(`${ENDPOINT_URL}/purchase?summary=true`).catch(() => ({ data: { data: [] } }))
+        ]);
+        if (customerId !== null && customerId !== undefined) {
+          if (reason === "Invoice" || !reason) {
+            const filterData = (res.data?.data || []).filter((row) => {
+              if (!row) return false;
+              const rowCustId = row.customerName?._id || row.customerName?.id || row.customerId || (typeof row.customerName === 'string' && row.customerName.length === 24 ? row.customerName : null);
+              if (rowCustId && customerId && String(rowCustId) === String(customerId)) return true;
+
+              const rowCustName = String(row.customerName?.customerName || row.customerName?.Customer || row.customerName || row.Customer || '').trim().toLowerCase();
+              const targetCustName = String(customerName?.customerName || customerName?.Customer || '').trim().toLowerCase();
+              if (rowCustName && targetCustName && rowCustName === targetCustName) return true;
+
+              return false;
+            });
+            setOldInvoice(filterData);
+
+            // Invoices awaiting payment: include Draft, Sent, Pending, Partially-Paid, and any with balanceDue > 0
+            const unpaidInvoices = filterData.filter((row) => {
+              if (!row) return false;
+              const st = String(row.status || '').trim().toLowerCase();
+              if (st === 'paid' || st === 'void' || st === 'decline' || st === 'free of charge') return false;
+              const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
+              const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
+              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : (totalInv - currentPaid));
+              return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+            });
+
             setInvoice(
-              filterData.filter((row) => row.status === 'Sent' || row.status === 'Partially-Paid')
-                .map((row) => ({
+              unpaidInvoices.map((row) => {
+                const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
+                const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
+                const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
+                return {
                   id: row._id,
                   customerName: row.customerName,
                   total: 0,
                   amountPaidFC: 0,
                   amountPaidUSD: 0,
-                  rateChange: rate,
+                  rateChange: rate || 1,
                   totalConverted: 0,
                   Ref: row.invoiceNumber,
                   prefix: (row.ReferenceName2 || row.invoicePurchase === 'Purchased') ? "P-" : "INV-",
-                  balanceDue: row.balanceDue,
-                  invoiceAmount: row.totalInvoice,
-                  status: row.status,
+                  balanceDue: bal,
+                  invoiceAmount: totalInv,
+                  status: row.status || 'Draft',
                   invoiceDate: row.invoiceDate
-                }))
-            )
+                };
+              })
+            );
           } else if (reason === "Project") {
-            const filterData2 = resProject.data?.data?.filter((row) => row.customerName?._id === customerId && row.status === "On-Going");
-            setProject(filterData2)
+            const filterData2 = (resProject.data?.data || []).filter((row) => {
+              const rowCustId = row.customerName?._id || row.customerName?.id || row.customerId;
+              const matchId = rowCustId && customerId && String(rowCustId) === String(customerId);
+              const matchName = String(row.customerName?.customerName || row.customerName || '').trim().toLowerCase() === String(customerName?.customerName || '').trim().toLowerCase();
+              return (matchId || matchName) && row.status === "On-Going";
+            });
+            setProject(filterData2);
             setInvoice(filterData2.map((row) => ({
               id: row._id,
               customerName: row.customerName,
               total: 0,
               amountPaidFC: 0,
               amountPaidUSD: 0,
-              rateChange: rate,
+              rateChange: rate || 1,
               totalConverted: 0,
               Ref: row.projectNumber,
               prefix: "P-",
@@ -263,7 +300,7 @@ function PaymentInformationForm() {
               invoiceAmount: row.budget !== undefined ? row.budget : 0,
               status: "",
               invoiceDate: row.startDate
-            })))
+            })));
           } else if (reason === "Customer Credit") {
             setInvoice([{
               id: customerId,
@@ -271,22 +308,22 @@ function PaymentInformationForm() {
               total: 0,
               amountPaidFC: 0,
               amountPaidUSD: 0,
-              rateChange: rate,
+              rateChange: rate || 1,
               totalConverted: 0,
               Ref: 'Credit',
               balanceDue: oldCredit || 0,
               invoiceAmount: oldCredit || 0,
               status: "",
               invoiceDate: new Date()
-            }])
+            }]);
           }
         }
       } catch (error) {
         console.error('Error fetching data:', error);
       }
-    }
-    fetchData()
-  }, [customerId, reason])
+    };
+    fetchData();
+  }, [customerId, customerName?.customerName, reason]);
 
   const handleChangeCEO = (e, idRow) => {
     const { name, value } = e.target;
@@ -638,12 +675,27 @@ function PaymentInformationForm() {
                   size="small"
                   options={customer || []}
                   getOptionLabel={(option) => option?.customerName || option?.Customer || ''}
-                  value={customerName?.customerName ? customerName : null}
-                  onChange={(e, val) => setCustomerName(val || {})}
+                  value={customer?.find(c => (c._id === customerId) || (c.Customer === customerName?.customerName)) || (customerName?.customerName ? customerName : null)}
+                  onChange={(e, val) => handleChangeCustomer(val)}
                   renderInput={(params) => (
                     <TextField {...params} label="Select Customer *" size="small" fullWidth />
                   )}
                 />
+              </Grid>
+
+              <Grid item xs={12}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Payment Reason</InputLabel>
+                  <Select
+                    value={reason || 'Invoice'}
+                    label="Payment Reason"
+                    onChange={(e) => setReason(e.target.value)}
+                  >
+                    <MenuItem value="Invoice">Invoice</MenuItem>
+                    <MenuItem value="Project">Project</MenuItem>
+                    <MenuItem value="Customer Credit">Customer Credit</MenuItem>
+                  </Select>
+                </FormControl>
               </Grid>
 
               <Grid item xs={12}>
@@ -664,7 +716,7 @@ function PaymentInformationForm() {
                   <Select
                     value={modes || 'Cash'}
                     label="Payment Mode"
-                    onChange={(e) => setModes(e.target.value)}
+                    onChange={(e) => handleChangeModes(e)}
                   >
                     <MenuItem value="Cash">Cash</MenuItem>
                     <MenuItem value="Bank-Transfer">Bank Transfer</MenuItem>
@@ -702,6 +754,138 @@ function PaymentInformationForm() {
               </Grid>
             </Grid>
           </Card>
+
+          {/* Card 2: Unpaid Invoices / Invoices to Pay */}
+          {reason === 'Invoice' && (
+            <Card sx={{ borderRadius: 3.5, p: 2.5, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+                <Box>
+                  <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', textTransform: 'uppercase', fontSize: '0.82rem' }}>
+                    Unpaid Invoices ({invoice?.length || 0})
+                  </Typography>
+                  <Typography variant="caption" sx={{ color: '#64748B' }}>
+                    {customerId ? (customerName?.customerName || 'Selected Customer') : 'Choose a customer above to view invoices'}
+                  </Typography>
+                </Box>
+                {invoice && invoice.length > 0 && Number(amount) > 0 && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    onClick={handlePayment}
+                    sx={{ textTransform: 'none', fontWeight: 700, fontSize: '0.75rem', borderColor: '#30368a', color: '#30368a' }}
+                  >
+                    Auto-Allocate
+                  </Button>
+                )}
+              </Box>
+
+              {(!invoice || invoice.length === 0) ? (
+                <Box sx={{ p: 2.5, textAlign: 'center', backgroundColor: '#F8FAFC', borderRadius: 2 }}>
+                  <Typography variant="body2" sx={{ color: '#64748B', fontWeight: 500 }}>
+                    {customerId ? 'No unpaid invoices found for this customer.' : 'Select a customer to see invoices awaiting payment.'}
+                  </Typography>
+                </Box>
+              ) : (
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                  {invoice.map((row, idx) => {
+                    const balDue = Number(row.balanceDue || 0);
+                    const paidUSD = Number(row.amountPaidUSD || 0);
+                    const refDisplay = `${row.prefix || 'INV-'}${String(row.Ref || '').padStart(6, '0')}`;
+                    return (
+                      <Box
+                        key={row.id || idx}
+                        sx={{
+                          p: 1.75,
+                          borderRadius: 2.5,
+                          backgroundColor: '#F8FAFC',
+                          border: '1px solid #E2E8F0',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: 1
+                        }}
+                      >
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <Box>
+                            <Typography variant="body2" sx={{ fontWeight: 700, color: '#0F172A' }}>
+                              {refDisplay}
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#64748B' }}>
+                              {row.invoiceDate ? dayjs(row.invoiceDate).format('DD/MM/YYYY') : 'No date'}
+                            </Typography>
+                          </Box>
+                          <Chip
+                            label={row.status || 'Draft'}
+                            size="small"
+                            sx={{
+                              height: 22,
+                              fontSize: '0.7rem',
+                              fontWeight: 700,
+                              backgroundColor: row.status === 'Sent' ? '#DBEAFE' : row.status === 'Partially-Paid' ? '#FEF3C7' : '#F1F5F9',
+                              color: row.status === 'Sent' ? '#1E40AF' : row.status === 'Partially-Paid' ? '#92400E' : '#475569'
+                            }}
+                          />
+                        </Box>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <Typography variant="caption" sx={{ color: '#64748B' }}>
+                            Total: <strong style={{ color: '#0F172A' }}>${Number(row.invoiceAmount || 0).toFixed(2)}</strong>
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#DC2626', fontWeight: 700 }}>
+                            Due: ${balDue.toFixed(2)}
+                          </Typography>
+                        </Box>
+
+                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mt: 0.5 }}>
+                          <TextField
+                            size="small"
+                            type="number"
+                            label="Pay Amount ($)"
+                            value={row.amountPaidUSD || ''}
+                            name="amountPaidUSD"
+                            onChange={(e) => {
+                              handleChangeCEO(e, row.id);
+                              // Keep total payment amount synchronized if user edits invoice rows directly
+                              setTimeout(() => {
+                                const currentTotal = invoice.reduce((sum, item) => sum + (item.id === row.id ? (Number(e.target.value) || 0) : Number(item.amountPaidUSD || 0)), 0);
+                                if (!amount || Number(amount) < currentTotal) {
+                                  setAmount(currentTotal);
+                                }
+                              }, 0);
+                            }}
+                            sx={{ flex: 1, backgroundColor: '#ffffff', borderRadius: 1 }}
+                            inputProps={{ min: 0, max: balDue, step: 'any' }}
+                          />
+                          <Button
+                            size="small"
+                            variant="text"
+                            onClick={() => {
+                              const syntheticEvent = { target: { name: 'amountPaidUSD', value: balDue } };
+                              handleChangeCEO(syntheticEvent, row.id);
+                              setTimeout(() => {
+                                const currentTotal = invoice.reduce((sum, item) => sum + (item.id === row.id ? balDue : Number(item.amountPaidUSD || 0)), 0);
+                                if (!amount || Number(amount) < currentTotal) {
+                                  setAmount(currentTotal);
+                                }
+                              }, 0);
+                            }}
+                            sx={{
+                              textTransform: 'none',
+                              fontWeight: 700,
+                              fontSize: '0.75rem',
+                              color: '#30368a',
+                              whiteSpace: 'nowrap'
+                            }}
+                          >
+                            Pay Full
+                          </Button>
+                        </Box>
+                      </Box>
+                    );
+                  })}
+                </Box>
+              )}
+            </Card>
+          )}
 
           {/* Bottom Save Button */}
           <Button
