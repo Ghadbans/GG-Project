@@ -237,6 +237,8 @@ function TewmViewAdmin() {
     // Online-only: syncOff logic removed
   }
   useEffect(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
     fetchData()
   }, [])
   const [open, setOpen] = useState(false);

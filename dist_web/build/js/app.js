@@ -92551,12 +92551,14 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 function SideMaintenance(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7;
-  var onView = _ref.onView;
+  var onView = _ref.onView,
+    isSubmenu = _ref.isSubmenu;
   var navigate = (0,dist/* useNavigate */.Zp)();
   var location = (0,dist/* useLocation */.zy)();
   var isActive = path => {
     return location.pathname === path;
   };
+  var isNestedSubmenu = Boolean(isSubmenu || onView);
   var _useState = (0,react.useState)(0),
     _useState2 = _slicedToArray(_useState, 2),
     view2 = _useState2[0],
@@ -92569,6 +92571,15 @@ function SideMaintenance(_ref) {
     setShow1(e);
     setView(e);
   };
+  var handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+  (0,react.useEffect)(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   var dispatch = (0,es/* useDispatch */.wA)();
   var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
   (0,react.useEffect)(() => {
@@ -92625,7 +92636,7 @@ function SideMaintenance(_ref) {
   var ReturnInfo = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.readM === true);
   var IPurchaseInfo = grantAccess.filter(row => row.moduleName === "Item-Purchase" && row.access.readM === true);
   var PurchaseOrderInfo = grantAccess.filter(row => row.moduleName === "Purchase-Order" && row.access.readM === true);
-  return /*#__PURE__*/react.createElement(react.Fragment, null, show1 === 1 ? /*#__PURE__*/react.createElement("div", null, parseInt(onView) === 3 ? null : /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  return /*#__PURE__*/react.createElement(react.Fragment, null, show1 === 1 ? /*#__PURE__*/react.createElement("div", null, isNestedSubmenu || parseInt(onView) === 3 ? null : /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     sx: {
       color: 'gray'
     },
@@ -92643,6 +92654,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/SupplierAdminView",
+    onClick: handleNavClick,
     style: isActive('/SupplierAdminView') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92664,6 +92676,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/StoreItemDisplay",
+    onClick: handleNavClick,
     style: isActive('/StoreItemDisplay') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92685,6 +92698,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/ItemViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/ItemViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92706,6 +92720,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/ItemOutViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/ItemOutViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92727,6 +92742,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/ItemReturnAdminView",
+    onClick: handleNavClick,
     style: isActive('/ItemReturnAdminView') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92748,6 +92764,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/ItemPurchaseViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/ItemPurchaseViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92769,6 +92786,7 @@ function SideMaintenance(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/PurchaseOrderViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/PurchaseOrderViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92798,7 +92816,8 @@ function SideMaintenance(_ref) {
     component: "div",
     inset: true
   }, "Main Menu"), /*#__PURE__*/react.createElement(SidebarDash/* default */.A, {
-    onView3: view2
+    onView3: 3,
+    isSubmenu: true
   })) : null);
 }
 /* harmony default export */ const component_SideMaintenance = (SideMaintenance);
@@ -92851,12 +92870,14 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 function SideMaintenanceMenu(_ref) {
   var _user$data3, _user$data4, _user$data5;
-  var onView = _ref.onView;
+  var onView = _ref.onView,
+    isSubmenu = _ref.isSubmenu;
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .useLocation */ .zy)();
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .useNavigate */ .Zp)();
   var isActive = path => {
     return location.pathname === path;
   };
+  var isNestedSubmenu = Boolean(isSubmenu || onView);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState2 = _slicedToArray(_useState, 2),
     view2 = _useState2[0],
@@ -92869,6 +92890,15 @@ function SideMaintenanceMenu(_ref) {
     setShow1(e);
     setView(e);
   };
+  var handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_7__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_8__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -92925,7 +92955,7 @@ function SideMaintenanceMenu(_ref) {
   }, [user]);
   var MaintenanceInfo = grantAccess.filter(row => row.moduleName === "Maintenance" && row.access.readM === true);
   var MaintenanceOrderInfo = grantAccess.filter(row => row.moduleName === "Maintenance-Order" && row.access.readM === true);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, parseInt(onView) === 6 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, isNestedSubmenu || parseInt(onView) === 6 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
     },
@@ -92943,6 +92973,7 @@ function SideMaintenanceMenu(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_1__/* .NavLink */ .k2,
     to: "/MaintenanceViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/MaintenanceViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92964,6 +92995,7 @@ function SideMaintenanceMenu(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_1__/* .NavLink */ .k2,
     to: "/MaintenanceOrderAdmin",
+    onClick: handleNavClick,
     style: isActive('/MaintenanceOrderAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -92985,6 +93017,7 @@ function SideMaintenanceMenu(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_1__/* .NavLink */ .k2,
     to: "/TechnicianStoreCatalog",
+    onClick: handleNavClick,
     style: isActive('/TechnicianStoreCatalog') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -93014,7 +93047,8 @@ function SideMaintenanceMenu(_ref) {
     component: "div",
     inset: true
   }, "Main Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SidebarDash__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-    onView6: view2
+    onView6: 6,
+    isSubmenu: true
   })) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SideMaintenanceMenu);
@@ -93119,16 +93153,23 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 function SideShop(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4;
-  var onView = _ref.onView;
+  var onView = _ref.onView,
+    isSubmenu = _ref.isSubmenu;
   var navigate = (0,dist/* useNavigate */.Zp)();
   var location = (0,dist/* useLocation */.zy)();
   var isActive = path => {
     return location.pathname === path;
   };
+  var isNestedSubmenu = Boolean(isSubmenu || onView);
   var handleNavClick = () => {
-    localStorage.setItem('activeSidebarMenu', 1);
-    localStorage.setItem('activeSidebarMenuE2', 1);
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
   };
+  (0,react.useEffect)(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   var _useState = (0,react.useState)(0),
     _useState2 = _slicedToArray(_useState, 2),
     view2 = _useState2[0],
@@ -93196,7 +93237,7 @@ function SideShop(_ref) {
   var ReturnInfo = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.readM === true);
   var IPurchaseInfo = grantAccess.filter(row => row.moduleName === "Item-Purchase" && row.access.readM === true);
   var POSInfo = grantAccess.filter(row => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
-  return /*#__PURE__*/react.createElement(react.Fragment, null, show1 === 1 ? /*#__PURE__*/react.createElement("div", null, parseInt(onView) === 4 ? null : /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
+  return /*#__PURE__*/react.createElement(react.Fragment, null, show1 === 1 ? /*#__PURE__*/react.createElement("div", null, isNestedSubmenu || parseInt(onView) === 4 ? null : /*#__PURE__*/react.createElement(ListItemButton/* default */.A, {
     disabled: ((_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) !== 'GG' && POSInfo.length === 0,
     sx: {
       color: 'gray'
@@ -93215,6 +93256,7 @@ function SideShop(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/PointOfSale",
+    onClick: handleNavClick,
     style: isActive('/PointOfSale') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -93236,6 +93278,7 @@ function SideShop(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/SellShopInvoiceView",
+    onClick: handleNavClick,
     style: isActive('/SellShopInvoiceView') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -93257,6 +93300,7 @@ function SideShop(_ref) {
     },
     component: react_router_dom_dist/* NavLink */.k2,
     to: "/ReportPos",
+    onClick: handleNavClick,
     style: isActive('/ReportPos') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -93286,7 +93330,8 @@ function SideShop(_ref) {
     component: "div",
     inset: true
   }, "Main Menu"), /*#__PURE__*/react.createElement(SidebarDash/* default */.A, {
-    onView4: view2
+    onView4: 4,
+    isSubmenu: true
   })) : null);
 }
 /* harmony default export */ const component_SideShop = (SideShop);
@@ -93385,24 +93430,16 @@ function SidebarDash(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7, _user$data8, _user$data9, _user$data0, _user$data1, _user$data10, _user$data11, _user$data12;
   var onView2 = _ref.onView2,
     onView3 = _ref.onView3,
-    onView4 = _ref.onView4;
+    onView4 = _ref.onView4,
+    onView6 = _ref.onView6,
+    isSubmenu = _ref.isSubmenu;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useNavigate */ .Zp)();
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_4__/* .useLocation */ .zy)();
   var isActive = path => {
     return location.pathname === path;
   };
-  var handleNavClick = () => {
-    localStorage.setItem('activeSidebarMenu', 1);
-    localStorage.setItem('activeSidebarMenuE2', 1);
-  };
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-      // If this primary sidebar is rendered inside a submenu (e.g. onView2 === 2 from More Menu)
-      // we force it to explicitly display the main menu (state 1) so it doesn't read the
-      // the saved submenu state (2,3,4) from localStorage and create an infinite loop.
-      if (onView2 === 2 || onView3 === 2 || onView4 === 2) return 1;
-      var saved = localStorage.getItem('activeSidebarMenu');
-      return saved ? parseInt(saved) : 1;
-    }),
+  var isNestedSubmenu = Boolean(isSubmenu || onView2 || onView3 || onView4 || onView6);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState2 = _slicedToArray(_useState, 2),
     show1 = _useState2[0],
     setShow1 = _useState2[1];
@@ -93413,8 +93450,16 @@ function SidebarDash(_ref) {
   var handleShow = e => {
     setShow1(e);
     setView(e);
-    localStorage.setItem('activeSidebarMenu', e);
   };
+  var handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_27__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_27__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_28__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -93537,7 +93582,7 @@ function SidebarDash(_ref) {
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PermIdentity__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Customer"
-  })), parseInt(onView3) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })), isNestedSubmenu || parseInt(onView3) === 2 || parseInt(onView3) === 3 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) !== 'GG' && StoreInfo.length === 0,
     sx: {
       color: 'gray'
@@ -93549,7 +93594,7 @@ function SidebarDash(_ref) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ListAlt__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Store"
-  })), parseInt(onView4) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })), isNestedSubmenu || parseInt(onView4) === 2 || parseInt(onView4) === 4 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) !== 'GG' && POSInfo.length === 0,
     sx: {
       color: 'gray'
@@ -93561,7 +93606,7 @@ function SidebarDash(_ref) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "POS"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })), isNestedSubmenu ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) !== 'GG' && BlockFactoryInfo.length === 0,
     sx: {
       color: 'gray'
@@ -93705,7 +93750,7 @@ function SidebarDash(_ref) {
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Receipt__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Purchases Request"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })), isNestedSubmenu || parseInt(onView6) === 6 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data1 = user.data) === null || _user$data1 === void 0 ? void 0 : _user$data1.userName) !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0,
     sx: {
       color: 'gray'
@@ -93739,7 +93784,7 @@ function SidebarDash(_ref) {
     } : null
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Moving__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     primary: "Reports"
-  })), parseInt(onView2) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  })), isNestedSubmenu || parseInt(onView2) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data11 = user.data) === null || _user$data11 === void 0 ? void 0 : _user$data11.userName) !== 'GG' && ((_user$data12 = user.data) === null || _user$data12 === void 0 ? void 0 : _user$data12.role) !== 'CEO' && MoreInfo.length === 0,
     sx: {
       color: 'gray'
@@ -93774,7 +93819,8 @@ function SidebarDash(_ref) {
     component: "div",
     inset: true
   }, "More Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SidebarDashE2__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
-    onView: view
+    onView: 2,
+    isSubmenu: true
   })) : null, show1 === 3 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
@@ -93790,7 +93836,8 @@ function SidebarDash(_ref) {
     component: "div",
     inset: true
   }, "Item Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideMaintenance__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
-    onView: view
+    onView: 3,
+    isSubmenu: true
   })) : null, show1 === 4 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
@@ -93806,7 +93853,8 @@ function SidebarDash(_ref) {
     component: "div",
     inset: true
   }, "POS Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideShop__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
-    onView: view
+    onView: 4,
+    isSubmenu: true
   })) : null, show1 === 5 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
@@ -93839,7 +93887,8 @@ function SidebarDash(_ref) {
     component: "div",
     inset: true
   }, "Maintenance Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideMaintenanceMenu__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
-    onView: view
+    onView: 6,
+    isSubmenu: true
   })) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidebarDash);
@@ -93913,31 +93962,35 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 function SidebarDashE2(_ref) {
   var _user$data2, _user$data3, _user$data4, _user$data5;
-  var onView = _ref.onView;
+  var onView = _ref.onView,
+    isSubmenu = _ref.isSubmenu;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Zp)();
   var location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useLocation */ .zy)();
   var isActive = path => {
     return location.pathname === path;
   };
+  var isNestedSubmenu = Boolean(isSubmenu || onView);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState2 = _slicedToArray(_useState, 2),
     view2 = _useState2[0],
     setView = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-      // If this sidebar is being rendered explicitly as a submenu (onView === 2), force it to state 1
-      // to prevent an infinite rendering loop with the parent SidebarDash.
-      if (onView === 2) return 1;
-      var saved = localStorage.getItem('activeSidebarMenuE2');
-      return saved ? parseInt(saved) : 1;
-    }),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState4 = _slicedToArray(_useState3, 2),
     show1 = _useState4[0],
     setShow1 = _useState4[1];
   var handleShow = e => {
     setShow1(e);
     setView(e);
-    localStorage.setItem('activeSidebarMenuE2', e);
   };
+  var handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_21__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_21__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_22__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
@@ -94011,7 +94064,7 @@ function SidebarDashE2(_ref) {
   var PRollInfo = grantAccess.filter(row => row.moduleName === "Pay-Roll" && row.access.readM === true);
   // Factory uses same permission level as Payroll/Employee for now
   var FactoryInfo = PRollInfo;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, parseInt(onView) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, isNestedSubmenu || parseInt(onView) === 2 ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
     },
@@ -94022,13 +94075,14 @@ function SidebarDashE2(_ref) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_MoreVert__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "Main"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     disabled: loadingAccess || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) !== 'GG' && RateInfo.length === 0,
     sx: {
       color: 'gray'
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/RateViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/RateViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94050,6 +94104,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/FleetViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/FleetViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94071,6 +94126,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/TewmViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/TewmViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94092,6 +94148,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/PayRollViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/PayRollViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94113,6 +94170,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/UserAccount",
+    onClick: handleNavClick,
     style: isActive('/UserAccount') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94134,6 +94192,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/RolePermission",
+    onClick: handleNavClick,
     style: isActive('/RolePermission') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94154,6 +94213,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/SettingsViewAdmin",
+    onClick: handleNavClick,
     style: isActive('/SettingsViewAdmin') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94175,6 +94235,7 @@ function SidebarDashE2(_ref) {
     },
     component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
     to: "/CompanyProfile",
+    onClick: handleNavClick,
     style: isActive('/CompanyProfile') ? {
       backgroundColor: '#30368a',
       color: 'white'
@@ -94204,7 +94265,8 @@ function SidebarDashE2(_ref) {
     component: "div",
     inset: true
   }, "Main Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SidebarDash__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    onView2: view2
+    onView2: 2,
+    isSubmenu: true
   })) : null, show1 === 3 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
@@ -123007,7 +123069,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.78"};
+module.exports = {"rE":"3.5.79"};
 
 /***/ },
 
@@ -123139,7 +123201,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"d70fd9d806c26240466d","457":"c1821719ed2b67e70b98","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"1abad85f951ed146e3df","742":"0ab4f37b46549dc9f501","778":"f8950b7fd584414ccde4","806":"b69de9f0df70da29c2b5","808":"8b6d491ac432e804fbbf","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"f07fd54f57fa4dd05502","1679":"16fb8bc0470cb6bec20b","1722":"be03a72cba90d57b0a0e","1853":"4404e10dd0a06664a690","1861":"b7634fa92c4aa00d7ec7","1919":"7b1af82129a9886cae73","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"cfdcaa9ef7bcc50050d5","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"8ab4ca3c38cf12313cf3","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"ac7fcc701366c0a89f17","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"6790b0f4c3dcc2f96ac1","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"0e13e97afba0dbccb713","3741":"37d03a8a510f8bda1f4a","3808":"f25d720ff5f7604cf9f7","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"2e984c907c3a6d212ca1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"c564e20d8ca162e4299f","4444":"c74fefa8261026368502","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"f475b7cbe67bdfe00ef1","5194":"4ef73fd80cc5dd08e814","5391":"b014727a603bec1ea172","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"206529ff2e24a65a772a","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"b6960c55bc05ec4289b4","6685":"857160452cc0ec2c80df","6725":"da42a334519030130071","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"828b91b640b534d3ecc2","7539":"72ee1ee088ac1a0441f8","7592":"f5b6a6bc1a7ffb5e8bc9","7645":"031f9c20b62c5968dec2","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"7e31e9ab527a700d3f9b","7941":"849b75b08604b7f96190","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"bf9a9a5609105898857c","8060":"c0a1baef996cd39788ee","8117":"25756ad53d0d4449d1f8","8282":"6485a3e080d6cbe70728","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"3b1c2aa49ef35578d425","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"5fbd5b0d1432a2621992","9528":"4dd9c43eb666c40b578c","9564":"96a46dc36a64832f05c7","9573":"fbbb85fa788c8885f1be","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"78fe236c6e44459360a8","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"d70fd9d806c26240466d","457":"c1821719ed2b67e70b98","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"1abad85f951ed146e3df","742":"0ab4f37b46549dc9f501","778":"f8950b7fd584414ccde4","806":"b69de9f0df70da29c2b5","808":"8b6d491ac432e804fbbf","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"f07fd54f57fa4dd05502","1679":"16fb8bc0470cb6bec20b","1722":"be03a72cba90d57b0a0e","1853":"4404e10dd0a06664a690","1861":"b7634fa92c4aa00d7ec7","1919":"7b1af82129a9886cae73","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"cfdcaa9ef7bcc50050d5","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"8ab4ca3c38cf12313cf3","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"ac7fcc701366c0a89f17","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"6790b0f4c3dcc2f96ac1","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"0e13e97afba0dbccb713","3741":"37d03a8a510f8bda1f4a","3808":"f25d720ff5f7604cf9f7","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"2e984c907c3a6d212ca1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"c564e20d8ca162e4299f","4444":"c74fefa8261026368502","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"f475b7cbe67bdfe00ef1","5194":"4ef73fd80cc5dd08e814","5391":"b014727a603bec1ea172","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"206529ff2e24a65a772a","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"b6960c55bc05ec4289b4","6685":"857160452cc0ec2c80df","6725":"da42a334519030130071","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"828b91b640b534d3ecc2","7539":"72ee1ee088ac1a0441f8","7592":"f5b6a6bc1a7ffb5e8bc9","7645":"031f9c20b62c5968dec2","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"7e31e9ab527a700d3f9b","7941":"849b75b08604b7f96190","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"bf9a9a5609105898857c","8060":"c0a1baef996cd39788ee","8117":"25756ad53d0d4449d1f8","8282":"6485a3e080d6cbe70728","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"3b1c2aa49ef35578d425","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"5fbd5b0d1432a2621992","9528":"4dd9c43eb666c40b578c","9564":"96a46dc36a64832f05c7","9573":"fbbb85fa788c8885f1be","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"3afee785efa362d669eb","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	

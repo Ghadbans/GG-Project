@@ -25,26 +25,25 @@ function ItemNameInfo({ onId, item, search, debouncedSearch, handleSearch }) {
   const [value2, setValue2] = useState(0);
 
   const newArray = useMemo(() => {
-    return debouncedSearch !== '' ? item.filter((row) =>
-      row.typeItem.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-      (row.itemDescription && row.itemDescription.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-      row.itemName.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
-      (row.itemBrand && row.itemBrand.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-      (row.itemManufacturer && row.itemManufacturer.toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-      (row.itemStore && row.itemStore.toLowerCase().includes(debouncedSearch.toLowerCase()))
-    ) : item;
+    if (!debouncedSearch || debouncedSearch.trim() === '') return item || [];
+    const q = debouncedSearch.toLowerCase().trim();
+    return (item || []).filter((row) =>
+      (row.typeItem && row.typeItem.toLowerCase().includes(q)) ||
+      (row.itemDescription && row.itemDescription.toLowerCase().includes(q)) ||
+      (row.itemName && row.itemName.toLowerCase().includes(q)) ||
+      (row.itemBrand && row.itemBrand.toLowerCase().includes(q)) ||
+      (row.itemManufacturer && row.itemManufacturer.toLowerCase().includes(q)) ||
+      (row.itemStore && row.itemStore.toLowerCase().includes(q))
+    );
   }, [item, debouncedSearch]);
 
   useEffect(() => {
-    const selectedIndex = item.findIndex(row => row._id === onId);
-    if (selectedIndex !== -1) {
-      setValue(selectedIndex)
-    }
-    const selectedIndex2 = newArray.findIndex(row => row._id === onId);
-    if (selectedIndex2 !== -1) {
-      setValue2(selectedIndex2)
-    }
-  }, [item, onId]);
+    const selectedIndex = (item || []).findIndex(row => row._id === onId);
+    setValue(selectedIndex !== -1 ? selectedIndex : false);
+
+    const selectedIndex2 = (newArray || []).findIndex(row => row._id === onId);
+    setValue2(selectedIndex2 !== -1 ? selectedIndex2 : false);
+  }, [item, onId, newArray]);
   const handleChange = (e, newValue) => {
     setValue(newValue)
   }
@@ -79,7 +78,7 @@ function ItemNameInfo({ onId, item, search, debouncedSearch, handleSearch }) {
               {item?.map((row, index) => (
                 <Tab
                   key={index}
-                  label={row.itemName.toUpperCase()}
+                  label={(row.itemName || '').toUpperCase()}
                   component={Link}
                   to={`/ItemInfo/${row._id}`}
                   sx={{
@@ -131,7 +130,7 @@ function ItemNameInfo({ onId, item, search, debouncedSearch, handleSearch }) {
               {newArray?.map((row, index) => (
                 <Tab
                   key={index}
-                  label={row.itemName.toUpperCase()}
+                  label={(row.itemName || '').toUpperCase()}
                   component={Link}
                   to={`/ItemInfo/${row._id}`}
                   sx={{

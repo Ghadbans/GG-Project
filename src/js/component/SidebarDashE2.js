@@ -24,26 +24,31 @@ import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 
 
-function SidebarDashE2({ onView }) {
+function SidebarDashE2({ onView, isSubmenu }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => {
     return location.pathname === path;
   }
 
+  const isNestedSubmenu = Boolean(isSubmenu || onView);
   const [view2, setView] = useState(0);
-  const [show1, setShow1] = useState(() => {
-    // If this sidebar is being rendered explicitly as a submenu (onView === 2), force it to state 1
-    // to prevent an infinite rendering loop with the parent SidebarDash.
-    if (onView === 2) return 1;
-    const saved = localStorage.getItem('activeSidebarMenuE2');
-    return saved ? parseInt(saved) : 1;
-  });
+  const [show1, setShow1] = useState(1);
   const handleShow = (e) => {
     setShow1(e);
     setView(e);
-    localStorage.setItem('activeSidebarMenuE2', e);
   }
+  const handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+
+  useEffect(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
+
   const dispatch = useDispatch()
   const user = useSelector(selectCurrentUser);
 
@@ -105,61 +110,58 @@ function SidebarDashE2({ onView }) {
       {show1 === 1 ?
         <div>
           {
-            parseInt(onView) === 2 ? null : (
-              <>
-                <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
-                  <ListItemIcon sx={{ color: 'gray' }} >
-                    <MoreVertIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Main" />
-                </ListItemButton>
-              </>
-
+            (isNestedSubmenu || parseInt(onView) === 2) ? null : (
+              <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
+                <ListItemIcon sx={{ color: 'gray' }} >
+                  <MoreVertIcon />
+                </ListItemIcon>
+                <ListItemText primary="Main" />
+              </ListItemButton>
             )
           }
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && RateInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && RateInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" onClick={handleNavClick} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <CurrencyExchange />
             </ListItemIcon>
             <ListItemText primary="Rate" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && FleetInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && FleetInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/FleetViewAdmin" onClick={handleNavClick} style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/FleetViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <DirectionsCarIcon />
             </ListItemIcon>
             <ListItemText primary="Fleet Management" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && EmployeeInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && EmployeeInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/TewmViewAdmin" onClick={handleNavClick} style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/TewmViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <GroupsIcon />
             </ListItemIcon>
             <ListItemText primary="Employee" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && PRollInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && PRollInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/PayRollViewAdmin" onClick={handleNavClick} style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PayRollViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PaymentIcon />
             </ListItemIcon>
             <ListItemText primary="PayRoll" />
           </ListItemButton>
-          <ListItemButton disabled={user.data.role !== 'CEO' && user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/UserAccount" style={isActive('/UserAccount') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data.role !== 'CEO' && user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/UserAccount" onClick={handleNavClick} style={isActive('/UserAccount') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/UserAccount') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <AccountBox />
             </ListItemIcon>
             <ListItemText primary="User Account" />
           </ListItemButton>
-          <ListItemButton disabled={user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/RolePermission" style={isActive('/RolePermission') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/RolePermission" onClick={handleNavClick} style={isActive('/RolePermission') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/RolePermission') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <AssignmentInd />
             </ListItemIcon>
             <ListItemText primary="Grant Access" />
           </ListItemButton>
-          <ListItemButton sx={{ color: 'gray' }} component={NavLink} to="/SettingsViewAdmin" style={isActive('/SettingsViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton sx={{ color: 'gray' }} component={NavLink} to="/SettingsViewAdmin" onClick={handleNavClick} style={isActive('/SettingsViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/SettingsViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ContactsIcon />
             </ListItemIcon>
             <ListItemText primary="User Profile" />
           </ListItemButton>
-          <ListItemButton disabled={user.data.role !== 'CEO' && user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/CompanyProfile" style={isActive('/CompanyProfile') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data.role !== 'CEO' && user.data.userName !== 'GG'} sx={{ color: 'gray' }} component={NavLink} to="/CompanyProfile" onClick={handleNavClick} style={isActive('/CompanyProfile') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/CompanyProfile') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <StoreIcon />
             </ListItemIcon>
@@ -179,7 +181,7 @@ function SidebarDashE2({ onView }) {
           <ListSubheader component="div" inset>
             Main Menu
           </ListSubheader>
-          <SidebarDash onView2={view2} />
+          <SidebarDash onView2={2} isSubmenu={true} />
         </div>
         : null}
       {show1 === 3 ?

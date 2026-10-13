@@ -11,7 +11,7 @@ import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader } from '@mui/material';
 
-function SideMaintenanceMenu({ onView }) {
+function SideMaintenanceMenu({ onView, isSubmenu }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -19,12 +19,23 @@ function SideMaintenanceMenu({ onView }) {
     return location.pathname === path;
   }
 
+  const isNestedSubmenu = Boolean(isSubmenu || onView);
   const [view2, setView] = useState(0);
   const [show1, setShow1] = useState(1);
   const handleShow = (e) => {
     setShow1(e);
     setView(e);
   }
+  const handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+
+  useEffect(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   
   const dispatch = useDispatch()
   const user = useSelector(selectCurrentUser)
@@ -72,7 +83,7 @@ function SideMaintenanceMenu({ onView }) {
       {show1 === 1 ?
         <div>
           {
-            parseInt(onView) === 6 ? null : (
+            (isNestedSubmenu || parseInt(onView) === 6) ? null : (
               <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
@@ -81,21 +92,21 @@ function SideMaintenanceMenu({ onView }) {
               </ListItemButton>
             )
           }
-          <ListItemButton disabled={user?.data?.userName !== 'GG' && MaintenanceInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceViewAdmin" style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user?.data?.userName !== 'GG' && MaintenanceInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceViewAdmin" onClick={handleNavClick} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <EngineeringIcon />
             </ListItemIcon>
             <ListItemText primary="Maintenance" />
           </ListItemButton>
           
-          <ListItemButton disabled={user?.data?.userName !== 'GG' && MaintenanceOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceOrderAdmin" style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user?.data?.userName !== 'GG' && MaintenanceOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/MaintenanceOrderAdmin" onClick={handleNavClick} style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MaintenanceOrderAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <EngineeringIcon />
             </ListItemIcon>
             <ListItemText primary="Maintenance Order" />
           </ListItemButton>
           
-          <ListItemButton disabled={user?.data?.userName !== 'GG' && MaintenanceOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/TechnicianStoreCatalog" style={isActive('/TechnicianStoreCatalog') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user?.data?.userName !== 'GG' && MaintenanceOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/TechnicianStoreCatalog" onClick={handleNavClick} style={isActive('/TechnicianStoreCatalog') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/TechnicianStoreCatalog') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <EngineeringIcon />
             </ListItemIcon>
@@ -115,7 +126,7 @@ function SideMaintenanceMenu({ onView }) {
           <ListSubheader component="div" inset>
             Main Menu
           </ListSubheader>
-          <SidebarDash onView6={view2} />
+          <SidebarDash onView6={6} isSubmenu={true} />
         </div>
         : null}
     </>

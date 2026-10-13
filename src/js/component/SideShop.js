@@ -23,7 +23,7 @@ import { ENDPOINT_URL } from '../apiConfig';
 
 
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@mui/material';
-function SideShop({ onView }) {
+function SideShop({ onView, isSubmenu }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,10 +31,17 @@ function SideShop({ onView }) {
     return location.pathname === path;
   }
 
+  const isNestedSubmenu = Boolean(isSubmenu || onView);
   const handleNavClick = () => {
-    localStorage.setItem('activeSidebarMenu', 1);
-    localStorage.setItem('activeSidebarMenuE2', 1);
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
   };
+
+  useEffect(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
 
   const [view2, setView] = useState(0);
   const [show1, setShow1] = useState(1);
@@ -88,7 +95,7 @@ function SideShop({ onView }) {
       {show1 === 1 ?
         <div>
           {
-            parseInt(onView) === 4 ? null : (
+            (isNestedSubmenu || parseInt(onView) === 4) ? null : (
               <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
@@ -97,19 +104,19 @@ function SideShop({ onView }) {
               </ListItemButton>
             )
           }
-          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PointOfSale" onClick={handleNavClick} style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PointOfSale') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ArtTrack />
             </ListItemIcon>
             <ListItemText primary="Item Display" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SellShopInvoiceView" style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SellShopInvoiceView" onClick={handleNavClick} style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/SellShopInvoiceView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <SellOutlined />
             </ListItemIcon>
             <ListItemText primary="Invoice" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ReportPos" style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && POSInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ReportPos" onClick={handleNavClick} style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ReportPos') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <Assessment />
             </ListItemIcon>
@@ -129,7 +136,7 @@ function SideShop({ onView }) {
           <ListSubheader component="div" inset>
             Main Menu
           </ListSubheader>
-          <SidebarDash onView4={view2} />
+          <SidebarDash onView4={4} isSubmenu={true} />
         </div>
         : null}
     </>

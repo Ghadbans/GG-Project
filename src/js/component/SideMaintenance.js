@@ -23,7 +23,7 @@ import { ENDPOINT_URL } from '../apiConfig';
 
 
 import { Divider, ListItemButton, ListItemIcon, ListItemText, ListSubheader, makeStyles } from '@mui/material';
-function SideMaintenance({ onView }) {
+function SideMaintenance({ onView, isSubmenu }) {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -31,12 +31,24 @@ function SideMaintenance({ onView }) {
     return location.pathname === path;
   }
 
+  const isNestedSubmenu = Boolean(isSubmenu || onView);
   const [view2, setView] = useState(0);
   const [show1, setShow1] = useState(1);
   const handleShow = (e) => {
     setShow1(e);
     setView(e);
   }
+  const handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+
+  useEffect(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
+
   const dispatch = useDispatch()
   const user = useSelector(selectCurrentUser)
   useEffect(() => {
@@ -85,7 +97,7 @@ function SideMaintenance({ onView }) {
       {show1 === 1 ?
         <div>
           {
-            parseInt(onView) === 3 ? null : (
+            (isNestedSubmenu || parseInt(onView) === 3) ? null : (
               <ListItemButton sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
@@ -94,45 +106,45 @@ function SideMaintenance({ onView }) {
               </ListItemButton>
             )
           }
-          <ListItemButton disabled={user.data?.userName !== 'GG' && SupplierInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SupplierAdminView" style={isActive('/SupplierAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && SupplierInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/SupplierAdminView" onClick={handleNavClick} style={isActive('/SupplierAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/SupplierAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ContactEmergencyRounded />
             </ListItemIcon>
             <ListItemText primary="Supplier" />
             </ListItemButton>
 
-            <ListItemButton disabled={user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/StoreItemDisplay" style={isActive('/StoreItemDisplay') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+            <ListItemButton disabled={user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/StoreItemDisplay" onClick={handleNavClick} style={isActive('/StoreItemDisplay') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ListItemIcon sx={{ color: 'gray' }} style={isActive('/StoreItemDisplay') ? { backgroundColor: '#30368a', color: 'white' } : null}>
                 <ArtTrack />
               </ListItemIcon>
               <ListItemText primary="Item Display" />
             </ListItemButton>
 
-          <ListItemButton disabled={user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemViewAdmin" style={isActive('/ItemViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && ItemInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemViewAdmin" onClick={handleNavClick} style={isActive('/ItemViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ListAltIcon />
             </ListItemIcon>
             <ListItemText primary="Item" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && ItemOInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemOutViewAdmin" style={isActive('/ItemOutViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && ItemOInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemOutViewAdmin" onClick={handleNavClick} style={isActive('/ItemOutViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemOutViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <ContentPasteGoIcon />
             </ListItemIcon>
             <ListItemText primary="Item Out" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && ReturnInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemReturnAdminView" style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && ReturnInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemReturnAdminView" onClick={handleNavClick} style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemReturnAdminView') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <PostAddIcon />
             </ListItemIcon>
             <ListItemText primary="Item Return" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && IPurchaseInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemPurchaseViewAdmin" style={isActive('/ItemPurchaseViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && IPurchaseInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/ItemPurchaseViewAdmin" onClick={handleNavClick} style={isActive('/ItemPurchaseViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/ItemPurchaseViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <StoreIcon />
             </ListItemIcon>
             <ListItemText primary="Item Purchase" />
           </ListItemButton>
-          <ListItemButton disabled={user.data?.userName !== 'GG' && PurchaseOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PurchaseOrderViewAdmin" style={isActive('/PurchaseOrderViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+          <ListItemButton disabled={user.data?.userName !== 'GG' && PurchaseOrderInfo.length === 0} sx={{ color: 'gray' }} component={NavLink} to="/PurchaseOrderViewAdmin" onClick={handleNavClick} style={isActive('/PurchaseOrderViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/PurchaseOrderViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <InventoryOutlined />
             </ListItemIcon>
@@ -152,7 +164,7 @@ function SideMaintenance({ onView }) {
           <ListSubheader component="div" inset>
             Main Menu
           </ListSubheader>
-          <SidebarDash onView3={view2} />
+          <SidebarDash onView3={3} isSubmenu={true} />
         </div>
         : null}
     </>

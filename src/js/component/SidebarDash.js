@@ -37,33 +37,30 @@ import SideShop from './SideShop';
 import SideBlockFactory from './SideBlockFactory';
 import CategoryIcon from '@mui/icons-material/Category';
 
-function SidebarDash({ onView2, onView3, onView4 }) {
+function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => {
     return location.pathname === path;
   }
 
-  const handleNavClick = () => {
-    localStorage.setItem('activeSidebarMenu', 1);
-    localStorage.setItem('activeSidebarMenuE2', 1);
-  };
-
-  const [show1, setShow1] = useState(() => {
-    // If this primary sidebar is rendered inside a submenu (e.g. onView2 === 2 from More Menu)
-    // we force it to explicitly display the main menu (state 1) so it doesn't read the
-    // the saved submenu state (2,3,4) from localStorage and create an infinite loop.
-    if (onView2 === 2 || onView3 === 2 || onView4 === 2) return 1;
-
-    const saved = localStorage.getItem('activeSidebarMenu');
-    return saved ? parseInt(saved) : 1;
-  });
+  const isNestedSubmenu = Boolean(isSubmenu || onView2 || onView3 || onView4 || onView6);
+  const [show1, setShow1] = useState(1);
   const [view, setView] = useState(0);
   const handleShow = (e) => {
     setShow1(e);
     setView(e);
-    localStorage.setItem('activeSidebarMenu', e);
   }
+  const handleNavClick = () => {
+    setShow1(1);
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  };
+
+  useEffect(() => {
+    localStorage.removeItem('activeSidebarMenu');
+    localStorage.removeItem('activeSidebarMenuE2');
+  }, []);
   const dispatch = useDispatch()
   const user = useSelector(selectCurrentUser)
   useEffect(() => {
@@ -144,7 +141,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             <ListItemText primary="Customer" />
           </ListItemButton>
           {
-            parseInt(onView3) === 2 ? null : (
+            (isNestedSubmenu || parseInt(onView3) === 2 || parseInt(onView3) === 3) ? null : (
               <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && StoreInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(3)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <ListAltIcon />
@@ -153,7 +150,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
               </ListItemButton>
             )}
           {
-            parseInt(onView4) === 2 ? null : (
+            (isNestedSubmenu || parseInt(onView4) === 2 || parseInt(onView4) === 4) ? null : (
               <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && POSInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(4)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <Storefront />
@@ -161,12 +158,16 @@ function SidebarDash({ onView2, onView3, onView4 }) {
                 <ListItemText primary="POS" />
               </ListItemButton>
             )}
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && BlockFactoryInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(5)}>
-            <ListItemIcon sx={{ color: 'gray' }}>
-              <CategoryIcon />
-            </ListItemIcon>
-            <ListItemText primary="Block Factory" />
-          </ListItemButton>
+          {
+            isNestedSubmenu ? null : (
+              <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && BlockFactoryInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(5)}>
+                <ListItemIcon sx={{ color: 'gray' }}>
+                  <CategoryIcon />
+                </ListItemIcon>
+                <ListItemText primary="Block Factory" />
+              </ListItemButton>
+            )
+          }
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && estimationInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/EstimateViewAdmin" onClick={handleNavClick} style={isActive('/EstimateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/EstimateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <RequestQuoteIcon />
@@ -203,12 +204,16 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             </ListItemIcon>
             <ListItemText primary="Purchases Request" />
           </ListItemButton>
-          <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(6)}>
-              <ListItemIcon sx={{ color: 'gray' }} >
-                <EngineeringIcon />
-              </ListItemIcon>
-              <ListItemText primary="Maintenance" />
-            </ListItemButton>
+          {
+            (isNestedSubmenu || parseInt(onView6) === 6) ? null : (
+              <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && MaintenanceInfo.length === 0 && MaintenanceOrderInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(6)}>
+                <ListItemIcon sx={{ color: 'gray' }} >
+                  <EngineeringIcon />
+                </ListItemIcon>
+                <ListItemText primary="Maintenance" />
+              </ListItemButton>
+            )
+          }
 
 
 
@@ -222,7 +227,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
 
 
           {
-            parseInt(onView2) === 2 ? null : (
+            (isNestedSubmenu || parseInt(onView2) === 2) ? null : (
               <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && user.data?.role !== 'CEO' && MoreInfo.length === 0)} sx={{ color: 'gray' }} onClick={() => handleShow(2)}>
                 <ListItemIcon sx={{ color: 'gray' }} >
                   <MoreVertIcon />
@@ -249,7 +254,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             <ListSubheader component="div" inset>
               More Menu
             </ListSubheader>
-            <SidebarDashE2 onView={view} />
+            <SidebarDashE2 onView={2} isSubmenu={true} />
           </div>
           : null
       }
@@ -266,7 +271,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             <ListSubheader component="div" inset>
               Item Menu
             </ListSubheader>
-            <SideMaintenance onView={view} />
+            <SideMaintenance onView={3} isSubmenu={true} />
           </div>
           : null
       }
@@ -283,7 +288,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             <ListSubheader component="div" inset>
               POS Menu
             </ListSubheader>
-            <SideShop onView={view} />
+            <SideShop onView={4} isSubmenu={true} />
           </div>
           : null
       }
@@ -318,7 +323,7 @@ function SidebarDash({ onView2, onView3, onView4 }) {
             <ListSubheader component="div" inset>
               Maintenance Menu
             </ListSubheader>
-            <SideMaintenanceMenu onView={view} />
+            <SideMaintenanceMenu onView={6} isSubmenu={true} />
           </div>
           : null
       }

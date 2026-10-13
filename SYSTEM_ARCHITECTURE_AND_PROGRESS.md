@@ -170,9 +170,36 @@
     - **Sub-Component Scope Extraction & Memoization (`EmployeePlaningView.js`):** Row components (such as `PlanningRow`) must NEVER be declared inside parent component render functions. Declaring components inside parent bodies forces React to unmount, destroy, and recreate the entire DOM tree and inner states on every single parent render. Always declare row components in module scope and wrap them with `React.memo`.
     - **O(1) Date Map Indexing vs O(D * N) Array Filtering:** When displaying date-grouped collections with thousands of records (e.g. 11,423 records in `planing`), NEVER filter the entire collection inside each day's row with repetitive `dayjs().format()` calls. Pre-group records once into a date dictionary (`planingByDate[YYYY-MM-DD] = [...]`) in `useMemo` (O(N) single-pass) so each row retrieves its records in O(1) time.
     - **Strict Date Range Limits & Collapse Unmounting:** Date range generation loops (`while (currentDate <= endDate)`) must enforce a strict safety cap (e.g., maximum 90 days) to prevent infinite loops from corrupted or historical date bounds. MUI `<Collapse>` components containing sub-tables must ALWAYS use `unmountOnExit` so off-screen collapsed tables do not execute DOM calculations or consume memory.
-    - **Server Date Scoping (`/planing`):** The backend `/planing` route in `server/routes/Routes.js` must support `startDate` and `endDate` query parameters to return only the relevant date window, reducing network payloads from 15+ MB to lightweight responses.
+46. **Sidebar Navigation Non-Persistence, Submenu Recursion Elimination & Resilient Client Searching (Ver 3.5.79)**:
+    - **Zero Persistence for Transient Submenu Navigation (`activeSidebarMenu` / `activeSidebarMenuE2`):** Submenu toggles (`show1 === 2` for More/Main, `show1 === 3` for Store, etc.) represent transient in-memory UI drawer states and MUST NEVER be written to or restored from `localStorage`. Persisting submenu states across route transitions causes newly mounted drawer components on subsequent pages to mount directly in nested submenu mode. All drawer sidebars (`SidebarDash`, `SidebarDashE2`, `SideMaintenance`, `SideShop`, `SideMaintenanceMenu`) must initialize with `const [show1, setShow1] = useState(1);` and purge legacy keys from `localStorage` on mount.
+    - **Nested Submenu Prop Guarding (`isSubmenu`):** Whenever a sidebar component renders another sidebar as a submenu (e.g. `<SidebarDashE2 isSubmenu={true} />` inside `SidebarDash`, or `<SidebarDash onView3={3} isSubmenu={true} />` inside `SideMaintenance`), the child sidebar component MUST receive `isSubmenu={true}` and suppress its own submenu switcher buttons ("Main", "More", "Store", etc.). This strictly breaks component cross-nesting and makes recursive rendering trees (`<SidebarDash>` <-> `<SidebarDashE2>`) structurally impossible.
+    - **Navigation Link Reset Callback (`handleNavClick`):** Every module navigation link (`<ListItemButton component={NavLink} ... onClick={handleNavClick}>`) in every sidebar component must invoke `handleNavClick` to reset submenu state (`setShow1(1)`) and ensure clean, top-level drawer presentation on the destination page. `handleNavClick` MUST be explicitly defined in component scope before any JSX invocation to prevent fatal runtime `ReferenceError` crashes.
+    - **Null-Safe Client Searches & MUI Tab Indices (`ItemNameInfo.js`):** In search filters, never invoke string methods (`.toLowerCase()`, `.trim()`) on properties without prior existence guards (`(row.typeItem && row.typeItem.toLowerCase().includes(q))`). In MUI `<Tabs>`, index values (`value`, `value2`) must safely fallback to `false` when the active item is not found in the filtered result set (`selectedIndex !== -1 ? selectedIndex : false`), preventing MUI invalid tab value errors during live typing.
 
 ## Current Progress Log
+- **Sidebar Recursive Infinite Render Loop Freezing on Navigation Between Item & Employee Modules (Ver 3.5.79)**:
+  - **Problem Reported:**
+    - User reported that when working in module `Employee` (`/TewmViewAdmin`), opening `TODAY'S ASSIGNMENT`, navigating to module `ITEM` to search for an item, and returning to module `Employee`, the system suffered severe lag, froze completely, and crashed to a white screen. User screenshot confirmed two nested `Close` buttons and two nested section headers ("Main Menu" and "More Menu") inside the left drawer.
+  - **Root Cause Identified:**
+    1. **`localStorage` Poisoning & Cross-Sidebar Recursion:**
+       - In `SidebarDash.js` and `SidebarDashE2.js`, clicking "More" or "Main" persisted `activeSidebarMenu` and `activeSidebarMenuE2` to `localStorage`.
+       - When navigating from Item to Employee, `TewmViewAdmin` mounted with `<SidebarDashE2 />`.
+       - `SidebarDashE2` read `activeSidebarMenuE2: 2` from `localStorage`, mounting in "Main Menu" submenu mode and rendering `<SidebarDash onView2={0} />`.
+       - `SidebarDash` read `activeSidebarMenu: 2` from `localStorage`, mounting in "More Menu" submenu mode and rendering `<SidebarDashE2 onView={0} />`.
+       - This triggered an infinite component recursion tree (`<SidebarDashE2>` -> `<SidebarDash>` -> `<SidebarDashE2>` -> ...) that locked the JavaScript event loop at 100% CPU and blew the Chromium call stack.
+    2. **Uncaught ReferenceError:** `handleNavClick` was bound to 9 `onClick` handlers in `SidebarDash.js` without being defined in component scope.
+    3. **Unprotected Item Filter & MUI Tab Values:** In `ItemNameInfo.js`, `.filter()` evaluated unguarded `row.typeItem.toLowerCase()`, and MUI `<Tabs>` crashed when search results excluded the selected index.
+  - **Architectural Resolution Applied:**
+    1. **Eliminated `localStorage` Submenu Persistence:** Removed all `localStorage.setItem` calls from all sidebars (`SidebarDash`, `SidebarDashE2`, `SideMaintenance`, `SideShop`, `SideMaintenanceMenu`). All sidebars now initialize in clean state `useState(1)` and purge legacy keys on mount.
+    2. **Prop-Guarded Submenu Embedding (`isSubmenu`):** Added `isSubmenu` prop to all sidebars. Embedded instances suppress "Main", "More", "Store", "POS", and "Maintenance" buttons, permanently preventing circular rendering.
+    3. **Defined `handleNavClick`:** Implemented reset handler on all sidebar navigation links across the application.
+    4. **Null-Safe Client Search & Safe Tab Values:** Refactored `ItemNameInfo.js` with comprehensive null checks and safe tab selection fallback.
+  - **Verification & Deployment:**
+    - Bumped version to `3.5.79`.
+    - Compiled production Web and Electron bundles via `npm run build`.
+    - Generated Windows Desktop installer: `dist/Global Gate Setup 3.5.79.exe`.
+    - Pushed to `origin main`.
+
 - **Employee Module & Today's Assignment Tab Lag, Freeze & White Screen Resolution (Ver 3.5.78)**:
   - **Problem Reported**:
     - When working in module `Employee` (`/TewmViewAdmin`), opening Tab 4 (`TODAY'S ASSIGNMENT`), navigating to module `ITEM` to search for an item, and navigating back to module `Employee`, the system suffered severe lag, froze completely, and crashed to a blank white screen.
