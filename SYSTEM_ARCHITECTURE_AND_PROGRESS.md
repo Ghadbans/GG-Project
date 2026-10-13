@@ -165,7 +165,43 @@
       - To prevent false "Access Denied" errors when users open new windows (`Shift + Click`), fresh browser tabs, or hard refreshes, `RequireAuth.js` must initialize with `checking = true` (rendering `<Loader />`), hydrate `localStorage.getItem('user')` via `/get-employeeuser/:id`, dispatch user credentials to Redux, fetch `grantAccess` permissions via `fetchUserGrantAccess`, and ONLY then evaluate `canAccessModule(effectiveUser, grantAccess, routePerm.module, routePerm.action)`.
       - Unauthorized route navigation attempts (such as a technician attempting to navigate directly to `#/MaintenanceViewAdmin` or another forbidden module) are strictly blocked with `toast.error("Access Denied: You do not have permission for the ... module.")` and redirected to `/AdminHome`.
 
+45. **Employee Module & Tab Switching High-Performance Architecture (Ver 3.5.78)**:
+    - **Synchronous Tab Hydration & Dependency Guarding (`TewmViewAdmin.js`):** Tab selection states stored in `localStorage` (`SelectEmployeeView`) must ALWAYS be initialized synchronously in React via lazy initializer `useState(() => localStorage.getItem('SelectEmployeeView') || '1')`. Any `useEffect` synchronizing this value MUST include an empty dependency array `[]` and guard against redundant updates `(result && result !== value)`. Never omit dependency arrays on tab switching effects, as this causes infinite re-render loops when switching tabs or returning to modules.
+    - **Sub-Component Scope Extraction & Memoization (`EmployeePlaningView.js`):** Row components (such as `PlanningRow`) must NEVER be declared inside parent component render functions. Declaring components inside parent bodies forces React to unmount, destroy, and recreate the entire DOM tree and inner states on every single parent render. Always declare row components in module scope and wrap them with `React.memo`.
+    - **O(1) Date Map Indexing vs O(D * N) Array Filtering:** When displaying date-grouped collections with thousands of records (e.g. 11,423 records in `planing`), NEVER filter the entire collection inside each day's row with repetitive `dayjs().format()` calls. Pre-group records once into a date dictionary (`planingByDate[YYYY-MM-DD] = [...]`) in `useMemo` (O(N) single-pass) so each row retrieves its records in O(1) time.
+    - **Strict Date Range Limits & Collapse Unmounting:** Date range generation loops (`while (currentDate <= endDate)`) must enforce a strict safety cap (e.g., maximum 90 days) to prevent infinite loops from corrupted or historical date bounds. MUI `<Collapse>` components containing sub-tables must ALWAYS use `unmountOnExit` so off-screen collapsed tables do not execute DOM calculations or consume memory.
+    - **Server Date Scoping (`/planing`):** The backend `/planing` route in `server/routes/Routes.js` must support `startDate` and `endDate` query parameters to return only the relevant date window, reducing network payloads from 15+ MB to lightweight responses.
+
 ## Current Progress Log
+- **Employee Module & Today's Assignment Tab Lag, Freeze & White Screen Resolution (Ver 3.5.78)**:
+  - **Problem Reported**:
+    - When working in module `Employee` (`/TewmViewAdmin`), opening Tab 4 (`TODAY'S ASSIGNMENT`), navigating to module `ITEM` to search for an item, and navigating back to module `Employee`, the system suffered severe lag, froze completely, and crashed to a blank white screen.
+  - **Root Cause Analysis**:
+    1. **Unbounded Re-render Loop in `TewmViewAdmin.js`**: An `useEffect` reading `localStorage.getItem('SelectEmployeeView')` was defined with zero dependency array (`[]`). Every render fired `setValue3(result)`, triggering an infinite re-render loop upon returning to Employee when Tab 4 was previously selected. In addition, an unassigned `useState` side-effect hook was executing in the component body.
+    2. **Catastrophic Unfiltered Payload in `EmployeePlaningView.js`**: On mounting Tab 4, `fetchData()` executed an unbounded `GET /planing` fetching all 11,423 historical documents (~15 MB JSON) into client memory.
+    3. **O(D * N) Exponential CPU Lockup & Inner Component Re-creation**:
+       - `Row` was declared inside the `EmployeePlaningView` component body. Every parent re-render unmounted and destroyed all `<Row>` components and remounted new ones.
+       - Inside each `<Row>`, it ran `newArray.filter((row1) => dayjs(row1.planingDate).format('DD/MM/YYYY') === dayjs(row).format('DD/MM/YYYY'))` across all 11,423 records. For a 30-day window, this executed 342,690 `dayjs().format()` calls per render without `unmountOnExit` on the MUI `<Collapse>`.
+       - When combined with the `TewmViewAdmin` infinite re-render loop, the UI thread froze solid, causing Chromium memory exhaustion and a renderer white-screen crash.
+    4. **Unsafe Property Access**: Missing null checks on `row.employeeName.toLowerCase()` and `row.projectName.name.toLowerCase()` risked immediate uncaught TypeErrors.
+  - **Technical Fixes Applied**:
+    1. **`src/js/AdminView1/TewmViewAdmin.js`**:
+       - Synchronized `value3` from `localStorage` synchronously in `useState(() => localStorage.getItem('SelectEmployeeView') || '1')`.
+       - Added `[]` dependency array and identity check to `useEffect` for `SelectEmployeeView`.
+       - Cleaned up `searchEmployee` initialization with lazy initializer and guarded JSON parsing for `QuickFilterEmployeeTst` and `HiddenColumnsEmployee`.
+    2. **`src/js/AdminView1/PageView/EmployeeView/EmployeePlaningView.js`**:
+       - Extracted `PlanningRow` to module scope and wrapped with `React.memo`.
+       - Added `unmountOnExit` to MUI `<Collapse>` so hidden date tables do not calculate DOM nodes until expanded.
+       - Implemented O(1) date hashmap indexing (`planingByDate`) in `useMemo`, eliminating 342,690+ `dayjs()` calls.
+       - Clamped date range generation to a maximum of 90 days with strict `dayjs` validation.
+       - Updated client search inside `PlanningRow` to filter only the current day's records (5-10 items) with complete null-safety across `employeeName`, `projectName`, `status`, `planingTask`, and `planingDescription`.
+       - Passed `startDate` and `endDate` query parameters to `/planing` to fetch only the active date window.
+    3. **`server/routes/Routes.js`**:
+       - Added `req.query.startDate` and `req.query.endDate` date filtering to `GET /planing` supporting both Date objects and ISO strings.
+    4. **Release & Packaging**:
+       - Bumped version to `3.5.78` in `package.json`.
+       - Verified AST safety across all files.
+
 - **MaintenanceOrderUpdate Scope Fix, Undeclared Variable Resolution & Form Component Hardening (Ver 3.5.77)**:
   - **Problem Reported**:
     - When viewing an assigned maintenance order (e.g. `KREAM RESTAURANT | M-001225`) in a technician or standard user account and clicking `Options -> Edit`, the browser navigated to `#/MaintenanceOrderUpdate/:id` and crashed with a blank white screen.

@@ -360,13 +360,7 @@ function TewmViewAdmin() {
     }
   }
   {/** search start */ }
-  const [searchEmployee, setSearchEmployee] = useState("");
-  useState(() => {
-    const storedValue = localStorage.getItem('QuickFilterEmployee');
-    if (storedValue) {
-      setSearchEmployee(storedValue)
-    }
-  })
+  const [searchEmployee, setSearchEmployee] = useState(() => localStorage.getItem('QuickFilterEmployee') || "");
   const [filterModel, setFilterModel] = React.useState({
     items: [],
     quickFilterExcludeHiddenColumns: true,
@@ -380,33 +374,35 @@ function TewmViewAdmin() {
 
   const handleFilter = (newModel) => {
     setFilterModel(newModel)
-
-
   }
-  useEffect(() => {
-    const storedQuick = JSON.parse(localStorage.getItem('QuickFilterEmployeeTst'));
-    if (storedQuick) {
-      setFilterModel(storedQuick)
-    }
-    const storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsEmployee'))
-    if (storedColumns) {
-      setColumnVisibilityModel(storedColumns)
-    }
 
-  }, [searchEmployee])
+  useEffect(() => {
+    try {
+      const storedQuick = JSON.parse(localStorage.getItem('QuickFilterEmployeeTst'));
+      if (storedQuick) {
+        setFilterModel(storedQuick)
+      }
+      const storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsEmployee'))
+      if (storedColumns) {
+        setColumnVisibilityModel(storedColumns)
+      }
+    } catch (e) {
+      console.error('Error parsing stored employee filter/column settings:', e);
+    }
+  }, [])
   {/** search end */ }
   const [sideBar, setSideBar] = React.useState(true);
   const toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  const [value3, setValue3] = React.useState('1');
+  const [value3, setValue3] = React.useState(() => localStorage.getItem('SelectEmployeeView') || '1');
 
   useEffect(() => {
-    const result = localStorage.getItem('SelectEmployeeView')
-    if (result) {
-      setValue3(result)
+    const result = localStorage.getItem('SelectEmployeeView');
+    if (result && result !== value3) {
+      setValue3(result);
     }
-  })
+  }, []);
   const handleChange3 = (event, newValue) => {
     const changeValue = newValue
     setValue3(changeValue);

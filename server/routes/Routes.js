@@ -480,6 +480,19 @@ Route.route("/planing", cors(corsOptionsDelegate)).get(
           { 'projectName': { $in: pIds } }
         ];
       }
+      if (req.query.startDate && req.query.endDate) {
+        const s = new Date(req.query.startDate);
+        const e = new Date(req.query.endDate);
+        if (!isNaN(s.getTime()) && !isNaN(e.getTime())) {
+          filter.$and = filter.$and || [];
+          filter.$and.push({
+            $or: [
+              { planingDate: { $gte: s, $lte: e } },
+              { planingDate: { $gte: req.query.startDate, $lte: req.query.endDate } }
+            ]
+          });
+        }
+      }
       const result = await planingSchema.find(filter).sort({ _id: -1 }).lean().exec();
       res.json({
         data: result,
