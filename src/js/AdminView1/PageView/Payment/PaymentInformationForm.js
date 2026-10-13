@@ -164,8 +164,8 @@ function PaymentInformationForm() {
     billingCity: null
   });
   const [bankCharge, setBankCharge] = useState(0);
-  const [modes, setModes] = useState('Cash');
-  const [reason, setReason] = useState('Invoice');
+  const [modes, setModes] = useState(isMobile ? 'Cash' : '');
+  const [reason, setReason] = useState(isMobile ? 'Invoice' : '');
   const [paymentDate, setPaymentDate] = useState(() => {
     const date = new Date()
     return date
@@ -239,23 +239,28 @@ function PaymentInformationForm() {
           axios.get(`${ENDPOINT_URL}/purchase?summary=true`).catch(() => ({ data: { data: [] } }))
         ]);
         if (customerId !== null && customerId !== undefined) {
-          if (reason === "Invoice" || !reason) {
+          if (reason === "Invoice" || (isMobile && !reason)) {
             const filterData = (res.data?.data || []).filter((row) => {
               if (!row) return false;
               const rowCustId = row.customerName?._id || row.customerName?.id || row.customerId || (typeof row.customerName === 'string' && row.customerName.length === 24 ? row.customerName : null);
               if (rowCustId && customerId && String(rowCustId) === String(customerId)) return true;
 
-              const rowCustName = String(row.customerName?.customerName || row.customerName?.Customer || row.customerName || row.Customer || '').trim().toLowerCase();
-              const targetCustName = String(customerName?.customerName || customerName?.Customer || '').trim().toLowerCase();
-              if (rowCustName && targetCustName && rowCustName === targetCustName) return true;
+              if (isMobile) {
+                const rowCustName = String(row.customerName?.customerName || row.customerName?.Customer || row.customerName || row.Customer || '').trim().toLowerCase();
+                const targetCustName = String(customerName?.customerName || customerName?.Customer || '').trim().toLowerCase();
+                if (rowCustName && targetCustName && rowCustName === targetCustName) return true;
+              }
 
               return false;
             });
             setOldInvoice(filterData);
 
-            // Invoices awaiting payment: include Draft, Sent, Pending, Partially-Paid, and any with balanceDue > 0
+            // Desktop/Web preserves strict Sent / Partially-Paid filter; Mobile includes Draft/Pending with balanceDue > 0
             const unpaidInvoices = filterData.filter((row) => {
               if (!row) return false;
+              if (!isMobile) {
+                return row.status === 'Sent' || row.status === 'Partially-Paid';
+              }
               const st = String(row.status || '').trim().toLowerCase();
               if (st === 'paid' || st === 'void' || st === 'decline' || st === 'free of charge') return false;
               const totalInv = Number(row.totalInvoice ?? row.total ?? 0);

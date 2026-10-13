@@ -1,33 +1,76 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectCurrentUser } from "./features/auth/authSlice";
+import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectCurrentUser, setUser } from "./features/auth/authSlice";
 import { getRoutePermission, canAccessModule, fetchUserGrantAccess } from "./utils/permissionUtils";
+import { isNativeMobile } from "./utils/isMobile";
+import axios from "axios";
+import { ENDPOINT_URL } from "./apiConfig";
 import { toast } from "react-toastify";
 import Loader from "./component/Loader";
 
 const RequireAuth = () => {
   const user = useSelector(selectCurrentUser);
+  const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
+  const isMobile = isNativeMobile();
 
   const [grantAccess, setGrantAccess] = useState(null);
-  const [checking, setChecking] = useState(true);
+  const [checking, setChecking] = useState(isMobile);
 
   const userName = user?.data?.userName || "";
   const userRole = user?.data?.role || "";
   const userId = user?.data?.id || user?.data?._id || "";
 
   useEffect(() => {
+    // STRICT ISOLATION: Desktop (.exe) and Web Portal handle auth/permissions
+    // inside their own module views and SidebarDash (allowing Shift+Click new windows
+    // to mount and hydrate from localStorage without false "Access Denied" redirects).
+    if (!isMobile) {
+      setChecking(false);
+      return;
+    }
+
     let isMounted = true;
     const checkPermissions = async () => {
-      if (!userId) {
+      let resolvedId = userId;
+      let resolvedName = userName;
+      let resolvedRole = userRole;
+
+      // Hydrate from localStorage if Redux store has not hydrated yet
+      if (!resolvedId || !resolvedName) {
+        const storedUserId = localStorage.getItem("user");
+        if (!storedUserId) {
+          if (isMounted) setChecking(false);
+          return;
+        }
+        resolvedId = storedUserId;
+        try {
+          const res = await axios.get(`${ENDPOINT_URL}/get-employeeuser/${storedUserId}`);
+          const empData = res.data?.data;
+          if (empData) {
+            resolvedName = empData.employeeName || "";
+            resolvedRole = empData.role || "";
+            dispatch(
+              setUser({
+                id: empData._id || storedUserId,
+                userName: resolvedName,
+                role: resolvedRole,
+              })
+            );
+          }
+        } catch (err) {
+          console.error("Error hydrating user in RequireAuth:", err);
+        }
+      }
+
+      if (!resolvedId) {
         if (isMounted) setChecking(false);
         return;
       }
 
       // GG Superuser bypass
-      if (userName === "GG") {
+      if (resolvedName === "GG") {
         if (isMounted) {
           setGrantAccess([]);
           setChecking(false);
@@ -36,7 +79,7 @@ const RequireAuth = () => {
       }
 
       try {
-        const modules = await fetchUserGrantAccess(userId);
+        const modules = await fetchUserGrantAccess(resolvedId);
         if (isMounted) {
           setGrantAccess(modules);
           setChecking(false);
@@ -55,10 +98,24 @@ const RequireAuth = () => {
     return () => {
       isMounted = false;
     };
-  }, [userId, userName]);
+  }, [isMobile, userId, userName, userRole, dispatch]);
+
+  // STRICT DESKTOP & WEB ISOLATION:
+  // Preserve 100% original Desktop & Web behavior so Shift+Click new windows
+  // and page transitions never trigger mobile route guard redirects.
+  if (!isMobile) {
+    return user && user.data ? (
+      <Outlet />
+    ) : (
+      <Navigate to="/" state={{ from: location }} replace />
+    );
+  }
+
+  // --- NATIVE MOBILE ONLY BELOW ---
 
   // 1. Authentication Check
-  if (!user || !user.data) {
+  const storedUserId = localStorage.getItem("user");
+  if ((!user || !user.data) && !storedUserId) {
     return <Navigate to="/" state={{ from: location }} replace />;
   }
 

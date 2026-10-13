@@ -123007,7 +123007,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.72"};
+module.exports = {"rE":"3.5.75"};
 
 /***/ },
 
@@ -123139,7 +123139,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ff352033dcca7c23d04b","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"837b90a01b7c7896166c","778":"f8950b7fd584414ccde4","806":"9193b67a01183084ef86","808":"d8f0362bf8e704419cb0","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"468b116ae22d5a6af445","1679":"74f1a4c2f02dc08d4c60","1722":"64a825cf89210c4f5730","1853":"4404e10dd0a06664a690","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"c31301dbc771d4c07fe4","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"6eec083cd839f330b7db","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"475541fe695f660e915a","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"ca8a6540365fbfd5deae","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"06e49b610a5b1149181f","3741":"37d03a8a510f8bda1f4a","3808":"b3d8960e9008116e9e0e","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"a49e6bb4804755211ad1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"801bd721440677205ead","4444":"727795f437c13c12d20f","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"2c7577122b0ff1b9d0af","5194":"d9e4d8382ebe97418258","5391":"2d52079dd1414cb9f104","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"67cd99b87d0f9e297c31","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"afbb66b92ae7a3def6fd","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"65bad2b5d4e3e062bef8","7539":"72ee1ee088ac1a0441f8","7592":"3327bce62ecd01a8e080","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"0fba5ac14ae1223565d7","7941":"e5a63ce8cf6f9930d444","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"ddc6d45afbcbc6bf570e","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"293b931d82c0bdd0c0f3","9528":"4dd9c43eb666c40b578c","9564":"eee8b6766c2885a603a6","9573":"315abf687f962cdeb4dc","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"a4d10a016f030d21ecba","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"ff352033dcca7c23d04b","457":"80f4c3b97b682b2b6309","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"11af74a88adb22505034","742":"837b90a01b7c7896166c","778":"f8950b7fd584414ccde4","806":"b69de9f0df70da29c2b5","808":"d8f0362bf8e704419cb0","864":"ac9193b4bf40eb4964a0","885":"18003f34e13a49891acd","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"243e66afccb0439a3aca","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"f07fd54f57fa4dd05502","1679":"74f1a4c2f02dc08d4c60","1722":"64a825cf89210c4f5730","1853":"4404e10dd0a06664a690","1861":"536c3be362064479b2d9","1919":"afe9710c1e2048d2d028","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"cfdcaa9ef7bcc50050d5","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"018400a75f3ef9da527e","2605":"0f600ae0872fdd6ecbda","2608":"d678bedc842234bcd0f5","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"6eec083cd839f330b7db","2821":"e278c91f0b7a5fdf62ab","2835":"4fa5f50cab8055ebf263","2982":"475541fe695f660e915a","2992":"850c363fd26f4808854f","3009":"567b00944880ad958271","3058":"6790b0f4c3dcc2f96ac1","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"41d688a6f65af9d9f326","3741":"37d03a8a510f8bda1f4a","3808":"f25d720ff5f7604cf9f7","3976":"705691c616b6f0797c34","4001":"67aa93e92b78fe92cddd","4006":"b9c2ffeeed76d95917d1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"c564e20d8ca162e4299f","4444":"c74fefa8261026368502","4783":"70a1da8d2c4bfe55ba6f","5059":"2b89ac7d099d3898a08b","5151":"f475b7cbe67bdfe00ef1","5194":"d9e4d8382ebe97418258","5391":"b014727a603bec1ea172","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"399958d9a240faccf888","5824":"5a1544f2a7d4bcddbd21","5881":"67cd99b87d0f9e297c31","5910":"6707b21bda340d85f399","5919":"bc7e74b946d808524e69","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"7dead46fa0c357e3cda5","6685":"e87335f90b35a6caf077","6725":"afbb66b92ae7a3def6fd","6744":"bf4db7d696a1ed5a5f64","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"8b5557139aba0fed70e1","7270":"f2e0f663a065acd9699e","7384":"fe2a629977d2bfdebb43","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"828b91b640b534d3ecc2","7539":"72ee1ee088ac1a0441f8","7592":"3327bce62ecd01a8e080","7645":"47a1993ce5d2cb39b56a","7757":"7a21c113d63f367702a7","7801":"9ef909c7ec5a21cfb516","7897":"7e31e9ab527a700d3f9b","7941":"e5a63ce8cf6f9930d444","7997":"2e21126ab3301ab4a2fa","8011":"6d6a3d82eeaead81aace","8017":"71c4225691f8990e835d","8027":"8aff4efe91269a9e2bd1","8060":"31f053bd76ae43a217c9","8117":"25756ad53d0d4449d1f8","8282":"ddc6d45afbcbc6bf570e","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"b54b824e53566af8dd49","8685":"2e4858ba3af14fde840a","8838":"f591889b998e1baa86be","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"7503b2573cc8e8866d38","9357":"5fbd5b0d1432a2621992","9528":"4dd9c43eb666c40b578c","9564":"eee8b6766c2885a603a6","9573":"fbbb85fa788c8885f1be","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"9261211cff3b8ebb295c","9773":"d25735645ac419634095","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -127746,16 +127746,51 @@ function MobileDashboardContent() {
         var _ref4 = MobileDashboard_asyncToGenerator(function* () {
           try {
             var _res$data3;
-            var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/maintenance-order"));
+            var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/maintenance?summary=true"));
             var orders = Array.isArray(res === null || res === void 0 || (_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) ? res.data.data : [];
             var activeBranch = localStorage.getItem('selectedBranch') || 'HQ';
-            var branchOrders = orders.filter(o => !(o !== null && o !== void 0 && o.branch) || activeBranch === 'HQ' || o.branch === activeBranch);
-            setMaintenanceStats({
-              open: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'open').length,
-              pending: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'pending').length,
-              converted: branchOrders.filter(o => String(o.status || '').toLowerCase() === 'converted' || String(o.status || '').toLowerCase() === 'close').length
+
+            // If technician has specific assignment, filter to their assigned orders
+            var userTechOrders = orders.filter(o => {
+              if (!o) return false;
+              var matchesBranch = !o.branchId || activeBranch === 'ALL' || o.branchId === activeBranch;
+              if (!matchesBranch) return false;
+              // If technician, scope to their assigned orders
+              if (userName && userName !== 'GG') {
+                var assigned = String(o.technicianAssign || '').trim().toLowerCase();
+                var current = String(userName).trim().toLowerCase();
+                if (assigned && assigned !== current) return false;
+              }
+              return true;
             });
-          } catch (e) {}
+
+            // Open: status === 'Open' and not converted
+            var openCount = userTechOrders.filter(o => {
+              var st = String(o.status || '').toLowerCase();
+              var isConverted = o.Converted === true || o.Converted === 'true' || st === 'converted';
+              return st === 'open' && !isConverted;
+            }).length;
+
+            // Pending: status === 'Pending' and not converted
+            var pendingCount = userTechOrders.filter(o => {
+              var st = String(o.status || '').toLowerCase();
+              var isConverted = o.Converted === true || o.Converted === 'true' || st === 'converted';
+              return st === 'pending' && !isConverted;
+            }).length;
+
+            // Converted / Closed: Converted or Close
+            var convertedCount = userTechOrders.filter(o => {
+              var st = String(o.status || '').toLowerCase();
+              return o.Converted === true || o.Converted === 'true' || st === 'converted' || st === 'close';
+            }).length;
+            setMaintenanceStats({
+              open: openCount,
+              pending: pendingCount,
+              converted: convertedCount
+            });
+          } catch (e) {
+            console.error('Error fetching maintenance stats in MobileDashboard:', e);
+          }
         });
         return function fetchMaint() {
           return _ref4.apply(this, arguments);
@@ -127763,7 +127798,7 @@ function MobileDashboardContent() {
       }();
       fetchMaint();
     }
-  }, [isSuperOrCEO]);
+  }, [isSuperOrCEO, userName]);
   var canCreate = mod => (0,permissionUtils/* canAccessModule */.jI)(user === null || user === void 0 ? void 0 : user.data, grantAccess, mod, 'create');
 
   // ONLY fetch executive financial collections (invoices, expenses, payments) for CEO or Superuser!
@@ -128226,7 +128261,7 @@ function MobileDashboardContent() {
       spacing: 1
     }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
       item: true,
-      xs: 4
+      xs: grantAccess.some(r => r.moduleName === "Maintenance" && r.access.readM) || isSuperOrCEO ? 4 : 6
     }, /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         p: 1.2,
@@ -128251,7 +128286,7 @@ function MobileDashboardContent() {
       }
     }, maintenanceStats.open))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
       item: true,
-      xs: 4
+      xs: grantAccess.some(r => r.moduleName === "Maintenance" && r.access.readM) || isSuperOrCEO ? 4 : 6
     }, /*#__PURE__*/react.createElement(Box/* default */.A, {
       sx: {
         p: 1.2,
@@ -128274,7 +128309,7 @@ function MobileDashboardContent() {
         color: '#1E40AF',
         mt: 0.2
       }
-    }, maintenanceStats.pending))), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+    }, maintenanceStats.pending))), (grantAccess.some(r => r.moduleName === "Maintenance" && r.access.readM) || isSuperOrCEO) && /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
       item: true,
       xs: 4
     }, /*#__PURE__*/react.createElement(Box/* default */.A, {
@@ -137420,16 +137455,20 @@ function RequireAuth_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
+
 var RequireAuth = () => {
   var _user$data, _user$data2, _user$data3, _user$data4;
   var user = (0,react_redux_es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
+  var dispatch = (0,react_redux_es/* useDispatch */.wA)();
   var location = (0,react_router_dist/* useLocation */.zy)();
-  var navigate = (0,react_router_dist/* useNavigate */.Zp)();
+  var isMobile = (0,utils_isMobile/* isNativeMobile */.g1)();
   var _useState = (0,react.useState)(null),
     _useState2 = RequireAuth_slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
-  var _useState3 = (0,react.useState)(true),
+  var _useState3 = (0,react.useState)(isMobile),
     _useState4 = RequireAuth_slicedToArray(_useState3, 2),
     checking = _useState4[0],
     setChecking = _useState4[1];
@@ -137437,16 +137476,52 @@ var RequireAuth = () => {
   var userRole = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) || "";
   var userId = (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.id) || (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4._id) || "";
   (0,react.useEffect)(() => {
+    // STRICT ISOLATION: Desktop (.exe) and Web Portal handle auth/permissions
+    // inside their own module views and SidebarDash (allowing Shift+Click new windows
+    // to mount and hydrate from localStorage without false "Access Denied" redirects).
+    if (!isMobile) {
+      setChecking(false);
+      return;
+    }
     var isMounted = true;
     var checkPermissions = /*#__PURE__*/function () {
       var _ref = RequireAuth_asyncToGenerator(function* () {
-        if (!userId) {
+        var resolvedId = userId;
+        var resolvedName = userName;
+        var resolvedRole = userRole;
+
+        // Hydrate from localStorage if Redux store has not hydrated yet
+        if (!resolvedId || !resolvedName) {
+          var _storedUserId = localStorage.getItem("user");
+          if (!_storedUserId) {
+            if (isMounted) setChecking(false);
+            return;
+          }
+          resolvedId = _storedUserId;
+          try {
+            var _res$data;
+            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-employeeuser/").concat(_storedUserId));
+            var empData = (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
+            if (empData) {
+              resolvedName = empData.employeeName || "";
+              resolvedRole = empData.role || "";
+              dispatch((0,authSlice/* setUser */.gV)({
+                id: empData._id || _storedUserId,
+                userName: resolvedName,
+                role: resolvedRole
+              }));
+            }
+          } catch (err) {
+            console.error("Error hydrating user in RequireAuth:", err);
+          }
+        }
+        if (!resolvedId) {
           if (isMounted) setChecking(false);
           return;
         }
 
         // GG Superuser bypass
-        if (userName === "GG") {
+        if (resolvedName === "GG") {
           if (isMounted) {
             setGrantAccess([]);
             setChecking(false);
@@ -137454,7 +137529,7 @@ var RequireAuth = () => {
           return;
         }
         try {
-          var modules = yield (0,permissionUtils/* fetchUserGrantAccess */.wN)(userId);
+          var modules = yield (0,permissionUtils/* fetchUserGrantAccess */.wN)(resolvedId);
           if (isMounted) {
             setGrantAccess(modules);
             setChecking(false);
@@ -137475,10 +137550,26 @@ var RequireAuth = () => {
     return () => {
       isMounted = false;
     };
-  }, [userId, userName]);
+  }, [isMobile, userId, userName, userRole, dispatch]);
+
+  // STRICT DESKTOP & WEB ISOLATION:
+  // Preserve 100% original Desktop & Web behavior so Shift+Click new windows
+  // and page transitions never trigger mobile route guard redirects.
+  if (!isMobile) {
+    return user && user.data ? /*#__PURE__*/react.createElement(react_router_dist/* Outlet */.sv, null) : /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
+      to: "/",
+      state: {
+        from: location
+      },
+      replace: true
+    });
+  }
+
+  // --- NATIVE MOBILE ONLY BELOW ---
 
   // 1. Authentication Check
-  if (!user || !user.data) {
+  var storedUserId = localStorage.getItem("user");
+  if ((!user || !user.data) && !storedUserId) {
     return /*#__PURE__*/react.createElement(react_router_dist/* Navigate */.C5, {
       to: "/",
       state: {

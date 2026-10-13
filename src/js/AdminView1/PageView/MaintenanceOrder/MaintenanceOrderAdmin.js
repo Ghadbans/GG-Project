@@ -216,7 +216,7 @@ function MaintenanceOrderAdmin() {
         visit: dayjs(item.visitDate).format('DD/MM/YYYY'),
       }));
       SetTotalPage(Math.ceil((res.data.totalItem || 0) / limit));
-      setTotalItemCount(formatDate.length);
+      setTotalItemCount(isMobile ? formatDate.length : (res.data.totalItem || 0));
       setMaintenance(formatDate);
       if (res.data.statusCounts) {
         setStatusCounts(res.data.statusCounts);
@@ -243,7 +243,7 @@ function MaintenanceOrderAdmin() {
 
   useEffect(() => {
     fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
-  }, [page, searchTerm, filterField, filterValue, statusFilter]);
+  }, [page, searchTerm, filterField, filterValue, statusFilter, user?.data?.userName, user?.data?.role, grantAccess]);
 
   const handlePageChange = (newPage) => {
     setPage(newPage); // Update page state (convert to 0-based index)
