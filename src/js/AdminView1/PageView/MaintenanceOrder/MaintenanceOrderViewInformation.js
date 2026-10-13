@@ -1118,7 +1118,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                     <Typography>Edit (Converted)</Typography>
                                                   </span>
                                                 ) : (
-                                                  <NavLink to={canViewCosts ? `/MaintenanceUpdateView/${row._id}` : `/MaintenanceOrderUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
+                                                  <NavLink to={(isOwner || (grantAccess || []).some(r => r.moduleName === "Maintenance" && r.access.editM === true)) ? `/MaintenanceUpdateView/${row._id}` : `/MaintenanceOrderUpdate/${row._id}`} className='LinkName' style={{ display: 'flex', gap: '20px', alignItems: 'center', color: 'gray' }}>
                                                     <EditIcon />
                                                     <Typography>Edit</Typography>
                                                   </NavLink>

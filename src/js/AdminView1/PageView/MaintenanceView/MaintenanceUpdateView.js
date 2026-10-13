@@ -2240,7 +2240,16 @@ function MaintenanceUpdateView() {
             </Grid>
             <br />
             <Grid item xs={6}>
-              <button type='submit' onClick={() => navigate('/MaintenanceViewAdmin')} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
+              <button type='submit' onClick={() => {
+                const hasMainMaintenanceRead = isOwner || (grantAccess || []).some(r => r.moduleName === "Maintenance" && r.access.readM === true);
+                if (window.history.length > 1) {
+                  navigate(-1);
+                } else if (hasMainMaintenanceRead) {
+                  navigate('/MaintenanceViewAdmin');
+                } else {
+                  navigate('/MaintenanceOrderAdmin');
+                }
+              }} className='btnCustomer' style={{ width: '100%' }}>Yes</button>
             </Grid>
             <Grid item xs={6}>
               <button type='submit' onClick={handleCloseBack} className='btnCustomer' style={{ width: '100%' }}>No</button>
