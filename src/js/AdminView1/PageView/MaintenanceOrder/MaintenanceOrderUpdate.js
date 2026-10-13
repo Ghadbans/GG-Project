@@ -213,6 +213,9 @@ function MaintenanceOrderUpdate() {
   const [technicianAssign, setTechnicianAssign] = useState('');
   const [customerName, setCustomerName] = useState({});
   const [customer, setCustomer] = useState([]);
+  const [employee, setEmployee] = useState([]);
+  const [grantAccess, setGrantAccess] = useState([]);
+  const [costVisibility, setCostVisibility] = useState(false);
   const [reason, setReason] = useState("");
   const [converted, setConverted] = useState("");
   const [includeAssetControl, setIncludeAssetControl] = useState(false);
@@ -277,6 +280,41 @@ function MaintenanceOrderUpdate() {
     };
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    const fetchGrant = async () => {
+      try {
+        const storesUserId = localStorage.getItem('user');
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const userGrant = res.data?.data?.find((row) => row.userID === (user?.data?.id || storesUserId) || (row.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase());
+        if (userGrant) {
+          setGrantAccess(userGrant.modules || []);
+          setCostVisibility(userGrant.costVisibility === true);
+        }
+      } catch (error) {
+        console.error('Error fetching grant access:', error);
+      }
+    };
+    fetchGrant();
+  }, [user]);
+
+  const userRole = (user?.data?.role || '').trim().toUpperCase();
+  const isOwner = user?.data?.userName === 'GG';
+  const isCEO = isOwner || userRole === 'CEO';
+  const isAdmin = userRole === 'ADMIN';
+  const canEditRate = isOwner || isCEO || isAdmin;
+  const currentEmployee = (employee || []).find(e => 
+    (e.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase()
+  );
+  const isTechnician = !isOwner && (
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIAN' || 
+    (currentEmployee?.department || '').toUpperCase() === 'TECHNICIEN' || 
+    (currentEmployee?.department || '').toUpperCase().includes('TECH') || 
+    (userRole || '').toUpperCase() === 'TECHNICIAN'
+  );
+  const canViewCosts = isOwner || !isTechnician;
+  const canCreateCustomer = isOwner || (grantAccess || []).some(row => row.moduleName === "Customer" && row.access.createM === true);
+  const canCreateItem = isOwner || (grantAccess || []).some(row => row.moduleName === "Item" && row.access.createM === true);
 
   // Fetch Shop Items & Rate
   const fetchShop = async () => {
@@ -554,7 +592,7 @@ function MaintenanceOrderUpdate() {
       itemOut: row.itemQty
     } : row))
   }
-  const [employee, setEmployee] = useState([])
+  // Data already fetched in the combined useEffect above.
   // Data already fetched in the combined useEffect above.
   const handleClearTech = () => {
     setTechnicianAssign('')

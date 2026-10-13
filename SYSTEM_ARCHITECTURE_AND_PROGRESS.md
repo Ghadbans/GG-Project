@@ -166,6 +166,26 @@
       - Unauthorized route navigation attempts (such as a technician attempting to navigate directly to `#/MaintenanceViewAdmin` or another forbidden module) are strictly blocked with `toast.error("Access Denied: You do not have permission for the ... module.")` and redirected to `/AdminHome`.
 
 ## Current Progress Log
+- **MaintenanceOrderUpdate Scope Fix, Undeclared Variable Resolution & Form Component Hardening (Ver 3.5.77)**:
+  - **Problem Reported**:
+    - When viewing an assigned maintenance order (e.g. `KREAM RESTAURANT | M-001225`) in a technician or standard user account and clicking `Options -> Edit`, the browser navigated to `#/MaintenanceOrderUpdate/:id` and crashed with a blank white screen.
+    - Console error: `Uncaught ReferenceError: isOwner is not defined at MaintenanceOrderUpdate`.
+  - **Root Cause Analysis**:
+    1. In `MaintenanceOrderUpdate.js` line 1571, the `serviceNumber` field rendered `disabled={!isOwner}`, and lines 1769-1999 rendered `{canViewCosts && ...}`, yet `isOwner` and `canViewCosts` were never declared in `MaintenanceOrderUpdate.js`. When the component mounted, evaluating `!isOwner` threw an unhandled ReferenceError.
+    2. Additionally, `const [employee, setEmployee] = useState([])` was declared at line 557, below the `useEffect` fetch that called `setEmployee(...)`.
+    3. Global AST scan across the entire codebase also identified missing `isOwner` / `canCreateItem` in `EstimateConvertToMaintenance.js` and missing `Tooltip` in `PaymentInformationForm.js`.
+  - **Technical Fixes Applied**:
+    1. **`src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderUpdate.js`**:
+       - Defined `employee`, `grantAccess`, `costVisibility`, and fetched permissions via `useEffect` with `fetchGrant`.
+       - Declared `isOwner`, `canViewCosts`, `userRole`, `isCEO`, `isAdmin`, `canEditRate`, `currentEmployee`, `isTechnician`, `canCreateCustomer`, and `canCreateItem` in component scope.
+       - Removed duplicate `employee` state declaration.
+    2. **`src/js/AdminView1/PageView/EstimateView/EstimateConvertToMaintenance.js`**:
+       - Added `grantAccess` fetching and defined `isOwner`, `canCreateCustomer`, and `canCreateItem`.
+       - Fixed customer creation button to properly check `canCreateCustomer`.
+    3. **`src/js/AdminView1/PageView/Payment/PaymentInformationForm.js`**:
+       - Imported `Tooltip, { tooltipClasses }` from `@mui/material/Tooltip` for `BlackTooltip`.
+  - **Release & Distribution**: Bumped version to `3.5.77` in `package.json`, verified 0 undeclared variables across all modified files, compiled production bundles (`npm run build`), packaged Windows Desktop installer (`dist/Global Gate Setup 3.5.77.exe`), and pushed to GitHub `origin main` for automatic Cloudflare Pages Web Portal deployment (`portal.globalgate.sarl`). Mobile APK builds paused per instruction.
+
 - **Strict Grant Access Route Guarding, Form Sidebar Security & Maintenance Navigation Fix (Ver 3.5.76)**:
   - **Problem Reported**:
     1. **Sidebar Bypass Visual Glitch in Forms**: In a technician account (e.g., `MOHAMAD AGHA`), when viewing an assigned maintenance order (`#/MaintenanceOrderViewInformation/:id`) and clicking `Options -> Edit`, the left sidebar navigation items turned normal gray (`color: 'gray'`) instead of light gray (disabled), visually indicating that unauthorized modules could be accessed and clicked.

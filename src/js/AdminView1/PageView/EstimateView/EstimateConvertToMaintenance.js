@@ -178,6 +178,29 @@ function EstimateConvertToMaintenance() {
     dispatch(logOut());
     navigate('/')
   }
+
+  const [grantAccess, setGrantAccess] = useState([]);
+
+  useEffect(() => {
+    const fetchGrant = async () => {
+      try {
+        const storesUserId = localStorage.getItem('user');
+        const res = await axios.get(`${ENDPOINT_URL}/grantAccess`);
+        const userGrant = res.data?.data?.find((row) => row.userID === (user?.data?.id || storesUserId) || (row.employeeName || '').trim().toLowerCase() === (user?.data?.userName || '').trim().toLowerCase());
+        if (userGrant) {
+          setGrantAccess(userGrant.modules || []);
+        }
+      } catch (error) {
+        console.error('Error fetching grant access:', error);
+      }
+    };
+    fetchGrant();
+  }, [user]);
+
+  const isOwner = user?.data?.userName === 'GG';
+  const canCreateCustomer = isOwner || (grantAccess || []).some(row => row.moduleName === "Customer" && row.access.createM === true);
+  const canCreateItem = isOwner || (grantAccess || []).some(row => row.moduleName === "Item" && row.access.createM === true);
+
   const apiUrl = `${ENDPOINT_URL}/create-maintenance`;
   const [serviceDate, setServiceDate] = useState(() => {
     const date = new Date()
@@ -881,7 +904,7 @@ function EstimateConvertToMaintenance() {
                         <Box {...other} sx={{ backgroundColor: 'white', left: '0', marginTop: '10px' }}>
                           {children}
                           <div>
-                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={!canCreateItem} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
+                            <button onClick={(e) => handleOpenOpenAutocomplete1(e)} disabled={!canCreateCustomer} onMouseDown={(e) => e.preventDefault()} className='btnCustomer7' style={{ width: '100%' }}>
                               ADD NEW CUSTOMER
                             </button>
                           </div>
