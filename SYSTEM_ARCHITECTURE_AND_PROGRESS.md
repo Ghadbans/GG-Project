@@ -1803,3 +1803,65 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Web bundle compiled (`dist_web/`).
     - Capacitor synced and native Android debug APK compiled: `android/app/build/outputs/apk/debug/app-debug.apk`.
 
+- **Mobile Payment Module Unpaid Invoice Allocation & Resilient Customer Matching (Ver 3.5.73)**:
+  - **Problem Reported:**
+    - When recording or updating a payment in the Mobile application (`PaymentInformationForm.js` / `PaymentInformationUpdate.js`), selecting a customer failed to display the customer's unpaid invoices to apply payments against.
+  - **Root Cause & Architectural Resolution:**
+    1. **Mobile Customer Selection Handler (`PaymentInformationForm.js`):**
+       - The mobile `Autocomplete` `onChange` was only setting local `customerName` object state instead of calling `handleChangeCustomer(val)`. As a result, `customerId` remained `null` and the `useEffect` that fetches unpaid invoices never executed. Updated mobile `Autocomplete` to invoke `handleChangeCustomer(val)`.
+    2. **Dedicated Mobile Invoices Allocation Card (Card 2):**
+       - Added an interactive mobile Card 2 in both `PaymentInformationForm.js` and `PaymentInformationUpdate.js` displaying all unpaid invoices for the selected customer with Reference (`INV-000xxx`), date, status badge, original invoice total, remaining balance due, per-invoice payment input, "Pay Full" button, and "Auto-Allocate" button.
+  - **Verification & Deployment:**
+    - Version bumped to `3.5.73`, web bundle compiled, Capacitor synced, and Android debug APK built.
+
+- **Technician Maintenance Order Scope Isolation, Staff Dashboard Maintenance Counts & Customer Autocomplete Selection Fix (Ver 3.5.74)**:
+  - **Problem Reported:**
+    1. **Staff Dashboard Maintenance Status Showing Zeros:** On the Staff Dashboard (`MobileDashboard.js`), the Maintenance Order status cards (`Open`, `Pending`) showed `0`.
+    2. **Technicians Seeing Converted Maintenance Orders:** Under the business rules (Rule 17 & Rule 23), technicians can only see `Open` or `Pending` maintenance orders and must never see `Closed` or `Converted` orders, yet converted orders were appearing in the technician's list.
+    3. **Customer Dropdown Selection Jump in Payment Form:** Selecting a customer (e.g., `GLOBAL PVA`) in `PaymentInformationForm.js` automatically jumped to and selected `MR. JUNIOR NUMBI`.
+  - **Root Cause & Architectural Resolution:**
+    1. **Customer Autocomplete Undefined Property Collision (`PaymentInformationForm.js` & `PaymentInformationUpdate.js`):**
+       - In `handleChangeCustomer`, `customer.find(option => option._id === newValue?._id || option.Customer === newValue?.Customer || option.customerName === newValue?.customerName)` evaluated `undefined === undefined` as `true` whenever `option.customerName` and `newValue.customerName` were both `undefined` (since the schema field is `Customer`). This caused `.find()` to always return the very first customer in the reversed array (`MR. JUNIOR NUMBI`).
+       - Fixed by guarding `valId` and `valName` for truthiness before comparing, and adding `isOptionEqualToValue` on the `Autocomplete` component.
+    2. **Technician Converted Maintenance Order Filtering (`server/routes/maintenanceRoutes.js`, `MaintenanceOrderAdmin.js`, `MobileCardList.js`):**
+       - In MongoDB, converted maintenance orders can retain `status: 'Open'` or `'Close'` while having `Converted: true` (or `'true'`). In `GET /technician-maintenance-Information`, `baseScopeQuery` for non-office users (`!isOffice`) only checked `status: { $nin: ['Close', 'Closed', 'Converted', 'Cancel'] }` without excluding `Converted: { $nin: [true, 'true'] }`.
+       - Added `Converted: { $nin: [true, 'true'] }` to `baseScopeQuery` in `server/routes/maintenanceRoutes.js` and enforced client-side filtering in `MaintenanceOrderAdmin.js` and `MobileCardList.js` so technicians strictly see only `Open` and `Pending` orders.
+    3. **Staff Dashboard Maintenance Counts (`MobileDashboard.js`):**
+       - `MobileDashboard.js` was calling the non-existent `/maintenance-order` endpoint (returning 404). Updated it to query `/maintenance?summary=true`, filtering by technician assignment and excluding converted/closed orders for pure technicians, while hiding the `Converted` status card from technicians.
+  - **Verification & Deployment:**
+    - Version bumped to `3.5.74`, pushed backend & frontend to `origin main`, and built Android APK.
+
+- **Desktop & Web `Shift + Click` New Window "Access Denied" Fix & Strict Platform Isolation (Ver 3.5.75)**:
+  - **Problem Reported:**
+    1. User requested to **stop all Mobile application work** and immediately resolve a critical regression affecting the **Desktop (`.exe`) and Web (`portal.globalgate.sarl`) applications**.
+    2. When opening another page in the Desktop or Web application — especially when holding **SHIFT + Click** on a sidebar module (such as `Daily Expenses` or `Invoices`) to open a new window — the new window failed to open the chosen module. Instead, it displayed a red error toast:
+       `Access Denied: You do not have permission for the [Expenses / Invoice / ####] module.`
+       and forcefully redirected the new window to `/AdminHome` (the Dashboard).
+    3. User asked for a full explanation of why this happened on `Shift + Click` and why mobile application updates affected the Desktop and Web applications despite explicit instructions to keep mobile changes isolated.
+  - **Exact Root Cause Analysis:**
+    1. **Why `Shift + Click` (New Window) Triggered `"Access Denied"` and Redirected to Dashboard:**
+       - When a user holds `Shift + Click` on a module in the sidebar on Desktop (Electron) or Web, a **brand-new window** is created directly at that module's hash route (e.g., `#/DailyExpenses` or `#/InvoiceViewAdmin`).
+       - In a newly created window, the Redux store (`src/js/features/auth/authSlice.js`) starts at its initial unhydrated state:
+         `initialState: { data: { userName: '', role: '', selectedBranch: null }, loading: true }`
+         where `user.data` is a truthy object, `user?.data?.id` is `undefined` (`""`), and `user?.data?.userName` is `""`.
+       - In the Desktop/Web architecture, `localStorage.getItem('user')` is read inside `<SidebarDash />` and the module component **after** `<Outlet />` mounts.
+       - However, in `v3.5.67`, `src/js/RequireAuth.js` was modified globally to run route-level permission checks **before** `<Outlet />` mounted. When `userId` was empty (`!userId`), `RequireAuth.js` immediately set `checking = false` with `grantAccess = null` (`[]`) and `userName = ""`.
+       - `RequireAuth.js` then called `canAccessModule(user.data, [], routePerm.module, routePerm.action)` with an empty user (`""`) and empty permissions (`[]`), which returned `false` even for `GG` and `CEO`!
+       - Line 98 of `RequireAuth.js` then fired `toast.error("Access Denied: You do not have permission for the ... module.")` and `<Navigate to="/AdminHome" replace />`, forcing every new `Shift + Click` window back to the Dashboard (`/AdminHome`). Once on `/AdminHome` (which has no `routePerm`), `<AdminHome />` and `<SidebarDash />` finally mounted and loaded the user from `localStorage`.
+    2. **Why Mobile Changes Affected Desktop & Web:**
+       - `RequireAuth.js` is shared across Desktop, Web, and Mobile in `App.js`. Modifying `RequireAuth.js` without gating it behind `isNativeMobile()` caused both the `3.5.67` Desktop `.exe` and the Cloudflare Pages Web Portal (`portal.globalgate.sarl`, auto-deployed from `origin main`) to run the broken pre-hydration route guard.
+  - **Architectural Resolution & Strict Isolation Applied (`Ver 3.5.75`):**
+    1. **`src/js/RequireAuth.js` (100% Desktop & Web Restoration):**
+       - Added a strict `if (!isNativeMobile())` guard that immediately returns `user && user.data ? <Outlet /> : <Navigate to="/" state={{ from: location }} replace />`.
+       - Desktop (`.exe`) and Web (`portal.globalgate.sarl`) now bypass the mobile route guard 100%, restoring original multi-window (`Shift + Click`) navigation where `<SidebarDash />` and each view component handle `localStorage` user hydration and module-level Grant Access permissions without ever blocking or redirecting new windows.
+       - Additionally, for native mobile (`isNativeMobile()`), added `localStorage.getItem('user')` hydration inside `RequireAuth.js` via `/get-employeeuser/:id` before evaluating `fetchUserGrantAccess` so permissions are never checked against an empty Redux user.
+    2. **`src/js/AdminView1/PageView/Payment/PaymentInformationForm.js` & `PaymentInformationUpdate.js` (Strict Desktop/Web Isolation):**
+       - Audited all files changed since `v3.5.66` and gated the `modes` (`'Cash'`), `reason` (`'Invoice'`), customer name fallback, and `Draft`/`Pending` unpaid invoice filters strictly behind `isMobile` (`useIsMobile()`), ensuring Desktop and Web Payment forms retain 100% of their original state defaults and `'Sent' | 'Partially-Paid'` filter behavior.
+    3. **`src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderAdmin.js` (Multi-Window Hydration & Pagination Count):**
+       - Restored `setTotalItemCount(isMobile ? formatDate.length : (res.data.totalItem || 0))` for Desktop/Web server pagination accuracy, and added `user?.data?.userName`, `user?.data?.role`, and `grantAccess` to the `useEffect` dependency array so opening `MaintenanceOrderAdmin` in a `Shift + Click` new window automatically re-fetches with full office/user scope as soon as `localStorage` user hydration completes.
+  - **Verification & Deployment:**
+    - Bumped version in `package.json` to `3.5.75`.
+    - Compiled production Electron (`build/`) and Web (`dist_web/`) bundles via `npm run build` (0 errors across all 232 source files).
+    - Packaged Windows Desktop installer: `dist/Global Gate Setup 3.5.75.exe`.
+    - Committed and pushed all source, `dist_web/`, and documentation updates to `origin main` for automatic Cloudflare Pages Web Portal deployment.
+    - Mobile APK work paused per user instruction.
