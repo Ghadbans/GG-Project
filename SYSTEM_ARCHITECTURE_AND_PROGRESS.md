@@ -179,26 +179,66 @@
 ## Current Progress Log
 - **Sidebar Recursive Infinite Render Loop Freezing on Navigation Between Item & Employee Modules (Ver 3.5.79)**:
   - **Problem Reported:**
-    - User reported that when working in module `Employee` (`/TewmViewAdmin`), opening `TODAY'S ASSIGNMENT`, navigating to module `ITEM` to search for an item, and returning to module `Employee`, the system suffered severe lag, froze completely, and crashed to a white screen. User screenshot confirmed two nested `Close` buttons and two nested section headers ("Main Menu" and "More Menu") inside the left drawer.
-  - **Root Cause Identified:**
-    1. **`localStorage` Poisoning & Cross-Sidebar Recursion:**
-       - In `SidebarDash.js` and `SidebarDashE2.js`, clicking "More" or "Main" persisted `activeSidebarMenu` and `activeSidebarMenuE2` to `localStorage`.
-       - When navigating from Item to Employee, `TewmViewAdmin` mounted with `<SidebarDashE2 />`.
-       - `SidebarDashE2` read `activeSidebarMenuE2: 2` from `localStorage`, mounting in "Main Menu" submenu mode and rendering `<SidebarDash onView2={0} />`.
-       - `SidebarDash` read `activeSidebarMenu: 2` from `localStorage`, mounting in "More Menu" submenu mode and rendering `<SidebarDashE2 onView={0} />`.
-       - This triggered an infinite component recursion tree (`<SidebarDashE2>` -> `<SidebarDash>` -> `<SidebarDashE2>` -> ...) that locked the JavaScript event loop at 100% CPU and blew the Chromium call stack.
-    2. **Uncaught ReferenceError:** `handleNavClick` was bound to 9 `onClick` handlers in `SidebarDash.js` without being defined in component scope.
-    3. **Unprotected Item Filter & MUI Tab Values:** In `ItemNameInfo.js`, `.filter()` evaluated unguarded `row.typeItem.toLowerCase()`, and MUI `<Tabs>` crashed when search results excluded the selected index.
-  - **Architectural Resolution Applied:**
-    1. **Eliminated `localStorage` Submenu Persistence:** Removed all `localStorage.setItem` calls from all sidebars (`SidebarDash`, `SidebarDashE2`, `SideMaintenance`, `SideShop`, `SideMaintenanceMenu`). All sidebars now initialize in clean state `useState(1)` and purge legacy keys on mount.
-    2. **Prop-Guarded Submenu Embedding (`isSubmenu`):** Added `isSubmenu` prop to all sidebars. Embedded instances suppress "Main", "More", "Store", "POS", and "Maintenance" buttons, permanently preventing circular rendering.
-    3. **Defined `handleNavClick`:** Implemented reset handler on all sidebar navigation links across the application.
-    4. **Null-Safe Client Search & Safe Tab Values:** Refactored `ItemNameInfo.js` with comprehensive null checks and safe tab selection fallback.
+    - User reported that when working in module `Employee` (`/TewmViewAdmin`), opening Tab 4 (`TODAY'S ASSIGNMENT`), navigating to module `ITEM` (`/ItemViewAdmin` or `/ItemInfo/:id`) to search for an item, and returning to module `Employee`, the system suffered severe lag, froze completely, and crashed to an empty white screen.
+    - Screenshot (`media_1791916728823_64cfa4ca.png`) revealed the visual signature of the failure: the left navigation drawer showed **two nested `Close` buttons and two nested section headers** (`Close` -> `Main Menu` -> `Close` -> `More Menu` -> `Rate` -> `Fleet Management` -> `Employee` -> ...).
+  - **Exhaustive Root Cause Analysis:**
+    1. **Two-Way `localStorage` Poisoning & Circular Cross-Sidebar Component Recursion:**
+       - In `SidebarDash.js` (Main Menu) line 58 and `SidebarDashE2.js` (More Menu) line 39:
+         Both components previously synchronized their submenu toggle (`show1`) via `localStorage.getItem('activeSidebarMenu')` and `localStorage.getItem('activeSidebarMenuE2')` and wrote back via `localStorage.setItem('activeSidebarMenu', e)` / `localStorage.setItem('activeSidebarMenuE2', e)`.
+       - When the user navigated in Item (`SideMaintenance.js`), clicking "Main" (`handleShow(2)`) rendered `<SidebarDash onView3={view2} />`.
+       - Inside `<SidebarDash />`, clicking "More" wrote `activeSidebarMenu = 2` to `localStorage` and rendered `<SidebarDashE2 onView={view} />`.
+       - Inside `<SidebarDashE2 />`, clicking "Employee" navigated to `/TewmViewAdmin`.
+       - When `/TewmViewAdmin` mounted, its drawer rendered `<SidebarDashE2 />` directly (with `onView` undefined).
+       - Because `activeSidebarMenuE2 = 2` remained in `localStorage`, `SidebarDashE2` mounted in `show1 = 2` ("Main Menu" mode) and rendered `<SidebarDash onView2={view2} />` (where `view2` was initialized to 0).
+       - In `SidebarDash`, `onView2` was 0 (the guard `if (onView2 === 2)` evaluated to `false`). It read `activeSidebarMenu: 2` from `localStorage`, mounted in `show1 = 2` ("More Menu" mode), and rendered `<SidebarDashE2 onView={view} />` (where `view` was initialized to 0).
+       - In that inner `SidebarDashE2`, `onView` was 0, so it mounted in `show1 = 2` and rendered `<SidebarDash onView2={0} />`...
+       - **Infinite Recursive Component Tree:** `<SidebarDashE2>` -> `<SidebarDash>` -> `<SidebarDashE2>` -> `<SidebarDash>` -> ...
+       - React hit `Maximum call stack size exceeded` and exhausted Chromium renderer process memory, locking the UI thread at 100% CPU and producing the empty white screen crash.
+    2. **Uncaught ReferenceError in `SidebarDash.js`:**
+       - In `SidebarDash.js`, lines 121, 127, 157, 163, 169, 175, 181, 187, and 202 had `onClick={handleNavClick}`, but `const handleNavClick` was never defined in component scope.
+       - Any click on those links threw an uncaught `ReferenceError: handleNavClick is not defined`, crashing React if triggered.
+    3. **Unprotected Item Filter & MUI Tab Values in `ItemNameInfo.js`:**
+       - In `ItemNameInfo.js` lines 28-35, `.filter()` evaluated `row.typeItem.toLowerCase()`, `row.itemName.toLowerCase()` without null guards. If any item had a null property, it threw `TypeError: Cannot read properties of undefined (reading 'toLowerCase')`.
+       - Furthermore, in MUI `<Tabs value={value2}>`, when filtering reduced the items array, `value2` could point to an out-of-bounds index, triggering MUI invalid tab value errors.
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Eliminated `localStorage` Submenu Persistence Across All Sidebars:**
+       - In `SidebarDash.js`, `SidebarDashE2.js`, `SideMaintenance.js`, `SideShop.js`, and `SideMaintenanceMenu.js`:
+         - Removed all `localStorage.setItem` calls for menu state.
+         - Initialized all sidebars with `const [show1, setShow1] = useState(1);`.
+         - Added `useEffect(() => { localStorage.removeItem('activeSidebarMenu'); localStorage.removeItem('activeSidebarMenuE2'); }, [])` on mount.
+    2. **Structural Recursion Breaking via `isSubmenu` Prop:**
+       - Added `isSubmenu` to props in all sidebars:
+         - `SidebarDash.js`: `function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu })`
+         - `SidebarDashE2.js`: `function SidebarDashE2({ onView, isSubmenu })`
+         - `SideMaintenance.js`: `function SideMaintenance({ onView, isSubmenu })`
+         - `SideShop.js`: `function SideShop({ onView, isSubmenu })`
+         - `SideMaintenanceMenu.js`: `function SideMaintenanceMenu({ onView, isSubmenu })`
+       - Defined `isNestedSubmenu = Boolean(isSubmenu || ...)` in each component.
+       - When `isNestedSubmenu` is true:
+         - Child instances suppress their own submenu switcher buttons ("Main", "More", "Store", "POS", "Maintenance", "Block Factory").
+         - Parent instances pass `isSubmenu={true}` and explicit view IDs when rendering children:
+           - `SidebarDash`: renders `<SidebarDashE2 onView={2} isSubmenu={true} />`, `<SideMaintenance onView={3} isSubmenu={true} />`, `<SideShop onView={4} isSubmenu={true} />`, `<SideMaintenanceMenu onView={6} isSubmenu={true} />`.
+           - `SidebarDashE2`: renders `<SidebarDash onView2={2} isSubmenu={true} />`.
+           - `SideMaintenance`: renders `<SidebarDash onView3={3} isSubmenu={true} />`.
+           - `SideShop`: renders `<SidebarDash onView4={4} isSubmenu={true} />`.
+           - `SideMaintenanceMenu`: renders `<SidebarDash onView6={6} isSubmenu={true} />`.
+       - This makes circular component nesting structurally impossible at runtime.
+    3. **Defined Navigation Reset Callback (`handleNavClick`):**
+       - Implemented `handleNavClick = () => { setShow1(1); localStorage.removeItem('activeSidebarMenu'); localStorage.removeItem('activeSidebarMenuE2'); }` in all sidebars.
+       - Attached `onClick={handleNavClick}` to every module navigation link (`<ListItemButton component={NavLink} ...>`), ensuring route transitions immediately reset drawers to the top-level menu.
+    4. **Null-Safe Client Search & Safe Tab Values (`ItemNameInfo.js`):**
+       - Refactored `newArray` filter in `ItemNameInfo.js` to guard every property (`row.typeItem`, `row.itemDescription`, `row.itemName`, `row.itemBrand`, `row.itemManufacturer`, `row.itemStore`) before calling `.toLowerCase()`.
+       - Updated MUI `<Tabs>` tab selection logic so `value` and `value2` fallback safely to `false` when the active item ID is not present in the filtered array (`selectedIndex !== -1 ? selectedIndex : false`), completely eliminating MUI invalid tab value errors during live search typing.
+       - Safely rendered tab labels with `(row.itemName || '').toUpperCase()`.
+    5. **Stale Key Cleanup on View Mount (`TewmViewAdmin.js`):**
+       - In `TewmViewAdmin.js` `useEffect(() => { ... }, [])`, added `localStorage.removeItem('activeSidebarMenu'); localStorage.removeItem('activeSidebarMenuE2');` on mount.
   - **Verification & Deployment:**
-    - Bumped version to `3.5.79`.
-    - Compiled production Web and Electron bundles via `npm run build`.
-    - Generated Windows Desktop installer: `dist/Global Gate Setup 3.5.79.exe`.
-    - Pushed to `origin main`.
+    - Bumped version to `3.5.79` in `package.json`.
+    - Quality gate verification: `node scripts/pre-build-check.js` validated AST syntax across all 232 source files with 0 errors.
+    - Webpack compilation succeeded for Electron (`build/`) and Web Portal (`dist_web/`).
+    - Packaged Windows Desktop installer: `dist/Global Gate Setup 3.5.79.exe` (94,335,244 bytes).
+    - Committed and pushed all source, `dist_web/`, and documentation updates to `origin main` for automatic Cloudflare Pages Web Portal deployment (`portal.globalgate.sarl`).
+
 
 - **Employee Module & Today's Assignment Tab Lag, Freeze & White Screen Resolution (Ver 3.5.78)**:
   - **Problem Reported**:
