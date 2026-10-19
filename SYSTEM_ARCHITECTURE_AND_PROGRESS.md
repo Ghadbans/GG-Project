@@ -193,40 +193,76 @@
     - **CardMedia Data URI Guards (`net::ERR_INVALID_URL`):** When rendering item thumbnails in catalog cards or grids via MUI `<CardMedia />`, NEVER pass an unguarded template literal `image={`data:${item.contentType};base64,${item.data}`}`. When an item has no image or an item is being initialized, `item.contentType` and `item.data` are `undefined`, producing the invalid URI `data:undefined;base64,undefined`. Browsers reject this and flood the console with dozens of `net::ERR_INVALID_URL` errors. Always guard with: `image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}`.
 
 49. **Store Voucher (Item Out & Item Return) Standard A4 Print Architecture & Brand Presentation (Ver 3.5.82)**:
-    - **Full-Width Canvas Enforcement:** Never render printable vouchers (`ItemOutViewAdmin`, `ItemReturnAdminView`) using unconstrained HTML `<table>` elements with `fontSize: 70%` and no width specification. Standard HTML tables without `width: 100%` collapse to the minimal text width, creating cramped 35% width columns jammed in the upper-left corner of the page with 65% empty white space.
-    - **Official Company Station Header & Footer:** Store vouchers must always embed `<PrintHeader branchId={branchId} />` with the official Global Gate logo and legal registration info (RCCM, ID NAT, Address), a bold `#093170` voucher title banner (`ITEM OUT VOUCHER / BON DE SORTIE` or `ITEM RETURN VOUCHER / BON DE RETOUR`) with padded voucher numbers (`O-027300`, `R-000728`), and `<PrintFooter branchId={branchId} />` at the bottom of the document.
-    - **Structured 100% Metadata Box & Styled Line Items:** Display Date, Reason, Reference (`INV-002603 / SOLUTION FOR AFRICA SAS`), and Issued/Received By in a full-width `#f8fafc` card. Line item tables must use 100% width, alternating rows, `#093170` headers, right-aligned quantities, and a total summary row.
-    - **Defensive Item Brand Formatting & Catalog Fetch:** Master view components displaying item lists must fetch the item catalog (`GET /item`) on mount so that units and brands resolve accurately. Never interpolate brands with unguarded parentheses (e.g. `( {brand ? brand : ''} )`), which prints empty parentheses `( )` whenever an item lacks a brand. Only format brand if present: `brand ? `${name} (${brand})` : name`.
-    - **Dual Signature Blocks:** All warehouse movement vouchers must provide side-by-side, 100% width signature cards for Storekeeper (`Store Manager / Responsable Dépôt`) and Receiver/Returner with dotted signature areas and date lines.
+    - **Full-Width Canvas Enforcement:** Never render printable vouchers (`ItemOutViewAdmin`, `ItemReturnAdminView`, etc.) using unconstrained HTML `<table>` elements with `fontSize: 70%` and no width specification. Standard HTML tables without `width: 100%` collapse to the minimal text width, creating cramped 35% width columns jammed in the upper-left corner of the page with 65% empty white space. All printable containers must specify `width: '100%'`, `boxSizing: 'border-box'`, `padding: '10mm 12mm'`, `fontFamily: 'Arial, Helvetica, sans-serif'`, `fontSize: '12px'`, and `lineHeight: 1.4`.
+    - **Official Company Stationery Header & Footer:** Store vouchers must always embed `<PrintHeader branchId={branchId} />` at the top (with the official Global Gate logo and legal registration info: RCCM, ID NAT, Address, Province, Country), separated by a solid brand border (`borderBottom: '2px solid #093170'`), and `<PrintFooter branchId={branchId} />` (Email, Phone, Website) at the bottom of the document.
+    - **Branded Document Title Banner:** Include a bold dark-navy banner (`backgroundColor: '#093170'`, color `#ffffff`, `padding: '8px 14px'`, `borderRadius: '4px'`) clearly identifying the document type and padded identifier:
+      - Item Out: `ITEM OUT VOUCHER / BON DE SORTIE` with `O-${String(outNumber).padStart(6, '0')}` (e.g. `O-027300`).
+      - Item Return: `ITEM RETURN VOUCHER / BON DE RETOUR` with `R-${String(outNumber).padStart(6, '0')}` (e.g. `R-000728`).
+    - **Structured 100% Metadata Box:** Render document metadata inside a dedicated full-width card (`backgroundColor: '#f8fafc'`, `border: '1px solid #cbd5e1'`, `borderRadius: '6px'`, `padding: '12px 16px'`) displaying Date, Reason, Reference (`INV-002603 / SOLUTION FOR AFRICA SAS`), and Issued/Received By in a balanced 4-column layout (`width: 14%` labels, `width: 36%` values), plus full-width description when present.
+    - **Defensive Item Brand Formatting & Catalog Fetching:**
+      - Master view components (`ItemOutViewAdmin`, `ItemReturnAdminView`) must fetch the item catalog (`GET /item`) on mount via `cachedGet('/item')` so `item` state is populated and item brands/units resolve accurately.
+      - Never interpolate brands with unguarded parentheses (e.g. `( {brand ? brand : ''} )`), which prints empty parentheses `( )` whenever an item lacks a brand (e.g. `CEMENT SACK 50KG ()`).
+      - Always format brand conditionally:
+        ```javascript
+        const itemId = row.itemName?._id || (typeof row.itemName === 'string' ? row.itemName : null);
+        const relatedUnit = itemId ? (item || []).find((Item1) => Item1._id === itemId) : null;
+        const rawName = typeof row.itemName === 'object' && row.itemName !== null
+          ? (row.itemName?.itemName || row.itemName?.itemDescription || '')
+          : String(row.itemName || '');
+        const brand = (relatedUnit?.itemBrand || row.itemName?.itemBrand || '').toString().trim().toUpperCase();
+        const displayName = brand ? `${rawName} (${brand})` : rawName;
+        const unitStr = (relatedUnit?.unit || row.itemName?.unit || '').toString().trim().toUpperCase();
+        ```
+    - **100% Width Styled Items Table & Totals Summary:**
+      - Header: `#093170` with white text, bold, `padding: '8px 12px'`.
+      - Proportional column widths: `#` (6%), `Item Name` (44%), `Description` (35%), `Qty` (15%).
+      - Alternating row styling (`#ffffff` and `#f8fafc`) with clean `#cbd5e1` borders.
+      - Table footer row calculating total item count and sum of all quantities (`reduce((sum, r) => sum + parseFloat(r.newItemOut || 0), 0)`).
+    - **Dual Side-by-Side Signature Blocks:** Warehouse movement documents require physical or stamp validation. Provide two balanced side-by-side signature cards (`width: '45%'`, `backgroundColor: '#fafafa'`, `border: '1px solid #cbd5e1'`, `borderRadius: '6px'`, `padding: '12px 14px'`) for Storekeeper (`Store Manager / Responsable Dépôt`) and Receiver/Returner (`Receiver / Destinataire` or `Returned By / Client ou Technicien`), each containing a 55px signing box, a dashed signature line, and a date line (`Date: _____/_____/202___`).
+    - **Dynamic Print Document Titles:** `useReactToPrint` MUST always include `documentTitle` (`Item-Out-O-${String(outNumber).padStart(6, '0')}` or `Item-Return-R-${String(outNumber).padStart(6, '0')}`) so that browser PDF exports and print spools are cleanly named instead of defaulting to untitled.
 
 ## Current Progress Log
 - **Item Out & Item Return Printable Voucher Redesign & Brand Architecture (Ver 3.5.82)**:
   - **Problem Reported:**
-    - User reported that the printouts of **Item Out** (`O-027300`) and **Item Return** (`R-0728`) were severely deformed:
-      1. Squeezed into a tiny 35% width column in the upper-left corner with microscopic 70% font size, leaving 65% of the A4 page as empty white space.
-      2. Missing the official Global Gate company header (RCCM, ID NAT, Address, Contacts) and official footer.
-      3. Items displayed broken empty parentheses `CEMENT SACK 50KG ()` due to unpopulated item catalog and raw string template `( {brand ? ... : ''} )`.
-      4. Signature blocks were jammed together with no signature lines or proper spacing.
-      5. Window and PDF print filenames defaulted to untitled.
-  - **Root Cause Analysis:**
-    1. `ItemOutViewAdmin.js` and `ItemReturnAdminView.js` contained legacy print templates using unstyled HTML `<table>` elements without `width: 100%`. In HTML/CSS, `display: table` without explicit width shrinks to minimal content size.
-    2. Neither file fetched the `item` catalog (`SetItems` was never called), leaving `item = []`. When resolving item brand and unit, `item.find()` returned `undefined`, and the template `( {relatedUnit !== undefined ? ... : ''} )` printed raw empty `()`.
-    3. `PrintHeader` and `PrintFooter` were never imported or rendered in either file.
-    4. `useReactToPrint` lacked `documentTitle`.
+    - User reported severe layout deformation on the printouts of **Item Out** (`O-027300`) and **Item Return** (`R-0728`) with user request: *"why the print out of item return and item out is like that ! fix it please"*.
+    - Uploaded PDF evidence showed:
+      1. **Squeezed 35% Width Layout:** The entire printable document was collapsed into a narrow 35% column in the upper-left quadrant of the A4 page, with microscopic 70% font, leaving 65% of the page width and 70% of page height completely blank.
+      2. **Missing Official Stationery:** Printed without the official Global Gate letterhead ([`PrintHeader.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/component/PrintHeader.js)), missing company registration numbers (RCCM, ID NAT), registered office address, and official footer ([`PrintFooter.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/component/PrintFooter.js)).
+      3. **Empty Parentheses Item Name Bug:** Rendered `CEMENT SACK 50KG ()` with empty trailing parentheses due to missing item catalog resolution.
+      4. **Unformatted Signatures:** Signature labels "Store Manager Signature" and "Customer Signature" were plain unstyled text squeezed on the left without signature lines or date fields.
+      5. **Default Untitled Print Job:** Print and PDF exports had no `documentTitle`, defaulting to browser title.
+  - **Exhaustive Root Cause Analysis:**
+    1. **CSS Table Auto-Sizing Collapse:** In `ItemOutViewAdmin.js` (line 799) and `ItemReturnAdminView.js` (line 788), `ref={componentRef}` wrapped `<table style={{ color: 'black', justifyContent: 'center', left: '40px', right: '40px' }}>` and inner tables `<table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD' }}>`. None of these tables specified `width: 100%`. Under standard CSS table layout algorithms, tables default to intrinsic content width. Because the text was short, the tables shrunk to ~320px on an A4 sheet (~794px width).
+    2. **Unpopulated Catalog State:** Both files declared `const [item, SetItems] = useState([])`, but `SetItems` was never called in any `useEffect`. When `item.find(Item1 => Item1._id === row.itemName._id)` executed during render, `item` was empty, so `relatedUnit` was always `undefined`. The template literal `( {relatedUnit !== undefined ? (relatedUnit?.itemBrand ? String(relatedUnit.itemBrand).toUpperCase() : '') : ''} )` placed parentheses outside the existence check, literally rendering `( )` whenever an item had no brand.
+    3. **Missing Module Imports:** Neither `PrintHeader` nor `PrintFooter` were imported or referenced in either file.
+    4. **Unpadded Document Numbers:** Both files used `O-0{itemPurchaseView.outNumber}` and `R-0{itemPurchaseView.outNumber}`, which produced inconsistent string padding (e.g. `O-027300` when `outNumber` was 27300).
   - **Architectural Resolution & Code Modifications Applied:**
-    1. **Official Station Header & Footer:** Imported and integrated `PrintHeader` and `PrintFooter` with dynamic `branchId` resolution.
-    2. **Voucher Title Banners:** Added bold `#093170` document banners (`ITEM OUT VOUCHER / BON DE SORTIE` and `ITEM RETURN VOUCHER / BON DE RETOUR`) with 6-digit padded document numbers (`O-027300`, `R-000728`).
-    3. **Full-Width Metadata Card:** Designed a clean, professional `#f8fafc` meta information card displaying Date, Reason, Reference, and Issued/Received By across 100% width.
-    4. **Full-Width Items Table & Empty Parentheses Elimination:** Replaced microscopic tables with 100% width, styled tables with `#093170` headers, alternating row colors, defensive brand resolution (`brand ? `${rawName} (${brand})` : rawName`), unit display, and total quantity summary rows.
-    5. **Item Catalog Fetching:** Added `cachedGet('/item')` on component mount so item brands and units resolve accurately.
-    6. **Professional Dual Signature Blocks:** Added side-by-side signature cards for Store Manager and Receiver/Returner with dotted signature areas and date lines.
-    7. **PDF Document Titles:** Added dynamic `documentTitle` in `useReactToPrint` (`Item-Out-O-027300`, `Item-Return-R-000728`).
+    1. **Official Station Header & Footer Integration:**
+       - Imported `PrintHeader` and `PrintFooter` in [`src/js/AdminView1/ItemOutViewAdmin.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/AdminView1/ItemOutViewAdmin.js) and [`src/js/AdminView1/ItemReturnAdminView.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/AdminView1/ItemReturnAdminView.js).
+       - Rendered `<PrintHeader branchId={itemPurchaseView.branchId || ""} />` with bottom brand rule, and `<PrintFooter branchId={itemPurchaseView.branchId || ""} />` at the page base.
+    2. **Branded Title Banners:**
+       - Added full-width dark navy (`#093170`) title banners:
+         - Item Out: `ITEM OUT VOUCHER / BON DE SORTIE` with `O-${String(itemPurchaseView.outNumber).padStart(6, '0')}`.
+         - Item Return: `ITEM RETURN VOUCHER / BON DE RETOUR` with `R-${String(itemPurchaseView.outNumber).padStart(6, '0')}`.
+    3. **Full-Width Metadata Card:**
+       - Replaced cramped tables with a 100% width `#f8fafc` structured card with 12px clean typography, displaying Date, Reason, Reference (`INV-002603 / SOLUTION FOR AFRICA SAS`), and Issued/Received By.
+    4. **100% Width Items Table & Total Quantity Summary:**
+       - Replaced 70% font table with a 100% width, styled table with `#093170` header, defined column proportions (6% / 44% / 35% / 15%), alternating row shading (`#ffffff` / `#f8fafc`), clean `#cbd5e1` cell borders, and right-aligned quantities.
+       - Added summary row calculating total item lines and grand total quantity.
+    5. **Defensive Brand & Unit Resolution:**
+       - Added catalog fetch effect on mount: `const resItem = await cachedGet(`${ENDPOINT_URL}/item`); SetItems(resItem.data.data || resItem.data || []);`.
+       - Formatted item names defensively: `brand ? `${rawName} (${brand})` : rawName`, eliminating all empty `()` occurrences.
+       - Appended unit abbreviations (`40 SACKS`, `15 PCS`) to quantity cells.
+    6. **Dual Side-by-Side Signature Blocks:**
+       - Implemented side-by-side signature boxes (45% width each) for Storekeeper (`Store Manager / Responsable Dépôt`) and Receiver/Returner (`Receiver / Destinataire` or `Returned By / Client ou Technicien`) with dashed signing lines and formatted date lines (`Date: _____/_____/202___`).
+    7. **Dynamic PDF Titles:**
+       - Configured `documentTitle: itemPurchaseView?.outNumber ? 'Item-Out-O-' + String(itemPurchaseView.outNumber).padStart(6, '0') : 'Item-Out'` in `useReactToPrint`.
   - **Verification & Deployment:**
     - Bumped `package.json` to `3.5.82`.
-    - AST pre-build validation passed with 0 errors across 232 files.
-    - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles successfully.
-    - Packaged Windows Electron installer: `dist/Global Gate Setup 3.5.82.exe`.
-    - Pushed commit to GitHub `origin main` triggering Cloudflare Pages auto-deployment.
+    - AST pre-build validation passed with 0 errors across 232 files (`node scripts/pre-build-check.js`).
+    - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles successfully with 0 errors.
+    - Packaged Windows Electron installer: `dist/Global Gate Setup 3.5.82.exe` (94,422,694 bytes).
+    - Pushed commit to GitHub `origin main` for automatic Cloudflare Pages deployment (`portal.globalgate.sarl`).
 
 - **Minified React Error #31, Null Property Access & Catalog CardMedia ERR_INVALID_URL Resolution (Ver 3.5.81)**:
   - **Problem Reported:**
