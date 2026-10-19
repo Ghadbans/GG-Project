@@ -44,6 +44,8 @@ import NotificationVIewInfo from './NotificationVIewInfo';
 
 import { useReactToPrint } from 'react-to-print';
 import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
+import PrintHeader from '../component/PrintHeader';
+import PrintFooter from '../component/PrintFooter';
 
 const DeleteTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -222,6 +224,20 @@ function ItemOutViewAdmin() {
   useEffect(() => {
     fetchItems(page, searchTerm, filterField, filterValue);
   }, [page, searchTerm, filterField, filterValue]);
+
+  useEffect(() => {
+    const fetchCatalog = async () => {
+      try {
+        const resItem = await cachedGet(`${ENDPOINT_URL}/item`);
+        if (resItem?.data) {
+          SetItems(resItem.data.data || resItem.data || []);
+        }
+      } catch (err) {
+        console.error('Error fetching item catalog:', err);
+      }
+    };
+    fetchCatalog();
+  }, []);
 
   const handlePageChange = (newPage) => {
     setPage(newPage); // Update page state (convert to 0-based index)
@@ -590,6 +606,7 @@ function ItemOutViewAdmin() {
 
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
+    documentTitle: itemPurchaseView?.outNumber ? `Item-Out-O-${String(itemPurchaseView.outNumber).padStart(6, '0')}` : 'Item-Out',
     pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }`,
   });
   return (
@@ -796,102 +813,248 @@ function ItemOutViewAdmin() {
             itemPurchaseView !== null ?
               <div>
                 <Box hidden>
-                  <div ref={componentRef} style={{ width: '100%', padding: '20px', margin: '10px' }}>
-                    <table style={{ color: 'black', justifyContent: 'center', left: '40px', right: '40px' }}>
+                  <div
+                    ref={componentRef}
+                    style={{
+                      width: '100%',
+                      padding: '10mm 12mm',
+                      boxSizing: 'border-box',
+                      color: '#0f172a',
+                      fontFamily: 'Arial, Helvetica, sans-serif',
+                      fontSize: '12px',
+                      lineHeight: 1.4,
+                      backgroundColor: '#ffffff',
+                    }}
+                  >
+                    {/* Official Company Header */}
+                    <div style={{ width: '100%', marginBottom: '10px', borderBottom: '2px solid #093170', paddingBottom: '8px' }}>
+                      <PrintHeader branchId={itemPurchaseView.branchId || ''} />
+                    </div>
+
+                    {/* Voucher Title Banner */}
+                    <div
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                        padding: '8px 14px',
+                        backgroundColor: '#093170',
+                        color: '#ffffff',
+                        borderRadius: '4px',
+                        marginBottom: '16px',
+                        boxSizing: 'border-box',
+                      }}
+                    >
+                      <span style={{ fontSize: '15px', fontWeight: 'bold', letterSpacing: '1px', textTransform: 'uppercase' }}>
+                        ITEM OUT VOUCHER / BON DE SORTIE
+                      </span>
+                      <span style={{ fontSize: '14px', fontWeight: 'bold', letterSpacing: '0.5px' }}>
+                        O-{String(itemPurchaseView.outNumber).padStart(6, '0')}
+                      </span>
+                    </div>
+
+                    {/* Meta Information Box */}
+                    <div
+                      style={{
+                        width: '100%',
+                        border: '1px solid #cbd5e1',
+                        borderRadius: '6px',
+                        backgroundColor: '#f8fafc',
+                        padding: '12px 16px',
+                        marginBottom: '20px',
+                        boxSizing: 'border-box',
+                      }}
+                    >
+                      <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '12px' }}>
+                        <tbody>
+                          <tr>
+                            <td style={{ width: '14%', fontWeight: 'bold', color: '#475569', padding: '4px 0', verticalAlign: 'top' }}>
+                              Date:
+                            </td>
+                            <td style={{ width: '36%', color: '#0f172a', padding: '4px 8px 4px 0', verticalAlign: 'top', fontWeight: '500' }}>
+                              {dayjs(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')}
+                            </td>
+                            <td style={{ width: '14%', fontWeight: 'bold', color: '#475569', padding: '4px 0', verticalAlign: 'top' }}>
+                              Reason:
+                            </td>
+                            <td style={{ width: '36%', color: '#0f172a', padding: '4px 0', verticalAlign: 'top', fontWeight: '500', textTransform: 'capitalize' }}>
+                              {itemPurchaseView.reason || '—'}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td style={{ fontWeight: 'bold', color: '#475569', padding: '4px 0', verticalAlign: 'top' }}>
+                              Reference:
+                            </td>
+                            <td style={{ color: '#0f172a', padding: '4px 8px 4px 0', verticalAlign: 'top', fontWeight: '600' }}>
+                              {typeof itemPurchaseView.reference === 'object' && itemPurchaseView.reference !== null
+                                ? (itemPurchaseView.reference.referenceName || itemPurchaseView.reference.name || '—')
+                                : (itemPurchaseView.reference || '—')}
+                            </td>
+                            <td style={{ fontWeight: 'bold', color: '#475569', padding: '4px 0', verticalAlign: 'top' }}>
+                              Issued By:
+                            </td>
+                            <td style={{ color: '#0f172a', padding: '4px 0', verticalAlign: 'top', fontWeight: '500' }}>
+                              {itemPurchaseView.Create?.person || user?.data?.userName || '—'}
+                            </td>
+                          </tr>
+                          {itemPurchaseView.description ? (
+                            <tr>
+                              <td style={{ fontWeight: 'bold', color: '#475569', padding: '4px 0', verticalAlign: 'top' }}>
+                                Description:
+                              </td>
+                              <td colSpan={3} style={{ color: '#0f172a', padding: '4px 0', verticalAlign: 'top' }}>
+                                {itemPurchaseView.description}
+                              </td>
+                            </tr>
+                          ) : null}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Items Table */}
+                    <table
+                      style={{
+                        width: '100%',
+                        borderCollapse: 'collapse',
+                        marginBottom: '25px',
+                        fontSize: '11.5px',
+                        boxSizing: 'border-box',
+                      }}
+                    >
                       <thead>
-                        <tr>
-                          <td>
-                            <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #DDD' }}>
-                                <p style={{ padding: '5px' }}>Item Out Number: O-0{itemPurchaseView.outNumber}</p>
-                              </section>
-                              <img  src={Image1} style={{ height: '60px', width: '230px' }} />
-                            </section>
-                          </td>
+                        <tr style={{ backgroundColor: '#093170', color: '#ffffff' }}>
+                          <th style={{ width: '6%', padding: '8px 10px', textAlign: 'center', border: '1px solid #093170', fontWeight: 'bold' }}>
+                            #
+                          </th>
+                          <th style={{ width: '44%', padding: '8px 12px', textAlign: 'left', border: '1px solid #093170', fontWeight: 'bold' }}>
+                            Item Name
+                          </th>
+                          <th style={{ width: '35%', padding: '8px 12px', textAlign: 'left', border: '1px solid #093170', fontWeight: 'bold' }}>
+                            Description
+                          </th>
+                          <th style={{ width: '15%', padding: '8px 12px', textAlign: 'right', border: '1px solid #093170', fontWeight: 'bold' }}>
+                            Qty
+                          </th>
                         </tr>
                       </thead>
                       <tbody>
-                        <tr>
-                          <td>
-                            <Grid container style={{ alignItems: 'center', color: 'black' }} spacing={2}>
-                              <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-                                <Grid item xs={12}>
-                                  <Box>
-                                    <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD' }}>
-                                      <tbody>
-                                        <tr>
-                                          <td>Date</td>
-                                          <td colSpan={3}>{dayjs(itemPurchaseView.itemOutDate).format('DD/MM/YYYY')}</td>
-                                        </tr>
-                                        <tr>
-                                          <td>Reason</td>
-                                          <td colSpan={3}>{itemPurchaseView.reason !== undefined ? itemPurchaseView.reason : ''}</td>
-                                        </tr>
-                                        <tr>
-                                          <td>Reference</td>
-                                          <td colSpan={3}>{itemPurchaseView.reference !== undefined ? itemPurchaseView.reference.referenceName : ''}</td>
-                                        </tr>
-                                        <tr>
-                                          <td>Description</td>
-                                          <td colSpan={3}>{itemPurchaseView.description !== undefined ? itemPurchaseView.description : ''}</td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                    <TableContainer>
-                                      <table className="secondTable" style={{ fontSize: '70%', marginBottom: '5px', border: '1px solid #DDD' }}>
-                                        <thead>
-                                          <tr>
-                                            <th>#</th>
-                                            <th>Item</th>
-                                            <th>Description</th>
-                                            <th>Qty</th>
-                                          </tr>
-                                        </thead>
-                                        <tbody>
-                                          {
-                                            itemPurchaseView.itemsQtyArray.filter((row) => parseFloat(row.newItemOut) > 0)
-                                              .map((row, i) => {
-                                                const relatedUnit = item.find((Item1) => Item1._id === row.itemName._id)
-                                                return (
-                                                  <tr key={row.idRow}>
-                                                    {
+                        {itemPurchaseView.itemsQtyArray
+                          ?.filter((row) => parseFloat(row.newItemOut) > 0 || row.newDescription)
+                          .map((row, i) => {
+                            const itemId = row.itemName?._id || (typeof row.itemName === 'string' ? row.itemName : null);
+                            const relatedUnit = itemId ? (item || []).find((Item1) => Item1._id === itemId) : null;
+                            const rawName = typeof row.itemName === 'object' && row.itemName !== null
+                              ? (row.itemName?.itemName || row.itemName?.itemDescription || '')
+                              : String(row.itemName || '');
+                            const brand = (relatedUnit?.itemBrand || row.itemName?.itemBrand || '').toString().trim().toUpperCase();
+                            const displayName = brand ? `${rawName} (${brand})` : rawName;
+                            const unitStr = (relatedUnit?.unit || row.itemName?.unit || '').toString().trim().toUpperCase();
 
-                                                      row.newDescription !== undefined ?
-                                                        <td colSpan={4}>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')}</td>
-                                                        :
-                                                        <>
-                                                          <td>{i + 1}</td>
-                                                          <td>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')} ( {relatedUnit !== undefined ? (relatedUnit?.itemBrand ? String(relatedUnit.itemBrand).toUpperCase() : '') : ''} )</td>
-                                                          <td>{row.itemDescription}</td>
-                                                          <td>{row.newItemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
-                                                        </>
-                                                    }
+                            if (row.newDescription) {
+                              return (
+                                <tr key={row.idRow || i} style={{ backgroundColor: '#e2e8f0', fontWeight: 'bold' }}>
+                                  <td colSpan={4} style={{ padding: '7px 12px', border: '1px solid #cbd5e1', color: '#1e293b' }}>
+                                    {row.newDescription}
+                                  </td>
+                                </tr>
+                              );
+                            }
 
-                                                  </tr>
-                                                )
-                                              }
-                                              )
-                                          }
-                                        </tbody>
-                                      </table>
-                                    </TableContainer>
-                                  </Box>
-                                </Grid>
-                              </Grid>
-                            </Grid>
-                            <section style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
-                              <p>Store Manager Signature</p>
-                              <p>Customer Signature</p>
-                            </section>
+                            return (
+                              <tr key={row.idRow || i} style={{ backgroundColor: i % 2 === 0 ? '#ffffff' : '#f8fafc' }}>
+                                <td style={{ padding: '7px 10px', textAlign: 'center', border: '1px solid #cbd5e1', color: '#64748b' }}>
+                                  {i + 1}
+                                </td>
+                                <td style={{ padding: '7px 12px', textAlign: 'left', border: '1px solid #cbd5e1', fontWeight: '500', color: '#0f172a' }}>
+                                  {displayName}
+                                </td>
+                                <td style={{ padding: '7px 12px', textAlign: 'left', border: '1px solid #cbd5e1', color: '#334155' }}>
+                                  {row.itemDescription || '—'}
+                                </td>
+                                <td style={{ padding: '7px 12px', textAlign: 'right', border: '1px solid #cbd5e1', fontWeight: 'bold', color: '#093170' }}>
+                                  {row.newItemOut} {unitStr}
+                                </td>
+                              </tr>
+                            );
+                          })}
+                      </tbody>
+                      <tfoot>
+                        <tr style={{ backgroundColor: '#f1f5f9', fontWeight: 'bold' }}>
+                          <td colSpan={3} style={{ padding: '9px 12px', textAlign: 'right', border: '1px solid #cbd5e1', color: '#334155' }}>
+                            Total Items: {(itemPurchaseView.itemsQtyArray || []).filter((r) => parseFloat(r.newItemOut) > 0).length} | Total Quantity:
+                          </td>
+                          <td style={{ padding: '9px 12px', textAlign: 'right', border: '1px solid #cbd5e1', color: '#093170', fontSize: '13px' }}>
+                            {(itemPurchaseView.itemsQtyArray || [])
+                              .filter((row) => parseFloat(row.newItemOut) > 0)
+                              .reduce((sum, r) => sum + (parseFloat(r.newItemOut) || 0), 0)
+                              .toLocaleString()}
                           </td>
                         </tr>
-
-                      </tbody>
+                      </tfoot>
                     </table>
+
+                    {/* Signatures Block */}
+                    <div
+                      style={{
+                        width: '100%',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        marginTop: '35px',
+                        marginBottom: '25px',
+                        pageBreakInside: 'avoid',
+                        boxSizing: 'border-box',
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: '45%',
+                          border: '1px solid #cbd5e1',
+                          borderRadius: '6px',
+                          padding: '12px 14px',
+                          backgroundColor: '#fafafa',
+                          boxSizing: 'border-box',
+                        }}
+                      >
+                        <p style={{ margin: '0 0 6px', fontWeight: 'bold', fontSize: '11px', color: '#1e293b', textTransform: 'uppercase' }}>
+                          Store Manager / Responsable Dépôt
+                        </p>
+                        <div style={{ height: '55px', borderBottom: '1px dashed #94a3b8', marginBottom: '8px' }}></div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#64748b' }}>
+                          <span>Name & Signature:</span>
+                          <span>Date: _____/_____/202___</span>
+                        </div>
+                      </div>
+
+                      <div
+                        style={{
+                          width: '45%',
+                          border: '1px solid #cbd5e1',
+                          borderRadius: '6px',
+                          padding: '12px 14px',
+                          backgroundColor: '#fafafa',
+                          boxSizing: 'border-box',
+                        }}
+                      >
+                        <p style={{ margin: '0 0 6px', fontWeight: 'bold', fontSize: '11px', color: '#1e293b', textTransform: 'uppercase' }}>
+                          Receiver / Destinataire
+                        </p>
+                        <div style={{ height: '55px', borderBottom: '1px dashed #94a3b8', marginBottom: '8px' }}></div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#64748b' }}>
+                          <span>Name & Signature:</span>
+                          <span>Date: _____/_____/202___</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Official Footer */}
+                    <div style={{ width: '100%', marginTop: '30px', pageBreakInside: 'avoid' }}>
+                      <PrintFooter branchId={itemPurchaseView.branchId || ''} />
+                    </div>
                   </div>
                 </Box>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
-                  <span>{itemPurchaseView.Create.person} </span><span> Create O-0{itemPurchaseView.outNumber}</span> on <span>{itemPurchaseView.Create.dateComment}</span>
+                  <span>{itemPurchaseView.Create?.person || ''} </span><span> Created O-{String(itemPurchaseView.outNumber).padStart(6, '0')}</span> on <span>{itemPurchaseView.Create?.dateComment || ''}</span>
                 </Typography>
                 <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
 
@@ -911,7 +1074,11 @@ function ItemOutViewAdmin() {
                             </TableRow>
                             <TableRow>
                               <TableCell>Reference</TableCell>
-                              <TableCell colSpan={3}>{itemPurchaseView.reference !== undefined ? itemPurchaseView.reference.referenceName : ''}</TableCell>
+                              <TableCell colSpan={3}>
+                                {typeof itemPurchaseView.reference === 'object' && itemPurchaseView.reference !== null
+                                  ? (itemPurchaseView.reference.referenceName || itemPurchaseView.reference.name || '')
+                                  : (itemPurchaseView.reference || '')}
+                              </TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Description</TableCell>
@@ -931,28 +1098,34 @@ function ItemOutViewAdmin() {
                             </TableHead>
                             <TableBody>
                               {
-                                itemPurchaseView.itemsQtyArray.filter((row) => parseFloat(row.newItemOut) > 0)
+                                itemPurchaseView.itemsQtyArray?.filter((row) => parseFloat(row.newItemOut) > 0 || row.newDescription)
                                   .map((row, i) => {
-                                    const relatedUnit = item.find((Item1) => Item1._id === row.itemName._id)
-                                    return (
-                                      <TableRow key={row.idRow}>
-                                        {
+                                    const itemId = row.itemName?._id || (typeof row.itemName === 'string' ? row.itemName : null);
+                                    const relatedUnit = itemId ? (item || []).find((Item1) => Item1._id === itemId) : null;
+                                    const rawName = typeof row.itemName === 'object' && row.itemName !== null
+                                      ? (row.itemName?.itemName || row.itemName?.itemDescription || '')
+                                      : String(row.itemName || '');
+                                    const brand = (relatedUnit?.itemBrand || row.itemName?.itemBrand || '').toString().trim().toUpperCase();
+                                    const displayName = brand ? `${rawName} (${brand})` : rawName;
+                                    const unitStr = (relatedUnit?.unit || row.itemName?.unit || '').toString().trim().toUpperCase();
 
-                                          row.newDescription !== undefined ?
-                                            <TableCell colSpan={4}>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')}</TableCell>
+                                    return (
+                                      <TableRow key={row.idRow || i}>
+                                        {
+                                          row.newDescription ?
+                                            <TableCell colSpan={4} sx={{ fontWeight: 'bold', backgroundColor: '#f1f5f9' }}>{row.newDescription}</TableCell>
                                             :
                                             <>
                                               <TableCell>{i + 1}</TableCell>
-                                              <TableCell>{typeof row.itemName === 'object' ? (row.itemName?.itemName || row.itemName?.itemDescription || '') : (row.itemName || '')} ( {relatedUnit !== undefined ? (relatedUnit?.itemBrand ? String(relatedUnit.itemBrand).toUpperCase() : '') : ''} )</TableCell>
-                                              <TableCell>{row.itemDescription}</TableCell>
-                                              <TableCell>{row.newItemOut} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
+                                              <TableCell>{displayName}</TableCell>
+                                              <TableCell>{row.itemDescription || '—'}</TableCell>
+                                              <TableCell>{row.newItemOut} {unitStr}</TableCell>
                                             </>
                                         }
 
                                       </TableRow>
                                     )
-                                  }
-                                  )
+                                  })
                               }
                             </TableBody>
                           </Table>

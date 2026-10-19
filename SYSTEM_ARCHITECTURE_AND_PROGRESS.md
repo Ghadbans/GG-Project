@@ -192,7 +192,42 @@
     - **Null-Safety on Form & Edit Scope:** In form components (`ItemPurchaseViewForm`, `ConvertPoToIP`, `ItemReturnViewForm`, etc.), top-level statements and `useEffect` hooks must NEVER assume `projectName` is non-null. Always use optional chaining `projectName?._id` and guard `if (!projectName?._id) return;` before filtering arrays or accessing nested properties.
     - **CardMedia Data URI Guards (`net::ERR_INVALID_URL`):** When rendering item thumbnails in catalog cards or grids via MUI `<CardMedia />`, NEVER pass an unguarded template literal `image={`data:${item.contentType};base64,${item.data}`}`. When an item has no image or an item is being initialized, `item.contentType` and `item.data` are `undefined`, producing the invalid URI `data:undefined;base64,undefined`. Browsers reject this and flood the console with dozens of `net::ERR_INVALID_URL` errors. Always guard with: `image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}`.
 
+49. **Store Voucher (Item Out & Item Return) Standard A4 Print Architecture & Brand Presentation (Ver 3.5.82)**:
+    - **Full-Width Canvas Enforcement:** Never render printable vouchers (`ItemOutViewAdmin`, `ItemReturnAdminView`) using unconstrained HTML `<table>` elements with `fontSize: 70%` and no width specification. Standard HTML tables without `width: 100%` collapse to the minimal text width, creating cramped 35% width columns jammed in the upper-left corner of the page with 65% empty white space.
+    - **Official Company Station Header & Footer:** Store vouchers must always embed `<PrintHeader branchId={branchId} />` with the official Global Gate logo and legal registration info (RCCM, ID NAT, Address), a bold `#093170` voucher title banner (`ITEM OUT VOUCHER / BON DE SORTIE` or `ITEM RETURN VOUCHER / BON DE RETOUR`) with padded voucher numbers (`O-027300`, `R-000728`), and `<PrintFooter branchId={branchId} />` at the bottom of the document.
+    - **Structured 100% Metadata Box & Styled Line Items:** Display Date, Reason, Reference (`INV-002603 / SOLUTION FOR AFRICA SAS`), and Issued/Received By in a full-width `#f8fafc` card. Line item tables must use 100% width, alternating rows, `#093170` headers, right-aligned quantities, and a total summary row.
+    - **Defensive Item Brand Formatting & Catalog Fetch:** Master view components displaying item lists must fetch the item catalog (`GET /item`) on mount so that units and brands resolve accurately. Never interpolate brands with unguarded parentheses (e.g. `( {brand ? brand : ''} )`), which prints empty parentheses `( )` whenever an item lacks a brand. Only format brand if present: `brand ? `${name} (${brand})` : name`.
+    - **Dual Signature Blocks:** All warehouse movement vouchers must provide side-by-side, 100% width signature cards for Storekeeper (`Store Manager / Responsable Dépôt`) and Receiver/Returner with dotted signature areas and date lines.
+
 ## Current Progress Log
+- **Item Out & Item Return Printable Voucher Redesign & Brand Architecture (Ver 3.5.82)**:
+  - **Problem Reported:**
+    - User reported that the printouts of **Item Out** (`O-027300`) and **Item Return** (`R-0728`) were severely deformed:
+      1. Squeezed into a tiny 35% width column in the upper-left corner with microscopic 70% font size, leaving 65% of the A4 page as empty white space.
+      2. Missing the official Global Gate company header (RCCM, ID NAT, Address, Contacts) and official footer.
+      3. Items displayed broken empty parentheses `CEMENT SACK 50KG ()` due to unpopulated item catalog and raw string template `( {brand ? ... : ''} )`.
+      4. Signature blocks were jammed together with no signature lines or proper spacing.
+      5. Window and PDF print filenames defaulted to untitled.
+  - **Root Cause Analysis:**
+    1. `ItemOutViewAdmin.js` and `ItemReturnAdminView.js` contained legacy print templates using unstyled HTML `<table>` elements without `width: 100%`. In HTML/CSS, `display: table` without explicit width shrinks to minimal content size.
+    2. Neither file fetched the `item` catalog (`SetItems` was never called), leaving `item = []`. When resolving item brand and unit, `item.find()` returned `undefined`, and the template `( {relatedUnit !== undefined ? ... : ''} )` printed raw empty `()`.
+    3. `PrintHeader` and `PrintFooter` were never imported or rendered in either file.
+    4. `useReactToPrint` lacked `documentTitle`.
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Official Station Header & Footer:** Imported and integrated `PrintHeader` and `PrintFooter` with dynamic `branchId` resolution.
+    2. **Voucher Title Banners:** Added bold `#093170` document banners (`ITEM OUT VOUCHER / BON DE SORTIE` and `ITEM RETURN VOUCHER / BON DE RETOUR`) with 6-digit padded document numbers (`O-027300`, `R-000728`).
+    3. **Full-Width Metadata Card:** Designed a clean, professional `#f8fafc` meta information card displaying Date, Reason, Reference, and Issued/Received By across 100% width.
+    4. **Full-Width Items Table & Empty Parentheses Elimination:** Replaced microscopic tables with 100% width, styled tables with `#093170` headers, alternating row colors, defensive brand resolution (`brand ? `${rawName} (${brand})` : rawName`), unit display, and total quantity summary rows.
+    5. **Item Catalog Fetching:** Added `cachedGet('/item')` on component mount so item brands and units resolve accurately.
+    6. **Professional Dual Signature Blocks:** Added side-by-side signature cards for Store Manager and Receiver/Returner with dotted signature areas and date lines.
+    7. **PDF Document Titles:** Added dynamic `documentTitle` in `useReactToPrint` (`Item-Out-O-027300`, `Item-Return-R-000728`).
+  - **Verification & Deployment:**
+    - Bumped `package.json` to `3.5.82`.
+    - AST pre-build validation passed with 0 errors across 232 files.
+    - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles successfully.
+    - Packaged Windows Electron installer: `dist/Global Gate Setup 3.5.82.exe`.
+    - Pushed commit to GitHub `origin main` triggering Cloudflare Pages auto-deployment.
+
 - **Minified React Error #31, Null Property Access & Catalog CardMedia ERR_INVALID_URL Resolution (Ver 3.5.81)**:
   - **Problem Reported:**
     1. Windows Electron desktop client and web portal (`portal.globalgate.sarl`) crashed to an unhandled white screen with console error:
