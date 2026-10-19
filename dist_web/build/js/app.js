@@ -86666,17 +86666,18 @@ function PayRollReportInfo(_ref3) {
       date: row.itemPurchaseDate,
       number: row.itemPurchaseNumber,
       reason: row.reason,
-      description: row.projectName !== undefined ? row.projectName.name : row.description,
+      description: row.projectName && typeof row.projectName === 'object' ? row.projectName.name || row.projectName.projectName || '' : typeof row.projectName === 'string' ? row.projectName : row.description || '',
       amount: row.amount
     });
   });
   filterMonthExpenses.forEach(row => {
+    var _row$expenseCategory, _row$accountNameInfo;
     monthArray.push({
       type: 'Expenses',
       date: row.expenseDate,
       number: row.expenseNumber,
-      reason: row.expenseCategory.expensesCategory + ' For ' + row.accountName,
-      description: row.accountNameInfo.name !== '' ? row.accountNameInfo.name : row.description,
+      reason: (((_row$expenseCategory = row.expenseCategory) === null || _row$expenseCategory === void 0 ? void 0 : _row$expenseCategory.expensesCategory) || row.expenseCategory || '') + ' For ' + row.accountName,
+      description: ((_row$accountNameInfo = row.accountNameInfo) === null || _row$accountNameInfo === void 0 ? void 0 : _row$accountNameInfo.name) || (typeof row.accountNameInfo === 'string' ? row.accountNameInfo : '') || row.description || '',
       amount: row.total
     });
   });
@@ -88956,7 +88957,7 @@ function ProjectReportInfo(_ref3) {
       scope: "row"
     }, (row === null || row === void 0 || (_row$customerName3 = row.customerName) === null || _row$customerName3 === void 0 ? void 0 : _row$customerName3.Customer) || (row === null || row === void 0 || (_row$customerName4 = row.customerName) === null || _row$customerName4 === void 0 ? void 0 : _row$customerName4.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, typeof row.projectName === 'object' && row.projectName !== null ? row.projectName.projectName || row.projectName.name || '' : String(row.projectName || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -89235,7 +89236,7 @@ function ProjectReportInfo(_ref3) {
       scope: "row"
     }, (row === null || row === void 0 || (_row$customerName5 = row.customerName) === null || _row$customerName5 === void 0 ? void 0 : _row$customerName5.Customer) || (row === null || row === void 0 || (_row$customerName6 = row.customerName) === null || _row$customerName6 === void 0 ? void 0 : _row$customerName6.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, typeof row.projectName === 'object' && row.projectName !== null ? row.projectName.projectName || row.projectName.name || '' : String(row.projectName || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -89364,7 +89365,7 @@ function ProjectReportInfo(_ref3) {
       scope: "row"
     }, (row === null || row === void 0 || (_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.Customer) || (row === null || row === void 0 || (_row$customerName8 = row.customerName) === null || _row$customerName8 === void 0 ? void 0 : _row$customerName8.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, typeof row.projectName === 'object' && row.projectName !== null ? row.projectName.projectName || row.projectName.name || '' : String(row.projectName || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
@@ -89846,7 +89847,7 @@ function ProjectReportInfo(_ref3) {
       align: "left"
     }, (row === null || row === void 0 || (_row$customerName9 = row.customerName) === null || _row$customerName9 === void 0 ? void 0 : _row$customerName9.Customer) || (row === null || row === void 0 || (_row$customerName0 = row.customerName) === null || _row$customerName0 === void 0 ? void 0 : _row$customerName0.customerName) || (typeof (row === null || row === void 0 ? void 0 : row.customerName) === 'string' ? row.customerName : 'N/A')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
-    }, row.projectName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, typeof row.projectName === 'object' && row.projectName !== null ? row.projectName.projectName || row.projectName.name || '' : String(row.projectName || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "left"
     }, row.description), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       align: "right"
@@ -90336,7 +90337,7 @@ function RevenueExpensesAll(_ref3) {
           date: row.date,
           number: row.itemPurchaseNumber,
           reason: row.reason,
-          description: "Payment for IP-".concat(row.itemPurchaseNumber, " (").concat(row.projectName !== undefined ? row.projectName.name : row.description, ")"),
+          description: "Payment for IP-".concat(row.itemPurchaseNumber, " (").concat(row.projectName && typeof row.projectName === 'object' ? row.projectName.name || row.projectName.projectName || '' : typeof row.projectName === 'string' ? row.projectName : row.description || '', ")"),
           amount: convertedAmount
         });
       });
@@ -90347,19 +90348,19 @@ function RevenueExpensesAll(_ref3) {
           date: row.itemPurchaseDate,
           number: row.itemPurchaseNumber,
           reason: row.reason,
-          description: row.projectName !== undefined ? row.projectName.name : row.description,
+          description: row.projectName && typeof row.projectName === 'object' ? row.projectName.name || row.projectName.projectName || '' : typeof row.projectName === 'string' ? row.projectName : row.description || '',
           amount: parseFloat(row.totalUSD || row.total || row.amount || 0)
         });
       });
     }
     filterMonthExpenses === null || filterMonthExpenses === void 0 || filterMonthExpenses.forEach(row => {
-      var _row$expenseCategory;
+      var _row$expenseCategory, _row$accountNameInfo;
       monthArray.push({
         type: 'Expenses',
         date: row.expenseDate,
         number: row.expenseNumber,
-        reason: ((_row$expenseCategory = row.expenseCategory) === null || _row$expenseCategory === void 0 ? void 0 : _row$expenseCategory.expensesCategory) + ' For ' + row.accountName,
-        description: row.accountNameInfo !== undefined ? row.accountNameInfo.name : row.description,
+        reason: (((_row$expenseCategory = row.expenseCategory) === null || _row$expenseCategory === void 0 ? void 0 : _row$expenseCategory.expensesCategory) || row.expenseCategory || '') + ' For ' + row.accountName,
+        description: ((_row$accountNameInfo = row.accountNameInfo) === null || _row$accountNameInfo === void 0 ? void 0 : _row$accountNameInfo.name) || (typeof row.accountNameInfo === 'string' ? row.accountNameInfo : '') || row.description || '',
         amount: parseFloat(row.total || 0)
       });
     });
@@ -123069,7 +123070,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.80"};
+module.exports = {"rE":"3.5.81"};
 
 /***/ },
 
@@ -123201,7 +123202,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"300fae0aeacfd7079f5d","457":"c1821719ed2b67e70b98","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"1abad85f951ed146e3df","742":"395f85433a1f01f433e4","778":"f8950b7fd584414ccde4","806":"cdf046fced15ecf5f557","808":"30b9032bbf15a1463bb6","864":"ac9193b4bf40eb4964a0","885":"e7bbea2812088e2ecc36","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"b616f3cc92a9f16be43c","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"54c3051b445acf0c484b","1679":"b7e47fa532d4af110f33","1722":"be03a72cba90d57b0a0e","1853":"01498521886077598f76","1861":"b7634fa92c4aa00d7ec7","1919":"7b1af82129a9886cae73","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"6a446455ccb42e0052ef","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"5a423d32777ec1a0898f","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"ea01de6dd2e67edb9795","2821":"6f32570729059d4530d3","2835":"4fa5f50cab8055ebf263","2982":"fe45a643e3ac1e815aca","2992":"e47744f780c5464cc25b","3009":"567b00944880ad958271","3058":"3cfcf02c8ef94e939722","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"0e13e97afba0dbccb713","3741":"37d03a8a510f8bda1f4a","3808":"a8e6efb0900e12f89caf","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"2e984c907c3a6d212ca1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"763142ec3fd70234b804","4444":"a3a511eecee4b3932795","4783":"b73a8d92f7b6b56b5334","5059":"2b89ac7d099d3898a08b","5151":"7446a59bd64c6f2a7898","5194":"4ef73fd80cc5dd08e814","5391":"c44b41a180d72b1871fc","5394":"9bd2e703f55a6aa05982","5646":"e2e8f697bcd06a54c997","5669":"db149f52b7287b20f041","5754":"531466d8fe35051301df","5824":"166e1bcdec001cd7803b","5881":"0fabcef4ebbf1f365001","5910":"6707b21bda340d85f399","5919":"e3598402090ddf33ddfd","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"b6960c55bc05ec4289b4","6685":"857160452cc0ec2c80df","6725":"60233d2c0e3fb9cef99f","6744":"e21f9b1c1717051cc364","6934":"294f3efc05a9b823f11f","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"f2e0f663a065acd9699e","7384":"4478da5c2cb0b68166a9","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"bd33f965a091dde910a9","7539":"f1dc178ae6e7701275fb","7592":"b3947e2e770dedc44090","7645":"031f9c20b62c5968dec2","7757":"7a21c113d63f367702a7","7801":"49967c7fa2665cbb7068","7897":"a4c6e3185e2729f68221","7941":"fecb615c1c89df862c9c","7997":"2e21126ab3301ab4a2fa","8011":"50b6a7402d0989d87e71","8017":"71c4225691f8990e835d","8027":"bf9a9a5609105898857c","8060":"c0a1baef996cd39788ee","8117":"25756ad53d0d4449d1f8","8282":"c02b0d3d0ccb03e36b7b","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"3b1c2aa49ef35578d425","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"80a538a6352c9a776e5e","9528":"4dd9c43eb666c40b578c","9564":"b2efe177d36891d08d42","9573":"6e1cc6282f18a4a2b085","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"94cf6d1f61063caa500e","9773":"187e02e42c514a344d8e","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"66f38ee4e1068e131852","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"c92302ad851e5178b727","457":"c1821719ed2b67e70b98","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"1abad85f951ed146e3df","742":"66e13e0b5450fcf65cb5","778":"f8950b7fd584414ccde4","806":"bfb6c93ed1c5aab60964","808":"cac03987be65d9da4145","864":"ac9193b4bf40eb4964a0","885":"31cc42012d2c9e2d7394","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"03c44a5a7e793590ff92","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"661a3084267ece0e899f","1679":"d8fb32f3245f258ef98d","1722":"be03a72cba90d57b0a0e","1853":"daeb90b988179c611229","1861":"b7634fa92c4aa00d7ec7","1919":"7b1af82129a9886cae73","1985":"c5a15a2575a5d01e7793","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"b48c5c3c9b24ba5d9ca9","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"bf517002e6f1017c22cc","2533":"986a33c0b03f7e16c2ba","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"dc1424b8a8728d9c419c","2821":"f424e55a6b798e607833","2835":"4fa5f50cab8055ebf263","2982":"0727aea0e5ca17a6aebb","2992":"058c04018ffb962de6d3","3009":"567b00944880ad958271","3058":"e6936936bb588d1fd1ce","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"0e13e97afba0dbccb713","3741":"37d03a8a510f8bda1f4a","3808":"c518f3ecac69876bc7b3","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"2e984c907c3a6d212ca1","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"964dcbf6cc6c30a2f729","4444":"6c28dbf5a7d2ce63594d","4783":"2ef6758b4d9059afc8a8","5059":"628654fd8f024ff22adb","5151":"f463ae729f40b7c0f831","5194":"4ef73fd80cc5dd08e814","5391":"b5f7660714381135d29d","5394":"194efd3738860bec7b9c","5646":"e2e8f697bcd06a54c997","5669":"49f9eb4540f658b32343","5754":"659db805ae05cd3da725","5824":"c8be2075624d4cd16ff2","5881":"53eaddb59888f999c2cf","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"6553605ba146fa4301bc","6671":"b6960c55bc05ec4289b4","6685":"857160452cc0ec2c80df","6725":"2d7b553f9e8a93ecae15","6744":"66f16a7ab51e26e081ff","6934":"e4cde38f302869697a6a","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"f2e0f663a065acd9699e","7384":"15615e503514bd58f2f5","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"14760163b3c821c75606","7539":"5ce3db780624994a0e9a","7592":"4f19348d64493b26562b","7645":"031f9c20b62c5968dec2","7757":"24d5a979854238c6e00e","7801":"d564a8d9182981f7f014","7897":"ee102106a3a9ff3727e2","7941":"b7fc9ac36c91654de447","7997":"2e21126ab3301ab4a2fa","8011":"3e33de92c3e7e283237a","8017":"71c4225691f8990e835d","8027":"bf9a9a5609105898857c","8060":"c0a1baef996cd39788ee","8117":"25756ad53d0d4449d1f8","8282":"a1bc0bb213e670a8dacc","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"3b1c2aa49ef35578d425","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"d919152300f2d1e2c6fa","8970":"79d3213cd8077fd3c976","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"def62e4f02fef3ac475b","9528":"4dd9c43eb666c40b578c","9564":"859671ce5d7bd5a8a578","9573":"ae2c0655565cb7beeed0","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3ef0da9461f2f9c2bd10","9773":"e6e9bc6fde4b6620c344","9846":"8c88ace851a350f2d752","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -130126,17 +130127,18 @@ function PaymentReportInf(_ref3) {
       date: row.itemPurchaseDate,
       number: row.itemPurchaseNumber,
       reason: row.reason,
-      description: row.projectName !== undefined ? row.projectName : row.description,
+      description: row.projectName && typeof row.projectName === 'object' ? row.projectName.name || row.projectName.projectName || '' : typeof row.projectName === 'string' ? row.projectName : row.description || '',
       amount: row.amount
     });
   });
   filterMonthExpenses.forEach(row => {
+    var _row$expenseCategory, _row$accountNameInfo;
     monthArray.push({
       type: 'Expenses',
       date: row.expenseDate,
       number: row.expenseNumber,
-      reason: row.expenseCategory.expensesCategory + ' For ' + row.accountName,
-      description: row.accountNameInfo.name !== '' ? row.accountNameInfo.name : row.description,
+      reason: (((_row$expenseCategory = row.expenseCategory) === null || _row$expenseCategory === void 0 ? void 0 : _row$expenseCategory.expensesCategory) || row.expenseCategory || '') + ' For ' + row.accountName,
+      description: ((_row$accountNameInfo = row.accountNameInfo) === null || _row$accountNameInfo === void 0 ? void 0 : _row$accountNameInfo.name) || (typeof row.accountNameInfo === 'string' ? row.accountNameInfo : '') || row.description || '',
       amount: row.total
     });
   });
@@ -131178,17 +131180,18 @@ function ItemPurchaseReportInfo(_ref3) {
       date: row.itemPurchaseDate,
       number: row.itemPurchaseNumber,
       reason: row.reason,
-      description: row.projectName !== undefined ? row.projectName.name : row.description,
+      description: row.projectName && typeof row.projectName === 'object' ? row.projectName.name || row.projectName.projectName || '' : typeof row.projectName === 'string' ? row.projectName : row.description || '',
       amount: row.amount
     });
   });
   filterMonthExpenses.forEach(row => {
+    var _row$expenseCategory, _row$accountNameInfo;
     monthArray.push({
       type: 'Expenses',
       date: row.expenseDate,
       number: row.expenseNumber,
-      reason: row.expenseCategory.expensesCategory + ' For ' + row.accountName,
-      description: row.accountNameInfo.name !== '' ? row.accountNameInfo.name : row.description,
+      reason: (((_row$expenseCategory = row.expenseCategory) === null || _row$expenseCategory === void 0 ? void 0 : _row$expenseCategory.expensesCategory) || row.expenseCategory || '') + ' For ' + row.accountName,
+      description: ((_row$accountNameInfo = row.accountNameInfo) === null || _row$accountNameInfo === void 0 ? void 0 : _row$accountNameInfo.name) || (typeof row.accountNameInfo === 'string' ? row.accountNameInfo : '') || row.description || '',
       amount: row.total
     });
   });

@@ -1036,7 +1036,7 @@ function DailyExpenses() {
                               <Table style={{ marginBottom: '5px' }}>
                                 <TableBody>
                                   <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }} colSpan={4}>{expensesView.reason === 'Project' ? (expensesView.accountNameInfo?.name || expensesView.accountNameInfo || '') : 'EMPLOYEE EXPENSE INFORMATION'}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center' }} colSpan={4}>{expensesView.reason === 'Project' ? (expensesView.accountNameInfo?.name || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || '') : 'EMPLOYEE EXPENSE INFORMATION'}</TableCell>
                                   </TableRow>
                                   <TableRow>
                                     <TableCell>Category</TableCell>
@@ -1149,7 +1149,7 @@ function DailyExpenses() {
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>Project Name</TableCell>
-                                        <TableCell colSpan={3}>{expensesView.accountNameInfo?.name || expensesView.accountNameInfo || ''}</TableCell>
+                                        <TableCell colSpan={3}>{expensesView.accountNameInfo?.name || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || ''}</TableCell>
                                       </TableRow>
                                       <TableRow>
                                         <TableCell>TVA (16%)</TableCell>

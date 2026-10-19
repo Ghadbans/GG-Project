@@ -325,12 +325,10 @@ function ItemReturnViewForm() {
   const [filteredProject, setFilteredProject] = useState([]);
   const [filteredMaintenance, setFilteredMaintenance] = useState([]);
   useEffect(() => {
-    invoice.filter((row) => row._id === reference._id).map((row) => setFilteredInvoice(row.items))
-    invoice.filter((row) => row._id === reference._id).map((row) => setInvoiceId(row._id))
-    projects.filter((row) => row.projectName._id === reference._id).map((row) => setFilteredProject(row.items))
-    projects.filter((row) => row.projectName._id === reference._id).map((row) => setProjectId(row._id))
-    maintenance.filter((row) => row._id === reference._id).map((row) => setFilteredMaintenance(row.items))
-    maintenance.filter((row) => row._id === reference._id).map((row) => setServiceId(row._id))
+    if (!reference?._id) return;
+    invoice.filter((row) => row._id === reference._id).forEach((row) => { setFilteredInvoice(row.items); setInvoiceId(row._id); });
+    projects.filter((row) => (row.projectName?._id === reference._id || row._id === reference._id)).forEach((row) => { setFilteredProject(row.items); setProjectId(row._id); });
+    maintenance.filter((row) => row._id === reference._id).forEach((row) => { setFilteredMaintenance(row.items); setServiceId(row._id); });
   }, [invoice, projects, maintenance, reference])
 
   {/**  Filter based on reference end */ }
@@ -1232,7 +1230,7 @@ function ItemReturnViewForm() {
                       <CardMedia
                         component="img"
                         height="120"
-                        image={`data:${item.contentType};base64,${item.data}`}
+                        image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}
                         alt={item.itemName}
                         sx={{ objectFit: 'contain', padding: '5px' }}
                       />

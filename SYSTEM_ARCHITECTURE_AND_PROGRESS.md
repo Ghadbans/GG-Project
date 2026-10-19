@@ -185,7 +185,47 @@
     - **Form State & Submission Sanitization:** In `ItemPurchaseUpdateForm`, `ItemPurchaseViewForm`, and `ConvertPoToIP`, when `reason === 'Other'` or `projectName` has no valid ID/name, sanitize `projectName` to `null` before sending to the backend so empty objects are not persisted to MongoDB.
     - **Consistent Summary Headers:** All summary table column headers (IN-SUMMARY, OUT-SUMMARY, RETURN-SUMMARY) must consistently display capitalized `Reason` instead of lowercase `reason`.
 
+48. **Universal Defensive Object Child & Data URI Guard (`safeString`, Ver 3.5.81)**:
+    - **React Error #31 (`Objects are not valid as a React child`):** In React 18, attempting to render a JavaScript object directly inside JSX curly braces (e.g. `{row.projectName}`, `{row.accountNameInfo}`) throws fatal `Minified React error #31: Objects are not valid as a React child (found: object with keys {_id, name})` and crashes the entire application to an unhandled white screen.
+    - **Polymorphic Database References:** Historical and modern MongoDB records store fields like `projectName` and `accountNameInfo` heterogeneously: sometimes as flat strings (`"HQ PROJECT"`), sometimes as populated subdocuments (`{ _id: "...", name: "HQ PROJECT" }`, `{ _id: "...", projectName: "..." }`), and sometimes as `null` (e.g. when Reason is `'Other'`).
+    - **Defensive String Resolution (`safeString`):** All JSX text interpolations across tables, modals, summaries, and reports must use `safeString(val, fallback = '')` from `src/js/utils/formatUtils.js` or safe inline property extraction: `{typeof val === 'object' && val !== null ? (val.name || val.projectName || fallback) : String(val || fallback)}`. Never interpolate raw variables `{row.projectName}` directly.
+    - **Null-Safety on Form & Edit Scope:** In form components (`ItemPurchaseViewForm`, `ConvertPoToIP`, `ItemReturnViewForm`, etc.), top-level statements and `useEffect` hooks must NEVER assume `projectName` is non-null. Always use optional chaining `projectName?._id` and guard `if (!projectName?._id) return;` before filtering arrays or accessing nested properties.
+    - **CardMedia Data URI Guards (`net::ERR_INVALID_URL`):** When rendering item thumbnails in catalog cards or grids via MUI `<CardMedia />`, NEVER pass an unguarded template literal `image={`data:${item.contentType};base64,${item.data}`}`. When an item has no image or an item is being initialized, `item.contentType` and `item.data` are `undefined`, producing the invalid URI `data:undefined;base64,undefined`. Browsers reject this and flood the console with dozens of `net::ERR_INVALID_URL` errors. Always guard with: `image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}`.
+
 ## Current Progress Log
+- **Minified React Error #31, Null Property Access & Catalog CardMedia ERR_INVALID_URL Resolution (Ver 3.5.81)**:
+  - **Problem Reported:**
+    1. Windows Electron desktop client and web portal (`portal.globalgate.sarl`) crashed to an unhandled white screen with console error:
+       `Error: Minified React error #31; visit https://reactjs.org/docs/error-decoder.html?invariant=31&args[]=[object%20with%20keys%20%7B_id%2C%20name%7D]`
+    2. Repeated network errors flooded the DevTools console 28 times on store/catalog grids:
+       `Failed to load resource: net::ERR_INVALID_URL data:undefined;base64,undefined:1`
+    3. Null reference exceptions occurred in form components:
+       `TypeError: Cannot read properties of null (reading 'name')` and `TypeError: Cannot read properties of null (reading '_id')`.
+  - **Exhaustive Root Cause Analysis:**
+    1. **Object as React Child (Error #31):**
+       - In `ItemPurchaseUpdateForm.js` and `ItemPurchaseViewForm.js`, saving purchases populated `projectName` as an object `{ _id, name: formattedName }`.
+       - In master views and report components (`ProjectReportInfo.js`, `ProjectViewInformation.js`, `DailyExpenses.js`, `EstimateViewAdminAll.js`, `InvoiceViewAdminAll.js`, `ItemPurchaseReportInfo.js`, `PayRollReportInfo.js`, `PaymentReportInf.js`, `RevenueExpensesAll.js`, `SupplierReportInfo.js`), code assumed `projectName` or `accountNameInfo` was always a plain string. When rendered as `{row.projectName}` or `{row.accountNameInfo}`, React 18 threw invariant 31 and crashed the tree.
+    2. **Null Reference on `projectName`:**
+       - When Reason was set to `'Other'`, `projectName` was set to `null` per Rule 47.
+       - Components evaluating `projectName.name !== undefined` or attempting `row.projectName._id === projectName._id` immediately threw `TypeError: Cannot read properties of null`.
+    3. **CardMedia Malformed Data URI:**
+       - 15 catalog and shop grid forms passed `image={`data:${item.contentType};base64,${item.data}`}` directly to MUI `<CardMedia />` without checking if `item.data` and `item.contentType` were present. When undefined, this resulted in 28 failed network requests for `data:undefined;base64,undefined`.
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Defensive Utility (`src/js/utils/formatUtils.js`):**
+       - Implemented and exported `safeString(val, fallback = '')` to cleanly extract string representations from `{ _id, name }`, `{ _id, projectName }`, numbers, strings, or return fallback.
+    2. **Master & Report Views Object Child Guarding:**
+       - Applied safe string coercion across `ProjectReportInfo.js`, `ProjectViewInformation.js`, `DailyExpenses.js`, `EstimateViewAdminAll.js`, `InvoiceViewAdminAll.js`, `ItemPurchaseReportInfo.js`, `PayRollReportInfo.js`, `PaymentReportInf.js`, `RevenueExpensesAll.js`, and `SupplierReportInfo.js`.
+    3. **Form Null-Safety Patches:**
+       - Added early returns and optional chaining (`!projectName?._id`, `projectName?._id`) in `ItemPurchaseViewForm.js`, `ConvertPoToIP.js`, `ItemReturnViewForm.js`, `ItemPurchaseViewAdmin.js`, and `EmployeePlaningFormUpdate.js`.
+    4. **CardMedia Image Guards across 15 Files:**
+       - Replaced all 15 unguarded data URI interpolations with `image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}` across `EstimateInvoiceForm.js`, `EstimateInvoiceFormUpdate.js`, `InvoiceForm.js`, `InvoiceFormUpdate.js`, `ItemOutViewForm.js`, `ItemOutViewUpdate.js`, `ItemPurchaseViewForm.js`, `ItemReturnUpdateForm.js`, `ItemReturnViewForm.js`, `MaintenanceOrderUpdate.js`, `MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `PurchaseOrder/PurchaseForm.js`, `PurchasesView/PurchaseFormUpdate.js`, and `PurchasesView/PurchasesFormView.js`.
+  - **Verification & Deployment:**
+    - Bumped `package.json` to `3.5.81`.
+    - Validated AST syntax across all 232 source files with 0 errors (`scripts/pre-build-check.js`).
+    - Webpack compilation succeeded for Electron (`build/`) and Web Portal (`dist_web/`).
+    - Packaged Windows Desktop installer: `dist/Global Gate Setup 3.5.81.exe`.
+    - Pushed to GitHub `origin main` for automatic Cloudflare Pages deployment (`portal.globalgate.sarl`).
+
 - **Item IN-SUMMARY Disappearing Reason Fix, Column Header Capitalization & Defensive Purchase Display Architecture (Ver 3.5.80)**:
   - **Problem Reported:**
     1. In the **Item Information** view (`/ItemInfo/:id`) on the **IN-SUMMARY** tab, for Item Purchase `#3787` (`IP-03787`), the `reason` column originally displayed an incorrect reason.

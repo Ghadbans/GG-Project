@@ -169,6 +169,20 @@ export const formatPurchaseReasonDisplay = (purchase, projects = []) => {
 
 export const getPurchaseReasonDisplay = formatPurchaseReasonDisplay;
 
+/**
+ * Universal Defensive String Coercion
+ * Safely converts any value (strings, numbers, null, undefined, or nested objects) into a renderable React string.
+ */
+export const safeString = (val, fallback = '') => {
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === 'string') return val;
+  if (typeof val === 'number' || typeof val === 'boolean') return String(val);
+  if (typeof val === 'object') {
+    return val.projectName || val.name || val.Customer || val.customerName || val.employeeName || val.storeName || fallback;
+  }
+  return String(val);
+};
+
 export default {
   safeNumber,
   formatUSD,
@@ -179,6 +193,7 @@ export default {
   formatEmployeeName,
   normalizeImageDataUrl,
   formatPurchaseReasonDisplay,
-  getPurchaseReasonDisplay
+  getPurchaseReasonDisplay,
+  safeString
 };
 

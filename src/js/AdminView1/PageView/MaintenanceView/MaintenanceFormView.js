@@ -2101,7 +2101,7 @@ function MaintenanceFormView() {
                       <CardMedia
                         component="img"
                         height="120"
-                        image={`data:${item.contentType};base64,${item.data}`}
+                        image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}
                         alt={item.itemName}
                         sx={{ objectFit: 'contain', padding: '5px' }}
                       />

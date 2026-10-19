@@ -367,7 +367,7 @@ function SupplierReportInfo({ onSuppliers, onItemPurchase }) {
                                             <TableRow key={idx} hover>
                                                 <TableCell>{dayjs(item.itemPurchaseDate).format('DD/MM/YYYY')}</TableCell>
                                                 <TableCell>{item.itemPurchaseNumber}</TableCell>
-                                                <TableCell>{item.projectName ? item.projectName.name : item.description}</TableCell>
+                                                <TableCell>{(item.projectName && typeof item.projectName === 'object') ? (item.projectName.name || item.projectName.projectName || '') : (typeof item.projectName === 'string' ? item.projectName : (item.description || ''))}</TableCell>
                                                 <TableCell align="right">${(item.calculatedTotal || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
                                                 <TableCell align="right">${(item.calculatedPaid || 0).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}</TableCell>
                                                 <TableCell align="right" sx={{ fontWeight: 'bold', color: item.calculatedBalance > 0 ? '#d32f2f' : 'inherit' }}>

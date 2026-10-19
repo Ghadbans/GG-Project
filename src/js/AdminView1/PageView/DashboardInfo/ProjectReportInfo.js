@@ -231,7 +231,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
           <TableCell component="th" scope="row">
             {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
           </TableCell>
-          <TableCell align="left">{row.projectName}</TableCell>
+          <TableCell align="left">{typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</TableCell>
           <TableCell align="left">{row.description}</TableCell>
           <TableCell align="left">
             {
@@ -384,7 +384,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
           <TableCell component="th" scope="row">
             {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
           </TableCell>
-          <TableCell align="left">{row.projectName}</TableCell>
+          <TableCell align="left">{typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</TableCell>
           <TableCell align="left">{row.description}</TableCell>
           <TableCell align="right">$ {(row.totalExpenses || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span></span></TableCell>
         </TableRow>
@@ -454,7 +454,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
           <TableCell component="th" scope="row">
             {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
           </TableCell>
-          <TableCell align="left">{row.projectName}</TableCell>
+          <TableCell align="left">{typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</TableCell>
           <TableCell align="left">{row.description}</TableCell>
           <TableCell align="left">
             {
@@ -796,7 +796,7 @@ function ProjectReportInfo({ onMonth, onProjectName, onPayment }) {
                               <TableCell align="left">
                                 {row?.customerName?.Customer || row?.customerName?.customerName || (typeof row?.customerName === 'string' ? row.customerName : 'N/A')}
                               </TableCell>
-                              <TableCell align="left">{row.projectName}</TableCell>
+                              <TableCell align="left">{typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</TableCell>
                               <TableCell align="left">{row.description}</TableCell>
                               <TableCell align="right">{`$${(totalInv || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</TableCell>
                               <TableCell align="right">{`$${(projectAdvances || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`}</TableCell>

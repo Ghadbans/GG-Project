@@ -1329,7 +1329,7 @@ function InvoiceViewAdminAll() {
                                               <span style={{ fontWeight: 'bold' }}>Reference </span>
                                               {
                                                 purchase ? purchase.map((row) => (
-                                                  <span key={row._id}> {row.purchaseName}, {row.projectName.projectName}</span>
+                                                  <span key={row._id}> {row.purchaseName}, {typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</span>
                                                 )) : null
                                               }
                                               {

@@ -438,11 +438,17 @@ function ItemPurchaseViewForm() {
       }
       useEffect(()=>{
           const fetchPur = async () => {
+            if (!projectName?._id) {
+              setPurchase([]);
+              setMaintenanceInfo([]);
+              setInvoiceInfo([]);
+              return;
+            }
             if (reason === 'Project') {
               try {
                 const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
-                setPurchase(resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id));
-                resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== ''))));
+                setPurchase(resPurchase.data?.data?.filter((row) => row.projectName?._id === projectName._id));
+                resPurchase.data?.data?.filter((row) => row.projectName?._id === projectName._id).map((row) => setItemArray(row.items.filter((row) => (row.itemName?.itemName && row.itemName?.itemName !== '') || (row.newDescription && row.newDescription !== ''))));
               } catch (error) {
                 console.log(error)
               }
@@ -871,7 +877,9 @@ const handleDecision = (decision) => {
    handleClose();
   } 
 }
-const reasonInfo = projectName.name !==undefined  ? projectName.name:description
+const reasonInfo = (projectName && typeof projectName === 'object')
+  ? (projectName.name || projectName.projectName || '')
+  : (typeof projectName === 'string' ? projectName : (description || ''));
 const handleCreateNotification = async (ReferenceInfo,ReferenceInfoNumber) => {
   const data = {
     idInfo: ReferenceInfo,
@@ -2098,7 +2106,7 @@ const handleQty = async () => {
                       <CardMedia
                         component="img"
                         height="120"
-                        image={`data:${item.contentType};base64,${item.data}`}
+                        image={item.data && item.contentType ? `data:${item.contentType};base64,${item.data}` : undefined}
                         alt={item.itemName}
                         sx={{ objectFit: 'contain', padding: '5px' }}
                       />

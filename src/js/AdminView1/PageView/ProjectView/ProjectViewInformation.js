@@ -695,16 +695,17 @@ const isItemMatch = (item1, item2) => {
     const value = e.target.value
     setSearch(value)
   }
+  const getPName = (r) => (typeof r?.projectName === 'object' && r?.projectName !== null ? (r.projectName.projectName || r.projectName.name || '') : String(r?.projectName || ''));
   const newArray = search !== '' ? project.filter((row) =>
-    row.projectName.toLowerCase().includes(search.toLowerCase()) ||
-    row.projectNumber.toString().includes(search) ||
-    row.description.toLowerCase().includes(search.toLowerCase()) ||
+    getPName(row).toLowerCase().includes(search.toLowerCase()) ||
+    (row.projectNumber !== undefined && row.projectNumber !== null ? row.projectNumber.toString().includes(search) : false) ||
+    (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
     (typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')).toLowerCase().includes(search.toLowerCase())
   ) : project
   const newArray2 = search !== '' ? filteredRows.filter((row) =>
-    row.projectName.toLowerCase().includes(search.toLowerCase()) ||
-    row.description.toLowerCase().includes(search.toLowerCase()) ||
-    row.projectNumber.toString().includes(search) ||
+    getPName(row).toLowerCase().includes(search.toLowerCase()) ||
+    (row.description ? row.description.toLowerCase().includes(search.toLowerCase()) : false) ||
+    (row.projectNumber !== undefined && row.projectNumber !== null ? row.projectNumber.toString().includes(search) : false) ||
     (typeof row.customerName === 'string' ? row.customerName : (row.customerName?.Customer || row.customerName?.customerName || '')).toLowerCase().includes(search.toLowerCase())
   ) : filteredRows
 
@@ -1375,7 +1376,7 @@ const isItemMatch = (item1, item2) => {
 
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <div>
-                          <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}> {'P-' + String(row.projectNumber).padStart(6, '0')} | {row.projectName}</Typography>
+                          <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}> {'P-' + String(row.projectNumber).padStart(6, '0')} | {typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</Typography>
                         </div>
                         <div>
                           <Button
@@ -1509,7 +1510,7 @@ const isItemMatch = (item1, item2) => {
                                 <Grid item xs={12}>
                                   <Card>
                                     <CardContent sx={{ textAlign: 'center' }}>
-                                      <Typography sx={{ fontSize: '20px' }}>{row.projectName}</Typography>
+                                      <Typography sx={{ fontSize: '20px' }}>{typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</Typography>
                                     </CardContent>
                                     <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
                                       <table style={{ fontSize: '20px' }}>

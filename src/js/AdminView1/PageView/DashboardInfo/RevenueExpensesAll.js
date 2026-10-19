@@ -332,7 +332,7 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
             date: row.date,
             number: row.itemPurchaseNumber,
             reason: row.reason,
-            description: `Payment for IP-${row.itemPurchaseNumber} (${row.projectName !== undefined ? row.projectName.name : row.description})`,
+            description: `Payment for IP-${row.itemPurchaseNumber} (${row.projectName && typeof row.projectName === 'object' ? (row.projectName.name || row.projectName.projectName || '') : (typeof row.projectName === 'string' ? row.projectName : (row.description || ''))})`,
             amount: convertedAmount,
           })
         })
@@ -343,7 +343,7 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
           date: row.itemPurchaseDate,
           number: row.itemPurchaseNumber,
           reason: row.reason,
-          description: row.projectName !== undefined ? row.projectName.name : row.description,
+          description: (row.projectName && typeof row.projectName === 'object' ? (row.projectName.name || row.projectName.projectName || '') : (typeof row.projectName === 'string' ? row.projectName : (row.description || ''))),
           amount: parseFloat(row.totalUSD || row.total || row.amount || 0),
         })
       })
@@ -353,8 +353,8 @@ function RevenueExpensesAll({ onMonth, onPayment, onPayRoll, onItemPurChase, onE
         type: 'Expenses',
         date: row.expenseDate,
         number: row.expenseNumber,
-        reason: row.expenseCategory?.expensesCategory + ' For ' + row.accountName,
-        description: row.accountNameInfo !== undefined ? row.accountNameInfo.name : row.description,
+        reason: (row.expenseCategory?.expensesCategory || row.expenseCategory || '') + ' For ' + row.accountName,
+        description: (row.accountNameInfo?.name || (typeof row.accountNameInfo === 'string' ? row.accountNameInfo : '') || row.description || ''),
         amount: parseFloat(row.total || 0),
       })
     })

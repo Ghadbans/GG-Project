@@ -501,7 +501,7 @@ function EmployeePlaningFormUpdate() {
                               <div style={{ display: 'flex', gap: '80px', alignItems: 'center' }}>
                                 <TextField
                                   label="Project Name"
-                                  value={projectName.name !== undefined ? projectName.name : ''}
+                                  value={projectName?.name || (typeof projectName === 'string' ? projectName : '') || ''}
                                   sx={{ width: '100%', backgroundColor: 'white' }}
                                 />
                                 <BlackTooltip title="Clear" placement='left'>
@@ -551,7 +551,7 @@ function EmployeePlaningFormUpdate() {
                               <div style={{ display: 'flex', gap: '80px', alignItems: 'center' }}>
                                 <TextField
                                   label="Project Name"
-                                  value={projectName.name !== undefined ? projectName.name : ''}
+                                  value={projectName?.name || (typeof projectName === 'string' ? projectName : '') || ''}
                                   sx={{ width: '100%', backgroundColor: 'white' }}
                                 />
                                 <BlackTooltip title="Clear" placement='left'>

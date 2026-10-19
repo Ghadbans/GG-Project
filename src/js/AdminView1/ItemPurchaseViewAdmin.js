@@ -440,7 +440,7 @@ function ItemPurchaseViewAdmin() {
         }
       } else if (reason === 'Maintenance') {
         const resM = await axios.get(`${ENDPOINT_URL}/maintenance?summary=true`);
-        const relevantMaintenance = resM.data?.data?.filter((row) => row._id === projectName._id);
+        const relevantMaintenance = resM.data?.data?.filter((row) => row._id === projectName?._id) || [];
         
         for (const maintenanceRow of relevantMaintenance) {
           const currentRes = await axios.get(`${ENDPOINT_URL}/get-maintenance/${maintenanceRow._id}`);
@@ -460,7 +460,7 @@ function ItemPurchaseViewAdmin() {
         }
       } else if (reason === 'Invoice') {
         const resI = await axios.get(`${ENDPOINT_URL}/invoice?summary=true`);
-        const relevantInvoices = resI.data?.data?.filter((row) => row._id === projectName._id);
+        const relevantInvoices = resI.data?.data?.filter((row) => row._id === projectName?._id) || [];
         
         for (const invoiceRow of relevantInvoices) {
           const currentRes = await axios.get(`${ENDPOINT_URL}/get-invoice/${invoiceRow._id}`);

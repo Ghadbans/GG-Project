@@ -184,7 +184,7 @@ function PayRollReportInfo({ onMonth, onPayRoll, selectedYear }) {
       date: row.itemPurchaseDate,
       number: row.itemPurchaseNumber,
       reason: row.reason,
-      description: row.projectName !== undefined ? row.projectName.name : row.description,
+      description: (row.projectName && typeof row.projectName === 'object' ? (row.projectName.name || row.projectName.projectName || '') : (typeof row.projectName === 'string' ? row.projectName : (row.description || ''))),
       amount: row.amount,
     })
   })
@@ -193,8 +193,8 @@ function PayRollReportInfo({ onMonth, onPayRoll, selectedYear }) {
       type: 'Expenses',
       date: row.expenseDate,
       number: row.expenseNumber,
-      reason: row.expenseCategory.expensesCategory + ' For ' + row.accountName,
-      description: row.accountNameInfo.name !== '' ? row.accountNameInfo.name : row.description,
+      reason: (row.expenseCategory?.expensesCategory || row.expenseCategory || '') + ' For ' + row.accountName,
+      description: (row.accountNameInfo?.name || (typeof row.accountNameInfo === 'string' ? row.accountNameInfo : '') || row.description || ''),
       amount: row.total,
     })
   })

@@ -296,10 +296,16 @@ function ConvertPoToIP() {
 
   useEffect(() => {
     const fetchPur = async () => {
+      if (!projectName?._id) {
+        setPurchase([]);
+        setMaintenanceInfo([]);
+        setInvoiceInfo([]);
+        return;
+      }
       if (reason === 'Project') {
         try {
           const resPurchase = await axios.get(`${ENDPOINT_URL}/purchase?summary=true`)
-          setPurchase(resPurchase.data?.data?.filter((row) => row.projectName._id === projectName._id));
+          setPurchase(resPurchase.data?.data?.filter((row) => row.projectName?._id === projectName._id));
         } catch (error) {
           console.log(error)
         }
@@ -689,7 +695,9 @@ const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescr
       handleClose();
     }
   }
-  const reasonInfo = projectName.name !== undefined ? projectName.name : description
+  const reasonInfo = (projectName && typeof projectName === 'object')
+    ? (projectName.name || projectName.projectName || '')
+    : (typeof projectName === 'string' ? projectName : (description || ''));
   const handleCreateNotification = async (ReferenceInfo, ReferenceInfoNumber) => {
     const data = {
       idInfo: ReferenceInfo,
@@ -1303,7 +1311,7 @@ const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescr
                       ) : (
                         <div>
                           <div style={{ display: 'flex', gap: '80px' }}>
-                            <Typography>{projectName !== undefined ? projectName.name : ''}</Typography>
+                            <Typography>{(projectName && typeof projectName === 'object') ? (projectName.name || projectName.projectName || '') : (typeof projectName === 'string' ? projectName : '')}</Typography>
                           </div>
                         </div>
                       )
