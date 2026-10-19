@@ -133,6 +133,42 @@ export const normalizeImageDataUrl = (raw, contentType) => {
   }
 };
 
+/**
+ * Defensive Purchase Reason / Project / Description formatter
+ * Handles all permutations of projectName (string, object with name/projectName/_id, empty object {}, null, undefined)
+ * and falls back cleanly to description and reason so item purchase reasons never disappear.
+ */
+export const formatPurchaseReasonDisplay = (purchase, projects = []) => {
+  if (!purchase) return '';
+  const proj = purchase.projectName;
+  let projName = typeof proj === 'object' && proj !== null
+    ? (proj.projectName || proj.name || '')
+    : (proj || '');
+
+  if (!projName && proj && typeof proj === 'object' && proj._id && Array.isArray(projects) && projects.length > 0) {
+    const foundProj = projects.find(p => p._id === proj._id);
+    if (foundProj) {
+      const pNum = foundProj.projectNumber !== undefined ? `P-${String(foundProj.projectNumber).padStart(6, '0')}` : '';
+      const client = foundProj.customerName?.customerName || '';
+      const pTitle = foundProj.projectName || '';
+      projName = pNum ? (client ? `${pNum} / ${client} - ${pTitle}` : `${pNum} / ${pTitle}`) : pTitle;
+    }
+  }
+
+  if (projName && String(projName).trim() !== '') {
+    return String(projName).trim();
+  }
+  if (purchase.description && String(purchase.description).trim() !== '') {
+    return String(purchase.description).trim();
+  }
+  if (purchase.reason && String(purchase.reason).trim() !== '') {
+    return String(purchase.reason).trim();
+  }
+  return '';
+};
+
+export const getPurchaseReasonDisplay = formatPurchaseReasonDisplay;
+
 export default {
   safeNumber,
   formatUSD,
@@ -141,5 +177,8 @@ export default {
   formatCustomerName,
   formatSupplierName,
   formatEmployeeName,
-  normalizeImageDataUrl
+  normalizeImageDataUrl,
+  formatPurchaseReasonDisplay,
+  getPurchaseReasonDisplay
 };
+

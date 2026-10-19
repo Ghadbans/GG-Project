@@ -434,7 +434,7 @@ function ItemPurchaseUpdateForm() {
 
   const handleReason = (e) => {
     setReason(e.target.value)
-    setProjectName({})
+    setProjectName(e.target.value === 'Other' ? null : {})
     setDescription("")
   }
 
@@ -1249,12 +1249,16 @@ function ItemPurchaseUpdateForm() {
       };
       return item;
     });
+    const cleanedProjectName = (reason === 'Other' || !projectName || Object.keys(projectName).length === 0 || (!projectName._id && !projectName.name && !projectName.projectName))
+      ? null
+      : projectName;
     const data = {
       itemPurchaseDate,
       itemPurchaseNumber,
       manufacturer, note,
       manufacturerNumber, manufacturerID,
-      description, total, totalUSD, totalFC, items: itemsWithoutData, reason, projectName
+      description, total, totalUSD, totalFC, items: itemsWithoutData, reason,
+      projectName: cleanedProjectName
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-itemPurchase/${id}`, data, lockConfig)

@@ -21,6 +21,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
+import { getPurchaseReasonDisplay } from '../../../utils/formatUtils';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import { useNavigate, useParams } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
@@ -1770,7 +1771,7 @@ function SupplierViewInformation() {
                             </TableRow>
                             <TableRow>
                               <TableCell>Description</TableCell>
-                              <TableCell colSpan={3}>{itemPurchaseView.projectName !== undefined ? (typeof itemPurchaseView.projectName === 'object' ? (itemPurchaseView.projectName.projectName || itemPurchaseView.projectName.name || '') : itemPurchaseView.projectName) : itemPurchaseView.description}</TableCell>
+                              <TableCell colSpan={3}>{getPurchaseReasonDisplay(itemPurchaseView, projectsList)}</TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Reference</TableCell>

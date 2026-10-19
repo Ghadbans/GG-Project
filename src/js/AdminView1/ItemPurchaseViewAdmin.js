@@ -19,6 +19,7 @@ import MuiDrawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import Divider from '@mui/material/Divider';
 import { invalidateCache } from '../utils/apiCache';
+import { getPurchaseReasonDisplay } from '../utils/formatUtils';
 import Container from '@mui/material/Container';
 import { DataGrid, GridToolbar } from '@mui/x-data-grid';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -229,7 +230,7 @@ function ItemPurchaseViewAdmin() {
         ...item,
         id: item._id,
         dataField: dayjs(item.itemPurchaseDate).format('DD/MM/YYYY'),
-        Account: item.projectName !== undefined ? item.projectName.name : item.description,
+        Account: getPurchaseReasonDisplay(item),
         referenceInfo: item.manufacturer + ' / ' + item.manufacturerNumber,
         itemInfo: (item.items || []).map((row) => {
           if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim();
@@ -926,7 +927,7 @@ function ItemPurchaseViewAdmin() {
                               :
                               null
                           }
-                          <p><span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Description: </span> {itemPurchaseView.projectName !== undefined ? itemPurchaseView.projectName.name : itemPurchaseView.description}</p>
+                          <p><span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Description: </span> {getPurchaseReasonDisplay(itemPurchaseView)}</p>
                         </Grid>
                         <br />
                       </Grid>

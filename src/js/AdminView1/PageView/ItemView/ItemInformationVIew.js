@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
-import { normalizeImageDataUrl } from '../../../utils/formatUtils';
+import { normalizeImageDataUrl, getPurchaseReasonDisplay } from '../../../utils/formatUtils';
 import { useNavigate, useParams, useOutletContext } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -586,6 +586,7 @@ function ItemInformationVIew() {
   }
   const newArray = (debouncedSearch !== '' ? itemPurchase.filter((row) =>
     row.itemPurchaseNumber.toString().includes(debouncedSearch) ||
+    (row.reason?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     (row.description?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     ((typeof row.projectName === 'object' ? (row.projectName?.projectName || row.projectName?.name || '') : (row.projectName || '')).toLowerCase().includes(debouncedSearch.toLowerCase())) ||
     (row.manufacturer?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
@@ -1223,7 +1224,7 @@ function ItemInformationVIew() {
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Manufacturer</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reference</th>
-                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>reason</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reason</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Rate</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Qty</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Action</th>
@@ -1237,7 +1238,7 @@ function ItemInformationVIew() {
                                           <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.itemPurchaseDate).format('DD/MM/YYYY')}</td>
                                           <td style={{ textAlign: 'left', width: '100px', borderLeft: '1px solid #DDD' }}>{row.manufacturer}</td>
                                           <td style={{ textAlign: 'left', width: '50px', borderLeft: '1px solid #DDD' }}>{row.manufacturerNumber}</td>
-                                          <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{row.projectName !== undefined ? (typeof row.projectName === 'object' ? (row.projectName.projectName || row.projectName.name || '') : row.projectName) : row.description}</td>
+                                          <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{getPurchaseReasonDisplay(row, projectsList)}</td>
                                           <td style={{ textAlign: 'left', width: '40px', borderLeft: '1px solid #DDD' }}>
                                             {row.items.filter(Item => parseFloat(Item.itemQty) >= 0).map((Item, i) => (
                                               <p key={i}>
@@ -1292,7 +1293,7 @@ function ItemInformationVIew() {
                                     <tr>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
-                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>reason</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reason</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Description</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Qty</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Action</th>
@@ -1359,7 +1360,7 @@ function ItemInformationVIew() {
                                     <tr>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>#</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Date</th>
-                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>reason</th>
+                                      <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Reason</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}>Description</th>
                                       <th style={{ padding: '10px', border: '1px solid #DDD', backgroundColor: '#e8f7fe' }}> Qty</th>
                                     </tr>
@@ -1807,7 +1808,7 @@ function ItemInformationVIew() {
                             </TableRow>
                             <TableRow>
                               <TableCell>Description</TableCell>
-                              <TableCell colSpan={3}>{itemPurchaseView.projectName !== undefined ? (typeof itemPurchaseView.projectName === 'object' ? (itemPurchaseView.projectName.projectName || itemPurchaseView.projectName.name || '') : itemPurchaseView.projectName) : itemPurchaseView.description}</TableCell>
+                              <TableCell colSpan={3}>{getPurchaseReasonDisplay(itemPurchaseView, projectsList)}</TableCell>
                             </TableRow>
                             <TableRow>
                               <TableCell>Reference</TableCell>

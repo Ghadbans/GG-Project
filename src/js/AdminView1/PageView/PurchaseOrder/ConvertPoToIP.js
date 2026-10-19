@@ -289,7 +289,7 @@ function ConvertPoToIP() {
 
   const handleReason = (e) => {
     setReason(e.target.value)
-    setProjectName({})
+    setProjectName(e.target.value === 'Other' ? null : {})
     setDescription("")
     setItems([])
   }
@@ -764,13 +764,16 @@ const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescr
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
+    const cleanedProjectName = (reason === 'Other' || !projectName || Object.keys(projectName).length === 0 || (!projectName._id && !projectName.name && !projectName.projectName))
+      ? null
+      : projectName;
     const data = {
       POID: id,
       itemPurchaseDate,
       itemPurchaseNumber,
       manufacturer, manufacturerID, status: "UnPaid",
       manufacturerNumber,
-      description, Create, totalUSD, total, totalFC, items: arrayItemRelated, reason, projectName, note
+      description, Create, totalUSD, total, totalFC, items: arrayItemRelated, reason, projectName: cleanedProjectName, note
     }
     try {
       const res = await axios.post(`${ENDPOINT_URL}/create-itemPurchase`, data);

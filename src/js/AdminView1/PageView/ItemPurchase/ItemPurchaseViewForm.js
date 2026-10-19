@@ -386,7 +386,7 @@ function ItemPurchaseViewForm() {
       }
       const handleReason = (e) => {
         setReason(e.target.value)
-        setProjectName({})
+        setProjectName(e.target.value === 'Other' ? null : {})
         setDescription("")
         setItems([])
        }
@@ -955,12 +955,16 @@ const handleQty = async () => {
       console.error("Error verifying last record", error);
     }
 
+    const cleanedProjectName = (reason === 'Other' || !projectName || Object.keys(projectName).length === 0 || (!projectName._id && !projectName.name && !projectName.projectName))
+      ? null
+      : projectName;
+
     const data = {
       itemPurchaseDate,
       itemPurchaseNumber: currentItemPurchaseNumber,
       manufacturer,status:"UnPaid",
       manufacturerNumber,manufacturerID,
-      description,Create,totalUSD,total,totalFC,items:itemsWithoutData,reason,projectName,note
+      description,Create,totalUSD,total,totalFC,items:itemsWithoutData,reason,projectName: cleanedProjectName,note
     }
     try {
       const res = await axios.post(`${ENDPOINT_URL}/create-itemPurchase`, data);

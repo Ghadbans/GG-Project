@@ -175,8 +175,64 @@
     - **Nested Submenu Prop Guarding (`isSubmenu`):** Whenever a sidebar component renders another sidebar as a submenu (e.g. `<SidebarDashE2 isSubmenu={true} />` inside `SidebarDash`, or `<SidebarDash onView3={3} isSubmenu={true} />` inside `SideMaintenance`), the child sidebar component MUST receive `isSubmenu={true}` and suppress its own submenu switcher buttons ("Main", "More", "Store", etc.). This strictly breaks component cross-nesting and makes recursive rendering trees (`<SidebarDash>` <-> `<SidebarDashE2>`) structurally impossible.
     - **Navigation Link Reset Callback (`handleNavClick`):** Every module navigation link (`<ListItemButton component={NavLink} ... onClick={handleNavClick}>`) in every sidebar component must invoke `handleNavClick` to reset submenu state (`setShow1(1)`) and ensure clean, top-level drawer presentation on the destination page. `handleNavClick` MUST be explicitly defined in component scope before any JSX invocation to prevent fatal runtime `ReferenceError` crashes.
     - **Null-Safe Client Searches & MUI Tab Indices (`ItemNameInfo.js`):** In search filters, never invoke string methods (`.toLowerCase()`, `.trim()`) on properties without prior existence guards (`(row.typeItem && row.typeItem.toLowerCase().includes(q))`). In MUI `<Tabs>`, index values (`value`, `value2`) must safely fallback to `false` when the active item is not found in the filtered result set (`selectedIndex !== -1 ? selectedIndex : false`), preventing MUI invalid tab value errors during live typing.
+47. **Universal Defensive Purchase Reason / Description Display & Schema Sanitization (`getPurchaseReasonDisplay`, Ver 3.5.80)**:
+    - **Flawed Object-Existence Ternary Hazard:** In MongoDB, `itemPurchaseSchema` defines `projectName: {}` (Mixed type). When an item purchase reason is changed to `'Other'` or when no project is selected, forms previously saved `projectName: {}` (an empty object). In JavaScript, `{}` is a truthy object where `row.projectName !== undefined` evaluates to `true`, and `(row.projectName.projectName || row.projectName.name || '')` evaluates to `''` (empty string). A ternary expression structured as `row.projectName !== undefined ? (typeof row.projectName === 'object' ? (row.projectName.projectName || row.projectName.name || '') : row.projectName) : row.description` thus evaluated to `''`, completely hiding `row.description` (`"ORDER FOR STORE KREAM"`) and causing the purchase reason to completely disappear from tables and modals!
+    - **Universal Defensive Formatter (`formatPurchaseReasonDisplay` / `getPurchaseReasonDisplay`):** Always use `getPurchaseReasonDisplay(purchase, projectsList)` from `src/js/utils/formatUtils.js`. The helper defensively inspects:
+      1. `purchase.projectName`: if a string or object with `.projectName` or `.name`, returns the non-empty trimmed text. If an object with only `._id`, resolves the project title/number from `projectsList`.
+      2. If resolved project text is empty (such as `{}` stored on historical records), falls back seamlessly to `purchase.description` (`"ORDER FOR STORE KREAM"`).
+      3. If description is also empty, falls back to `purchase.reason` (`"Other"`).
+      4. Returns `''` only if all three fields are genuinely empty.
+    - **Form State & Submission Sanitization:** In `ItemPurchaseUpdateForm`, `ItemPurchaseViewForm`, and `ConvertPoToIP`, when `reason === 'Other'` or `projectName` has no valid ID/name, sanitize `projectName` to `null` before sending to the backend so empty objects are not persisted to MongoDB.
+    - **Consistent Summary Headers:** All summary table column headers (IN-SUMMARY, OUT-SUMMARY, RETURN-SUMMARY) must consistently display capitalized `Reason` instead of lowercase `reason`.
 
 ## Current Progress Log
+- **Item IN-SUMMARY Disappearing Reason Fix, Column Header Capitalization & Defensive Purchase Display Architecture (Ver 3.5.80)**:
+  - **Problem Reported:**
+    1. In the **Item Information** view (`/ItemInfo/:id`) on the **IN-SUMMARY** tab, for Item Purchase `#3787` (`IP-03787`), the `reason` column originally displayed an incorrect reason.
+    2. The user opened module **Item Purchase**, edited record `#3787`, changed Reason to `"Other"`, entered Description `"ORDER FOR STORE KREAM"`, and saved.
+    3. Upon returning to **Item Information -> IN-SUMMARY**, the reason column for `#3787` disappeared completely and rendered blank!
+    4. Furthermore, the user noted: `( Note : reason written wrong need to be writen Reason )` — the summary table column header was displaying lowercase `reason` instead of capitalized `Reason`.
+  - **Exhaustive Root Cause Analysis:**
+    1. **Empty Object Truthiness & Premature Ternary Short-Circuit:**
+       - In `ItemPurchaseUpdateForm.js`, when Reason was changed to `"Other"`, `handleReason` executed `setProjectName({})`.
+       - When saved to MongoDB, Mongoose stored `projectName: {}` on document `#3787`.
+       - In `ItemInformationVIew.js` (line 1240) and modal (line 1810), the table rendered:
+         `{row.projectName !== undefined ? (typeof row.projectName === 'object' ? (row.projectName.projectName || row.projectName.name || '') : row.projectName) : row.description}`
+       - In JavaScript, `{}` is an object, so `row.projectName !== undefined` evaluated to `true`, and `typeof row.projectName === 'object'` evaluated to `true`.
+       - `(row.projectName.projectName || row.projectName.name || '')` evaluated to `''` (empty string).
+       - Because the condition evaluated to `true`, JavaScript **never evaluated `: row.description`**!
+       - The cell rendered empty string `''`, completely hiding `"ORDER FOR STORE KREAM"`.
+    2. **Duplicate Flawed Ternaries Across Codebase:**
+       - Found identical flawed ternaries in:
+         - `ItemPurchaseViewAdmin.js` (line 232 DataGrid mapping & line 929 view modal)
+         - `SupplierViewInformation.js` (line 1773 view modal)
+       - In all these locations, any record saved with Reason `"Other"` rendered blank.
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Universal Defensive Formatter (`src/js/utils/formatUtils.js`):**
+       - Implemented and exported `formatPurchaseReasonDisplay` and alias `getPurchaseReasonDisplay`.
+       - Defensively checks `purchase.projectName` (resolving string, `.projectName`, `.name`, or project ID lookups in `projectsList`).
+       - If resolved project text is empty, falls back seamlessly to `purchase.description` (`"ORDER FOR STORE KREAM"`).
+       - If description is empty, falls back to `purchase.reason` (`"Other"`).
+    2. **Item Information View (`src/js/AdminView1/PageView/ItemView/ItemInformationVIew.js`):**
+       - Capitalized table headers: `reason` -> `Reason` across IN-SUMMARY, OUT-SUMMARY, and RETURN-SUMMARY tables.
+       - Replaced flawed ternary with `getPurchaseReasonDisplay(row, projectsList)` in IN-SUMMARY table cell.
+       - Replaced flawed ternary with `getPurchaseReasonDisplay(itemPurchaseView, projectsList)` in detail view modal.
+       - Enhanced `newArray` search filter to include `row.reason`.
+    3. **Item Purchase Master View (`src/js/AdminView1/ItemPurchaseViewAdmin.js`):**
+       - Updated `fetchItems` DataGrid mapping to use `Account: getPurchaseReasonDisplay(item)`.
+       - Updated detail modal description display to use `getPurchaseReasonDisplay(itemPurchaseView)`.
+    4. **Supplier View (`src/js/AdminView1/PageView/Supplier/SupplierViewInformation.js`):**
+       - Updated detail modal description display to use `getPurchaseReasonDisplay(itemPurchaseView, projectsList)`.
+    5. **Form State & Submission Sanitization (`ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, `ConvertPoToIP.js`):**
+       - Updated `handleReason` to set `projectName` to `null` when `reason === 'Other'`.
+       - Sanitized `handleSubmit` payload so `projectName` is submitted as `null` if empty or without valid ID/name.
+  - **Verification & Deployment:**
+    - Bumped version to `3.5.80` in `package.json`.
+    - Quality gate verification: `node scripts/pre-build-check.js` validated AST syntax across all 232 source files with 0 errors.
+    - Webpack compilation succeeded for Electron (`build/`) and Web Portal (`dist_web/`).
+    - Packaged Windows Desktop installer: `dist/Global Gate Setup 3.5.80.exe`.
+    - Pushed to GitHub `origin main` for automatic Cloudflare Pages Web Portal deployment (`portal.globalgate.sarl`).
+
 - **Sidebar Recursive Infinite Render Loop Freezing on Navigation Between Item & Employee Modules (Ver 3.5.79)**:
   - **Problem Reported:**
     - User reported that when working in module `Employee` (`/TewmViewAdmin`), opening Tab 4 (`TODAY'S ASSIGNMENT`), navigating to module `ITEM` (`/ItemViewAdmin` or `/ItemInfo/:id`) to search for an item, and returning to module `Employee`, the system suffered severe lag, froze completely, and crashed to an empty white screen.
