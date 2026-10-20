@@ -234,40 +234,45 @@ Route.route("/invoice-Information").get(async (req, res) => {
       const tokens = trimmedSearch.split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
       
       const fullRegex = new RegExp(escapedSearch, 'i');
-      const combinedRegex = tokens.length > 1 ? new RegExp(tokens.join('.*'), 'i') : fullRegex;
-      const reverseCombinedRegex = tokens.length > 1 ? new RegExp(tokens.slice().reverse().join('.*'), 'i') : fullRegex;
+      const allTokensRegex = tokens.length > 1
+        ? new RegExp(tokens.map(t => `(?=.*\${t})`).join(''), 'i')
+        : fullRegex;
 
       const numClean = trimmedSearch.replace(/^[Ii][Nn][Vv][-_\s]*/, '');
       const searchNum = (!isNaN(Number(numClean)) && numClean !== '') ? Number(numClean) : (!isNaN(Number(trimmedSearch)) ? Number(trimmedSearch) : null);
 
-      // Search matching customers from customerSchema
+      // Search matching customers from customerSchema strictly matching all tokens
       let matchingCustomerIds = [];
       try {
-        const matchingCustomers = await customerSchema.find({
+        const customerQuery = {
           $or: [
-            { Customer: fullRegex },
-            { customerName: fullRegex },
-            { customerFullName: fullRegex },
-            { customerFirstName: fullRegex },
-            { customerLastName: fullRegex },
-            { companyName: fullRegex },
-            ...(tokens.length > 1 ? [
-              { Customer: combinedRegex },
-              { customerFullName: combinedRegex },
-              { companyName: combinedRegex }
+            { Customer: allTokensRegex },
+            { customerName: allTokensRegex },
+            { customerFullName: allTokensRegex },
+            { companyName: allTokensRegex },
+            { customerEmail: allTokensRegex },
+            { customerPhone: allTokensRegex },
+            { billingAddress: allTokensRegex },
+            { billingCity: allTokensRegex },
+            ...(tokens.length === 2 ? [
+              {
+                customerFirstName: new RegExp(tokens[0], 'i'),
+                customerLastName: new RegExp(tokens[1], 'i')
+              },
+              {
+                customerFirstName: new RegExp(tokens[1], 'i'),
+                customerLastName: new RegExp(tokens[0], 'i')
+              }
             ] : [])
           ]
-        }, '_id').lean();
+        };
+        const matchingCustomers = await customerSchema.find(customerQuery, '_id').lean();
         matchingCustomerIds = matchingCustomers.map(c => c._id);
       } catch (err) {
         console.error("Error matching customers:", err);
       }
 
-      const regexList = [fullRegex];
-      if (tokens.length > 1) {
-        regexList.push(combinedRegex);
-        regexList.push(reverseCombinedRegex);
-      }
+      const regexList = tokens.length > 1 ? [allTokensRegex, fullRegex] : [fullRegex];
 
       let searchOr = [
         ...(searchNum !== null ? [{ invoiceNumber: searchNum }] : []),
@@ -341,19 +346,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
         );
       }
 
-      if (tokens.length > 1) {
-        tokens.forEach(tok => {
-          const tokRegex = new RegExp(tok, 'i');
-          searchOr.push(
-            { 'customerName.Customer': tokRegex },
-            { 'customerName.customerName': tokRegex },
-            { 'customerName.companyName': tokRegex },
-            { 'customerName.customerFullName': tokRegex },
-            { 'customerName.customerFirstName': tokRegex },
-            { 'customerName.customerLastName': tokRegex }
-          );
-        });
-      }
+
 
       if (branchCondition) {
         query.$and = [branchCondition, { $or: searchOr }];

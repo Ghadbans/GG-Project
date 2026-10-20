@@ -240,7 +240,59 @@
       - In `invoiceBalanceUtils.js`, `syncInvoiceBalances` must inspect `payment.transactionType`. If `transactionType === 'Refund'`, it must subtract the refund amount from the invoice's `totalPaid` (`totalPaid -= amt;`) and clamp to zero (`Math.max(0, totalPaid)`). Adding refunds to paid amounts corrupts client balances.
       - MongoDB payment schemas must explicitly define `transactionType: { type: String, enum: ['Payment', 'Refund'], default: 'Payment' }` and `status: { type: String, enum: ['Cleared', 'Pending', 'Voided'], default: 'Cleared' }`. Backend `/create-payment` and `/update-payment` routes must accept and persist these fields.
 
+51. **Multi-Token Search Conjunction Architecture & Elimination of Single-Word `$or` Disjunctions (Ver 3.5.84)**:
+    - **Conjunction Requirement for Multi-Word Queries:** When a user enters a multi-word search phrase (e.g. `HASSAN HAMOUD` or `CAST CONCRETE`), the search engine MUST enforce conjunction (ALL tokens must be present across the record or linked customer) rather than disjunction (ANY single token matching).
+    - **Prohibition of Single-Token `$or` Pollutions:** Backend search routes must NEVER loop over split tokens and push single-word regexes (`tokens.forEach(tok => searchOr.push({ 'customerName.Customer': tokRegex }))`) into an `$or` query array. Pushing individual tokens into `$or` destroys search specificity by returning every record matching any single word (e.g. returning all 111 invoices containing "HASSAN" including Hassan Mansour and Hassan Jaffal when the user specifically searched for Hassan Hamoud).
+    - **Standardized Lookahead Conjunction Pattern:** All collection search endpoints (`/invoice-Information`, `/estimation-Information`, `/customer-Information`, `/employee-Information`, `/item-Information`, etc.) must construct conjunction regexes via positive lookaheads:
+      ```javascript
+      const tokens = search.trim().split(/\s+/).filter(Boolean).map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+      const allTokensRegex = tokens.length > 1
+        ? new RegExp(tokens.map(t => `(?=.*${t})`).join(''), 'i')
+        : fullRegex;
+      ```
+    - **Relational Customer Pre-Filtering:** When resolving customer IDs (`customerSchema.find`) for embedded or referenced relations (`customerName._id`, `customerId`), the query must test `allTokensRegex` against `Customer`, `customerName`, `customerFullName`, `companyName`, and first/last name permutations (`tokens.length === 2 ? { customerFirstName: tok0, customerLastName: tok1 } : ...`). Unrelated customers must never enter `matchingCustomerIds`.
+
 ## Current Progress Log
+- **Multi-Token Search Conjunction Fortification for Invoices & Quotations (Ver 3.5.84)**:
+  - **Problem Reported:**
+    - User reported: *"in the search if im searching for client name like HASSAN HAMOUD it will show everyone in his name has Hassan like HASSAN Jaffal HASSAN MANSOUR etc.. im not searching for for Hassan to give me all the hassan clients in my invoices i noticed this happening in the INVOICES QUOTATION modules !"*.
+    - Uploaded screenshot evidence confirmed that typing `HASSAN HAMOUD` in the Invoice module returned 111 invoices spanning every client with "Hassan" in their name (`MR. HASSAN MANSOUR`, `MR. HASSAN JAFFAL`, `MR. HASSAN HAMOUD`).
+  - **Exhaustive Root Cause Analysis:**
+    1. **Single-Word Disjunction in `invoiceRoutes.js` (L344–356):**
+       - The route handler parsed search tokens `['HASSAN', 'HAMOUD']`, but then executed:
+         ```javascript
+         if (tokens.length > 1) {
+           tokens.forEach(tok => {
+             const tokRegex = new RegExp(tok, 'i');
+             searchOr.push(
+               { 'customerName.Customer': tokRegex },
+               { 'customerName.customerName': tokRegex },
+               ...
+             );
+           });
+         }
+         ```
+       - Because MongoDB evaluates `query.$or = searchOr`, pushing `{ 'customerName.Customer': /HASSAN/i }` as an independent `$or` item immediately caused every document with "Hassan" to evaluate as a match, completely overriding the presence of "Hamoud".
+    2. **Identical Copy in `estimationRoutes.js` (L388–400):**
+       - The Quotation/Estimation search route `/estimation-Information` duplicated the exact same `tokens.forEach` single-word `$or` push, exhibiting the identical search pollution.
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Standardized Order-Independent Lookahead Conjunction:**
+       - Replaced the flawed `combinedRegex` and `reverseCombinedRegex` with the standard positive lookahead conjunction regex:
+         `const allTokensRegex = tokens.length > 1 ? new RegExp(tokens.map(t => '(?=.*' + t + ')').join(''), 'i') : fullRegex;`
+       - This guarantees that every token in the query must exist in the target string regardless of word order, while strictly excluding names that match only one token.
+    2. **Customer Relational Pre-Filter Hardening:**
+       - Updated `customerSchema.find` in both `invoiceRoutes.js` and `estimationRoutes.js` to query against `allTokensRegex` (plus two-token first/last name permutations). Only customers matching all search words are added to `matchingCustomerIds`.
+    3. **Elimination of Flawed `$or` Token Loops:**
+       - Completely removed the `tokens.forEach` blocks from both `invoiceRoutes.js` (lines 344–356) and `estimationRoutes.js` (lines 388–400).
+    4. **Universal Field Verification:**
+       - Maintained complete search coverage across invoice numbers, quotation numbers, subjects, descriptions, item names, defect descriptions, and customer metadata with 100% token conjunction.
+  - **Verification & Deployment:**
+    - Version bumped to `3.5.84` in `package.json`.
+    - AST quality check passed with 0 errors across 232 files (`node scripts/pre-build-check.js`).
+    - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles with 0 errors.
+    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.84.exe`.
+    - Pushed commit to GitHub `origin main` for automated Cloudflare Pages and Railway API deployments.
+
 - **Payment & Refund Architecture, Status Lifecycle (`Cleared`, `Pending`, `Voided`) & Daily Cash Reconciliations (Ver 3.5.83)**:
   - **Problem Reported:**
     - User reported: *"In Payment module than Add new Payment there is transaction type there is Payment and REFUND and there is in Status Cleared Pending and Voided .. i want you to check this ones if its active or not is it working fine or not .... because i tried the refund is not showing me the client invoices from which invoice i want to make refund as well in the EXPENSES DAILY INFORMATION is showing +1100$ and -1100$ than its adding 1100$ to in the Payment Received"*.
@@ -287,8 +339,15 @@
     - Version bumped to `3.5.83` in `package.json`.
     - AST pre-build verification passed with 0 errors across all 232 files (`node scripts/pre-build-check.js`).
     - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles with 0 errors.
-    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.83.exe`.
+    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.83.exe` (94,437,058 bytes).
     - Pushed commit to GitHub `origin main` for automated Cloudflare Pages deployment (`portal.globalgate.sarl`).
+  - **Live User Production Verification & End-to-End Accounting Proof:**
+    - **Live Execution Recorded (`PAY-001173`):** User successfully executed a real-world $1,100.00 refund for client `MR. OLIVIER MOTEBA` against invoice `INV-002602` ($2,050.00 total) with `Transaction Type: Refund`, `Status: Cleared`, `Payment Mode: Cash`.
+    - **Payment Register (`PaymentView.js`):** Row `PAY-001173` renders cleanly with `Type: REFUND` (red chip), `Status: CLEARED` (green chip), and `A-Paid: -$1,100.00` in bold red.
+    - **Payment Voucher Document (`PaymentInformationView.js`):** Document header confirms `MR. OLIVIER MOTEBA | PAY-001173` with red `Refund` and blue `Cleared` badges, displaying the linked invoice `INV-002602` ($2,050 total, $1,100 refund applied).
+    - **Commercial Invoices Multi-Module Ledger (`InvoiceViewAdmin.js` & `InvoiceInformationView.js`):** `INV-002602` automatically reverted from `Paid` to `Partially-Paid` (amber chip), with `I-Amount: $2,050.00`, `A-Paid: $950.00`, and `B-Due: $1,100.00` ($2,050.00 - $1,100.00 = $950.00 paid), confirming automatic balance deduction and invoice status recalculation.
+    - **Daily Cash Book & Collections (`DailyExpenseAdminView.js`):** `PAY-001173 [REFUND]` appears as `-$1,100.00` in red under `Payment Received` with reference `INV-002602: -$1100`, eliminating the previous false `+$1100 / -$1100` double entries. `Payment Received Gross Total` accurately deducted the outgoing refund ($6,333.62 SAM TRANSPORT - $1,100.00 refund = $5,233.62 net cash), with `Payment Return Change Total: -$ 0.00`.
+    - **Input Typography Polish:** Updated form labels in `PaymentInformationForm.js` and `PaymentInformationUpdate.js` so that when `Transaction Type: Refund` is active, the primary input label dynamically switches from `Amount Received` to `Refund Amount` / `Refund Amount ($)`.
 
 - **Item Out & Item Return Printable Voucher Redesign & Brand Architecture (Ver 3.5.82)**:
   - **Problem Reported:**

@@ -750,7 +750,7 @@ function PaymentInformationUpdate() {
                   fullWidth
                   required
                   size="small"
-                  label="Amount Received ($)"
+                  label={transactionType === 'Refund' ? 'Refund Amount ($)' : 'Amount Received ($)'}
                   type="number"
                   value={amount || ''}
                   onChange={(e) => {
@@ -1112,14 +1112,14 @@ function PaymentInformationUpdate() {
                   <Grid item xs={7}>
                     <div style={{ display: 'flex', gap: '10px' }}>
                       <FormControl>
-                        <InputLabel htmlFor='amount'>Amount Received</InputLabel>
+                        <InputLabel htmlFor='amount'>{transactionType === 'Refund' ? 'Refund Amount' : 'Amount Received'}</InputLabel>
                         <OutlinedInput
                           required
                           id='amount'
                           value={amount}
                           onChange={(e) => setAmount(e.target.value)}
                           startAdornment={<InputAdornment position="start">USD</InputAdornment>}
-                          label="Amount Received"
+                          label={transactionType === 'Refund' ? 'Refund Amount' : 'Amount Received'}
                         />
                       </FormControl>
                     </div>
