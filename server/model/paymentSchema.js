@@ -49,6 +49,16 @@ const paymentSchema = new Schema({
       type: String,
       trim: true
     },
+    transactionType: {
+      type: String,
+      enum: ['Payment', 'Refund'],
+      default: 'Payment'
+    },
+    status: {
+      type: String,
+      enum: ['Cleared', 'Pending', 'Voided'],
+      default: 'Cleared'
+    },
     description: {
       type: String,
       trim: true

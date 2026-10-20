@@ -295,21 +295,26 @@ function PaymentInformationUpdate() {
             });
             setOldInvoice(filterData);
 
-            // Desktop/Web preserves strict Sent / Partially-Paid filter; Mobile includes Draft/Pending with balanceDue > 0
+            // Filter invoices: for Refund show invoices with paid balances; for Payment show unpaid invoices
             const exInvoice = filterData.filter((row) => {
               if (!row) return false;
               const isAlreadyAttached = (invoice1 || []).some((row1) => String(row1.id || row1._id) === String(row._id));
               if (isAlreadyAttached) return false;
 
-              if (!isMobile) {
-                return row.status === 'Sent' || row.status === 'Partially-Paid';
-              }
-
               const st = String(row.status || '').trim().toLowerCase();
-              if (st === 'paid' || st === 'void' || st === 'decline' || st === 'free of charge') return false;
+              if (st === 'void' || st === 'decline' || st === 'free of charge') return false;
+
               const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
               const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
-              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : (totalInv - currentPaid));
+              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
+
+              if (transactionType === 'Refund') {
+                return currentPaid > 0.001 || st === 'paid' || st === 'partially-paid';
+              }
+
+              if (!isMobile) {
+                return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
+              }
               return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
             }).map((row) => {
               const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
@@ -326,6 +331,8 @@ function PaymentInformationUpdate() {
                 Ref: row.invoiceNumber,
                 prefix: (row.ReferenceName2 || row.invoicePurchase === 'Purchased') ? "P-" : "INV-",
                 balanceDue: bal,
+                paidAmount: currentPaid,
+                maxRefundable: currentPaid,
                 invoiceAmount: totalInv,
                 status: row.status || 'Draft',
                 invoiceDate: row.invoiceDate
@@ -363,7 +370,7 @@ function PaymentInformationUpdate() {
       }
     };
     fetchData();
-  }, [customerId, customerName?.customerName, invoice1, reason]);
+  }, [customerId, customerName?.customerName, invoice1, reason, transactionType]);
 
   const handleChangeCEO = (e, idRow) => {
     const { name, value } = e.target;
@@ -372,7 +379,10 @@ function PaymentInformationUpdate() {
     list[i][name] = value;
     list[i]['totalConverted'] = Math.round((list[i]['amountPaidFC'] / list[i]['rateChange']) * 100) / 100;
     list[i]['total'] = Math.round((parseFloat(list[i]['totalConverted']) + parseFloat(list[i]['amountPaidUSD'])) * 100) / 100;
-    if (list[i]['total'] > list[i]['balanceDue']) {
+    const maxLimit = transactionType === 'Refund'
+      ? parseFloat(list[i]['maxRefundable'] !== undefined ? list[i]['maxRefundable'] : (list[i]['paidAmount'] || 0))
+      : parseFloat(list[i]['balanceDue'] || 0);
+    if (list[i]['total'] > maxLimit) {
       list[i]['amountPaidFC'] = 0
       list[i]['amountPaidUSD'] = 0
       list[i]['total'] = 0
@@ -383,8 +393,11 @@ function PaymentInformationUpdate() {
     e.preventDefault();
     let remaining = amount;
     const totalInvoiceExp = invoice.map((row) => {
-      const total = Math.min(remaining, row.balanceDue).toFixed(2);
-      remaining -= total
+      const limit = transactionType === 'Refund'
+        ? parseFloat(row.maxRefundable !== undefined ? row.maxRefundable : (row.paidAmount || 0))
+        : parseFloat(row.balanceDue || 0);
+      const total = Math.min(remaining, limit).toFixed(2);
+      remaining -= parseFloat(total);
       return { ...row, total }
     })
     setInvoice(totalInvoiceExp)
@@ -451,16 +464,27 @@ function PaymentInformationUpdate() {
 
     let difference = 0
     let total = 0
-    const difference1 = Math.round((parseFloat(row.balanceDue) - parseFloat(row.total)) * 100) / 100;
-    difference = difference1
-    total = Math.round((parseFloat(correspondingId.totalInvoice) - parseFloat(difference1)) * 100) / 100;
+    const rowPaid = parseFloat(row.total || 0);
+    const currentPaid = parseFloat(correspondingId.total || 0);
+    const totalInv = parseFloat(correspondingId.totalInvoice || 0);
 
-    if (difference <= 0 && parseFloat(total) !== 0) {
-      row.status = 'Paid'
-    } else if (total > 0 && total < correspondingId.totalInvoice) {
-      row.status = 'Partially-Paid'
+    if (transactionType === 'Payment') {
+      total = currentPaid + rowPaid;
     } else {
-      row.status = 'Sent'
+      total = Math.max(0, currentPaid - rowPaid);
+    }
+    total = Math.round(total * 100) / 100;
+    difference = Math.max(0, Math.round((totalInv - total) * 100) / 100);
+
+    let newStatus = correspondingId.status;
+    if (newStatus !== 'Void' && newStatus !== 'Free of Charge') {
+      if (totalInv > 0 && total >= totalInv - 0.001) {
+        newStatus = 'Paid';
+      } else if (total > 0.001) {
+        newStatus = 'Partially-Paid';
+      } else {
+        newStatus = 'Sent';
+      }
     }
     return {
       id: row.id,
@@ -468,7 +492,7 @@ function PaymentInformationUpdate() {
       data: {
         total: Number(total),
         balanceDue: difference,
-        status: row.status
+        status: newStatus
       }
     }
   }).filter(Boolean) : []

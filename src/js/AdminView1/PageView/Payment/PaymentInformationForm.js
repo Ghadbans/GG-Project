@@ -256,22 +256,28 @@ function PaymentInformationForm() {
             });
             setOldInvoice(filterData);
 
-            // Desktop/Web preserves strict Sent / Partially-Paid filter; Mobile includes Draft/Pending with balanceDue > 0
-            const unpaidInvoices = filterData.filter((row) => {
+            // Filter invoices: for Refund show invoices with paid balances; for Payment show unpaid invoices
+            const targetInvoices = filterData.filter((row) => {
               if (!row) return false;
-              if (!isMobile) {
-                return row.status === 'Sent' || row.status === 'Partially-Paid';
-              }
               const st = String(row.status || '').trim().toLowerCase();
-              if (st === 'paid' || st === 'void' || st === 'decline' || st === 'free of charge') return false;
+              if (st === 'void' || st === 'decline' || st === 'free of charge') return false;
+
               const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
               const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
-              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : (totalInv - currentPaid));
-              return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+              const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
+
+              if (transactionType === 'Refund') {
+                return currentPaid > 0.001 || st === 'paid' || st === 'partially-paid';
+              }
+
+              if (!isMobile) {
+                return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
+              }
+              return bal > 0.001 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
             });
 
             setInvoice(
-              unpaidInvoices.map((row) => {
+              targetInvoices.map((row) => {
                 const totalInv = Number(row.totalInvoice ?? row.total ?? 0);
                 const currentPaid = Number(row.total ?? row.paidAmount ?? 0);
                 const bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
@@ -286,6 +292,8 @@ function PaymentInformationForm() {
                   Ref: row.invoiceNumber,
                   prefix: (row.ReferenceName2 || row.invoicePurchase === 'Purchased') ? "P-" : "INV-",
                   balanceDue: bal,
+                  paidAmount: currentPaid,
+                  maxRefundable: currentPaid,
                   invoiceAmount: totalInv,
                   status: row.status || 'Draft',
                   invoiceDate: row.invoiceDate
@@ -337,7 +345,7 @@ function PaymentInformationForm() {
       }
     };
     fetchData();
-  }, [customerId, customerName?.customerName, reason]);
+  }, [customerId, customerName?.customerName, reason, transactionType]);
 
   const handleChangeCEO = (e, idRow) => {
     const { name, value } = e.target;
@@ -346,7 +354,10 @@ function PaymentInformationForm() {
     list[i][name] = value;
     list[i]['totalConverted'] = Math.round((list[i]['amountPaidFC'] / list[i]['rateChange']) * 100) / 100;
     list[i]['total'] = Math.round((parseFloat(list[i]['totalConverted']) + parseFloat(list[i]['amountPaidUSD'])) * 100) / 100;
-    if (list[i]['total'] > list[i]['balanceDue'] && reason === "Invoice") {
+    const maxLimit = transactionType === 'Refund'
+      ? parseFloat(list[i]['maxRefundable'] !== undefined ? list[i]['maxRefundable'] : (list[i]['paidAmount'] || 0))
+      : parseFloat(list[i]['balanceDue'] || 0);
+    if (list[i]['total'] > maxLimit && reason === "Invoice") {
       list[i]['amountPaidFC'] = 0
       list[i]['amountPaidUSD'] = 0
       list[i]['total'] = 0
@@ -358,8 +369,11 @@ function PaymentInformationForm() {
     const effectiveMax = modes === 'Credit-Account' ? Math.min(parseFloat(amount || 0), parseFloat(oldCredit || 0)) : parseFloat(amount || 0);
     let remaining = effectiveMax;
     const totalInvoiceExp = invoice.map((row) => {
-      const total = Math.min(remaining, row.balanceDue).toFixed(2);
-      remaining -= total;
+      const limit = transactionType === 'Refund'
+        ? parseFloat(row.maxRefundable !== undefined ? row.maxRefundable : (row.paidAmount || 0))
+        : parseFloat(row.balanceDue || 0);
+      const total = Math.min(remaining, limit).toFixed(2);
+      remaining -= parseFloat(total);
       return { ...row, total };
     });
     setInvoice(totalInvoiceExp);
@@ -476,6 +490,7 @@ function PaymentInformationForm() {
         return {
           id: row.id,
           number: correspondingId.invoiceNumber,
+          rowPaid,
           data: {
             total,
             balanceDue: difference,
@@ -485,7 +500,7 @@ function PaymentInformationForm() {
       }).filter(Boolean) : null
 
       const updateRequest = invoiceUpdate !== null ?
-        invoiceUpdate.filter((row) => row.data.total !== 0).map(({ id, data }) => {
+        invoiceUpdate.filter((row) => row.rowPaid > 0).map(({ id, data }) => {
           return axios.put(`${ENDPOINT_URL}/update-invoice/${id}`, data)
         }) : null
       if (updateRequest !== null) {
@@ -719,6 +734,46 @@ function PaymentInformationForm() {
                 </FormControl>
               </Grid>
 
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Transaction Type</InputLabel>
+                  <Select
+                    value={transactionType || 'Payment'}
+                    label="Transaction Type"
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setTransactionType(val);
+                      setPaymentReceivedUSD(0);
+                      setPaymentReceivedFC(0);
+                      setAmount(0);
+                      setReturnUSD(0);
+                      setReturnFC(0);
+                      if (invoice && invoice.length > 0) {
+                        setInvoice(invoice.map(r => ({ ...r, total: 0, amountPaidUSD: 0, amountPaidFC: 0 })));
+                      }
+                    }}
+                  >
+                    <MenuItem value="Payment">Payment</MenuItem>
+                    <MenuItem value="Refund">Refund</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
+              <Grid item xs={6}>
+                <FormControl fullWidth size="small">
+                  <InputLabel>Status</InputLabel>
+                  <Select
+                    value={status || 'Cleared'}
+                    label="Status"
+                    onChange={(e) => setStatus(e.target.value)}
+                  >
+                    <MenuItem value="Cleared">Cleared</MenuItem>
+                    <MenuItem value="Pending">Pending</MenuItem>
+                    <MenuItem value="Voided">Voided</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+
               <Grid item xs={12}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <DatePicker
@@ -782,10 +837,10 @@ function PaymentInformationForm() {
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
                 <Box>
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', textTransform: 'uppercase', fontSize: '0.82rem' }}>
-                    Unpaid Invoices ({invoice?.length || 0})
+                    {transactionType === 'Refund' ? 'Paid Invoices (Refund Eligible)' : 'Unpaid Invoices'} ({invoice?.length || 0})
                   </Typography>
                   <Typography variant="caption" sx={{ color: '#64748B' }}>
-                    {customerId ? (customerName?.customerName || 'Selected Customer') : 'Choose a customer above to view invoices'}
+                    {customerId ? (customerName?.customerName || 'Selected Customer') : (transactionType === 'Refund' ? 'Choose a customer to view refundable invoices' : 'Choose a customer above to view invoices')}
                   </Typography>
                 </Box>
                 {invoice && invoice.length > 0 && Number(amount) > 0 && (
@@ -803,7 +858,7 @@ function PaymentInformationForm() {
               {(!invoice || invoice.length === 0) ? (
                 <Box sx={{ p: 2.5, textAlign: 'center', backgroundColor: '#F8FAFC', borderRadius: 2 }}>
                   <Typography variant="body2" sx={{ color: '#64748B', fontWeight: 500 }}>
-                    {customerId ? 'No unpaid invoices found for this customer.' : 'Select a customer to see invoices awaiting payment.'}
+                    {customerId ? (transactionType === 'Refund' ? 'No paid invoices eligible for refund found for this customer.' : 'No unpaid invoices found for this customer.') : (transactionType === 'Refund' ? 'Select a customer to see paid invoices eligible for refund.' : 'Select a customer to see invoices awaiting payment.')}
                   </Typography>
                 </Box>
               ) : (
@@ -851,8 +906,8 @@ function PaymentInformationForm() {
                           <Typography variant="caption" sx={{ color: '#64748B' }}>
                             Total: <strong style={{ color: '#0F172A' }}>${Number(row.invoiceAmount || 0).toFixed(2)}</strong>
                           </Typography>
-                          <Typography variant="caption" sx={{ color: '#DC2626', fontWeight: 700 }}>
-                            Due: ${balDue.toFixed(2)}
+                          <Typography variant="caption" sx={{ color: transactionType === 'Refund' ? '#059669' : '#DC2626', fontWeight: 700 }}>
+                            {transactionType === 'Refund' ? `Paid: ${Number(row.maxRefundable ?? row.paidAmount ?? 0).toFixed(2)}` : `Due: ${balDue.toFixed(2)}`}
                           </Typography>
                         </Box>
 
@@ -860,7 +915,7 @@ function PaymentInformationForm() {
                           <TextField
                             size="small"
                             type="number"
-                            label="Pay Amount ($)"
+                            label={transactionType === 'Refund' ? "Refund Amount ($)" : "Pay Amount ($)"}
                             value={row.amountPaidUSD || ''}
                             name="amountPaidUSD"
                             onChange={(e) => {
@@ -874,7 +929,7 @@ function PaymentInformationForm() {
                               }, 0);
                             }}
                             sx={{ flex: 1, backgroundColor: '#ffffff', borderRadius: 1 }}
-                            inputProps={{ min: 0, max: balDue, step: 'any' }}
+                            inputProps={{ min: 0, max: transactionType === 'Refund' ? (row.maxRefundable ?? row.paidAmount ?? 0) : balDue, step: 'any' }}
                           />
                           <Button
                             size="small"
@@ -897,7 +952,7 @@ function PaymentInformationForm() {
                               whiteSpace: 'nowrap'
                             }}
                           >
-                            Pay Full
+                            {transactionType === 'Refund' ? 'Refund Full' : 'Pay Full'}
                           </Button>
                         </Box>
                       </Box>
@@ -1100,7 +1155,18 @@ function PaymentInformationForm() {
                         name="transactionType"
                         value={transactionType}
                         label="Transaction Type"
-                        onChange={(e) => setTransactionType(e.target.value)}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setTransactionType(val);
+                          setPaymentReceivedUSD(0);
+                          setPaymentReceivedFC(0);
+                          setAmount(0);
+                          setReturnUSD(0);
+                          setReturnFC(0);
+                          if (invoice && invoice.length > 0) {
+                            setInvoice(invoice.map(r => ({ ...r, total: 0, amountPaidUSD: 0, amountPaidFC: 0 })));
+                          }
+                        }}
                       >
                         <MenuItem value="Payment">Payment</MenuItem>
                         <MenuItem value="Refund">Refund</MenuItem>
@@ -1327,14 +1393,14 @@ function PaymentInformationForm() {
                                                   </td>
                                                   <td id='InvoiceAmount'>
                                                     <FormControl>
-                                                      <InputLabel htmlFor='subtotal'>Amount</InputLabel>
+                                                      <InputLabel htmlFor='subtotal'>{transactionType === 'Refund' ? 'Paid (Refundable)' : 'Balance Due'}</InputLabel>
                                                       <OutlinedInput
                                                         sx={{ width: '250px', backgroundColor: 'white' }}
                                                         type='number'
                                                         id='subtotal'
-                                                        value={row.balanceDue}
+                                                        value={transactionType === 'Refund' ? (row.maxRefundable ?? row.paidAmount ?? 0) : row.balanceDue}
                                                         startAdornment={<InputAdornment position="start">USD</InputAdornment>}
-                                                        label="subtotal"
+                                                        label={transactionType === 'Refund' ? 'Paid (Refundable)' : 'Balance Due'}
                                                       />
                                                     </FormControl>
                                                   </td>
@@ -1368,7 +1434,7 @@ function PaymentInformationForm() {
                                                   </td>
                                                   <td>
                                                     <FormControl>
-                                                      <InputLabel htmlFor='amountPaidUSD'>Amount Paid USD</InputLabel>
+                                                      <InputLabel htmlFor='amountPaidUSD'>{transactionType === 'Refund' ? 'Refund USD' : 'Amount Paid USD'}</InputLabel>
                                                       <OutlinedInput
                                                         sx={{ width: '200px', backgroundColor: 'white' }}
                                                         id='amountPaidUSD'
@@ -1382,7 +1448,7 @@ function PaymentInformationForm() {
                                                   </td>
                                                   <td>
                                                     <FormControl>
-                                                      <InputLabel htmlFor='total'>Total Paid</InputLabel>
+                                                      <InputLabel htmlFor='total'>{transactionType === 'Refund' ? 'Total Refund' : 'Total Paid'}</InputLabel>
                                                       <OutlinedInput
                                                         disabled
                                                         sx={{ width: '200px', backgroundColor: 'white' }}
@@ -1407,7 +1473,7 @@ function PaymentInformationForm() {
                               )
                           }
 
-                          {remaining > 0 && modes !== 'Credit-Account' && (
+                          {transactionType !== 'Refund' && remaining > 0 && modes !== 'Credit-Account' && (
                             <Box sx={{ mt: 2, mb: 2, p: 2, border: '1px solid #30368a', borderRadius: '8px', backgroundColor: '#f0f4ff', width: '100%' }}>
                               <Typography variant="subtitle1" sx={{ fontWeight: 'bold', color: '#30368a', mb: 1.5 }}>
                                 Rest / Surplus Amount Action (Overpayment: ${remaining.toFixed(2)})

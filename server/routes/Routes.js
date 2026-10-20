@@ -766,7 +766,10 @@ Route.route("/create-payment").post(async (req, res, next) => {
     TotalAmount,
     excessAction,
     returnUSD,
-    returnFC
+    returnFC,
+    transactionType,
+    status,
+    reason
   } = req.body
    try {
     const branchId = req.body.branchId || req.query.branchId;
@@ -793,6 +796,9 @@ Route.route("/create-payment").post(async (req, res, next) => {
         excessAction: excessAction || 'Credit',
         returnUSD: Number(returnUSD || 0),
         returnFC: Number(returnFC || 0),
+        transactionType: transactionType || 'Payment',
+        status: status || 'Cleared',
+        reason: reason || 'Invoice',
         branchId
       });
     } else {
@@ -814,6 +820,9 @@ Route.route("/create-payment").post(async (req, res, next) => {
         excessAction: excessAction || 'Credit',
         returnUSD: Number(returnUSD || 0),
         returnFC: Number(returnFC || 0),
+        transactionType: transactionType || 'Payment',
+        status: status || 'Cleared',
+        reason: reason || 'Invoice',
         branchId
       });
     }

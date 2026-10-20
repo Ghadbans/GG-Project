@@ -548,12 +548,47 @@ function DailyExpenseAdminView() {
   const totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0
 
   const getPaymentRowValues = (row) => {
+    const isVoided = row.status === 'Voided';
+    const isRefund = row.transactionType === 'Refund';
+
+    // Voided payments have zero financial impact on cash and revenue
+    if (isVoided) {
+      return {
+        grossFC: 0,
+        grossUSD: 0,
+        returnFC: 0,
+        returnUSD: 0,
+        netFC: 0,
+        netUSD: 0,
+        credit: 0,
+        isVoided: true,
+        isRefund
+      };
+    }
+
     const payFC = parseFloat(row.PaymentReceivedFC) || 0;
     const payUSD = parseFloat(row.PaymentReceivedUSD) || 0;
     const retFC = parseFloat(row.returnFC) || 0;
     const retUSD = parseFloat(row.returnUSD) || 0;
     const rem = parseFloat(row.remaining) || 0;
     const amt = parseFloat(row.amount) || 0;
+
+    // Refund is cash disbursed back to customer: it reduces daily cash collections
+    if (isRefund) {
+      const refundUSD = payUSD > 0 ? payUSD : (amt > 0 ? amt : 0);
+      const refundFC = payFC > 0 ? payFC : 0;
+      return {
+        grossFC: -refundFC,
+        grossUSD: -refundUSD,
+        returnFC: 0,
+        returnUSD: 0,
+        netFC: -refundFC,
+        netUSD: -refundUSD,
+        credit: 0,
+        isVoided: false,
+        isRefund: true
+      };
+    }
 
     let grossUSD = payUSD;
     let grossFC = payFC;
@@ -597,7 +632,9 @@ function DailyExpenseAdminView() {
       returnUSD: retUSD,
       netFC,
       netUSD,
-      credit
+      credit,
+      isVoided: false,
+      isRefund: false
     };
   };
 
@@ -1151,34 +1188,61 @@ function DailyExpenseAdminView() {
                                 {
                                   dayjs(item.paymentDate).format('DD/MM') === dayjs(row).format('DD/MM') ? (
                                     <>
-                                      <td style={{ border: '1px solid gray' }}>
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
                                         PAY-{String(item.paymentNumber).padStart(6, '0')}
+                                        {item.transactionType === 'Refund' && (
+                                          <span style={{ backgroundColor: '#fee2e2', color: '#b91c1c', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', marginLeft: '6px' }}>
+                                            REFUND
+                                          </span>
+                                        )}
+                                        {item.status === 'Voided' && (
+                                          <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', textDecoration: 'line-through', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', marginLeft: '6px' }}>
+                                            VOIDED
+                                          </span>
+                                        )}
+                                        {item.status === 'Pending' && (
+                                          <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 6px', borderRadius: '4px', fontSize: '10px', fontWeight: 'bold', marginLeft: '6px' }}>
+                                            PENDING
+                                          </span>
+                                        )}
                                       </td>
-                                      <td style={{ border: '1px solid gray' }}>
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
                                         {item.customerName ? (item.customerName.Customer || item.customerName.customerName || (typeof item.customerName === 'string' ? item.customerName : '')) : ''}
                                       </td>
-                                      <td style={{ border: '1px solid gray' }}>
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
                                         {item.modes !== undefined ? item.modes.toUpperCase() : ''}  {' | ' + (item.description || '')}
-                                        {(item.returnUSD > 0 || item.returnFC > 0) && (
+                                        {item.transactionType !== 'Refund' && item.status !== 'Voided' && (item.returnUSD > 0 || item.returnFC > 0) && (
                                           <div style={{ fontSize: '11px', color: '#c62828', fontWeight: 'bold' }}>
                                             Return Change: {item.returnUSD > 0 ? `${(parseFloat(item.returnUSD) || 0).toFixed(2)} ` : ''}{item.returnFC > 0 ? `FC ${item.returnFC.toLocaleString()}` : ''}
                                           </div>
                                         )}
                                       </td>
-                                      <td style={{ border: '1px solid gray' }}>
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
                                         {item.TotalAmount?.map((Item, i) => (
                                           <p key={i}>
-                                            <span>{Item.prefix || (item.reason === "Project" ? "P-" : "INV-")}{String(Item.Ref).padStart(6, '0')}:  ${Item.total !== undefined ? Item.total : 0}</span>
+                                            <span>{Item.prefix || (item.reason === "Project" ? "P-" : "INV-")}{String(Item.Ref).padStart(6, '0')}:  {item.transactionType === 'Refund' ? '-' : ''}${Item.total !== undefined ? Item.total : 0}</span>
                                           </p>
                                         ))}
                                       </td>
-                                      <td style={{ border: '1px solid gray' }}>
-                                        <span>FC </span>{getPaymentRowValues(item).grossFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
+                                        {item.status === 'Voided' ? (
+                                          <span style={{ color: '#94a3b8', textDecoration: 'line-through' }}>FC 0.00</span>
+                                        ) : item.transactionType === 'Refund' && getPaymentRowValues(item).grossFC < 0 ? (
+                                          <span style={{ color: '#b91c1c', fontWeight: 'bold' }}>-FC {Math.abs(getPaymentRowValues(item).grossFC).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                        ) : (
+                                          <><span>FC </span>{getPaymentRowValues(item).grossFC.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</>
+                                        )}
                                       </td>
-                                      <td style={{ border: '1px solid gray' }}>
-                                        <span>$ </span>{getPaymentRowValues(item).grossUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
+                                        {item.status === 'Voided' ? (
+                                          <span style={{ color: '#94a3b8', textDecoration: 'line-through' }}>$ 0.00</span>
+                                        ) : item.transactionType === 'Refund' ? (
+                                          <span style={{ color: '#b91c1c', fontWeight: 'bold' }}>-$ {Math.abs(getPaymentRowValues(item).grossUSD).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                        ) : (
+                                          <><span>$ </span>{getPaymentRowValues(item).grossUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</>
+                                        )}
                                       </td>
-                                      <td style={{ border: '1px solid gray' }}>
+                                      <td style={{ border: '1px solid gray', opacity: item.status === 'Voided' ? 0.6 : 1 }}>
                                         <span>$ </span>{getPaymentRowValues(item).credit.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                       </td>
                                     </>

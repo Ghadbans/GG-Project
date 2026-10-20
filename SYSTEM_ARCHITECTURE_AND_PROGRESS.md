@@ -221,7 +221,75 @@
     - **Dual Side-by-Side Signature Blocks:** Warehouse movement documents require physical or stamp validation. Provide two balanced side-by-side signature cards (`width: '45%'`, `backgroundColor: '#fafafa'`, `border: '1px solid #cbd5e1'`, `borderRadius: '6px'`, `padding: '12px 14px'`) for Storekeeper (`Store Manager / Responsable Dépôt`) and Receiver/Returner (`Receiver / Destinataire` or `Returned By / Client ou Technicien`), each containing a 55px signing box, a dashed signature line, and a date line (`Date: _____/_____/202___`).
     - **Dynamic Print Document Titles:** `useReactToPrint` MUST always include `documentTitle` (`Item-Out-O-${String(outNumber).padStart(6, '0')}` or `Item-Return-R-${String(outNumber).padStart(6, '0')}`) so that browser PDF exports and print spools are cleanly named instead of defaulting to untitled.
 
+50. **Payment & Refund Lifecycle, Multi-Currency Reconciliations, and Status Integrity (Ver 3.5.83)**:
+    - **Transaction Type Architecture (`Payment` vs `Refund`):**
+      - Standard payments collect money from clients towards unpaid invoices (`Sent`, `Partially-Paid`).
+      - Refunds disburse funds back to clients against previously paid or partially-paid invoices where `paidAmount > 0`.
+      - When `transactionType === 'Refund'`, invoice queries MUST filter for settled/partially-settled invoices: `status === 'Paid' || status === 'Partially-Paid' || paidAmount > 0.001`.
+      - Refund inputs (`paidAmount`, `paidAmountUSD`, `paidAmountFC`) must be clamped to `maxRefundable` (the invoice's actual paid amount), NOT `balanceDue` (which is $0.00 on fully paid invoices). Clamping to `balanceDue` zeroes out legitimate refunds.
+      - Never compute return change (`excessAction = 'Return'`) on refunds. Return change represents overpayment on receipts, whereas a refund is already an outgoing money disbursement.
+    - **Status Lifecycle Architecture (`Cleared`, `Pending`, `Voided`):**
+      - `Cleared`: Fully settled and verified transaction that affects invoice balances, cash books, revenue, and customer ledgers.
+      - `Pending`: Recorded payment awaiting clearance or confirmation (e.g. check deposit or bank transfer clearance).
+      - `Voided`: Canceled, bounced, or reversed transaction. **CRITICAL:** Voided payments MUST be strictly excluded from invoice paid balances (`syncInvoiceBalances`), cash in hand / daily expenses collections, customer statements, and financial turnover reports.
+    - **Daily Cash Book & Expenses Integration (`DailyExpenseAdminView`):**
+      - Outgoing refunds represent money leaving the company register. In daily cash calculations, refunds must be recorded with negative gross amounts (`-refundUSD`, `-refundFC`) and subtracted from daily collections (reducing net cash in hand).
+      - Refunds must never generate fake "Return Change" rows or inflate "Payment Received" totals.
+      - Voided payments must contribute $0.00 to cash collections and display with strikethrough and `[VOIDED]` indicator badge.
+    - **Backend Ledger Consistency (`syncInvoiceBalances` & `reconcileAllInvoiceBalances`):**
+      - In `invoiceBalanceUtils.js`, `syncInvoiceBalances` must inspect `payment.transactionType`. If `transactionType === 'Refund'`, it must subtract the refund amount from the invoice's `totalPaid` (`totalPaid -= amt;`) and clamp to zero (`Math.max(0, totalPaid)`). Adding refunds to paid amounts corrupts client balances.
+      - MongoDB payment schemas must explicitly define `transactionType: { type: String, enum: ['Payment', 'Refund'], default: 'Payment' }` and `status: { type: String, enum: ['Cleared', 'Pending', 'Voided'], default: 'Cleared' }`. Backend `/create-payment` and `/update-payment` routes must accept and persist these fields.
+
 ## Current Progress Log
+- **Payment & Refund Architecture, Status Lifecycle (`Cleared`, `Pending`, `Voided`) & Daily Cash Reconciliations (Ver 3.5.83)**:
+  - **Problem Reported:**
+    - User reported: *"In Payment module than Add new Payment there is transaction type there is Payment and REFUND and there is in Status Cleared Pending and Voided .. i want you to check this ones if its active or not is it working fine or not .... because i tried the refund is not showing me the client invoices from which invoice i want to make refund as well in the EXPENSES DAILY INFORMATION is showing +1100$ and -1100$ than its adding 1100$ to in the Payment Received"*.
+  - **Exhaustive Root Cause Analysis:**
+    1. **Inactive MongoDB Schema & Backend Routes:**
+       - In `server/model/paymentSchema.js`, neither `transactionType` nor `status` was declared. Under Mongoose strict schema enforcement, any values sent from the client were silently stripped away before database persistence.
+       - In `server/routes/Routes.js` (`POST /create-payment`), `transactionType`, `status`, and `reason` were never extracted from `req.body` or passed into `paymentSchema.create()`.
+    2. **Refund Invoices Hidden & Zeroed Out:**
+       - In `PaymentInformationForm.js`, invoice queries filtered strictly for `row.status === 'Sent' || row.status === 'Partially-Paid'`. Fully paid invoices had `row.status === 'Paid'` and were completely filtered out, leaving the client invoice list empty when attempting a refund.
+       - `transactionType` was omitted from the `useEffect` dependency array, so toggling between `Payment` and `Refund` never re-queried or filtered invoices.
+       - `handleChangeCEO` clamped input values to `balanceDue`. For a paid invoice, `balanceDue` is `0`, instantly zeroing out any typed refund amount.
+       - `handleUpdateInvoice` filtered records with `rowPaid < row.balanceDue`. On a paid invoice, `0 < 0` evaluated to false, preventing the refund from attaching to the invoice.
+    3. **Daily Expenses Erroneously Added Refunds & Generated Fake Return Change:**
+       - Because invoices were empty, entering `$1100` resulted in `invoiceAmount = 0` and unallocated excess of `$1100`. The payment form defaulted `excessAction = 'Return'` with `returnUSD = 1100`.
+       - In `DailyExpenseAdminView.js`, `getPaymentRowValues` ignored `transactionType`. It treated the `$1100` as gross cash payment received (`+$1100`) and the `$1100` return as change returned (`-$1100`).
+       - In daily totals, `Total Payment Received` added `$1100` instead of subtracting the outgoing customer refund.
+    4. **Inverted Backend Balance Synchronization:**
+       - In `server/utils/invoiceBalanceUtils.js`, `syncInvoiceBalances` performed `totalPaid += amt` unconditionally. If a payment was a Refund, it increased the invoice's paid amount in the database instead of reducing it!
+    5. **Customer Statements & Payment Grids Missing Audit Signals:**
+       - Voided transactions were not excluded from customer balance calculations in `CustomerInformationView.js`, and refunds were not reflected as debit adjustments.
+       - `PaymentView.js` lacked visual indicators for Transaction Type (`Payment` vs `Refund`) and Status (`Cleared`, `Pending`, `Voided`).
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Database Schema & Route Persistence (`server/model/paymentSchema.js`, `server/routes/Routes.js`):**
+       - Added `transactionType: { type: String, enum: ['Payment', 'Refund'], default: 'Payment' }` and `status: { type: String, enum: ['Cleared', 'Pending', 'Voided'], default: 'Cleared' }` to `paymentSchema.js`.
+       - Extracted `transactionType`, `status`, and `reason` from `req.body` in `/create-payment` and persisted them across all branch execution paths.
+    2. **Invoice Balance Synchronization (`server/utils/invoiceBalanceUtils.js`):**
+       - Updated `syncInvoiceBalances`: `if (p.transactionType === 'Refund') totalPaid -= amt; else totalPaid += amt;` and clamped with `Math.max(0, totalPaid)`.
+       - Updated `reconcileAllInvoiceBalances` to sign refund amounts negatively.
+    3. **Payment Form Refund Activation (`PaymentInformationForm.js` & `PaymentInformationUpdate.js`):**
+       - Enabled invoice selection for refunds: when `transactionType === 'Refund'`, filters for settled invoices (`status === 'Paid' || status === 'Partially-Paid' || paidAmount > 0.001`).
+       - Populated `maxRefundable` (actual amount paid) and clamped refund inputs against `maxRefundable`.
+       - Added `transactionType` to `useEffect` dependency array for instantaneous invoice list updating upon dropdown change.
+       - Reset allocations and suppressed surplus/overpayment card on refunds.
+       - Updated UI labels ("Paid Invoices (Refund Eligible)", "Refund Amount USD", "Refund Full").
+       - Added `Transaction Type` and `Status` dropdowns to Mobile Card 1.
+    4. **Daily Expenses Refund Accounting (`DailyExpenseAdminView.js`):**
+       - In `getPaymentRowValues`: Refunds return negative gross and net amounts (`-refundUSD`, `-refundFC`), reducing daily cash in hand, and suppress return change calculations.
+       - Voided transactions return zero amounts and render with strikethrough and `[VOIDED]` badge.
+       - Rendered distinct visual badges: `[REFUND]` (bold red), `[VOIDED]` (strikethrough), `[PENDING]` (amber).
+    5. **Customer Statement & Payment Grid Integrity (`CustomerInformationView.js`, `PaymentView.js`):**
+       - Customer statement excludes voided transactions, signs refunds as ledger debits (increasing customer balance due), and displays `REFUND`, `VOIDED`, `PENDING` chips.
+       - Added `Type` and `Status` columns to `PaymentView.js` with color-coded chips and red negative amounts for refunds.
+  - **Verification & Deployment:**
+    - Version bumped to `3.5.83` in `package.json`.
+    - AST pre-build verification passed with 0 errors across all 232 files (`node scripts/pre-build-check.js`).
+    - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles with 0 errors.
+    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.83.exe`.
+    - Pushed commit to GitHub `origin main` for automated Cloudflare Pages deployment (`portal.globalgate.sarl`).
+
 - **Item Out & Item Return Printable Voucher Redesign & Brand Architecture (Ver 3.5.82)**:
   - **Problem Reported:**
     - User reported severe layout deformation on the printouts of **Item Out** (`O-027300`) and **Item Return** (`R-0728`) with user request: *"why the print out of item return and item out is like that ! fix it please"*.
@@ -1363,7 +1431,7 @@
 
 ## v3.4.39 - Strict Branch Enforcements & Eviction Hooks
 - **Zero-Branch Login Lockdown (Fail-Closed)**: Fixed a severe security flaw in Loginadmin.js and Loginemployee.js. Previously, if a new user was created but had no branches assigned in their Grant Access profile, the login sequence artificially injected a default [{ branchId: 'HQ' }] fallback and allowed them into the HeadQuarters branch. Removed this fallback; the system now immediately rejects the login with the error *"Your account has not been assigned to any branch"* if myBranches.length === 0.
-- **Live Branch Revocation Eviction**: Patched a flaw in BranchSwitcher.js where users could retain their localStorage 'HQ' branch status if an administrator revoked their branches while they were actively logged in. If BranchSwitcher.js detects   branches assigned for a non-GG user, it now actively executes localStorage.clear() and forcefully kicks the user back to the login screen.
+- **Live Branch Revocation Eviction**: Patched a flaw in BranchSwitcher.js where users could retain their localStorage 'HQ' branch status if an administrator revoked their branches while they were actively logged in. If BranchSwitcher.js detects   branches assigned for a non-GG user, it now actively executes localStorage.clear() and forcefully kicks the user back to the login screen.
 - **Web Version Synchronization**: Executed the dedicated web bundler (\
 pm run build:web\) and pushed the \dist_web\ payload to GitHub to ensure Cloudflare Pages properly synchronizes the new 3.4.39 branch security patches. Re-enforced that web deployments require manual compilation of the web package prior to pushing.
 

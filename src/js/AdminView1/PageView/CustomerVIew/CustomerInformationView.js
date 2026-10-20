@@ -358,17 +358,21 @@ function CustomerInformationView() {
     })
   })
   payment.forEach(row => {
-      statement.push({
-        type: 'Payment',
-        date: row.paymentDate,
-        number: row.paymentNumber,
-        numberArray: row.TotalAmount,
-        defect: row.modes,
-        payment: row.amount - row.remaining,
-      status: '',
-      credit: row.remaining
-    })
-  })
+    if (row.status === 'Voided') return;
+    const isRefund = row.transactionType === 'Refund';
+    const netPayment = parseFloat(row.amount || 0) - (isRefund ? 0 : parseFloat(row.remaining || 0));
+    statement.push({
+      type: isRefund ? 'Refund' : 'Payment',
+      date: row.paymentDate,
+      number: row.paymentNumber,
+      numberArray: row.TotalAmount,
+      defect: row.modes,
+      payment: isRefund ? -netPayment : netPayment,
+      status: row.status || 'Cleared',
+      credit: isRefund ? 0 : (parseFloat(row.remaining) || 0),
+      transactionType: row.transactionType || 'Payment'
+    });
+  });
   posHistory.forEach(row => {
     const usdAmount = row.rate > 0 ? (row.totalInvoice / row.rate) : 0;
     statement.push({
@@ -411,6 +415,8 @@ function CustomerInformationView() {
         prevBalance -= parseFloat(row.payment)
         credit = prevBalance
         prevBalance = Math.max(prevBalance, 0)
+      } else if (row.type === 'Refund') {
+        prevBalance += Math.abs(parseFloat(row.payment))
       } else if (row.type === 'POS') {
         prevBalance += parseFloat(row.amount)
         prevBalance -= parseFloat(row.payment || 0)
@@ -511,7 +517,7 @@ function CustomerInformationView() {
       setOpeningBalanceTotal(openingBalanceTotal1)
       const InvoiceTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
-      const PaymentTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Payment' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
+      const PaymentTotal1 = newStatement.length > 0 ? newStatement.filter((row) => row.type === 'Payment' || row.type === 'Refund' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
       setPaymentTotal(PaymentTotal1)
       const totalBalance1 = (openingBalanceTotal1 + InvoiceTotal1) - PaymentTotal1
       setTotalBalance(totalBalance1)
@@ -519,7 +525,7 @@ function CustomerInformationView() {
       setOpeningBalanceTotal(0)
       const InvoiceTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
-      const PaymentTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Payment' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
+      const PaymentTotal1 = AllStatement.length > 0 ? AllStatement.filter((row) => row.type === 'Payment' || row.type === 'Refund' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
       setPaymentTotal(PaymentTotal1)
       const totalBalance1 = InvoiceTotal1 - PaymentTotal1 - parseFloat(credit2)
       setTotalBalance(totalBalance1)
@@ -535,7 +541,7 @@ function CustomerInformationView() {
       setOpeningBalanceTotal(0)
       const InvoiceTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Invoice' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.amount || 0), 0) : 0
       setInvoiceTotal(InvoiceTotal1)
-      const PaymentTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Payment' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
+      const PaymentTotal1 = customStatement.length > 0 ? customStatement.filter((row) => row.type === 'Payment' || row.type === 'Refund' || row.type === 'POS').reduce((sum, row) => sum + parseFloat(row.payment || 0), 0) : 0
       setPaymentTotal(PaymentTotal1)
       const totalBalance1 = InvoiceTotal1 - PaymentTotal1
       setTotalBalance(totalBalance1)
@@ -698,6 +704,8 @@ function CustomerInformationView() {
       amount1 += parseFloat(row.amount)
     } else if (row.type === 'Payment') {
       amount1 -= parseFloat(row.payment)
+    } else if (row.type === 'Refund') {
+      amount1 += Math.abs(parseFloat(row.payment))
     } else if (row.type === 'POS') {
       amount1 += parseFloat(row.amount)
       amount1 -= parseFloat(row.payment || 0)
@@ -724,6 +732,8 @@ function CustomerInformationView() {
       amount2 += parseFloat(row.balance)
     } else if (row.type === 'Payment') {
       amount2 -= parseFloat(row.payment)
+    } else if (row.type === 'Refund') {
+      amount2 += Math.abs(parseFloat(row.payment))
     } else if (row.type === 'POS') {
       // For outstanding, POS is usually fully paid, so amount - payment = 0 if status is Paid.
       // If partially paid, balance should be row.amount - row.payment
@@ -752,6 +762,8 @@ function CustomerInformationView() {
       amount3 += parseFloat(row.amount)
     } else if (row.type === 'Payment') {
       amount3 -= parseFloat(row.payment)
+    } else if (row.type === 'Refund') {
+      amount3 += Math.abs(parseFloat(row.payment))
     } else if (row.type === 'POS') {
       amount3 += parseFloat(row.amount)
       amount3 -= parseFloat(row.payment || 0)
@@ -779,6 +791,8 @@ function CustomerInformationView() {
       amount4 += parseFloat(row.amount)
     } else if (row.type === 'Payment') {
       amount4 -= parseFloat(row.payment)
+    } else if (row.type === 'Refund') {
+      amount4 += Math.abs(parseFloat(row.payment))
     } else if (row.type === 'POS') {
       amount4 += parseFloat(row.amount)
       amount4 -= parseFloat(row.payment || 0)
@@ -1663,7 +1677,18 @@ function CustomerInformationView() {
 
                                                 return (
                                                   <tr key={row._id}>
-                                                    <td style={{ textAlign: 'left', width: '50px' }}>PAY-{String(row.paymentNumber).padStart(6, '0')}</td>
+                                                    <td style={{ textAlign: 'left', width: '50px', opacity: row.status === 'Voided' ? 0.6 : 1 }}>
+                                                      PAY-{String(row.paymentNumber).padStart(6, '0')}
+                                                      {row.transactionType === 'Refund' && (
+                                                        <span style={{ backgroundColor: '#fee2e2', color: '#b91c1c', padding: '2px 5px', borderRadius: '3px', fontSize: '9px', fontWeight: 'bold', marginLeft: '4px' }}>REFUND</span>
+                                                      )}
+                                                      {row.status === 'Voided' && (
+                                                        <span style={{ backgroundColor: '#f1f5f9', color: '#64748b', textDecoration: 'line-through', padding: '2px 5px', borderRadius: '3px', fontSize: '9px', fontWeight: 'bold', marginLeft: '4px' }}>VOIDED</span>
+                                                      )}
+                                                      {row.status === 'Pending' && (
+                                                        <span style={{ backgroundColor: '#fef3c7', color: '#92400e', padding: '2px 5px', borderRadius: '3px', fontSize: '9px', fontWeight: 'bold', marginLeft: '4px' }}>PENDING</span>
+                                                      )}
+                                                    </td>
                                                     <td style={{ textAlign: 'left', width: '30px', borderLeft: '1px solid #DDD' }}>{dayjs(row.paymentDate).format('DD/MM/YYYY')}</td>
                                                     <td style={{ textAlign: 'left', width: '90px', borderLeft: '1px solid #DDD' }}>
                                                       {row.modes === 'Credit-Account' ? (

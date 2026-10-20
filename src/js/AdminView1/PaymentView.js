@@ -731,10 +731,35 @@ const toggleDrawer = () => {
                                   ]
                  const columnsPayment = [
                                     {field: 'paymentNumber', headerName: 'Payment#', width:130, renderCell: (params)=> `PAY-${String(params.row.paymentNumber).padStart(6, '0')}` },
-                                    {field: 'customer', headerName: 'Customer Name', width:sideBar?360:460, valueGetter:(params)=> (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()},
-                                    {field: 'description', headerName: 'Description', width:sideBar?200:250},
-                                    {field: 'dateField', headerName: 'Date', width:140},
-                                       {field: 'modes', headerName: 'Mode', width:140, renderCell: (params)=> {
+                                    {field: 'customer', headerName: 'Customer Name', width:sideBar?260:340, valueGetter:(params)=> (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()},
+                                    {field: 'transactionType', headerName: 'Type', width:110, renderCell: (params)=> {
+                                      const isRefund = params.row.transactionType === 'Refund';
+                                      return (
+                                        <span style={{ backgroundColor: isRefund ? '#fee2e2' : '#dcfce7', color: isRefund ? '#b91c1c' : '#166534', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                          {isRefund ? 'REFUND' : 'PAYMENT'}
+                                        </span>
+                                      );
+                                    }},
+                                    {field: 'status', headerName: 'Status', width:110, renderCell: (params)=> {
+                                      const st = params.row.status || 'Cleared';
+                                      let bg = '#dcfce7';
+                                      let color = '#166534';
+                                      if (st === 'Pending') {
+                                        bg = '#fef3c7';
+                                        color = '#92400e';
+                                      } else if (st === 'Voided') {
+                                        bg = '#f1f5f9';
+                                        color = '#64748b';
+                                      }
+                                      return (
+                                        <span style={{ backgroundColor: bg, color: color, textDecoration: st === 'Voided' ? 'line-through' : 'none', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                                          {st.toUpperCase()}
+                                        </span>
+                                      );
+                                    }},
+                                    {field: 'description', headerName: 'Description', width:sideBar?180:220},
+                                    {field: 'dateField', headerName: 'Date', width:130},
+                                       {field: 'modes', headerName: 'Mode', width:130, renderCell: (params)=> {
                                          const mode = params.row.modes || '';
                                          if (mode === 'Credit-Account') {
                                            return <span style={{ backgroundColor: '#e0e7ff', color: '#3730a3', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>CREDIT APPLIED</span>;
@@ -750,7 +775,19 @@ const toggleDrawer = () => {
                                          }
                                          return <span style={{ backgroundColor: '#f1f5f9', color: '#334155', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>{mode.toUpperCase()}</span>;
                                        }},
-                                    {field: 'amount', headerName: 'A-Paid', width:130,renderCell: (params)=> `$${params.row.amount?.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',')}` },
+                                    {field: 'amount', headerName: 'A-Paid', width:130, renderCell: (params)=> {
+                                      const isRefund = params.row.transactionType === 'Refund';
+                                      const isVoided = params.row.status === 'Voided';
+                                      const amtNum = parseFloat(params.row.amount || 0);
+                                      const amtStr = amtNum.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                                      if (isVoided) {
+                                        return <span style={{ color: '#94a3b8', textDecoration: 'line-through' }}>${amtStr}</span>;
+                                      }
+                                      if (isRefund) {
+                                        return <span style={{ color: '#b91c1c', fontWeight: 'bold' }}>-${amtStr}</span>;
+                                      }
+                                      return `$${amtStr}`;
+                                    }},
                                     {field: 'view', headerName: 'View', width:50, renderCell:(params)=> (
                                       <ViewTooltip title="View">
                                       <span>

@@ -32,14 +32,18 @@ async function syncInvoiceBalances(invoiceIds) {
             if (itemIdStr === invId) {
               const amt = parseFloat(item.total || item.amount || 0);
               if (!isNaN(amt) && amt > 0) {
-                totalPaid += amt;
+                if (p.transactionType === 'Refund') {
+                  totalPaid -= amt;
+                } else {
+                  totalPaid += amt;
+                }
               }
             }
           });
         }
       });
 
-      totalPaid = Math.round(totalPaid * 100) / 100;
+      totalPaid = Math.max(0, Math.round(totalPaid * 100) / 100);
       const totalInvoice = parseFloat(invoice.totalInvoice || 0);
       const balanceDue = Math.max(0, Math.round((totalInvoice - totalPaid) * 100) / 100);
 
@@ -89,7 +93,7 @@ async function reconcileAllInvoiceBalances() {
     // Group all non-voided payments by invoice ID
     const allPayments = await paymentSchema.find({
       status: { $nin: ['Voided', 'Void'] }
-    }, 'TotalAmount status').lean();
+    }, 'TotalAmount status transactionType').lean();
 
     const paymentTotalsByInvId = new Map();
 
@@ -99,7 +103,8 @@ async function reconcileAllInvoiceBalances() {
           const amt = parseFloat(item.total || item.amount || 0);
           if (!isNaN(amt) && amt > 0 && item.id) {
             const idStr = item.id.toString();
-            paymentTotalsByInvId.set(idStr, (paymentTotalsByInvId.get(idStr) || 0) + amt);
+            const signedAmt = p.transactionType === 'Refund' ? -amt : amt;
+            paymentTotalsByInvId.set(idStr, (paymentTotalsByInvId.get(idStr) || 0) + signedAmt);
           }
         });
       }
@@ -110,7 +115,7 @@ async function reconcileAllInvoiceBalances() {
 
     for (const inv of allInvoices) {
       const invIdStr = inv._id.toString();
-      const totalPaid = Math.round((paymentTotalsByInvId.get(invIdStr) || 0) * 100) / 100;
+      const totalPaid = Math.max(0, Math.round((paymentTotalsByInvId.get(invIdStr) || 0) * 100) / 100);
       const totalInvoice = parseFloat(inv.totalInvoice || 0);
       const balanceDue = Math.max(0, Math.round((totalInvoice - totalPaid) * 100) / 100);
 
