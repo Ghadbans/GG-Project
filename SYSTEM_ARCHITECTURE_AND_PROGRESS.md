@@ -303,6 +303,13 @@
     - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles with 0 errors.
     - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.85.exe`.
     - Pushed commit to GitHub `origin main` for automated Cloudflare Pages deployment.
+  - **Live Testing & User Confirmation:**
+    - User performed end-to-end testing in production using the user account `BENEDICTE K. MUTALENU`.
+    - Navigated to the `Item-Return` module and clicked the `+` (Add) button.
+    - Verified that `/ItemReturnUpdateForm` opened smoothly without getting kicked back to `/AdminHome` and with zero `ACCESS DENIED` popups.
+    - Verified that return vouchers can be created and saved successfully.
+    - Confirmed that users lacking `Edit` permission (`editM: false`) remain strictly guarded from modifying existing return records (`/ItemReturnViewForm/:id`).
+    - User confirmed: *"working fine testing it .."*, confirming full restoration of the Grant Access workflow without side effects.
 
 - **Multi-Token Search Conjunction Fortification for Invoices & Quotations (Ver 3.5.84)**:
   - **Problem Reported:**
