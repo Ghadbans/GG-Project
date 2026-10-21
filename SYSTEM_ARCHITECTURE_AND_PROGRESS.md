@@ -252,7 +252,58 @@
       ```
     - **Relational Customer Pre-Filtering:** When resolving customer IDs (`customerSchema.find`) for embedded or referenced relations (`customerName._id`, `customerId`), the query must test `allTokensRegex` against `Customer`, `customerName`, `customerFullName`, `companyName`, and first/last name permutations (`tokens.length === 2 ? { customerFirstName: tok0, customerLastName: tok1 } : ...`). Unrelated customers must never enter `matchingCustomerIds`.
 
+
+52. **Route Action Semantic Alignment & Inverted Component Name Safeguarding (Ver 3.5.85)**:
+    - **Underlying Mutation Determines Permission Action:** When mapping routes to module permissions in `ROUTE_PERMISSION_MAP` (`src/js/utils/permissionUtils.js`), NEVER determine the required action (`create`, `edit`, `view`, `read`) based on the component's filename or route naming conventions alone. Component filenames in legacy codebases frequently use counter-intuitive terms (e.g. `ItemReturnUpdateForm.js` performs `POST /create-itemReturn` to create new return vouchers, while `ItemReturnViewForm.js` performs `PUT /update-itemReturn/:id` to edit existing vouchers).
+    - **Audit HTTP Mutation Before Guarding:** Always verify the underlying Axios mutation in the target component:
+      - If the component calls `axios.post` to insert a new document, the route MUST map to `action: 'create'`.
+      - If the component calls `axios.put` or `axios.patch` to update an existing document, the route MUST map to `action: 'edit'`.
+      - If the component renders a read-only document preview or print sheet, the route MUST map to `action: 'view'`.
+      - If the component renders a master listing grid or table, the route MUST map to `action: 'read'`.
+    - **Inverted Item-Return Route Mapping Standard:**
+      - Route `/itemreturnupdateform` is the **creation form** (`ItemReturnUpdateForm.js`, `POST /create-itemReturn`) -> MUST map to `{ module: 'Item-Return', action: 'create' }`.
+      - Route `/itemreturnviewform` is the **edit/update form** (`ItemReturnViewForm.js`, `PUT /update-itemReturn/:id`) -> MUST map to `{ module: 'Item-Return', action: 'edit' }`.
+      - Inverting these routes causes users with `Create` permission (like staff or warehouse managers) who lack `Edit` permission to receive `ACCESS DENIED: YOU DO NOT HAVE PERMISSION FOR THE ITEM-RETURN MODULE` and be kicked back to the dashboard upon clicking the `+` (Add) button.
+    - **Comprehensive Route Pattern Coverage:** Ensure all navigation paths and secondary aliases across all modules (e.g., `/purchaseform` for Purchase-Order create, `/itemupdateview2` for Item edit, `/itemformview2` for Item create, `/estimateinformation` for Estimate view, `/estimateviewconverttoinvoice` for Estimate edit) are explicitly declared in `ROUTE_PERMISSION_MAP`.
+    - **Universal Grant Access Compliance:** All users from CEO down to general staff strictly follow their configured permissions in the Grant Access module. The ONLY user account in the entire system that bypasses Grant Access rules is username `GG` (the system creator).
 ## Current Progress Log
+- **Item-Return Create Route Permission Inversion Resolution & Universal Grant Access Enforcement (Ver 3.5.85)**:
+  - **Problem Reported:**
+    - User reported: *"i have an user like BENEDICTE K. MUTALENU it has access throw GRANT ACCESS module to create in the Item-Return ,, throw her account she can view edit but when she press on + button to add the system kicking her back to the dashboard and pop up msg coming up saying ACCESS DENIED: YOU DO NOT HAVE PERMISSION FOR THE ITEM-RETURN MODULE ... please check it please check it ... this was working fine what happened stop fixing somwthing damaging somthing else ... all users should be following the Grant access module from CEO till normall user only GG account by pass this grant access rules as this acount is the creator !"*.
+    - Screenshot evidence confirmed that user `BENEDICTE K. MUTALENU` had Grant Access configured for module `Item-Return`: `Read: [x]`, `Create: [x]`, `View: [x]`, `Edit: [ ]`, `Delete: [ ]`.
+    - When she navigated to `Item-Return` and clicked the `+` (Add) button, the application kicked her back to `/AdminHome` with the red toast `ACCESS DENIED: YOU DO NOT HAVE PERMISSION FOR THE ITEM-RETURN MODULE`.
+  - **Exhaustive Root Cause Analysis:**
+    1. **Counter-Intuitive Legacy Component Naming:**
+       - In `src/js/AdminView1/ItemReturnAdminView.js`, line 683, clicking the Add (`+`) button navigates to `<NavLink to={'/ItemReturnUpdateForm'}>`.
+       - Inside `ItemReturnUpdateForm.js`, line 645, the component executes `axios.post(`${ENDPOINT_URL}/create-itemReturn`, ...)` -> Despite having "Update" in its name, `ItemReturnUpdateForm` is the **CREATE** form!
+       - In `ItemReturnAdminView.js`, line 574, clicking the Edit button in the table navigates to `<NavLink to={`/ItemReturnViewForm/${params.row._id}`}>`.
+       - Inside `ItemReturnViewForm.js`, line 642, the component executes `axios.put(`${ENDPOINT_URL}/update-itemReturn/${id}`, ...)` -> Despite having "View" in its name, `ItemReturnViewForm` is the **EDIT** form!
+    2. **Inverted Route Permission Mapping in `permissionUtils.js`:**
+       - In `ROUTE_PERMISSION_MAP`, the mappings were mistakenly assigned based on component names:
+         - `{ pattern: /^\/itemreturnviewform/i, module: 'Item-Return', action: 'create' }`
+         - `{ pattern: /^\/itemreturnupdateform/i, module: 'Item-Return', action: 'edit' }`
+       - When Benedicte clicked `+`, she navigated to `/ItemReturnUpdateForm`.
+       - `RequireAuth.js` evaluated `matchRoutePermission('/ItemReturnUpdateForm')`, which matched `Item-Return` with `action: 'edit'`.
+       - Because Benedicte has `createM: true` but `editM: false`, `canAccessModule` returned `false`.
+       - `RequireAuth.js` immediately displayed the toast error and redirected her to `/AdminHome`.
+  - **Architectural Resolution & Code Modifications Applied:**
+    1. **Corrected Route Permission Mapping (`src/js/utils/permissionUtils.js`):**
+       - Aligned `ROUTE_PERMISSION_MAP` with actual component behavior:
+         - `/itemreturnupdateform` -> `action: 'create'` (calls `POST /create-itemReturn`)
+         - `/itemreturnviewform` -> `action: 'edit'` (calls `PUT /update-itemReturn/:id`)
+    2. **Audited & Added Missing Route Permissions:**
+       - Added `{ pattern: /^\/purchaseform$/i, module: 'Purchase-Order', action: 'create' }` (Add button in `PurchaseOrderViewAdmin.js`).
+       - Added `{ pattern: /^\/itemupdateview2/i, module: 'Item', action: 'edit' }` and `{ pattern: /^\/itemformview2/i, module: 'Item', action: 'create' }`.
+       - Added `{ pattern: /^\/estimateinformation/i, module: 'Estimate', action: 'view' }` and `{ pattern: /^\/estimateviewconverttoinvoice/i, module: 'Estimate', action: 'edit' }`.
+    3. **Universal Grant Access Hierarchy Affirmed:**
+       - All users (CEO, Admins, Staff) strictly follow Grant Access permissions configured for their account. Only superuser `GG` bypasses these rules.
+  - **Verification & Deployment:**
+    - Version bumped to `3.5.85` in `package.json`.
+    - AST pre-build safety verification passed with 0 errors across 232 files (`node scripts/pre-build-check.js`).
+    - Webpack compiled Electron (`build/`) and Web (`dist_web/`) bundles with 0 errors.
+    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.85.exe`.
+    - Pushed commit to GitHub `origin main` for automated Cloudflare Pages deployment.
+
 - **Multi-Token Search Conjunction Fortification for Invoices & Quotations (Ver 3.5.84)**:
   - **Problem Reported:**
     - User reported: *"in the search if im searching for client name like HASSAN HAMOUD it will show everyone in his name has Hassan like HASSAN Jaffal HASSAN MANSOUR etc.. im not searching for for Hassan to give me all the hassan clients in my invoices i noticed this happening in the INVOICES QUOTATION modules !"*.

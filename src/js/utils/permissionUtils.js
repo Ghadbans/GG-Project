@@ -82,9 +82,11 @@ const ROUTE_PERMISSION_MAP = [
   { pattern: /^\/itemviewadmin/i, module: 'Item', action: 'read' },
   { pattern: /^\/storeitemdisplay/i, module: 'Item', action: 'read' },
   { pattern: /^\/itemformupdate/i, module: 'Item', action: 'edit' },
+  { pattern: /^\/itemupdateview2/i, module: 'Item', action: 'edit' },
   { pattern: /^\/itemformclone/i, module: 'Item', action: 'create' },
   { pattern: /^\/iteminfo/i, module: 'Item', action: 'view' },
   { pattern: /^\/itemcommentform/i, module: 'Item', action: 'edit' },
+  { pattern: /^\/itemformview2/i, module: 'Item', action: 'create' },
   { pattern: /^\/itemform/i, module: 'Item', action: 'create' },
 
   // Item Out / Return / Purchase / PO
@@ -92,8 +94,8 @@ const ROUTE_PERMISSION_MAP = [
   { pattern: /^\/itemoutviewupdate/i, module: 'Item-Out', action: 'edit' },
   { pattern: /^\/itemoutviewadmin/i, module: 'Item-Out', action: 'read' },
 
-  { pattern: /^\/itemreturnviewform/i, module: 'Item-Return', action: 'create' },
-  { pattern: /^\/itemreturnupdateform/i, module: 'Item-Return', action: 'edit' },
+  { pattern: /^\/itemreturnupdateform/i, module: 'Item-Return', action: 'create' },
+  { pattern: /^\/itemreturnviewform/i, module: 'Item-Return', action: 'edit' },
   { pattern: /^\/itemreturnadminview/i, module: 'Item-Return', action: 'read' },
 
   { pattern: /^\/itempurchaseviewform/i, module: 'Item-Purchase', action: 'create' },
@@ -103,6 +105,7 @@ const ROUTE_PERMISSION_MAP = [
   { pattern: /^\/convertpo/i, module: 'Purchase-Order', action: 'edit' },
   { pattern: /^\/purchaseupdateorder/i, module: 'Purchase-Order', action: 'edit' },
   { pattern: /^\/purchaseorderinfoview/i, module: 'Purchase-Order', action: 'view' },
+  { pattern: /^\/purchaseform$/i, module: 'Purchase-Order', action: 'create' },
   { pattern: /^\/purchaseorder/i, module: 'Purchase-Order', action: 'create' },
   { pattern: /^\/purchaseorderviewadmin/i, module: 'Purchase-Order', action: 'read' },
 
@@ -110,6 +113,8 @@ const ROUTE_PERMISSION_MAP = [
   { pattern: /^\/estimateinvoiceformupdate/i, module: 'Estimate', action: 'edit' },
   { pattern: /^\/estimateinvoiceform/i, module: 'Estimate', action: 'create' },
   { pattern: /^\/estimateformclone/i, module: 'Estimate', action: 'create' },
+  { pattern: /^\/estimateinformation/i, module: 'Estimate', action: 'view' },
+  { pattern: /^\/estimateviewconverttoinvoice/i, module: 'Estimate', action: 'edit' },
   { pattern: /^\/estimateviewadminall/i, module: 'Estimate', action: 'view' },
   { pattern: /^\/estimateviewadmin/i, module: 'Estimate', action: 'read' },
 

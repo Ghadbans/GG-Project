@@ -94988,6 +94988,10 @@ var ROUTE_PERMISSION_MAP = [
   module: 'Item',
   action: 'edit'
 }, {
+  pattern: /^\/itemupdateview2/i,
+  module: 'Item',
+  action: 'edit'
+}, {
   pattern: /^\/itemformclone/i,
   module: 'Item',
   action: 'create'
@@ -94999,6 +95003,10 @@ var ROUTE_PERMISSION_MAP = [
   pattern: /^\/itemcommentform/i,
   module: 'Item',
   action: 'edit'
+}, {
+  pattern: /^\/itemformview2/i,
+  module: 'Item',
+  action: 'create'
 }, {
   pattern: /^\/itemform/i,
   module: 'Item',
@@ -95018,11 +95026,11 @@ var ROUTE_PERMISSION_MAP = [
   module: 'Item-Out',
   action: 'read'
 }, {
-  pattern: /^\/itemreturnviewform/i,
+  pattern: /^\/itemreturnupdateform/i,
   module: 'Item-Return',
   action: 'create'
 }, {
-  pattern: /^\/itemreturnupdateform/i,
+  pattern: /^\/itemreturnviewform/i,
   module: 'Item-Return',
   action: 'edit'
 }, {
@@ -95054,6 +95062,10 @@ var ROUTE_PERMISSION_MAP = [
   module: 'Purchase-Order',
   action: 'view'
 }, {
+  pattern: /^\/purchaseform$/i,
+  module: 'Purchase-Order',
+  action: 'create'
+}, {
   pattern: /^\/purchaseorder/i,
   module: 'Purchase-Order',
   action: 'create'
@@ -95075,6 +95087,14 @@ var ROUTE_PERMISSION_MAP = [
   pattern: /^\/estimateformclone/i,
   module: 'Estimate',
   action: 'create'
+}, {
+  pattern: /^\/estimateinformation/i,
+  module: 'Estimate',
+  action: 'view'
+}, {
+  pattern: /^\/estimateviewconverttoinvoice/i,
+  module: 'Estimate',
+  action: 'edit'
 }, {
   pattern: /^\/estimateviewadminall/i,
   module: 'Estimate',
@@ -123070,7 +123090,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.84"};
+module.exports = {"rE":"3.5.85"};
 
 /***/ },
 
