@@ -117,6 +117,7 @@ const maintenanceRoutes = require("./routes/maintenanceRoutes");
 const customerRoutes = require("./routes/customerRoutes");
 const estimationRoutes = require("./routes/estimationRoutes");
 const projectRoutes = require("./routes/projectRoutes");
+const attachmentRoutes = require("./routes/attachmentRoutes");
 
 
 const app = express();
@@ -161,6 +162,7 @@ app.use("/endpoint", maintenanceRoutes);
 app.use("/endpoint", customerRoutes);
 app.use("/endpoint", estimationRoutes);
 app.use("/endpoint", projectRoutes);
+app.use("/endpoint", attachmentRoutes);
 
 
 const fleetRoute = require('./routes/fleet');

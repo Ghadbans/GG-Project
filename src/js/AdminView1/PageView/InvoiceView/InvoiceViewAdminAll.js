@@ -18,6 +18,7 @@ import axios from 'axios';
 import { cachedGet } from '../../../utils/apiCache';
 import { ENDPOINT_URL } from '../../../apiConfig';
 import InvoiceInformation from './InvoiceInformation';
+import DocumentAttachmentsModal from '../../../component/DocumentAttachmentsModal';
 import { NavLink, useParams, useNavigate } from 'react-router-dom';
 import LanguageIcon from '@mui/icons-material/Language';
 import { invalidateCache } from '../../../utils/apiCache';
@@ -213,6 +214,18 @@ function InvoiceViewAdminAll() {
 
 
   const [invoice, setInvoice] = useState([]);
+  const [openAttachments, setOpenAttachments] = useState(false);
+  const [attachmentCount, setAttachmentCount] = useState(0);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${ENDPOINT_URL}/attachments/${id}`)
+        .then(res => {
+          setAttachmentCount(res.data?.count || (res.data?.data || []).length || 0);
+        })
+        .catch(() => {});
+    }
+  }, [id]);
   const [loadingData, setLoadingData] = useState(true);
   const [oldInvoice, setOldInvoice] = useState([]);
   const [referenceName, setReferenceName] = useState('');
@@ -1221,7 +1234,24 @@ function InvoiceViewAdminAll() {
                                     </section>
 
                                   </div>
-                                  <div>
+                                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                    <Tooltip title="Attachments">
+                                      <IconButton
+                                        onClick={() => setOpenAttachments(true)}
+                                        sx={{
+                                          color: attachmentCount > 0 ? '#1976d2' : '#64748b',
+                                          bgcolor: attachmentCount > 0 ? '#eff6ff' : '#f1f5f9',
+                                          border: attachmentCount > 0 ? '1px solid #93c5fd' : '1px solid #cbd5e1',
+                                          borderRadius: '6px',
+                                          p: '6px',
+                                          '&:hover': { bgcolor: '#e2e8f0' }
+                                        }}
+                                      >
+                                        <Badge badgeContent={attachmentCount} color="primary" max={99}>
+                                          <AttachFileIcon sx={{ fontSize: 20 }} />
+                                        </Badge>
+                                      </IconButton>
+                                    </Tooltip>
                                     <Button
                                       aria-controls={open ? 'demo-customized-menu' : undefined}
                                       aria-haspopup="true"
@@ -1278,6 +1308,16 @@ function InvoiceViewAdminAll() {
                                       <MenuItem onClick={exportToExcel} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
                                         <Explicit />
                                         <span>Export to Excel</span>
+                                      </MenuItem>
+                                      <MenuItem
+                                        onClick={() => {
+                                          handleCloseMenu();
+                                          setOpenAttachments(true);
+                                        }}
+                                        sx={{ display: 'flex', gap: '20px', color: 'gray' }}
+                                      >
+                                        <AttachFileIcon />
+                                        <span>Attachments {attachmentCount > 0 ? `(${attachmentCount})` : ''}</span>
                                       </MenuItem>
                                       <Divider />
                                       <MenuItem onClick={() => handleShow1(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
@@ -2863,6 +2903,14 @@ function InvoiceViewAdminAll() {
           </form>
         </Box>
       </Modal>
+      <DocumentAttachmentsModal
+        open={openAttachments}
+        onClose={() => setOpenAttachments(false)}
+        documentId={id}
+        documentType="Invoice"
+        documentNumber={invoiceNumber ? ('INV-' + String(invoiceNumber).padStart(6, '0')) : ''}
+        onAttachmentCountChange={(count) => setAttachmentCount(count)}
+      />
     </div>
   )
 }

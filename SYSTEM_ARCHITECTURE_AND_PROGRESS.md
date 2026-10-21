@@ -266,7 +266,64 @@
       - Inverting these routes causes users with `Create` permission (like staff or warehouse managers) who lack `Edit` permission to receive `ACCESS DENIED: YOU DO NOT HAVE PERMISSION FOR THE ITEM-RETURN MODULE` and be kicked back to the dashboard upon clicking the `+` (Add) button.
     - **Comprehensive Route Pattern Coverage:** Ensure all navigation paths and secondary aliases across all modules (e.g., `/purchaseform` for Purchase-Order create, `/itemupdateview2` for Item edit, `/itemformview2` for Item create, `/estimateinformation` for Estimate view, `/estimateviewconverttoinvoice` for Estimate edit) are explicitly declared in `ROUTE_PERMISSION_MAP`.
     - **Universal Grant Access Compliance:** All users from CEO down to general staff strictly follow their configured permissions in the Grant Access module. The ONLY user account in the entire system that bypasses Grant Access rules is username `GG` (the system creator).
+
+53. **Universal Document Attachment & Isolated Binary Storage Standard (Ver 3.5.86)**:
+    - **Strict Isolation of Binary Payloads from Core Collections:** Never embed multi-megabyte binary file buffers (`data: Buffer` or long base64 strings) inside core transactional collections (`invoice`, `estimation`, `customer`, `purchase`, `expenses`). Core collections are frequently queried across dashboards, master grids, and financial reports; embedding multi-megabyte files balloons document sizes, triggers Mongo BSON 16MB document cap violations, and causes severe memory and bandwidth thrashing across desktop, web, and mobile clients.
+    - **Dedicated `attachments` Collection Architecture:** All uploaded document attachments (Purchase Orders, signed delivery slips, related invoices, specs, contracts) MUST be stored in the isolated `attachments` collection (`server/model/attachmentSchema.js`) with schema `{ documentId: String, documentType: String, documentNumber: String, fileName: String, fileSize: Number, contentType: String, data: Buffer, uploadedBy: String, branchId: String, createdAt: Date }` and indexed by `{ documentId: 1, createdAt: -1 }`.
+    - **Lightweight Metadata Queries vs On-Demand Streaming:**
+      - Querying attachments for a document (`GET /attachments/:documentId`) MUST execute `.select('-data')` to return only lightweight metadata in <10ms without transferring heavy file contents.
+      - Binary data MUST be streamed strictly on-demand via `GET /attachment-file/:id`: with `Content-Disposition: inline` for preview and printing, and `attachment` when `?download=true`.
+    - **Zoho Invoice Parity for User Experience:**
+      - **Dual Access Points:** Every supported document view (`InvoiceViewAdminAll`, `EstimateViewAdminAll`) must surface attachments in TWO places:
+        1. A top action bar paperclip icon button with an active count badge (`Badge badgeContent={count} color="primary"`) for 1-click access.
+        2. A dedicated menu item in the `OPTIONS` dropdown menu (`Attachments (count)`).
+      - **Upload Experience:** Provide an intuitive modal with drag-and-drop and file browser upload supporting PDF, Images (PNG, JPG, WEBP), and Documents up to 15MB each, accompanied by a visual upload progress indicator.
+      - **Card Representation:** Display attached files with format-specific color icons (Red for PDF, Cyan for Images, Gray for Documents), file name, formatted file size (e.g., `113.6 KB`), author, and upload date.
+      - **Interactive Preview & Direct 1-Click Print Engine:** Clicking a file or its preview button must open a full-featured viewer modal (`AttachmentPreviewDialog.js`) with responsive PDF iframe embedding, image zoom/pan controls, download button, and a dedicated **Print** button that dispatches the document directly to the system print dialog without requiring the user to download the file first.
 ## Current Progress Log
+- **Document Attachments (Upload, Preview, Direct Print, Download & Delete) for Invoices & Quotations (Ver 3.5.86)**:
+  - **Problem & Requirement Reported:**
+    - User requested: *"IN INVOICE and Quotation modules I would like to have in OPTIONS possibplity to add Attachments like if i have a Purchase Order or an related INVOICE to attach it with it so it will not be lost ... as well i can preview this attacment and i can print it out if i want ! same like in zoho invoices .. i left for you screenshuts .. be creative and dont mess with the links and modules and sub-modules"*.
+    - Provided 5 screenshots detailing:
+      1. Invoice Information view with `OPTIONS` button.
+      2. Options menu dropdown.
+      3. Zoho Invoice Attachments modal in empty state with upload zone.
+      4. Zoho Invoice Attachments modal showing attached file `PO-000741.pdf` with metadata, download, and delete actions.
+      5. Zoho Invoice full interactive PDF preview viewer with Zoom controls and Print button.
+  - **Exhaustive Architectural Implementation:**
+    1. **Isolated Binary Storage (`server/model/attachmentSchema.js`):**
+       - Created dedicated `attachmentSchema` in MongoDB with fields: `documentId`, `documentType` (`Invoice` | `Estimation` | `PurchaseOrder`), `documentNumber`, `fileName`, `fileSize`, `contentType`, `data: Buffer`, `uploadedBy`, `branchId`, `createdAt`.
+       - Indexed on `{ documentId: 1, createdAt: -1 }`. Core `invoice` and `estimation` collections remain 100% lightweight and performant.
+    2. **REST API Endpoints (`server/routes/attachmentRoutes.js` & `server/index.js`):**
+       - Mounted `attachmentRoutes` under `/endpoint`.
+       - `POST /upload-attachment`: Handles multi-file uploads via `multer.memoryStorage()`, enforcing 15MB limit and allowed MIME types.
+       - `GET /attachments/:documentId`: Returns lightweight metadata array using `.select('-data')` for sub-10ms response times.
+       - `GET /attachment-file/:id`: Streams binary data with `Content-Type` and `Content-Disposition` (`inline` for preview/print, `attachment` for download).
+       - `GET /attachment-data/:id`: Returns JSON with base64 data for frontend viewers.
+       - `DELETE /delete-attachment/:id`: Deletes attachment by `_id`.
+    3. **Zoho-Style Attachments Modal (`src/js/component/DocumentAttachmentsModal.js`):**
+       - Header displaying document number (e.g. `INV-002610` / `Q-000431`), total files attached, and close button.
+       - Empty state with paperclip illustration matching Zoho reference.
+       - Drag-and-drop upload dropzone with linear progress bar.
+       - Attachment list cards with red PDF / blue image icons, bold clickable file names, formatted file sizes (`KB`/`MB`), author, and upload date.
+       - Four quick actions on every file card: **Preview** (eye), **Direct Print** (printer), **Download** (tray), and **Delete** (trash).
+       - Delete confirmation dialog.
+    4. **Interactive Preview & Direct 1-Click Print Engine (`src/js/component/AttachmentPreviewDialog.js`):**
+       - Dark top toolbar matching Zoho reference.
+       - PDF viewer with high-fidelity iframe streaming.
+       - Image viewer with Zoom In, Zoom Out, and Reset Zoom controls.
+       - Direct **Print** button: prints PDFs and images directly via system print dialog without downloading.
+       - Direct **Download** button.
+    5. **Integration in Invoice & Quotation Viewers:**
+       - `src/js/AdminView1/PageView/InvoiceView/InvoiceViewAdminAll.js`: Added paperclip button with count badge in header + `Attachments (count)` MenuItem in `OPTIONS` menu.
+       - `src/js/AdminView1/PageView/EstimateView/EstimateViewAdminAll.js`: Added paperclip button with count badge in header + `Attachments (count)` MenuItem in `OPTIONS` menu.
+  - **Verification & Deployment:**
+    - Bumped `package.json` to version `3.5.86`.
+    - AST pre-build safety gate passed with 0 errors across 234 source files (`node scripts/pre-build-check.js`).
+    - Webpack production bundles compiled cleanly for Electron (`build/`) and Web (`dist_web/`).
+    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.86.exe` (94,570,817 bytes).
+    - Pushed commit to GitHub `origin main` for automated Cloudflare Pages web portal deployment and Railway backend sync.
+
 - **Item-Return Create Route Permission Inversion Resolution & Universal Grant Access Enforcement (Ver 3.5.85)**:
   - **Problem Reported:**
     - User reported: *"i have an user like BENEDICTE K. MUTALENU it has access throw GRANT ACCESS module to create in the Item-Return ,, throw her account she can view edit but when she press on + button to add the system kicking her back to the dashboard and pop up msg coming up saying ACCESS DENIED: YOU DO NOT HAVE PERMISSION FOR THE ITEM-RETURN MODULE ... please check it please check it ... this was working fine what happened stop fixing somwthing damaging somthing else ... all users should be following the Grant access module from CEO till normall user only GG account by pass this grant access rules as this acount is the creator !"*.
