@@ -61,7 +61,9 @@ export default function DocumentAttachmentsModal({
         onAttachmentCountChange(list.length);
       }
     } catch (err) {
-      console.error('Error fetching attachments:', err);
+      if (err.response?.status !== 404) {
+        console.error('Error fetching attachments:', err);
+      }
     } finally {
       setLoading(false);
     }
@@ -109,14 +111,16 @@ export default function DocumentAttachmentsModal({
 
     try {
       setUploading(true);
-      const res = await axios.post(`${ENDPOINT_URL}/upload-attachment`, formData, {
-        headers: { 'Content-Type': 'multipart/form-data' }
-      });
+      const res = await axios.post(`${ENDPOINT_URL}/upload-attachment`, formData);
       toast.success(res.data?.message || 'Attachment(s) uploaded successfully');
       fetchAttachments();
     } catch (err) {
       console.error('Error uploading attachment:', err);
-      toast.error('Failed to upload attachment. Please try again.');
+      if (err.response?.status === 404) {
+        toast.warning('Railway deployment is currently pending (builds queued due to Railway infrastructure incident). The endpoint will activate once Railway finishes redeploying.');
+      } else {
+        toast.error('Failed to upload attachment. Please try again.');
+      }
     } finally {
       setUploading(false);
       if (fileInputRef.current) {

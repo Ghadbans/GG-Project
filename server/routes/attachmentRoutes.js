@@ -1,6 +1,5 @@
 const express = require("express");
 const Route = express.Router();
-const cors = require("cors");
 const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({
@@ -10,20 +9,8 @@ const upload = multer({
 
 const attachmentSchema = require("../model/attachmentSchema");
 
-// Allowed CORS options delegate or default
-const whitelist = ["http://localhost:3000", "http://localhost:3001", "https://portal.globalgate.sarl", "https://gg-project.pages.dev"];
-const corsOptionsDelegate = function (req, callback) {
-  let corsOptions;
-  if (whitelist.indexOf(req.header("Origin")) !== -1 || !req.header("Origin")) {
-    corsOptions = { origin: true, credentials: true };
-  } else {
-    corsOptions = { origin: false };
-  }
-  callback(null, corsOptions);
-};
-
 // 1. Upload Attachment(s)
-Route.post("/upload-attachment", cors(corsOptionsDelegate), upload.array("files", 10), async (req, res, next) => {
+Route.post("/upload-attachment", upload.any(), async (req, res, next) => {
   try {
     const files = req.files || (req.file ? [req.file] : []);
     if (!files || files.length === 0) {
@@ -76,7 +63,7 @@ Route.post("/upload-attachment", cors(corsOptionsDelegate), upload.array("files"
 });
 
 // 2. Get Attachments Metadata by Document ID (Lightweight, excludes binary data)
-Route.get("/attachments/:documentId", cors(corsOptionsDelegate), async (req, res, next) => {
+Route.get("/attachments/:documentId", async (req, res, next) => {
   try {
     const documentId = req.params.documentId;
     const attachments = await attachmentSchema
@@ -97,7 +84,7 @@ Route.get("/attachments/:documentId", cors(corsOptionsDelegate), async (req, res
 });
 
 // 3. Stream File for Inline Preview or Direct Download
-Route.get("/attachment-file/:id", cors(corsOptionsDelegate), async (req, res, next) => {
+Route.get("/attachment-file/:id", async (req, res, next) => {
   try {
     const attachment = await attachmentSchema.findById(req.params.id);
     if (!attachment || !attachment.data) {
@@ -122,7 +109,7 @@ Route.get("/attachment-file/:id", cors(corsOptionsDelegate), async (req, res, ne
 });
 
 // 4. Get Attachment Base64 & Info for Frontend Preview
-Route.get("/attachment-data/:id", cors(corsOptionsDelegate), async (req, res, next) => {
+Route.get("/attachment-data/:id", async (req, res, next) => {
   try {
     const attachment = await attachmentSchema.findById(req.params.id);
     if (!attachment || !attachment.data) {
@@ -151,7 +138,7 @@ Route.get("/attachment-data/:id", cors(corsOptionsDelegate), async (req, res, ne
 });
 
 // 5. Delete Attachment
-Route.delete("/delete-attachment/:id", cors(corsOptionsDelegate), async (req, res, next) => {
+Route.delete("/delete-attachment/:id", async (req, res, next) => {
   try {
     const result = await attachmentSchema.findByIdAndDelete(req.params.id);
     if (!result) {
