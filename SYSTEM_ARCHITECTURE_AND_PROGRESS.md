@@ -280,6 +280,10 @@
       - **Upload Experience:** Provide an intuitive modal with drag-and-drop and file browser upload supporting PDF, Images (PNG, JPG, WEBP), and Documents up to 15MB each, accompanied by a visual upload progress indicator.
       - **Card Representation:** Display attached files with format-specific color icons (Red for PDF, Cyan for Images, Gray for Documents), file name, formatted file size (e.g., `113.6 KB`), author, and upload date.
       - **Interactive Preview & Direct 1-Click Print Engine:** Clicking a file or its preview button must open a full-featured viewer modal (`AttachmentPreviewDialog.js`) with responsive PDF iframe embedding, image zoom/pan controls, download button, and a dedicated **Print** button that dispatches the document directly to the system print dialog without requiring the user to download the file first.
+54. **Railway Backend Monorepo `/server` Root Directory Deployment Rule (Ver 3.5.86)**:
+    - **Railway Trigger Filtering:** The Railway backend service (`api.globalgate.sarl`) is configured with `Root Directory: /server`. Railway's automated webhook pipeline monitors only the `/server` directory for changes.
+    - **Mandatory Server File Modification for Backend Deploys:** If a git commit touches only frontend code, web bundles (`dist_web/`), documentation, or root configuration without modifying files inside `server/`, Railway automatically skips the build (`"the latest commit has nothing for the service to build"`).
+    - **Standard Deployment Protocol:** Whenever new backend endpoints, Mongoose models, or server-side fixes are released, ALWAYS include a version bump in `server/package.json` (e.g. `"version": "3.5.86"`) and update the `/status` route signature in `server/index.js`. This guarantees that Railway detects the commit, initiates the container image build, and deploys the new backend without requiring manual intervention.
 ## Current Progress Log
 - **Document Attachments (Upload, Preview, Direct Print, Download & Delete) for Invoices & Quotations (Ver 3.5.86)**:
   - **Problem & Requirement Reported:**
@@ -317,12 +321,24 @@
     5. **Integration in Invoice & Quotation Viewers:**
        - `src/js/AdminView1/PageView/InvoiceView/InvoiceViewAdminAll.js`: Added paperclip button with count badge in header + `Attachments (count)` MenuItem in `OPTIONS` menu.
        - `src/js/AdminView1/PageView/EstimateView/EstimateViewAdminAll.js`: Added paperclip button with count badge in header + `Attachments (count)` MenuItem in `OPTIONS` menu.
-  - **Verification & Deployment:**
+  - **Railway Monorepo Deployment & Production Synchronization:**
+    - Resolved 404 deployment lag by modifying `server/package.json` (bumping API version to `3.5.86`) and updating `server/index.js` status routes, satisfying Railway's `/server` root directory watch rule (commit `f547088f`).
+    - Verified live endpoint activation on `https://api.globalgate.sarl`:
+      - `GET /endpoint/attachments/:id` -> `200 OK`
+      - `POST /endpoint/upload-attachment` -> `200 OK` (tested live multipart upload)
+      - `DELETE /endpoint/delete-attachment/:id` -> `200 OK`
+  - **Live Testing Verification & User Confirmation:**
+    - User verified live functionality in the desktop application with production screenshots:
+      - Uploaded `Purchase Order - S4AL_LPO_2026_00215 (1).pdf` (48.6 KB) to `INV-002610` (`SOLUTION FOR AFRICA SAS`).
+      - Confirmed green success toast `Attachment(s) uploaded successfully`.
+      - Confirmed paperclip active count badge updated to `1`.
+      - Confirmed interactive preview modal renders multi-page PDF with thumbnail bar, full vector display, zoom controls, download, and direct 1-click printing.
+  - **Packaging & Artifact Preservation:**
     - Bumped `package.json` to version `3.5.86`.
     - AST pre-build safety gate passed with 0 errors across 234 source files (`node scripts/pre-build-check.js`).
     - Webpack production bundles compiled cleanly for Electron (`build/`) and Web (`dist_web/`).
     - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.86.exe` (94,570,817 bytes).
-    - Pushed commit to GitHub `origin main` for automated Cloudflare Pages web portal deployment and Railway backend sync.
+    - All code, web bundles, and architectural documentation synchronized with GitHub `origin main`.
 
 - **Item-Return Create Route Permission Inversion Resolution & Universal Grant Access Enforcement (Ver 3.5.85)**:
   - **Problem Reported:**
