@@ -572,8 +572,10 @@ function PayRollFormView() {
   const totalNet = totalActualEarning !== 0 ? totalActualEarning - totalActualDeduction : 0
   const totalPaid = totalNet + bonus + totalActualDeduction
   const totalPaidDollars = rate !== 0 ? Math.min((totalNet / rate) * 100) / 100 : 0
-  let dividedAmountPaidFc = parseFloat(amountPayFC / rate).toFixed(2)
-  let totalPaidUsd = parseFloat(Number(amountPayUSD) + Number(dividedAmountPaidFc)).toFixed(2)
+  const safeAmountPayFC = (amountPayFC !== null && amountPayFC !== undefined && amountPayFC !== '') ? (parseFloat(amountPayFC) || 0) : 0;
+  const safeAmountPayUSD = (amountPayUSD !== null && amountPayUSD !== undefined && amountPayUSD !== '') ? (parseFloat(amountPayUSD) || 0) : 0;
+  let dividedAmountPaidFc = rate !== 0 ? parseFloat(safeAmountPayFC / rate).toFixed(2) : '0.00'
+  let totalPaidUsd = parseFloat(Number(safeAmountPayUSD) + Number(dividedAmountPaidFc)).toFixed(2)
   const CreditUSD = Math.round((totalPaidDollars - totalPaidUsd) * 100) / 100
   const CreditFC = rate !== 0 ? Math.round((CreditUSD * rate) * 100) / 100 : 0
 
@@ -745,7 +747,7 @@ function PayRollFormView() {
       payNumber, payDate, month, daysW, status, daysOpen, Lops, basicSalary, earningSalary, advancedSalary, basicTransport, transportEarning, transportDeduction, foodBasic,
       foodEarning, itemLost, foodDeduction, bounceAllowances, bounceAllowancesEarning, other, otherEarning, loan,
       bonus, totalActualSalary, totalActualEarning, totalActualDeduction, totalNet, totalPaid, rate, totalPaidDollars, words,
-      employeeName, amountPayUSD, amountPayFC, CreditFC, CreditUSD, synced: false,
+      employeeName, amountPayUSD: cleanPaidUSD, amountPayFC: cleanPaidFC, CreditFC: cleanCreditFC, CreditUSD: cleanCreditUSD, synced: false,
       // Metadata
       factoryEarned, factoryDamage,
       weekFrom: weekFrom && dayjs(weekFrom).isValid() ? dayjs(weekFrom).format('YYYY-MM-DD') : null,
@@ -760,7 +762,7 @@ function PayRollFormView() {
         payNumber, payDate, month: finalMonth, daysW, status, daysOpen, Lops, basicSalary, earningSalary, advancedSalary, basicTransport, transportEarning, transportDeduction, foodBasic,
         foodEarning, itemLost, foodDeduction, bounceAllowances, bounceAllowancesEarning, other, otherEarning, loan,
         bonus, totalActualSalary, totalActualEarning, totalActualDeduction, totalNet, totalPaid, rate, totalPaidDollars, words,
-        employeeName, amountPayUSD, amountPayFC, CreditFC, CreditUSD,
+        employeeName, amountPayUSD: cleanPaidUSD, amountPayFC: cleanPaidFC, CreditFC: cleanCreditFC, CreditUSD: cleanCreditUSD,
         employeeDepartment, // Explicitly send department for server logic
         // FACTORY METADATA
         factoryEarned, factoryDamage,

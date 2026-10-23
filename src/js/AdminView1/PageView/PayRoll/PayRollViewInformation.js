@@ -155,6 +155,29 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
+
+const safeNum = (val) => {
+  if (val === null || val === undefined || isNaN(Number(val))) return 0;
+  return Number(val);
+};
+
+const safeFormatMoney = (val, decimals = 2) => {
+  const n = safeNum(val);
+  return n.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const safeFormatRateDollars = (val, rate, decimals = 2) => {
+  const n = safeNum(val);
+  const r = safeNum(rate);
+  if (r <= 0) return '0.00';
+  return (n / r).toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
+const safeFormatInt = (val) => {
+  const n = Math.round(safeNum(val));
+  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+
 function PayRollViewInformation() {
   let { id } = useParams();
   const navigate = useNavigate();
@@ -734,67 +757,67 @@ function PayRollViewInformation() {
                                           <tr>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Basic wage</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.basicSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.basicSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.basicSalary)} </span> <span>($<span>{safeFormatRateDollars(row.basicSalary, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.earningSalary !== undefined ? row.earningSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.earningSalary !== undefined ? row.earningSalary / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.earningSalary)} </span> <span>($<span>{safeFormatRateDollars(row.earningSalary, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>In advanced allowances </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.advancedSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.advancedSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.advancedSalary)} </span> <span>($<span>{safeFormatRateDollars(row.advancedSalary, row.rate)}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Transport allowances</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.basicTransport?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.basicTransport / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.basicTransport)} </span> <span>($<span>{safeFormatRateDollars(row.basicTransport, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.transportEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.transportEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.transportEarning)} </span> <span>($<span>{safeFormatRateDollars(row.transportEarning, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Transport</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.transportDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.transportDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.transportDeduction)} </span> <span>($<span>{safeFormatRateDollars(row.transportDeduction, row.rate)}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Food allowances</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.foodBasic !== undefined ? row.foodBasic?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.foodBasic !== undefined ? row.foodBasic / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.foodBasic)} </span> <span>($<span>{safeFormatRateDollars(row.foodBasic, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.foodEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.foodEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.foodEarning)} </span> <span>($<span>{safeFormatRateDollars(row.foodEarning, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Food</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.foodDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.foodDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.foodDeduction)} </span> <span>($<span>{safeFormatRateDollars(row.foodDeduction, row.rate)}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Bounce allowances 3%</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.bounceAllowances?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.bounceAllowances / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.bounceAllowances)} </span> <span>($<span>{safeFormatRateDollars(row.bounceAllowances, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.bounceAllowancesEarning !== undefined ? row.bounceAllowancesEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.bounceAllowancesEarning !== undefined ? row.bounceAllowancesEarning / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.bounceAllowancesEarning)} </span> <span>($<span>{safeFormatRateDollars(row.bounceAllowancesEarning, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Loan recovery</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
 
-                                              <span>{row.loan?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.loan / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.loan)} </span> <span>($<span>{safeFormatRateDollars(row.loan, row.rate)}</span>)</span>
                                             </td>
                                           </tr>
                                           <tr>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Other</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.other !== undefined ? row.other?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</span> <span>($<span>{(row.other !== undefined ? row.other / row.rate : 0)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.other)} </span> <span>($<span>{safeFormatRateDollars(row.other, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.otherEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.otherEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.otherEarning)} </span> <span>($<span>{safeFormatRateDollars(row.otherEarning, row.rate)}</span>)</span>
                                             </td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>Item lost recovery / Deduction</td>
                                             <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }}>
-                                              <span>{row.itemLost?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} </span> <span>($<span>{(row.itemLost / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span>
+                                              <span>{safeFormatMoney(row.itemLost)} </span> <span>($<span>{safeFormatRateDollars(row.itemLost, row.rate)}</span>)</span>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -814,46 +837,46 @@ function PayRollViewInformation() {
                                           <tr>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Basic:</span> <span> FC {row.totalActualSalary?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualSalary / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Earning:</span> <span> FC {row.totalActualEarning?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualEarning / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Deduction:</span> <span> FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Basic:</span> <span> FC {safeFormatMoney(row.totalActualSalary)}</span> <span>($<span>{safeFormatRateDollars(row.totalActualSalary, row.rate)}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Earning:</span> <span> FC {safeFormatMoney(row.totalActualEarning)}</span> <span>($<span>{safeFormatRateDollars(row.totalActualEarning, row.rate)}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={2}><span>Total Deduction:</span> <span> FC {safeFormatMoney(row.totalActualDeduction)}</span> <span>($<span>{safeFormatRateDollars(row.totalActualDeduction, row.rate)}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Paid)</td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Net payable</td>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{row.totalPaidDollars?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {safeFormatMoney(row.totalNet)} <span>($<span>{safeFormatMoney(row.totalPaidDollars)}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Deduction</td>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalActualDeduction?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalActualDeduction / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {safeFormatMoney(row.totalActualDeduction)} <span>($<span>{safeFormatRateDollars(row.totalActualDeduction, row.rate)}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Overtime & Bonus</td>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.bonus?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.bonus / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {safeFormatMoney(row.bonus)} <span>($<span>{safeFormatRateDollars(row.bonus, row.rate)}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Total Generale</td>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {row.totalPaid?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')} <span>($<span>{(row.totalPaid / row.rate)?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>)</span></td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black' }} colSpan={4}>FC {safeFormatMoney(row.totalPaid)} <span>($<span>{safeFormatRateDollars(row.totalPaid, row.rate)}</span>)</span></td>
                                           </tr>
                                           <tr>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }} colSpan={6}>Total (Net)</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Net payable(FC): FC{row.totalNet?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Net payable(FC): FC{safeFormatMoney(row.totalNet)}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }}><span>rate</span>: {row.rate}</td>
-                                            <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Net payable($): ${row.totalPaidDollars?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</td>
+                                            <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Net payable($): ${safeFormatMoney(row.totalPaidDollars)}</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Amount Paid(FC): FC{row.amountPayFC !== undefined ? row.amountPayFC.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Amount Paid(FC): FC{safeFormatInt(row.amountPayFC)}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }}>-</td>
-                                            <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Amount Paid($): ${row.amountPayUSD !== undefined ? row.amountPayUSD.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                            <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Amount Paid($): ${safeFormatMoney(row.amountPayUSD)}</td>
                                           </tr>
                                           <tr>
-                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Credit(FC): FC{row.CreditFC !== undefined ? row.CreditFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                            <td style={{ width: '20%', border: '1px solid #DDD', color: 'black', color: 'black' }} colSpan={2}>Credit(FC): FC{safeFormatMoney(row.CreditFC)}</td>
                                             <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', textAlign: 'center' }}>-</td>
-                                            <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Credit($): ${row.CreditUSD !== undefined ? row.CreditUSD?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}</td>
+                                            <td style={{ padding: '5px', border: '1px solid #DDD', color: 'black', color: 'black', textAlign: 'center' }} colSpan={2}>Credit($): ${safeFormatMoney(row.CreditUSD)}</td>
                                           </tr>
                                           <tr>
                                             <td style={{ border: '1px solid #DDD' }} colSpan={2}>Net Words</td>

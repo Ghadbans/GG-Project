@@ -284,7 +284,50 @@
     - **Railway Trigger Filtering:** The Railway backend service (`api.globalgate.sarl`) is configured with `Root Directory: /server`. Railway's automated webhook pipeline monitors only the `/server` directory for changes.
     - **Mandatory Server File Modification for Backend Deploys:** If a git commit touches only frontend code, web bundles (`dist_web/`), documentation, or root configuration without modifying files inside `server/`, Railway automatically skips the build (`"the latest commit has nothing for the service to build"`).
     - **Standard Deployment Protocol:** Whenever new backend endpoints, Mongoose models, or server-side fixes are released, ALWAYS include a version bump in `server/package.json` (e.g. `"version": "3.5.86"`) and update the `/status` route signature in `server/index.js`. This guarantees that Railway detects the commit, initiates the container image build, and deploys the new backend without requiring manual intervention.
+55. **Payroll Status Evaluation & Strict Non-Null Numeric Monetary Standard (Ver 3.5.87)**:
+    - **Defensive Numeric Parsing on Payroll Forms:** In `PayRollUpdateFormView` and `PayRollFormView`, never evaluate payment status using `parseInt(amountPayUSD) === 0` without defensive fallback coercion. When an input field is empty, null, or undefined, `parseInt(null)` returns `NaN`. Because `NaN === 0` evaluates to `false`, unhandled status checks bypass `UnPaid` and erroneously default to `Partially-Paid`.
+    - **Defensive Status Evaluation Formula:** Always coerce inputs using `parseFloat(val) || 0`. If both `cleanPaidUSD <= 0 && cleanPaidFC <= 0`, status strictly evaluates to **`UnPaid`**. If remaining credit is settled (`cleanCreditUSD <= 0.05 && cleanCreditFC <= 10`), status evaluates to **`Paid`**. Only when payments have actually been made (`cleanPaidUSD > 0 || cleanPaidFC > 0`) and remaining credit is positive does status evaluate to **`Partially-Paid`**.
+    - **Database Numeric Integrity:** Never persist `null` or empty strings in `amountPayUSD` or `amountPayFC`. Always persist sanitized numeric values (`0` when unpaid).
+    - **Defensive Null-Safe Detail Rendering:** In `PayRollViewInformation.js` (and any detail view formatting monetary values), NEVER call `.toString()` or `?.toFixed(2).replace(...)` directly on unvalidated MongoDB fields. Always wrap numeric values in defensive helpers (`safeFormatMoney`, `safeFormatInt`, `safeFormatRateDollars`) to prevent unhandled `TypeError: Cannot read properties of null (reading 'toString')` or `reading 'replace'` from triggering a white screen crash.
 ## Current Progress Log
+- **Payroll Payment Status Logic Correction & View White Screen Crash Fix (Ver 3.5.87)**:
+  - **Problem Reported:**
+    - User reported: *"I was making edit for this employe pay roll than i made save .. it showed me the status Partially-Paid but me i didnt do payment for this .. i pressed the view button it make this erorr ....."*
+    - Provided 4 screenshots showing:
+      1. Payroll payment edit form for `MAHMOUD ALABOUSH` (#1421) with `Amount Paid(FC): 0` and `Amount Paid($): 0`, and full credit remaining.
+      2. Pay Roll listing table showing record #1421 with status erroneously displaying `Partially-Paid`.
+      3. Blank white screen when clicking the View (eye) button with console error:
+         `TypeError: Cannot read properties of null (reading 'toString') at PayRollViewInformation.js:851:235`.
+  - **Root Cause Analysis:**
+    1. **Why Status Defaulted to `Partially-Paid`:**
+       - In `PayRollUpdateFormView.js` (lines 629–636) and `PayRollFormView.js` (lines 735–742), status determination used `if (parseInt(amountPayUSD) === 0 && parseInt(amountPayFC) === 0)`.
+       - When `amountPayUSD` was `null` or empty string, `parseInt(null)` returned `NaN`. Since `NaN === 0` is `false`, the check failed, skipped `UnPaid`, and fell into the `else` branch, assigning `status = 'Partially-Paid'` and saving `amountPayUSD: null` to MongoDB.
+    2. **Why View Crashed with White Screen:**
+       - In `PayRollViewInformation.js` line 851, the component rendered:
+         `Amount Paid($): ${row.amountPayUSD !== undefined ? row.amountPayUSD.toString().replace(...) : 0}`.
+       - Because in JavaScript `null !== undefined` evaluates to `true`, the expression executed `null.toString()`, throwing an unhandled `TypeError` that unmounted the React layout tree.
+  - **Exhaustive Architectural Resolution & Implementation:**
+    1. **`src/js/AdminView1/PageView/PayRoll/PayRollUpdateFormView.js` & `PayRollFormView.js`:**
+       - Initialized state with `res.data.data.amountPayUSD != null ? res.data.data.amountPayUSD : 0` to eliminate null states.
+       - Implemented defensive numeric parsing (`parseFloat() || 0`) for payments and remaining credit.
+       - Enforced accurate status computation:
+         - `cleanPaidUSD <= 0 && cleanPaidFC <= 0` -> strictly `UnPaid`.
+         - `cleanCreditUSD <= 0.05 && cleanCreditFC <= 10` -> `Paid`.
+         - Otherwise -> `Partially-Paid`.
+       - Transmitted clean numeric values in the payload so MongoDB never stores `null` for payment amounts.
+    2. **`src/js/AdminView1/PageView/PayRoll/PayRollViewInformation.js`:**
+       - Introduced universal null-safe helpers: `safeNum`, `safeFormatMoney`, `safeFormatRateDollars`, and `safeFormatInt`.
+       - Refactored all table cells (Basic wage, transport, food allowances, bounce allowances, loans, overtime/bonus, totals, amount paid FC/USD, credit FC/USD) to use these helpers, guaranteeing 100% crash-proof rendering regardless of database nulls.
+    3. **`server/routes/payrollRoutes.js` & `server/index.js`:**
+       - Added input sanitization in `POST /create-payRoll` and `PUT /update-payRoll/:id` to coerce `null`/`undefined`/`NaN` to `0` and force `UnPaid` if 0 payment is supplied with `Partially-Paid` status.
+       - Added non-blocking background auto-repair in `server/index.js` that automatically cleans up existing records with `amountPayUSD: null` or misattributed `Partially-Paid` status.
+       - Successfully updated live MongoDB record #1421 (`MAHMOUD ALABOUSH`) to `status: 'UnPaid'`, `amountPayUSD: 0`, `amountPayFC: 0`.
+  - **Packaging & Multi-Platform Deployment:**
+    - Version bumped to `3.5.87` across `package.json`, `server/package.json`, and `server/index.js`.
+    - AST quality gate verified 234 source files with 0 errors.
+    - Webpack compiled `dist_web/` (Cloudflare Pages) and `build/` (Electron desktop).
+    - Packaged Windows desktop installer: `dist/Global Gate Setup 3.5.87.exe` (94,570,752 bytes).
+    - Synchronized all files with GitHub `origin main` for automatic Cloudflare Pages and Railway container deployment.
 - **Document Attachments (Upload, Preview, Direct Print, Download & Delete) for Invoices & Quotations (Ver 3.5.86)**:
   - **Problem & Requirement Reported:**
     - User requested: *"IN INVOICE and Quotation modules I would like to have in OPTIONS possibplity to add Attachments like if i have a Purchase Order or an related INVOICE to attach it with it so it will not be lost ... as well i can preview this attacment and i can print it out if i want ! same like in zoho invoices .. i left for you screenshuts .. be creative and dont mess with the links and modules and sub-modules"*.

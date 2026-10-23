@@ -112,6 +112,19 @@ Route.route("/get-last-saved-payRoll").get(async(req,res, next)=>{
 Route.route("/create-payRoll").post(async (req, res, next) => {
 
   try {
+    if (req.body.amountPayUSD === null || req.body.amountPayUSD === undefined || isNaN(Number(req.body.amountPayUSD))) {
+      req.body.amountPayUSD = 0;
+    } else {
+      req.body.amountPayUSD = Number(req.body.amountPayUSD);
+    }
+    if (req.body.amountPayFC === null || req.body.amountPayFC === undefined || isNaN(Number(req.body.amountPayFC))) {
+      req.body.amountPayFC = 0;
+    } else {
+      req.body.amountPayFC = Number(req.body.amountPayFC);
+    }
+    if (req.body.amountPayUSD <= 0 && req.body.amountPayFC <= 0 && req.body.status === 'Partially-Paid') {
+      req.body.status = 'UnPaid';
+    }
     const branchId = req.body.branchId;
     const existing = await payRollSchema.findOne({
       'employeeName.name': req.body.employeeName.name,
@@ -151,6 +164,19 @@ Route.route("/get-payRoll/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-payRoll/:id").put(async (req, res, next) => {
+  if (req.body.amountPayUSD === null || req.body.amountPayUSD === undefined || isNaN(Number(req.body.amountPayUSD))) {
+    req.body.amountPayUSD = 0;
+  } else {
+    req.body.amountPayUSD = Number(req.body.amountPayUSD);
+  }
+  if (req.body.amountPayFC === null || req.body.amountPayFC === undefined || isNaN(Number(req.body.amountPayFC))) {
+    req.body.amountPayFC = 0;
+  } else {
+    req.body.amountPayFC = Number(req.body.amountPayFC);
+  }
+  if (req.body.amountPayUSD <= 0 && req.body.amountPayFC <= 0 && req.body.status === 'Partially-Paid') {
+    req.body.status = 'UnPaid';
+  }
   await payRollSchema
     .findByIdAndUpdate(req.params.id, {
       $set: req.body,

@@ -269,8 +269,8 @@ function PayRollUpdateFormView() {
         setLoan(res.data.data.loan);
         setBonus(res.data.data.bonus);
         setRate(res.data.data.rate);
-        setAmountPayFC(res.data.data.amountPayFC);
-        setAmountPayUSD(res.data.data.amountPayUSD);
+        setAmountPayFC(res.data.data.amountPayFC != null ? res.data.data.amountPayFC : 0);
+        setAmountPayUSD(res.data.data.amountPayUSD != null ? res.data.data.amountPayUSD : 0);
         // Load Factory Data
         if (res.data.data.factoryEarned !== undefined) setFactoryEarned(res.data.data.factoryEarned);
         if (res.data.data.factoryDamage !== undefined) setFactoryDamage(res.data.data.factoryDamage);
@@ -524,8 +524,10 @@ function PayRollUpdateFormView() {
   const totalNet = totalActualEarning !== 0 ? totalActualEarning - totalActualDeduction : 0
   const totalPaid = totalNet + bonus + totalActualDeduction
   const totalPaidDollars = rate !== 0 ? Math.min((totalNet / rate) * 100) / 100 : 0
-  let dividedAmountPaidFc = parseFloat(amountPayFC / rate).toFixed(2)
-  let totalPaidUsd = parseFloat(Number(amountPayUSD) + Number(dividedAmountPaidFc)).toFixed(2)
+  const safeAmountPayFC = (amountPayFC !== null && amountPayFC !== undefined && amountPayFC !== '') ? (parseFloat(amountPayFC) || 0) : 0;
+  const safeAmountPayUSD = (amountPayUSD !== null && amountPayUSD !== undefined && amountPayUSD !== '') ? (parseFloat(amountPayUSD) || 0) : 0;
+  let dividedAmountPaidFc = rate !== 0 ? parseFloat(safeAmountPayFC / rate).toFixed(2) : '0.00'
+  let totalPaidUsd = parseFloat(Number(safeAmountPayUSD) + Number(dividedAmountPaidFc)).toFixed(2)
   const CreditUSD = Math.round((totalPaidDollars - totalPaidUsd) * 100) / 100
   const CreditFC = rate !== 0 ? Math.round((CreditUSD * rate) * 100) / 100 : 0
 
@@ -626,10 +628,15 @@ function PayRollUpdateFormView() {
       }
     }
   }
+  const cleanPaidUSD = (amountPayUSD !== null && amountPayUSD !== undefined && amountPayUSD !== '') ? (parseFloat(amountPayUSD) || 0) : 0;
+  const cleanPaidFC = (amountPayFC !== null && amountPayFC !== undefined && amountPayFC !== '') ? (parseFloat(amountPayFC) || 0) : 0;
+  const cleanCreditUSD = (CreditUSD !== null && CreditUSD !== undefined) ? (parseFloat(CreditUSD) || 0) : 0;
+  const cleanCreditFC = (CreditFC !== null && CreditFC !== undefined) ? (parseFloat(CreditFC) || 0) : 0;
+
   let status = ''
-  if (parseInt(amountPayUSD) === 0 && parseInt(amountPayFC) === 0) {
+  if (cleanPaidUSD <= 0 && cleanPaidFC <= 0) {
     status = 'UnPaid'
-  } else if (parseInt(CreditFC) === 0 && parseInt(CreditUSD) === 0) {
+  } else if (cleanCreditUSD <= 0.05 && cleanCreditFC <= 10) {
     status = 'Paid'
   } else {
     status = 'Partially-Paid'
@@ -649,7 +656,7 @@ function PayRollUpdateFormView() {
       daysOpen, Lops, basicSalary, earningSalary, advancedSalary, basicTransport, transportEarning, transportDeduction, foodBasic,
       foodEarning, itemLost, foodDeduction, bounceAllowances, bounceAllowancesEarning, other, otherEarning, loan,
       bonus, totalActualSalary, totalActualEarning, totalActualDeduction, totalNet, totalPaid, rate, totalPaidDollars, words,
-      employeeName, amountPayUSD, amountPayFC, CreditFC, CreditUSD, updateS: false,
+      employeeName, amountPayUSD: cleanPaidUSD, amountPayFC: cleanPaidFC, CreditFC: cleanCreditFC, CreditUSD: cleanCreditUSD, updateS: false,
       employeeDepartment, // Explicitly send department
       // Metadata
       factoryEarned, factoryDamage,
@@ -1093,7 +1100,7 @@ function PayRollUpdateFormView() {
                               size='small'
                               placeholder='Paying Amount FC'
                               name='amountPayFC'
-                              value={amountPayFC !== undefined ? amountPayFC : 0}
+                              value={amountPayFC != null ? amountPayFC : 0}
                               onChange={(e) => setAmountPayFC(e.target.value)}
                               style={{ width: '200px', backgroundColor: 'white' }}
                             />
@@ -1112,7 +1119,7 @@ function PayRollUpdateFormView() {
                             <TextField
                               size='small'
                               name='amountPayUSD'
-                              value={amountPayUSD !== undefined ? amountPayUSD : 0}
+                              value={amountPayUSD != null ? amountPayUSD : 0}
                               placeholder='Paying Amount USD'
                               onChange={(e) => setAmountPayUSD(e.target.value)}
                               style={{ width: '200px', backgroundColor: 'white' }}

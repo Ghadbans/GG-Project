@@ -34,6 +34,24 @@ mongoDbConnection().then(() => {
       console.log('Dropped old itemName_1 index from item collection');
     } catch (e) {}
 
+    // Auto-repair payroll records where payment is null or status is Partially-Paid with 0 paid
+    try {
+      const payRollColl = mongoose.connection.db.collection('payRoll');
+      await payRollColl.updateMany({ amountPayUSD: null }, { $set: { amountPayUSD: 0 } });
+      await payRollColl.updateMany({ amountPayFC: null }, { $set: { amountPayFC: 0 } });
+      await payRollColl.updateMany(
+        { 
+          status: 'Partially-Paid', 
+          amountPayUSD: { $lte: 0 }, 
+          amountPayFC: { $lte: 0 } 
+        },
+        { $set: { status: 'UnPaid', amountPayUSD: 0, amountPayFC: 0 } }
+      );
+      console.log('Payroll background auto-repair completed.');
+    } catch (e) {
+      console.error('Payroll auto-repair error:', e.message);
+    }
+
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;
@@ -168,8 +186,8 @@ app.use("/endpoint", attachmentRoutes);
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
-app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.5.86-attachments]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.5.86', attachments: true, uptime: process.uptime() })); // health check
+app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.5.87-payroll-fix]'));
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.5.87', attachments: true, uptime: process.uptime() })); // health check
 
 // DEBUG & INIT ROUTES
 app.get('/debug-db', async (req, res) => {
