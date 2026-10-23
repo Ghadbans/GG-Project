@@ -322,6 +322,10 @@
        - Added input sanitization in `POST /create-payRoll` and `PUT /update-payRoll/:id` to coerce `null`/`undefined`/`NaN` to `0` and force `UnPaid` if 0 payment is supplied with `Partially-Paid` status.
        - Added non-blocking background auto-repair in `server/index.js` that automatically cleans up existing records with `amountPayUSD: null` or misattributed `Partially-Paid` status.
        - Successfully updated live MongoDB record #1421 (`MAHMOUD ALABOUSH`) to `status: 'UnPaid'`, `amountPayUSD: 0`, `amountPayFC: 0`.
+  - **Live Testing Verification & User Confirmation:**
+    - User tested the live implementation: editing/saving a payroll record with 0 payments now reliably evaluates and assigns `status: 'UnPaid'`.
+    - User confirmed clicking the View (eye) button opens the complete payroll details sheet with 100% stability, rendering all financial figures cleanly with 0 console errors or white screen crashes.
+    - Verified live against MongoDB (`globalgatedb`), Railway container (`https://api.globalgate.sarl` running `v3.5.87`), Cloudflare Pages (`portal.globalgate.sarl`), and Electron desktop.
   - **Packaging & Multi-Platform Deployment:**
     - Version bumped to `3.5.87` across `package.json`, `server/package.json`, and `server/index.js`.
     - AST quality gate verified 234 source files with 0 errors.
