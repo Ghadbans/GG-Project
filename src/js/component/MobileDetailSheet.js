@@ -168,6 +168,212 @@ function MobileDetailSheet({ open, onClose, record, type }) {
   const user = useSelector(selectCurrentUser);
   const [printOpen, setPrintOpen] = useState(false);
   const [grantAccess, setGrantAccess] = useState([]);
+  const [openAttachments, setOpenAttachments] = useState(false);
+  const [attachmentCount, setAttachmentCount] = useState(0);
+  const [attachmentsList, setAttachmentsList] = useState([]);
+  const [previewAttachment, setPreviewAttachment] = useState(null);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const cameraInputRef = useRef(null);
+
+  const fetchAttachments = async () => {
+    const docId = record?._id || record?.id;
+    if (!docId) return;
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/attachments/${docId}`);
+      const list = res.data?.data || [];
+      setAttachmentsList(list);
+      setAttachmentCount(res.data?.count || list.length || 0);
+    } catch (err) {
+      // ignore
+    }
+  };
+
+  useEffect(() => {
+    if (open && (record?._id || record?.id)) {
+      fetchAttachments();
+    } else {
+      setAttachmentsList([]);
+      setAttachmentCount(0);
+    }
+  }, [open, record?._id, record?.id]);
+
+  const handleDirectCameraCapture = async (e) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    const docId = record?._id || record?.id;
+    if (!docId) return;
+
+    if (file.size > 15 * 1024 * 1024) {
+      toast.error('Photo exceeds 15MB limit.');
+      return;
+    }
+
+    const typeMapping = {
+      invoices: 'Invoice',
+      quotations: 'Estimation',
+      estimates: 'Estimation',
+      maintenance: 'Maintenance',
+      maintenance_orders: 'MaintenanceOrder',
+      projects: 'Project'
+    };
+    const documentType = typeMapping[type] || 'Invoice';
+
+    let docNumber = '';
+    if (type === 'invoices') docNumber = `INV-${String(record?.invoiceNumber || '').padStart(6, '0')}`;
+    else if (type === 'quotations' || type === 'estimates') docNumber = `Q-${String(record?.estimateNumber || '').padStart(6, '0')}`;
+    else if (type === 'maintenance' || type === 'maintenance_orders') docNumber = safeText(record?.serviceNumber || record?.orderNumber || record?.maintenanceNumber);
+    else if (type === 'projects') docNumber = `P-${String(record?.projectNumber || '').padStart(6, '0')}`;
+
+    const formData = new FormData();
+    formData.append('files', file);
+    formData.append('documentId', docId);
+    formData.append('documentType', documentType);
+    formData.append('documentNumber', docNumber);
+    formData.append('uploadedBy', user?.data?.userName || 'Staff');
+    formData.append('branchId', user?.data?.selectedBranch || 'HQ');
+
+    try {
+      setUploadingPhoto(true);
+      const res = await axios.post(`${ENDPOINT_URL}/upload-attachment`, formData);
+      toast.success('Photo uploaded & archived successfully!');
+      fetchAttachments();
+    } catch (err) {
+      console.error('Error uploading photo:', err);
+      toast.error('Failed to upload photo. Please try again.');
+    } finally {
+      setUploadingPhoto(false);
+      if (cameraInputRef.current) {
+        cameraInputRef.current.value = '';
+      }
+    }
+  };
+
+  const renderAttachmentsCard = () => (
+    <Card sx={{ borderRadius: 3.5, p: 2, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1.5 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+          <PhotoCameraIcon sx={{ color: '#30368a', fontSize: 20 }} />
+          <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
+            Photos & Attachments {attachmentCount > 0 ? `(${attachmentCount})` : ''}
+          </Typography>
+        </Box>
+        {attachmentCount > 0 && (
+          <Chip
+            label={`${attachmentCount} Archived`}
+            size="small"
+            sx={{ backgroundColor: '#EEF2FF', color: '#30368a', fontWeight: 700, height: 22 }}
+          />
+        )}
+      </Box>
+
+      {/* Direct Action Buttons for Technicians / Users */}
+      <Box sx={{ display: 'flex', gap: 1, mb: attachmentsList.length > 0 ? 1.5 : 0 }}>
+        <Button
+          fullWidth
+          variant="contained"
+          size="small"
+          disabled={uploadingPhoto}
+          startIcon={uploadingPhoto ? <CircularProgress size={16} color="inherit" /> : <CameraAltIcon />}
+          onClick={() => {
+            if (cameraInputRef.current) cameraInputRef.current.click();
+          }}
+          sx={{
+            backgroundColor: '#30368a',
+            textTransform: 'none',
+            fontWeight: 700,
+            fontSize: '0.82rem',
+            py: 0.9,
+            borderRadius: 2.5,
+            '&:hover': { backgroundColor: '#252b70' }
+          }}
+        >
+          {uploadingPhoto ? 'Uploading...' : 'Take Photo'}
+        </Button>
+        <Button
+          fullWidth
+          variant="outlined"
+          size="small"
+          startIcon={<AttachFileIcon />}
+          onClick={() => setOpenAttachments(true)}
+          sx={{
+            borderColor: '#cbd5e1',
+            color: '#334155',
+            textTransform: 'none',
+            fontWeight: 700,
+            fontSize: '0.82rem',
+            py: 0.9,
+            borderRadius: 2.5,
+            '&:hover': { borderColor: '#94a3b8', backgroundColor: '#f8fafc' }
+          }}
+        >
+          {attachmentCount > 0 ? 'Manage Files' : 'Upload Files'}
+        </Button>
+      </Box>
+
+      {/* Hidden direct camera input for 1-tap photo capture */}
+      <input
+        type="file"
+        accept="image/*"
+        capture="environment"
+        ref={cameraInputRef}
+        onChange={handleDirectCameraCapture}
+        style={{ display: 'none' }}
+      />
+
+      {/* Mini Horizontal Scroll Preview of Photos/Files if any */}
+      {attachmentsList.length > 0 && (
+        <Box sx={{ display: 'flex', gap: 1.5, overflowX: 'auto', pt: 1.5, pb: 0.5, '::-webkit-scrollbar': { display: 'none' } }}>
+          {attachmentsList.map((att) => {
+            const isImg = (att.contentType || '').startsWith('image/') || /\.(png|jpe?g|webp|gif)$/i.test(att.fileName);
+            return (
+              <Box
+                key={att._id}
+                onClick={() => setPreviewAttachment(att)}
+                sx={{
+                  flexShrink: 0,
+                  width: 72,
+                  cursor: 'pointer',
+                  textAlign: 'center'
+                }}
+              >
+                <Box
+                  sx={{
+                    width: 72,
+                    height: 72,
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    border: '1px solid #e2e8f0',
+                    backgroundColor: '#f8fafc',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                  }}
+                >
+                  {isImg ? (
+                    <img
+                      src={`${ENDPOINT_URL}/attachment-file/${att._id}`}
+                      alt={att.fileName}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  ) : (
+                    <PictureAsPdfIcon sx={{ color: '#ef4444', fontSize: 32 }} />
+                  )}
+                </Box>
+                <Typography
+                  variant="caption"
+                  noWrap
+                  sx={{ display: 'block', fontSize: '10px', color: '#64748b', mt: 0.4, maxWidth: 72 }}
+                >
+                  {att.fileName}
+                </Typography>
+              </Box>
+            );
+          })}
+        </Box>
+      )}
+    </Card>
+  );
 
   useEffect(() => {
     const fetchAccess = async () => {
@@ -529,6 +735,9 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                   </Box>
                 </Box>
               </Card>
+
+              {/* Photos & Attachments Card for Technicians */}
+              {renderAttachmentsCard()}
 
               {/* Client Info */}
               {customerName && (

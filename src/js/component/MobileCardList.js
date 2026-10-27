@@ -172,6 +172,7 @@ function MobileCardList({
   const user = useSelector(selectCurrentUser);
   const [search, setSearch] = useState(searchValue || '');
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const [quickAttachmentRecord, setQuickAttachmentRecord] = useState(null);
   const [grantAccess, setGrantAccess] = useState([]);
 
   // Sync internal search state when external searchValue changes
