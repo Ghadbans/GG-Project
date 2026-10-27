@@ -28,6 +28,8 @@ function safeText(val, fallback = '') {
     if (val.itemName) return safeText(val.itemName, fallback);
     if (val.name) return safeText(val.name, fallback);
     if (val.description) return safeText(val.description, fallback);
+    if (val.itemDescriptionInfo) return safeText(val.itemDescriptionInfo, fallback);
+    if (val.defectDescription) return safeText(val.defectDescription, fallback);
     return fallback;
   }
   return String(val);
@@ -87,7 +89,10 @@ export default function MobileDocumentPrintModal({ open, onClose, record, type =
 
   const docDate = safeText(record?.dateField || record?.date || record?.paymentDate || record?.serviceDate || record?.createdAt?.substring(0, 10), 'N/A');
   const dueDate = safeText(record?.dueDate || record?.due || 'Upon Receipt');
-  const subject = safeText(record?.invoiceSubject || record?.subject || record?.defectDescription || record?.reason || '');
+  const itemDesc = safeText(record?.itemDescriptionInfo || record?.itemDescription || record?.applianceDescription || '');
+  const defectDesc = safeText(record?.defectDescription || record?.defect || '');
+  const maintenanceSubj = itemDesc && defectDesc ? `${itemDesc} - ${defectDesc}` : (itemDesc || defectDesc);
+  const subject = safeText(record?.invoiceSubject || record?.subject || maintenanceSubj || record?.reason || '');
 
   const lineItems = Array.isArray(record?.items) && record.items.length > 0
     ? record.items

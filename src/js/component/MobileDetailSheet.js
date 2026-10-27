@@ -56,6 +56,7 @@ function safeText(val, fallback = '') {
     if (val.projectName) return safeText(val.projectName, fallback);
     if (val.newCode) return safeText(val.newCode, fallback);
     if (val.code) return safeText(val.code, fallback);
+    if (val.itemDescriptionInfo) return safeText(val.itemDescriptionInfo, fallback);
     if (val.defectDescription) return safeText(val.defectDescription, fallback);
     if (val.description) return safeText(val.description, fallback);
     if (val.label) return safeText(val.label, fallback);
@@ -63,6 +64,26 @@ function safeText(val, fallback = '') {
     return fallback;
   }
   return String(val);
+}
+
+function getMaintenanceTitle(item, defaultFallback = 'Maintenance Job') {
+  if (!item) return defaultFallback;
+  const itemDesc = safeText(
+    item.itemDescriptionInfo || item.itemDescription || item.applianceDescription || item.itemName || [item.brand, item.model].filter(Boolean).join(' ') || ''
+  ).trim();
+  const defectDesc = safeText(
+    item.defectDescription || item.defect || ''
+  ).trim();
+
+  if (itemDesc && defectDesc) {
+    if (itemDesc.toLowerCase() === defectDesc.toLowerCase()) {
+      return itemDesc;
+    }
+    return `${itemDesc} - ${defectDesc}`;
+  }
+  if (itemDesc) return itemDesc;
+  if (defectDesc) return defectDesc;
+  return defaultFallback;
 }
 
 function formatMoney(val) {
@@ -474,6 +495,10 @@ function MobileDetailSheet({ open, onClose, record, type }) {
       title = safeText(record?.supplierName || record?.name, 'Supplier');
     }
 
+        const maintenanceHeading = (type === 'maintenance' || type === 'maintenance_orders')
+      ? getMaintenanceTitle(record, '')
+      : '';
+
     const isMaintenanceOrder = type === 'maintenance' || type === 'maintenance_orders';
     const isConverted = isMaintenanceOrder && (record?.Converted === true || record?.status === 'Converted');
 
@@ -709,11 +734,16 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 1.5 }}>
                   <Box>
                     <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
-                      Service Order
+                      {type === 'maintenance' ? 'Maintenance Job' : 'Service Order'}
                     </Typography>
                     <Typography variant="h5" sx={{ fontWeight: 800, color: '#1E293B', mt: 0.3 }}>
                       {title}
                     </Typography>
+                    {maintenanceHeading && (
+                      <Typography variant="subtitle1" sx={{ fontWeight: 700, color: '#30368a', mt: 0.5, lineHeight: 1.3 }}>
+                        {maintenanceHeading}
+                      </Typography>
+                    )}
                   </Box>
                   {getStatusChip(isConverted ? 'Converted' : (record?.status || 'Open'), 0, 0)}
                 </Box>
@@ -751,17 +781,82 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                 </Card>
               )}
 
-              {/* Defect / Problem Description */}
-              {Boolean(record?.defectDescription || record?.itemDescriptionInfo || record?.defect) && (
-                <Card sx={{ borderRadius: 3.5, p: 2, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
-                  <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase' }}>
-                    Defect / Issue Reported
-                  </Typography>
-                  <Typography variant="body2" sx={{ color: '#1E293B', fontWeight: 600, mt: 0.5 }}>
-                    {safeText(record?.defectDescription || record?.itemDescriptionInfo || record?.defect)}
-                  </Typography>
-                </Card>
-              )}
+              {/* Appliance & Defect Info */}
+              <Card sx={{ borderRadius: 3.5, p: 2, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
+                <Typography variant="caption" sx={{ color: '#64748B', fontWeight: 700, textTransform: 'uppercase', mb: 1.5, display: 'block' }}>
+                  Appliance & Defect Info
+                </Typography>
+                <Box sx={{ display: 'grid', gridTemplateColumns: '1fr', gap: 1.5 }}>
+                  {Boolean(record?.itemDescriptionInfo || record?.itemDescription || record?.applianceDescription) && (
+                    <Box>
+                      <Typography variant="caption" sx={{ color: '#94A3B8' }}>Item / Appliance Description</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 800, color: '#1E293B' }}>
+                        {safeText(record?.itemDescriptionInfo || record?.itemDescription || record?.applianceDescription)}
+                      </Typography>
+                    </Box>
+                  )}
+                  {Boolean(record?.defectDescription || record?.defect) && (
+                    <Box>
+                      <Typography variant="caption" sx={{ color: '#94A3B8' }}>Defect Description</Typography>
+                      <Typography variant="body2" sx={{ fontWeight: 700, color: '#DC2626' }}>
+                        {safeText(record?.defectDescription || record?.defect)}
+                      </Typography>
+                    </Box>
+                  )}
+                  {(Boolean(record?.brand) || Boolean(record?.model) || Boolean(record?.serialNo) || Boolean(record?.warranty)) && (
+                    <Box sx={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 1.5, pt: 0.5 }}>
+                      {Boolean(record?.brand) && (
+                        <Box>
+                          <Typography variant="caption" sx={{ color: '#94A3B8' }}>Brand</Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
+                            {record.brand}
+                          </Typography>
+                        </Box>
+                      )}
+                      {Boolean(record?.model) && (
+                        <Box>
+                          <Typography variant="caption" sx={{ color: '#94A3B8' }}>Model</Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
+                            {record.model}
+                          </Typography>
+                        </Box>
+                      )}
+                      {Boolean(record?.serialNo) && (
+                        <Box>
+                          <Typography variant="caption" sx={{ color: '#94A3B8' }}>Serial No.</Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
+                            {record.serialNo}
+                          </Typography>
+                        </Box>
+                      )}
+                      {Boolean(record?.warranty) && (
+                        <Box>
+                          <Typography variant="caption" sx={{ color: '#94A3B8' }}>Warranty Status</Typography>
+                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
+                            {record.warranty}
+                          </Typography>
+                        </Box>
+                      )}
+                    </Box>
+                  )}
+                  {Boolean(record?.actionTaken || record?.action) && (
+                    <Box sx={{ pt: 0.5 }}>
+                      <Typography variant="caption" sx={{ color: '#94A3B8' }}>Action Taken</Typography>
+                      <Typography variant="body2" sx={{ color: '#334155', fontWeight: 500 }}>
+                        {safeText(record?.actionTaken || record?.action)}
+                      </Typography>
+                    </Box>
+                  )}
+                  {Boolean(record?.note) && (
+                    <Box sx={{ pt: 0.5 }}>
+                      <Typography variant="caption" sx={{ color: '#94A3B8' }}>Notes</Typography>
+                      <Typography variant="body2" sx={{ color: '#334155', fontStyle: 'italic' }}>
+                        {record.note}
+                      </Typography>
+                    </Box>
+                  )}
+                </Box>
+              </Card>
 
               {/* Parts Used */}
               {lineItems.length > 0 && (

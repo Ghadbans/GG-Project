@@ -20,7 +20,11 @@ export const isNativeMobile = () => {
   }
 
   // 2. Explicit query parameter override for testing/debugging in browser (?mobile=true)
-  if (typeof window.location !== 'undefined' && window.location.search && window.location.search.includes('mobile=true')) {
+  if (typeof window.location !== 'undefined' && (
+    (window.location.search && window.location.search.includes('mobile=true')) ||
+    (window.location.hash && window.location.hash.includes('mobile=true')) ||
+    (window.location.href && window.location.href.includes('mobile=true'))
+  )) {
     return true;
   }
 

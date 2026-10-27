@@ -43,6 +43,7 @@ function safeText(val, fallback = '') {
     if (val.projectName) return safeText(val.projectName, fallback);
     if (val.newCode) return safeText(val.newCode, fallback);
     if (val.code) return safeText(val.code, fallback);
+    if (val.itemDescriptionInfo) return safeText(val.itemDescriptionInfo, fallback);
     if (val.defectDescription) return safeText(val.defectDescription, fallback);
     if (val.description) return safeText(val.description, fallback);
     if (val.label) return safeText(val.label, fallback);
@@ -50,6 +51,26 @@ function safeText(val, fallback = '') {
     return fallback;
   }
   return String(val);
+}
+
+function getMaintenanceTitle(item, defaultFallback = 'Maintenance Job') {
+  if (!item) return defaultFallback;
+  const itemDesc = safeText(
+    item.itemDescriptionInfo || item.itemDescription || item.applianceDescription || item.itemName || [item.brand, item.model].filter(Boolean).join(' ') || ''
+  ).trim();
+  const defectDesc = safeText(
+    item.defectDescription || item.defect || ''
+  ).trim();
+
+  if (itemDesc && defectDesc) {
+    if (itemDesc.toLowerCase() === defectDesc.toLowerCase()) {
+      return itemDesc;
+    }
+    return `${itemDesc} - ${defectDesc}`;
+  }
+  if (itemDesc) return itemDesc;
+  if (defectDesc) return defectDesc;
+  return defaultFallback;
 }
 
 function formatMoney(val) {
@@ -309,7 +330,8 @@ function MobileCardList({
     }
 
     if (type === 'maintenance' || type === 'maintenance_orders') {
-      const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect).toLowerCase();
+      const itemDesc = safeText(item.itemDescriptionInfo || item.itemDescription || item.applianceDescription || item.itemName).toLowerCase();
+      const defect = safeText(item.defectDescription || item.defect).toLowerCase();
       const cust = safeText(item.customerName?.customerName || item.customerName?.Customer || item.customerName || item.customer).toLowerCase();
       const num = safeText(item.serviceNumber || item.orderNumber || item.maintenanceNumber).toLowerCase();
       const numFmt = `m-${String(item.serviceNumber || item.orderNumber || '').padStart(6, '0')}`.toLowerCase();
@@ -320,7 +342,7 @@ function MobileCardList({
       const serial = safeText(item.serialNo).toLowerCase();
       const stat = safeText(item.status).toLowerCase();
       const date = safeText(item.dateField || item.serviceDate || item.visit).toLowerCase();
-      const allText = `${defect} ${cust} ${num} ${numFmt} ${numFmtMo} ${tech} ${brand} ${model} ${serial} ${stat} ${date}`;
+      const allText = `${itemDesc} ${defect} ${cust} ${num} ${numFmt} ${numFmtMo} ${tech} ${brand} ${model} ${serial} ${stat} ${date}`;
       return tokens.every(tok => allText.includes(tok));
     }
 
@@ -722,7 +744,7 @@ function MobileCardList({
 
           // 5. Maintenance / Job Cards
           if (type === 'maintenance') {
-            const defect = safeText(item.defectDescription || item.defect || item.itemDescriptionInfo, 'Maintenance Job');
+            const maintTitle = getMaintenanceTitle(item, 'Maintenance Job');
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, 'Client');
             const servNum = item.serviceNumber ? (String(item.serviceNumber).startsWith('M-') ? item.serviceNumber : `M-${String(item.serviceNumber).padStart(6, '0')}`) : `M-00${idx + 1}`;
             const date = safeText(item.dateField || item.date, '2026');
@@ -748,7 +770,7 @@ function MobileCardList({
               >
                 <Box sx={{ minWidth: 0, flex: 1, pr: 1.5 }}>
                   <Typography variant="subtitle2" sx={{ fontWeight: 800, color: '#1E293B', fontSize: '0.95rem' }} noWrap>
-                    {defect}
+                    {maintTitle}
                   </Typography>
                   <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.3 }}>
                     {servNum} • {customer} • {date}
@@ -788,7 +810,7 @@ function MobileCardList({
             const servNum = safeText(item.serviceNumber || item.orderNumber || item.maintenanceNumber, `MO-${idx + 1}`);
             const tech = safeText(item.technicianAssign || item.technicianName || item.technician, 'Unassigned');
             const customer = safeText(item.customerName?.customerName || item.customerName || item.customer, '');
-            const defect = safeText(item.defectDescription || item.itemDescriptionInfo || item.defect || item.brand, 'Service Order');
+            const maintTitle = getMaintenanceTitle(item, 'Service Order');
             const date = safeText(item.dateField || item.date || item.visit, '2026');
             const isOrderConverted = item.Converted === true || item.status === 'Converted';
             const displayStatus = isOrderConverted ? 'Converted' : (item.status || 'Open');
@@ -822,7 +844,7 @@ function MobileCardList({
                     )}
                   </Box>
                   <Typography variant="body2" sx={{ color: '#334155', fontWeight: 600, mt: 0.3 }} noWrap>
-                    {defect}
+                    {maintTitle}
                   </Typography>
                   <Typography variant="caption" sx={{ color: '#64748B', display: 'block', mt: 0.2 }}>
                     Tech: {tech} • {date}

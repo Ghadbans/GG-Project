@@ -2635,3 +2635,53 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
       - Location: `dist/Global Gate Setup 3.5.90.exe`
       - Size: 90.46 MB (94,854,103 bytes)
       - Timestamp: 27-Oct-2026 17:39:47
+
+- **Mobile Maintenance Title Formatting (Item Description First + Defect Description) & Full Appliance Info Display (Ver 3.5.91)**:
+  - **User Requirement:**
+    - In the mobile application maintenance and maintenance order listings (`MobileCardList.js`) and detail sheets (`MobileDetailSheet.js`), the title previously displayed ONLY the defect description (e.g. `PROBLEM`, `NO POWER`, `GROUND RESISTANCE TESTING`, `NOT CHARCHING`).
+    - The item / appliance description was hidden and only visible when opening the edit view.
+    - User requested: Display the **Item / Appliance Description FIRST**, followed by the **Defect Description** (e.g. `DOUGHT MACHINE - PROBLEM` or `ELECTRIC PROBLEM - NO POWER`).
+  - **Architectural & Schema Analysis:**
+    - In MongoDB `maintenance` collection, appliance and issue data are stored across:
+      - `itemDescriptionInfo`: The primary Item / Appliance Description field (e.g. `DOUGHT MACHINE`).
+      - `defectDescription`: The primary Defect Description field (e.g. `PROBLEM`).
+      - Secondary attributes: `brand`, `model`, `serialNo`, `warranty`, `actionTaken`, `note`.
+    - In `MobileCardList.js`, `const defect = safeText(item.defectDescription || item.defect || item.itemDescriptionInfo, 'Maintenance Job')` was previously prioritizing `defectDescription`, completely shadowing `itemDescriptionInfo`.
+  - **Component Upgrades (`MobileCardList.js`, `MobileDetailSheet.js`, `MobileDocumentPrintModal.js`, `isMobile.js`):**
+    - `MobileCardList.js`:
+      - Implemented `getMaintenanceTitle(item, defaultFallback)` helper function:
+        - Extracts `itemDesc = safeText(item.itemDescriptionInfo || item.itemDescription || item.applianceDescription || item.itemName || [item.brand, item.model].filter(Boolean).join(' '))`.
+        - Extracts `defectDesc = safeText(item.defectDescription || item.defect)`.
+        - Combines them as `${itemDesc} - ${defectDesc}` when both exist (or single description if either is empty or identical).
+      - Card Titles: Display `getMaintenanceTitle(item)` prominently as the primary subtitle/heading in both `maintenance` and `maintenance_orders` cards.
+      - Search Engine: Enhanced token matching in search filtering to index both `itemDesc` and `defectDesc` along with customer, service numbers, technician, brand, model, and serial number.
+      - Object Unwrapping: Added `val.itemDescriptionInfo` to `safeText()`.
+    - `MobileDetailSheet.js`:
+      - Top Service Order Card: Prominently renders the composite title `${itemDesc} - ${defectDesc}` (e.g. `DOUGHT MACHINE - PROBLEM`) directly underneath the reference number (`M-001295`).
+      - New Appliance & Defect Info Card: Replaced the old one-line defect card with a complete, structured card matching the edit view:
+        - **Item / Appliance Description**: Bold primary display (`DOUGHT MACHINE`).
+        - **Defect Description**: Red alert text (`PROBLEM`).
+        - **Brand, Model, Serial No., Warranty Status**: Multi-column metadata grid.
+        - **Action Taken & Notes**: Technician field action summary.
+      - Object Unwrapping: Added `val.itemDescriptionInfo` to `safeText()`.
+    - `MobileDocumentPrintModal.js`:
+      - Updated document subject logic to format maintenance subjects as `${itemDesc} - ${defectDesc}` when generating mobile print previews and PDFs.
+    - `isMobile.js`:
+      - Enhanced `isNativeMobile()` to check `window.location.hash.includes('mobile=true')` and `window.location.href.includes('mobile=true')` in addition to `window.location.search`, ensuring HashRouter route changes preserve the mobile layout seamlessly.
+  - **Automated Verification & Quality Gates:**
+    - Pre-build AST check: 0 errors across 234 source files.
+    - Automated Headless Chrome CDP verification suite executed against live Railway API (`https://api.globalgate.sarl`):
+      - Verified **0 JavaScript runtime exceptions** across all 12 mobile modules!
+      - Card List Verification (`mobile_screen_09_maintenance.png`): Confirmed card 1 displays `DOUGHT MACHINE - PROBLEM`, card 2 displays `ELECTRIC PROBLEM - NO POWER`, card 3 displays `EARTH RESISTANCE TEST - GROUND ...`.
+      - Maintenance Orders Verification (`mobile_screen_10_maint_orders.png`): Confirmed card 1 displays `DOUGHT MACHINE - PROBLEM`.
+      - Detail Sheet Verification (`mobile_screen_detail_sheet.png`): Confirmed top header displays `DOUGHT MACHINE - PROBLEM`, Photos & Attachments gallery with 2 archived images, client Paillote Auralia Guest-House, and full Appliance & Defect Info card.
+  - **Builds & Deployment:**
+    - System version bumped to `v3.5.91` in `package.json` and `server/index.js`.
+    - Android Debug APK compiled via `scripts/build-apk.ps1`:
+      - Location: `android/app/build/outputs/apk/debug/app-debug.apk`
+      - Size: 116.75 MB (122,417,143 bytes)
+      - Timestamp: 27-Oct-2026 19:19:31
+    - Windows Desktop Installer compiled via `npm run build:electron` & `npm run make:win`:
+      - Location: `dist/Global Gate Setup 3.5.91.exe`
+      - Size: 90.57 MB (94,970,582 bytes)
+      - Timestamp: 27-Oct-2026 19:22:12
