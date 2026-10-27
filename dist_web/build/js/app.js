@@ -123090,7 +123090,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.87"};
+module.exports = {"rE":"3.5.88"};
 
 /***/ },
 

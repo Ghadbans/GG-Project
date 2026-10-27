@@ -1,3 +1,6 @@
+/**
+ * Global Gate API Server v3.5.88
+ */
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -139,6 +142,8 @@ const attachmentRoutes = require("./routes/attachmentRoutes");
 
 
 const app = express();
+// Trust Cloudflare / Railway reverse proxy so req.ip and rate limiters receive real client IPs
+app.set('trust proxy', 1);
 const server = http.createServer(app)
 const io = new Server(server, {
   cors: {

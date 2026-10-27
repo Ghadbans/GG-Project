@@ -2487,3 +2487,36 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Packaged Windows Desktop installer: `dist/Global Gate Setup 3.5.75.exe`.
     - Committed and pushed all source, `dist_web/`, and documentation updates to `origin main` for automatic Cloudflare Pages Web Portal deployment.
     - Mobile APK work paused per user instruction.
+
+
+- **Authentication Rate Limiting (`express-rate-limit`) & Server-Side Joi Input Validation (Ver 3.5.88)**:
+  - **Audit & Requirements:**
+    - Audited `server/index.js`, `server/routes/AuthRoutes.js`, and `server/Controller/auth.js`.
+    - Identified that `express-rate-limit` was not installed, leaving login endpoints vulnerable to unthrottled brute-force attempts.
+    - Identified that `app.set('trust proxy', 1)` was missing in Express, which would cause rate-limiters behind Cloudflare Orange Cloud (`api.globalgate.sarl`) and Railway reverse proxy to misidentify the client IP.
+    - Identified that authentication request bodies were queried in MongoDB without schema validation, length bounds, or string trimming.
+  - **Architectural Implementation:**
+    1. **Reverse Proxy Configuration (`server/index.js`):**
+       - Enabled `app.set('trust proxy', 1);` immediately after creating the Express application instance to ensure accurate resolution of `req.ip` and reverse proxy headers from Cloudflare (`cf-connecting-ip`) and Railway.
+    2. **Rate Limiting Middleware (`server/Middleware/rateLimiter.js`):**
+       - Implemented `loginLimiter` using `express-rate-limit`:
+         - 15-minute sliding window with a maximum of 10 failed login attempts per client IP.
+         - Configured `skipSuccessfulRequests: true` so legitimate staff logins throughout the workday are never locked out, regardless of office NAT IP sharing.
+         - Resilient `getClientIp` resolution checking `cf-connecting-ip`, then `x-forwarded-for` (first hop), falling back to `req.ip`.
+         - Standard `draft-7` headers enabled; HTTP 429 response: `{ message: "Too many login attempts from this IP. Please try again after 15 minutes." }`.
+       - Implemented `passwordResetLimiter` restricting reset attempts to 5 per 15-minute window to prevent email inbox flooding and resource exhaustion.
+    3. **Server-Side Joi Validation Middleware (`server/Middleware/authValidation.js`):**
+       - Implemented `validateLogin` enforcing string type, trimming, min 1, and max 100 characters for `employeeName`, min 1 and max 128 for `password`, and sanitizing unknown keys to prevent MongoDB query injection.
+       - Implemented `validateRegister`, `validateRequestPasswordReset`, `validateResetPassword`, and `validateLogout`.
+       - Returns clean HTTP 400 responses with `{ message: error.details[0].message }`, which frontend components (`Loginadmin.js` and `Loginemployee.js`) automatically capture and display in user alert banners.
+    4. **Route Integration (`server/routes/AuthRoutes.js`):**
+       - Attached `loginLimiter` and `validateLogin` to `POST /auth/login`.
+       - Attached `validateRegister` to `POST /auth/register`.
+       - Attached `validateLogout` to `POST /auth/logout`.
+       - Attached `passwordResetLimiter` and `validateRequestPasswordReset` to `POST /auth/requestpasswordreset`.
+       - Attached `passwordResetLimiter` and `validateResetPassword` to `POST /auth/passwordreset`.
+  - **Verification & Deployment:**
+    - Automated Node.js integration tests verified validation failures (HTTP 400), rate limiter lockout on 11th consecutive failed attempt (HTTP 429), and per-IP isolation via Cloudflare headers.
+    - Pre-build AST quality gate passed (0 errors across 234 source files).
+    - Web bundle compiled and synchronized to `dist_web/` for Cloudflare Pages portal.
+    - Electron bundle compiled and Windows installer packaged: `dist/Global Gate Setup 3.5.88.exe`.
