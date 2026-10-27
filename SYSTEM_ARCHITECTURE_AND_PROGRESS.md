@@ -2554,3 +2554,4 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Pre-build AST check passed (0 errors across 234 source files).
     - Web bundle compiled and copied to `dist_web/` for Cloudflare Pages auto-deployment.
     - Packaged Windows installer: `dist/Global Gate Setup 3.5.89.exe`.
+    - Live user verification: Tested and confirmed working smoothly across desktop, web, and mobile environments.
