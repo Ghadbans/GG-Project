@@ -33,6 +33,7 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
+import DocumentAttachmentsModal from '../../../component/DocumentAttachmentsModal';
 import ProjectPhase from './ProjectPhase';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
@@ -182,6 +183,18 @@ function ProjectViewInformation() {
   const [loadingData, setLoadingData] = useState(true);
   const [loadingTab, setLoadingTab] = useState(false);
   const [item, SetItems] = useState([])
+  const [openAttachments, setOpenAttachments] = useState(false);
+  const [attachmentCount, setAttachmentCount] = useState(0);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${ENDPOINT_URL}/attachments/${id}`)
+        .then(res => {
+          setAttachmentCount(res.data?.count || (res.data?.data || []).length || 0);
+        })
+        .catch(() => {});
+    }
+  }, [id]);
 
 
   // Priority Data (Initial Load)
@@ -1378,7 +1391,24 @@ const isItemMatch = (item1, item2) => {
                         <div>
                           <Typography sx={{ fontWeight: 'bold', fontSize: '20px' }}> {'P-' + String(row.projectNumber).padStart(6, '0')} | {typeof row.projectName === 'object' && row.projectName !== null ? (row.projectName.projectName || row.projectName.name || '') : String(row.projectName || '')}</Typography>
                         </div>
-                        <div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          <Tooltip title="Attachments">
+                            <IconButton
+                              onClick={() => setOpenAttachments(true)}
+                              sx={{
+                                color: attachmentCount > 0 ? '#1976d2' : '#64748b',
+                                bgcolor: attachmentCount > 0 ? '#eff6ff' : '#f1f5f9',
+                                border: attachmentCount > 0 ? '1px solid #93c5fd' : '1px solid #cbd5e1',
+                                borderRadius: '6px',
+                                p: '6px',
+                                '&:hover': { bgcolor: '#e2e8f0' }
+                              }}
+                            >
+                              <Badge badgeContent={attachmentCount} color="primary" max={99}>
+                                <AttachFileIcon sx={{ fontSize: '20px' }} />
+                              </Badge>
+                            </IconButton>
+                          </Tooltip>
                           <Button
                             aria-controls={open ? 'demo-customized-menu' : undefined}
                             aria-haspopup="true"
@@ -1412,6 +1442,16 @@ const isItemMatch = (item1, item2) => {
                                 <EditIcon />
                                 <Typography>Edit</Typography>
                               </NavLink>
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                handleCloseMenu();
+                                setOpenAttachments(true);
+                              }}
+                              sx={{ display: 'flex', gap: '20px', color: 'gray' }}
+                            >
+                              <AttachFileIcon />
+                              <span>Attachments {attachmentCount > 0 ? `(${attachmentCount})` : ''}</span>
                             </MenuItem>
                             <Divider />
                             <MenuItem onClick={() => handleShow1(2)}> <span style={{ color: 'gray' }}>Comments</span> </MenuItem>
@@ -1615,6 +1655,28 @@ const isItemMatch = (item1, item2) => {
                                           </tr>
                                         </tbody>
                                       </table>
+                                    </CardContent>
+                                    <CardContent sx={{ borderTop: '1px solid #f1f5f9', pt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                                        <AttachFileIcon sx={{ color: '#64748b' }} />
+                                        <Box>
+                                          <Typography sx={{ fontWeight: 700, fontSize: '16px', color: '#1e293b' }}>
+                                            Project Attachments & Documents
+                                          </Typography>
+                                          <Typography variant="body2" sx={{ color: '#64748b' }}>
+                                            {attachmentCount > 0 ? `${attachmentCount} file(s) attached` : 'No files attached yet'}
+                                          </Typography>
+                                        </Box>
+                                      </Box>
+                                      <Button
+                                        variant="outlined"
+                                        size="small"
+                                        startIcon={<AttachFileIcon />}
+                                        onClick={() => setOpenAttachments(true)}
+                                        sx={{ textTransform: 'none', borderRadius: '6px', borderColor: '#cbd5e1', color: '#334155' }}
+                                      >
+                                        {attachmentCount > 0 ? 'Manage Attachments' : 'Attach Files'}
+                                      </Button>
                                     </CardContent>
                                   </Card>
                                 </Grid>
@@ -2350,6 +2412,18 @@ const isItemMatch = (item1, item2) => {
           </table>
         )}
       </div>
+
+      <DocumentAttachmentsModal
+        open={openAttachments}
+        onClose={() => setOpenAttachments(false)}
+        documentId={id}
+        documentType="Project"
+        documentNumber={(() => {
+          const activeProj = project.find(p => p._id === id);
+          return activeProj?.projectNumber ? ('P-' + String(activeProj.projectNumber).padStart(6, '0')) : '';
+        })()}
+        onAttachmentCountChange={(count) => setAttachmentCount(count)}
+      />
 
     </Grid >
   )

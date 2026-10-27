@@ -12,7 +12,6 @@ const attachmentSchema = new Schema(
     documentType: {
       type: String,
       required: true,
-      enum: ['Invoice', 'Estimation', 'PurchaseOrder'],
       index: true,
       trim: true
     },

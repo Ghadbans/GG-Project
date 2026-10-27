@@ -13,6 +13,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import IosShareIcon from '@mui/icons-material/IosShare';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
+import DocumentAttachmentsModal from '../../../component/DocumentAttachmentsModal';
 import SendIcon from '@mui/icons-material/Send';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import MuiAppBar from '@mui/material/AppBar';
@@ -223,6 +224,18 @@ function MaintenanceOrderViewInformation() {
   const [planingInfo, setPlaningInfo] = useState([]);
   const [maintenanceExpenses, setMaintenanceExpenses] = useState([]);
   const [totalMaintenanceExpenses, setTotalMaintenanceExpenses] = useState(0);
+  const [openAttachments, setOpenAttachments] = useState(false);
+  const [attachmentCount, setAttachmentCount] = useState(0);
+
+  useEffect(() => {
+    if (id) {
+      axios.get(`${ENDPOINT_URL}/attachments/${id}`)
+        .then(res => {
+          setAttachmentCount(res.data?.count || (res.data?.data || []).length || 0);
+        })
+        .catch(() => {});
+    }
+  }, [id]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -1079,7 +1092,24 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                            </Typography>
                                          );
                                        })()}
-                                      <div>
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <Tooltip title="Attachments">
+                                          <IconButton
+                                            onClick={() => setOpenAttachments(true)}
+                                            sx={{
+                                              color: attachmentCount > 0 ? '#1976d2' : '#64748b',
+                                              bgcolor: attachmentCount > 0 ? '#eff6ff' : '#f1f5f9',
+                                              border: attachmentCount > 0 ? '1px solid #93c5fd' : '1px solid #cbd5e1',
+                                              borderRadius: '6px',
+                                              p: '6px',
+                                              '&:hover': { bgcolor: '#e2e8f0' }
+                                            }}
+                                          >
+                                            <Badge badgeContent={attachmentCount} color="primary" max={99}>
+                                              <AttachFileIcon sx={{ fontSize: '20px' }} />
+                                            </Badge>
+                                          </IconButton>
+                                        </Tooltip>
                                         <Button
                                           aria-controls={open ? 'demo-customized-menu' : undefined}
                                           aria-haspopup="true"
@@ -1129,6 +1159,16 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                           <Divider />
                                           <MenuItem>
                                             
+                                          </MenuItem>
+                                          <MenuItem
+                                            onClick={() => {
+                                              handleCloseMenu();
+                                              setOpenAttachments(true);
+                                            }}
+                                            sx={{ display: 'flex', gap: '20px', color: 'gray' }}
+                                          >
+                                            <AttachFileIcon />
+                                            <span>Attachments {attachmentCount > 0 ? `(${attachmentCount})` : ''}</span>
                                           </MenuItem>
                                           <Divider />
                                           <MenuItem onClick={handleOpenPrint} sx={{ display: 'flex', gap: '20px', color: 'gray' }}>
@@ -2051,6 +2091,17 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
           )}
         </Box>
       </Modal>
+      <DocumentAttachmentsModal
+        open={openAttachments}
+        onClose={() => setOpenAttachments(false)}
+        documentId={id}
+        documentType="MaintenanceOrder"
+        documentNumber={(() => {
+          const activeM = (maintenance || []).find(m => m._id === id);
+          return activeM?.serviceNumber ? ('M-' + String(activeM.serviceNumber).padStart(6, '0')) : '';
+        })()}
+        onAttachmentCountChange={(count) => setAttachmentCount(count)}
+      />
     </div>
   )
 }

@@ -2555,3 +2555,74 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Web bundle compiled and copied to `dist_web/` for Cloudflare Pages auto-deployment.
     - Packaged Windows installer: `dist/Global Gate Setup 3.5.89.exe`.
     - Live user verification: Tested and confirmed working smoothly across desktop, web, and mobile environments.
+
+- **Mobile Application Comprehensive Testing & Android APK Generation (Ver 3.5.89)**:
+  - **Objective & Scope:**
+    - Automated end-to-end testing and verification of all 12 mobile modules on Capacitor / Android before dispatching the APK to physical devices.
+    - Strict adherence to multi-branch scoping, authentication persistence, and mobile UX paradigms (`MobileLayout`, `MobileDrawer`, `MobileCardList`, `MobileDetailSheet`, `NativeBackHandler`).
+  - **Automated Verification Methodology:**
+    - Simulated native mobile device via Headless Chromium over Chrome DevTools Protocol (CDP) at 393 x 852 viewport with Android User-Agent and touch capabilities.
+    - Authenticated with real CEO user credentials (`GG`, ID: `65c762fbc79604186da5e417`) connecting to live production Railway API (`https://api.globalgate.sarl`).
+    - Sequentially loaded and exercised all 12 core mobile modules:
+      1. `/` - Auth redirection and login handshake
+      2. `/DashboardAdmin` - CEO summary cards, currency rate, SVG donut chart, dynamic FAB actions
+      3. `/InvoiceViewAdmin` - Invoices card feed, search, payment allocation, status pills
+      4. `/CustomerViewAdmin` - Contact cards, direct-dial phone actions, customer details
+      5. `/ItemViewAdmin` - Store items, 48x48 product thumbnails, live stock counters
+      6. `/EstimateViewAdmin` - Quotation cards, status chips, convert to invoice actions
+      7. `/PaymentView` - Payment receipt cards, currency tags, invoice payment allocations
+      8. `/DailyExpenses` - Multi-currency USD/FC breakdown, category badges, expense cards
+      9. `/MaintenanceViewAdmin` - Job cards, defect tracking, labor & parts consumption
+      10. `/MaintenanceOrderAdmin` - Maintenance orders, technician scope isolation (Open & Pending)
+      11. `/ProjectViewAdmin` - Projects directory, customer linkage, status chips
+      12. `/EmployeeViewAdminAll` - Staff directory, role and department badges
+      13. `/SupplierAdminView` - Supplier contact cards, balance tracking
+      14. `/TechnicianStoreDisplay` - Field stock tracking and technician inventory
+    - **Test Results:** 0 unhandled JavaScript exceptions, 0 blank screens, and 14 high-resolution mobile screenshots captured into conversation artifacts.
+  - **Capacitor Sync & Android APK Build:**
+    - Executed `scripts/build-apk.ps1` to compile `dist_web/` and synchronize Capacitor native assets (`npx cap sync android`).
+    - Successfully compiled Android debug APK via Gradle:
+      - Location: `android/app/build/outputs/apk/debug/app-debug.apk`
+      - Size: 111.85 MB (117,288,432 bytes)
+      - Timestamp: 27-Oct-2026 13:08:19
+      - Configured for live API: `https://api.globalgate.sarl`
+
+- **Document Attachments in Project, Maintenance & Maintenance Order + Mobile 1-Tap Camera Photo Archiving (Ver 3.5.90)**:
+  - **User Requirement:**
+    - Extend the Zoho-style Attachments system (already present in Invoice and Quotation modules) to:
+      1. **Project Module** (in the Overview tab and top header next to the Options button).
+      2. **Maintenance Module (Job Cards)** (in the top header and Options menu).
+      3. **Maintenance Order Module** (in the top header and Options menu).
+    - In the Mobile Application, technicians must be able to take photos with their phone's camera and upload them directly to the related Maintenance Order or Project for permanent visual archiving.
+  - **Backend Enhancements (`server/model/attachmentSchema.js`, `server/index.js`):**
+    - Relaxed `documentType` schema definition in `attachmentSchema.js` from restricted enum `['Invoice', 'Estimation', 'PurchaseOrder']` to open indexed string type (`type: String, required: true, index: true, trim: true`), allowing `Project`, `Maintenance`, `MaintenanceOrder`, and any future modules to persist attachments without Mongoose validation errors.
+    - Updated `server/index.js` health-check version to `3.5.90`.
+  - **Desktop / Web Views (`ProjectViewInformation.js`, `MaintenanceViewInformation.js`, `MaintenanceOrderViewInformation.js`):**
+    - `ProjectViewInformation.js`:
+      - Added paperclip `IconButton` with dynamic count `Badge` in top header adjacent to Options button.
+      - Added `Attachments (count)` MenuItem inside Options dropdown.
+      - Added dedicated **Project Attachments & Documents** card in the **Overview** tab displaying attachment count and "Manage Attachments" / "Attach Files" button.
+      - Mounted `<DocumentAttachmentsModal>` with `documentType="Project"` and formatted document number `P-000xxx`.
+    - `MaintenanceViewInformation.js`:
+      - Added paperclip `IconButton` with count `Badge` in top header.
+      - Added `Attachments (count)` MenuItem in Options dropdown.
+      - Mounted `<DocumentAttachmentsModal>` with `documentType="Maintenance"` and formatted service number `M-00xxxx`.
+    - `MaintenanceOrderViewInformation.js`:
+      - Added paperclip `IconButton` with count `Badge` in top header.
+      - Added `Attachments (count)` MenuItem in Options dropdown.
+      - Mounted `<DocumentAttachmentsModal>` with `documentType="MaintenanceOrder"` and formatted service number `M-00xxxx`.
+  - **Mobile Application Architecture (`MobileDetailSheet.js`, `MobileCardList.js`):**
+    - `MobileDetailSheet.js`:
+      - Top AppBar: Added paperclip `IconButton` with dynamic attachment count `Badge`.
+      - Body Card: Injected dedicated **Photos & Attachments** card for `maintenance_orders`, `maintenance`, `projects`, and financial records.
+      - 1-Tap Camera Photo Capture: Provided a primary "Take Photo" button (`CameraAltIcon`) backed by hidden `<input type="file" accept="image/*" capture="environment" />`, instantly opening the native rear camera on Android devices, validating file size ($\le$ 15MB), automatically uploading to `${ENDPOINT_URL}/upload-attachment`, and updating live state with a success toast.
+      - "Upload / Manage Files" button opening full `<DocumentAttachmentsModal>` with multi-file support.
+      - Horizontal mini-gallery displaying thumbnails of all attached photos and PDF document badges with tap-to-expand.
+      - Integrated `<AttachmentPreviewDialog>` for interactive full-screen photo zooming, PDF viewing, downloading, and printing.
+    - `MobileCardList.js`:
+      - Added direct camera/paperclip action buttons on `maintenance_orders`, `maintenance`, and `projects` cards with `e.stopPropagation()`.
+      - Mounted `<DocumentAttachmentsModal>` so technicians can snap and archive photos directly from the card list without entering the full detail sheet.
+  - **Quality Gates, Builds & Deployment:**
+    - Pre-build AST check verified: 0 errors across 234 source files.
+    - Web bundle recompiled (`npm run build:web`) and updated in `dist_web/` for Cloudflare Pages auto-deployment.
+    - Synchronized Capacitor Android assets (`npx cap sync android`) and compiled debug APK: `android/app/build/outputs/apk/debug/app-debug.apk` (113.9 MB, generated 10/27/2026 16:34:04).

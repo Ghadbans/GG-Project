@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectCurrentUser } from '../features/auth/authSlice';
@@ -29,6 +31,14 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import BadgeIcon from '@mui/icons-material/Badge';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import CircularProgress from '@mui/material/CircularProgress';
+import Badge from '@mui/material/Badge';
+import DocumentAttachmentsModal from './DocumentAttachmentsModal';
+import AttachmentPreviewDialog from './AttachmentPreviewDialog';
 import MobileDocumentPrintModal from './MobileDocumentPrintModal';
 
 function safeText(val, fallback = '') {
@@ -875,6 +885,9 @@ function MobileDetailSheet({ open, onClose, record, type }) {
                 </Box>
               </Card>
 
+              {/* Photos & Attachments Card */}
+              {renderAttachmentsCard()}
+
               {/* CARD 2: CLIENT DETAILS */}
               {Boolean(customerName || record?.phone || record?.email) && (
                 <Card sx={{ borderRadius: 3.5, p: 2, mb: 2, backgroundColor: '#ffffff', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
@@ -979,6 +992,36 @@ function MobileDetailSheet({ open, onClose, record, type }) {
           onClose={() => setPrintOpen(false)}
           record={record}
           type={type}
+        />
+
+        {/* ── ATTACHMENTS & DOCUMENT UPLOAD MODAL ── */}
+        <DocumentAttachmentsModal
+          open={openAttachments}
+          onClose={() => setOpenAttachments(false)}
+          documentId={record?._id || record?.id}
+          documentType={
+            type === 'maintenance_orders' ? 'MaintenanceOrder' :
+            type === 'maintenance' ? 'Maintenance' :
+            type === 'projects' ? 'Project' :
+            type === 'quotations' || type === 'estimates' ? 'Estimation' : 'Invoice'
+          }
+          documentNumber={
+            type === 'invoices' ? (typeof record?.invoiceNumber === 'number' ? `INV-${String(record.invoiceNumber).padStart(6, '0')}` : safeText(record?.invoiceNumber, '')) :
+            type === 'quotations' || type === 'estimates' ? (typeof record?.estimateNumber === 'number' ? `Q-${String(record.estimateNumber).padStart(6, '0')}` : safeText(record?.estimateNumber, '')) :
+            type === 'projects' ? (typeof record?.projectNumber === 'number' ? `P-${String(record.projectNumber).padStart(6, '0')}` : safeText(record?.projectNumber, '')) :
+            safeText(record?.serviceNumber || record?.orderNumber || record?.maintenanceNumber, '')
+          }
+          onAttachmentCountChange={(count) => {
+            setAttachmentCount(count);
+            fetchAttachments();
+          }}
+        />
+
+        {/* ── FULL SCREEN ATTACHMENT PREVIEW DIALOG ── */}
+        <AttachmentPreviewDialog
+          open={Boolean(previewAttachment)}
+          onClose={() => setPreviewAttachment(null)}
+          attachment={previewAttachment}
         />
       </>
     );

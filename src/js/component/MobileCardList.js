@@ -24,6 +24,9 @@ import ArrowBack from '@mui/icons-material/ArrowBack';
 import AddIcon from '@mui/icons-material/Add';
 import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
 import MobileDetailSheet from './MobileDetailSheet';
+import AttachFileIcon from '@mui/icons-material/AttachFile';
+import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import DocumentAttachmentsModal from './DocumentAttachmentsModal';
 
 function safeText(val, fallback = '') {
   if (val === null || val === undefined) return fallback;
@@ -753,7 +756,26 @@ function MobileCardList({
                     {getStatusChip(displayStatus, 0, 0)}
                   </Box>
                 </Box>
-                <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+                  <IconButton
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setQuickAttachmentRecord({
+                        record: item,
+                        type: 'maintenance',
+                        docNumber: servNum
+                      });
+                    }}
+                    sx={{
+                      color: '#475569',
+                      backgroundColor: '#f1f5f9',
+                      p: 0.8,
+                      '&:hover': { backgroundColor: '#e2e8f0', color: '#1e293b' }
+                    }}
+                  >
+                    <PhotoCameraIcon sx={{ fontSize: 17 }} />
+                  </IconButton>
                   <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
                 </Box>
               </Card>
@@ -808,7 +830,26 @@ function MobileCardList({
                     {getStatusChip(displayStatus, 0, 0)}
                   </Box>
                 </Box>
-                <Box sx={{ textAlign: 'right', flexShrink: 0 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+                  <IconButton
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setQuickAttachmentRecord({
+                        record: item,
+                        type: 'maintenance_orders',
+                        docNumber: servNum
+                      });
+                    }}
+                    sx={{
+                      color: '#475569',
+                      backgroundColor: '#f1f5f9',
+                      p: 0.8,
+                      '&:hover': { backgroundColor: '#e2e8f0', color: '#1e293b' }
+                    }}
+                  >
+                    <PhotoCameraIcon sx={{ fontSize: 17 }} />
+                  </IconButton>
                   <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
                 </Box>
               </Card>
@@ -940,7 +981,28 @@ function MobileCardList({
                     {customer} {desc ? `• ${desc}` : ''}
                   </Typography>
                 </Box>
-                <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
+                  <IconButton
+                    size="small"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setQuickAttachmentRecord({
+                        record: item,
+                        type: 'projects',
+                        docNumber: `P-${String(item.projectNumber || '').padStart(6, '0')}`
+                      });
+                    }}
+                    sx={{
+                      color: '#475569',
+                      backgroundColor: '#f1f5f9',
+                      p: 0.8,
+                      '&:hover': { backgroundColor: '#e2e8f0', color: '#1e293b' }
+                    }}
+                  >
+                    <AttachFileIcon sx={{ fontSize: 17 }} />
+                  </IconButton>
+                  <ArrowForwardIosIcon sx={{ fontSize: 14, color: '#CBD5E1' }} />
+                </Box>
               </Card>
             );
           }
@@ -1094,6 +1156,19 @@ function MobileCardList({
         onClose={() => setSelectedRecord(null)}
         record={selectedRecord}
         type={type}
+      />
+
+      {/* ── QUICK LIST ATTACHMENT MODAL ── */}
+      <DocumentAttachmentsModal
+        open={Boolean(quickAttachmentRecord)}
+        onClose={() => setQuickAttachmentRecord(null)}
+        documentId={quickAttachmentRecord?.record?._id || quickAttachmentRecord?.record?.id}
+        documentType={
+          quickAttachmentRecord?.type === 'maintenance_orders' ? 'MaintenanceOrder' :
+          quickAttachmentRecord?.type === 'maintenance' ? 'Maintenance' :
+          quickAttachmentRecord?.type === 'projects' ? 'Project' : 'Invoice'
+        }
+        documentNumber={quickAttachmentRecord?.docNumber || ''}
       />
     </Box>
   );
