@@ -1788,9 +1788,9 @@ Route.route("/get-last-saved-grantAccess").get(async(req,res, next)=>{
 })
 // Create grantAccess
 Route.route("/create-grantAccess").post(async (req, res, next) => {
-  const { employeeName, userID, modules, branches, costVisibility, branchId } = req.body;
+  const { employeeName, userID, modules, branches, costVisibility, notificationVisibility, messageVisibility, backupVisibility, branchId } = req.body;
   await grantAccessSchema
-    .create({ employeeName, userID, modules, branches, costVisibility, branchId })
+    .create({ employeeName, userID, modules, branches, costVisibility, notificationVisibility, messageVisibility, backupVisibility, branchId })
     .then((result) => {
       res.json({
         data: result,
@@ -1824,12 +1824,12 @@ Route.route("/get-grantAccess/:id").get(async (req, res, next) => {
 // Update single grantAccess
 
 Route.route("/update-grantAccess/:id").put(async (req, res, next) => {
-  const { employeeName, userID, modules, branches, costVisibility, branchId } = req.body;
+  const { employeeName, userID, modules, branches, costVisibility, notificationVisibility, messageVisibility, backupVisibility, branchId } = req.body;
   await grantAccessSchema
     .findByIdAndUpdate(
       req.params.id,
       {
-        $set: { employeeName, userID, modules, branches, branchId },
+        $set: { employeeName, userID, modules, branches, costVisibility, notificationVisibility, messageVisibility, backupVisibility, branchId },
       },
       { new: true }
     )

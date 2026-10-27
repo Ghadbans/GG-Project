@@ -81203,6 +81203,12 @@ var Delete = __webpack_require__(67034);
 var apiConfig = __webpack_require__(71510);
 // EXTERNAL MODULE: ./node_modules/react-toastify/dist/ReactToastify.css
 var ReactToastify = __webpack_require__(12717);
+// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
+var es = __webpack_require__(13561);
+// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
+var authSlice = __webpack_require__(32005);
+// EXTERNAL MODULE: ./src/js/utils/apiCache.js
+var apiCache = __webpack_require__(46986);
 ;// ./src/js/AdminView1/MessageAdminView.js
 function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
 function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
@@ -81232,6 +81238,9 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
+
 var style = {
   position: 'absolute',
   top: '50%',
@@ -81245,41 +81254,78 @@ var style = {
   pb: 3
 };
 function MessageAdminView(_ref) {
+  var _user$data3;
   var name = _ref.name,
     role = _ref.role;
-  var _useState = (0,react.useState)([]),
+  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
+  var _useState = (0,react.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    messageInfo = _useState2[0],
-    setMessageInfo = _useState2[1];
+    canViewMessage = _useState2[0],
+    setCanViewMessage = _useState2[1];
+  var _useState3 = (0,react.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    messageInfo = _useState4[0],
+    setMessageInfo = _useState4[1];
+  (0,react.useEffect)(() => {
+    var checkMessagePermission = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator(function* () {
+        var _user$data, _user$data2;
+        var currentUserName = name || (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '';
+        var userId = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.id) || localStorage.getItem('user');
+        if (currentUserName === 'GG') {
+          setCanViewMessage(true);
+          return;
+        }
+        if (!userId) {
+          setCanViewMessage(false);
+          return;
+        }
+        try {
+          var _res$data;
+          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var records = (res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
+          var myAccess = records.slice().reverse().find(a => a.userID === userId);
+          setCanViewMessage(myAccess ? myAccess.messageVisibility === true : false);
+        } catch (err) {
+          console.error('Error checking message permission:', err);
+          setCanViewMessage(false);
+        }
+      });
+      return function checkMessagePermission() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+    checkMessagePermission();
+  }, [name, user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName]);
   var userName = name;
   var date = new Date();
   var nowDate = date.toLocaleDateString();
   var nowTime = date.toLocaleTimeString();
-  var _useState3 = (0,react.useState)(''),
-    _useState4 = _slicedToArray(_useState3, 2),
-    message = _useState4[0],
-    setMessage = _useState4[1];
-  var _useState5 = (0,react.useState)('false'),
+  var _useState5 = (0,react.useState)(''),
     _useState6 = _slicedToArray(_useState5, 2),
-    editView = _useState6[0],
-    setEditView = _useState6[1];
-  var _useState7 = (0,react.useState)(null),
+    message = _useState6[0],
+    setMessage = _useState6[1];
+  var _useState7 = (0,react.useState)('false'),
     _useState8 = _slicedToArray(_useState7, 2),
-    idEdit = _useState8[0],
-    setIdEdit = _useState8[1];
-  var _useState9 = (0,react.useState)(''),
+    editView = _useState8[0],
+    setEditView = _useState8[1];
+  var _useState9 = (0,react.useState)(null),
     _useState0 = _slicedToArray(_useState9, 2),
-    updatedMessage = _useState0[0],
-    setUpdatedMessage = _useState0[1];
-  var _useState1 = (0,react.useState)(null),
+    idEdit = _useState0[0],
+    setIdEdit = _useState0[1];
+  var _useState1 = (0,react.useState)(''),
     _useState10 = _slicedToArray(_useState1, 2),
-    replyingTo = _useState10[0],
-    setReplyingTo = _useState10[1];
-  var inputRef = (0,react.useRef)(null);
-  var _useState11 = (0,react.useState)(parseInt(localStorage.getItem('badgeMessage')) || 0),
+    updatedMessage = _useState10[0],
+    setUpdatedMessage = _useState10[1];
+  var _useState11 = (0,react.useState)(null),
     _useState12 = _slicedToArray(_useState11, 2),
-    badgeNumber = _useState12[0],
-    setBadgeNumber = _useState12[1];
+    replyingTo = _useState12[0],
+    setReplyingTo = _useState12[1];
+  var inputRef = (0,react.useRef)(null);
+  var _useState13 = (0,react.useState)(parseInt(localStorage.getItem('badgeMessage')) || 0),
+    _useState14 = _slicedToArray(_useState13, 2),
+    badgeNumber = _useState14[0],
+    setBadgeNumber = _useState14[1];
   var _React$useState = react.useState(null),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     anchorEl = _React$useState2[0],
@@ -81297,8 +81343,12 @@ function MessageAdminView(_ref) {
   var open = Boolean(anchorEl);
   var id = open ? 'simple-popover' : undefined;
   (0,react.useEffect)(() => {
+    if (!canViewMessage) {
+      setMessageInfo([]);
+      return;
+    }
     var fetchComment = /*#__PURE__*/function () {
-      var _ref2 = _asyncToGenerator(function* () {
+      var _ref3 = _asyncToGenerator(function* () {
         try {
           var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/message"));
           setMessageInfo(res.data.data.reverse());
@@ -81307,12 +81357,16 @@ function MessageAdminView(_ref) {
         }
       });
       return function fetchComment() {
-        return _ref2.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       };
     }();
     fetchComment();
-  }, []);
+  }, [canViewMessage]);
   (0,react.useEffect)(() => {
+    if (!canViewMessage) {
+      setBadgeNumber(0);
+      return;
+    }
     var socket = (0,esm.io)("".concat(apiConfig/* API_BASE_URL */.J));
     socket.on('newMessage', newMessage => {
       setMessageInfo(prev => [newMessage, ...prev]);
@@ -81331,15 +81385,15 @@ function MessageAdminView(_ref) {
     return () => {
       socket.off('newMessage');
     };
-  }, [badgeNumber]);
-  var _useState13 = (0,react.useState)(false),
-    _useState14 = _slicedToArray(_useState13, 2),
-    openDelete = _useState14[0],
-    setOpen = _useState14[1];
-  var _useState15 = (0,react.useState)(null),
+  }, [canViewMessage, badgeNumber]);
+  var _useState15 = (0,react.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    DeleteId = _useState16[0],
-    setDeleteId = _useState16[1];
+    openDelete = _useState16[0],
+    setOpen = _useState16[1];
+  var _useState17 = (0,react.useState)(null),
+    _useState18 = _slicedToArray(_useState17, 2),
+    DeleteId = _useState18[0],
+    setDeleteId = _useState18[1];
   var handleOpenDelete = id => {
     setOpen(true);
     setDeleteId(id);
@@ -81367,7 +81421,7 @@ function MessageAdminView(_ref) {
   };
   (0,react.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
-      var _ref3 = _asyncToGenerator(function* () {
+      var _ref4 = _asyncToGenerator(function* () {
         if (idEdit !== null) {
           try {
             var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-message/").concat(idEdit));
@@ -81378,23 +81432,23 @@ function MessageAdminView(_ref) {
         }
       });
       return function fetchData() {
-        return _ref3.apply(this, arguments);
+        return _ref4.apply(this, arguments);
       };
     }();
     fetchData();
   }, [idEdit]);
-  var _useState17 = (0,react.useState)(false),
-    _useState18 = _slicedToArray(_useState17, 2),
-    loading = _useState18[0],
-    setLoading = _useState18[1];
   var _useState19 = (0,react.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    loadingOpenModal = _useState20[0],
-    setLoadingOpenModal = _useState20[1];
+    loading = _useState20[0],
+    setLoading = _useState20[1];
   var _useState21 = (0,react.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    ErrorOpenModal = _useState22[0],
-    setErrorOpenModal = _useState22[1];
+    loadingOpenModal = _useState22[0],
+    setLoadingOpenModal = _useState22[1];
+  var _useState23 = (0,react.useState)(false),
+    _useState24 = _slicedToArray(_useState23, 2),
+    ErrorOpenModal = _useState24[0],
+    setErrorOpenModal = _useState24[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -81409,10 +81463,10 @@ function MessageAdminView(_ref) {
       setLoading(false);
     }, 500);
   };
-  var _useState23 = (0,react.useState)(''),
-    _useState24 = _slicedToArray(_useState23, 2),
-    updateD = _useState24[0],
-    setUpdateD = _useState24[1];
+  var _useState25 = (0,react.useState)(''),
+    _useState26 = _slicedToArray(_useState25, 2),
+    updateD = _useState26[0],
+    setUpdateD = _useState26[1];
   var handleCloseModale = () => {
     setLoadingOpenModal(false);
     setBadgeNumber(0);
@@ -81424,7 +81478,7 @@ function MessageAdminView(_ref) {
     setErrorOpenModal(false);
   };
   var handleDeleteUpdate = /*#__PURE__*/function () {
-    var _ref4 = _asyncToGenerator(function* (e) {
+    var _ref5 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       try {
         var res = yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-message/").concat(DeleteId));
@@ -81437,11 +81491,11 @@ function MessageAdminView(_ref) {
       }
     });
     return function handleDeleteUpdate(_x) {
-      return _ref4.apply(this, arguments);
+      return _ref5.apply(this, arguments);
     };
   }();
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref5 = _asyncToGenerator(function* (e) {
+    var _ref6 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       var data = {
         message: updatedMessage
@@ -81459,11 +81513,11 @@ function MessageAdminView(_ref) {
       }
     });
     return function handleSubmit(_x2) {
-      return _ref5.apply(this, arguments);
+      return _ref6.apply(this, arguments);
     };
   }();
   var handleSubmitEdit = /*#__PURE__*/function () {
-    var _ref6 = _asyncToGenerator(function* (e) {
+    var _ref7 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       if (!message.trim()) return;
       var data = _objectSpread({
@@ -81495,9 +81549,10 @@ function MessageAdminView(_ref) {
       }
     });
     return function handleSubmitEdit(_x3) {
-      return _ref6.apply(this, arguments);
+      return _ref7.apply(this, arguments);
     };
   }();
+  if (!canViewMessage) return null;
   return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     "aria-describedby": id,
     variant: "contained",
@@ -81924,6 +81979,9 @@ function MessageAdminView(_ref) {
 /* harmony import */ var _mui_lab__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(38339);
 /* harmony import */ var _mui_lab__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(38354);
 /* harmony import */ var _component_BranchSwitcher__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(43581);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(32005);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(46986);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -81948,19 +82006,59 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
+
+
 function NotificationVIewInfo() {
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _user$data3;
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_20__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_21__/* .selectCurrentUser */ .xu);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    notification = _useState2[0],
-    setNotification = _useState2[1];
+    canViewNotification = _useState2[0],
+    setCanViewNotification = _useState2[1];
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
-    notificationAll = _useState4[0],
-    setNotificationAll = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    notification = _useState4[0],
+    setNotification = _useState4[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var checkNotificationPermission = /*#__PURE__*/function () {
+      var _ref = _asyncToGenerator(function* () {
+        var _user$data, _user$data2;
+        var userName = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '';
+        var userId = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.id) || localStorage.getItem('user');
+        if (userName === 'GG') {
+          setCanViewNotification(true);
+          return;
+        }
+        if (!userId) {
+          setCanViewNotification(false);
+          return;
+        }
+        try {
+          var _res$data;
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_22__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_15__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var records = (res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data) || [];
+          var myAccess = records.slice().reverse().find(a => a.userID === userId);
+          setCanViewNotification(myAccess ? myAccess.notificationVisibility === true : false);
+        } catch (err) {
+          console.error('Error checking notification permission:', err);
+          setCanViewNotification(false);
+        }
+      });
+      return function checkNotificationPermission() {
+        return _ref.apply(this, arguments);
+      };
+    }();
+    checkNotificationPermission();
+  }, [user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName]);
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
-    badgeNumber = _useState6[0],
-    setBadgeNumber = _useState6[1];
+    notificationAll = _useState6[0],
+    setNotificationAll = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState8 = _slicedToArray(_useState7, 2),
+    badgeNumber = _useState8[0],
+    setBadgeNumber = _useState8[1];
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(null),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     anchorEl = _React$useState2[0],
@@ -81984,8 +82082,12 @@ function NotificationVIewInfo() {
     localStorage.removeItem('badgeNotification');
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!canViewNotification) {
+      setNotificationAll([]);
+      return;
+    }
     var fetchNotification = /*#__PURE__*/function () {
-      var _ref = _asyncToGenerator(function* () {
+      var _ref2 = _asyncToGenerator(function* () {
         try {
           var notificationResponse = yield axios__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_15__/* .ENDPOINT_URL */ .m, "/notification"));
           setNotificationAll(notificationResponse.data.data || []);
@@ -81994,14 +82096,19 @@ function NotificationVIewInfo() {
         }
       });
       return function fetchNotification() {
-        return _ref.apply(this, arguments);
+        return _ref2.apply(this, arguments);
       };
     }();
     fetchNotification();
-  }, []);
+  }, [canViewNotification]);
   var open = Boolean(anchorEl);
   var id = open ? 'simple-popover' : undefined;
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!canViewNotification) {
+      setNotification([]);
+      setBadgeNumber(0);
+      return;
+    }
     // Limit reconnection attempts to stop 30-second "Not Found" spam on Railway
     var socket = (0,socket_io_client__WEBPACK_IMPORTED_MODULE_11__.io)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_15__/* .API_BASE_URL */ .J), {
       reconnection: true,
@@ -82033,23 +82140,23 @@ function NotificationVIewInfo() {
       socket.off('connect_error');
       socket.disconnect();
     };
-  }, []);
+  }, [canViewNotification]);
   var handleClear = () => {
     setNotification([]);
     setBadgeNumber(0);
     localStorage.removeItem('ArrayNotification');
     localStorage.removeItem('badgeNotification');
   };
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState8 = _slicedToArray(_useState7, 2),
-    search2 = _useState8[0],
-    setSearch2 = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState0 = _slicedToArray(_useState9, 2),
+    search2 = _useState0[0],
+    setSearch2 = _useState0[1];
   var handleSearch2 = e => {
     var value = e.target.value;
     setSearch2(value);
   };
   var newArray2 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useMemo)(() => search2 !== '' ? notificationAll.filter(Item => Item.person && Item.person.toLowerCase().includes(search2.toLowerCase()) || Item.reason && Item.reason.toLowerCase().includes(search2.toLowerCase()) || dayjs__WEBPACK_IMPORTED_MODULE_10___default()(Item.dateNotification).format('DD/MM/YYYY') && dayjs__WEBPACK_IMPORTED_MODULE_10___default()(Item.dateNotification).format('DD/MM/YYYY').toLowerCase().includes(search2.toLowerCase())) : notificationAll, [notificationAll, search2]);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_BranchSwitcher__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_BranchSwitcher__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null), canViewNotification && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
     "aria-describedby": id,
     variant: "contained",
     onClick: handleClick
@@ -82244,7 +82351,7 @@ function NotificationVIewInfo() {
       mt: 10,
       color: 'gray'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, "No notifications found")))))));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null, "No notifications found"))))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (NotificationVIewInfo);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
@@ -123090,7 +123197,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.88"};
+module.exports = {"rE":"3.5.89"};
 
 /***/ },
 
@@ -123222,7 +123329,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"67282ee0f46830583293","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"c92302ad851e5178b727","457":"c1821719ed2b67e70b98","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"1abad85f951ed146e3df","742":"66e13e0b5450fcf65cb5","778":"f8950b7fd584414ccde4","806":"bfb6c93ed1c5aab60964","808":"cac03987be65d9da4145","864":"ac9193b4bf40eb4964a0","885":"31cc42012d2c9e2d7394","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"03c44a5a7e793590ff92","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ba5de24276c1ade128c6","1624":"1e1d88c032094f247d47","1645":"661a3084267ece0e899f","1679":"d8fb32f3245f258ef98d","1722":"be03a72cba90d57b0a0e","1853":"daeb90b988179c611229","1861":"b7634fa92c4aa00d7ec7","1919":"7b1af82129a9886cae73","1985":"a25b1912f4c6ab7c10f2","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"b48c5c3c9b24ba5d9ca9","2495":"79a293d0e3613013b386","2517":"956f7558989fb2a45d33","2529":"e413d5ed1cf8c2005daa","2533":"986a33c0b03f7e16c2ba","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"dc1424b8a8728d9c419c","2821":"f424e55a6b798e607833","2835":"4fa5f50cab8055ebf263","2982":"0727aea0e5ca17a6aebb","2992":"058c04018ffb962de6d3","3009":"567b00944880ad958271","3058":"e6936936bb588d1fd1ce","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"4fea95badff56b8cb178","3741":"37d03a8a510f8bda1f4a","3808":"c518f3ecac69876bc7b3","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"3020c016b26240ddc524","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"964dcbf6cc6c30a2f729","4444":"6c28dbf5a7d2ce63594d","4783":"2ef6758b4d9059afc8a8","5059":"628654fd8f024ff22adb","5151":"f463ae729f40b7c0f831","5194":"4ef73fd80cc5dd08e814","5391":"8d1a3a6bf0ab28b7fbbb","5394":"d5b003f164a0045ee00d","5646":"e2e8f697bcd06a54c997","5669":"49f9eb4540f658b32343","5754":"659db805ae05cd3da725","5824":"c8be2075624d4cd16ff2","5881":"53eaddb59888f999c2cf","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"8bb447cd910320602080","6671":"b6960c55bc05ec4289b4","6685":"857160452cc0ec2c80df","6725":"2d7b553f9e8a93ecae15","6744":"66f16a7ab51e26e081ff","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"d00ce31d418ab684ff53","7384":"15615e503514bd58f2f5","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"14760163b3c821c75606","7539":"5ce3db780624994a0e9a","7592":"4f19348d64493b26562b","7612":"e346fb629dc06e2e6fc9","7645":"031f9c20b62c5968dec2","7757":"f75d27feaf347b96d2c6","7801":"d564a8d9182981f7f014","7897":"ee102106a3a9ff3727e2","7941":"b7fc9ac36c91654de447","7997":"2e21126ab3301ab4a2fa","8011":"3e33de92c3e7e283237a","8017":"71c4225691f8990e835d","8027":"bf9a9a5609105898857c","8060":"c0a1baef996cd39788ee","8117":"25756ad53d0d4449d1f8","8282":"a1bc0bb213e670a8dacc","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"3b1c2aa49ef35578d425","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"d919152300f2d1e2c6fa","8970":"86f51603a5fec4482804","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"def62e4f02fef3ac475b","9528":"4dd9c43eb666c40b578c","9564":"859671ce5d7bd5a8a578","9573":"ae2c0655565cb7beeed0","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3ef0da9461f2f9c2bd10","9773":"e6e9bc6fde4b6620c344","9846":"51bc1d1ec09fccb6843d","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"8a47ff782238a1a20a5a","116":"aecf84c095a623a3ddca","118":"67282ee0f46830583293","223":"eae090564130f6c223d1","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"c92302ad851e5178b727","457":"c1821719ed2b67e70b98","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"1abad85f951ed146e3df","742":"66e13e0b5450fcf65cb5","778":"f8950b7fd584414ccde4","806":"bfb6c93ed1c5aab60964","808":"cac03987be65d9da4145","864":"ac9193b4bf40eb4964a0","885":"31cc42012d2c9e2d7394","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"9efd196dd1edf885b32f","1168":"b2f690e1d5399977dcaf","1223":"03c44a5a7e793590ff92","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"411d911c2f9d1179322d","1624":"1e1d88c032094f247d47","1645":"661a3084267ece0e899f","1679":"d8fb32f3245f258ef98d","1722":"be03a72cba90d57b0a0e","1853":"daeb90b988179c611229","1861":"b7634fa92c4aa00d7ec7","1919":"7b1af82129a9886cae73","1985":"a25b1912f4c6ab7c10f2","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"b48c5c3c9b24ba5d9ca9","2495":"a4b8da4d44fe8cbf9fdc","2517":"956f7558989fb2a45d33","2529":"e413d5ed1cf8c2005daa","2533":"986a33c0b03f7e16c2ba","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"dc1424b8a8728d9c419c","2821":"f424e55a6b798e607833","2835":"4fa5f50cab8055ebf263","2982":"0727aea0e5ca17a6aebb","2992":"058c04018ffb962de6d3","3009":"567b00944880ad958271","3058":"e6936936bb588d1fd1ce","3094":"df87a4853ddb2177d1e8","3229":"8cab295c6967223e4e9d","3426":"652c3a09a05b98c83e9c","3502":"4f45d1358142fa1d222e","3547":"1e2de2721983f1041975","3697":"4fea95badff56b8cb178","3741":"37d03a8a510f8bda1f4a","3808":"c518f3ecac69876bc7b3","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"3020c016b26240ddc524","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"964dcbf6cc6c30a2f729","4444":"6c28dbf5a7d2ce63594d","4783":"2ef6758b4d9059afc8a8","5059":"628654fd8f024ff22adb","5151":"f463ae729f40b7c0f831","5194":"4ef73fd80cc5dd08e814","5391":"8d1a3a6bf0ab28b7fbbb","5394":"d5b003f164a0045ee00d","5646":"e2e8f697bcd06a54c997","5669":"49f9eb4540f658b32343","5754":"659db805ae05cd3da725","5824":"c8be2075624d4cd16ff2","5881":"53eaddb59888f999c2cf","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"8bb447cd910320602080","6671":"b6960c55bc05ec4289b4","6685":"857160452cc0ec2c80df","6725":"2d7b553f9e8a93ecae15","6744":"66f16a7ab51e26e081ff","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"d00ce31d418ab684ff53","7384":"15615e503514bd58f2f5","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"14760163b3c821c75606","7539":"5ce3db780624994a0e9a","7592":"4f19348d64493b26562b","7612":"e346fb629dc06e2e6fc9","7645":"031f9c20b62c5968dec2","7757":"f75d27feaf347b96d2c6","7801":"d564a8d9182981f7f014","7897":"ee102106a3a9ff3727e2","7941":"b7fc9ac36c91654de447","7997":"2e21126ab3301ab4a2fa","8011":"3e33de92c3e7e283237a","8017":"71c4225691f8990e835d","8027":"bf9a9a5609105898857c","8060":"c0a1baef996cd39788ee","8117":"25756ad53d0d4449d1f8","8282":"a1bc0bb213e670a8dacc","8354":"176023e85ee8d67dc8c1","8442":"67e79a9bf47e191d1eeb","8520":"bd678456cc879023807e","8646":"3b1c2aa49ef35578d425","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"d919152300f2d1e2c6fa","8970":"86f51603a5fec4482804","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"def62e4f02fef3ac475b","9528":"4dd9c43eb666c40b578c","9564":"859671ce5d7bd5a8a578","9573":"ae2c0655565cb7beeed0","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3ef0da9461f2f9c2bd10","9773":"e6e9bc6fde4b6620c344","9846":"51bc1d1ec09fccb6843d","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -133694,7 +133801,7 @@ function AdminHome() {
     var checkBackupAccess = /*#__PURE__*/function () {
       var _ref6 = AdminHome_asyncToGenerator(function* () {
         try {
-          var _user$data;
+          var _user$data, _res$data;
           // localStorage 'user' stores a plain userId string (not JSON)
           var userId = localStorage.getItem('user');
           if (!userId) return;
@@ -133708,16 +133815,13 @@ function AdminHome() {
             return;
           }
 
-          // For all others: check Grant Access module
+          // For all others: check Grant Access special permission
           var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
-          var myAccess = res.data.data.slice().reverse().find(a => a.userID === userId);
-          if (myAccess && Array.isArray(myAccess.modules)) {
-            // Module field is 'moduleName' in the Grant Access schema
-            var allowed = myAccess.modules.some(m => {
-              var name = typeof m === 'string' ? m : (m === null || m === void 0 ? void 0 : m.moduleName) || (m === null || m === void 0 ? void 0 : m.name) || (m === null || m === void 0 ? void 0 : m.module) || '';
-              return name.toLowerCase().includes('backup');
-            });
-            setHasBackupAccess(allowed);
+          var myAccess = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.slice().reverse().find(a => a.userID === userId);
+          if (myAccess) {
+            setHasBackupAccess(myAccess.backupVisibility === true);
+          } else {
+            setHasBackupAccess(false);
           }
         } catch (e) {
           console.log('Backup access check error:', e.message);

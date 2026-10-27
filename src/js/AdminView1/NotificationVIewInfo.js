@@ -14,11 +14,43 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { API_BASE_URL, ENDPOINT_URL } from '../apiConfig';
 import { TabContext, TabList, TabPanel } from '@mui/lab';
 import BranchSwitcher from '../component/BranchSwitcher';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../features/auth/authSlice';
+import { cachedGet } from '../utils/apiCache';
 
 
 function NotificationVIewInfo() {
-
+  const user = useSelector(selectCurrentUser);
+  const [canViewNotification, setCanViewNotification] = useState(false);
   const [notification, setNotification] = useState([]);
+  useEffect(() => {
+    const checkNotificationPermission = async () => {
+      const userName = user?.data?.userName || '';
+      const userId = user?.data?.id || localStorage.getItem('user');
+
+      if (userName === 'GG') {
+        setCanViewNotification(true);
+        return;
+      }
+
+      if (!userId) {
+        setCanViewNotification(false);
+        return;
+      }
+
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
+        const records = res?.data?.data || [];
+        const myAccess = records.slice().reverse().find(a => a.userID === userId);
+        setCanViewNotification(myAccess ? myAccess.notificationVisibility === true : false);
+      } catch (err) {
+        console.error('Error checking notification permission:', err);
+        setCanViewNotification(false);
+      }
+    };
+    checkNotificationPermission();
+  }, [user?.data?.userName]);
+
   const [notificationAll, setNotificationAll] = useState([]);
   const [badgeNumber, setBadgeNumber] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -40,6 +72,10 @@ function NotificationVIewInfo() {
   };
 
   useEffect(() => {
+    if (!canViewNotification) {
+      setNotificationAll([]);
+      return;
+    }
     const fetchNotification = async () => {
       try {
         const notificationResponse = await axios.get(`${ENDPOINT_URL}/notification`);
@@ -49,12 +85,17 @@ function NotificationVIewInfo() {
       }
     }
     fetchNotification()
-  }, [])
+  }, [canViewNotification])
 
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
   useEffect(() => {
+    if (!canViewNotification) {
+      setNotification([]);
+      setBadgeNumber(0);
+      return;
+    }
     // Limit reconnection attempts to stop 30-second "Not Found" spam on Railway
     const socket = io(`${API_BASE_URL}`, {
       reconnection: true,
@@ -86,7 +127,7 @@ function NotificationVIewInfo() {
       socket.off('connect_error')
       socket.disconnect()
     }
-  }, [])
+  }, [canViewNotification])
 
   const handleClear = () => {
     setNotification([]);
@@ -108,20 +149,22 @@ function NotificationVIewInfo() {
   return (
     <>
       <BranchSwitcher />
-      <IconButton aria-describedby={id} variant="contained" onClick={handleClick}>
-        <Badge badgeContent={badgeNumber} color="secondary">
-          <NotificationsIcon sx={{ color: 'white' }} />
-        </Badge>
-      </IconButton>
-      <Popover
-        id={id}
-        open={open}
-        anchorEl={anchorEl}
-        onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}>
+      {canViewNotification && (
+        <>
+          <IconButton aria-describedby={id} variant="contained" onClick={handleClick}>
+            <Badge badgeContent={badgeNumber} color="secondary">
+              <NotificationsIcon sx={{ color: 'white' }} />
+            </Badge>
+          </IconButton>
+          <Popover
+            id={id}
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}>
         <Box sx={{ width: 430, height: 670 }}>
           <section style={{ padding: '15px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#30368a' }}>Notifications</Typography>
@@ -237,6 +280,8 @@ function NotificationVIewInfo() {
 
         </Box>
       </Popover>
+        </>
+      )}
     </>
   )
 }

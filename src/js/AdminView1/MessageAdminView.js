@@ -13,6 +13,9 @@ import Edit from '@mui/icons-material/Edit';
 import Delete from '@mui/icons-material/Delete';
 import { API_BASE_URL, ENDPOINT_URL } from '../apiConfig';
 import 'react-toastify/ReactToastify.css';
+import { useSelector } from 'react-redux';
+import { selectCurrentUser } from '../features/auth/authSlice';
+import { cachedGet } from '../utils/apiCache';
 
 const style = {
   position: 'absolute',
@@ -29,7 +32,37 @@ const style = {
 
 
 function MessageAdminView({ name, role }) {
+  const user = useSelector(selectCurrentUser);
+  const [canViewMessage, setCanViewMessage] = useState(false);
   const [messageInfo, setMessageInfo] = useState([])
+  useEffect(() => {
+    const checkMessagePermission = async () => {
+      const currentUserName = name || user?.data?.userName || '';
+      const userId = user?.data?.id || localStorage.getItem('user');
+
+      if (currentUserName === 'GG') {
+        setCanViewMessage(true);
+        return;
+      }
+
+      if (!userId) {
+        setCanViewMessage(false);
+        return;
+      }
+
+      try {
+        const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
+        const records = res?.data?.data || [];
+        const myAccess = records.slice().reverse().find(a => a.userID === userId);
+        setCanViewMessage(myAccess ? myAccess.messageVisibility === true : false);
+      } catch (err) {
+        console.error('Error checking message permission:', err);
+        setCanViewMessage(false);
+      }
+    };
+    checkMessagePermission();
+  }, [name, user?.data?.userName]);
+
   const userName = name
   const date = new Date();
   const nowDate = date.toLocaleDateString();
@@ -61,6 +94,10 @@ function MessageAdminView({ name, role }) {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
   useEffect(() => {
+    if (!canViewMessage) {
+      setMessageInfo([]);
+      return;
+    }
     const fetchComment = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/message`)
@@ -70,8 +107,12 @@ function MessageAdminView({ name, role }) {
       }
     }
     fetchComment()
-  }, [])
+  }, [canViewMessage])
   useEffect(() => {
+    if (!canViewMessage) {
+      setBadgeNumber(0);
+      return;
+    }
     const socket = io(`${API_BASE_URL}`)
     socket.on('newMessage', (newMessage) => {
       setMessageInfo((prev) => [newMessage, ...prev])
@@ -88,7 +129,7 @@ function MessageAdminView({ name, role }) {
     return () => {
       socket.off('newMessage')
     }
-  }, [badgeNumber])
+  }, [canViewMessage, badgeNumber])
 
 
   const [openDelete, setOpen] = useState(false);
@@ -228,6 +269,8 @@ function MessageAdminView({ name, role }) {
       }
     }
   }
+
+  if (!canViewMessage) return null;
 
   return (
     <>

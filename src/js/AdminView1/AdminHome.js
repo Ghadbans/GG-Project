@@ -198,21 +198,16 @@ function AdminHome() {
           return;
         }
 
-        // For all others: check Grant Access module
+        // For all others: check Grant Access special permission
         const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
-        const myAccess = res.data.data.slice().reverse().find(
+        const myAccess = res?.data?.data?.slice().reverse().find(
           a => a.userID === userId
         );
 
-        if (myAccess && Array.isArray(myAccess.modules)) {
-          // Module field is 'moduleName' in the Grant Access schema
-          const allowed = myAccess.modules.some(m => {
-            const name = typeof m === 'string'
-              ? m
-              : (m?.moduleName || m?.name || m?.module || '');
-            return name.toLowerCase().includes('backup');
-          });
-          setHasBackupAccess(allowed);
+        if (myAccess) {
+          setHasBackupAccess(myAccess.backupVisibility === true);
+        } else {
+          setHasBackupAccess(false);
         }
       } catch (e) {
         console.log('Backup access check error:', e.message);

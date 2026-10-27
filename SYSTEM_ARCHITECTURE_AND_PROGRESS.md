@@ -2520,3 +2520,37 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Pre-build AST quality gate passed (0 errors across 234 source files).
     - Web bundle compiled and synchronized to `dist_web/` for Cloudflare Pages portal.
     - Electron bundle compiled and Windows installer packaged: `dist/Global Gate Setup 3.5.88.exe`.
+
+
+- **Grant Access Special Permissions (Notification, Msg, Backup) & Multi-Platform Enforcement (Ver 3.5.89)**:
+  - **Problem Reported:**
+    1. Any authenticated user could see the notifications bell icon and read/send live messages via the top-bar icons across desktop, web, and mobile.
+    2. When logging out from the Dashboard (`AdminHome.js`), the "Backup Before Logout?" dialog popped up for every user, even those with no administrative backup responsibilities.
+    3. User requested granular control in the **Grant Access** module under **Special Permissions** (`Notification`, `Msg`, and `Backup`), allowing the CEO/Admin to explicitly grant or deny each permission per user.
+  - **Architectural Implementation:**
+    1. **Database Schema & Backend Routing (`server/model/grantAccessSchema.js`, `server/routes/Routes.js`, `server/index.js`):**
+       - Extended `grantAccessSchema` with `notificationVisibility: { type: Boolean, default: false }`, `messageVisibility: { type: Boolean, default: false }`, and `backupVisibility: { type: Boolean, default: false }`.
+       - Updated `POST /create-grantAccess` and `PUT /update-grantAccess/:id` to persist and update all four special permissions (`costVisibility`, `notificationVisibility`, `messageVisibility`, `backupVisibility`) in MongoDB `$set`.
+       - Configured `/init-permissions` in `server/index.js` to ensure creator `GG` is automatically granted full access across all special permissions.
+    2. **Grant Access UI (`GrantAccessFormView.js`, `GrantAccessUpdateView.js`):**
+       - Expanded the "Special Permissions:" section into a clean responsive 4-column grid:
+         - `View Costs/Rates: Granted / Denied`
+         - `Notification: Granted / Denied`
+         - `Msg: Granted / Denied`
+         - `Backup: Granted / Denied`
+       - Loaded, tracked, and submitted each permission state; added `invalidateCache('/grantAccess')` upon successful save to immediately clear in-memory caches across all active windows.
+    3. **Top Bar Notification Gating (`NotificationVIewInfo.js`):**
+       - Evaluates `canViewNotification`: `GG` has universal bypass; other users must have `myAccess.notificationVisibility === true`.
+       - If denied, hides the notification bell `<IconButton>` and `<Popover>`, while preserving `<BranchSwitcher />` for multi-branch users.
+       - Disables background notification polling and live Socket.io listeners when permission is denied.
+    4. **Top Bar Messages Gating (`MessageAdminView.js`):**
+       - Evaluates `canViewMessage`: `GG` has universal bypass; other users must have `myAccess.messageVisibility === true`.
+       - If denied, component returns `null`, suppressing the envelope icon, message drawer, and audio notifications.
+    5. **Dashboard Logout Backup Prompt Gating (`AdminHome.js`):**
+       - Refactored `checkBackupAccess` from legacy module array search to strictly evaluate `myAccess.backupVisibility === true` (with `GG` bypass).
+       - If `hasBackupAccess === false`, clicking Logout directly calls `doLogout()` with zero backup dialog prompt.
+       - If `hasBackupAccess === true`, opens the "Backup Before Logout?" dialog as intended.
+  - **Verification & Deployment:**
+    - Pre-build AST check passed (0 errors across 234 source files).
+    - Web bundle compiled and copied to `dist_web/` for Cloudflare Pages auto-deployment.
+    - Packaged Windows installer: `dist/Global Gate Setup 3.5.89.exe`.

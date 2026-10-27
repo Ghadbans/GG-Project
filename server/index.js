@@ -1,5 +1,5 @@
 /**
- * Global Gate API Server v3.5.88
+ * Global Gate API Server v3.5.89
  */
 const express = require("express");
 const mongoose = require("mongoose");
@@ -251,6 +251,10 @@ app.get('/init-permissions', async (req, res) => {
 
     if (grantAccess) {
       grantAccess.modules = modules;
+      grantAccess.costVisibility = true;
+      grantAccess.notificationVisibility = true;
+      grantAccess.messageVisibility = true;
+      grantAccess.backupVisibility = true;
       await grantAccess.save();
       return res.send('Permissions for GG updated to FULL ACCESS.');
     }
@@ -258,7 +262,11 @@ app.get('/init-permissions', async (req, res) => {
     grantAccess = new GrantAccess({
       employeeName: user.employeeName,
       userID: user._id,
-      modules
+      modules,
+      costVisibility: true,
+      notificationVisibility: true,
+      messageVisibility: true,
+      backupVisibility: true
     });
 
     await grantAccess.save();

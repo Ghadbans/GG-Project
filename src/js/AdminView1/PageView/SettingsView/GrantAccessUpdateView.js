@@ -33,6 +33,7 @@ import { Add } from '@mui/icons-material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
+import { invalidateCache } from '../../../utils/apiCache';
 
 const LightTooltip = styled(({ className, ...props }) => (
   <Tooltip {...props} classes={{ popper: className }} />
@@ -149,6 +150,9 @@ function GrantAccessUpdateView() {
   const [modules, setModules] = useState([])
   const [branches, setBranches] = useState([]);
   const [costVisibility, setCostVisibility] = useState(false);
+  const [notificationVisibility, setNotificationVisibility] = useState(false);
+  const [messageVisibility, setMessageVisibility] = useState(false);
+  const [backupVisibility, setBackupVisibility] = useState(false);
   const [branchOptions, setBranchOptions] = useState([]);
 
   useEffect(() => {
@@ -174,6 +178,9 @@ function GrantAccessUpdateView() {
         setUserName(res.data.data.employeeName);
         setBranches(res.data.data.branches || []);
         setCostVisibility(res.data.data.costVisibility || false);
+        setNotificationVisibility(res.data.data.notificationVisibility || false);
+        setMessageVisibility(res.data.data.messageVisibility || false);
+        setBackupVisibility(res.data.data.backupVisibility || false);
         let fetchedModules = res.data.data.modules;
 
         
@@ -328,11 +335,15 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
     const data = {
       modules,
       branches,
-      costVisibility
+      costVisibility,
+      notificationVisibility,
+      messageVisibility,
+      backupVisibility
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-grantAccess/${id}`, data)
       if (res) {
+        invalidateCache('/grantAccess');
         // Open Loading View
         handleCreateComment()
         handleOpen();
@@ -524,16 +535,53 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
                       sx={{ mb: 3 }}
                     />
                     
-                    <Typography variant="h6" sx={{ mb: 1 }}>Special Permissions:</Typography>
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={costVisibility}
-                          onChange={(e) => setCostVisibility(e.target.checked)}
+                    <Typography variant="h6" sx={{ mb: 1, fontWeight: 600 }}>Special Permissions:</Typography>
+                    <Grid container spacing={2} sx={{ mb: 2 }}>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={costVisibility}
+                              onChange={(e) => setCostVisibility(e.target.checked)}
+                            />
+                          }
+                          label={`View Costs/Rates: ${costVisibility ? 'Granted' : 'Denied'}`}
                         />
-                      }
-                      label={`View Costs/Rates: ${costVisibility ? 'Granted' : 'Denied'}`}
-                    />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={notificationVisibility}
+                              onChange={(e) => setNotificationVisibility(e.target.checked)}
+                            />
+                          }
+                          label={`Notification: ${notificationVisibility ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={messageVisibility}
+                              onChange={(e) => setMessageVisibility(e.target.checked)}
+                            />
+                          }
+                          label={`Msg: ${messageVisibility ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={backupVisibility}
+                              onChange={(e) => setBackupVisibility(e.target.checked)}
+                            />
+                          }
+                          label={`Backup: ${backupVisibility ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                    </Grid>
                   </Box>
                 </Grid>
                 <Grid item xs={12}>
