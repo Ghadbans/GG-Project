@@ -2685,3 +2685,39 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
       - Location: `dist/Global Gate Setup 3.5.91.exe`
       - Size: 90.57 MB (94,970,582 bytes)
       - Timestamp: 27-Oct-2026 19:22:12
+
+- **Accurate Multi-Word Search & Customer Whitespace Normalization in Invoice and Quotation Modules (Ver 3.5.92)**:
+  - **User Requirement:**
+    - In the Invoice Module and Quotation Module, searching for multi-word queries like customer names (e.g. `ISTANBUL RESTAURANT`) returned 0 rows ("No rows" in DataGrid), even though searching single words (e.g. `ISTANBUL`) returned all matching records (39 invoices, 1 quotation).
+    - User reported: "In INVOICE MODULE and in Quotation Module the search is not accurate !! this we fixed it before why not is doing the same before again .. we fixed the search in all modules and sub-modules".
+  - **Root Cause Analysis & Investigation:**
+    - Live database query and character-level inspection revealed two distinct issues:
+      1. **Broken Regex Token Interpolation**:
+         - In `server/routes/invoiceRoutes.js` (line 238) and `server/routes/estimationRoutes.js` (line 306), the token regex construction had an unintended backslash escape: `new RegExp(tokens.map(t => '(?=.*\${t})').join(''), 'i')`.
+         - In JavaScript template literals/strings, `\${t}` was treated as the literal characters `${t}` rather than variable interpolation, evaluating to `/(?=.*${t})(?=.*${t})/i`. Any query containing two or more words attempted to match the literal substring `"${t}"`, immediately returning 0 records.
+      2. **Non-Breaking Space (`\u00a0`) in Legacy Records**:
+         - Inspecting MongoDB customer data (`scratch/test_live_search.js`) revealed that customer name for Istanbul Restaurant is stored with a non-breaking space: `"ISTANBUL\u00a0RESTAURANT"` (character code 160) rather than a standard ASCII space (`\u0020`, code 32).
+         - Standard string queries and basic whitespace-agnostic regexes failed because ASCII space did not match `\u00a0`.
+      3. **Customer ObjectId vs String Matching**:
+         - Invoices and estimates link customers either via MongoDB ObjectIds or strings across multiple keys (`customerName._id`, `customerName.id`, `customerName`, `customerId`, `customer`, `customer._id`).
+         - The search filter previously only checked ObjectIds against `{ 'customerName._id': { $in: matchingCustomerIds } }`, ignoring string-based references.
+  - **Comprehensive Backend Search Fixes (`invoiceRoutes.js` & `estimationRoutes.js`):**
+    - **Variable Interpolation**: Fixed `allTokensRegex` to cleanly interpolate tokens: `new RegExp(tokens.map(t => '(?=.*' + t + ')').join(''), 'i')`.
+    - **Whitespace & Non-Breaking Space Normalization**: Added `normalizedRegex`: `new RegExp(tokens.join('[\\s\\u00a0]+'), 'i')`, allowing any number of spaces, tabs, or non-breaking spaces between words.
+    - **Resilient Customer Lookup**:
+      - `customerQuery` now queries across `cRegexList = [allTokensRegex, normalizedRegex, fullRegex]` in `customerSchema`.
+      - Expanded `allCustomerIds` to include both raw ObjectIds and stringified IDs (`matchingCustomerIds.map(id => id.toString())`).
+      - In `searchOr` / `orConditions`, matched against all potential customer reference fields: `customerName._id`, `customerName.id`, `customerName`, `customerId`, `customer`, and `customer._id`.
+    - **Numeric Amount Search**: Added support for searching invoices and quotations by numeric amount (`totalInvoice`, `subTotal`, `balanceDue`, `total`) alongside invoice/estimate number prefix stripping.
+  - **Quality Gates, Builds & Deployment:**
+    - Quality Gate check: Deep AST and safety verification PASSED on all 234 source files with 0 errors.
+    - System version bumped to `v3.5.92` in `package.json` and `server/index.js`.
+    - Web application rebuilt: `npm run build:web` generated updated bundle in `dist_web/`.
+    - Android Debug APK compiled via `scripts/build-apk.ps1`:
+      - Location: `android/app/build/outputs/apk/debug/app-debug.apk`
+      - Size: 116.75 MB (122,418,900 bytes)
+      - Timestamp: 28-Oct-2026 14:36:01
+    - Windows Desktop Installer compiled via `npm run build:electron` & `npm run make:win`:
+      - Location: `dist/Global Gate Setup 3.5.92.exe`
+      - Size: 90.57 MB (94,970,552 bytes)
+      - Timestamp: 28-Oct-2026 14:39:12

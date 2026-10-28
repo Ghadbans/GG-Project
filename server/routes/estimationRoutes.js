@@ -303,7 +303,10 @@ Route.route("/estimation-Information").get(async (req, res) => {
       
       const fullRegex = new RegExp(escapedSearch, 'i');
       const allTokensRegex = tokens.length > 1
-        ? new RegExp(tokens.map(t => `(?=.*\${t})`).join(''), 'i')
+        ? new RegExp(tokens.map(t => '(?=.*' + t + ')').join(''), 'i')
+        : fullRegex;
+      const normalizedRegex = tokens.length > 1
+        ? new RegExp(tokens.join('[\\s\\u00a0]+'), 'i')
         : fullRegex;
 
       const numClean = trimmedSearch.replace(/^([Ee][Ss][Tt]|[Qq][Uu][Oo]|[Qq])[-_\s]*/, '');
@@ -311,42 +314,53 @@ Route.route("/estimation-Information").get(async (req, res) => {
 
       let matchingCustomerIds = [];
       try {
-        const customerQuery = {
-          $or: [
-            { Customer: allTokensRegex },
-            { customerName: allTokensRegex },
-            { customerFullName: allTokensRegex },
-            { companyName: allTokensRegex },
-            { customerEmail: allTokensRegex },
-            { customerPhone: allTokensRegex },
-            { billingAddress: allTokensRegex },
-            { billingCity: allTokensRegex },
-            ...(tokens.length === 2 ? [
-              {
-                customerFirstName: new RegExp(tokens[0], 'i'),
-                customerLastName: new RegExp(tokens[1], 'i')
-              },
-              {
-                customerFirstName: new RegExp(tokens[1], 'i'),
-                customerLastName: new RegExp(tokens[0], 'i')
-              }
-            ] : [])
-          ]
-        };
+        const cRegexList = tokens.length > 1 ? [allTokensRegex, normalizedRegex, fullRegex] : [fullRegex];
+        const customerOrConditions = [];
+        for (const crgx of cRegexList) {
+          customerOrConditions.push(
+            { Customer: crgx },
+            { customerName: crgx },
+            { customerFullName: crgx },
+            { companyName: crgx },
+            { customerEmail: crgx },
+            { customerPhone: crgx },
+            { billingAddress: crgx },
+            { billingCity: crgx }
+          );
+        }
+        if (tokens.length === 2) {
+          customerOrConditions.push(
+            { customerFirstName: new RegExp(tokens[0], 'i'), customerLastName: new RegExp(tokens[1], 'i') },
+            { customerFirstName: new RegExp(tokens[1], 'i'), customerLastName: new RegExp(tokens[0], 'i') }
+          );
+        }
+        const customerQuery = { $or: customerOrConditions };
         const matchingCustomers = await customerSchema.find(customerQuery, '_id').lean();
         matchingCustomerIds = matchingCustomers.map(c => c._id);
       } catch (err) {
         console.error("Error matching customers:", err);
       }
 
-      const regexList = tokens.length > 1 ? [allTokensRegex, fullRegex] : [fullRegex];
+      const allCustomerIds = [
+        ...matchingCustomerIds,
+        ...matchingCustomerIds.map(id => id.toString())
+      ];
+
+      const rawNumClean = trimmedSearch.replace(/^[^\d.]*/, '').replace(/[^\d.]*$/, '');
+      const amountNum = (!isNaN(Number(rawNumClean)) && rawNumClean !== '') ? Number(rawNumClean) : null;
+
+      const regexList = tokens.length > 1 ? [allTokensRegex, normalizedRegex, fullRegex] : [fullRegex];
 
       const orConditions = [
         ...(searchNum !== null ? [{ estimateNumber: searchNum }] : []),
+        ...(amountNum !== null ? [{ total: amountNum }, { subTotal: amountNum }, { totalInvoice: amountNum }] : []),
         ...(matchingCustomerIds.length > 0 ? [
-          { 'customerName._id': { $in: matchingCustomerIds } },
-          { customerId: { $in: matchingCustomerIds } },
-          { 'customerName.id': { $in: matchingCustomerIds } }
+          { 'customerName._id': { $in: allCustomerIds } },
+          { 'customerName.id': { $in: allCustomerIds } },
+          { customerName: { $in: allCustomerIds } },
+          { customerId: { $in: allCustomerIds } },
+          { customer: { $in: allCustomerIds } },
+          { 'customer._id': { $in: allCustomerIds } }
         ] : [])
       ];
 
