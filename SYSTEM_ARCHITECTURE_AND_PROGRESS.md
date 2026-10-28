@@ -2703,7 +2703,8 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
          - The search filter previously only checked ObjectIds against `{ 'customerName._id': { $in: matchingCustomerIds } }`, ignoring string-based references.
   - **Comprehensive Backend Search Fixes (`invoiceRoutes.js` & `estimationRoutes.js`):**
     - **Variable Interpolation**: Fixed `allTokensRegex` to cleanly interpolate tokens: `new RegExp(tokens.map(t => '(?=.*' + t + ')').join(''), 'i')`.
-    - **Whitespace & Non-Breaking Space Normalization**: Added `normalizedRegex`: `new RegExp(tokens.join('[\\s\\u00a0]+'), 'i')`, allowing any number of spaces, tabs, or non-breaking spaces between words.
+    - **Whitespace & Non-Breaking Space Normalization**: Added `normalizedRegex`: `new RegExp(tokens.join('[\\s\u00a0]+'), 'i')`, utilizing the literal non-breaking space character to ensure full compatibility with MongoDB's PCRE2 regex engine (which rejects `\u` escapes).
+    - **Defensive Pagination Guard**: Added `Math.max(1, parseInt(page, 10) || 1)` to prevent negative `skip` values when page is 0 or uninitialized.
     - **Resilient Customer Lookup**:
       - `customerQuery` now queries across `cRegexList = [allTokensRegex, normalizedRegex, fullRegex]` in `customerSchema`.
       - Expanded `allCustomerIds` to include both raw ObjectIds and stringified IDs (`matchingCustomerIds.map(id => id.toString())`).
