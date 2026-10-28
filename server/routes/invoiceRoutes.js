@@ -189,7 +189,9 @@ Route.route("/invoice", cors(corsOptionsDelegate)).get(
 Route.route("/invoice-Information").get(async (req, res) => {
   try {
     const { page = 1, limit = 100, search = '', filterField, filterValue, branchId, status } = req.query;
-    const skip = (Number(page) - 1) * Number(limit);
+    const pageNum = Math.max(1, parseInt(page, 10) || 1);
+    const limitNum = Math.max(1, parseInt(limit, 10) || 100);
+    const skip = (pageNum - 1) * limitNum;
 
     // Build the query object dynamically based on the filters
     const query = branchFilter(req);
@@ -238,7 +240,7 @@ Route.route("/invoice-Information").get(async (req, res) => {
         ? new RegExp(tokens.map(t => '(?=.*' + t + ')').join(''), 'i')
         : fullRegex;
       const normalizedRegex = tokens.length > 1
-        ? new RegExp(tokens.join('[\\s\\u00a0]+'), 'i')
+        ? new RegExp(tokens.join('[\\s\u00a0]+'), 'i')
         : fullRegex;
 
       const numClean = trimmedSearch.replace(/^[Ii][Nn][Vv][-_\s]*/, '');
