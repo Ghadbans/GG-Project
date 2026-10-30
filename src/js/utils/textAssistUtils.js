@@ -19,11 +19,16 @@ export const COMMON_PRESETS = {
     'Burnt Coil',
     'Mechanical Breakdown',
     'Low Pressure',
-    'Tripping Breaker'
+    'Tripping Breaker',
+    'Intermittent On/Off Fault',
+    'Video Signal Lost / Flickering',
+    'Sensor / Thermostat Error',
+    'Blown Fuse'
   ],
   appliances: [
     'Air Conditioner',
     'Generator',
+    'CCTV Security Cameras',
     'Bakery Dough Mixer',
     'Electric Oven',
     'Water Pump',
@@ -33,7 +38,9 @@ export const COMMON_PRESETS = {
     'Transformer',
     'Ice Machine',
     'Air Compressor',
-    'Deep Fryer'
+    'Deep Fryer',
+    'Refrigerator / Freezer',
+    'Electrical Control Panel'
   ],
   actions: [
     'Diagnostic & Inspection OK',
@@ -45,7 +52,8 @@ export const COMMON_PRESETS = {
     'Replaced Bearings & Belts',
     'Tested & Fully Operational',
     'Calibrated & Adjusted',
-    'Replaced Burnt Coil'
+    'Replaced Burnt Coil',
+    'Firmware Updated & System Reset'
   ],
   subjects: [
     'Maintenance & Repair Services',
@@ -53,7 +61,8 @@ export const COMMON_PRESETS = {
     'Troubleshooting & Emergency Repair',
     'Preventive Maintenance Contract',
     'Installation & Commissioning',
-    'Technical Inspection & Audit'
+    'Technical Inspection & Audit',
+    'Security & Surveillance System Service'
   ]
 };
 

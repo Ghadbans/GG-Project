@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
-import QuickChipsBar from '../../../component/QuickChipsBar';
+import SmartTextInput from '../../../component/SmartTextInput';
 import { polishText } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -1218,53 +1218,37 @@ The GLOBAL GATE Team`;
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
-                    <QuickChipsBar presetKey="subjects" label="Common Subjects:" currentValue={estimateSubject} onSelect={(val) => setEstimateSubject(val)} />
-                    <TextField
+                    <SmartTextInput
                       id='estimateSubject'
                       name='estimateSubject'
                       label='Subject'
+                      presetKey='subjects'
                       value={estimateSubject}
-                      onChange={(e) => setEstimateSubject(e.target.value)}
-                      onBlur={() => { if (estimateSubject) { const p = polishText(estimateSubject, 'sentence'); if (p !== estimateSubject) setEstimateSubject(p); } }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <LanguageFixerButton value={estimateSubject} onFixed={setEstimateSubject} mode="sentence" />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setEstimateSubject(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <QuickChipsBar presetKey="defects" label="Common Defects:" currentValue={estimateDefect} onSelect={(val) => setEstimateDefect(val)} />
-                    <TextField
+                    <SmartTextInput
                       id='estimateDefect'
                       name='estimateDefect'
                       label='Defect'
+                      presetKey='defects'
                       value={estimateDefect}
-                      onChange={(e) => setEstimateDefect(e.target.value)}
-                      onBlur={() => { if (estimateDefect) { const p = polishText(estimateDefect, 'sentence'); if (p !== estimateDefect) setEstimateDefect(p); } }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <LanguageFixerButton value={estimateDefect} onFixed={setEstimateDefect} mode="sentence" />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setEstimateDefect(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
+                    <SmartTextInput
                       id='noteInfo'
                       name='noteInfo'
+                      label='Quotation Note'
                       multiline
                       rows={3}
                       value={noteInfo}
-                      label='Note'
-                      onChange={(e) => setNoteInfo(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setNoteInfo(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1739,16 +1723,16 @@ The GLOBAL GATE Team`;
 
                   <Grid item xs={12}>
                     <div style={{ display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
-                      <TextField
-                        id='note'
-                        name='note'
-                        multiline
-                        rows={4}
-                        value={note}
-                        label='Quote Note'
-                        onChange={(e) => setNote(e.target.value)}
-                        sx={{ width: '50%', backgroundColor: 'white' }}
-                      />
+                      <SmartTextInput
+                      id='note'
+                      name='note'
+                      label='Note'
+                      multiline
+                      rows={3}
+                      value={note}
+                      onChange={(val) => setNote(val)}
+                      mode='sentence'
+                    />
                       <table className="firstTable">
                         <tbody>
                           <tr style={{ borderBottom: '1px solid black' }}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
-import QuickChipsBar from '../../../component/QuickChipsBar';
+import SmartTextInput from '../../../component/SmartTextInput';
 import { polishText } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
@@ -1372,44 +1372,37 @@ function InvoiceFormUpdate() {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
-                    <QuickChipsBar presetKey="subjects" label="Common Subjects:" currentValue={invoiceSubject} onSelect={(val) => setInvoiceSubject(val)} />
-                    <TextField
+                    <SmartTextInput
                       id='invoiceSubject'
                       name='invoiceSubject'
                       label='Subject'
-                      value={invoiceSubject !== undefined ? invoiceSubject : ''}
-                      onChange={(e) => setInvoiceSubject(e.target.value)}
-                      onBlur={() => { if (invoiceSubject) { const p = polishText(invoiceSubject, 'sentence'); if (p !== invoiceSubject) setInvoiceSubject(p); } }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <LanguageFixerButton value={invoiceSubject} onFixed={setInvoiceSubject} mode="sentence" />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      presetKey='subjects'
+                      value={invoiceSubject}
+                      onChange={(val) => setInvoiceSubject(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
+                    <SmartTextInput
                       id='invoiceDefect'
                       name='invoiceDefect'
                       label='Defect'
-                      value={invoiceDefect !== undefined ? invoiceDefect : ''}
-                      onChange={(e) => setInvoiceDefect(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      presetKey='defects'
+                      value={invoiceDefect}
+                      onChange={(val) => setInvoiceDefect(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
+                    <SmartTextInput
                       id='noteInfo'
                       name='noteInfo'
+                      label='Invoice Note'
                       multiline
                       rows={3}
-                      value={noteInfo !== undefined ? noteInfo : ''}
-                      label='Note'
-                      onChange={(e) => setNoteInfo(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      value={noteInfo}
+                      onChange={(val) => setNoteInfo(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   {
@@ -1908,16 +1901,16 @@ function InvoiceFormUpdate() {
                   </Grid>
                   <Grid item xs={12}>
                     <div style={{ display: 'flex', gap: '20px', justifyContent: 'space-between' }}>
-                      <TextField
-                        id='note'
-                        name='note'
-                        multiline
-                        rows={4}
-                        value={note}
-                        label='Invoice Note'
-                        onChange={(e) => setNote(e.target.value)}
-                        sx={{ width: '50%', backgroundColor: 'white' }}
-                      />
+                      <SmartTextInput
+                      id='note'
+                      name='note'
+                      label='Note'
+                      multiline
+                      rows={3}
+                      value={note}
+                      onChange={(val) => setNote(val)}
+                      mode='sentence'
+                    />
                       <table className="firstTable" style={{ borderCollapse: 'collapse', width: '100%' }}>
                         <tbody>
                           <tr style={{ borderBottom: '1px solid black' }}>

@@ -49,7 +49,7 @@ import ItemThumbnail from '../../../component/ItemThumbnail';
 import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './AssetControlReportSection';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
-import QuickChipsBar from '../../../component/QuickChipsBar';
+import SmartTextInput from '../../../component/SmartTextInput';
 import { polishText, toTitleCase, toUpperCaseCode } from '../../../utils/textAssistUtils';
 
 
@@ -900,22 +900,14 @@ function MaintenanceFormView() {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                {/* Quick Appliance Chips */}
-                <QuickChipsBar presetKey="appliances" label="Quick Appliance:" currentValue={itemDescriptionInfo} onSelect={(val) => setItemDescriptionInfo(val)} />
-                <TextField
+                <SmartTextInput
                   fullWidth
                   size="small"
                   label="Appliance Description"
+                  presetKey="appliances"
                   value={itemDescriptionInfo || ''}
-                  onChange={(e) => setItemDescriptionInfo(e.target.value)}
-                  onBlur={() => { if (itemDescriptionInfo) { const p = polishText(itemDescriptionInfo, 'sentence'); if (p !== itemDescriptionInfo) setItemDescriptionInfo(p); } }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <LanguageFixerButton value={itemDescriptionInfo} onFixed={setItemDescriptionInfo} mode="sentence" />
-                      </InputAdornment>
-                    )
-                  }}
+                  onChange={(val) => setItemDescriptionInfo(val)}
+                  mode="sentence"
                 />
               </Grid>
               <Grid item xs={6}>
@@ -937,24 +929,16 @@ function MaintenanceFormView() {
                 />
               </Grid>
               <Grid item xs={12}>
-                {/* Quick Defect Chips */}
-                <QuickChipsBar presetKey="defects" label="Quick Defects:" currentValue={defectDescription} onSelect={(val) => setDefectDescription(val)} />
-                <TextField
+                <SmartTextInput
                   fullWidth
                   multiline
                   rows={3}
                   size="small"
                   label="Defect Description"
+                  presetKey="defects"
                   value={defectDescription || ''}
-                  onChange={(e) => setDefectDescription(e.target.value)}
-                  onBlur={() => { if (defectDescription) { const p = polishText(defectDescription, 'sentence'); if (p !== defectDescription) setDefectDescription(p); } }}
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <LanguageFixerButton value={defectDescription} onFixed={setDefectDescription} mode="sentence" />
-                      </InputAdornment>
-                    )
-                  }}
+                  onChange={(val) => setDefectDescription(val)}
+                  mode="sentence"
                 />
               </Grid>
             </Grid>
@@ -1466,82 +1450,66 @@ function MaintenanceFormView() {
                     <p style={{ textAlign: 'center' }}>Appliance Info</p>
                   </Grid>
                   <Grid item xs={12}>
-                    <QuickChipsBar presetKey="appliances" label="Quick Appliance:" currentValue={itemDescriptionInfo} onSelect={(val) => setItemDescriptionInfo(val)} />
-                    <TextField
+                    <SmartTextInput
                       id='itemDescription'
                       name='itemDescription'
                       label='Item Description'
+                      presetKey='appliances'
                       value={itemDescriptionInfo}
-                      onChange={(e) => setItemDescriptionInfo(e.target.value)}
-                      onBlur={() => { if (itemDescriptionInfo) { const p = polishText(itemDescriptionInfo, 'sentence'); if (p !== itemDescriptionInfo) setItemDescriptionInfo(p); } }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <LanguageFixerButton value={itemDescriptionInfo} onFixed={setItemDescriptionInfo} mode="sentence" />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setItemDescriptionInfo(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
+                    <SmartTextInput
                       id='brand'
                       name='brand'
                       label='Brand'
                       value={brand}
-                      onChange={(e) => setBrand(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setBrand(val)}
+                      mode='title'
                     />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
+                    <SmartTextInput
                       id='model'
                       name='model'
                       label='Model'
                       value={model}
-                      onChange={(e) => setModel(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setModel(val)}
+                      mode='upper'
                     />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
+                    <SmartTextInput
                       id='serialNo'
                       name='serialNo'
                       label='Serial No'
                       value={serialNo}
-                      onChange={(e) => setSerialNo(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setSerialNo(val)}
+                      mode='upper'
                     />
                   </Grid>
 
                   <Grid item xs={6}>
-                    <QuickChipsBar presetKey="defects" label="Common Defects:" currentValue={defectDescription} onSelect={(val) => setDefectDescription(val)} />
-                    <TextField
+                    <SmartTextInput
                       id='defectDescription'
                       name='defectDescription'
                       label='Defect Description'
+                      presetKey='defects'
                       value={defectDescription}
-                      onChange={(e) => setDefectDescription(e.target.value)}
-                      onBlur={() => { if (defectDescription) { const p = polishText(defectDescription, 'sentence'); if (p !== defectDescription) setDefectDescription(p); } }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end">
-                            <LanguageFixerButton value={defectDescription} onFixed={setDefectDescription} mode="sentence" />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setDefectDescription(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
+                    <SmartTextInput
                       id='warranty'
                       name='warranty'
                       label='Warranty Status'
                       value={warranty}
-                      onChange={(e) => setWarranty(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setWarranty(val)}
+                      mode='title'
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1577,36 +1545,28 @@ function MaintenanceFormView() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
-                    <QuickChipsBar presetKey="actions" label="Common Actions:" currentValue={actionTaken} onSelect={(val) => setActionTaken(val)} />
-                    <TextField
+                    <SmartTextInput
                       id='actionTaken'
                       name='actionTaken'
                       label='Action Taken'
+                      presetKey='actions'
                       multiline
                       rows={5}
                       value={actionTaken}
-                      onChange={(e) => setActionTaken(e.target.value)}
-                      onBlur={() => { if (actionTaken) { const p = polishText(actionTaken, 'sentence'); if (p !== actionTaken) setActionTaken(p); } }}
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position="end" sx={{ alignSelf: 'flex-start', mt: 1 }}>
-                            <LanguageFixerButton value={actionTaken} onFixed={setActionTaken} mode="sentence" />
-                          </InputAdornment>
-                        )
-                      }}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setActionTaken(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
+                    <SmartTextInput
                       id='note'
                       name='note'
                       label='Note'
                       multiline
                       rows={5}
                       value={note}
-                      onChange={(e) => setNote(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
+                      onChange={(val) => setNote(val)}
+                      mode='sentence'
                     />
                   </Grid>
                   <Grid item xs={12}>

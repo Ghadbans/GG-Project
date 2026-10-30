@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
-import QuickChipsBar from '../../../component/QuickChipsBar';
+import SmartTextInput from '../../../component/SmartTextInput';
 import { polishText } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
@@ -1239,44 +1239,37 @@ The GLOBAL GATE Team`;
                       </LocalizationProvider>
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <SmartTextInput
                         id="estimateDefect"
                         name="estimateDefect"
                         label="Defect"
+                        presetKey="defects"
                         value={estimateDefect}
-                        onChange={(e) => setEstimateDefect(e.target.value)}
-                        sx={{ width: '100%', backgroundColor: 'white' }}
+                        onChange={(val) => setEstimateDefect(val)}
+                        mode="sentence"
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <QuickChipsBar presetKey="subjects" label="Common Subjects:" currentValue={estimateSubject} onSelect={(val) => setEstimateSubject(val)} />
-                        <TextField
+                        <SmartTextInput
                         id="estimateSubject"
                         name="estimateSubject"
                         label="Subject"
+                        presetKey="subjects"
                         value={estimateSubject}
-                        onChange={(e) => setEstimateSubject(e.target.value)}
-                          onBlur={() => { if (estimateSubject) { const p = polishText(estimateSubject, 'sentence'); if (p !== estimateSubject) setEstimateSubject(p); } }}
-                          InputProps={{
-                            endAdornment: (
-                              <InputAdornment position="end">
-                                <LanguageFixerButton value={estimateSubject} onFixed={setEstimateSubject} mode="sentence" />
-                              </InputAdornment>
-                            )
-                          }}
-                        sx={{ width: '100%', backgroundColor: 'white' }}
+                        onChange={(val) => setEstimateSubject(val)}
+                        mode="sentence"
                       />
                     </Grid>
                     <Grid item xs={6}>
-                      <TextField
+                      <SmartTextInput
                         id="noteInfo"
                         name="noteInfo"
+                        label="Note"
                         multiline
                         rows={3}
                         value={noteInfo !== undefined ? noteInfo : ''}
-                        label="Note"
-                        onChange={(e) => setNoteInfo(e.target.value)}
-                        sx={{ width: '100%', backgroundColor: 'white' }}
+                        onChange={(val) => setNoteInfo(val)}
+                        mode="sentence"
                       />
                     </Grid>
                     <Grid item xs={12}>
