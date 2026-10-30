@@ -2776,3 +2776,53 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - Windows Installer: `dist/Global Gate Setup 3.5.95.exe` (95.32 MB).
     - Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` (120.27 MB).
     - Web & Backend: Version bumped to `v3.5.95` in `package.json` and `server/index.js`.
+
+- **Word-by-Word Spellchecking Engine, Universal CAPITAL LETTERS & Daily Expenses Sparkle Assistant (Ver 3.5.97)**:
+  - **User Feedback & Problem Analysis**:
+    - In v3.5.95/v3.5.96 testing, the user noticed:
+      1. Whole-sentence typos were not being corrected word-by-word:
+         - `ARI CONTONER` remained `ARI CONTONER` rather than correcting to `AIR CONDITIONER`.
+         - `ARI CONTONER TSET` only fixed `TSET` to `TEST`, leaving `ARI CONTONER` untouched.
+         - `FULLOW` clicked Sparkle and displayed toast *"Text is already clean and correctly formatted in CAPITAL LETTERS!"* instead of correcting to `FOLLOW`.
+         - `UOT OF ORDDER` gave the same toast without fixing to `OUT OF ORDER`.
+         - `LFIE IHIS GOOD` was not fixing all individual words.
+      2. The user required **universal CAPITAL LETTERS** across the entire system, all modules and sub-modules (Maintenance, POS, Invoices, Quotations, Daily Expenses, Customers, Suppliers, Employees, Projects, etc.).
+      3. The user noticed that in the Daily Expenses module (`Add new Expenses`), the primary `Expense Description *` field was missing the Click Sparkle ✨ assistant and typo warning badge.
+  - **Architecture & Implementation**:
+    - **1. Word-by-Word Spellchecking & Typo Auto-Correction Engine (`textAssistUtils.js`)**:
+      - **Damerau-Levenshtein Algorithm (`damerauLevenshtein(a, b)`)**: Implemented full edit-distance calculation supporting letter transpositions, swaps, insertions, deletions, and substitutions.
+      - **Curated Domain Vocabulary (`ENGLISH_FRENCH_VOCABULARY`)**: Built a comprehensive vocabulary set (~1,500+ terms) covering commercial, retail, appliance, electrical, automotive, and French & English common words, including spelled-out numbers (`ZERO` to `THOUSAND`, `UN` to `MILLE`).
+      - **Word-Level Correction (`correctWord(word)`)**:
+        - Skips numeric sequences and system codes (`M-1314`, `D-016416`).
+        - Preserves 1-2 character technical abbreviations and codes (`PC`, `TV`, `AC`, `OK`, `FC`, `V`, `A`, `W`).
+        - Evaluates single-word typo dictionary mappings.
+        - For words of length $\ge 4$, matches the nearest vocabulary term via Damerau-Levenshtein distance (distance 1 for short words, 1-2 for words $\ge 6$ chars).
+      - **Full-Sentence Multi-Word Pipeline (`correctTypos`)**: Runs multi-word phrases first, followed by word-by-word tokenized spelling correction across all individual words in the sentence.
+      - **Unified Zero-Discrepancy Typo Detection (`hasTypo`)**: Set `hasTypo(text, mode) => polishText(text, mode) !== text.trim()`. Guarantees that if the amber typo badge appears, clicking the Sparkle ✨ button is 100% guaranteed to produce clean, improved text and never falsely display *"Text is already clean"*.
+    - **2. Universal CAPITAL LETTERS Standard Across All Modules**:
+      - **Global MUI Theme (`App.js`)**: Configured `globalMuiTheme` with `textTransform: 'uppercase'` overrides on `MuiInputBase` and `MuiOutlinedInput` (exempting password, email, and file inputs). Every MUI field across all pages automatically enters and displays in uppercase.
+      - **Global CSS Rules (`Side.css`)**: Injected universal `text-transform: uppercase !important;` rules for all standard HTML inputs, textareas, and MUI input fields across desktop and mobile.
+      - **Component-Level State Casing (`SmartTextInput.js`)**: Updated `notifyChange` so that whenever `mode === 'upper'`, any typed, pasted, or selected text is immediately transformed to UPPERCASE in React state, guaranteeing uppercase storage in database documents.
+    - **3. Daily Expenses Sparkle Assistant Integration**:
+      - Replaced plain `<TextField>` with `<SmartTextInput>` for `Expense Description *` in:
+        - `DailyExpenseForm.js` (line 1275, main desktop expense entry form).
+        - `DailyExpenseUpdate.js` (line 1280, main expense editing view).
+      - Wired with embedded Sparkle ✨ button, live typo badge, and automatic uppercase formatting.
+  - **Quality Gates, Verification & Deliverables**:
+    - **Deep AST & Safety Gate**: Verified all 238 source files with 0 errors via `scripts/pre-build-check.js`.
+    - **Automated Regression Suite (`scripts/test_engine.js`)**: Passed 100% across all user test cases:
+      - `ARI CONTONER` $\rightarrow$ `AIR CONDITIONER` (hasTypo: true)
+      - `ARI CONTONER TSET` $\rightarrow$ `AIR CONDITIONER TEST` (hasTypo: true)
+      - `FULLOW` $\rightarrow$ `FOLLOW` (hasTypo: true)
+      - `UOT OF ORDDER` $\rightarrow$ `OUT OF ORDER` (hasTypo: true)
+      - `TSTE THE MACHINE` $\rightarrow$ `TEST THE MACHINE` (hasTypo: true)
+      - `LFIE IHIS GOOD` $\rightarrow$ `LIFE IS GOOD` (hasTypo: true)
+      - `tset wronge` $\rightarrow$ `TEST WRONG` (hasTypo: true)
+      - `no powre` $\rightarrow$ `NO POWER` (hasTypo: true)
+      - `CCTV CAMERAS` $\rightarrow$ `CCTV CAMERAS` (hasTypo: false)
+      - `ONE CAMERA IS DOING ON/OFF` $\rightarrow$ `ONE CAMERA IS DOING ON/OFF` (hasTypo: false)
+      - `AIR CONDITIONER` $\rightarrow$ `AIR CONDITIONER` (hasTypo: false)
+    - **System Navigation Integrity Suite**: `scripts/verify-language-and-nav.js` passed 100% across all 15 mobile form routes.
+    - **Desktop Windows Installer**: Packaged `dist/Global Gate Setup 3.5.97.exe` (95.58 MB).
+    - **Android Debug APK**: Built `android/app/build/outputs/apk/debug/app-debug.apk` (129.75 MB).
+    - **Cloud & Source Sync**: Version `3.5.97` synced in `package.json` and `server/index.js`, committed and pushed to `main`.
