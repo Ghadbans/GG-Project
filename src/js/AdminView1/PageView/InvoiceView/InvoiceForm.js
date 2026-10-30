@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 import { toast } from 'react-toastify';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -730,7 +732,11 @@ function InvoiceForm() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    if (isNativeMobile()) {
+      navigate('/InvoiceViewAdmin');
+    } else {
+      window.location.reload();
+    }
   }
   const handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);

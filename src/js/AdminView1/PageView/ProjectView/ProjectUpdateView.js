@@ -41,7 +41,7 @@ import dayjs from 'dayjs';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { toast } from 'react-toastify';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
 
 
@@ -325,7 +325,13 @@ function ProjectUpdateView() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/ProjectViewAdmin');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/ProjectViewAdmin');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

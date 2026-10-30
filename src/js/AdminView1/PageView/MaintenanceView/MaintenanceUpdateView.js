@@ -1,6 +1,8 @@
 import { useDocumentLock } from '../../../hooks/useDocumentLock';
 import React, { useEffect, useState } from 'react';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -735,6 +737,15 @@ function MaintenanceUpdateView() {
 
   const handleOpen = () => {
     setLoading(true);
+    if (isNativeMobile()) {
+      setTimeout(() => {
+        setLoading(false);
+        setLoadingOpenModal(false);
+        setLoadingOpenNavigateConvertInvoice(false);
+        navigate('/MaintenanceViewAdmin');
+      }, 900);
+      return;
+    }
     setTimeout(() => {
       setLoading(false);
     }, 500)
@@ -754,7 +765,13 @@ function MaintenanceUpdateView() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/MaintenanceViewAdmin');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/MaintenanceViewAdmin');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -762,7 +779,14 @@ function MaintenanceUpdateView() {
   const handleDecision = (decision) => {
     //Navigate Based on th Decision
     if (decision === 'previous') {
-      navigate(-1);
+      if (isNativeMobile()) {
+        navigate('/MaintenanceViewAdmin');
+      } else if (window.history.length > 1) {
+        navigate(-1);
+      } else {
+        navigate('/MaintenanceViewAdmin');
+      }
+    
     } else if (decision === 'stay') {
       handleClose();
     }
@@ -904,7 +928,7 @@ function MaintenanceUpdateView() {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+            <IconButton onClick={() => isNativeMobile() ? navigate('/MaintenanceViewAdmin') : (window.history.length > 1 ? navigate(-1) : navigate('/MaintenanceViewAdmin'))} sx={{ color: '#ffffff', p: 0.5 }}>
               <ArrowBack />
             </IconButton>
             <Box>

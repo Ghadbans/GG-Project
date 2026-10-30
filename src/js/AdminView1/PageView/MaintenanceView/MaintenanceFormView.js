@@ -47,7 +47,9 @@ import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { toast } from 'react-toastify';
 import ItemThumbnail from '../../../component/ItemThumbnail';
 import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './AssetControlReportSection';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 
 
 
@@ -680,6 +682,14 @@ function MaintenanceFormView() {
 
   const handleOpen = () => {
     setLoading(true);
+    if (isNativeMobile()) {
+      setTimeout(() => {
+        setLoading(false);
+        setLoadingOpenModal(false);
+        navigate('/MaintenanceViewAdmin');
+      }, 900);
+      return;
+    }
     setTimeout(() => {
       setLoading(false);
     }, 500)
@@ -699,7 +709,11 @@ function MaintenanceFormView() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    if (isNativeMobile()) {
+      navigate('/MaintenanceViewAdmin');
+    } else {
+      window.location.reload();
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

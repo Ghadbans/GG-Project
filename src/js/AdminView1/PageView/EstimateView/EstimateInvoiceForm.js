@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -697,7 +699,11 @@ The GLOBAL GATE Team`;
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    if (isNativeMobile()) {
+      navigate('/EstimateViewAdmin');
+    } else {
+      window.location.reload();
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

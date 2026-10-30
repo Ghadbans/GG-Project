@@ -36,7 +36,7 @@ import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Button, Card, Chip } from '@mui/material';
 import { invalidateCache } from '../../../utils/apiCache';
 
@@ -535,9 +535,16 @@ function PaymentInformationUpdate() {
   const [ErrorOpenModal, setErrorOpenModal] = useState(false);
 
   const handleOpen = () => {
-
     setLoadingOpenModal(true);
     setLoading(true);
+    if (isNativeMobile()) {
+      setTimeout(() => {
+        setLoading(false);
+        setLoadingOpenModal(false);
+        navigate('/PaymentView');
+      }, 900);
+      return;
+    }
 
     setTimeout(() => {
       setLoading(false);
@@ -554,7 +561,13 @@ function PaymentInformationUpdate() {
 
   const handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    if (isNativeMobile()) {
+      navigate('/PaymentView');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/PaymentView');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -638,7 +651,7 @@ function PaymentInformationUpdate() {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+            <IconButton onClick={() => isNativeMobile() ? navigate('/PaymentView') : (window.history.length > 1 ? navigate(-1) : navigate('/PaymentView'))} sx={{ color: '#ffffff', p: 0.5 }}>
               <ArrowBack />
             </IconButton>
             <Box>

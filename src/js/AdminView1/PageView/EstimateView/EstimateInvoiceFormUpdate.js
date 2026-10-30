@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
 import '../Chartview.css'
@@ -607,6 +609,14 @@ The GLOBAL GATE Team`;
     setLoadingOpenModal(true);
     setLoading(true);
     setOpen2(false);
+    if (isNativeMobile()) {
+      setTimeout(() => {
+        setLoading(false);
+        setLoadingOpenModal(false);
+        navigate('/EstimateViewAdmin');
+      }, 900);
+      return;
+    }
     setTimeout(() => {
       setLoading(false);
     }, 500)
@@ -629,7 +639,13 @@ The GLOBAL GATE Team`;
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/EstimateViewAdmin');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/EstimateViewAdmin');
+    }
   }
   const handleCloseUpdateItem = () => {
     setOpen1(false);
@@ -820,7 +836,7 @@ The GLOBAL GATE Team`;
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+            <IconButton onClick={() => isNativeMobile() ? navigate('/EstimateViewAdmin') : (window.history.length > 1 ? navigate(-1) : navigate('/EstimateViewAdmin'))} sx={{ color: '#ffffff', p: 0.5 }}>
               <ArrowBack />
             </IconButton>
             <Box>

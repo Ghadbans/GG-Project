@@ -42,7 +42,7 @@ import ProjectFormView from '../ProjectView/ProjectFormView';
 import ProjectFormView2 from '../ProjectView/ProjectFormView2';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
 
 
@@ -441,7 +441,13 @@ function DailyExpenseUpdate() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/DailyExpenses');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/DailyExpenses');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

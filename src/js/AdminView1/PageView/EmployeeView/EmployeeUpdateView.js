@@ -39,7 +39,7 @@ import Logout from '../../../component/NetworkLogoutIcon';
 import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
 
 
@@ -300,7 +300,13 @@ function EmployeeUpdateView() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/EmployeeViewAdminAll');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/EmployeeViewAdminAll');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

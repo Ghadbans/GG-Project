@@ -32,7 +32,7 @@ import { v4 } from 'uuid';
 import dayjs from 'dayjs';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
 
 
@@ -322,7 +322,13 @@ function ItemFormUpdate() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/ItemViewAdmin');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/ItemViewAdmin');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

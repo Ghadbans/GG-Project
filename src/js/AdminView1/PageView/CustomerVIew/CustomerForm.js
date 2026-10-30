@@ -33,7 +33,7 @@ import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { v4 as uuidv4, v4 } from 'uuid';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Card, Button } from '@mui/material';
 
 

@@ -40,7 +40,7 @@ import CustomerFormView2 from '../CustomerVIew/CustomerFormView2';
 import Close from '@mui/icons-material/Close';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import { Button, Card } from '@mui/material';
 
 
@@ -254,7 +254,13 @@ function SupplierFormUpdate() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/SupplierAdminView');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/SupplierAdminView');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

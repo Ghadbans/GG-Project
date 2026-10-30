@@ -30,7 +30,8 @@ import { Close } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import { Button, Card } from '@mui/material';
 
 
@@ -240,7 +241,13 @@ function CustomerFormUpdate() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(-1);
+    if (isNativeMobile()) {
+      navigate('/CustomerViewAdmin');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/CustomerViewAdmin');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);

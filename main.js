@@ -4,6 +4,59 @@ const url = require('url');
 
 let win;
 const windows = []; //Array to keep track of all windows
+function setupWebContentsSpellcheck(targetWin) {
+  if (!targetWin || targetWin.isDestroyed()) return;
+  try {
+    targetWin.webContents.session.setSpellCheckerLanguages(['fr', 'en-US']);
+  } catch (err) {
+    console.error('Spellchecker language setup error:', err);
+  }
+
+  targetWin.webContents.on('context-menu', (event, params) => {
+    const menuTemplate = [];
+
+    // Spelling suggestions for misspelled words (French & English)
+    if (params.misspelledWord) {
+      if (params.dictionarySuggestions && params.dictionarySuggestions.length > 0) {
+        for (const suggestion of params.dictionarySuggestions) {
+          menuTemplate.push({
+            label: suggestion,
+            click: () => targetWin.webContents.replaceMisspelling(suggestion)
+          });
+        }
+      } else {
+        menuTemplate.push({ label: 'No Spelling Suggestions', enabled: false });
+      }
+      menuTemplate.push({
+        label: 'Add "' + params.misspelledWord + '" to Dictionary',
+        click: () => targetWin.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+      });
+      menuTemplate.push({ type: 'separator' });
+    }
+
+    if (params.isEditable) {
+      menuTemplate.push(
+        { role: 'undo' },
+        { role: 'redo' },
+        { type: 'separator' },
+        { role: 'cut' },
+        { role: 'copy' },
+        { role: 'paste' },
+        { role: 'selectAll' }
+      );
+    } else if (params.selectionText) {
+      menuTemplate.push(
+        { role: 'copy' }
+      );
+    }
+
+    if (menuTemplate.length > 0) {
+      const contextMenu = Menu.buildFromTemplate(menuTemplate);
+      contextMenu.popup();
+    }
+  });
+}
+
 function createWindow() {
   win = new BrowserWindow({
     webPreferences: {
@@ -12,11 +65,13 @@ function createWindow() {
       worldsafeExecuteJavaScript: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      webSecurity: true
+      webSecurity: true,
+      spellcheck: true
     },
     icon: 'Icon.png'
   })
   win.maximize();
+  setupWebContentsSpellcheck(win);
   win.webContents.on('did-finish-load', () => {
     if (win && !win.isDestroyed()) {
       win.webContents.focus();
@@ -103,11 +158,13 @@ function createNewWindow() {
       worldsafeExecuteJavaScript: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js'),
-      webSecurity: true
+      webSecurity: true,
+      spellcheck: true
     },
     icon: 'Icon.png'
   })
   newWin.maximize();
+  setupWebContentsSpellcheck(newWin);
   newWin.webContents.on('did-finish-load', () => {
     if (newWin && !newWin.isDestroyed()) {
       newWin.webContents.focus();

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
 import '../Chartview.css'
@@ -720,7 +722,11 @@ function InvoiceFormUpdate() {
   };
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(`/InvoiceViewAdminAll/${id}`);
+    if (isNativeMobile()) {
+      navigate('/InvoiceViewAdmin');
+    } else {
+      navigate(`/InvoiceViewAdminAll/${id}`);
+    }
   };
   const handleCloseUpdateItem = () => {
     setLoadingUpdateItemOpenModal(false);
@@ -891,7 +897,7 @@ function InvoiceFormUpdate() {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+            <IconButton onClick={() => isNativeMobile() ? navigate('/InvoiceViewAdmin') : (window.history.length > 1 ? navigate(-1) : navigate('/InvoiceViewAdmin'))} sx={{ color: '#ffffff', p: 0.5 }}>
               <ArrowBack />
             </IconButton>
             <Box>

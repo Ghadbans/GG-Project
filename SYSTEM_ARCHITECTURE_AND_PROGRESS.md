@@ -2722,3 +2722,37 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
       - Location: `dist/Global Gate Setup 3.5.92.exe`
       - Size: 90.57 MB (94,970,552 bytes)
       - Timestamp: 28-Oct-2026 14:39:12
+
+- **Data Entry Language Quality Suite (5-Strategy Suite) & Mobile Edit Save/Close Auto-Navigation (Ver 3.5.93)**:
+  - **User Requirements:**
+    1. **Language & Data Entry Quality**: Users frequently make language/typing mistakes when entering data (especially technical descriptions, defects, appliance types, and notes on mobile virtual keyboards and desktop). Implement a comprehensive 5-strategy solution to prevent and correct language mistakes without slowing users down.
+    2. **Mobile Edit Save/Close Auto-Navigation**: In the mobile application across Invoices, Quotations, Maintenance, Maintenance Orders, and all sub-modules, saving an edit did not close the order being edited or return to the previous list page (e.g. keeping users trapped inside desktop information views like `/InvoiceViewAdminAll/:id` or reloading in place).
+    3. **Full System Verification**: Perform rigorous end-to-end testing across Desktop App, Web App, and Mobile App before building and pushing. Ensure all module and sub-module navigation links remain 100% intact.
+  - **Comprehensive 5-Strategy Language Quality Implementation**:
+    - **Strategy 1: Quick Selection Chips Bar (`<QuickChipsBar />`)**:
+      - Provides horizontal, swipeable chips with pre-standardized industry and shop terms.
+      - Implemented for Maintenance Defects (`No Power`, `Not Charging`, `Overheating`, `Motor Blocked`, `Short Circuit`, etc.), Technician Actions Taken, Appliance/Equipment types, and Invoice/Quotation Subjects.
+      - Users tap a chip to instantly insert standardized terms without typing.
+    - **Strategy 2: Native Multi-Language Spellcheck**:
+      - **Desktop (.exe / Electron)**: Enabled `spellcheck: true` in `webPreferences` for all BrowserWindows and activated bilingual French and US English dictionaries (`targetWin.webContents.session.setSpellCheckerLanguages(['fr', 'en-US'])`).
+      - Implemented native `context-menu` popup to suggest correct spellings and allow adding custom terms to the dictionary upon right-clicking misspelled words.
+      - **Web & Mobile**: Configured `spellCheck="true"`, `autoCorrect="on"`, and `autoCapitalize="sentences"` across inputs.
+    - **Strategy 3: Auto-Formatting & Whitespace Normalization (`textAssistUtils.js`)**:
+      - Auto-collapses multiple consecutive spaces, tabs, and non-breaking spaces into a single ASCII space.
+      - Provides `toSentenceCase`, `toTitleCase` (for Customer and Employee names), and `toUpperCaseCode` (for codes/serials).
+    - **Strategy 4: Custom Bilingual GG Dictionary (`TYPO_DICTIONARY`)**:
+      - Built-in rule dictionary mapping 80+ frequent bilingual & technical phonetic typos (e.g. `not charch` -> `Not Charging`, `probleme` -> `Problem`, `electrique` -> `Electrical`, `maint` -> `Maintenance`, `reparation` -> `Repair`, `ventilo` -> `Ventilator`, `climatiseur` -> `Air Conditioner`, etc.).
+    - **Strategy 5: "One-Click Language Fixer" Button (`<LanguageFixerButton />`)**:
+      - Added a discreet sparkle magic wand button (`✨`) next to description, subject, and defect text fields.
+      - With one click, it automatically normalizes spaces, fixes recognized typos, formats punctuation, and applies proper casing.
+  - **Mobile Edit Save & Close Navigation Architecture**:
+    - Resolved the issue across `InvoiceFormUpdate.js`, `EstimateInvoiceFormUpdate.js`, `MaintenanceUpdateView.js`, `MaintenanceOrderUpdate.js`, `PaymentInformationUpdate.js`, `CustomerFormUpdate.js`, `DailyExpenseUpdate.js`, `ItemFormUpdate.js`, `ProjectUpdateView.js`, `EmployeeUpdateView.js`, and `SupplierFormUpdate.js`.
+    - When `isNativeMobile()` is true:
+      - Upon saving, `handleOpen()` displays the success confirmation and automatically closes the form after 900ms, returning the user directly to the module's primary listing page (`/InvoiceViewAdmin`, `/EstimateViewAdmin`, `/MaintenanceViewAdmin`, `/MaintenanceOrderAdmin`, etc.).
+      - `handleClose()` and top-bar back buttons immediately return to the main list route, eliminating any entrapment in desktop detail views or infinite reloads.
+  - **Quality Gates, Builds & Deployment:**
+    - Quality Gate check: Deep AST and safety verification PASSED on all 237 source files with 0 errors.
+    - Automated Verification: `scripts/verify-language-and-nav.js` PASSED 100% verifying all 15 form routes and text assist functions.
+    - System version bumped to `v3.5.93` in `package.json` and `server/index.js`.
+    - Desktop Windows Installer packaged: `dist/Global Gate Setup 3.5.93.exe` (94.98 MB).
+    - Android Debug APK built: `android/app/build/outputs/apk/debug/app-debug.apk` (117.99 MB).

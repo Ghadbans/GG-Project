@@ -1,7 +1,9 @@
 import { cachedGet } from '../../../utils/apiCache';
 import { useDocumentLock } from '../../../hooks/useDocumentLock';
 import React, { useEffect, useState } from 'react';
-import { useIsMobile } from '../../../utils/isMobile';
+import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
+import LanguageFixerButton from '../../../component/LanguageFixerButton';
+import QuickChipsBar from '../../../component/QuickChipsBar';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -747,7 +749,13 @@ function MaintenanceOrderUpdate() {
   }
   const handleClose = () => {
     setLoadingOpenModal(false);
-    navigate(user.data.role === 'User' ? `/MaintenanceOrderViewInformation/${id}` : '/MaintenanceOrderAdmin');
+    if (isNativeMobile()) {
+      navigate('/MaintenanceOrderAdmin');
+    } else if (user?.data?.role === 'User') {
+      navigate(`/MaintenanceOrderViewInformation/${id}`);
+    } else {
+      navigate('/MaintenanceOrderAdmin');
+    }
   }
   const handleCloseError = () => {
     setErrorOpenModal(false);
@@ -867,7 +875,7 @@ function MaintenanceOrderUpdate() {
           }}
         >
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton onClick={() => navigate(-1)} sx={{ color: '#ffffff', p: 0.5 }}>
+            <IconButton onClick={() => isNativeMobile() ? navigate('/MaintenanceOrderAdmin') : (window.history.length > 1 ? navigate(-1) : navigate('/MaintenanceOrderAdmin'))} sx={{ color: '#ffffff', p: 0.5 }}>
               <ArrowBack />
             </IconButton>
             <Box>
