@@ -1277,15 +1277,16 @@ function DailyExpenseUpdate() {
                             ) : null
                           }
                           <Grid item xs={12}>
-                            <TextField
+                            <SmartTextInput
                               name='description'
                               id='description'
                               label='Expense Description'
                               value={description}
                               multiline
                               maxRows={5}
-                              onChange={(e) => setDescription(e.target.value)}
+                              onChange={(val) => setDescription(val)}
                               sx={{ width: '100%', backgroundColor: 'white' }}
+                              mode='upper'
                             />
                           </Grid>
                           <Grid item xs={3}>

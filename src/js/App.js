@@ -20,6 +20,24 @@ import { isNativeMobile, useIsMobile } from './utils/isMobile';
 
 const globalMuiTheme = createTheme({
   components: {
+    MuiInputBase: {
+      styleOverrides: {
+        input: {
+          '&:not([type="password"]):not([type="email"]):not([type="file"])': {
+            textTransform: 'uppercase',
+          },
+        },
+      },
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        input: {
+          '&:not([type="password"]):not([type="email"]):not([type="file"])': {
+            textTransform: 'uppercase',
+          },
+        },
+      },
+    },
     MuiModal: {
       defaultProps: {
         disableRestoreFocus: true,

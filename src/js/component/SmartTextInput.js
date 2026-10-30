@@ -41,10 +41,13 @@ function SmartTextInput({
 
   const notifyChange = (newVal) => {
     if (typeof onChange !== 'function') return;
+    const finalVal = (mode === 'upper' && typeof newVal === 'string')
+      ? newVal.toUpperCase()
+      : newVal;
     if (passEvent) {
-      onChange({ target: { name: name || id || '', value: newVal } });
+      onChange({ target: { name: name || id || '', value: finalVal } });
     } else {
-      onChange(newVal);
+      onChange(finalVal);
     }
   };
 

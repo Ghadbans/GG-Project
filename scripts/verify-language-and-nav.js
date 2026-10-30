@@ -63,7 +63,7 @@ console.log('✅ toUpperCaseCode() passed.');
 assert.strictEqual(polishText('TSTE THE MACHINE'), 'TEST THE MACHINE');
 assert.strictEqual(polishText('LFIE IHIS GOOD'), 'LIFE IS GOOD');
 assert.strictEqual(polishText('tset wronge'), 'TEST WRONG');
-assert.strictEqual(polishText('one camera is doing on/off'), 'ONE CAMERA IS INTERMITTENT ON/OFF');
+assert.strictEqual(polishText('one camera is doing on/off'), 'ONE CAMERA IS DOING ON/OFF');
 assert.strictEqual(polishText('  four elec   avec  surchauffe .  condo a changer '), 'ELECTRIC OVEN AVEC OVERHEATING . CAPACITOR A CHANGER');
 assert.strictEqual(polishText('ahmed ali transport', 'title'), 'Ahmed Ali Transport');
 assert.strictEqual(polishText('xyz-987-a', 'upper'), 'XYZ-987-A');

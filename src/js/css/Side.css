@@ -311,3 +311,10 @@
     text-align: center !important;
   }
 }
+
+/* Universal Capital Letters across all modules and sub-modules */
+input:not([type="password"]):not([type="email"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
+textarea,
+.MuiInputBase-input:not([type="password"]):not([type="email"]):not([type="file"]) {
+    text-transform: uppercase !important;
+}
