@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import QuickChipsBar from '../../../component/QuickChipsBar';
+import { polishText } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
 import '../Chartview.css'
@@ -1371,12 +1372,21 @@ function InvoiceFormUpdate() {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
+                    <QuickChipsBar presetKey="subjects" label="Common Subjects:" currentValue={invoiceSubject} onSelect={(val) => setInvoiceSubject(val)} />
                     <TextField
                       id='invoiceSubject'
                       name='invoiceSubject'
                       label='Subject'
                       value={invoiceSubject !== undefined ? invoiceSubject : ''}
                       onChange={(e) => setInvoiceSubject(e.target.value)}
+                      onBlur={() => { if (invoiceSubject) { const p = polishText(invoiceSubject, 'sentence'); if (p !== invoiceSubject) setInvoiceSubject(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LanguageFixerButton value={invoiceSubject} onFixed={setInvoiceSubject} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>

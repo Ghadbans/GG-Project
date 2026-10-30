@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import QuickChipsBar from '../../../component/QuickChipsBar';
+import { polishText, toTitleCase, toUpperCaseCode } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -835,18 +836,22 @@ function MaintenanceUpdateView() {
       return;
     }
     const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
+
+    // Auto-correct & polish text, defects, actions, and codes before saving
+    const finalItemDesc = polishText(itemDescriptionInfo, 'sentence');
+    const finalDefectDesc = polishText(defectDescription, 'sentence');
+    const finalActionTaken = polishText(actionTaken, 'sentence');
+    const finalNote = polishText(note, 'sentence');
+    const finalBrand = polishText(brand, 'title');
+    const finalSerialNo = toUpperCaseCode(serialNo);
+
+    if (finalItemDesc !== itemDescriptionInfo) setItemDescriptionInfo(finalItemDesc);
+    if (finalDefectDesc !== defectDescription) setDefectDescription(finalDefectDesc);
+    if (finalActionTaken !== actionTaken) setActionTaken(finalActionTaken);
     const data = {
       customerName,
       serviceDate,
-      actionTaken,
-      itemDescriptionInfo,
-      warranty,
-      defectDescription,
-      brand,
-      model, technicianAssign,
-      serviceNumber,
-      serviceName,
-      serialNo,
+      actionTaken: finalActionTaken, itemDescriptionInfo: finalItemDesc, warranty, defectDescription: finalDefectDesc, brand: finalBrand, model, technicianAssign, serviceNumber, serviceName, serialNo: finalSerialNo,
       status, action,
       items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false,
@@ -1045,12 +1050,21 @@ function MaintenanceUpdateView() {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
+                <QuickChipsBar presetKey="appliances" label="Quick Appliance:" currentValue={itemDescriptionInfo} onSelect={(val) => setItemDescriptionInfo(val)} />
                 <TextField
                   fullWidth
                   size="small"
                   label="Item / Appliance Description"
                   value={itemDescriptionInfo || ''}
                   onChange={(e) => setItemDescriptionInfo(e.target.value)}
+                  onBlur={() => { if (itemDescriptionInfo) { const p = polishText(itemDescriptionInfo, 'sentence'); if (p !== itemDescriptionInfo) setItemDescriptionInfo(p); } }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <LanguageFixerButton value={itemDescriptionInfo} onFixed={setItemDescriptionInfo} mode="sentence" />
+                      </InputAdornment>
+                    )
+                  }}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -1090,6 +1104,7 @@ function MaintenanceUpdateView() {
                 />
               </Grid>
               <Grid item xs={12}>
+                <QuickChipsBar presetKey="defects" label="Quick Defects:" currentValue={defectDescription} onSelect={(val) => setDefectDescription(val)} />
                 <TextField
                   fullWidth
                   multiline
@@ -1098,6 +1113,14 @@ function MaintenanceUpdateView() {
                   label="Defect Description"
                   value={defectDescription || ''}
                   onChange={(e) => setDefectDescription(e.target.value)}
+                  onBlur={() => { if (defectDescription) { const p = polishText(defectDescription, 'sentence'); if (p !== defectDescription) setDefectDescription(p); } }}
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end">
+                        <LanguageFixerButton value={defectDescription} onFixed={setDefectDescription} mode="sentence" />
+                      </InputAdornment>
+                    )
+                  }}
                 />
               </Grid>
             </Grid>
@@ -1739,12 +1762,21 @@ function MaintenanceUpdateView() {
                     <p style={{ textAlign: 'center' }}>Appliance Info</p>
                   </Grid>
                   <Grid item xs={12}>
+                    <QuickChipsBar presetKey="appliances" label="Quick Appliance:" currentValue={itemDescriptionInfo} onSelect={(val) => setItemDescriptionInfo(val)} />
                     <TextField
                       id='itemDescription'
                       name='itemDescription'
                       label='Item Description'
                       value={itemDescriptionInfo}
                       onChange={(e) => setItemDescriptionInfo(e.target.value)}
+                      onBlur={() => { if (itemDescriptionInfo) { const p = polishText(itemDescriptionInfo, 'sentence'); if (p !== itemDescriptionInfo) setItemDescriptionInfo(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LanguageFixerButton value={itemDescriptionInfo} onFixed={setItemDescriptionInfo} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>
@@ -1789,12 +1821,21 @@ function MaintenanceUpdateView() {
                     />
                   </Grid>
                   <Grid item xs={6}>
+                    <QuickChipsBar presetKey="defects" label="Common Defects:" currentValue={defectDescription} onSelect={(val) => setDefectDescription(val)} />
                     <TextField
                       id='defectDescription'
                       name='defectDescription'
                       label='Defect Description'
                       value={defectDescription}
                       onChange={(e) => setDefectDescription(e.target.value)}
+                      onBlur={() => { if (defectDescription) { const p = polishText(defectDescription, 'sentence'); if (p !== defectDescription) setDefectDescription(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LanguageFixerButton value={defectDescription} onFixed={setDefectDescription} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>
@@ -1851,6 +1892,7 @@ function MaintenanceUpdateView() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
+                    <QuickChipsBar presetKey="actions" label="Common Actions:" currentValue={actionTaken} onSelect={(val) => setActionTaken(val)} />
                     <TextField
                       id='actionTaken'
                       name='actionTaken'
@@ -1859,6 +1901,14 @@ function MaintenanceUpdateView() {
                       rows={5}
                       value={actionTaken}
                       onChange={(e) => setActionTaken(e.target.value)}
+                      onBlur={() => { if (actionTaken) { const p = polishText(actionTaken, 'sentence'); if (p !== actionTaken) setActionTaken(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end" sx={{ alignSelf: 'flex-start', mt: 1 }}>
+                            <LanguageFixerButton value={actionTaken} onFixed={setActionTaken} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>

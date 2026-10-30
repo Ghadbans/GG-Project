@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import QuickChipsBar from '../../../component/QuickChipsBar';
+import { polishText } from '../../../utils/textAssistUtils';
 import { toast } from 'react-toastify';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -792,9 +793,9 @@ function InvoiceForm() {
       invoiceNumber,
       invoiceDate,
       invoiceDueDate,
-      invoiceSubject,
+      invoiceSubject: polishText(invoiceSubject, 'sentence'),
       invoicePurchase,
-      invoiceDefect,
+      invoiceDefect: polishText(invoiceDefect, 'sentence'),
       status,
       items: itemsWithoutData,
       subTotal,
@@ -1286,12 +1287,21 @@ function InvoiceForm() {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
+                    <QuickChipsBar presetKey="subjects" label="Common Subjects:" currentValue={invoiceSubject} onSelect={(val) => setInvoiceSubject(val)} />
                     <TextField
                       id='invoiceSubject'
                       name='invoiceSubject'
                       label='Subject'
                       value={invoiceSubject}
                       onChange={(e) => setInvoiceSubject(e.target.value)}
+                      onBlur={() => { if (invoiceSubject) { const p = polishText(invoiceSubject, 'sentence'); if (p !== invoiceSubject) setInvoiceSubject(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LanguageFixerButton value={invoiceSubject} onFixed={setInvoiceSubject} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>

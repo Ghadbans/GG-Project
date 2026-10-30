@@ -61,7 +61,7 @@ export const COMMON_PRESETS = {
 export const TYPO_DICTIONARY = [
   // Multi-word phrases (evaluated first)
   { pattern: /\b(not\s+charch(ing)?|not\s+charg(ing)?|ne\s+charge\s+pas)\b/gi, replacement: 'Not Charging' },
-  { pattern: /\b(no\s+powr|no\s+pwer|pas\s+de\s+courant|pas\s+de\s+tension|coupe\s+courant)\b/gi, replacement: 'No Power' },
+  { pattern: /\b(no\s+powr(e)?|no\s+pwer|no\s+power|pas\s+de\s+courant|pas\s+de\s+tension|coupe\s+courant|ne\s+s['\s]?allume\s+pas)\b/gi, replacement: 'No Power' },
   { pattern: /\b(court[\s\-_]circuit|court[\s\-_]circui)\b/gi, replacement: 'Short Circuit' },
   { pattern: /\b(four\s+elec(trique)?)\b/gi, replacement: 'Electric Oven' },
   { pattern: /\b(pompe\s+a\s+eau|pompe\s+d['\s]?eau)\b/gi, replacement: 'Water Pump' },
@@ -72,8 +72,13 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(bruit\s+anormal|bruyant)\b/gi, replacement: 'Abnormal Noise' },
   { pattern: /\b(moteur\s+bloqu[eé])\b/gi, replacement: 'Motor Blocked' },
   { pattern: /\b(entretien\s+periodique)\b/gi, replacement: 'Periodic Maintenance' },
+  { pattern: /\b(ne\s+marche\s+pas|marche\s+pas|not\s+work(ing)?)\b/gi, replacement: 'Not Working' },
+  { pattern: /\b(tset\s+wronge?|test\s+wronge?)\b/gi, replacement: 'Test Wrong' },
 
   // Single word typos and common terms
+  { pattern: /\b(tset|tesst)\b/gi, replacement: 'Test' },
+  { pattern: /\b(wronge|rong|wrog)\b/gi, replacement: 'Wrong' },
+  { pattern: /\b(powre|powr|pwer)\b/gi, replacement: 'Power' },
   { pattern: /\b(probl[eèé]me?|problm|prob)\b/gi, replacement: 'Problem' },
   { pattern: /\b(elec|electrique|eletrique)\b/gi, replacement: 'Electrical' },
   { pattern: /\b(maint|maintenace|mientenace|maintenence)\b/gi, replacement: 'Maintenance' },
@@ -98,7 +103,7 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(remplac[eé]|remplacment|remplacement)\b/gi, replacement: 'Replaced' },
   { pattern: /\b(diagnostique|diagnostic)\b/gi, replacement: 'Diagnostic' },
   { pattern: /\b(operationnel|operationel)\b/gi, replacement: 'Operational' },
-  { pattern: /\b(technicien|technicien)\b/gi, replacement: 'Technician' },
+  { pattern: /\b(technicien|technition)\b/gi, replacement: 'Technician' },
   { pattern: /\b(inspection)\b/gi, replacement: 'Inspection' }
 ];
 

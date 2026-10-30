@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import QuickChipsBar from '../../../component/QuickChipsBar';
+import { polishText } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -1217,22 +1218,40 @@ The GLOBAL GATE Team`;
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
+                    <QuickChipsBar presetKey="subjects" label="Common Subjects:" currentValue={estimateSubject} onSelect={(val) => setEstimateSubject(val)} />
                     <TextField
                       id='estimateSubject'
                       name='estimateSubject'
                       label='Subject'
                       value={estimateSubject}
                       onChange={(e) => setEstimateSubject(e.target.value)}
+                      onBlur={() => { if (estimateSubject) { const p = polishText(estimateSubject, 'sentence'); if (p !== estimateSubject) setEstimateSubject(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LanguageFixerButton value={estimateSubject} onFixed={setEstimateSubject} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>
                   <Grid item xs={6}>
+                    <QuickChipsBar presetKey="defects" label="Common Defects:" currentValue={estimateDefect} onSelect={(val) => setEstimateDefect(val)} />
                     <TextField
                       id='estimateDefect'
                       name='estimateDefect'
                       label='Defect'
                       value={estimateDefect}
                       onChange={(e) => setEstimateDefect(e.target.value)}
+                      onBlur={() => { if (estimateDefect) { const p = polishText(estimateDefect, 'sentence'); if (p !== estimateDefect) setEstimateDefect(p); } }}
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position="end">
+                            <LanguageFixerButton value={estimateDefect} onFixed={setEstimateDefect} mode="sentence" />
+                          </InputAdornment>
+                        )
+                      }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>

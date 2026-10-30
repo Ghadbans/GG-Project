@@ -2756,3 +2756,22 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - System version bumped to `v3.5.93` in `package.json` and `server/index.js`.
     - Desktop Windows Installer packaged: `dist/Global Gate Setup 3.5.93.exe` (94.98 MB).
     - Android Debug APK built: `android/app/build/outputs/apk/debug/app-debug.apk` (117.99 MB).
+
+- **Full UI Form Wiring & Active Auto-Sanitization on Save & Blur (Ver 3.5.94)**:
+  - **Issue Addressed**: The initial v3.5.93 release created the language assistance components and utilities, but they were not physically embedded into JSX input fields in `MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `MaintenanceOrderUpdate.js`, `InvoiceForm.js`, `InvoiceFormUpdate.js`, `EstimateInvoiceForm.js`, and `EstimateInvoiceFormUpdate.js`. Furthermore, right-clicking in Electron Desktop on custom shop typos didn't automatically surface the GG technical dictionary corrections.
+  - **Comprehensive Enhancements in v3.5.94**:
+    - **Visual JSX Integration**:
+      - Embedded `<QuickChipsBar />` above `Item Description`, `Defect Description`, `Action Taken`, and `Subject` across both Desktop and Mobile views.
+      - Integrated `<LanguageFixerButton />` (`✨`) directly inside `TextField` via `InputProps.endAdornment`.
+    - **Automatic Self-Healing (`onBlur`)**:
+      - Fields now automatically run `polishText()` when focus leaves the input, automatically fixing spacing and capitalization without needing extra clicks.
+    - **Automatic Database Sanitization on Submit (`handleSubmit`)**:
+      - Even if a user ignores chips and fixer buttons, `handleSubmit` automatically sanitizes all descriptions, defects, actions, notes, brand, and serial numbers before creating or updating records in MongoDB.
+    - **Electron Right-Click Context Menu Enhancements (`main.js`)**:
+      - Added `getGgTypoCorrection()` to Electron's main process context-menu handler.
+      - Right-clicking misspelled or selected words now surfaces `✨ GG Quick Fix: "<Term>"` at the top of the menu.
+      - Reordered spellcheck priority to `['en-US', 'fr']` so English dictionary suggestions appear first for English terms.
+    - **Builds & Deployments**:
+      - Windows Installer: `dist/Global Gate Setup 3.5.94.exe` (95.32 MB).
+      - Android APK: `android/app/build/outputs/apk/debug/app-debug.apk` (119.13 MB).
+      - Cloud Server & Web: Bumped to `v3.5.94` in `server/index.js` and `package.json`.
