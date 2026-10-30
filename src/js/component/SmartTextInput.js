@@ -52,12 +52,8 @@ function SmartTextInput({
   };
 
   const handleBlur = (e) => {
-    if (value && typeof value === 'string' && value.trim()) {
-      const polished = polishText(value, mode);
-      if (polished !== value) {
-        notifyChange(polished);
-      }
-    }
+    // Note: Do NOT automatically mutate or change user text on blur.
+    // User text is only polished when explicitly clicking the Sparkle ✨ button or right-clicking.
     if (typeof onBlur === 'function') {
       onBlur(e);
     }

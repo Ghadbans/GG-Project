@@ -163,7 +163,8 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(plase|plese)\b/gi, replacement: 'PLEASE' },
   { pattern: /\b(chck|chek)\b/gi, replacement: 'CHECK' },
   { pattern: /\b(wokr|wrk)\b/gi, replacement: 'WORK' },
-  { pattern: /\b(payd|payed)\b/gi, replacement: 'PAID' }
+  { pattern: /\b(payd|payed)\b/gi, replacement: 'PAID' },
+  { pattern: /\b(wrkrs|workrs|wrokers)\b/gi, replacement: 'WORKERS' }
 ];
 
 // Curated vocabulary for word-by-word Damerau-Levenshtein spellchecking
@@ -179,19 +180,41 @@ export const ENGLISH_FRENCH_VOCABULARY = new Set([
   'THIS', 'BUT', 'HIS', 'BY', 'FROM', 'THEY', 'WE', 'SAY', 'HER', 'SHE', 'OR', 'AN', 'WILL', 'MY', 'ALL', 'WOULD', 'THERE',
   'THEIR', 'WHAT', 'SO', 'OUT', 'IF', 'ABOUT', 'WHO', 'GET', 'WHICH', 'GO', 'ME', 'WHEN', 'MAKE', 'CAN', 'LIKE', 'TIME', 'NO',
   'JUST', 'HIM', 'KNOW', 'TAKE', 'PEOPLE', 'INTO', 'YEAR', 'YOUR', 'GOOD', 'SOME', 'COULD', 'THEM', 'SEE', 'OTHER', 'THAN', 'THEN',
-  'NOW', 'LOOK', 'ONLY', 'COME', 'ITS', 'OVER', 'UNDER', 'THINK', 'ALSO', 'BACK', 'AFTER', 'USE', 'HOW', 'OUR', 'WORK', 'FIRST',
+  'NOW', 'LOOK', 'ONLY', 'COME', 'ITS', 'OVER', 'UNDER', 'THINK', 'ALSO', 'BACK', 'AFTER', 'USE', 'HOW', 'OUR', 'WORK', 'WORKS', 'WORKED', 'WORKING', 'FIRST',
   'WELL', 'WAY', 'EVEN', 'NEW', 'OLD', 'WANT', 'BECAUSE', 'ANY', 'THESE', 'GIVE', 'DAY', 'MOST', 'US', 'IS', 'ARE', 'WAS', 'WERE', 'BEEN',
   'DONE', 'DID', 'DOES', 'DOING', 'TEST', 'TESTS', 'TESTED', 'TESTING', 'WRONG', 'LIFE', 'ORDER', 'ORDERS', 'CHECK', 'CHECKS',
   'FOLLOW', 'FOLLOWS', 'FOLLOWED', 'FOLLOWING', 'BROKEN', 'BURNT', 'BLOCKED', 'LEAK', 'LEAKS', 'CLEAN', 'CLEANED', 'SERVICE', 'SERVICES',
   'REPAIR', 'REPAIRS', 'REPAIRED', 'REPLACED', 'INSPECT', 'INSPECTED', 'INSPECTION', 'DIAGNOSTIC', 'OPERATIONAL', 'MAINTENANCE',
   'LEFT', 'RIGHT', 'TOP', 'BOTTOM', 'FRONT', 'REAR', 'FAST', 'SLOW', 'SAFE', 'OPEN', 'CLOSE', 'CLOSED', 'BAD', 'TRUE', 'FALSE',
 
-  // Common French Core Words
+  // Food, Meals, Expenses & Staff (English)
+  'FOOD', 'FOODS', 'MEAL', 'MEALS', 'LUNCH', 'DINNER', 'BREAKFAST', 'DRINK', 'DRINKS', 'WATER', 'TEA', 'COFFEE',
+  'SUGAR', 'BREAD', 'MILK', 'RICE', 'MEAT', 'CHICKEN', 'FISH', 'FRUIT', 'FRUITS', 'VEGETABLE', 'VEGETABLES', 'SNACK', 'SNACKS',
+  'KITCHEN', 'COOK', 'COOKING', 'RESTAURANT', 'CATERING', 'REFRESHMENT', 'REFRESHMENTS',
+  'WORKER', 'WORKERS', 'STAFF', 'TEAM', 'CREW', 'LABOR', 'LABOUR', 'LABORER', 'LABORERS', 'DRIVER', 'DRIVERS', 'GUARD', 'GUARDS',
+  'OFFICER', 'CLEANER', 'CLEANERS', 'OPERATOR', 'OPERATORS', 'SUPERVISOR', 'SUPERVISORS', 'MANAGER', 'MANAGERS', 'DIRECTOR', 'DIRECTORS',
+  'ASSISTANT', 'ASSISTANTS', 'HELPER', 'HELPERS', 'CASHIER', 'CASHIERS', 'ACCOUNTANT', 'ACCOUNTANTS', 'MECHANIC', 'MECHANICS',
+  'ELECTRICIAN', 'ELECTRICIANS', 'PLUMBER', 'PLUMBERS',
+  'TRANSPORT', 'TRANSPORTATION', 'TAXI', 'BUS', 'FUEL', 'PETROL', 'DIESEL', 'OIL', 'TIRE', 'TIRES', 'TYRE', 'TYRES',
+  'PARKING', 'TOLL', 'FARE', 'RENT', 'HOTEL', 'TRAVEL', 'TICKET', 'FLIGHT', 'VISA', 'PASSPORT', 'ALLOWANCE', 'PERDIEM',
+  'SALARY', 'SALARIES', 'ADVANCE', 'LOAN', 'BONUS', 'COMMISSION', 'FEE', 'FEES', 'CHARGE', 'CHARGES', 'TAX', 'TAXES', 'TVA', 'VAT',
+  'CUSTOMS', 'DUTY', 'CLEARANCE', 'FINE', 'PENALTY', 'PRINTING', 'COURIER', 'POSTAGE', 'DELIVERY', 'SHIPPING', 'FREIGHT',
+  'TONER', 'PAPER', 'STATIONERY', 'SUPPLIES', 'TOOL', 'TOOLS', 'MATERIAL', 'MATERIALS', 'EQUIPMENT', 'INTERNET', 'WIFI',
+  'PHONE', 'TELEPHONE', 'AIRTIME', 'CREDIT', 'CARD', 'ELECTRICITY', 'POWER', 'INSURANCE', 'MEDICAL', 'MEDICINE', 'HEALTH',
+  'HOSPITAL', 'CLINIC', 'UNIFORM', 'UNIFORMS', 'SAFETY', 'BOOTS', 'HELMET', 'GLOVES', 'VEST', 'GIFT', 'DONATION', 'CHARITY',
+  'MISCELLANEOUS', 'OTHER', 'OTHERS',
+
+  // Common French Core & Expense Words
   'LE', 'LA', 'LES', 'UN', 'UNE', 'DES', 'DU', 'DE', 'AU', 'AUX', 'EN', 'DANS', 'SUR', 'SOUS', 'PAR', 'POUR', 'AVEC', 'SANS', 'VERS', 'CHEZ',
   'CE', 'CET', 'CETTE', 'CES', 'MON', 'MA', 'MES', 'TON', 'TA', 'TES', 'SON', 'SA', 'SES', 'NOTRE', 'NOS', 'VOTRE', 'VOS', 'LEUR', 'LEURS',
   'JE', 'TU', 'IL', 'ELLE', 'ON', 'NOUS', 'VOUS', 'ILS', 'ELLES', 'ME', 'TE', 'SE', 'LUI', 'MOI', 'TOI', 'SOI', 'EUX', 'QUI', 'QUE', 'QUOI',
   'DONT', 'OU', 'FAIT', 'FAIRE', 'ETRE', 'AVOIR', 'PAS', 'PLUS', 'BIEN', 'BON', 'BONNE', 'MAUVAIS', 'JOUR', 'JOURS', 'MOIS', 'ANNEE', 'TEMPS',
   'CHANGER', 'CHANGE', 'CHANGEMENT', 'REMPLACER', 'REMPLACEMENT', 'NETTOYER', 'NETTOYAGE', 'VERIFIER', 'VERIFICATION', 'REGLER', 'REGLAGE',
+  'NOURRITURE', 'REPAS', 'DEJEUNER', 'DINER', 'PETIT-DEJEUNER', 'BOISSON', 'BOISSONS', 'EAU', 'PAIN', 'CAFE', 'THE', 'SUCRE', 'LAIT',
+  'RIZ', 'VIANDE', 'POULET', 'POISSON', 'TRAVAILLEUR', 'TRAVAILLEURS', 'OUVRIER', 'OUVRIERS', 'EMPLOYE', 'EMPLOYES', 'PERSONNEL',
+  'EQUIPE', 'CHAUFFEUR', 'CHAUFFEURS', 'GARDE', 'GARDES', 'TECHNICIEN', 'TECHNICIENS', 'INGENIEUR', 'INGENIEURS', 'MECANICIEN',
+  'ELECTRICIEN', 'CARBURANT', 'ESSENCE', 'GASOIL', 'DIESEL', 'TRANSPORT', 'FRAIS', 'DEPENSE', 'DEPENSES', 'LOYER', 'ELECTRICITE',
+  'INTERNET', 'FOURNITURES', 'PAPIER', 'SALAIRE', 'SALAIRES', 'AVANCE', 'PRIME',
 
   // Appliances & Equipment
   'AIR', 'CONDITIONER', 'APPLIANCE', 'APPLIANCES', 'OVEN', 'MIXER', 'DOUGH', 'WATER', 'PUMP',
@@ -283,12 +306,16 @@ export function correctWord(word) {
     }
   }
 
-  // 3. For short words (length <= 3), do NOT fuzzy match to prevent accidental collapse
-  if (upper.length <= 3) {
+  // 3. For short words (length <= 4), do NOT fuzzy match!
+  // Single-word typos for short words (1 to 4 chars) are handled strictly by TYPO_DICTIONARY
+  // (e.g. ARI -> AIR, UOT -> OUT, TSET -> TEST, LFIE -> LIFE, WOKR -> WORK).
+  // This prevents valid 4-letter words (like FOOD, WOOD, GOOD, BOOK, LOOK, CARS, WORK, SHOP)
+  // from ever being mutated or collapsed into other words.
+  if (upper.length <= 4) {
     return upper;
   }
 
-  // 4. Find closest match in vocabulary via Damerau-Levenshtein distance (for words length >= 4)
+  // 4. Find closest match in vocabulary via Damerau-Levenshtein distance (for words length >= 5)
   let bestMatch = null;
   let bestDist = 999;
 
@@ -297,8 +324,8 @@ export function correctWord(word) {
     if (Math.abs(vocabWord.length - upper.length) > 2) continue;
 
     const dist = damerauLevenshtein(upper, vocabWord);
-    // Allow edit distance 1 for short words (<=5 chars), distance 2 for words >=6 chars
-    const maxAllowed = vocabWord.length <= 5 ? 1 : 2;
+    // Allow edit distance 1 for 5-6 char words, distance 2 for words >=7 chars
+    const maxAllowed = vocabWord.length <= 6 ? 1 : 2;
 
     if (dist <= maxAllowed && dist < bestDist) {
       bestDist = dist;

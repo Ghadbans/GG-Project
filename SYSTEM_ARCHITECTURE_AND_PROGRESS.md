@@ -2826,3 +2826,30 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - **Desktop Windows Installer**: Packaged `dist/Global Gate Setup 3.5.97.exe` (95.58 MB).
     - **Android Debug APK**: Built `android/app/build/outputs/apk/debug/app-debug.apk` (129.75 MB).
     - **Cloud & Source Sync**: Version `3.5.97` synced in `package.json` and `server/index.js`, committed and pushed to `main`.
+
+- **Disable Auto-Fix On Blur, Native Red Squiggly Underline & 4-Letter Word Protection (Ver 3.5.98)**:
+  - **User Feedback & Problem Analysis**:
+    - When typing `FOOD FOR WORKERS` in Daily Expenses, moving focus to another field caused the text to silently auto-change to `GOOD FOR ORDERS`.
+    - User instruction: *"prevent this automatically fixing the words automatically i dont want that ... if there is a wrong word should have red points under it than i can press right click on the word that has red points under it and than chose from the list of the right click !"*
+  - **Architecture & Implementation**:
+    - **1. Disabling Auto-Fix on Blur (`SmartTextInput.js`)**:
+      - Completely removed automatic `notifyChange(polished)` in `handleBlur`.
+      - User text is never silently mutated behind the user's back when switching fields or clicking away.
+      - Corrections are performed strictly on user action:
+        a) Clicking the Sparkle ✨ button (`LanguageFixerButton`), or
+        b) Right-clicking on a misspelled word with red wavy underline and selecting a suggestion.
+    - **2. Preserving Native Chromium Spellcheck & Red Dotted Underline**:
+      - Configured inputs with `spellCheck: true` (`en-US` and `fr` dictionaries active in Electron session).
+      - Misspelled words display native red squiggly points under them.
+      - Right-clicking misspelled words presents uppercase suggestions in the Electron context menu (`replaceMisspelling(upperSuggestion)`).
+    - **3. Short-Word Protection & Expense/Catering Vocabulary (`textAssistUtils.js`)**:
+      - Added `FOOD`, `FOODS`, `WORKER`, `WORKERS`, expense categories, meals, and staffing terms to `ENGLISH_FRENCH_VOCABULARY`.
+      - **Strict Length Threshold**: Set `if (upper.length <= 4) return upper;` in `correctWord(word)`. Single-word corrections for words of length $\le 4$ must match explicit `TYPO_DICTIONARY` patterns (e.g. `ARI` $\rightarrow$ `AIR`, `UOT` $\rightarrow$ `OUT`, `TSET` $\rightarrow$ `TEST`, `LFIE` $\rightarrow$ `LIFE`). This permanently prevents valid words like `FOOD` from colliding with `GOOD` or `WOOD`.
+      - Verified that `FOOD FOR WORKERS` stays `FOOD FOR WORKERS` with `hasTypo: false` (no amber badge).
+  - **Quality Gates, Verification & Deliverables**:
+    - **Deep AST & Safety Gate**: Verified all 238 source files with 0 errors via `scripts/pre-build-check.js`.
+    - **Automated Regression Suite (`scripts/test_engine.js`)**: 100% passing across all test cases including `FOOD FOR WORKERS`.
+    - **System Navigation Integrity Suite**: `scripts/verify-language-and-nav.js` passed 100%.
+    - **Desktop Windows Installer**: Packaged `dist/Global Gate Setup 3.5.98.exe` (95.56 MB).
+    - **Android Debug APK**: Built `android/app/build/outputs/apk/debug/app-debug.apk` (125.55 MB).
+    - **Cloud & Source Sync**: Version `3.5.98` synced in `package.json` and `server/index.js`, committed and pushed to `main`.

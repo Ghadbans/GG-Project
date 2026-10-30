@@ -24,16 +24,21 @@ function getGgTypoCorrection(text) {
     { pattern: /^(entretien\s+periodique)$/i, replacement: 'PERIODIC MAINTENANCE' },
     { pattern: /^(tset\s+wronge?|test\s+wronge?|tste\s+wronge?)$/i, replacement: 'TEST WRONG' },
     { pattern: /^(lfie\s+ihis\s+good|life\s+ihis\s+good|lfie\s+is\s+good)$/i, replacement: 'LIFE IS GOOD' },
-    { pattern: /^(doing\s+on[\s\-_/]*off|fait\s+on[\s\-_/]*off)$/i, replacement: 'INTERMITTENT ON/OFF' },
     { pattern: /^(on[\s\-_/]+off)$/i, replacement: 'ON/OFF' },
+    { pattern: /^(ari)$/i, replacement: 'AIR' },
+    { pattern: /^(contoner|condoner|condishioner|conditionner)$/i, replacement: 'CONDITIONER' },
+    { pattern: /^(uot)$/i, replacement: 'OUT' },
+    { pattern: /^(ordder|ordr)$/i, replacement: 'ORDER' },
+    { pattern: /^(fullow|fllow)$/i, replacement: 'FOLLOW' },
     { pattern: /^(tste|tset|tesst|tst)$/i, replacement: 'TEST' },
     { pattern: /^(lfie|lyfe)$/i, replacement: 'LIFE' },
     { pattern: /^(ihis|isi)$/i, replacement: 'IS' },
     { pattern: /^(machin|mashin|machiene|machne)$/i, replacement: 'MACHINE' },
     { pattern: /^(camra|camer|kamra)$/i, replacement: 'CAMERA' },
-    { pattern: /^(cctv|cc\s*tv)$/i, replacement: 'CCTV' },
+    { pattern: /^(cc\s+tv)$/i, replacement: 'CCTV' },
     { pattern: /^(wronge|rong|wrog|wrng)$/i, replacement: 'WRONG' },
     { pattern: /^(powre|powr|pwer|poer)$/i, replacement: 'POWER' },
+    { pattern: /^(wrkrs|workrs|wrokers)$/i, replacement: 'WORKERS' },
     { pattern: /^(probl[eèé]me?|problm|prob)$/i, replacement: 'PROBLEM' },
     { pattern: /^(elec|electrique|eletrique)$/i, replacement: 'ELECTRICAL' },
     { pattern: /^(maint|maintenace|mientenace|maintenence)$/i, replacement: 'MAINTENANCE' },
@@ -98,9 +103,10 @@ function setupWebContentsSpellcheck(targetWin) {
     if (params.misspelledWord) {
       if (params.dictionarySuggestions && params.dictionarySuggestions.length > 0) {
         for (const suggestion of params.dictionarySuggestions) {
+          const upperSuggestion = suggestion.toUpperCase();
           menuTemplate.push({
-            label: suggestion,
-            click: () => targetWin.webContents.replaceMisspelling(suggestion)
+            label: upperSuggestion,
+            click: () => targetWin.webContents.replaceMisspelling(upperSuggestion)
           });
         }
       } else if (!ggFix) {
