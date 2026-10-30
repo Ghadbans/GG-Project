@@ -1,14 +1,15 @@
 import React from 'react';
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import LanguageFixerButton from './LanguageFixerButton';
-import { COMMON_PRESETS, polishText } from '../utils/textAssistUtils';
+import { COMMON_PRESETS, polishText, hasTypo } from '../utils/textAssistUtils';
 
 /**
  * SmartTextInput
  * Drop-in intelligent text input with:
  * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
- * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button
- * 3. Automatic self-healing onBlur
+ * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
+ * 3. Real-time typo detection badge & visual warning
+ * 4. Automatic self-healing onBlur
  */
 function SmartTextInput({
   label,
@@ -17,7 +18,7 @@ function SmartTextInput({
   onBlur,
   presetKey,
   options,
-  mode = 'sentence',
+  mode = 'upper',
   multiline = false,
   rows = 1,
   id,
@@ -28,23 +29,38 @@ function SmartTextInput({
   sx = {},
   disabled = false,
   placeholder,
+  passEvent = false,
+  inputProps = {},
   ...rest
 }) {
   const dropdownOptions = Array.isArray(options) && options.length > 0
     ? options
     : (presetKey && COMMON_PRESETS[presetKey] ? COMMON_PRESETS[presetKey] : null);
 
+  const isTypo = hasTypo(value, mode);
+
+  const notifyChange = (newVal) => {
+    if (typeof onChange !== 'function') return;
+    if (passEvent) {
+      onChange({ target: { name: name || id || '', value: newVal } });
+    } else {
+      onChange(newVal);
+    }
+  };
+
   const handleBlur = (e) => {
     if (value && typeof value === 'string' && value.trim()) {
       const polished = polishText(value, mode);
-      if (polished !== value && typeof onChange === 'function') {
-        onChange(polished);
+      if (polished !== value) {
+        notifyChange(polished);
       }
     }
     if (typeof onBlur === 'function') {
       onBlur(e);
     }
   };
+
+  const textTransformStyle = mode === 'upper' ? 'uppercase' : 'none';
 
   // If dropdown options exist and it's not multiline, use freeSolo Autocomplete
   if (dropdownOptions && !multiline) {
@@ -55,14 +71,10 @@ function SmartTextInput({
         options={dropdownOptions}
         value={value || ''}
         onInputChange={(event, newInputValue) => {
-          if (typeof onChange === 'function') {
-            onChange(newInputValue);
-          }
+          notifyChange(newInputValue);
         }}
         onChange={(event, newValue) => {
-          if (typeof onChange === 'function') {
-            onChange(newValue || '');
-          }
+          notifyChange(newValue || '');
         }}
         renderInput={(params) => (
           <TextField
@@ -75,15 +87,23 @@ function SmartTextInput({
             size={size}
             placeholder={placeholder}
             onBlur={handleBlur}
+            inputProps={{
+              ...params.inputProps,
+              spellCheck: 'true',
+              ...inputProps,
+              style: {
+                textTransform: textTransformStyle,
+                ...(inputProps?.style || {}),
+                ...(params.inputProps?.style || {})
+              }
+            }}
             InputProps={{
               ...params.InputProps,
               endAdornment: (
                 <InputAdornment position="end" sx={{ gap: 0.5 }}>
                   <LanguageFixerButton
                     value={value}
-                    onFixed={(fixed) => {
-                      if (typeof onChange === 'function') onChange(fixed);
-                    }}
+                    onFixed={(fixed) => notifyChange(fixed)}
                     mode={mode}
                     size={size === 'small' ? 'small' : 'medium'}
                   />
@@ -94,6 +114,11 @@ function SmartTextInput({
             sx={{
               width: fullWidth ? '100%' : 'auto',
               backgroundColor: 'white',
+              ...(isTypo ? {
+                '& .MuiOutlinedInput-notchedOutline': {
+                  borderColor: '#f59e0b'
+                }
+              } : {}),
               ...sx
             }}
           />
@@ -111,7 +136,8 @@ function SmartTextInput({
       label={label}
       value={value !== undefined && value !== null ? value : ''}
       onChange={(e) => {
-        if (typeof onChange === 'function') onChange(e.target.value);
+        const val = e && e.target ? e.target.value : e;
+        notifyChange(val);
       }}
       onBlur={handleBlur}
       multiline={multiline}
@@ -120,6 +146,14 @@ function SmartTextInput({
       size={size}
       disabled={disabled}
       placeholder={placeholder}
+      inputProps={{
+        spellCheck: 'true',
+        ...inputProps,
+        style: {
+          textTransform: textTransformStyle,
+          ...(inputProps?.style || {})
+        }
+      }}
       InputProps={{
         endAdornment: (
           <InputAdornment
@@ -128,9 +162,7 @@ function SmartTextInput({
           >
             <LanguageFixerButton
               value={value}
-              onFixed={(fixed) => {
-                if (typeof onChange === 'function') onChange(fixed);
-              }}
+              onFixed={(fixed) => notifyChange(fixed)}
               mode={mode}
               size={size === 'small' ? 'small' : 'medium'}
             />
@@ -140,6 +172,11 @@ function SmartTextInput({
       sx={{
         width: fullWidth ? '100%' : 'auto',
         backgroundColor: 'white',
+        ...(isTypo ? {
+          '& .MuiOutlinedInput-notchedOutline': {
+            borderColor: '#f59e0b'
+          }
+        } : {}),
         ...sx
       }}
     />
@@ -147,3 +184,4 @@ function SmartTextInput({
 }
 
 export default SmartTextInput;
+

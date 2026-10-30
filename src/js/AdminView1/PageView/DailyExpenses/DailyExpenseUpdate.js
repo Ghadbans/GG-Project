@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -600,15 +601,7 @@ function DailyExpenseUpdate() {
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  size="small"
-                  label="Description / Purpose"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+                <SmartTextInput fullWidth multiline rows={3} size="small" label="Description / Purpose" value={description} onChange={(val) => setDescription(val)} mode="upper" />
               </Grid>
             </Grid>
           </Card>
@@ -853,16 +846,7 @@ function DailyExpenseUpdate() {
                           </FormControl>
                         </Grid>
                         <Grid item xs={12}>
-                          <TextField
-                            name='description'
-                            id='description'
-                            label='Expense Description'
-                            value={description}
-                            multiline
-                            maxRows={5}
-                            onChange={(e) => setDescription(e.target.value)}
-                            sx={{ width: '100%', backgroundColor: 'white' }}
-                          />
+                          <SmartTextInput name="description" id="description" label="Expense Description" value={description} multiline maxRows={5} onChange={(val) => setDescription(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                         </Grid>
 
                         {

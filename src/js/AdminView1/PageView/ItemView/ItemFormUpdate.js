@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react'
 import SideMaintenance2 from '../../../component/SideMaintenance2';
 import '../../view.css'
@@ -540,22 +541,10 @@ function ItemFormUpdate() {
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Brand"
-                  value={itemBrand}
-                  onChange={(e) => setItemBrand(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Brand" value={itemBrand} onChange={(val) => setItemBrand(val)} mode="upper" />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Manufacturer"
-                  value={itemManufacturer}
-                  onChange={(e) => setItemManufacturer(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Manufacturer" value={itemManufacturer} onChange={(val) => setItemManufacturer(val)} mode="upper" />
               </Grid>
             </Grid>
           </Card>
@@ -810,14 +799,7 @@ function ItemFormUpdate() {
                     />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
-                      id='itemBrand'
-                      name='itemBrand'
-                      value={itemBrand}
-                      label='Brand'
-                      onChange={(e) => setItemBrand(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="itemBrand" name="itemBrand" value={itemBrand} label="Item Brand" onChange={(val) => setItemBrand(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
                     {
@@ -953,14 +935,7 @@ function ItemFormUpdate() {
                   </Grid>
 
                   <Grid item xs={4}>
-                    <TextField
-                      id='itemManufacturer'
-                      name='itemManufacturer'
-                      value={itemManufacturer}
-                      label='Manufacturer'
-                      onChange={(e) => setItemManufacturer(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="itemManufacturer" name="itemManufacturer" value={itemManufacturer} label="Manufacturer" onChange={(val) => setItemManufacturer(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
                     {

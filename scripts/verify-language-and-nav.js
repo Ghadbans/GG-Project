@@ -37,13 +37,15 @@ assert.strictEqual(normalizeSpaces('   hello    world   '), 'hello world');
 assert.strictEqual(normalizeSpaces('no\u00a0break\u00a0space'), 'no break space');
 console.log('✅ normalizeSpaces() passed.');
 
-// Test Typo Correction
-assert.strictEqual(correctTypos('not charch'), 'Not Charging');
-assert.strictEqual(correctTypos('pas de courant'), 'No Power');
-assert.strictEqual(correctTypos('four elec'), 'Electric Oven');
-assert.strictEqual(correctTypos('pompe a eau'), 'Water Pump');
-assert.strictEqual(correctTypos('moteur motuer'), 'Motor Motor');
-console.log('✅ correctTypos() passed for bilingual & technical terms.');
+// Test Typo Correction (Universal UPPERCASE standard)
+assert.strictEqual(correctTypos('not charch'), 'NOT CHARGING');
+assert.strictEqual(correctTypos('pas de courant'), 'NO POWER');
+assert.strictEqual(correctTypos('four elec'), 'ELECTRIC OVEN');
+assert.strictEqual(correctTypos('pompe a eau'), 'WATER PUMP');
+assert.strictEqual(correctTypos('moteur motuer'), 'MOTOR MOTOR');
+assert.strictEqual(correctTypos('TSTE THE MACHINE'), 'TEST THE MACHINE');
+assert.strictEqual(correctTypos('LFIE IHIS GOOD'), 'LIFE IS GOOD');
+console.log('✅ correctTypos() passed for bilingual & technical terms in CAPITAL LETTERS.');
 
 // Test Sentence Case
 assert.strictEqual(toSentenceCase('motor is overheating. please check capacitor.'), 'Motor is overheating. Please check capacitor.');
@@ -57,11 +59,15 @@ console.log('✅ toTitleCase() passed.');
 assert.strictEqual(toUpperCaseCode('gg-sn1234-ab'), 'GG-SN1234-AB');
 console.log('✅ toUpperCaseCode() passed.');
 
-// Test polishText Master Function
-assert.strictEqual(polishText('  four elec   avec  surchauffe .  condo a changer '), 'Electric Oven avec Overheating. Capacitor a changer');
+// Test polishText Master Function (defaults to universal CAPITAL LETTERS)
+assert.strictEqual(polishText('TSTE THE MACHINE'), 'TEST THE MACHINE');
+assert.strictEqual(polishText('LFIE IHIS GOOD'), 'LIFE IS GOOD');
+assert.strictEqual(polishText('tset wronge'), 'TEST WRONG');
+assert.strictEqual(polishText('one camera is doing on/off'), 'ONE CAMERA IS INTERMITTENT ON/OFF');
+assert.strictEqual(polishText('  four elec   avec  surchauffe .  condo a changer '), 'ELECTRIC OVEN AVEC OVERHEATING . CAPACITOR A CHANGER');
 assert.strictEqual(polishText('ahmed ali transport', 'title'), 'Ahmed Ali Transport');
 assert.strictEqual(polishText('xyz-987-a', 'upper'), 'XYZ-987-A');
-console.log('✅ polishText() passed master integration tests.');
+console.log('✅ polishText() passed master integration tests with universal CAPITAL LETTERS.');
 
 // 2. Navigation & Route Audit
 const filesToCheck = [

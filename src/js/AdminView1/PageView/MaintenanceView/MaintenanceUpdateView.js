@@ -1057,44 +1057,20 @@ function MaintenanceUpdateView() {
                   presetKey="appliances"
                   value={itemDescriptionInfo || ''}
                   onChange={(val) => setItemDescriptionInfo(val)}
-                  mode="sentence"
+                  mode="upper"
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Brand"
-                  value={brand || ''}
-                  onChange={(e) => setBrand(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Brand" value={brand || ''} onChange={(val) => setBrand(val)} mode="upper" />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Model"
-                  value={model || ''}
-                  onChange={(e) => setModel(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Model" value={model || ''} onChange={(val) => setModel(val)} mode="upper" />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Serial No"
-                  value={serialNo || ''}
-                  onChange={(e) => setSerialNo(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Serial No" value={serialNo || ''} onChange={(val) => setSerialNo(val)} mode="upper" />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Warranty"
-                  value={warranty || ''}
-                  onChange={(e) => setWarranty(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Warranty" value={warranty || ''} onChange={(val) => setWarranty(val)} mode="upper" />
               </Grid>
               <Grid item xs={12}>
                 <SmartTextInput
@@ -1106,7 +1082,7 @@ function MaintenanceUpdateView() {
                   presetKey="defects"
                   value={defectDescription || ''}
                   onChange={(val) => setDefectDescription(val)}
-                  mode="sentence"
+                  mode="upper"
                 />
               </Grid>
             </Grid>
@@ -1133,26 +1109,10 @@ function MaintenanceUpdateView() {
                 </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={2}
-                  size="small"
-                  label="Action Taken"
-                  value={actionTaken || ''}
-                  onChange={(e) => setActionTaken(e.target.value)}
-                />
+                <SmartTextInput fullWidth multiline rows={2} size="small" label="Action Taken" presetKey="actions" value={actionTaken || ''} onChange={(val) => setActionTaken(val)} mode="upper" />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={2}
-                  size="small"
-                  label="Technical Notes"
-                  value={note || ''}
-                  onChange={(e) => setNote(e.target.value)}
-                />
+                <SmartTextInput fullWidth multiline rows={2} size="small" label="Technical Notes" value={note || ''} onChange={(val) => setNote(val)} mode="upper" />
               </Grid>
             </Grid>
           </Card>
@@ -1755,7 +1715,7 @@ function MaintenanceUpdateView() {
                       presetKey='appliances'
                       value={itemDescriptionInfo}
                       onChange={(val) => setItemDescriptionInfo(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={3}>
@@ -1806,7 +1766,7 @@ function MaintenanceUpdateView() {
                       presetKey='defects'
                       value={defectDescription}
                       onChange={(val) => setDefectDescription(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1871,7 +1831,7 @@ function MaintenanceUpdateView() {
                       rows={5}
                       value={actionTaken}
                       onChange={(val) => setActionTaken(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1883,7 +1843,7 @@ function MaintenanceUpdateView() {
                       rows={5}
                       value={note}
                       onChange={(val) => setNote(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>

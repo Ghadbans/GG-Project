@@ -1294,7 +1294,7 @@ function InvoiceForm() {
                       presetKey='subjects'
                       value={invoiceSubject}
                       onChange={(val) => setInvoiceSubject(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1305,7 +1305,7 @@ function InvoiceForm() {
                       presetKey='defects'
                       value={invoiceDefect}
                       onChange={(val) => setInvoiceDefect(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1317,7 +1317,7 @@ function InvoiceForm() {
                       rows={3}
                       value={noteInfo}
                       onChange={(val) => setNoteInfo(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1803,7 +1803,7 @@ function InvoiceForm() {
                       rows={3}
                       value={note}
                       onChange={(val) => setNote(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                       <table className="firstTable" style={{ borderCollapse: 'collapse', width: '100%' }}>
                         <tbody>

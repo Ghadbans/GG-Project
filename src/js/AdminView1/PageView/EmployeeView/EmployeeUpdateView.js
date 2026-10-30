@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import SidebarDashE3 from '../../../component/SidebarDashE3';
@@ -738,13 +739,7 @@ function EmployeeUpdateView() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
-                      id='employeeName'
-                      label='Employee Name'
-                      value={employeeName}
-                      onChange={(e) => setEmployeeName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="employeeName" name="employeeName" value={employeeName} label="Employee Name" onChange={(val) => setEmployeeName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -762,13 +757,7 @@ function EmployeeUpdateView() {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
-                      id='employeeAddress'
-                      label='Employee Address'
-                      value={employeeAddress}
-                      onChange={(e) => setEmployeeAddress(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="employeeAddress" name="employeeAddress" value={employeeAddress} label="Employee Address" onChange={(val) => setEmployeeAddress(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
@@ -1013,16 +1002,7 @@ function EmployeeUpdateView() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      id='description'
-                      name='description'
-                      value={description}
-                      label='Description'
-                      multiline
-                      rows={4}
-                      onChange={(e) => setDescription(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="description" name="description" value={description} label="Description" multiline rows={3} onChange={(val) => setDescription(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={12}>
                     <button className='btnCustomer6' style={{ width: '100%' }}>Save</button>

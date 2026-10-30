@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import SideMaintenance2 from '../../../component/SideMaintenance2';
 import '../../view.css';
@@ -407,25 +408,11 @@ function SupplierFormUpdate() {
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Address"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Address" value={address} onChange={(val) => setAddress(val)} mode="upper" />
               </Grid>
 
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  size="small"
-                  label="Description / Notes"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
+                <SmartTextInput fullWidth multiline rows={3} size="small" label="Description / Notes" value={description} onChange={(val) => setDescription(val)} mode="upper" />
               </Grid>
             </Grid>
           </Card>
@@ -567,32 +554,13 @@ function SupplierFormUpdate() {
               <form onSubmit={handleOpenUpdate}>
                 <Grid container style={{ alignItems: 'center', padding: '20px' }} spacing={2} component={Paper}>
                   <Grid item xs={6}>
-                    <TextField
-                      name='supplierName'
-                      value={supplierName}
-                      label='Supplier Name'
-                      onChange={(e) => setSupplierName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput name="supplierName" id="supplierName" value={supplierName} label="Supplier Name" onChange={(val) => setSupplierName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      required
-                      name='storeName'
-                      value={storeName}
-                      label='Store Name'
-                      onChange={(e) => setStoreName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required name="storeName" id="storeName" value={storeName} label="Store Name" onChange={(val) => setStoreName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
-                      name='address'
-                      value={address}
-                      label='Address'
-                      onChange={(e) => setAddress(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput name="address" id="address" value={address} label="Address" onChange={(val) => setAddress(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
                     <TextField
@@ -613,16 +581,7 @@ function SupplierFormUpdate() {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      id='description'
-                      name='description'
-                      value={description}
-                      label='Description'
-                      multiline
-                      rows={4}
-                      onChange={(e) => setDescription(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="description" name="description" value={description} label="Description" multiline rows={3} onChange={(val) => setDescription(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={12}>
                     <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button>

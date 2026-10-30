@@ -1,68 +1,68 @@
 /**
  * GG Management - Intelligent Language & Text Assistance Utility
  * Provides typo auto-correction, technical terminology standardization,
- * whitespace cleaning, and smart casing for French & English data entry.
+ * whitespace cleaning, and universal CAPITAL LETTERS formatting.
  */
 
 export const COMMON_PRESETS = {
   defects: [
-    'No Power',
-    'Not Charging',
-    'Overheating',
-    'Motor Blocked',
-    'Short Circuit',
-    'Abnormal Noise',
-    'Water Leak',
-    'Gas Leak',
-    'Periodic Maintenance',
-    'Display Fault',
-    'Burnt Coil',
-    'Mechanical Breakdown',
-    'Low Pressure',
-    'Tripping Breaker',
-    'Intermittent On/Off Fault',
-    'Video Signal Lost / Flickering',
-    'Sensor / Thermostat Error',
-    'Blown Fuse'
+    'NO POWER',
+    'NOT CHARGING',
+    'OVERHEATING',
+    'MOTOR BLOCKED',
+    'SHORT CIRCUIT',
+    'ABNORMAL NOISE',
+    'WATER LEAK',
+    'GAS LEAK',
+    'PERIODIC MAINTENANCE',
+    'DISPLAY FAULT',
+    'BURNT COIL',
+    'MECHANICAL BREAKDOWN',
+    'LOW PRESSURE',
+    'TRIPPING BREAKER',
+    'INTERMITTENT ON/OFF FAULT',
+    'VIDEO SIGNAL LOST / FLICKERING',
+    'SENSOR / THERMOSTAT ERROR',
+    'BLOWN FUSE'
   ],
   appliances: [
-    'Air Conditioner',
-    'Generator',
-    'CCTV Security Cameras',
-    'Bakery Dough Mixer',
-    'Electric Oven',
-    'Water Pump',
-    'Cold Room / Chiller',
-    'Electric Motor',
-    'Inverter / UPS',
-    'Transformer',
-    'Ice Machine',
-    'Air Compressor',
-    'Deep Fryer',
-    'Refrigerator / Freezer',
-    'Electrical Control Panel'
+    'AIR CONDITIONER',
+    'GENERATOR',
+    'CCTV SECURITY CAMERAS',
+    'BAKERY DOUGH MIXER',
+    'ELECTRIC OVEN',
+    'WATER PUMP',
+    'COLD ROOM / CHILLER',
+    'ELECTRIC MOTOR',
+    'INVERTER / UPS',
+    'TRANSFORMER',
+    'ICE MACHINE',
+    'AIR COMPRESSOR',
+    'DEEP FRYER',
+    'REFRIGERATOR / FREEZER',
+    'ELECTRICAL CONTROL PANEL'
   ],
   actions: [
-    'Diagnostic & Inspection OK',
-    'Replaced Capacitor',
-    'Cleaned & Serviced',
-    'Rewired Electrical Connections',
-    'Motor Rewound & Tested',
-    'Refrigerant Gas Refilled',
-    'Replaced Bearings & Belts',
-    'Tested & Fully Operational',
-    'Calibrated & Adjusted',
-    'Replaced Burnt Coil',
-    'Firmware Updated & System Reset'
+    'DIAGNOSTIC & INSPECTION OK',
+    'REPLACED CAPACITOR',
+    'CLEANED & SERVICED',
+    'REWIRED ELECTRICAL CONNECTIONS',
+    'MOTOR REWOUND & TESTED',
+    'REFRIGERANT GAS REFILLED',
+    'REPLACED BEARINGS & BELTS',
+    'TESTED & FULLY OPERATIONAL',
+    'CALIBRATED & ADJUSTED',
+    'REPLACED BURNT COIL',
+    'FIRMWARE UPDATED & SYSTEM RESET'
   ],
   subjects: [
-    'Maintenance & Repair Services',
-    'Supply of Electrical Equipment',
-    'Troubleshooting & Emergency Repair',
-    'Preventive Maintenance Contract',
-    'Installation & Commissioning',
-    'Technical Inspection & Audit',
-    'Security & Surveillance System Service'
+    'MAINTENANCE & REPAIR SERVICES',
+    'SUPPLY OF ELECTRICAL EQUIPMENT',
+    'TROUBLESHOOTING & EMERGENCY REPAIR',
+    'PREVENTIVE MAINTENANCE CONTRACT',
+    'INSTALLATION & COMMISSIONING',
+    'TECHNICAL INSPECTION & AUDIT',
+    'SECURITY & SURVEILLANCE SYSTEM SERVICE'
   ]
 };
 
@@ -82,16 +82,25 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(moteur\s+bloqu[eé])\b/gi, replacement: 'Motor Blocked' },
   { pattern: /\b(entretien\s+periodique)\b/gi, replacement: 'Periodic Maintenance' },
   { pattern: /\b(ne\s+marche\s+pas|marche\s+pas|not\s+work(ing)?)\b/gi, replacement: 'Not Working' },
-  { pattern: /\b(tset\s+wronge?|test\s+wronge?)\b/gi, replacement: 'Test Wrong' },
+  { pattern: /\b(tset\s+wronge?|test\s+wronge?|tste\s+wronge?)\b/gi, replacement: 'Test Wrong' },
+  { pattern: /\b(lfie\s+ihis\s+good|life\s+ihis\s+good|lfie\s+is\s+good)\b/gi, replacement: 'Life Is Good' },
+  { pattern: /\b(doing\s+on[\s\-_/]*off|fait\s+on[\s\-_/]*off)\b/gi, replacement: 'Intermittent ON/OFF' },
+  { pattern: /\b(on[\s\-_/]+off)\b/gi, replacement: 'ON/OFF' },
+  { pattern: /\b(en\s+panne|hors\s+service)\b/gi, replacement: 'Out Of Order' },
 
   // Single word typos and common terms
-  { pattern: /\b(tset|tesst)\b/gi, replacement: 'Test' },
-  { pattern: /\b(wronge|rong|wrog)\b/gi, replacement: 'Wrong' },
-  { pattern: /\b(powre|powr|pwer)\b/gi, replacement: 'Power' },
+  { pattern: /\b(tste|tset|tesst|tst)\b/gi, replacement: 'Test' },
+  { pattern: /\b(lfie|lyfe)\b/gi, replacement: 'Life' },
+  { pattern: /\b(ihis|isi)\b/gi, replacement: 'Is' },
+  { pattern: /\b(machin|mashin|machiene|machne)\b/gi, replacement: 'Machine' },
+  { pattern: /\b(camra|camer|kamra)\b/gi, replacement: 'Camera' },
+  { pattern: /\b(cctv|cc\s*tv)\b/gi, replacement: 'CCTV' },
+  { pattern: /\b(wronge|rong|wrog|wrng)\b/gi, replacement: 'Wrong' },
+  { pattern: /\b(powre|powr|pwer|poer)\b/gi, replacement: 'Power' },
   { pattern: /\b(probl[eèé]me?|problm|prob)\b/gi, replacement: 'Problem' },
   { pattern: /\b(elec|electrique|eletrique)\b/gi, replacement: 'Electrical' },
   { pattern: /\b(maint|maintenace|mientenace|maintenence)\b/gi, replacement: 'Maintenance' },
-  { pattern: /\b(reparation|reparer|reparartion)\b/gi, replacement: 'Repair' },
+  { pattern: /\b(reparation|reparer|reparartion|repar)\b/gi, replacement: 'Repair' },
   { pattern: /\b(moteur|motuer|motteur)\b/gi, replacement: 'Motor' },
   { pattern: /\b(batteri|batterie|baterie)\b/gi, replacement: 'Battery' },
   { pattern: /\b(climatiseur|clim)\b/gi, replacement: 'Air Conditioner' },
@@ -102,19 +111,76 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(disjoncteur|disjonctuer)\b/gi, replacement: 'Circuit Breaker' },
   { pattern: /\b(transformateur|transfo)\b/gi, replacement: 'Transformer' },
   { pattern: /\b(bobinage|bobinne)\b/gi, replacement: 'Coil Winding' },
-  { pattern: /\b(condensateur|condo)\b/gi, replacement: 'Capacitor' },
+  { pattern: /\b(condensateur|condo|capaciter)\b/gi, replacement: 'Capacitor' },
   { pattern: /\b(roulement|roulements)\b/gi, replacement: 'Bearings' },
   { pattern: /\b(ventilateur|ventillo|ventilo)\b/gi, replacement: 'Ventilator / Fan' },
   { pattern: /\b(surchauffe|overheat|overheating)\b/gi, replacement: 'Overheating' },
   { pattern: /\b(ecran|ecrant)\b/gi, replacement: 'Screen / Display' },
   { pattern: /\b(cablage|cablagge)\b/gi, replacement: 'Wiring' },
-  { pattern: /\b(nettoy[eé]|netoyage|nettoyage)\b/gi, replacement: 'Cleaned' },
-  { pattern: /\b(remplac[eé]|remplacment|remplacement)\b/gi, replacement: 'Replaced' },
+  { pattern: /\b(nettoy[eé]|netoyage|nettoyage|clean|cleand)\b/gi, replacement: 'Cleaned' },
+  { pattern: /\b(remplac[eé]|remplacment|remplacement|chnge)\b/gi, replacement: 'Replaced' },
   { pattern: /\b(diagnostique|diagnostic)\b/gi, replacement: 'Diagnostic' },
   { pattern: /\b(operationnel|operationel)\b/gi, replacement: 'Operational' },
   { pattern: /\b(technicien|technition)\b/gi, replacement: 'Technician' },
-  { pattern: /\b(inspection)\b/gi, replacement: 'Inspection' }
+  { pattern: /\b(inspection)\b/gi, replacement: 'Inspection' },
+  { pattern: /\b(servis|service|servce)\b/gi, replacement: 'Service' },
+  { pattern: /\b(coup|coupe|coupure)\b/gi, replacement: 'Cut' },
+  { pattern: /\b(casse|casser|casses|brokn)\b/gi, replacement: 'Broken' },
+  { pattern: /\b(brule|brulee|bruler|burnd)\b/gi, replacement: 'Burnt' },
+  { pattern: /\b(bloque|bloquer|bloq)\b/gi, replacement: 'Blocked' },
+  { pattern: /\b(fuite|fuit)\b/gi, replacement: 'Leak' },
+  { pattern: /\b(charg|charch|chargeur)\b/gi, replacement: 'Charging' },
+  { pattern: /\b(costomer|custmer|customr|cleint|clien)\b/gi, replacement: 'Customer' },
+  { pattern: /\b(suplier|suppliar|fourniseur|fournissur)\b/gi, replacement: 'Supplier' },
+  { pattern: /\b(invocie|invoce|factur)\b/gi, replacement: 'Invoice' },
+  { pattern: /\b(quattion|quotatn|devis)\b/gi, replacement: 'Quotation' },
+  { pattern: /\b(payemnt|paymnt|peymnt)\b/gi, replacement: 'Payment' },
+  { pattern: /\b(expens|expeses|depense)\b/gi, replacement: 'Expense' },
+  { pattern: /\b(projct|progect|porject)\b/gi, replacement: 'Project' },
+  { pattern: /\b(employe|emploe|personel)\b/gi, replacement: 'Employee' },
+  { pattern: /\b(discripton|descrip|descriptoin|descreption)\b/gi, replacement: 'Description' },
+  { pattern: /\b(addres|adres|adress)\b/gi, replacement: 'Address' },
+  { pattern: /\b(waranty|warenty|woranty|garanti|garantie)\b/gi, replacement: 'Warranty' },
+  { pattern: /\b(seriel|serail|seral)\b/gi, replacement: 'Serial' },
+  { pattern: /\b(recived|recieve|recu)\b/gi, replacement: 'Received' },
+  { pattern: /\b(deliverd|delivry|livraison)\b/gi, replacement: 'Delivered' },
+  { pattern: /\b(compleat|complet|termnated)\b/gi, replacement: 'Completed' },
+  { pattern: /\b(canceld|cancelld|annule)\b/gi, replacement: 'Cancelled' },
+  { pattern: /\b(urgent|urgant)\b/gi, replacement: 'Urgent' },
+  { pattern: /\b(approvd|aprovd|aprouved)\b/gi, replacement: 'Approved' },
+  { pattern: /\b(requst|reqest|demande)\b/gi, replacement: 'Request' },
+  { pattern: /\b(quantite|qantity|qte|qty)\b/gi, replacement: 'Quantity' },
+  { pattern: /\b(balanc|balnce|solde)\b/gi, replacement: 'Balance' },
+  { pattern: /\b(disscount|discont|remise)\b/gi, replacement: 'Discount' },
+  { pattern: /\b(shiping|shiped)\b/gi, replacement: 'Shipping' }
 ];
+
+/**
+ * Checks if a string contains any recognized typo, unnormalized spacing,
+ * or non-capitalized letters (when user prefers universal CAPITAL LETTERS).
+ * @param {string} text - Raw input string
+ * @param {'upper'|'sentence'|'title'|'none'} mode - Current mode (defaults to 'upper')
+ * @returns {boolean} true if typo or unpolished formatting is detected
+ */
+export const hasTypo = (text, mode = 'upper') => {
+  if (!text || typeof text !== 'string' || !text.trim()) return false;
+  
+  // 1. Check against dictionary typo patterns
+  for (const { pattern } of TYPO_DICTIONARY) {
+    if (new RegExp(pattern.source, 'i').test(text)) return true;
+  }
+
+  // 2. 3+ identical consecutive letters (e.g. "tesst", "wronnng", "camerra")
+  if (/(.)\1{2,}/i.test(text)) return true;
+
+  // 3. Lowercase letters when in uppercase mode (user requested ALL CAPS entry)
+  if (mode === 'upper' && /[a-z\u00E0-\u00FC]/.test(text)) return true;
+
+  // 4. Repeated spaces or unnormalized spacing
+  if (/\s{2,}/.test(text) || text !== text.trim()) return true;
+
+  return false;
+};
 
 /**
  * Normalizes repeated spaces, non-breaking spaces (\u00a0), and tabs into a single ASCII space.
@@ -127,11 +193,16 @@ export const normalizeSpaces = (text) => {
 /**
  * Corrects common typos and non-standard technical phrases based on the GG dictionary.
  */
-export const correctTypos = (text) => {
+export const correctTypos = (text, forceUpper = true) => {
   if (!text || typeof text !== 'string') return '';
   let cleaned = text;
   for (const { pattern, replacement } of TYPO_DICTIONARY) {
-    cleaned = cleaned.replace(pattern, replacement);
+    cleaned = cleaned.replace(pattern, (match) => {
+      if (forceUpper || match === match.toUpperCase()) {
+        return replacement.toUpperCase();
+      }
+      return replacement;
+    });
   }
   return cleaned;
 };
@@ -144,12 +215,10 @@ export const toSentenceCase = (text) => {
   const trimmed = normalizeSpaces(text);
   if (!trimmed) return '';
 
-  // Clean spacing around commas and periods
   let formatted = trimmed
     .replace(/\s*([,;:])\s*/g, '$1 ')
     .replace(/\s*([.!?])\s*/g, '$1 ');
 
-  // Capitalize start of text and letters following period/exclamation/question mark
   formatted = formatted.replace(/(^|[.!?]\s+)([a-z\u00E0-\u00FC])/g, (match, prefix, char) => {
     return prefix + char.toUpperCase();
   });
@@ -175,22 +244,25 @@ export const toUpperCaseCode = (text) => {
 };
 
 /**
- * Master polishing function that cleans whitespace, fixes typos, and applies appropriate casing.
+ * Master polishing function that cleans whitespace, fixes typos, and standardizes to CAPITAL LETTERS.
+ * Defaults to 'upper' mode as preferred by the user across the entire management system.
  * @param {string} text - Raw input text
- * @param {'sentence'|'title'|'upper'|'none'} mode - Desired casing mode
+ * @param {'upper'|'sentence'|'title'|'none'} mode - Desired casing mode (defaults to 'upper')
  */
-export const polishText = (text, mode = 'sentence') => {
+export const polishText = (text, mode = 'upper') => {
   if (!text || typeof text !== 'string') return '';
   let result = normalizeSpaces(text);
-  result = correctTypos(result);
+  const isUpper = mode === 'upper';
+  result = correctTypos(result, isUpper);
 
-  if (mode === 'sentence') {
-    result = toSentenceCase(result);
+  if (mode === 'upper') {
+    result = toUpperCaseCode(result);
   } else if (mode === 'title') {
     result = toTitleCase(result);
-  } else if (mode === 'upper') {
-    result = toUpperCaseCode(result);
+  } else if (mode === 'sentence') {
+    result = toSentenceCase(result);
   }
 
   return result;
 };
+

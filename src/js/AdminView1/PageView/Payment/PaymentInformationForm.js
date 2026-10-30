@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -1280,16 +1281,7 @@ function PaymentInformationForm() {
                             </FormControl>
                           </Grid>
                           <Grid item xs={12}>
-                            <TextField
-                              id='description'
-                              name='description'
-                              multiline
-                              rows={4}
-                              value={description}
-                              label='Description'
-                              onChange={(e) => setDescription(e.target.value)}
-                              sx={{ width: '100%', backgroundColor: 'white' }}
-                            />
+                            <SmartTextInput id="description" name="description" value={description} label="Description" multiline rows={3} onChange={(val) => setDescription(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                           </Grid>
                           {
                             modes === 'Credit' ? (

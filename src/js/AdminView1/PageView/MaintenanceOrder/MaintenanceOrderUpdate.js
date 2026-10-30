@@ -1004,7 +1004,7 @@ function MaintenanceOrderUpdate() {
                   presetKey="appliances"
                   value={itemDescriptionInfo || ''}
                   onChange={(val) => setItemDescriptionInfo(val)}
-                  mode="sentence"
+                  mode="upper"
                 />
               </Grid>
               <Grid item xs={6}>
@@ -1053,7 +1053,7 @@ function MaintenanceOrderUpdate() {
                   presetKey="defects"
                   value={defectDescription || ''}
                   onChange={(val) => setDefectDescription(val)}
-                  mode="sentence"
+                  mode="upper"
                 />
               </Grid>
             </Grid>
@@ -1675,7 +1675,7 @@ function MaintenanceOrderUpdate() {
                       presetKey='appliances'
                       value={itemDescriptionInfo}
                       onChange={(val) => setItemDescriptionInfo(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={3}>
@@ -1726,7 +1726,7 @@ function MaintenanceOrderUpdate() {
                       presetKey='defects'
                       value={defectDescription}
                       onChange={(val) => setDefectDescription(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1787,7 +1787,7 @@ function MaintenanceOrderUpdate() {
                       rows={5}
                       value={actionTaken}
                       onChange={(val) => setActionTaken(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1799,7 +1799,7 @@ function MaintenanceOrderUpdate() {
                       rows={5}
                       value={note}
                       onChange={(val) => setNote(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>

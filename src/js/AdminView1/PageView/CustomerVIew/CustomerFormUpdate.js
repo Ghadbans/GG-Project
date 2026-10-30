@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -361,43 +362,18 @@ function CustomerFormUpdate() {
 
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  required
-                  size="small"
-                  label="Display Name / Billing Name *"
-                  value={Customer}
-                  onChange={(e) => setCustomer(e.target.value)}
-                />
+                <SmartTextInput fullWidth required size="small" label="Display Name / Billing Name *" value={Customer} onChange={(val) => setCustomer(val)} mode="upper" />
               </Grid>
               {customerType === 'Business' && (
                 <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    size="small"
-                    label="Company Name"
-                    value={companyName}
-                    onChange={(e) => setCompanyName(e.target.value)}
-                  />
+                  <SmartTextInput fullWidth size="small" label="Company Name" value={companyName} onChange={(val) => setCompanyName(val)} mode="upper" />
                 </Grid>
               )}
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="First Name"
-                  value={customerFirstName}
-                  onChange={(e) => setCustomerFirstName(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="First Name" value={customerFirstName} onChange={(val) => setCustomerFirstName(val)} mode="upper" />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Last Name"
-                  value={customerLastName}
-                  onChange={(e) => setCustomerLastName(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Last Name" value={customerLastName} onChange={(val) => setCustomerLastName(val)} mode="upper" />
               </Grid>
             </Grid>
           </Card>
@@ -446,33 +422,13 @@ function CustomerFormUpdate() {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Billing Address"
-                  value={billingAddress}
-                  onChange={(e) => setBillingAddress(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Billing Address" value={billingAddress} onChange={(val) => setBillingAddress(val)} mode="upper" />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="City / Location"
-                  value={billingCity}
-                  onChange={(e) => setBillingCity(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="City / Location" value={billingCity} onChange={(val) => setBillingCity(val)} mode="upper" />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  fullWidth
-                  multiline
-                  rows={3}
-                  size="small"
-                  label="Remarks / Notes"
-                  value={customerDescription}
-                  onChange={(e) => setCustomerDescription(e.target.value)}
-                />
+                <SmartTextInput fullWidth multiline rows={3} size="small" label="Remarks / Notes" value={customerDescription} onChange={(val) => setCustomerDescription(val)} mode="upper" />
               </Grid>
             </Grid>
           </Card>
@@ -650,47 +606,16 @@ function CustomerFormUpdate() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={3}>
-                    <TextField
-                      required={customerType === 'Individual'}
-                      id='customerFirstName'
-                      name='customerFirstName'
-                      value={customerFirstName}
-                      label='First Name'
-                      onChange={(e) => setCustomerFirstName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required={customerType === "Individual"} id="customerFirstName" name="customerFirstName" value={customerFirstName} label="First Name" onChange={(val) => setCustomerFirstName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={3}>
-                    <TextField
-                      required={customerType === 'Individual'}
-                      id='customerLastName'
-                      name='customerLastName'
-                      value={customerLastName}
-                      label='Last Name'
-                      onChange={(e) => setCustomerLastName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required={customerType === "Individual"} id="customerLastName" name="customerLastName" value={customerLastName} label="Last Name" onChange={(val) => setCustomerLastName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
-                      required={customerType === 'Individual'}
-                      id='customerFullName'
-                      name='customerFullName'
-                      value={customerFullName}
-                      label='Full Name'
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required={customerType === "Individual"} id="customerFullName" name="customerFullName" value={customerFullName} label="Full Name" sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
-                    <TextField
-                      required={customerType === 'Business'}
-                      id='companyName'
-                      name='companyName'
-                      value={companyName}
-                      label='Company Name'
-                      onChange={(e) => setCompanyName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required={customerType === "Business"} id="companyName" name="companyName" value={companyName} label="Company Name" onChange={(val) => setCompanyName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={4}>
                     <FormControl sx={{ minWidth: "97%" }}>
@@ -781,48 +706,16 @@ function CustomerFormUpdate() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      required
-                      id='billingAddress'
-                      name='billingAddress'
-                      value={billingAddress}
-                      label='Billing Address'
-                      onChange={(e) => setBillingAddress(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required id="billingAddress" name="billingAddress" value={billingAddress} label="Billing Address" onChange={(val) => setBillingAddress(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      required
-                      id='billingCity'
-                      name='billingCity'
-                      value={billingCity}
-                      label='Billing City'
-                      onChange={(e) => setBillingCity(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required id="billingCity" name="billingCity" value={billingCity} label="Billing City" onChange={(val) => setBillingCity(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      required
-                      id='shippingAddress'
-                      name='shippingAddress'
-                      value={shippingAddress}
-                      label='Shipping Address'
-                      onChange={(e) => setShippingAddress(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required id="shippingAddress" name="shippingAddress" value={shippingAddress} label="Shipping Address" onChange={(val) => setShippingAddress(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      required
-                      id='shippingCity'
-                      name='shippingCity'
-                      value={shippingCity}
-                      label='Shipping City'
-                      onChange={(e) => setShippingCity(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required id="shippingCity" name="shippingCity" value={shippingCity} label="Shipping City" onChange={(val) => setShippingCity(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   {/**
      * <Grid item xs={6}>
@@ -839,16 +732,7 @@ function CustomerFormUpdate() {
      */}
 
                   <Grid item xs={12}>
-                    <TextField
-                      id='customerDescription'
-                      name='customerDescription'
-                      value={customerDescription}
-                      label='Description'
-                      multiline
-                      rows={4}
-                      onChange={(e) => setCustomerDescription(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="customerDescription" name="customerDescription" value={customerDescription} label="Description" multiline rows={4} onChange={(val) => setCustomerDescription(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={12}>
                     <button type='submit' className='btnCustomer6' style={{ width: '100%' }}>Save</button>

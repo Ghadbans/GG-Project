@@ -907,26 +907,14 @@ function MaintenanceFormView() {
                   presetKey="appliances"
                   value={itemDescriptionInfo || ''}
                   onChange={(val) => setItemDescriptionInfo(val)}
-                  mode="sentence"
+                  mode="upper"
                 />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Brand"
-                  value={brand || ''}
-                  onChange={(e) => setBrand(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Brand" value={brand || ''} onChange={(val) => setBrand(val)} mode="upper" />
               </Grid>
               <Grid item xs={6}>
-                <TextField
-                  fullWidth
-                  size="small"
-                  label="Model"
-                  value={model || ''}
-                  onChange={(e) => setModel(e.target.value)}
-                />
+                <SmartTextInput fullWidth size="small" label="Model" value={model || ''} onChange={(val) => setModel(val)} mode="upper" />
               </Grid>
               <Grid item xs={12}>
                 <SmartTextInput
@@ -938,7 +926,7 @@ function MaintenanceFormView() {
                   presetKey="defects"
                   value={defectDescription || ''}
                   onChange={(val) => setDefectDescription(val)}
-                  mode="sentence"
+                  mode="upper"
                 />
               </Grid>
             </Grid>
@@ -1457,7 +1445,7 @@ function MaintenanceFormView() {
                       presetKey='appliances'
                       value={itemDescriptionInfo}
                       onChange={(val) => setItemDescriptionInfo(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={4}>
@@ -1499,7 +1487,7 @@ function MaintenanceFormView() {
                       presetKey='defects'
                       value={defectDescription}
                       onChange={(val) => setDefectDescription(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1554,7 +1542,7 @@ function MaintenanceFormView() {
                       rows={5}
                       value={actionTaken}
                       onChange={(val) => setActionTaken(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1566,7 +1554,7 @@ function MaintenanceFormView() {
                       rows={5}
                       value={note}
                       onChange={(val) => setNote(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>

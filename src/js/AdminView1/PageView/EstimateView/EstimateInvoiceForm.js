@@ -1225,7 +1225,7 @@ The GLOBAL GATE Team`;
                       presetKey='subjects'
                       value={estimateSubject}
                       onChange={(val) => setEstimateSubject(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1236,7 +1236,7 @@ The GLOBAL GATE Team`;
                       presetKey='defects'
                       value={estimateDefect}
                       onChange={(val) => setEstimateDefect(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -1248,7 +1248,7 @@ The GLOBAL GATE Team`;
                       rows={3}
                       value={noteInfo}
                       onChange={(val) => setNoteInfo(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -1731,7 +1731,7 @@ The GLOBAL GATE Team`;
                       rows={3}
                       value={note}
                       onChange={(val) => setNote(val)}
-                      mode='sentence'
+                      mode="upper"
                     />
                       <table className="firstTable">
                         <tbody>

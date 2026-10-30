@@ -1,3 +1,4 @@
+import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -665,15 +666,7 @@ function ProjectFormView() {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
-                    <TextField
-                      required
-                      id='ProjectName'
-                      name='ProjectName'
-                      label='Project Name'
-                      value={projectName}
-                      onChange={(e) => setProjectName(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput required id="ProjectName" name="ProjectName" value={ProjectName} label="Project Name" onChange={(val) => setProjectName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
 
@@ -732,16 +725,7 @@ function ProjectFormView() {
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
-                    <TextField
-                      id='description'
-                      name='description'
-                      value={description}
-                      label='Description'
-                      multiline
-                      rows={4}
-                      onChange={(e) => setDescription(e.target.value)}
-                      sx={{ width: '100%', backgroundColor: 'white' }}
-                    />
+                    <SmartTextInput id="description" name="description" value={description} label="Description" multiline rows={3} onChange={(val) => setDescription(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={12}>
                     {
