@@ -45,69 +45,18 @@ const register = async (req, res, next) => {
   const login = async (req, res, next) => {
     const { employeeName, password } = req.body;
     try {
-      const escapeRegex = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\  // Login with an existing user
-  const login = async (req, res, next) => {
-    const { employeeName, password } = req.body;
-    try {
-      // Finding a user in the database based on the provided employeeName
-      const user = await User.findOne({ employeeName });
-      // If no user is found with the provided employeeName, return a 404 error
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }');
       const cleanName = (employeeName || '').trim();
-
-      // Case-insensitive user lookup so lowercase/uppercase username input matches database record
-      let user = null;
-      if (cleanName) {
-        user = await User.findOne({
-          employeeName: { $regex: new RegExp(`^${escapeRegex(cleanName)}require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const crypto =require("crypto");
-const nodemailer=require("nodemailer");
-const User = require("../model/employeeUserSchema");
-const notificationSchema = require("../model/notificationSchema");
-const { setgroups } = require('process');
-
-
-// Register a new user
-const register = async (req, res, next) => {
-    const { employeeName, employeeEmail, password, role} = req.body;
-    
-    if (!employeeName || !password || !role) {
-      return res.status(400).json({ message: 'Name, password, and role are required' });
-    }
-
-    const existingUser = await User.findOne({ employeeName });
-    
-    let existingUserEmail = null;
-    if (employeeEmail && employeeEmail.trim() !== '') {
-      existingUserEmail = await User.findOne({ employeeEmail });
-    }
-
-    if (existingUser || existingUserEmail) {
-      return res.status(400).json({ message: 'User or Email already exists' });
-    }
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // Generate a fallback email if not provided to satisfy the DB schema
-      const userEmailToSave = (employeeEmail && employeeEmail.trim() !== '') 
-          ? employeeEmail 
-          : `${employeeName.replace(/\s+/g, '').toLowerCase()}@globalgate.com`;
-          
-      const user = new User({ employeeName, employeeEmail: userEmailToSave, password: hashedPassword, role });
-      await user.save();
-      res.json({ message: 'Registration successful' });
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-, 'i') }
-        });
+      if (!cleanName || !password) {
+        return res.status(400).json({ message: 'Name and password are required' });
       }
-      if (!user && cleanName) {
+
+      // Finding a user in database (case-insensitive so lowercase or uppercase username matches)
+      const safePattern = cleanName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      let user = await User.findOne({
+        employeeName: { $regex: new RegExp('^' + safePattern + '$', 'i') }
+      });
+
+      if (!user) {
         user = await User.findOne({ employeeName: cleanName });
       }
 
@@ -116,32 +65,32 @@ const register = async (req, res, next) => {
         return res.status(404).json({ message: 'User not found' });
       }
       // Compare the provided password with the hashed password stored in the database
-      const passwordMatch = await bcrypt.compare(password,user.password);
-     if (!passwordMatch) {   
-      return res.status(401).json({ message: 'Incorrect password' });
-    }
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: '1 hour'
-    });
-
-    // Automatically record Login Notification in database and emit real-time event
-    try {
-      const loginNotification = new notificationSchema({
-        idInfo: String(user._id),
-        person: `${user.employeeName} Logged In`,
-        reason: `User ${user.employeeName} (${user.role || 'Staff'}) successfully logged into the system`,
-        dateNotification: new Date(),
-        branchId: req.body.branchId || 'HQ'
-      });
-      await loginNotification.save();
-      if (req.io) {
-        req.io.emit('newNotification', loginNotification);
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      if (!passwordMatch) {   
+        return res.status(401).json({ message: 'Incorrect password' });
       }
-    } catch (notifErr) {
-      console.error("Error saving login notification:", notifErr);
-    }
+      const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
+        expiresIn: '1 hour'
+      });
 
-    res.json({ token });
+      // Automatically record Login Notification in database and emit real-time event
+      try {
+        const loginNotification = new notificationSchema({
+          idInfo: String(user._id),
+          person: `${user.employeeName} Logged In`,
+          reason: `User ${user.employeeName} (${user.role || 'Staff'}) successfully logged into the system`,
+          dateNotification: new Date(),
+          branchId: req.body.branchId || 'HQ'
+        });
+        await loginNotification.save();
+        if (req.io) {
+          req.io.emit('newNotification', loginNotification);
+        }
+      } catch (notifErr) {
+        console.error("Error saving login notification:", notifErr);
+      }
+
+      res.json({ token });
     } catch (error) {
       // If an error occurs during the login process, pass the error to the error-handling middleware
       next(error);
@@ -189,400 +138,21 @@ const register = async (req, res, next) => {
   }; 
   const resetPassword = async (req, res, next) => {
     try {
-      const {oldPassword, newPassword, employeeEmail,employeeName,role} = req.body;
-      const escapeRegex = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\  const resetPassword = async (req, res, next) => {
-    try {
-      const {oldPassword, newPassword, employeeEmail,employeeName,role} = req.body;
-      const user = await User.findOne({
-        employeeEmail: employeeEmail,
-      });');
+      const {oldPassword, newPassword, employeeEmail, employeeName, role} = req.body;
       const cleanEmail = (employeeEmail || '').trim();
       const cleanName = (employeeName || '').trim();
+      const safeEmail = cleanEmail.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const safeName = cleanName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-      const user = await User.findOne({
+      let user = await User.findOne({
         $or: [
-          { employeeEmail: { $regex: new RegExp(`^${escapeRegex(cleanEmail)}require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const crypto =require("crypto");
-const nodemailer=require("nodemailer");
-const User = require("../model/employeeUserSchema");
-const notificationSchema = require("../model/notificationSchema");
-const { setgroups } = require('process');
-
-
-// Register a new user
-const register = async (req, res, next) => {
-    const { employeeName, employeeEmail, password, role} = req.body;
-    
-    if (!employeeName || !password || !role) {
-      return res.status(400).json({ message: 'Name, password, and role are required' });
-    }
-
-    const existingUser = await User.findOne({ employeeName });
-    
-    let existingUserEmail = null;
-    if (employeeEmail && employeeEmail.trim() !== '') {
-      existingUserEmail = await User.findOne({ employeeEmail });
-    }
-
-    if (existingUser || existingUserEmail) {
-      return res.status(400).json({ message: 'User or Email already exists' });
-    }
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // Generate a fallback email if not provided to satisfy the DB schema
-      const userEmailToSave = (employeeEmail && employeeEmail.trim() !== '') 
-          ? employeeEmail 
-          : `${employeeName.replace(/\s+/g, '').toLowerCase()}@globalgate.com`;
-          
-      const user = new User({ employeeName, employeeEmail: userEmailToSave, password: hashedPassword, role });
-      await user.save();
-      res.json({ message: 'Registration successful' });
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-  // Login with an existing user
-  const login = async (req, res, next) => {
-    const { employeeName, password } = req.body;
-    try {
-      const escapeRegex = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\  // Login with an existing user
-  const login = async (req, res, next) => {
-    const { employeeName, password } = req.body;
-    try {
-      // Finding a user in the database based on the provided employeeName
-      const user = await User.findOne({ employeeName });
-      // If no user is found with the provided employeeName, return a 404 error
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }');
-      const cleanName = (employeeName || '').trim();
-
-      // Case-insensitive user lookup so lowercase/uppercase username input matches database record
-      let user = null;
-      if (cleanName) {
-        user = await User.findOne({
-          employeeName: { $regex: new RegExp(`^${escapeRegex(cleanName)}require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const crypto =require("crypto");
-const nodemailer=require("nodemailer");
-const User = require("../model/employeeUserSchema");
-const notificationSchema = require("../model/notificationSchema");
-const { setgroups } = require('process');
-
-
-// Register a new user
-const register = async (req, res, next) => {
-    const { employeeName, employeeEmail, password, role} = req.body;
-    
-    if (!employeeName || !password || !role) {
-      return res.status(400).json({ message: 'Name, password, and role are required' });
-    }
-
-    const existingUser = await User.findOne({ employeeName });
-    
-    let existingUserEmail = null;
-    if (employeeEmail && employeeEmail.trim() !== '') {
-      existingUserEmail = await User.findOne({ employeeEmail });
-    }
-
-    if (existingUser || existingUserEmail) {
-      return res.status(400).json({ message: 'User or Email already exists' });
-    }
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // Generate a fallback email if not provided to satisfy the DB schema
-      const userEmailToSave = (employeeEmail && employeeEmail.trim() !== '') 
-          ? employeeEmail 
-          : `${employeeName.replace(/\s+/g, '').toLowerCase()}@globalgate.com`;
-          
-      const user = new User({ employeeName, employeeEmail: userEmailToSave, password: hashedPassword, role });
-      await user.save();
-      res.json({ message: 'Registration successful' });
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-, 'i') }
-        });
-      }
-      if (!user && cleanName) {
-        user = await User.findOne({ employeeName: cleanName });
-      }
-
-      // If no user is found with the provided employeeName, return a 404 error
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      // Compare the provided password with the hashed password stored in the database
-      const passwordMatch = await bcrypt.compare(password,user.password);
-     if (!passwordMatch) {   
-      return res.status(401).json({ message: 'Incorrect password' });
-    }
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: '1 hour'
-    });
-
-    // Automatically record Login Notification in database and emit real-time event
-    try {
-      const loginNotification = new notificationSchema({
-        idInfo: String(user._id),
-        person: `${user.employeeName} Logged In`,
-        reason: `User ${user.employeeName} (${user.role || 'Staff'}) successfully logged into the system`,
-        dateNotification: new Date(),
-        branchId: req.body.branchId || 'HQ'
-      });
-      await loginNotification.save();
-      if (req.io) {
-        req.io.emit('newNotification', loginNotification);
-      }
-    } catch (notifErr) {
-      console.error("Error saving login notification:", notifErr);
-    }
-
-    res.json({ token });
-    } catch (error) {
-      // If an error occurs during the login process, pass the error to the error-handling middleware
-      next(error);
-    }
-  };
-  // Request for password
-  const requestPasswordReset = async (req, res, next) => {
-    try {
-      const { employeeEmail } = req.body;
-      const user = await User.findOne({ employeeEmail });
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      // Generate reset code and set expiration
-      const resetToken = crypto.randomBytes(20).toString('hex');
-      const generatecode=()=> {
-        return Math.random().toString(36).substring(7);
-      }
-      const verificationCode = generatecode();
-      const codeExpiration = new Date(Date.now() + 3600000);
-      user.verificationCode = verificationCode;
-      user.codeExpiration = codeExpiration; // code expiration in 1 hour
-      await user.save();
-      // Send password reset email
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'emmanuelcibembe3@gmail.com', // Your Gmail email address
-          pass: 'pols znwz iqqf tlit' // Your Gmail password or an app-specific password
-        }
-      });
-      const mailOptions = {
-        from: 'emmanuelcibembe3@gmail.com',
-        to: user.employeeEmail,
-        subject: 'Password Reset',
-        html: `<p>You requested a password reset from global gate app. here is 
-        your verification code to reset your password.<h1> ${verificationCode}</h1></p>`
-      };
-      await transporter.sendMail(mailOptions);
-      res.status(200).json({ message: 'Password reset email sent' });
-    } catch (error) {
-      next(error);
-    }
-  }; 
-, 'i') } },
-          { employeeName: { $regex: new RegExp(`^${escapeRegex(cleanName)}require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const crypto =require("crypto");
-const nodemailer=require("nodemailer");
-const User = require("../model/employeeUserSchema");
-const notificationSchema = require("../model/notificationSchema");
-const { setgroups } = require('process');
-
-
-// Register a new user
-const register = async (req, res, next) => {
-    const { employeeName, employeeEmail, password, role} = req.body;
-    
-    if (!employeeName || !password || !role) {
-      return res.status(400).json({ message: 'Name, password, and role are required' });
-    }
-
-    const existingUser = await User.findOne({ employeeName });
-    
-    let existingUserEmail = null;
-    if (employeeEmail && employeeEmail.trim() !== '') {
-      existingUserEmail = await User.findOne({ employeeEmail });
-    }
-
-    if (existingUser || existingUserEmail) {
-      return res.status(400).json({ message: 'User or Email already exists' });
-    }
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // Generate a fallback email if not provided to satisfy the DB schema
-      const userEmailToSave = (employeeEmail && employeeEmail.trim() !== '') 
-          ? employeeEmail 
-          : `${employeeName.replace(/\s+/g, '').toLowerCase()}@globalgate.com`;
-          
-      const user = new User({ employeeName, employeeEmail: userEmailToSave, password: hashedPassword, role });
-      await user.save();
-      res.json({ message: 'Registration successful' });
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-  // Login with an existing user
-  const login = async (req, res, next) => {
-    const { employeeName, password } = req.body;
-    try {
-      const escapeRegex = (string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\  // Login with an existing user
-  const login = async (req, res, next) => {
-    const { employeeName, password } = req.body;
-    try {
-      // Finding a user in the database based on the provided employeeName
-      const user = await User.findOne({ employeeName });
-      // If no user is found with the provided employeeName, return a 404 error
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }');
-      const cleanName = (employeeName || '').trim();
-
-      // Case-insensitive user lookup so lowercase/uppercase username input matches database record
-      let user = null;
-      if (cleanName) {
-        user = await User.findOne({
-          employeeName: { $regex: new RegExp(`^${escapeRegex(cleanName)}require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
-const crypto =require("crypto");
-const nodemailer=require("nodemailer");
-const User = require("../model/employeeUserSchema");
-const notificationSchema = require("../model/notificationSchema");
-const { setgroups } = require('process');
-
-
-// Register a new user
-const register = async (req, res, next) => {
-    const { employeeName, employeeEmail, password, role} = req.body;
-    
-    if (!employeeName || !password || !role) {
-      return res.status(400).json({ message: 'Name, password, and role are required' });
-    }
-
-    const existingUser = await User.findOne({ employeeName });
-    
-    let existingUserEmail = null;
-    if (employeeEmail && employeeEmail.trim() !== '') {
-      existingUserEmail = await User.findOne({ employeeEmail });
-    }
-
-    if (existingUser || existingUserEmail) {
-      return res.status(400).json({ message: 'User or Email already exists' });
-    }
-    try {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      // Generate a fallback email if not provided to satisfy the DB schema
-      const userEmailToSave = (employeeEmail && employeeEmail.trim() !== '') 
-          ? employeeEmail 
-          : `${employeeName.replace(/\s+/g, '').toLowerCase()}@globalgate.com`;
-          
-      const user = new User({ employeeName, employeeEmail: userEmailToSave, password: hashedPassword, role });
-      await user.save();
-      res.json({ message: 'Registration successful' });
-    } catch (error) {
-      next(error);
-    }
-  };
-  
-, 'i') }
-        });
-      }
-      if (!user && cleanName) {
-        user = await User.findOne({ employeeName: cleanName });
-      }
-
-      // If no user is found with the provided employeeName, return a 404 error
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      // Compare the provided password with the hashed password stored in the database
-      const passwordMatch = await bcrypt.compare(password,user.password);
-     if (!passwordMatch) {   
-      return res.status(401).json({ message: 'Incorrect password' });
-    }
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_KEY, {
-      expiresIn: '1 hour'
-    });
-
-    // Automatically record Login Notification in database and emit real-time event
-    try {
-      const loginNotification = new notificationSchema({
-        idInfo: String(user._id),
-        person: `${user.employeeName} Logged In`,
-        reason: `User ${user.employeeName} (${user.role || 'Staff'}) successfully logged into the system`,
-        dateNotification: new Date(),
-        branchId: req.body.branchId || 'HQ'
-      });
-      await loginNotification.save();
-      if (req.io) {
-        req.io.emit('newNotification', loginNotification);
-      }
-    } catch (notifErr) {
-      console.error("Error saving login notification:", notifErr);
-    }
-
-    res.json({ token });
-    } catch (error) {
-      // If an error occurs during the login process, pass the error to the error-handling middleware
-      next(error);
-    }
-  };
-  // Request for password
-  const requestPasswordReset = async (req, res, next) => {
-    try {
-      const { employeeEmail } = req.body;
-      const user = await User.findOne({ employeeEmail });
-  
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-      // Generate reset code and set expiration
-      const resetToken = crypto.randomBytes(20).toString('hex');
-      const generatecode=()=> {
-        return Math.random().toString(36).substring(7);
-      }
-      const verificationCode = generatecode();
-      const codeExpiration = new Date(Date.now() + 3600000);
-      user.verificationCode = verificationCode;
-      user.codeExpiration = codeExpiration; // code expiration in 1 hour
-      await user.save();
-      // Send password reset email
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'emmanuelcibembe3@gmail.com', // Your Gmail email address
-          pass: 'pols znwz iqqf tlit' // Your Gmail password or an app-specific password
-        }
-      });
-      const mailOptions = {
-        from: 'emmanuelcibembe3@gmail.com',
-        to: user.employeeEmail,
-        subject: 'Password Reset',
-        html: `<p>You requested a password reset from global gate app. here is 
-        your verification code to reset your password.<h1> ${verificationCode}</h1></p>`
-      };
-      await transporter.sendMail(mailOptions);
-      res.status(200).json({ message: 'Password reset email sent' });
-    } catch (error) {
-      next(error);
-    }
-  }; 
-, 'i') } }
+          { employeeEmail: { $regex: new RegExp('^' + safeEmail + '$', 'i') } },
+          { employeeName: { $regex: new RegExp('^' + safeName + '$', 'i') } }
         ]
       });
+      if (!user && cleanEmail) {
+        user = await User.findOne({ employeeEmail: cleanEmail });
+      }
       if (user) {
         const passwordMatch = await bcrypt.compare(oldPassword, user.password)
         if (passwordMatch) {
