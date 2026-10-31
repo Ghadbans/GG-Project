@@ -381,6 +381,9 @@
 /* Ensure login inputs allow capital and small letters without uppercase forcing */
 .wrap-input100 input.input100,
 .wrap-input100 input[type='text'],
-.wrap-input100 input[type='password'] {
+.wrap-input100 input[type='password'],
+.login100-form input,
+.wrap-login100 input {
   text-transform: none !important;
+  -webkit-text-transform: none !important;
 }

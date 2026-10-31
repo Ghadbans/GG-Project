@@ -16,7 +16,7 @@ import axios from 'axios';
 import { cachedGet } from './utils/apiCache';
 import { ENDPOINT_URL } from './apiConfig';
 
-const isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)));
+const isInstalledApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)) || (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches));
 
 function Loginemployee() {
 	const [employeeName, setEmployeeName] = useState('');
@@ -137,14 +137,14 @@ function Loginemployee() {
 								</p>
 							)}
 							<div className="wrap-input100 " >
-								<input required className="input100 no-uppercase" type="text" name="employeeName" placeholder="User Name" onChange={(e) => setEmployeeName(e.target.value)} style={{ textTransform: 'none' }} />
+								<input required className="input100 no-uppercase" type="text" name="employeeName" placeholder="User Name" onChange={(e) => setEmployeeName(e.target.value)} autoCapitalize="none" autoCorrect="off" spellCheck="false" style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<Person />
 								</span>
 							</div>
 							<div className="wrap-input100 ">
-								<input required className="input100 no-uppercase" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} style={{ textTransform: 'none' }} />
+								<input required className="input100 no-uppercase" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} autoCapitalize="none" autoCorrect="off" spellCheck="false" style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<LockIcon />
@@ -162,7 +162,7 @@ function Loginemployee() {
 									Contact The Admin
 								</span>
 							</div>
-							{!isDesktopApp && (
+							{!isInstalledApp && (
 							<div className="text-center" style={{ marginTop: '14px' }}>
 								<a
 									href="https://api.globalgate.sarl/download"

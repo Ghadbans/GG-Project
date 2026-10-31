@@ -93534,7 +93534,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
+var isInstalledApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent) || window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform() || window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
 function SidebarDash(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7, _user$data8, _user$data9, _user$data0, _user$data1, _user$data10, _user$data11, _user$data12;
   var onView2 = _ref.onView2,
@@ -93916,7 +93916,7 @@ function SidebarDash(_ref) {
       flexDirection: 'column',
       gap: '2px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE), !isDesktopApp && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE), !isInstalledApp && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     href: "https://api.globalgate.sarl/download",
     target: "_blank",
     rel: "noopener noreferrer",
@@ -95713,7 +95713,7 @@ ___CSS_LOADER_EXPORT___.push([module.id, `.homepanel1{position:absolute;width:10
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_noSourceMaps_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, `.limiter,.limiter *,.container-login100,.container-login100 *,.wrap-login100,.wrap-login100 *,.wrap-input100,.wrap-input100 *,.container-login100-form-btn,.login100-form-btn{box-sizing:border-box !important}.limiter{width:100vw;min-height:100vh;margin:0 auto}.container-login100{width:100%;min-height:100vh;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:0;padding:15px;background:#202a5a;background:-webkit-linear-gradient(-135deg, #202a5a, #4158d0);background:-o-linear-gradient(-135deg, #202a5a, #4158d0);background:-moz-linear-gradient(-135deg, #202a5a, #4158d0);background:linear-gradient(-135deg, #202a5a, #4158d0)}.wrap-login100{width:850px;min-height:480px;background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;padding:60px 80px 40px 80px;box-shadow:0 10px 40px rgba(0,0,0,.25);position:relative}.login100-pic{width:316px;display:flex;justify-content:center;align-items:center}.login100-pic img{max-width:100%;height:auto}.btnBack{position:absolute;top:24px;right:24px;border:none;cursor:pointer;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;color:#ef4444;padding:6px;border-radius:50%;transition:all .2s ease}.btnBack:hover{background:#fee2e2}.btnBackIcon{font-size:2rem !important}.login100-form{width:300px;max-width:100%;display:flex;flex-direction:column;justify-content:center;text-align:center}.login100-form-title{font-size:24px;font-weight:700;color:#1e293b;line-height:1.2;text-align:center;width:100%;display:block;padding-bottom:28px}.wrap-input100{position:relative;width:100%;margin-bottom:14px}.wrap-input100 input.input100,.wrap-input100 input[type=text],.wrap-input100 input[type=password]{font-size:15px;line-height:1.5;color:#1e293b;display:block;border:1.5px solid #cbd5e1;width:100% !important;max-width:100% !important;background:#f8fafc;height:50px;border-radius:25px;padding:0 45px 0 50px !important;outline:none;transition:all .3s ease}.wrap-input100 input.input100:focus,.wrap-input100 input[type=text]:focus,.wrap-input100 input[type=password]:focus{border-color:#30368a;background:#fff;box-shadow:0 0 0 3px rgba(48,54,138,.12)}.focus-input100{display:block;position:absolute;border-radius:25px;bottom:0;left:0;z-index:-1;width:100%;height:100%}.symbol-input100{font-size:16px;display:flex;align-items:center;position:absolute;border-radius:25px;top:0;bottom:0;left:0;right:0;width:100%;height:100%;padding:0 16px 0 18px;pointer-events:none;color:#64748b;justify-content:space-between}.symbol-input100 button{pointer-events:auto !important;background:rgba(0,0,0,0) !important;border:none !important;color:#64748b !important;cursor:pointer !important;display:flex !important;align-items:center !important;justify-content:center !important;padding:4px !important}.container-login100-form-btn{position:relative;width:100%;display:flex;justify-content:center;padding-top:10px}.login100-form-btn{font-size:15px;font-weight:700;line-height:1.5;color:#fff;text-transform:uppercase;width:100%;height:50px;border-radius:25px;background:#202a5a;border:none;display:flex;justify-content:center;align-items:center;padding:0 25px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 14px rgba(32,42,90,.35)}.login100-form-btn:hover{background:#30368a;transform:translateY(-1px);box-shadow:0 6px 20px rgba(48,54,138,.4)}.text-center{padding:16px 0 8px 0;text-align:center}.txt1{font-size:13px;line-height:1.5;color:#64748b;padding-right:6px}.txt2{font-size:13px;font-weight:600;line-height:1.5;color:#30368a}@media screen and (max-width: 899px){.limiter{width:100vw !important;min-height:100vh !important;padding:0 !important;margin:0 !important;display:flex !important;align-items:center !important;justify-content:center !important}.container-login100{width:100% !important;min-height:100vh !important;padding:20px 16px !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;margin:0 auto !important}.wrap-login100{width:100% !important;max-width:360px !important;height:auto !important;min-height:auto !important;padding:32px 20px 24px 20px !important;margin:0 auto !important;border-radius:24px !important;box-shadow:0 10px 30px rgba(0,0,0,.25) !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;position:relative !important;overflow:visible !important}.login100-pic{width:100% !important;display:flex !important;justify-content:center !important;align-items:center !important;margin-bottom:8px !important}.login100-pic img{height:48px !important;width:auto !important;object-fit:contain !important;margin:0 auto !important}.btnBack{position:absolute !important;top:14px !important;right:14px !important;margin:0 !important;background:#fee2e2 !important;border-radius:50% !important;width:36px !important;height:36px !important;display:flex !important;align-items:center !important;justify-content:center !important;border:none !important;cursor:pointer !important;color:#ef4444 !important;box-shadow:0 2px 6px rgba(239,68,68,.15) !important}.btnBackIcon{font-size:1.25rem !important;color:#ef4444 !important}.login100-form{width:100% !important;max-width:100% !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;margin:0 auto !important}.login100-form-title{padding-bottom:18px !important;font-size:22px !important;font-weight:800 !important;color:#1e293b !important;text-align:center !important;width:100% !important}.wrap-input100{width:100% !important;max-width:100% !important;margin:0 0 14px 0 !important;position:relative !important}.wrap-input100 input.input100,.wrap-input100 input[type=text],.wrap-input100 input[type=password]{width:100% !important;max-width:100% !important;height:48px !important;border-radius:24px !important;padding:0 45px 0 48px !important;font-size:15px !important}.container-login100-form-btn{width:100% !important;max-width:100% !important;display:flex !important;justify-content:center !important;margin:8px 0 0 0 !important;padding:0 !important}.login100-form-btn{width:100% !important;max-width:100% !important;height:48px !important;margin:0 !important;display:flex !important;justify-content:center !important;align-items:center !important;background:#202a5a !important;color:#fff !important;font-weight:700 !important;font-size:15px !important;border-radius:24px !important;border:none !important;box-shadow:0 4px 14px rgba(32,42,90,.35) !important}}.wrap-input100 input.input100,.wrap-input100 input[type=text],.wrap-input100 input[type=password]{text-transform:none !important}`, ""]);
+___CSS_LOADER_EXPORT___.push([module.id, `.limiter,.limiter *,.container-login100,.container-login100 *,.wrap-login100,.wrap-login100 *,.wrap-input100,.wrap-input100 *,.container-login100-form-btn,.login100-form-btn{box-sizing:border-box !important}.limiter{width:100vw;min-height:100vh;margin:0 auto}.container-login100{width:100%;min-height:100vh;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;margin:0;padding:15px;background:#202a5a;background:-webkit-linear-gradient(-135deg, #202a5a, #4158d0);background:-o-linear-gradient(-135deg, #202a5a, #4158d0);background:-moz-linear-gradient(-135deg, #202a5a, #4158d0);background:linear-gradient(-135deg, #202a5a, #4158d0)}.wrap-login100{width:850px;min-height:480px;background:#fff;border-radius:16px;overflow:hidden;display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;padding:60px 80px 40px 80px;box-shadow:0 10px 40px rgba(0,0,0,.25);position:relative}.login100-pic{width:316px;display:flex;justify-content:center;align-items:center}.login100-pic img{max-width:100%;height:auto}.btnBack{position:absolute;top:24px;right:24px;border:none;cursor:pointer;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;color:#ef4444;padding:6px;border-radius:50%;transition:all .2s ease}.btnBack:hover{background:#fee2e2}.btnBackIcon{font-size:2rem !important}.login100-form{width:300px;max-width:100%;display:flex;flex-direction:column;justify-content:center;text-align:center}.login100-form-title{font-size:24px;font-weight:700;color:#1e293b;line-height:1.2;text-align:center;width:100%;display:block;padding-bottom:28px}.wrap-input100{position:relative;width:100%;margin-bottom:14px}.wrap-input100 input.input100,.wrap-input100 input[type=text],.wrap-input100 input[type=password]{font-size:15px;line-height:1.5;color:#1e293b;display:block;border:1.5px solid #cbd5e1;width:100% !important;max-width:100% !important;background:#f8fafc;height:50px;border-radius:25px;padding:0 45px 0 50px !important;outline:none;transition:all .3s ease}.wrap-input100 input.input100:focus,.wrap-input100 input[type=text]:focus,.wrap-input100 input[type=password]:focus{border-color:#30368a;background:#fff;box-shadow:0 0 0 3px rgba(48,54,138,.12)}.focus-input100{display:block;position:absolute;border-radius:25px;bottom:0;left:0;z-index:-1;width:100%;height:100%}.symbol-input100{font-size:16px;display:flex;align-items:center;position:absolute;border-radius:25px;top:0;bottom:0;left:0;right:0;width:100%;height:100%;padding:0 16px 0 18px;pointer-events:none;color:#64748b;justify-content:space-between}.symbol-input100 button{pointer-events:auto !important;background:rgba(0,0,0,0) !important;border:none !important;color:#64748b !important;cursor:pointer !important;display:flex !important;align-items:center !important;justify-content:center !important;padding:4px !important}.container-login100-form-btn{position:relative;width:100%;display:flex;justify-content:center;padding-top:10px}.login100-form-btn{font-size:15px;font-weight:700;line-height:1.5;color:#fff;text-transform:uppercase;width:100%;height:50px;border-radius:25px;background:#202a5a;border:none;display:flex;justify-content:center;align-items:center;padding:0 25px;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 14px rgba(32,42,90,.35)}.login100-form-btn:hover{background:#30368a;transform:translateY(-1px);box-shadow:0 6px 20px rgba(48,54,138,.4)}.text-center{padding:16px 0 8px 0;text-align:center}.txt1{font-size:13px;line-height:1.5;color:#64748b;padding-right:6px}.txt2{font-size:13px;font-weight:600;line-height:1.5;color:#30368a}@media screen and (max-width: 899px){.limiter{width:100vw !important;min-height:100vh !important;padding:0 !important;margin:0 !important;display:flex !important;align-items:center !important;justify-content:center !important}.container-login100{width:100% !important;min-height:100vh !important;padding:20px 16px !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;margin:0 auto !important}.wrap-login100{width:100% !important;max-width:360px !important;height:auto !important;min-height:auto !important;padding:32px 20px 24px 20px !important;margin:0 auto !important;border-radius:24px !important;box-shadow:0 10px 30px rgba(0,0,0,.25) !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;position:relative !important;overflow:visible !important}.login100-pic{width:100% !important;display:flex !important;justify-content:center !important;align-items:center !important;margin-bottom:8px !important}.login100-pic img{height:48px !important;width:auto !important;object-fit:contain !important;margin:0 auto !important}.btnBack{position:absolute !important;top:14px !important;right:14px !important;margin:0 !important;background:#fee2e2 !important;border-radius:50% !important;width:36px !important;height:36px !important;display:flex !important;align-items:center !important;justify-content:center !important;border:none !important;cursor:pointer !important;color:#ef4444 !important;box-shadow:0 2px 6px rgba(239,68,68,.15) !important}.btnBackIcon{font-size:1.25rem !important;color:#ef4444 !important}.login100-form{width:100% !important;max-width:100% !important;display:flex !important;flex-direction:column !important;align-items:center !important;justify-content:center !important;text-align:center !important;margin:0 auto !important}.login100-form-title{padding-bottom:18px !important;font-size:22px !important;font-weight:800 !important;color:#1e293b !important;text-align:center !important;width:100% !important}.wrap-input100{width:100% !important;max-width:100% !important;margin:0 0 14px 0 !important;position:relative !important}.wrap-input100 input.input100,.wrap-input100 input[type=text],.wrap-input100 input[type=password]{width:100% !important;max-width:100% !important;height:48px !important;border-radius:24px !important;padding:0 45px 0 48px !important;font-size:15px !important}.container-login100-form-btn{width:100% !important;max-width:100% !important;display:flex !important;justify-content:center !important;margin:8px 0 0 0 !important;padding:0 !important}.login100-form-btn{width:100% !important;max-width:100% !important;height:48px !important;margin:0 !important;display:flex !important;justify-content:center !important;align-items:center !important;background:#202a5a !important;color:#fff !important;font-weight:700 !important;font-size:15px !important;border-radius:24px !important;border:none !important;box-shadow:0 4px 14px rgba(32,42,90,.35) !important}}.wrap-input100 input.input100,.wrap-input100 input[type=text],.wrap-input100 input[type=password],.login100-form input,.wrap-login100 input{text-transform:none !important;-webkit-text-transform:none !important}`, ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -123212,7 +123212,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.6.0"};
+module.exports = {"rE":"3.6.1"};
 
 /***/ },
 
@@ -126781,7 +126781,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
-var isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
+var isInstalledApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent) || window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform() || window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
 function Loginadmin() {
   (0,react.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
@@ -127027,6 +127027,9 @@ function Loginadmin() {
     value: employeeName,
     onChange: handleChangeUser,
     onKeyDown: handleKeyDown,
+    autoCapitalize: "none",
+    autoCorrect: "off",
+    spellCheck: "false",
     style: {
       textTransform: 'none'
     }
@@ -127045,6 +127048,9 @@ function Loginadmin() {
     value: password,
     onChange: handleChangePass,
     onKeyDown: handleKeyDown,
+    autoCapitalize: "none",
+    autoCorrect: "off",
+    spellCheck: "false",
     style: {
       textTransform: 'none'
     }
@@ -127091,7 +127097,7 @@ function Loginadmin() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin")), !isDesktopApp && /*#__PURE__*/react.createElement("div", {
+  }, "Contact The Admin")), !isInstalledApp && /*#__PURE__*/react.createElement("div", {
     className: "text-center",
     style: {
       marginTop: '14px'
@@ -127179,7 +127185,7 @@ function Loginemployee_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
-var Loginemployee_isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
+var Loginemployee_isInstalledApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent) || window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform() || window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
 function Loginemployee() {
   var _useState = (0,react.useState)(''),
     _useState2 = Loginemployee_slicedToArray(_useState, 2),
@@ -127359,6 +127365,9 @@ function Loginemployee() {
     name: "employeeName",
     placeholder: "User Name",
     onChange: e => setEmployeeName(e.target.value),
+    autoCapitalize: "none",
+    autoCorrect: "off",
+    spellCheck: "false",
     style: {
       textTransform: 'none'
     }
@@ -127375,6 +127384,9 @@ function Loginemployee() {
     name: "password",
     placeholder: "Password",
     onChange: e => setPassword(e.target.value),
+    autoCapitalize: "none",
+    autoCorrect: "off",
+    spellCheck: "false",
     style: {
       textTransform: 'none'
     }
@@ -127393,7 +127405,7 @@ function Loginemployee() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin")), !Loginemployee_isDesktopApp && /*#__PURE__*/react.createElement("div", {
+  }, "Contact The Admin")), !Loginemployee_isInstalledApp && /*#__PURE__*/react.createElement("div", {
     className: "text-center",
     style: {
       marginTop: '14px'

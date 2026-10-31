@@ -48,6 +48,9 @@ if ($foundApk) {
     Write-Host "APK Location: $($foundApk.FullName)" -ForegroundColor Cyan
     Write-Host "APK Size: $sizeMb MB" -ForegroundColor Cyan
     Write-Host "Last Modified: $($foundApk.LastWriteTime)" -ForegroundColor Cyan
+    $destApk = "$root\server\public\downloads\GlobalGate.apk"
+    Copy-Item -Path $foundApk.FullName -Destination $destApk -Force
+    Write-Host "COPIED TO SERVER DOWNLOADS: $destApk" -ForegroundColor Green
 } else {
     Write-Error "APK file was not found in the output directory."
 }

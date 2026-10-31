@@ -18,7 +18,7 @@ import { cachedGet } from './utils/apiCache';
 import { ENDPOINT_URL } from './apiConfig';
 
 
-const isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)));
+const isInstalledApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)) || (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches));
 
 function Loginadmin() {
 	useEffect(() => {
@@ -198,14 +198,14 @@ function Loginadmin() {
 								</p>
 							)}
 							<div className="wrap-input100 " >
-								<input required className="input100 no-uppercase" type="text" name="employeeName" placeholder="User Name" value={employeeName} onChange={handleChangeUser} onKeyDown={handleKeyDown} style={{ textTransform: 'none' }} />
+								<input required className="input100 no-uppercase" type="text" name="employeeName" placeholder="User Name" value={employeeName} onChange={handleChangeUser} onKeyDown={handleKeyDown} autoCapitalize="none" autoCorrect="off" spellCheck="false" style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<Person />
 								</span>
 							</div>
 							<div className="wrap-input100 ">
-								<input required className="input100 no-uppercase" type={showPassword ? 'text' : 'password'} name="password" placeholder="Password" value={password} onChange={handleChangePass} onKeyDown={handleKeyDown} style={{ textTransform: 'none' }} />
+								<input required className="input100 no-uppercase" type={showPassword ? 'text' : 'password'} name="password" placeholder="Password" value={password} onChange={handleChangePass} onKeyDown={handleKeyDown} autoCapitalize="none" autoCorrect="off" spellCheck="false" style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<LockIcon />
@@ -228,7 +228,7 @@ function Loginadmin() {
 								Contact The Admin
 							</span>
 						</div>
-						{!isDesktopApp && (
+						{!isInstalledApp && (
 						<div className="text-center" style={{ marginTop: '14px' }}>
 							<a
 								href="https://api.globalgate.sarl/download"

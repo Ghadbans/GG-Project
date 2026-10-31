@@ -37,9 +37,11 @@ import SideShop from './SideShop';
 import SideBlockFactory from './SideBlockFactory';
 import CategoryIcon from '@mui/icons-material/Category';
 
-const isDesktopApp = typeof window !== 'undefined' && Boolean(
+const isInstalledApp = typeof window !== 'undefined' && Boolean(
   window.electron || 
-  (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent))
+  (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)) ||
+  (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) ||
+  (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
 );
 
 function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
@@ -242,7 +244,7 @@ function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
           }
           <div style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '0.7rem', color: 'lightgray', display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <span>Version: {pkg.version}</span>
-            {!isDesktopApp && (
+            {!isInstalledApp && (
             <a 
               href="https://api.globalgate.sarl/download" 
               target="_blank" 

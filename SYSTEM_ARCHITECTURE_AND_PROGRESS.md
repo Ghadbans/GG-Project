@@ -2976,3 +2976,39 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
      - Recompiled Electron bundle (`npm run build:electron`).
      - Packaged official 64-bit installer `dist/Global Gate Setup 3.6.0.exe` (91.13 MB).
      - Synchronized `dist/Global Gate Setup 3.6.0.exe` into `server/public/downloads/GlobalGateSetup.exe`.
+
+### Session: October 31, 2026 - Mobile Login Mixed-Case Keyboard Fix, Standalone App Download Hide & Version Bump to v3.6.1
+- **Problem Diagnosed**:
+  1. **Mobile Application Uppercase Keyboard on Password**:
+     - On the mobile app, when users attempted to enter their password in lowercase or mixed case, mobile virtual keyboards (Gboard, Samsung Keyboard, etc.) automatically activated Shift/Caps or WebView forced uppercase styling on the input.
+     - **Root Cause**:
+       a) Mobile inputs lacked explicit HTML attributes (`autoCapitalize="none"`, `autoCorrect="off"`, `spellCheck="false"`).
+       b) When the show-password eye icon was toggled, `type` switched to `"text"`, which caused mobile keyboards to default to Capital letters.
+       c) The hosted APK file at `server/public/downloads/GlobalGate.apk` was an earlier build from that morning (7:31 AM) before any of the login case exemptions and regex login enhancements were added.
+       d) The download button was still visible inside the mobile app because `isDesktopApp` only checked for Electron, rather than Capacitor / Standalone PWA runtime.
+
+- **Solutions Implemented**:
+  1. **Mobile Input Attributes & Keyboard Autocapitalize Suppression**:
+     - Added `autoCapitalize="none"`, `autoCorrect="off"`, `spellCheck="false"` to username and password inputs in both `Loginadmin.js` and `Loginemployee.js`.
+     - Added `-webkit-text-transform: none !important; text-transform: none !important;` across `.wrap-input100 input`, `.login100-form input`, and `input[type="password"]` in `Login.css` and `Side.css`.
+  2. **Universal `isInstalledApp` Detection**:
+     - Replaced `isDesktopApp` with `isInstalledApp` across `Loginadmin.js`, `Loginemployee.js`, and `SidebarDash.js`:
+       ```javascript
+       const isInstalledApp = typeof window !== 'undefined' && Boolean(
+         window.electron || 
+         (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)) ||
+         (window.Capacitor && typeof window.Capacitor.isNativePlatform === 'function' && window.Capacitor.isNativePlatform()) ||
+         (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
+       );
+       ```
+     - Result: The download button is now cleanly hidden in **both Desktop Electron (.exe) AND Native Mobile Capacitor APK / PWA**, showing exclusively on the public web browser portal (`portal.globalgate.sarl`).
+  3. **Android APK Recompiled & Synced**:
+     - Synced Capacitor web assets with `npx cap sync android`.
+     - Updated `scripts/build-apk.ps1` to automatically copy the compiled APK directly into `server/public/downloads/GlobalGate.apk`.
+     - Built fresh `android/app/build/outputs/apk/debug/app-debug.apk` (14.73 MB) and copied to `server/public/downloads/GlobalGate.apk`.
+  4. **Desktop Executable Recompiled & Version Bumped to v3.6.1**:
+     - Bumped version to **`3.6.1`** across `package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+     - Recompiled Electron bundle (`npm run build:electron`).
+     - Generated official installer `dist/Global Gate Setup 3.6.1.exe` (91.13 MB) and copied to `server/public/downloads/GlobalGateSetup.exe`.
+  5. **Cloud Deployment**:
+     - Pushed commit to GitHub `main` for automatic live deployment to Railway and Cloudflare Pages.
