@@ -2952,3 +2952,27 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
      - Recompiled Electron bundle with `npm run build:electron`.
      - Generated updated 64-bit installer `dist/Global Gate Setup 3.5.99.exe` (91.13 MB) with `npm run make:win`.
      - Replaced `server/public/downloads/GlobalGateSetup.exe` with the freshly built installer for direct self-hosted delivery.
+
+### Session: October 31, 2026 - Critical Fix: SidebarDash ReferenceError & Version Bump to v3.6.0
+- **Problem Diagnosed**:
+  1. **White Screen Crash on Web & Desktop**:
+     - Both Web (`portal.globalgate.sarl`) and the Desktop app (`.exe`) opened with a blank white screen.
+     - Browser console and Electron DevTools revealed:
+       `ReferenceError: isDesktopApp is not defined at SidebarDash (SidebarDash.js:240)`
+     - **Root Cause**: During the previous update, `{!isDesktopApp && (...)}` was wrapped around the download link in `SidebarDash.js`, but because `SidebarDash`'s signature had multiple props (`function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {`), the automated script missed inserting the declaration of `isDesktopApp`. When React mounted `SidebarDash`, it threw an uncaught `ReferenceError`, collapsing the entire component tree into a white screen.
+  2. **Version Bump Enforcement**:
+     - Upgraded version from `3.5.99` to **`3.6.0`** across all configuration files, adhering strictly to the architecture protocol that every deploy must have a newly incremented version number.
+
+- **Solutions Implemented**:
+  1. **Defined `isDesktopApp` in `SidebarDash.js`**:
+     - Declared `const isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)));` right at the top of `SidebarDash.js`.
+     - Verified all other occurrences across `Loginadmin.js` and `Loginemployee.js` to guarantee 0 undefined variable references.
+  2. **System Version Bump to v3.6.0**:
+     - Bumped version in `package.json` (`"version": "3.6.0"`).
+     - Bumped version in `server/index.js` (`version: '3.6.0'`).
+     - Bumped version in `server/routes/downloadRoutes.js` (`const APP_VERSION = '3.6.0';`).
+  3. **Builds & Binaries Generated**:
+     - Recompiled Web production bundle (`npm run build:web`) into `dist_web/` (0 AST errors, cache-busted `index.html`).
+     - Recompiled Electron bundle (`npm run build:electron`).
+     - Packaged official 64-bit installer `dist/Global Gate Setup 3.6.0.exe` (91.13 MB).
+     - Synchronized `dist/Global Gate Setup 3.6.0.exe` into `server/public/downloads/GlobalGateSetup.exe`.

@@ -93534,6 +93534,7 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+var isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
 function SidebarDash(_ref) {
   var _user$data, _user$data2, _user$data3, _user$data4, _user$data5, _user$data6, _user$data7, _user$data8, _user$data9, _user$data0, _user$data1, _user$data10, _user$data11, _user$data12;
   var onView2 = _ref.onView2,
@@ -123211,7 +123212,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.99"};
+module.exports = {"rE":"3.6.0"};
 
 /***/ },
 
@@ -126780,7 +126781,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
-var js_isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
+var isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
 function Loginadmin() {
   (0,react.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
@@ -127090,7 +127091,7 @@ function Loginadmin() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin")), !js_isDesktopApp && /*#__PURE__*/react.createElement("div", {
+  }, "Contact The Admin")), !isDesktopApp && /*#__PURE__*/react.createElement("div", {
     className: "text-center",
     style: {
       marginTop: '14px'

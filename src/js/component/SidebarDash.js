@@ -37,6 +37,11 @@ import SideShop from './SideShop';
 import SideBlockFactory from './SideBlockFactory';
 import CategoryIcon from '@mui/icons-material/Category';
 
+const isDesktopApp = typeof window !== 'undefined' && Boolean(
+  window.electron || 
+  (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent))
+);
+
 function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
   const navigate = useNavigate();
   const location = useLocation();
