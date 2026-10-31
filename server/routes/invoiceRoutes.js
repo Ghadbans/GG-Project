@@ -432,7 +432,22 @@ Route.route("/invoice-Overdue", cors(corsOptionsDelegate)).get(
           query.branchId = branchId;
         }
       }
-      const payments = await invoiceSchema.find(query);
+      // Overdue invoices awaiting payment: Sent or Partially-Paid
+      // Exclude Paid (1640+ items), Free of Charge, Void, and Decline to keep payload lightweight (<100KB vs 12MB)
+      if (!req.query.all) {
+        query.status = { $in: ["Sent", "Partially-Paid"] };
+      }
+      const payments = await invoiceSchema.find(query, {
+        invoiceNumber: 1,
+        customerName: 1,
+        invoiceDate: 1,
+        invoiceDueDate: 1,
+        status: 1,
+        subTotal: 1,
+        total: 1,
+        balanceDue: 1,
+        branchId: 1
+      });
       const today = new Date();
       payments.forEach(row => {
         const invoiceDueDate = new Date(row.invoiceDueDate);

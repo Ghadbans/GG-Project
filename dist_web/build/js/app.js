@@ -93915,7 +93915,7 @@ function SidebarDash(_ref) {
       flexDirection: 'column',
       gap: '2px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE), !isDesktopApp && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
     href: "https://api.globalgate.sarl/download",
     target: "_blank",
     rel: "noopener noreferrer",
@@ -123211,7 +123211,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.5.98"};
+module.exports = {"rE":"3.5.99"};
 
 /***/ },
 
@@ -123343,7 +123343,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"f4f9a829202d5bec4741","116":"aecf84c095a623a3ddca","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"90c913d81ddad06b1f65","457":"6a698ea7fcac94c3974b","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"d92527ea49cfb51c3d87","742":"66e13e0b5450fcf65cb5","778":"f8950b7fd584414ccde4","806":"fa65da9ad44081d53908","808":"a74589b2beec1ef4e74b","864":"ac9193b4bf40eb4964a0","885":"31cc42012d2c9e2d7394","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"dea21ca27e9281327f42","1168":"b2f690e1d5399977dcaf","1223":"03c44a5a7e793590ff92","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"411d911c2f9d1179322d","1624":"1e1d88c032094f247d47","1645":"5182b4dc1bb7075f9f56","1679":"47010207f8f56bfac627","1722":"be03a72cba90d57b0a0e","1853":"daeb90b988179c611229","1861":"b7634fa92c4aa00d7ec7","1919":"5e2d2db8e5fff20bec18","1985":"a25b1912f4c6ab7c10f2","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"8ba8c80da1991678bbf7","2495":"a4b8da4d44fe8cbf9fdc","2517":"956f7558989fb2a45d33","2529":"e413d5ed1cf8c2005daa","2533":"986a33c0b03f7e16c2ba","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"dc1424b8a8728d9c419c","2821":"f424e55a6b798e607833","2835":"4fa5f50cab8055ebf263","2982":"bee1dd875b7e171e748e","2992":"058c04018ffb962de6d3","3009":"567b00944880ad958271","3058":"7fd0706992dfd8500924","3094":"df87a4853ddb2177d1e8","3229":"182c129b837276b277ff","3426":"652c3a09a05b98c83e9c","3502":"9e2239f0d7a71a5a1fb6","3547":"1e2de2721983f1041975","3697":"68b8bcc34d67cdfc13e6","3741":"37d03a8a510f8bda1f4a","3808":"c182f07cf1d8803a7db9","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"11afea118a1e6069aa8c","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"d502db1bff8b88a2ec20","4444":"a660c208331174844f75","4783":"2ef6758b4d9059afc8a8","5059":"628654fd8f024ff22adb","5151":"a6e9565a9024591c0e6e","5194":"208caa1b9d62061c535d","5391":"af4accd2205c3c258471","5394":"19ccb614bee8997f7750","5646":"e2e8f697bcd06a54c997","5669":"49f9eb4540f658b32343","5754":"659db805ae05cd3da725","5824":"c8be2075624d4cd16ff2","5881":"53eaddb59888f999c2cf","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"8bb447cd910320602080","6671":"83a6cedc443530c3d899","6685":"857160452cc0ec2c80df","6725":"e30ff031a69f8e0d9afb","6744":"66f16a7ab51e26e081ff","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"d00ce31d418ab684ff53","7384":"15615e503514bd58f2f5","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"344ee685c77434638a04","7539":"5ce3db780624994a0e9a","7592":"4f19348d64493b26562b","7612":"6e4759712d01d8e621ef","7645":"031f9c20b62c5968dec2","7757":"393a0d2394f5c999c0d1","7801":"d564a8d9182981f7f014","7897":"2ae4badc5372576c7a36","7941":"45c0282e978817d26734","7997":"2e21126ab3301ab4a2fa","8011":"3e33de92c3e7e283237a","8017":"d2461f96286b4a42a156","8027":"4101828497224e28eef5","8060":"c93d54f4d061f0771315","8117":"25756ad53d0d4449d1f8","8282":"613dedbba32aa5b4daa2","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"cfad96403c4bb90df86a","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"7a93c3d849d0d989fdc3","8970":"86f51603a5fec4482804","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"57e435ecf0c0b6f8291a","9528":"4dd9c43eb666c40b578c","9564":"859671ce5d7bd5a8a578","9573":"353ddb36d9f2ce54b136","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3ef0da9461f2f9c2bd10","9773":"bb003b9f5a05ebb29b5e","9846":"51bc1d1ec09fccb6843d","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"f4f9a829202d5bec4741","116":"aecf84c095a623a3ddca","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"90c913d81ddad06b1f65","457":"6a698ea7fcac94c3974b","483":"342be2530e4d9bff3bc7","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"d92527ea49cfb51c3d87","742":"66e13e0b5450fcf65cb5","778":"f8950b7fd584414ccde4","806":"fa65da9ad44081d53908","808":"a74589b2beec1ef4e74b","864":"ac9193b4bf40eb4964a0","885":"31cc42012d2c9e2d7394","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"dea21ca27e9281327f42","1168":"b2f690e1d5399977dcaf","1223":"03c44a5a7e793590ff92","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"411d911c2f9d1179322d","1624":"1e1d88c032094f247d47","1645":"5182b4dc1bb7075f9f56","1679":"47010207f8f56bfac627","1722":"be03a72cba90d57b0a0e","1853":"daeb90b988179c611229","1861":"b7634fa92c4aa00d7ec7","1919":"5e2d2db8e5fff20bec18","1985":"a25b1912f4c6ab7c10f2","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"8ba8c80da1991678bbf7","2495":"a4b8da4d44fe8cbf9fdc","2517":"956f7558989fb2a45d33","2529":"e413d5ed1cf8c2005daa","2533":"986a33c0b03f7e16c2ba","2605":"0f600ae0872fdd6ecbda","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"dc1424b8a8728d9c419c","2821":"f424e55a6b798e607833","2835":"4fa5f50cab8055ebf263","2982":"bee1dd875b7e171e748e","2992":"058c04018ffb962de6d3","3009":"567b00944880ad958271","3058":"7fd0706992dfd8500924","3094":"df87a4853ddb2177d1e8","3229":"182c129b837276b277ff","3426":"652c3a09a05b98c83e9c","3502":"9e2239f0d7a71a5a1fb6","3547":"1e2de2721983f1041975","3697":"68b8bcc34d67cdfc13e6","3741":"37d03a8a510f8bda1f4a","3808":"c182f07cf1d8803a7db9","3976":"26709cbde449f8b4e157","4001":"67aa93e92b78fe92cddd","4006":"11afea118a1e6069aa8c","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"d502db1bff8b88a2ec20","4444":"a660c208331174844f75","4783":"2ef6758b4d9059afc8a8","5059":"628654fd8f024ff22adb","5151":"a6e9565a9024591c0e6e","5194":"208caa1b9d62061c535d","5391":"e4e699595ce33c2bbda1","5394":"19ccb614bee8997f7750","5646":"e2e8f697bcd06a54c997","5669":"49f9eb4540f658b32343","5754":"659db805ae05cd3da725","5824":"c8be2075624d4cd16ff2","5881":"53eaddb59888f999c2cf","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"ea84a169dd0e5d537c61","6619":"8bb447cd910320602080","6671":"83a6cedc443530c3d899","6685":"857160452cc0ec2c80df","6725":"e30ff031a69f8e0d9afb","6744":"66f16a7ab51e26e081ff","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"19dbe641e42a4da57337","7270":"d00ce31d418ab684ff53","7384":"15615e503514bd58f2f5","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"344ee685c77434638a04","7539":"5ce3db780624994a0e9a","7592":"4f19348d64493b26562b","7612":"6e4759712d01d8e621ef","7645":"031f9c20b62c5968dec2","7757":"393a0d2394f5c999c0d1","7801":"d564a8d9182981f7f014","7897":"2ae4badc5372576c7a36","7941":"45c0282e978817d26734","7997":"2e21126ab3301ab4a2fa","8011":"3e33de92c3e7e283237a","8017":"d2461f96286b4a42a156","8027":"4101828497224e28eef5","8060":"c93d54f4d061f0771315","8117":"25756ad53d0d4449d1f8","8282":"613dedbba32aa5b4daa2","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"cfad96403c4bb90df86a","8685":"2e4858ba3af14fde840a","8838":"60b37da80739e8f8886a","8849":"7a93c3d849d0d989fdc3","8970":"86f51603a5fec4482804","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"57e435ecf0c0b6f8291a","9528":"4dd9c43eb666c40b578c","9564":"859671ce5d7bd5a8a578","9573":"353ddb36d9f2ce54b136","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"3ef0da9461f2f9c2bd10","9773":"bb003b9f5a05ebb29b5e","9846":"51bc1d1ec09fccb6843d","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -126780,6 +126780,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+var js_isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
 function Loginadmin() {
   (0,react.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
@@ -127089,7 +127090,7 @@ function Loginadmin() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin")), /*#__PURE__*/react.createElement("div", {
+  }, "Contact The Admin")), !js_isDesktopApp && /*#__PURE__*/react.createElement("div", {
     className: "text-center",
     style: {
       marginTop: '14px'
@@ -127177,6 +127178,7 @@ function Loginemployee_arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+var Loginemployee_isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent));
 function Loginemployee() {
   var _useState = (0,react.useState)(''),
     _useState2 = Loginemployee_slicedToArray(_useState, 2),
@@ -127390,7 +127392,7 @@ function Loginemployee() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin")), /*#__PURE__*/react.createElement("div", {
+  }, "Contact The Admin")), !Loginemployee_isDesktopApp && /*#__PURE__*/react.createElement("div", {
     className: "text-center",
     style: {
       marginTop: '14px'

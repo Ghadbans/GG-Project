@@ -237,6 +237,7 @@ function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
           }
           <div style={{ position: 'absolute', bottom: 8, left: 10, fontSize: '0.7rem', color: 'lightgray', display: 'flex', flexDirection: 'column', gap: '2px' }}>
             <span>Version: {pkg.version}</span>
+            {!isDesktopApp && (
             <a 
               href="https://api.globalgate.sarl/download" 
               target="_blank" 
@@ -246,6 +247,7 @@ function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
             >
               📲 Mobile & PC Apps
             </a>
+            )}
           </div>
         </div >
         : null

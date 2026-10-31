@@ -320,12 +320,24 @@ function PaymentView() {
         /* setLoadingData(false) disabled here to fix race */
         // Load overdue invoices in background — if this endpoint is slow/missing it won't freeze the UI
         try {
-          const resOverdue = await cachedGet(`${ENDPOINT_URL}/invoice-Overdue`)
-          setInvoice(resOverdue.data)
-          localStorage.setItem('InvoiceOverdue', JSON.stringify(resOverdue.data))
-        } catch (_) {
-          const storedCustomer = JSON.parse(localStorage.getItem('InvoiceOverdue')) || []
-          if (Array.isArray(storedCustomer)) setInvoice(storedCustomer.reverse());
+          const resOverdue = await cachedGet(`${ENDPOINT_URL}/invoice-Overdue`);
+          const overdueList = Array.isArray(resOverdue.data)
+            ? resOverdue.data
+            : (Array.isArray(resOverdue.data?.data) ? resOverdue.data.data : []);
+          setInvoice(overdueList);
+          try {
+            localStorage.setItem('InvoiceOverdue', JSON.stringify(overdueList));
+          } catch (storageErr) {
+            console.warn('Could not cache InvoiceOverdue in localStorage:', storageErr);
+          }
+        } catch (fetchErr) {
+          console.error('Error fetching invoice-Overdue:', fetchErr);
+          try {
+            const storedCustomer = JSON.parse(localStorage.getItem('InvoiceOverdue')) || [];
+            if (Array.isArray(storedCustomer) && storedCustomer.length > 0) {
+              setInvoice(storedCustomer.reverse());
+            }
+          } catch (_) {}
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -361,14 +373,14 @@ function PaymentView() {
     fetchDataHidden()
   },[])
  
-  const invoicePaymentRow = invoice.filter((row)=> row.status === "Sent" || row.status === "Partially-Paid")
+  const invoicePaymentRow = (Array.isArray(invoice) ? invoice : []).filter((row)=> row && (row.status === "Sent" || row.status === "Partially-Paid"))
                                 .map((row)=>({
                                    ...row,
-                                   id: row._id,
-                                   invoiceNumber: `INV-${String(row.invoiceNumber).padStart(6, '0')}`,
+                                   id: row._id || row.id || ('INV-' + row.invoiceNumber),
+                                   invoiceNumber: row.invoiceNumber ? (String(row.invoiceNumber).startsWith('INV-') ? row.invoiceNumber : `INV-${String(row.invoiceNumber).padStart(6, '0')}`) : 'INV-000000',
                                    dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
                                    dueDateField: dayjs(row.invoiceDueDate).format('DD/MM/YYYY'),
-                                  }))
+                                }))
   {/** search start */}
 const [searchInvoice, setSearchInvoice] = useState("");
 useState(()=>{
@@ -995,22 +1007,22 @@ const toggleDrawer = () => {
                  />)}
           </TabList>
         </Box>
-        <TabPanel value="1">
-        <div style={{marginTop:'-40px'}}>
-           <section style={{position:'relative',float:'right',margin:'10px'}}>
-      <ViewTooltip>
-          <span>
-             <IconButton hidden={PaymentInfoC.length === 0}>
-             <NavLink to={'/PaymentInformationForm'} className='LinkName'>
-             <span className='btnCustomerAdding'>
-             <Add /> 
-             </span>
-             </NavLink>
-             </IconButton>
-           </span>
-      </ViewTooltip>
-          </section>
-            <Box sx={{ height: isNativeMobile() ? 'auto' : 560, width: '100%' }}>
+        <TabPanel value="1" sx={{ p: { xs: 1, sm: 2 }, width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
+          <Box sx={{ width: '100%', minWidth: 0 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1, width: '100%' }}>
+              <ViewTooltip>
+                <span>
+                  <IconButton hidden={PaymentInfoC.length === 0}>
+                    <NavLink to={'/PaymentInformationForm'} className='LinkName'>
+                      <span className='btnCustomerAdding'>
+                        <Add /> 
+                      </span>
+                    </NavLink>
+                  </IconButton>
+                </span>
+              </ViewTooltip>
+            </Box>
+            <Box sx={{ height: isNativeMobile() ? 'auto' : 580, width: '100%', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
               {isNativeMobile() ? (
                 <MobileCardList
                   type="payments"
@@ -1038,51 +1050,45 @@ const toggleDrawer = () => {
                   onFilterModelChange={(newModel) => handleFilter(newModel)}
                   columnVisibilityModel={columnVisibilityModel}
                   onColumnVisibilityModelChange={handelHiddenColumn}
-                  sx={{ width: '100%', backgroundColor: 'white', padding: '10px' }}
+                  sx={{ width: '100%', minWidth: 0, flexGrow: 1, backgroundColor: 'white', padding: '10px' }}
                 />
               )}
             </Box>
-        </div>
+          </Box>
         </TabPanel>
-        <TabPanel value="2">
-        <div >
-          <Box sx={{ height: 630, width: '100%',marginTop:'-40px' }}>
-         <br/>
-          <DataGrid
-                  rows={payment}
-                  columns={columnsPayment}
-                  slots={{toolbar: GridToolbar}}
-                  slotProps={{
-                    toolbar: {
-                      showQuickFilter: true,
-                          quickFilterProps: { debounceMs: 500 },
-                      printOptions:{
-                       disableToolbarButton: true
-                     },
-                    },
-                  }}
-                  checkboxSelection
-                  disableDensitySelector
-                  filterModel={filterModelPayment}
-                  onFilterModelChange={(newModel) => handleFilterPayment(newModel)}
-                  columnVisibilityModel = {columnVisibilityModelPayment}
-                  onColumnVisibilityModelChange={handelHiddenColumnPayment}
-                  sx={{width:'100%',backgroundColor:'white', padding:'10px'}}
-          />
+        <TabPanel value="2" sx={{ p: { xs: 1, sm: 2 }, width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
+          <Box sx={{ height: 630, width: '100%', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+            <DataGrid
+              rows={payment}
+              columns={columnsPayment}
+              slots={{toolbar: GridToolbar}}
+              slotProps={{
+                toolbar: {
+                  showQuickFilter: true,
+                  quickFilterProps: { debounceMs: 500 },
+                  printOptions:{
+                    disableToolbarButton: true
+                  },
+                },
+              }}
+              checkboxSelection
+              disableDensitySelector
+              filterModel={filterModelPayment}
+              onFilterModelChange={(newModel) => handleFilterPayment(newModel)}
+              columnVisibilityModel = {columnVisibilityModelPayment}
+              onColumnVisibilityModelChange={handelHiddenColumnPayment}
+              sx={{ width: '100%', minWidth: 0, flexGrow: 1, backgroundColor: 'white', padding: '10px' }}
+            />
           </Box> 
-      </div>
         </TabPanel>
-        <TabPanel value="3">
-        <div >
-          <Box sx={{ height: 630, width: '100%',marginTop:'-40px' }}>
-         <br/>
-        <DataGrid
-                             rows={customer}
-                             columns={columnCustomer}
-                             sx={{borderRadius:'5px',backgroundColor:'#fff'}}
-                           />
+        <TabPanel value="3" sx={{ p: { xs: 1, sm: 2 }, width: '100%', minWidth: 0, boxSizing: 'border-box' }}>
+          <Box sx={{ height: 630, width: '100%', minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+            <DataGrid
+              rows={customer}
+              columns={columnCustomer}
+              sx={{ borderRadius: '5px', backgroundColor: '#fff', width: '100%', minWidth: 0, flexGrow: 1 }}
+            />
           </Box> 
-      </div>
         </TabPanel>
       </TabContext>)
       }

@@ -1867,12 +1867,23 @@ function PaymentView() {
           /* setLoadingData(false) disabled here to fix race */
           // Load overdue invoices in background — if this endpoint is slow/missing it won't freeze the UI
           try {
+            var _resOverdue$data;
             var resOverdue = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_47__/* .ENDPOINT_URL */ .m, "/invoice-Overdue"));
-            setInvoice(resOverdue.data);
-            localStorage.setItem('InvoiceOverdue', JSON.stringify(resOverdue.data));
-          } catch (_) {
-            var storedCustomer = JSON.parse(localStorage.getItem('InvoiceOverdue')) || [];
-            if (Array.isArray(storedCustomer)) setInvoice(storedCustomer.reverse());
+            var overdueList = Array.isArray(resOverdue.data) ? resOverdue.data : Array.isArray((_resOverdue$data = resOverdue.data) === null || _resOverdue$data === void 0 ? void 0 : _resOverdue$data.data) ? resOverdue.data.data : [];
+            setInvoice(overdueList);
+            try {
+              localStorage.setItem('InvoiceOverdue', JSON.stringify(overdueList));
+            } catch (storageErr) {
+              console.warn('Could not cache InvoiceOverdue in localStorage:', storageErr);
+            }
+          } catch (fetchErr) {
+            console.error('Error fetching invoice-Overdue:', fetchErr);
+            try {
+              var storedCustomer = JSON.parse(localStorage.getItem('InvoiceOverdue')) || [];
+              if (Array.isArray(storedCustomer) && storedCustomer.length > 0) {
+                setInvoice(storedCustomer.reverse());
+              }
+            } catch (_) {}
           }
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -1919,9 +1930,9 @@ function PaymentView() {
     }();
     fetchDataHidden();
   }, []);
-  var invoicePaymentRow = invoice.filter(row => row.status === "Sent" || row.status === "Partially-Paid").map(row => _objectSpread(_objectSpread({}, row), {}, {
-    id: row._id,
-    invoiceNumber: "INV-".concat(String(row.invoiceNumber).padStart(6, '0')),
+  var invoicePaymentRow = (Array.isArray(invoice) ? invoice : []).filter(row => row && (row.status === "Sent" || row.status === "Partially-Paid")).map(row => _objectSpread(_objectSpread({}, row), {}, {
+    id: row._id || row.id || 'INV-' + row.invoiceNumber,
+    invoiceNumber: row.invoiceNumber ? String(row.invoiceNumber).startsWith('INV-') ? row.invoiceNumber : "INV-".concat(String(row.invoiceNumber).padStart(6, '0')) : 'INV-000000',
     dateField: dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.invoiceDate).format('DD/MM/YYYY'),
     dueDateField: dayjs__WEBPACK_IMPORTED_MODULE_38___default()(row.invoiceDueDate).format('DD/MM/YYYY')
   }));
@@ -2814,16 +2825,27 @@ function PaymentView() {
       }
     }
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-    value: "1"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      marginTop: '-40px'
+    value: "1",
+    sx: {
+      p: {
+        xs: 1,
+        sm: 2
+      },
+      width: '100%',
+      minWidth: 0,
+      boxSizing: 'border-box'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
-    style: {
-      position: 'relative',
-      float: 'right',
-      margin: '10px'
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      width: '100%',
+      minWidth: 0
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      justifyContent: 'flex-end',
+      mb: 1,
+      width: '100%'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     hidden: PaymentInfoC.length === 0
@@ -2834,8 +2856,11 @@ function PaymentView() {
     className: "btnCustomerAdding"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
-      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_48__/* .isNativeMobile */ .g1)() ? 'auto' : 560,
-      width: '100%'
+      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_48__/* .isNativeMobile */ .g1)() ? 'auto' : 580,
+      width: '100%',
+      minWidth: 0,
+      display: 'flex',
+      flexDirection: 'column'
     }
   }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_48__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
     type: "payments",
@@ -2867,18 +2892,31 @@ function PaymentView() {
     onColumnVisibilityModelChange: handelHiddenColumn,
     sx: {
       width: '100%',
+      minWidth: 0,
+      flexGrow: 1,
       backgroundColor: 'white',
       padding: '10px'
     }
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-    value: "2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    value: "2",
+    sx: {
+      p: {
+        xs: 1,
+        sm: 2
+      },
+      width: '100%',
+      minWidth: 0,
+      boxSizing: 'border-box'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       height: 630,
       width: '100%',
-      marginTop: '-40px'
+      minWidth: 0,
+      display: 'flex',
+      flexDirection: 'column'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__/* .DataGrid */ .zh, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__/* .DataGrid */ .zh, {
     rows: payment,
     columns: columnsPayment,
     slots: {
@@ -2903,25 +2941,41 @@ function PaymentView() {
     onColumnVisibilityModelChange: handelHiddenColumnPayment,
     sx: {
       width: '100%',
+      minWidth: 0,
+      flexGrow: 1,
       backgroundColor: 'white',
       padding: '10px'
     }
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
-    value: "3"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_lab__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+    value: "3",
+    sx: {
+      p: {
+        xs: 1,
+        sm: 2
+      },
+      width: '100%',
+      minWidth: 0,
+      boxSizing: 'border-box'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       height: 630,
       width: '100%',
-      marginTop: '-40px'
+      minWidth: 0,
+      display: 'flex',
+      flexDirection: 'column'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__/* .DataGrid */ .zh, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_39__/* .DataGrid */ .zh, {
     rows: customer,
     columns: columnCustomer,
     sx: {
       borderRadius: '5px',
-      backgroundColor: '#fff'
+      backgroundColor: '#fff',
+      width: '100%',
+      minWidth: 0,
+      flexGrow: 1
     }
-  }))))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  })))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     open: open,
     onClose: handleClose,
     "aria-labelledby": "modal-modal-title",

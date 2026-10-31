@@ -16,6 +16,8 @@ import axios from 'axios';
 import { cachedGet } from './utils/apiCache';
 import { ENDPOINT_URL } from './apiConfig';
 
+const isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)));
+
 function Loginemployee() {
 	const [employeeName, setEmployeeName] = useState('');
 	const [password, setPassword] = useState('');
@@ -160,6 +162,7 @@ function Loginemployee() {
 									Contact The Admin
 								</span>
 							</div>
+							{!isDesktopApp && (
 							<div className="text-center" style={{ marginTop: '14px' }}>
 								<a
 									href="https://api.globalgate.sarl/download"
@@ -181,6 +184,7 @@ function Loginemployee() {
 									📱 DOWNLOAD MOBILE & DESKTOP APP
 								</a>
 							</div>
+							)}
 						</form>)}
 						</div>
 						)}

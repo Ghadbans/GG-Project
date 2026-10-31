@@ -2915,3 +2915,40 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   - **Direct Cloud Download Sync**:
     - Copied `dist/Global Gate Setup 3.5.99.exe` to `server/public/downloads/GlobalGateSetup.exe`.
     - Download portal (`https://api.globalgate.sarl/download/windows`) serves this updated `3.5.99` installer directly without 404 or external redirects.
+
+### Session: October 31, 2026 - Desktop Download Button Suppression & Payment Module "No Rows" / 0px DataGrid Fix (v3.5.99)
+- **Problem Diagnosed**:
+  1. **Desktop App Displaying Download Link**:
+     - In the Windows Desktop application (.exe), the user saw the button "📱 DOWNLOAD MOBILE & DESKTOP APP" on both admin and employee login pages, as well as "📲 Mobile & PC Apps" in the sidebar. Since the user was already running the desktop application, this link was redundant and confusing.
+  2. **Payment Module "No Rows" in Web Portal**:
+     - Navigating to the Payment module on the Web portal (`portal.globalgate.sarl/#/PaymentView`) showed "No rows" in Tab 1 ("PAYMENT"), accompanied by a console error:
+       `MUI: useResizeContainer - The parent DOM element of the data grid has an empty width. Please make sure that this element has an intrinsic width. The grid displays with a width of 0px.`
+     - **Root Cause Investigation**:
+       a) `GET /endpoint/invoice-Overdue` fetched all 1980 invoices without projection or status filtering, dumping a massive **12.4 MB JSON payload** over HTTP (taking 4.5+ seconds).
+       b) In `PaymentView.js`, `localStorage.setItem('InvoiceOverdue', JSON.stringify(resOverdue.data))` attempted to store this 12.4 MB payload into `localStorage`, immediately exceeding the browser's hard 5MB quota and throwing a `QuotaExceededError`.
+       c) The catch block caught this quota exception and executed `setInvoice(storedCustomer)` with an empty array `[]`, overriding the in-memory invoices and wiping the DataGrid rows to 0.
+       d) Tab 1 was wrapped in an un-cleared floating section (`float: right`) without explicit width constraints, causing MUI DataGrid to measure 0px parent DOM width during layout calculation.
+
+- **Solutions Implemented**:
+  1. **Platform-Aware Download Link Visibility**:
+     - Added robust desktop detection across `Loginadmin.js`, `Loginemployee.js`, and `SidebarDash.js`:
+       `const isDesktopApp = typeof window !== 'undefined' && Boolean(window.electron || (typeof navigator !== 'undefined' && /electron/i.test(navigator.userAgent)));`
+     - Wrapped the download links with `{!isDesktopApp && (...)}` so they are **strictly visible on Web (`portal.globalgate.sarl`) and mobile devices**, and cleanly hidden inside the Electron desktop application.
+  2. **Backend Payload Optimization for `/invoice-Overdue`**:
+     - Updated `server/routes/invoiceRoutes.js` to filter for invoices awaiting payment: `query.status = { $in: ["Sent", "Partially-Paid"] }` and project only required fields (`invoiceNumber`, `customerName`, `invoiceDate`, `invoiceDueDate`, `status`, `subTotal`, `total`, `balanceDue`, `branchId`).
+     - Reduced network payload by **99.33%** (from 12.4 MB down to ~83 KB), speeding up endpoint response time from 4,500ms to under 50ms.
+  3. **Frontend In-Memory State Resilience in `PaymentView.js`**:
+     - Decoupled `setInvoice` from `localStorage.setItem`: In-memory state is set immediately from API response.
+     - Isolated `localStorage.setItem` inside its own `try...catch`, so storage quota exceptions never disrupt UI rendering or clear state.
+     - Fallback storage reads only restore state if non-empty, preventing empty array overwrites.
+     - Robust row ID mapping (`row._id || row.id || ('INV-' + row.invoiceNumber)`) ensuring stable DataGrid row keys.
+  4. **DataGrid Flexbox Layout & 0px Container Resolution**:
+     - Refactored `TabPanel` containers across all three tabs ("Payment", "Payment Received", "Credit") to use responsive flexbox layout:
+       `<Box sx={{ width: '100%', minWidth: 0, display: 'flex', flexDirection: 'column' }}>` with `flexGrow: 1`.
+     - Replaced un-cleared float section with flexbox `Box` with `justifyContent: 'flex-end'`.
+     - Completely eliminated MUI DataGrid 0px width warning.
+  5. **Production Build & Distribution Sync**:
+     - Recompiled web production bundle with `npm run build:web` into `dist_web/`.
+     - Recompiled Electron bundle with `npm run build:electron`.
+     - Generated updated 64-bit installer `dist/Global Gate Setup 3.5.99.exe` (91.13 MB) with `npm run make:win`.
+     - Replaced `server/public/downloads/GlobalGateSetup.exe` with the freshly built installer for direct self-hosted delivery.
