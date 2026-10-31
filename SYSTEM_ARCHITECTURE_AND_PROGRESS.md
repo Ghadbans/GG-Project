@@ -2899,3 +2899,19 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
       - Updated `login` to perform case-insensitive regex query on `employeeName` (`new RegExp('^' + cleanName + '$', 'i')`). Users can type `ali nasrallah`, `Ali Nasrallah`, or `ALI NASRALLAH` and match their user document in the database seamlessly.
       - Password verification remains strictly authenticated via `bcrypt.compare(password, user.password)`, accurately testing lowercase and uppercase characters.
       - Updated `resetPassword` to match `employeeEmail` or `employeeName` case-insensitively.
+
+- **Release v3.5.99 Windows Executable Packaging & Cloud Sync**:
+  - **Version Bump**: Bumped version to `3.5.99` across `package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+  - **Frontend Build Pipeline**:
+    - Compiled React source code via Webpack (`npm run build:electron`, `webpack.prod.js`).
+    - Packaged Windows 64-bit desktop installer using `electron-builder` (`npm run make:win`).
+    - Output: `dist/Global Gate Setup 3.5.99.exe` (95.56 MB / 91.13 MB, generated 31-Oct-2026).
+  - **Included Changes**:
+    - Login pages (`Loginadmin.js` and `Loginemployee.js`) allow mixed-case typing for usernames and passwords (`no-uppercase`, `textTransform: 'none'`).
+    - User Account module (`UserAccountForm.js` and `UserAccount.js`) allows mixed-case typing for all fields (User Name, Email, Password, Old Password, New Password).
+    - Passwords are never converted or forced to uppercase under any circumstances.
+    - Native red squiggly spellchecking with right-click corrections and no automatic text mutation on blur.
+    - Four-letter word dictionary protection preventing valid words like `FOOD` from fuzzy changing.
+  - **Direct Cloud Download Sync**:
+    - Copied `dist/Global Gate Setup 3.5.99.exe` to `server/public/downloads/GlobalGateSetup.exe`.
+    - Download portal (`https://api.globalgate.sarl/download/windows`) serves this updated `3.5.99` installer directly without 404 or external redirects.
