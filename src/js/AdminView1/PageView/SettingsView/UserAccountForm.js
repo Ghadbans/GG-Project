@@ -240,7 +240,7 @@ function UserAccountForm() {
     setSideBar(!sideBar);
   };
   return (
-    <div className='Homeemployee'>
+    <div className='Homeemployee user-account-container no-uppercase'>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
@@ -315,7 +315,7 @@ function UserAccountForm() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 8 }} >
             <div>
-              <form >
+              <form className="no-uppercase">
                 <Grid container style={{ alignItems: 'center', padding: '160px' }} spacing={3} component={Paper}>
                   <Grid item xs={10}>
                     <Autocomplete
@@ -323,7 +323,7 @@ function UserAccountForm() {
                       options={employee}
                       getOptionLabel={(option) => option.employeeName}
                       renderOption={(props, option) => (<Box {...props}>{option.employeeName}</Box>)}
-                      renderInput={(params) => <TextField {...params} label="User Name" />}
+                      renderInput={(params) => <TextField {...params} label="User Name" inputProps={{ ...params.inputProps, style: { textTransform: 'none' } }} />}
                       onChange={(e, newValue) => handleChange(newValue ? newValue : '')}
                       size="small"
                       sx={{ width: '100%', backgroundColor: 'white' }}
@@ -355,6 +355,8 @@ function UserAccountForm() {
                       onChange={(e) => setEmployeeEmail(e.target.value)}
                       name='employeeEmail'
                       label='Email'
+                      type='email'
+                      inputProps={{ style: { textTransform: 'none' } }}
                       size="small"
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
@@ -368,6 +370,8 @@ function UserAccountForm() {
                       <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                       <Input
                         id="outlined-adornment-password"
+                        className="no-uppercase"
+                        style={{ textTransform: 'none' }}
                         type={showPassword ? 'text' : 'password'}
                         endAdornment={
                           <InputAdornment position="end">

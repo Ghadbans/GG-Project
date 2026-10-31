@@ -23,7 +23,7 @@ const globalMuiTheme = createTheme({
     MuiInputBase: {
       styleOverrides: {
         input: {
-          '&:not([type="password"]):not([type="email"]):not([type="file"])': {
+          '&:not([type="password"]):not([type="email"]):not([type="file"]):not([name*="password"]):not([name*="Password"]):not([name*="email"]):not([name*="Email"]):not([id*="password"]):not([id*="email"]):not(.no-uppercase)': {
             textTransform: 'uppercase',
           },
         },
@@ -32,7 +32,7 @@ const globalMuiTheme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         input: {
-          '&:not([type="password"]):not([type="email"]):not([type="file"])': {
+          '&:not([type="password"]):not([type="email"]):not([type="file"]):not([name*="password"]):not([name*="Password"]):not([name*="email"]):not([name*="Email"]):not([id*="password"]):not([id*="email"]):not(.no-uppercase)': {
             textTransform: 'uppercase',
           },
         },

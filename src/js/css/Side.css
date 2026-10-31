@@ -312,9 +312,40 @@
   }
 }
 
-/* Universal Capital Letters across all modules and sub-modules */
-input:not([type="password"]):not([type="email"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]),
-textarea,
-.MuiInputBase-input:not([type="password"]):not([type="email"]):not([type="file"]) {
+/* Universal Capital Letters across standard business modules (Customer, Item, Maintenance, Invoice, Expenses, etc.) */
+input:not([type="password"]):not([type="email"]):not([type="file"]):not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="range"]):not([name*="password" i]):not([name*="Password"]):not([name*="email" i]):not([name*="Email"]):not([id*="password" i]):not([id*="email" i]):not(.no-uppercase),
+textarea:not(.no-uppercase),
+.MuiInputBase-input:not([type="password"]):not([type="email"]):not([type="file"]):not([name*="password" i]):not([name*="Password"]):not([name*="email" i]):not([name*="Email"]):not([id*="password" i]):not([id*="email" i]):not(.no-uppercase) {
     text-transform: uppercase !important;
+}
+
+/* Explicit Exemption: Login Page and USER ACCOUNT MODULE can write in capital and small letters freely */
+.wrap-login100 input,
+.login100-form input,
+.input100,
+.no-uppercase,
+.no-uppercase input,
+.no-uppercase textarea,
+.no-uppercase .MuiInputBase-input,
+.no-uppercase .MuiOutlinedInput-input,
+.no-uppercase .MuiInput-input,
+.user-account-container input,
+.user-account-container textarea,
+.user-account-container .MuiInputBase-input,
+.user-account-container .MuiOutlinedInput-input,
+.user-account-container .MuiInput-input,
+.user-account-modal input,
+.user-account-modal textarea,
+.user-account-modal .MuiInputBase-input,
+.user-account-modal .MuiOutlinedInput-input,
+.user-account-modal .MuiInput-input,
+input[type="password"],
+input[type="email"],
+input[name*="password" i],
+input[name*="Password"],
+input[name*="email" i],
+input[name*="Email"],
+input[id*="password" i],
+input[id*="email" i] {
+    text-transform: none !important;
 }

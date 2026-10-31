@@ -381,7 +381,7 @@ function UserAccount() {
     },
   ]
   return (
-    <div className='Homeemployee'>
+    <div className='Homeemployee user-account-container no-uppercase'>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={sideBar} sx={{ backgroundColor: '#30368a' }}>
@@ -538,7 +538,7 @@ function UserAccount() {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Change Password
           </Typography>
-          <form onSubmit={handleResetPassword}>
+          <form onSubmit={handleResetPassword} className="no-uppercase user-account-modal">
             <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
               <Grid item xs={6}>
                 <TextField
@@ -580,6 +580,8 @@ function UserAccount() {
                 >
                   <Input
                     id="outlined-adornment-password"
+                    className="no-uppercase"
+                    style={{ textTransform: 'none' }}
                     type={showPassword ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position="end">
@@ -608,6 +610,8 @@ function UserAccount() {
                 >
                   <Input
                     id="outlined-adornment-password"
+                    className="no-uppercase"
+                    style={{ textTransform: 'none' }}
                     type={showPassword1 ? 'text' : 'password'}
                     endAdornment={
                       <InputAdornment position="end">

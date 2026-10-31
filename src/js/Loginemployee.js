@@ -135,14 +135,14 @@ function Loginemployee() {
 								</p>
 							)}
 							<div className="wrap-input100 " >
-								<input required className="input100" type="text" name="employeeName" placeholder="User Name" onChange={(e) => setEmployeeName(e.target.value)} />
+								<input required className="input100 no-uppercase" type="text" name="employeeName" placeholder="User Name" onChange={(e) => setEmployeeName(e.target.value)} style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<Person />
 								</span>
 							</div>
 							<div className="wrap-input100 ">
-								<input required className="input100" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+								<input required className="input100 no-uppercase" type="password" name="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<LockIcon />

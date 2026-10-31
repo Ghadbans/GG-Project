@@ -453,7 +453,7 @@ function UserAccountForm() {
     setSideBar(!sideBar);
   };
   return /*#__PURE__*/react.createElement("div", {
-    className: "Homeemployee"
+    className: "Homeemployee user-account-container no-uppercase"
   }, /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       display: 'flex'
@@ -539,7 +539,9 @@ function UserAccountForm() {
     sx: {
       mt: 8
     }
-  }, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("form", null, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("form", {
+    className: "no-uppercase"
+  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
     container: true,
     style: {
       alignItems: 'center',
@@ -556,7 +558,12 @@ function UserAccountForm() {
     getOptionLabel: option => option.employeeName,
     renderOption: (props, option) => /*#__PURE__*/react.createElement(Box/* default */.A, props, option.employeeName),
     renderInput: params => /*#__PURE__*/react.createElement(TextField/* default */.A, _extends({}, params, {
-      label: "User Name"
+      label: "User Name",
+      inputProps: _objectSpread(_objectSpread({}, params.inputProps), {}, {
+        style: {
+          textTransform: 'none'
+        }
+      })
     })),
     onChange: (e, newValue) => handleChange(newValue ? newValue : ''),
     size: "small",
@@ -596,6 +603,12 @@ function UserAccountForm() {
     onChange: e => setEmployeeEmail(e.target.value),
     name: "employeeEmail",
     label: "Email",
+    type: "email",
+    inputProps: {
+      style: {
+        textTransform: 'none'
+      }
+    },
     size: "small",
     sx: {
       width: '100%',
@@ -615,6 +628,10 @@ function UserAccountForm() {
     htmlFor: "outlined-adornment-password"
   }, "Password"), /*#__PURE__*/react.createElement(Input/* default */.A, {
     id: "outlined-adornment-password",
+    className: "no-uppercase",
+    style: {
+      textTransform: 'none'
+    },
     type: showPassword ? 'text' : 'password',
     endAdornment: /*#__PURE__*/react.createElement(InputAdornment/* default */.A, {
       position: "end"

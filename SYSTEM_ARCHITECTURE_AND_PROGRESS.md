@@ -2877,3 +2877,25 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - **4. Portal & Sidebar Integration**:
       - Added direct "📱 DOWNLOAD MOBILE & DESKTOP APP" links to `Loginadmin.js` and `Loginemployee.js` so users accessing `portal.globalgate.sarl` from smartphones can install the app with one click.
       - Added "📲 Mobile & PC Apps" link to `SidebarDash.js` under the version footer.
+
+- **Windows PC Direct Download Fix & Login / User Account Mixed-Case Exemption (Ver 3.5.98 - Hotfix)**:
+  - **User Feedback & Problem Analysis**:
+    1. Clicking "DOWNLOAD FOR WINDOWS (PC)" opened a GitHub 404 error page because the fallback GitHub Release asset was not found on cloud server without local binary.
+    2. Passwords with lowercase letters were failing or users were unable to log in because the universal capital letters feature was enforcing uppercase across the login screens and the USER ACCOUNT module.
+    3. User specification: *"login page and USER ACCOUNT MODULE can write in it cappital and small letters ..."*.
+  - **Architecture & Implementation**:
+    - **1. Windows PC Installer Direct Hosting (`server/public/downloads/GlobalGateSetup.exe`)**:
+      - Copied `dist/Global Gate Setup 3.5.98.exe` (91.14 MB) directly to `server/public/downloads/GlobalGateSetup.exe`.
+      - Updated `server/routes/downloadRoutes.js` `/windows` endpoint to directly stream the executable attachment with `Content-Disposition: attachment; filename="GlobalGate-Setup-v3.5.98.exe"`.
+      - Eliminates 404 errors permanently by serving straight from Railway cloud storage.
+    - **2. Login & User Account Mixed-Case Exemption**:
+      - **Global CSS Rules (`Side.css`)**: Exempted `.login100-form input`, `.wrap-login100 input`, `.input100`, `.no-uppercase`, `.user-account-container`, `.user-account-modal`, and password/email fields (`input[type="password"]`, `input[type="email"]`, `input[name*="password" i]`, `input[name*="email" i]`) with `text-transform: none !important;`.
+      - **MUI Theme (`App.js`)**: Updated `globalMuiTheme` `styleOverrides` to skip password fields, email fields, and `.no-uppercase` elements from uppercase transformation.
+      - **Login Screens (`Loginadmin.js` & `Loginemployee.js`)**: Added `className="input100 no-uppercase"` and `style={{ textTransform: 'none' }}` to both username and password inputs, allowing users to type mixed case freely.
+      - **User Account Module (`UserAccountForm.js` & `UserAccount.js`)**:
+        - Applied `user-account-container no-uppercase` to root layouts.
+        - Set `textTransform: 'none'` on User Name, Email, Password, Old Password, and New Password fields so administrators and staff can input mixed uppercase and lowercase characters.
+    - **3. Backend Auth Case-Insensitive Username Lookup (`server/Controller/auth.js`)**:
+      - Updated `login` to perform case-insensitive regex query on `employeeName` (`new RegExp('^' + cleanName + '$', 'i')`). Users can type `ali nasrallah`, `Ali Nasrallah`, or `ALI NASRALLAH` and match their user document in the database seamlessly.
+      - Password verification remains strictly authenticated via `bcrypt.compare(password, user.password)`, accurately testing lowercase and uppercase characters.
+      - Updated `resetPassword` to match `employeeEmail` or `employeeName` case-insensitively.

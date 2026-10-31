@@ -1232,7 +1232,7 @@ function UserAccount() {
     }))))
   }];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "Homeemployee"
+    className: "Homeemployee user-account-container no-uppercase"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
@@ -1435,7 +1435,8 @@ function UserAccount() {
     variant: "h6",
     component: "h2"
   }, "Change Password"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-    onSubmit: handleResetPassword
+    onSubmit: handleResetPassword,
+    className: "no-uppercase user-account-modal"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     container: true,
     style: {
@@ -1491,6 +1492,10 @@ function UserAccount() {
     variant: "outlined"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     id: "outlined-adornment-password",
+    className: "no-uppercase",
+    style: {
+      textTransform: 'none'
+    },
     type: showPassword ? 'text' : 'password',
     endAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       position: "end"
@@ -1516,6 +1521,10 @@ function UserAccount() {
     variant: "outlined"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     id: "outlined-adornment-password",
+    className: "no-uppercase",
+    style: {
+      textTransform: 'none'
+    },
     type: showPassword1 ? 'text' : 'password',
     endAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       position: "end"

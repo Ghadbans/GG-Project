@@ -377,3 +377,10 @@
     box-shadow: 0 4px 14px rgba(32, 42, 90, 0.35) !important;
   }
 }
+
+/* Ensure login inputs allow capital and small letters without uppercase forcing */
+.wrap-input100 input.input100,
+.wrap-input100 input[type='text'],
+.wrap-input100 input[type='password'] {
+  text-transform: none !important;
+}

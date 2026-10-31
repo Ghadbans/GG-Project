@@ -60,8 +60,30 @@ router.get('/windows', (req, res) => {
     });
   }
 
-  const githubFallback = `https://github.com/Ghadbans/GG-Project/releases/download/v${APP_VERSION}/GlobalGate-Setup-${APP_VERSION}.exe`;
-  return res.redirect(githubFallback);
+  // Graceful response if installer is still syncing
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  return res.status(200).send(`<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Windows Installer - Global Gate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: -apple-system, sans-serif; background: #0d1b2a; color: #e0e1dd; text-align: center; padding: 48px 16px; }
+    .box { max-width: 500px; margin: 0 auto; background: rgba(255,255,255,0.05); padding: 32px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); }
+    h2 { color: #ffffff; margin-bottom: 12px; }
+    p { color: #90e0ef; font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
+    a { display: inline-block; background: #00b4d8; color: #03045e; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>💻 Windows Installer</h2>
+    <p>The Windows Desktop installer (v${APP_VERSION}) is currently syncing with the cloud storage. In the meantime, you can use the Android App or Web Portal.</p>
+    <a href="/download">&larr; Back to Downloads</a>
+  </div>
+</body>
+</html>`);
 });
 
 // 3. API Version endpoint

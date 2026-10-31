@@ -196,14 +196,14 @@ function Loginadmin() {
 								</p>
 							)}
 							<div className="wrap-input100 " >
-								<input required className="input100" type="text" name="employeeName" placeholder="User Name" value={employeeName} onChange={handleChangeUser} onKeyDown={handleKeyDown} />
+								<input required className="input100 no-uppercase" type="text" name="employeeName" placeholder="User Name" value={employeeName} onChange={handleChangeUser} onKeyDown={handleKeyDown} style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<Person />
 								</span>
 							</div>
 							<div className="wrap-input100 ">
-								<input required className="input100" type={showPassword ? 'text' : 'password'} name="password" placeholder="Password" value={password} onChange={handleChangePass} onKeyDown={handleKeyDown} />
+								<input required className="input100 no-uppercase" type={showPassword ? 'text' : 'password'} name="password" placeholder="Password" value={password} onChange={handleChangePass} onKeyDown={handleKeyDown} style={{ textTransform: 'none' }} />
 								<span className="focus-input100"></span>
 								<span className="symbol-input100">
 									<LockIcon />
