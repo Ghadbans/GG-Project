@@ -187,6 +187,10 @@ app.use("/endpoint", estimationRoutes);
 app.use("/endpoint", projectRoutes);
 app.use("/endpoint", attachmentRoutes);
 
+const downloadRoutes = require("./routes/downloadRoutes");
+app.use("/download", downloadRoutes);
+app.use("/downloads", downloadRoutes);
+
 
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);

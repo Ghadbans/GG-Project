@@ -24,5 +24,6 @@ module.exports = merge(common, {
         path: path.resolve(__dirname, 'dist_web', 'build', 'js'),
         publicPath: 'auto',
         globalObject: 'this',
+        clean: true,
     }
 })

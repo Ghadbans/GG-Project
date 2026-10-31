@@ -2853,3 +2853,27 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
     - **Desktop Windows Installer**: Packaged `dist/Global Gate Setup 3.5.98.exe` (95.56 MB).
     - **Android Debug APK**: Built `android/app/build/outputs/apk/debug/app-debug.apk` (125.55 MB).
     - **Cloud & Source Sync**: Version `3.5.98` synced in `package.json` and `server/index.js`, committed and pushed to `main`.
+
+- **Direct Website App Downloads & Multi-Platform Distribution Portal (Ver 3.5.98 - Web Distribution)**:
+  - **User Feedback & Architecture Decision**:
+    - The user decided against Google Play Store and Apple App Store distribution due to developer account fees, long review delays, and policy restrictions: *"No Need for all that Google Play Store (Android) and the Apple App Store (iOS) .. We have our website www.globalgate.com we can upload the mobile application on our website and the users can download it from the website right ... !!"*
+    - Implemented a direct, self-hosted multi-platform download portal hosted on the backend (`https://api.globalgate.sarl/download`) and linked across the web portal (`portal.globalgate.sarl`) and company domain (`www.globalgate.com`).
+  - **Architecture & Implementation**:
+    - **1. Direct Download Landing Page (`/download` & `/downloads`)**:
+      - Built a responsive HTML5 download portal with Global Gate branding, navy glassmorphism cards, and mobile-optimized layouts.
+      - **Android Phone & Tablet**: 1-click download button for `GlobalGate.apk` with step-by-step 3-step installation guide (Download -> Open -> Allow Unknown Sources / Install).
+      - **Apple iOS (iPhone & iPad)**: Direct access button linking to `https://portal.globalgate.sarl` with visual step-by-step Safari PWA installation instructions (Safari Share 📤 -> Add to Home Screen ➕ -> Add), providing a full-screen, native-feeling app experience without the Apple App Store.
+      - **Windows Desktop (PC)**: 1-click download button for `GlobalGateSetup.exe` 64-bit installer.
+    - **2. Backend Endpoints (`server/routes/downloadRoutes.js`)**:
+      - `GET /download` & `GET /downloads`: Serves the responsive landing page.
+      - `GET /download/android`: Streams `GlobalGate-v3.5.98.apk` with `Content-Disposition: attachment; filename="GlobalGate-v3.5.98.apk"`.
+      - `GET /download/windows`: Streams `GlobalGate-Setup-v3.5.98.exe` installer with `Content-Disposition: attachment; filename="GlobalGate-Setup-v3.5.98.exe"`.
+      - `GET /download/version`: JSON API returning version metadata, file availability, download URLs, and sizes.
+    - **3. APK Size Optimization via Gradle Clean**:
+      - Discovered that previous Gradle debug builds accumulated historical unreferenced files (2,429 entries, 125.4 MB).
+      - Updated `scripts/build-apk.ps1` to execute `gradlew.bat clean assembleDebug`.
+      - Reduced final APK size from 125.4 MB to **14.73 MB** (88% reduction!), easily fitting in Git/Railway containers and downloading in seconds on mobile devices.
+      - Copied optimized APK to `server/public/downloads/GlobalGate.apk`.
+    - **4. Portal & Sidebar Integration**:
+      - Added direct "📱 DOWNLOAD MOBILE & DESKTOP APP" links to `Loginadmin.js` and `Loginemployee.js` so users accessing `portal.globalgate.sarl` from smartphones can install the app with one click.
+      - Added "📲 Mobile & PC Apps" link to `SidebarDash.js` under the version footer.

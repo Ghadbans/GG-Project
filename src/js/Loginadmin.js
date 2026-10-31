@@ -226,6 +226,27 @@ function Loginadmin() {
 								Contact The Admin
 							</span>
 						</div>
+						<div className="text-center" style={{ marginTop: '14px' }}>
+							<a
+								href="https://api.globalgate.sarl/download"
+								target="_blank"
+								rel="noopener noreferrer"
+								style={{
+									display: 'inline-flex',
+									alignItems: 'center',
+									gap: '6px',
+									fontSize: '12px',
+									fontWeight: '700',
+									color: '#1a237e',
+									textDecoration: 'none',
+									padding: '6px 14px',
+									borderRadius: '20px',
+									background: 'rgba(26, 35, 126, 0.08)'
+								}}
+							>
+								📱 DOWNLOAD MOBILE & DESKTOP APP
+							</a>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -93907,12 +93907,26 @@ function SidebarDash(_ref) {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       position: 'absolute',
-      bottom: 10,
+      bottom: 8,
       left: 10,
       fontSize: '0.7rem',
-      color: 'lightgray'
+      color: 'lightgray',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '2px'
     }
-  }, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE)) : null, show1 === 2 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "Version: ", _package_json__WEBPACK_IMPORTED_MODULE_32__/* .version */ .rE), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("a", {
+    href: "https://api.globalgate.sarl/download",
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      color: '#90caf9',
+      textDecoration: 'none',
+      fontSize: '0.68rem',
+      fontWeight: 'bold'
+    },
+    title: "Download Mobile & Desktop Apps"
+  }, "\uD83D\uDCF2 Mobile & PC Apps"))) : null, show1 === 2 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
     },
@@ -127069,7 +127083,28 @@ function Loginadmin() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Contact The Admin")), /*#__PURE__*/react.createElement("div", {
+    className: "text-center",
+    style: {
+      marginTop: '14px'
+    }
+  }, /*#__PURE__*/react.createElement("a", {
+    href: "https://api.globalgate.sarl/download",
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+      fontSize: '12px',
+      fontWeight: '700',
+      color: '#1a237e',
+      textDecoration: 'none',
+      padding: '6px 14px',
+      borderRadius: '20px',
+      background: 'rgba(26, 35, 126, 0.08)'
+    }
+  }, "\uD83D\uDCF1 DOWNLOAD MOBILE & DESKTOP APP"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: showBranchModal,
     onClose: () => {},
     "aria-labelledby": "branch-modal-title"
@@ -127343,7 +127378,28 @@ function Loginemployee() {
     className: "txt1"
   }, "Forgot Password"), /*#__PURE__*/react.createElement("span", {
     className: "txt2"
-  }, "Contact The Admin"))))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Contact The Admin")), /*#__PURE__*/react.createElement("div", {
+    className: "text-center",
+    style: {
+      marginTop: '14px'
+    }
+  }, /*#__PURE__*/react.createElement("a", {
+    href: "https://api.globalgate.sarl/download",
+    target: "_blank",
+    rel: "noopener noreferrer",
+    style: {
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '6px',
+      fontSize: '12px',
+      fontWeight: '700',
+      color: '#1a237e',
+      textDecoration: 'none',
+      padding: '6px 14px',
+      borderRadius: '20px',
+      background: 'rgba(26, 35, 126, 0.08)'
+    }
+  }, "\uD83D\uDCF1 DOWNLOAD MOBILE & DESKTOP APP"))))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
     open: showBranchModal,
     onClose: () => {},
     "aria-labelledby": "branch-modal-title"

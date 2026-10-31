@@ -21,8 +21,8 @@ if (-not (Test-Path "gradlew.bat")) {
     Write-Error "gradlew.bat not found in $androidDir"
 }
 
-# Run assembleDebug
-cmd.exe /c "gradlew.bat assembleDebug"
+# Run clean assembleDebug
+cmd.exe /c "gradlew.bat clean assembleDebug"
 
 if ($LASTEXITCODE -ne 0) {
     Write-Error "Gradle build failed with exit code $LASTEXITCODE"
