@@ -3308,3 +3308,45 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Generated official Windows installer: `dist/Global Gate Setup 3.6.8.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.8.exe`.
    - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.8.apk`.
    - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.
+
+### Version 3.6.9 (November 02, 2026) - Service & Duplicate Line-Item Isolation & Movement Cost Multiplier Bug Resolution
+1. **Reported Issue & User Feedback**:
+   - In Purchase Requests, Orders, and Projects (e.g. `PUR-000174 | KALIMA | OUTDOOR TOILET`), users frequently register services (such as `ALUMINUM FABRICATION / INSTALLATION`) multiple times in the same order with different descriptions (e.g. Row 13: "3 DOORS DEVIS :599 $720", Row 14: "WINDOW + DOOR $390", Row 15: "1 DOOR DIVES:637 $220").
+   - When Item Purchases or Item Outs were created, each service row was supposed to be linked only to its corresponding purchase (e.g. IP-003836 for Row 13, IP-003697 & O-027042 for Row 14, IP-003837 for Row 15).
+   - Instead, the system combined all 3 purchases together across every single row. Row 13, Row 14, and Row 15 all showed `Buy: 3`, `Total Buy: $1,330.00`, and `I-Out: 1 LOT`.
+   - In the SubTotal, the cost was multiplied by 3 ($1,330 * 3 = $3,990 instead of $1,330), causing the total buy cost to skyrocket from $1,614.65 to $4,274.65!
+   - User report:
+     *"ALUMINUM FABRICATION / INSTALLATION is registered as service not item .. when it used in the the order either purchase request or invoice or maintenance or any the service it possible to be dublicated in the purchase request because for each will have its own item purchase wich is linked to it... problem is that it combining them togother instead each the total of the out be same it is multiplay it my the item purchase ... like here 3 times !!! this is wrong this is happening in all the purchase request causing the cost to go to much high !"*
+
+2. **Root Cause Analysis**:
+   - In `PurchasesViewAdminAll.js`, `PurchaseFormUpdate.js`, and `ProjectViewInformation.js`, `isItemMatch(item1, item2)` evaluated matching between movement items (`it` from `itemPurchase` / `itemOut` / `itemReturn`) and order line items (`Item`).
+   - The old function checked:
+     `if (id1 && id2 && id1 !== 'empty' && id2 !== 'empty') { return id1 === id2; }`
+   - Because all 3 service rows had the same catalog item ID (`ALUMINUM FABRICATION / INSTALLATION`), `id1 === id2` evaluated to `true` immediately for every IP record and every line row, completely ignoring the distinct `idRow` UUIDs, descriptions, and unit rates.
+   - Every row matched all 3 item purchases ($720 + $390 + $220 = $1,330) and the item out record, and the SubTotal reduction summed $1,330 three times.
+
+3. **Solutions & Implementations**:
+   - **Authoritative `idRow` Matching**:
+     When line items are generated or converted from a document, both the document item and the movement item (`itemPurchase`, `itemOut`, `itemReturn`) carry the unique `idRow` UUID.
+     `if (rowId1 && rowId2) { return rowId1 === rowId2; }`
+     This directly maps IP-003836 to Row 13, IP-003697 & O-027042 to Row 14, and IP-003837 to Row 15 with 100% precision.
+   - **Description-Based Disambiguation Fallback**:
+     If `idRow` is not present (e.g. legacy records or manual creation without conversion), when both items have descriptions, they must match:
+     `if (desc1 && desc2) { if (desc1 === desc2 || (desc1.length >= 4 && desc2.length >= 4 && (desc1.includes(desc2) || desc2.includes(desc1)))) return true; return false; }`
+     This prevents line items with different task descriptions from matching each other.
+   - **Rate / Cost Verification Fallback**:
+     Added rate-to-cost proximity check (`Math.abs(rate1 - cost2) < 0.01`) for duplicate service disambiguation.
+   - **Applied Universally Across Core Modules**:
+     - `PurchasesViewAdminAll.js` (L145-L210)
+     - `PurchaseFormUpdate.js` (L150-L215)
+     - `ProjectViewInformation.js` (L323-L385)
+   - **Version Bumping**: Bumped to **`3.6.9`** across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+4. **Multi-Platform Production Builds & Releases**:
+   - AST validation verified with 0 errors (`npm run prebuild`).
+   - Typo / Test engine verified with 19/19 tests passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Generated official Windows installer: `dist/Global Gate Setup 3.6.9.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.9.exe`.
+   - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.9.apk`.
+   - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.

@@ -3,7 +3,7 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 
-const APP_VERSION = '3.6.8';
+const APP_VERSION = '3.6.9';
 
 // Potential paths for APK file
 function getAndroidApkPath() {

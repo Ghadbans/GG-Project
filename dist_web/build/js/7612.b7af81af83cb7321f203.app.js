@@ -2163,18 +2163,62 @@ function ProjectViewInformation() {
   var isItemMatch = (item1, item2) => {
     var _item1$itemName, _item2$itemName, _item1$itemName2, _item2$itemName2;
     if (!item1 || !item2) return false;
+
+    // 1. Authoritative idRow match:
+    // When line items are generated or converted from a document, they share the unique idRow UUID.
+    var rowId1 = String(item1.idRow || '').trim();
+    var rowId2 = String(item2.idRow || '').trim();
+    if (rowId1 && rowId2) {
+      return rowId1 === rowId2;
+    }
     var id1 = String(((_item1$itemName = item1.itemName) === null || _item1$itemName === void 0 ? void 0 : _item1$itemName._id) || (typeof item1.itemName === 'string' && item1.itemName !== 'empty' && item1.itemName.length === 24 ? item1.itemName : '') || '');
     var id2 = String(((_item2$itemName = item2.itemName) === null || _item2$itemName === void 0 ? void 0 : _item2$itemName._id) || (typeof item2.itemName === 'string' && item2.itemName !== 'empty' && item2.itemName.length === 24 ? item2.itemName : '') || '');
-    if (id1 && id2 && id1 !== 'empty' && id2 !== 'empty') {
-      return id1 === id2;
+    var rawName1 = typeof item1.itemName === 'string' ? item1.itemName : ((_item1$itemName2 = item1.itemName) === null || _item1$itemName2 === void 0 ? void 0 : _item1$itemName2.itemName) || '';
+    var rawName2 = typeof item2.itemName === 'string' ? item2.itemName : ((_item2$itemName2 = item2.itemName) === null || _item2$itemName2 === void 0 ? void 0 : _item2$itemName2.itemName) || '';
+    var name1 = cleanStr(rawName1);
+    var name2 = cleanStr(rawName2);
+
+    // If both have catalog ObjectIds and they differ, no match
+    if (id1 && id2 && id1 !== 'empty' && id2 !== 'empty' && id1 !== id2) {
+      return false;
     }
-    var desc1 = cleanStr(item1.itemDescription || (typeof item1.itemName === 'string' ? item1.itemName : (_item1$itemName2 = item1.itemName) === null || _item1$itemName2 === void 0 ? void 0 : _item1$itemName2.itemName) || item1.newDescription || '');
-    var desc2 = cleanStr(item2.itemDescription || (typeof item2.itemName === 'string' ? item2.itemName : (_item2$itemName2 = item2.itemName) === null || _item2$itemName2 === void 0 ? void 0 : _item2$itemName2.itemName) || item2.newDescription || '');
+
+    // If both have names and they differ, no match
+    if (name1 && name2 && name1 !== 'empty' && name2 !== 'empty' && name1 !== name2) {
+      return false;
+    }
+    var desc1 = cleanStr(item1.itemDescription || item1.newDescription || '');
+    var desc2 = cleanStr(item2.itemDescription || item2.newDescription || '');
+
+    // 2. If both items have descriptions, description is essential to distinguish separate tasks/services
     if (desc1 && desc2) {
       if (desc1 === desc2) return true;
-      if (desc1.length >= 5 && desc2.length >= 5) {
+      if (desc1.length >= 4 && desc2.length >= 4) {
         if (desc1.includes(desc2) || desc2.includes(desc1)) return true;
       }
+      // Descriptions are present and completely different - they are distinct line items
+      return false;
+    }
+
+    // 3. Rate/cost comparison for duplicate/service disambiguation when one has no description
+    var rate1 = parseFloat(item1.itemRate || item1.cost || item1.itemCost || 0);
+    var cost2 = parseFloat(item2.itemCost || item2.itemRate || item2.cost || 0);
+    if (rate1 > 0 && cost2 > 0 && Math.abs(rate1 - cost2) < 0.01 && (id1 === id2 || name1 === name2)) {
+      return true;
+    }
+
+    // 4. Fallback for catalog items without distinct descriptions
+    if (id1 && id2 && id1 !== 'empty' && id2 !== 'empty' && id1 === id2) {
+      return true;
+    }
+    if (name1 && name2 && name1 !== 'empty' && name2 !== 'empty' && name1 === name2) {
+      return true;
+    }
+
+    // 5. Custom non-catalog empty items fallback
+    if (desc1 && desc2) {
+      if (desc1 === desc2) return true;
+      if (desc1.length >= 5 && desc2.length >= 5 && (desc1.includes(desc2) || desc2.includes(desc1))) return true;
     }
     return false;
   };
