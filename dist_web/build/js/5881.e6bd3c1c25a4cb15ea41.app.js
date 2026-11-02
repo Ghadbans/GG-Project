@@ -3981,7 +3981,8 @@ function PurchaseFormUpdate() {
           if (isSectionDivider) return Item;
           var matchedOutQty = (matchedOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
           var matchedReturnQty = (matchedReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-          var netOutQty = matchedOutQty > 0 || matchedReturnQty > 0 ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
+          var hasOutMovements = (matchedOut || []).length > 0 || (matchedReturn || []).length > 0;
+          var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
           var matchedPurchases = (matchedPurchase || []).flatMap(ip => (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
             qty: parseFloat(it.newItemOut || it.itemQty || 0),
             total: parseFloat(it.totalAmount || it.totalAmountUSD || parseFloat(it.newItemOut || it.itemQty || 0) * parseFloat(it.itemRate || it.cost || 0) || 0)

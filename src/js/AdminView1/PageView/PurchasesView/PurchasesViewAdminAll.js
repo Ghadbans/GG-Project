@@ -241,7 +241,8 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2, itemPurchase, item
     .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
   const matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
     .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-  const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
+  const hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+  const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
 
   return (
     <React.Fragment>
@@ -1167,7 +1168,8 @@ function PurchasesViewAdminAll() {
                                                         .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
                                                       const matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
                                                         .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-                                                      const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
+                                                      const hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+                                                      const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
 
                                                       return (
                                                         <tr key={Item.idRow || i}>

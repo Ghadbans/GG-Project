@@ -376,7 +376,7 @@ function ItemReturnViewForm() {
     const difference = [];
     const sumToAdd = [];
     OldArray.map((row) => {
-      const newItem = itemsQtyArray.find((row1) => row1.itemName?._id === row.itemName?._id)
+      const newItem = itemsQtyArray.find((row1) => (row1.idRow && row.idRow ? row1.idRow === row.idRow : row1.itemName?._id === row.itemName?._id))
       if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
         const diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut)
         difference.push({

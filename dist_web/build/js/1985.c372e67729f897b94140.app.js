@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[2529],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[1985],{
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -1227,7 +1227,7 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 32529
+/***/ 91985
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1476,8 +1476,8 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay
     })
   };
 });
-function ItemOutViewAdmin() {
-  var _itemPurchaseView$ite, _itemPurchaseView$Cre, _user$data, _itemPurchaseView$ite2, _itemPurchaseView$Cre2, _itemPurchaseView$Cre3, _itemPurchaseView$ite3;
+function ItemReturnAdminView() {
+  var _itemPurchaseView$Cre, _user$data, _itemPurchaseView$ite, _itemPurchaseView$Cre2, _itemPurchaseView$Cre3, _itemPurchaseView$ite2;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .useNavigate */ .Zp)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_43__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_43__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__/* .selectCurrentUser */ .xu);
@@ -1508,11 +1508,6 @@ function ItemOutViewAdmin() {
     }();
     fetchUser();
   }, [dispatch]);
-  var handleLogout = () => {
-    localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__/* .logOut */ .je)());
-    navigate('/');
-  };
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
@@ -1534,10 +1529,15 @@ function ItemOutViewAdmin() {
     }();
     fetchNumber();
   }, [user]);
-  var ItemOInfoC = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.createM === true);
-  var ItemOInfoV = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.viewM === true);
-  var ItemOInfoU = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.editM === true);
-  var ItemOInfoD = grantAccess.filter(row => row.moduleName === "Item-Out" && row.access.deleteM === true);
+  var ReturnInfoC = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.createM === true);
+  var ReturnInfoV = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.viewM === true);
+  var ReturnInfoU = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.editM === true);
+  var ReturnInfoD = grantAccess.filter(row => row.moduleName === "Item-Return" && row.access.deleteM === true);
+  var handleLogout = () => {
+    localStorage.removeItem('user');
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_44__/* .logOut */ .je)());
+    navigate('/');
+  };
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
     itemOut = _useState4[0],
@@ -1586,19 +1586,16 @@ function ItemOutViewAdmin() {
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue) {
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/itemOut-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
-        var formatDate = res.data.itemI.map(item => {
-          var _item$reference;
-          return _objectSpread(_objectSpread({}, item), {}, {
-            id: item._id,
-            dataField: dayjs__WEBPACK_IMPORTED_MODULE_40___default()(item.itemOutDate).format('DD/MM/YYYY'),
-            referenceInfo: item.reference !== undefined ? (_item$reference = item.reference) === null || _item$reference === void 0 ? void 0 : _item$reference.referenceName : item.description,
-            itemInfo: (item.itemsQtyArray || []).filter(row => row.newItemOut > 0).map(row => row.itemName ? typeof row.itemName === 'object' ? row.itemName.itemName || row.itemName.itemDescription || '' : row.itemName : ''),
-            itemDescriptionInfo: item.itemsQtyArray.filter(row => row.newItemOut > 0).map(row => row.itemDescription !== undefined ? row.itemDescription : '')
-          });
-        });
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/itemReturn-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
+        var formatDate = res.data.itemI.map(item => _objectSpread(_objectSpread({}, item), {}, {
+          id: item._id,
+          dataField: dayjs__WEBPACK_IMPORTED_MODULE_40___default()(item.itemOutDate).format('DD/MM/YYYY'),
+          referenceInfo: item.reference !== undefined ? item.reference.referenceName : item.description,
+          itemInfo: (item.itemsQtyArray || []).filter(row => row.newItemOut > 0).map(row => row.itemName ? typeof row.itemName === 'object' ? row.itemName.itemName || row.itemName.itemDescription || '' : row.itemName : ''),
+          itemDescriptionInfo: item.itemsQtyArray.filter(row => row.newItemOut > 0).map(row => row.itemDescription !== undefined ? row.itemDescription : '')
+        }));
         SetTotalPage(Math.ceil(res.data.totalItem / limit));
-        setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
+        setTotalItemCount(res.data.totalItem); // Ensure totalPage is correctly calculated
         setItemOut(formatDate);
         setLoadingData(false);
       } catch (error) {
@@ -1637,15 +1634,6 @@ function ItemOutViewAdmin() {
   var handlePageChange = newPage => {
     setPage(newPage); // Update page state (convert to 0-based index)
   };
-  var handleSearchChange = event => {
-    setSearchTerm(event.target.value);
-  };
-  var handleFilterFieldChange = event => {
-    setFilterField(event.target.value);
-  };
-  var handleFilterValueChange = event => {
-    setFilterValue(event.target.value);
-  };
   {/** search start */}
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
@@ -1661,7 +1649,7 @@ function ItemOutViewAdmin() {
     setColumnVisibilityModel = _useState24[1];
   var handelHiddenColumn = newHidden => {
     setColumnVisibilityModel(newHidden);
-    localStorage.setItem('HiddenColumnsItemOut', JSON.stringify(newHidden));
+    localStorage.setItem('HiddenColumnsItemReturn', JSON.stringify(newHidden));
   };
   var handleFilter = newModel => {
     var _newModel$quickFilter;
@@ -1670,14 +1658,14 @@ function ItemOutViewAdmin() {
     setFilterModel(newModel);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemOutTst'));
+    var storedQuick = JSON.parse(localStorage.getItem('QuickFilterItemReturnTst'));
     if (storedQuick) {
       var _storedQuick$quickFil;
       var _searchTerm = ((_storedQuick$quickFil = storedQuick.quickFilterValues) === null || _storedQuick$quickFil === void 0 ? void 0 : _storedQuick$quickFil.join(' ')) || '';
       setSearchTerm(_searchTerm);
       setFilterModel(storedQuick);
     }
-    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsItemOut'));
+    var storedColumns = JSON.parse(localStorage.getItem('HiddenColumnsItemReturn'));
     if (storedColumns) {
       setColumnVisibilityModel(storedColumns);
     }
@@ -1714,7 +1702,7 @@ function ItemOutViewAdmin() {
       var _ref11 = _asyncToGenerator(function* () {
         if (idView !== null) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemOut/").concat(idView));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(idView));
             setItemPurchaseView(res.data.data);
           } catch (error) {
             console.log(error);
@@ -1744,6 +1732,7 @@ function ItemOutViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
+  {/** delete multiple && all modal end */}
   var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState38 = _slicedToArray(_useState37, 2),
     openReasonDelete = _useState38[0],
@@ -1755,7 +1744,6 @@ function ItemOutViewAdmin() {
   var handleCloseReasonDelete = () => {
     setOpenReasonDelete(false);
   };
-  {/** delete multiple && all modal end */}
   var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState40 = _slicedToArray(_useState39, 2),
     loading = _useState40[0],
@@ -1815,7 +1803,7 @@ function ItemOutViewAdmin() {
         if (DeleteId !== null) {
           try {
             var _res$data2, _res$data3;
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemOut/").concat(DeleteId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(DeleteId));
             SetItemsQtyArray(res.data.data.itemsQtyArray);
             setReference(res.data.data.reference);
             setRelatedNumber(Number(((_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.outNumber) || ((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.outNumber) || 0));
@@ -1922,11 +1910,11 @@ function ItemOutViewAdmin() {
         var result = currentPurchase.items.map(row => {
           var relatedArray = itemsQtyArray.filter(Item => parseFloat(Item.newItemOut) !== 0).find(Item => {
             var _Item$itemName, _Item$itemName2, _row$itemName;
-            return ((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) && ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id) === ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id);
+            return Item.idRow && row.idRow ? Item.idRow === row.idRow : ((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) && ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id) === ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id);
           });
           if (relatedArray) {
             var infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
-            var _itemOut = (parseFloat(row.itemOut) || 0) - infoOut;
+            var _itemOut = (parseFloat(row.itemOut) || 0) + infoOut;
             return _objectSpread(_objectSpread({}, row), {}, {
               itemOut: _itemOut
             });
@@ -1957,7 +1945,7 @@ function ItemOutViewAdmin() {
           });
           if (relatedArray) {
             var infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
-            var _itemOut2 = (parseFloat(row.itemOut) || 0) - infoOut;
+            var _itemOut2 = (parseFloat(row.itemOut) || 0) + infoOut;
             return _objectSpread(_objectSpread({}, row), {}, {
               itemOut: _itemOut2
             });
@@ -1988,7 +1976,7 @@ function ItemOutViewAdmin() {
           });
           if (relatedArray) {
             var infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
-            var _itemOut3 = (parseFloat(row.itemOut) || 0) - infoOut;
+            var _itemOut3 = (parseFloat(row.itemOut) || 0) + infoOut;
             return _objectSpread(_objectSpread({}, row), {}, {
               itemOut: _itemOut3
             });
@@ -2013,7 +2001,7 @@ function ItemOutViewAdmin() {
     var _ref17 = _asyncToGenerator(function* () {
       var data = {
         idInfo: '',
-        person: user.data.userName + ' Deleted ' + ' O-' + relatedNumber,
+        person: user.data.userName + ' Deleted ' + ' R-' + relatedNumber,
         reason,
         dateNotification: new Date()
       };
@@ -2043,7 +2031,7 @@ function ItemOutViewAdmin() {
     var _ref19 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/delete-itemOut/").concat(DeleteId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/delete-itemReturn/").concat(DeleteId));
         if (res) {
           yield handleCreateNotification();
           yield handleQty();
@@ -2076,23 +2064,18 @@ function ItemOutViewAdmin() {
   var toggleDrawer = () => {
     setOpen1(!open1);
   };
-  var itemsArray = (itemPurchaseView === null || itemPurchaseView === void 0 || (_itemPurchaseView$ite = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite === void 0 ? void 0 : _itemPurchaseView$ite.length) < 5 ? [...itemPurchaseView.itemsQtyArray, ...Array(5 - itemPurchaseView.itemsQtyArray.length).fill({
-    itemName: '',
-    itemDescription: '',
-    newItemOut: ''
-  })] : itemPurchaseView === null || itemPurchaseView === void 0 ? void 0 : itemPurchaseView.itemsQtyArray;
   var columns = [{
     field: 'outNumber',
     headerName: '#',
     width: 90,
-    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "O-0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, params.row.outNumber), " ")
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "R-0"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, params.row.outNumber), " ")
   }, {
     field: 'itemOutDate',
     headerName: 'Date',
     width: 100,
     type: 'date',
-    valueGetter: params => new Date(params.row.itemOutDate),
-    renderCell: params => dayjs__WEBPACK_IMPORTED_MODULE_40___default()(params.row.itemOutDate).format('DD/MM/YYYY')
+    valueGetter: params => params.row.itemOutDate ? new Date(params.row.itemOutDate) : null,
+    renderCell: params => params.row.itemOutDate ? dayjs__WEBPACK_IMPORTED_MODULE_40___default()(params.row.itemOutDate).format('DD/MM/YYYY') : '—'
   }, {
     field: 'reason',
     headerName: 'Reason',
@@ -2121,8 +2104,8 @@ function ItemOutViewAdmin() {
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: ItemOInfoV.length === 0,
-      onClick: () => handleOpenView(params.row._id)
+      onClick: () => handleOpenView(params.row._id),
+      disabled: ReturnInfoV.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
@@ -2135,9 +2118,9 @@ function ItemOutViewAdmin() {
     renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
       title: "Edit"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      disabled: ItemOInfoU.length === 0
+      disabled: ReturnInfoU.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-      to: "/ItemOutViewUpdate/".concat(params.row._id),
+      to: "/ItemReturnViewForm/".concat(params.row._id),
       className: "LinkName"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
@@ -2152,7 +2135,7 @@ function ItemOutViewAdmin() {
       title: "Delete"
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, "                  ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       onClick: () => handleOpen(params.row._id),
-      disabled: ItemOInfoD.length === 0
+      disabled: ReturnInfoD.length === 0
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
@@ -2163,7 +2146,7 @@ function ItemOutViewAdmin() {
   var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)();
   var handlePrint = (0,react_to_print__WEBPACK_IMPORTED_MODULE_52__.useReactToPrint)({
     content: () => componentRef.current,
-    documentTitle: itemPurchaseView !== null && itemPurchaseView !== void 0 && itemPurchaseView.outNumber ? "Item-Out-O-".concat(String(itemPurchaseView.outNumber).padStart(6, '0')) : 'Item-Out',
+    documentTitle: itemPurchaseView !== null && itemPurchaseView !== void 0 && itemPurchaseView.outNumber ? "Item-Return-R-".concat(String(itemPurchaseView.outNumber).padStart(6, '0')) : 'Item-Return',
     pageStyle: "@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }"
   });
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2200,7 +2183,7 @@ function ItemOutViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Item Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+  }, "Item Return"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
@@ -2252,9 +2235,9 @@ function ItemOutViewAdmin() {
       margin: '10px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: ItemOInfoC.length === 0
+    disabled: ReturnInfoC.length === 0
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_7__/* .NavLink */ .k2, {
-    to: '/ItemOutViewForm',
+    to: '/ItemReturnUpdateForm',
     className: "LinkName"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
@@ -2477,13 +2460,13 @@ function ItemOutViewAdmin() {
       letterSpacing: '1px',
       textTransform: 'uppercase'
     }
-  }, "ITEM OUT VOUCHER / BON DE SORTIE"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, "ITEM RETURN VOUCHER / BON DE RETOUR"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     style: {
       fontSize: '14px',
       fontWeight: 'bold',
       letterSpacing: '0.5px'
     }
-  }, "O-", String(itemPurchaseView.outNumber).padStart(6, '0'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "R-", String(itemPurchaseView.outNumber).padStart(6, '0'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       width: '100%',
       border: '1px solid #cbd5e1',
@@ -2507,7 +2490,7 @@ function ItemOutViewAdmin() {
       padding: '4px 0',
       verticalAlign: 'top'
     }
-  }, "Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+  }, "Return Date:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     style: {
       width: '36%',
       color: '#0f172a',
@@ -2553,7 +2536,7 @@ function ItemOutViewAdmin() {
       padding: '4px 0',
       verticalAlign: 'top'
     }
-  }, "Issued By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+  }, "Received By:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     style: {
       color: '#0f172a',
       padding: '4px 0',
@@ -2619,7 +2602,7 @@ function ItemOutViewAdmin() {
       border: '1px solid #093170',
       fontWeight: 'bold'
     }
-  }, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, (_itemPurchaseView$ite2 = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite2 === void 0 ? void 0 : _itemPurchaseView$ite2.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
+  }, "Qty Returned"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, (_itemPurchaseView$ite = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite === void 0 ? void 0 : _itemPurchaseView$ite.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
     var _row$itemName4, _row$itemName5, _row$itemName6, _row$itemName7, _row$itemName8;
     var itemId = ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4._id) || (typeof row.itemName === 'string' ? row.itemName : null);
     var relatedUnit = itemId ? (item || []).find(Item1 => Item1._id === itemId) : null;
@@ -2757,7 +2740,7 @@ function ItemOutViewAdmin() {
       color: '#1e293b',
       textTransform: 'uppercase'
     }
-  }, "Receiver / Destinataire"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, "Returned By / Client ou Technicien"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       height: '55px',
       borderBottom: '1px dashed #94a3b8',
@@ -2782,7 +2765,7 @@ function ItemOutViewAdmin() {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre2 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre2 === void 0 ? void 0 : _itemPurchaseView$Cre2.person) || '', " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, " Created O-", String(itemPurchaseView.outNumber).padStart(6, '0')), " on ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre3 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre3 === void 0 ? void 0 : _itemPurchaseView$Cre3.dateComment) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre2 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre2 === void 0 ? void 0 : _itemPurchaseView$Cre2.person) || '', " "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, " Created R-", String(itemPurchaseView.outNumber).padStart(6, '0')), " on ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, ((_itemPurchaseView$Cre3 = itemPurchaseView.Create) === null || _itemPurchaseView$Cre3 === void 0 ? void 0 : _itemPurchaseView$Cre3.dateComment) || '')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
@@ -2808,7 +2791,7 @@ function ItemOutViewAdmin() {
     style: {
       marginBottom: '5px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Out Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Return Date"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     colSpan: 3
   }, dayjs__WEBPACK_IMPORTED_MODULE_40___default()(itemPurchaseView.itemOutDate).format('DD/MM/YYYY'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     colSpan: 3
@@ -2824,7 +2807,7 @@ function ItemOutViewAdmin() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     "aria-label": "collapsible table",
     stickyHeader: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, (_itemPurchaseView$ite3 = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite3 === void 0 ? void 0 : _itemPurchaseView$ite3.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, "Qty"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, (_itemPurchaseView$ite2 = itemPurchaseView.itemsQtyArray) === null || _itemPurchaseView$ite2 === void 0 ? void 0 : _itemPurchaseView$ite2.filter(row => parseFloat(row.newItemOut) > 0 || row.newDescription).map((row, i) => {
     var _row$itemName9, _row$itemName0, _row$itemName1, _row$itemName10, _row$itemName11;
     var itemId = ((_row$itemName9 = row.itemName) === null || _row$itemName9 === void 0 ? void 0 : _row$itemName9._id) || (typeof row.itemName === 'string' ? row.itemName : null);
     var relatedUnit = itemId ? (item || []).find(Item1 => Item1._id === itemId) : null;
@@ -2867,7 +2850,7 @@ function ItemOutViewAdmin() {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: O-", relatedNumber, "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+  }, "Why do you want to delete: R-", relatedNumber, "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleDeleteUpdate
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .Ay, {
     container: true,
@@ -2904,7 +2887,7 @@ function ItemOutViewAdmin() {
     }
   }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemOutViewAdmin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemReturnAdminView);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);

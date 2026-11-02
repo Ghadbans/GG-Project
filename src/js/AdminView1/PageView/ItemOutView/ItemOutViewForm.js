@@ -459,14 +459,14 @@ function ItemOutViewForm() {
         const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${projectId}`);
         const currentPurchase = res.data.data;
         const result = currentPurchase.items.map((row) => {
-          const newItem = itemsQtyArray.find((Item) => Item.itemName._id === row.itemName?._id && Item.itemName.itemName !== '')
-          if (newItem) {
-            const itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut)
+          const newItem = itemsQtyArray.find((Item) => (Item.idRow && row.idRow ? Item.idRow === row.idRow : (Item.itemName?._id === row.itemName?._id && Item.itemName?.itemName !== '')));
+          if (newItem && parseFloat(newItem.newItemOut || 0) > 0) {
+            const itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut);
             return {
               ...row, itemOut
-            }
+            };
           }
-          return row
+          return row;
         })
         const data = { items: result };
         return await axios.put(`${ENDPOINT_URL}/update-purchase/${projectId}`, data)

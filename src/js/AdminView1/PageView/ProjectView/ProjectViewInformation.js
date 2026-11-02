@@ -495,7 +495,8 @@ const isItemMatch = (item1, item2) => {
       .reduce((s, it) => s + parseFloat(it.newItemOut || 0), 0);
     const matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, row)))
       .reduce((s, it) => s + parseFloat(it.newItemOut || 0), 0);
-    const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
+    const hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+    const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
 
     const unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
     const costOut = (row.itemName?._id === undefined || row.itemName?._id === "") && netOutQty === 0 && totalBuy > 0
@@ -1189,7 +1190,8 @@ const isItemMatch = (item1, item2) => {
       .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
     const matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, row)))
       .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-    const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
+    const hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+    const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(row.itemOut) || 0);
 
     const unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
     const totalCostOut = (row.itemName?._id === undefined || row.itemName?._id === "") && netOutQty === 0 && totalBuy > 0

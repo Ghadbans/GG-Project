@@ -392,7 +392,8 @@ function PurchaseItemRow(_ref9) {
   var totalBuyCost = totalBoughtCost > 0 ? totalBoughtCost : parseFloat(Item.totalGenerale) || buyQty * (parseFloat(Item.itemCost) || 0);
   var matchedOutQty = (itemOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
   var matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-  var netOutQty = matchedOutQty > 0 || matchedReturnQty > 0 ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
+  var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+  var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
     key: Item.idRow || i
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
@@ -1683,7 +1684,8 @@ function PurchasesViewAdminAll() {
       var totalBuyCost = totalBoughtCost > 0 ? totalBoughtCost : parseFloat(Item.totalGenerale) || buyQty * (parseFloat(Item.itemCost) || 0);
       var matchedOutQty = (itemOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
       var matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-      var netOutQty = matchedOutQty > 0 || matchedReturnQty > 0 ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
+      var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+      var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(Item.itemOut) || 0;
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {
         key: Item.idRow || i
       }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {

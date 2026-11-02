@@ -2382,7 +2382,8 @@ function ProjectViewInformation() {
     var totalBuy = totalBoughtCost > 0 ? totalBoughtCost : parseFloat(row.totalGenerale) || buyQty * (parseFloat(row.itemCost) || 0);
     var matchedOutQty = (itemOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, row))).reduce((s, it) => s + parseFloat(it.newItemOut || 0), 0);
     var matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, row))).reduce((s, it) => s + parseFloat(it.newItemOut || 0), 0);
-    var netOutQty = matchedOutQty > 0 || matchedReturnQty > 0 ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
+    var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+    var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
     var unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
     var costOut = (((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id) === undefined || ((_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2._id) === "") && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
     return sum + (costOut || 0);
@@ -3253,7 +3254,8 @@ function ProjectViewInformation() {
     var totalBuy = totalBoughtCost > 0 ? totalBoughtCost : parseFloat(row.totalGenerale) || buyQty * (parseFloat(row.itemCost) || 0);
     var matchedOutQty = (itemOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, row))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
     var matchedReturnQty = (itemReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, row))).reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-    var netOutQty = matchedOutQty > 0 || matchedReturnQty > 0 ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
+    var hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0;
+    var netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : parseFloat(row.itemOut) || 0;
     var unitCost = parseFloat(row.itemCost) || (buyQty > 0 ? totalBuy / buyQty : 0);
     var totalCostOut = (((_row$itemName3 = row.itemName) === null || _row$itemName3 === void 0 ? void 0 : _row$itemName3._id) === undefined || ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4._id) === "") && netOutQty === 0 && totalBuy > 0 ? totalBuy : netOutQty * unitCost;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react__WEBPACK_IMPORTED_MODULE_2__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("tr", {

@@ -3350,3 +3350,37 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Generated official Windows installer: `dist/Global Gate Setup 3.6.9.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.9.exe`.
    - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.9.apk`.
    - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.
+
+### Version 3.6.10 (November 02, 2026) - Accurate I-Out Calculation & Service Item Movement Disambiguation
+1. **Reported Issue & User Feedback**:
+   - In Purchase Requests and Orders (e.g. `PUR-000174 | KALIMA | OUTDOOR TOILET`), the user observed that the `I-Out` column was displaying `1 LOT` on **Row 13** and **Row 15** even though there was NO Item Out movement recorded for those two rows (only Row 14 had an Item Out movement `O-027042` for 1 LOT).
+   - User report:
+     *"working fine now but why it is showing I-Out 1 and there is no out Row 13 Row 15... if there is no out it cannot it should be zero ! right no !! why it is showing 1 ! ! ?even your table shows the out it zero !!!"*
+
+2. **Root Cause Analysis**:
+   - **Corrupted Database Values from Prior Item Out**: In `ItemOutViewForm.js`, line 462 previously updated purchase item counters by matching solely on catalog ID (`Item.itemName._id === row.itemName?._id`). When `O-027042` was issued for Row 14, because Rows 13, 14, and 15 all shared the same service item name (`ALUMINUM FABRICATION / INSTALLATION`), the loop added `1` to `itemOut` across all three rows in MongoDB.
+   - **Flawed Display Fallback Condition**: In `PurchasesViewAdminAll.js` (L244 & L1170), `PurchaseFormUpdate.js` (L334), and `ProjectViewInformation.js` (L498 & L1192), `netOutQty` was calculated as:
+     `(matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0)`
+     When `O-027042` was loaded for the purchase, `isItemMatch` correctly matched Row 14's unique `idRow` and returned `matchedOutQty = 0` for Rows 13 and 15. However, because `matchedOutQty > 0` evaluated to `false`, the ternary fell back to `Item.itemOut`, which read the corrupted `1` stored in MongoDB, displaying `1 LOT` instead of `0`.
+
+3. **Solutions & Implementations**:
+   - **Authoritative Movement-Aware Calculation**:
+     When out or return movements exist for a purchase/project (`hasOutMovements = (itemOut || []).length > 0 || (itemReturn || []).length > 0`), the live matched movement count is the sole source of truth:
+     `const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);`
+     Unmatched line items with 0 out transactions now strictly and reliably evaluate to `0`.
+   - **Prevent Future Cross-Row Item Out Updates**:
+     - `ItemOutViewForm.js`: Disambiguates by `Item.idRow === row.idRow` and validates `parseFloat(newItem.newItemOut) > 0` before updating line item `itemOut` counters.
+     - `ItemOutViewAdmin.js` & `ItemReturnAdminView.js`: Updated deletion/restoration matching to prioritize `idRow`.
+     - `ItemReturnViewForm.js`: Updated diff mapping to disambiguate by `idRow`.
+   - **Database Record Restoration for PUR-000174**:
+     - Verified and repaired MongoDB document for `PUR-000174` (ID: `6a89a3b53816745f17ea7f9b`): Row 13 `itemOut = 0`, Row 14 `itemOut = 1`, Row 15 `itemOut = 0`.
+   - **Version Bumping**: Bumped to **`3.6.10`** across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+4. **Multi-Platform Production Builds & Releases**:
+   - AST validation verified with 0 errors (`npm run prebuild`).
+   - Typo / Test engine verified with 19/19 tests passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Generated official Windows installer: `dist/Global Gate Setup 3.6.10.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.10.exe`.
+   - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.10.apk`.
+   - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.

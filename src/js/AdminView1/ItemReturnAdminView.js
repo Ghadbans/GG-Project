@@ -436,15 +436,15 @@ function ItemReturnAdminView() {
       const currentPurchase = res.data.data;
       const result = currentPurchase.items.map((row) => {
         const relatedArray = itemsQtyArray.filter((Item) => parseFloat(Item.newItemOut) !== 0)
-          .find((Item) => Item.itemName?._id && Item.itemName?._id === row.itemName?._id)
+          .find((Item) => (Item.idRow && row.idRow ? Item.idRow === row.idRow : Item.itemName?._id && Item.itemName?._id === row.itemName?._id));
         if (relatedArray) {
-          const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0
-          const itemOut = (parseFloat(row.itemOut) || 0) + infoOut
+          const infoOut = relatedArray.newItemOut > 0 ? parseFloat(relatedArray.newItemOut) : 0;
+          const itemOut = (parseFloat(row.itemOut) || 0) + infoOut;
           return {
             ...row, itemOut
-          }
+          };
         }
-        return row
+        return row;
       })
       const data = {
         items: result

@@ -331,7 +331,8 @@ function PurchaseFormUpdate() {
           .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
         const matchedReturnQty = (matchedReturn || []).flatMap(ir => (ir.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
           .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
-        const netOutQty = (matchedOutQty > 0 || matchedReturnQty > 0) ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
+        const hasOutMovements = (matchedOut || []).length > 0 || (matchedReturn || []).length > 0;
+        const netOutQty = hasOutMovements ? Math.max(0, matchedOutQty - matchedReturnQty) : (parseFloat(Item.itemOut) || 0);
 
         const matchedPurchases = (matchedPurchase || []).flatMap(ip => 
           (ip.itemsQtyArray || ip.items || []).filter(it => isItemMatch(it, Item)).map(it => ({
