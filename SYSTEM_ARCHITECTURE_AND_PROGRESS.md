@@ -3185,3 +3185,44 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - **Windows Installer**: `dist/Global Gate Setup 3.6.5.exe` (95.57 MB) generated and mirrored to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.5.exe`.
    - **Android APK**: Compiled via Gradle `assembleDebug` (17.66 MB) and mirrored to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.5.apk`.
    - **Git Push**: Pushed to `origin main` for automatic Railway deployment.
+
+### Version 3.6.6 (November 02, 2026) - Custom Non-Catalog ("EMPTY" Box) Item Display, Editing, & Invoice/Estimate Conversion Safeguards
+1. **Reported Issues & User Feedback**:
+   - In Purchase Requests / Orders, users frequently enter custom non-catalog items (e.g. `BLACK OXYD 25L`) using the "EMPTY" box mechanism (`itemName: { itemName: 'empty' }`), entering the item name or description in the free-text description box.
+   - In Purchase Information View (`PurchasesViewAdminAll.js`), the literal placeholder text `EMPTY` was being displayed on top of the custom description `BLACK OXYD 25L`.
+   - When opening **Update Purchase** (`PurchaseFormUpdate.js`), the custom item was failing to render the description text box and was instead showing a blank, unpopulated `<Autocomplete>` dropdown box, hiding `BLACK OXYD 25L` and confusing the user.
+   - When converting a Purchase Order or Request to an Invoice (`ConvertToInvoice.js`) or Estimate (`ConvertToEstimate.js`), non-catalog empty-box items and section dividers were either failing rate calculations or dropping descriptions, prices, and quantities.
+   - The user requested:
+     *"working fine and testing,, but you see EMPTY box that is writting in BLACK OXYD 25L this is what item is not inclueded our items and we do empty box and write down the item .. than we can do item purchase ... when we want to make edit or converte it to an invoice is showing it empty no data inside this causing problem /// it s should show the empty box as we wwriite in BLACK OXYD 25L and the total and price !! .."*
+
+2. **Root Cause Analysis**:
+   - **Case-Sensitivity Mismatch**: In MongoDB or after uppercase normalization, `{ itemName: 'empty' }` became `{ itemName: 'EMPTY' }`. The checks in `PurchasesViewAdminAll.js` and `InvoiceViewAdminAll.js` used exact case `=== 'empty'`, which evaluated to `false` for `'EMPTY'`. As a result, the literal string `EMPTY` was rendered in the document table above `BLACK OXYD 25L`.
+   - **Autocomplete Dropdown Fallback in Edit Form**: In `PurchaseFormUpdate.js:1128`, the condition checked `Item.itemName?._id || Item.itemName?.itemName === 'empty' || (typeof Item.itemName === 'string')`. For non-catalog items with `{ itemName: 'EMPTY' }` and no `_id`, this check failed, falling through to the `else` branch which rendered an empty `<Autocomplete>` dropdown instead of the description `<TextField>`.
+   - **Conversion Rate & Field Omission**: In `ConvertToInvoice.js` and `ConvertToEstimate.js`, checking `item.newDescription !== undefined` or exact case `=== 'empty'` caused rate calculation functions (`getProjectItemRate`, `fetchData`, `fetchItem`) to return 0 or drop rates, and caused the conversion form to hide description fields.
+
+3. **Solutions & Implementations**:
+   - **`PurchasesViewAdminAll.js`**:
+     - Updated both the `PurchaseItemRow` (L217) and the print table (L1140) to check `(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : ...`.
+     - Suppresses the dummy label `EMPTY` completely, cleanly displaying only the actual custom item text (`BLACK OXYD 25L`).
+   - **`PurchaseFormUpdate.js`**:
+     - Updated item rendering condition (L1128) to:
+       `(Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== '')))`
+     - This guarantees that non-catalog items with custom descriptions (like `BLACK OXYD 25L`) always render the description text field with full editability, preserving quantity, unit price, total, and item movement info.
+     - Suppressed the dummy `EMPTY` typography header when `Item.itemName.itemName` is `empty` or `EMPTY`.
+   - **`PurchasesFormView.js`**:
+     - Updated L978 so that dummy `EMPTY` typography is suppressed while keeping the editable description `<TextField>` active.
+   - **`ConvertToInvoice.js` & `ConvertToEstimate.js`**:
+     - Replaced brittle `item.newDescription !== undefined` with strict divider checks `Boolean(item.newDescription && String(item.newDescription).trim() !== '' && (!item.itemName || ...))`.
+     - Updated table item rows (L1142, L1338 in `ConvertToInvoice.js` and L712 in `ConvertToEstimate.js`) to use `hasItemData` condition, preserving rates, prices, quantities, and descriptions.
+     - Suppressed the dummy `EMPTY` label in both invoice and estimate conversion forms.
+   - **`InvoiceViewAdminAll.js`**:
+     - Replaced `hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}` with case-insensitive `Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')` across all invoice views and print tables (L1732, L1970, L2287, L2350, L2416, L2500).
+
+4. **Multi-Platform Production Builds & Verification**:
+   - Pre-build AST check passed with 0 errors across all 238 source files (`npm run prebuild`).
+   - Test engine verified with 19/19 test cases passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Windows installer `Global Gate Setup 3.6.6.exe` (95.57 MB) generated in `dist/` and mirrored to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.6.exe`.
+   - Android APK compiled via Gradle `assembleDebug` (18.52 MB) and mirrored to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.6.apk`.
+   - Committed all changes and pushed to GitHub `origin main`.

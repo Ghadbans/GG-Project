@@ -1125,7 +1125,7 @@ function PurchaseFormUpdate() {
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td style={{ height: '100px' }}>
                                                 {
-                                                  Item.itemName?._id || Item.itemName?.itemName === 'empty' || (typeof Item.itemName === 'string') ? (
+                                                  (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     (
                                                       <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
                                                         <ItemThumbnail
@@ -1135,7 +1135,9 @@ function PurchaseFormUpdate() {
                                                         />
                                                         <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                            <Typography hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'} sx={{ fontSize: '20px', fontWeight: 'bold' }}>{typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}</Typography>
+                                                            {(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : (
+                                                              <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}</Typography>
+                                                            )}
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'
                                                               value={Item.itemDescription}

@@ -214,10 +214,12 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2, itemPurchase, item
           <span>{i + 1}</span>
         </td>
         <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
-          <span hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'}>
-            {typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}
-          </span>
-          <br />
+          {(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : (
+            <>
+              <span>{typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}</span>
+              <br />
+            </>
+          )}
           <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
         </td>
         <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
@@ -1138,9 +1140,13 @@ function PurchasesViewAdminAll() {
                                                                 <>
                                                                   <td style={{ width: '10px', border: '1px solid #DDD' }} >{i + 1}</td>
                                                                   <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
-                                                                    <span hidden={(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName) === 'empty'}>{typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}</span>
-                                                                    <br />
-                                                                    <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
+                                                                    {(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : (
+                                                                        <>
+                                                                          <span>{typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')}</span>
+                                                                          <br />
+                                                                        </>
+                                                                      )}
+                                                                      <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>
                                                                   </td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
                                                                   <td style={{ border: '1px solid #DDD' }} align="left">{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>

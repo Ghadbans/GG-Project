@@ -1729,7 +1729,7 @@ function InvoiceViewAdminAll() {
                                                                         (
                                                                           <>
                                                                             <td style={{ textAlign: 'center', width: '30px' }}><span>{i + 1}</span></td>
-                                                                            <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                            <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                             <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}><span>{Item.itemDescription.toUpperCase()}</span></td>
                                                                             <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                             <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
@@ -1967,7 +1967,7 @@ function InvoiceViewAdminAll() {
                                                               (
                                                                 <>
                                                                   <td style={{ textAlign: 'center', width: '30px' }}><span>{i + 1}</span></td>
-                                                                  <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                  <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                   <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}><span>{Item.itemDescription.toUpperCase()}</span></td>
                                                                   <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                   <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
@@ -2284,7 +2284,7 @@ function InvoiceViewAdminAll() {
                                                               :
                                                               (
                                                                 <>
-                                                                  <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                  <td style={{ border: '1px solid black' }}> <span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                   <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
                                                                   <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                   <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
@@ -2347,7 +2347,7 @@ function InvoiceViewAdminAll() {
                                                             :
                                                             (
                                                               <>
-                                                                <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                <td style={{ border: '1px solid black' }}> <span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                 <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
                                                                 <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
@@ -2413,7 +2413,7 @@ function InvoiceViewAdminAll() {
                                                             :
                                                             (
                                                               <>
-                                                                <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                                <td style={{ border: '1px solid black' }}> <span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                 <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
                                                                 <td style={{ border: '1px solid black' }} ><span >{Item.itemOut !== undefined ? Item.itemOut : 0} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                 <td style={{ border: '1px solid black' }} ><span data-prefix>$ </span><span >{Item.itemCost !== undefined ? Item.itemCost : 0}</span></td>
@@ -2497,7 +2497,7 @@ function InvoiceViewAdminAll() {
             <>
                     <td style={{width:'10px', border:'1px solid #DDD'}} >{i+1}</td>
                         <td style={{width:'300px',textAlign:'left', border:'1px solid #DDD'}} align="left">
-                           <span hidden = {Item.itemName?Item.itemName.itemName === 'empty':''}>{Item.itemName.itemName?Item.itemName.itemName.toUpperCase():''}</span>
+                           <span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName.itemName?Item.itemName.itemName.toUpperCase():''}</span>
                            <br/>
                             <span>{Item.itemDescription?Item.itemDescription.toUpperCase():''}</span>
                           </td>

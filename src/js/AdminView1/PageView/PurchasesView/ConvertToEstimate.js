@@ -188,7 +188,7 @@ const handleChange = (e,i) => {
            setCustomerName1(res.data.data.customerName);
            setProjectName(res.data.data.projectName);
             const purchaseItems = (res.data.data.items || []).map(item => {
-              if (item.newDescription !== undefined) return item;
+              const isDivider = Boolean(item?.newDescription && String(item.newDescription).trim() !== '' && (!item.itemName || (typeof item.itemName === 'string' ? item.itemName.trim() === '' : !item.itemName._id && !item.itemName.itemName))); if (isDivider) return item;
               const rateVal = parseFloat(item.itemRate);
               const costVal = parseFloat(item.itemCost);
               const priceVal = parseFloat(item.itemPrice);
@@ -684,7 +684,7 @@ const handleCreateItem = (newItem)=> {
                                      {...provided.draggableProps}  
                                    >
                                     {
-                                      Item.newDescription !== undefined ?(
+                                      (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                         <>
                                          <td {...provided.dragHandleProps} ><DragIndicatorRounded/></td>
                                         <td colSpan={6}><TextField 
@@ -709,7 +709,7 @@ const handleCreateItem = (newItem)=> {
                                            <td {...provided.dragHandleProps} ><DragIndicatorRounded/></td>
                                  <td style={{height:'100px'}}>
         {
-          Item.itemName.itemName? (
+          (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
             (  
               <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
                 <ItemThumbnail
@@ -718,7 +718,9 @@ const handleCreateItem = (newItem)=> {
                   initialType={Item.contentType}
                 />
                 <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                  <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+                  {(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : (
+      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+    )}
                   <TextField
                     required
                     name='itemDescription' id='itemDescription'

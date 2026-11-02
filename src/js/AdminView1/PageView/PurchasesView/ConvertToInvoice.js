@@ -250,7 +250,7 @@ function ConvertToInvoice() {
     }
   };
   const getProjectItemRate = (item) => {
-    if (!item || item.newDescription !== undefined) return 0;
+    const isDivider = Boolean(item?.newDescription && String(item.newDescription).trim() !== '' && (!item.itemName || (typeof item.itemName === 'string' ? item.itemName.trim() === '' : !item.itemName._id && !item.itemName.itemName))); if (!item || isDivider) return 0;
     const rateVal = parseFloat(item.itemRate);
     if (!isNaN(rateVal) && rateVal > 0) return rateVal;
 
@@ -281,7 +281,7 @@ function ConvertToInvoice() {
         setCustomer(res.data.data.customerName);
         setProjectID(res.data.data.projectName?._id || res.data.data.projectName);
         const purchaseItems = (res.data.data.items || []).map(item => {
-          if (item.newDescription !== undefined) return item;
+          const isDivider = Boolean(item?.newDescription && String(item.newDescription).trim() !== '' && (!item.itemName || (typeof item.itemName === 'string' ? item.itemName.trim() === '' : !item.itemName._id && !item.itemName.itemName))); if (isDivider) return item;
           const rate = getProjectItemRate(item);
           const qty = parseFloat(item.itemQty) || 0;
           const discount = parseFloat(item.itemDiscount) || 0;
@@ -381,7 +381,7 @@ function ConvertToInvoice() {
         const res = await axios.get(`${ENDPOINT_URL}/item`)
         setItemInformation(res.data.data.reverse())
         SetItems(items => items.map((row) => {
-          if (row.newDescription !== undefined) return row;
+          const isDivider = Boolean(row?.newDescription && String(row.newDescription).trim() !== '' && (!row.itemName || (typeof row.itemName === 'string' ? row.itemName.trim() === '' : !row.itemName._id && !row.itemName.itemName))); if (isDivider) return row;
           const related = res.data?.data?.find((row2) => row.itemName !== undefined && row2._id === row.itemName?._id);
           
           let rate = 0;
@@ -1114,7 +1114,7 @@ function ConvertToInvoice() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1139,7 +1139,7 @@ function ConvertToInvoice() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName.itemName ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
                                                             <ItemThumbnail
@@ -1148,7 +1148,9 @@ function ConvertToInvoice() {
                                                               initialType={Item.contentType}
                                                             />
                                                             <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+                                                              {(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : (
+      <Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+    )}
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}
@@ -1310,7 +1312,7 @@ function ConvertToInvoice() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1335,11 +1337,13 @@ function ConvertToInvoice() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName?.itemName ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+                                                              {(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') ? null : (
+      <Typography sx={{ fontSize: '23px' }}>{Item.itemName?.itemName?.toUpperCase() || ''}</Typography>
+    )}
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}

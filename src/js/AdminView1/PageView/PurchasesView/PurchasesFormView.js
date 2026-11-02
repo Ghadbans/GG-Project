@@ -975,7 +975,7 @@ function PurchasesFormView() {
                                                         />
                                                         <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                                           {
-                                                            Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (<Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>) : null
+                                                            (Item.itemName?._id || (Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty')) ? (<Typography sx={{ fontSize: '20px', fontWeight: 'bold' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>) : null
                                                           }
                                                           <TextField
                                                             name='itemDescription' id='itemDescription'
