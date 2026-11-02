@@ -719,7 +719,7 @@ function PurchaseOrderInfoView() {
                                                               <>
                                                                 <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
                                                                 <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{typeof Item.itemName === 'object' ? (Item.itemName?.itemName !== 'empty' ? Item.itemName?.itemName : '') : (Item.itemName || '')}</td>
-                                                                <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{Item.itemDescription}</td>
+                                                                <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD', textTransform: 'uppercase' }}>{Item.itemDescription ? String(Item.itemDescription).toUpperCase() : ''}</td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.qtyBuy}</td>
                                                               </>

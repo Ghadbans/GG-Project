@@ -3012,3 +3012,64 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
      - Generated official installer `dist/Global Gate Setup 3.6.1.exe` (91.13 MB) and copied to `server/public/downloads/GlobalGateSetup.exe`.
   5. **Cloud Deployment**:
      - Pushed commit to GitHub `main` for automatic live deployment to Railway and Cloudflare Pages.
+
+
+### Session: November 2, 2026 - Universal CAPITAL LETTERS Propagation across Purchase & Item Purchase, Polished Sparkle Toast, & Version Bump to v3.6.2
+- **Problem Diagnosed**:
+  1. **Discrepancy Between Purchase Request and Item Purchase (Lowercase Text Leaking)**:
+     - In Screenshot 4, Purchase Request `PUR-000167` displayed Line 21: `ALUMINUM FABRICATION / INSTALLATION` | `LED TUBE 4X2 + CORNER 2X2 DIVES 730` in **CAPITAL LETTERS**.
+     - In Screenshots 2 & 3, when viewing Item Purchase `IP-03833` created from that Purchase Request, the table column `I-Description` displayed `led tube 4x2 ...` in lowercase, and the modal view displayed `Information Description: led tube 4x2 + corner 2x2 devis 730` in lowercase.
+     - **Root Cause**:
+       a) **Display Level**: In `PurchasesViewAdminAll.js`, the code explicitly formatted item descriptions with `<span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span>`. However, in `ItemPurchaseViewAdmin.js`:
+          - The DataGrid `itemDescriptionInfo` column definition had no `renderCell` or `valueGetter` converting to uppercase, and no CSS `text-transform: uppercase`.
+          - The Modal View (`<TableCell>{row.itemDescription !== undefined ? row.itemDescription : null}</TableCell>`) rendered raw un-transformed text.
+       b) **Input Level (Keystrokes vs CSS Display)**: In `PurchasesFormView.js`, `PurchaseFormUpdate.js`, `ConvertPoToIP.js`, `ItemPurchaseViewForm.js`, `ItemPurchaseUpdateForm.js`, and `PurchaseForm.js`, the `handleChange` event assigned `list[i][name] = value` directly from `e.target.value`. Even though CSS `text-transform: uppercase` made the typed letters look capitalized on the user's screen during entry, the underlying JavaScript string was stored in lowercase if the physical keyboard Caps Lock was off.
+       c) **Conversion Level**: In `ConvertPoToIP.js`, items mapped from `poData.itemsQtyArray` were copied directly as lowercase into the new Item Purchase document.
+  2. **Redundant Toast Notification Wording**:
+     - When clicking the ✨ AI Sparkle language assistant button, the toast notification stated:
+       `✨ Polished & formatted in CAPITAL LETTERS!`
+     - The user pointed out that because the entire business management system universally enforces capital letters by default, explicitly mentioning "in CAPITAL LETTERS!" in the popup message was redundant and confusing.
+
+- **Solutions Implemented**:
+  1. **Language Assistant Toast Notification Refined**:
+     - Updated `src/js/component/LanguageFixerButton.js`:
+       - Success toast: `✨ Text polished & formatted!` (removed redundant mention of "in CAPITAL LETTERS!").
+       - Info toast: `Text is already clean and formatted!`.
+       - Tooltip: `✨ Polish & format text` (or `⚠️ Suggestion available! Click ✨ to auto-correct & polish text`).
+  2. **Item Purchase Display Uppercase Enforcement**:
+     - In `src/js/AdminView1/ItemPurchaseViewAdmin.js`:
+       - Updated DataGrid column `itemDescriptionInfo` with `renderCell` rendering `<span style={{ textTransform: 'uppercase' }}>{String(val).toUpperCase()}</span>`.
+       - Updated `Account` ('Description') and `referenceInfo` ('Account') columns to render uppercase.
+       - Updated `itemDescriptionInfo` mapping in `fetchItems` to uppercase all item and new descriptions.
+       - Updated View Modal table cells:
+         `<TableCell sx={{ textTransform: 'uppercase' }}>{row.itemDescription ? String(row.itemDescription).toUpperCase() : (row.newDescription ? String(row.newDescription).toUpperCase() : '')}</TableCell>`.
+         `<TableCell sx={{ textTransform: 'uppercase' }}>{(() => ... name.toUpperCase())()}</TableCell>`.
+       - Made related item comparison in Item Purchase case-insensitive:
+         `((Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase())`.
+  3. **Universal Uppercase Input & Conversion Propagation**:
+     - In `src/js/AdminView1/PageView/PurchaseOrder/ConvertPoToIP.js`:
+       - Transferred items from PO now explicitly convert descriptions to uppercase:
+         `itemDescription: (row.itemDescription || '').toUpperCase()`, `newDescription: (row.newDescription || '').toUpperCase()`.
+       - `handleChange` automatically uppercases all string fields (`(typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value`).
+       - `arrayItemRelated` mapping in `handleSubmit` guarantees all items sent to the backend are uppercase.
+     - In `src/js/AdminView1/PageView/PurchasesView/PurchasesFormView.js`, `PurchaseFormUpdate.js`, `PurchaseForm.js`, `PurchaseUpdateOrder.js`, `ItemPurchaseViewForm.js`, and `ItemPurchaseUpdateForm.js`:
+       - `handleChange` converts typed text to uppercase in React state on every keystroke.
+       - `handleSubmit` maps all item descriptions and new descriptions through `.toUpperCase()`.
+     - In `src/js/AdminView1/PageView/PurchaseOrder/PurchaseOrderInfoView.js`:
+       - Enforced uppercase rendering on item descriptions in all tables and detail views.
+  4. **Backend Auto-Sanitization & Database Auto-Repair**:
+     - In `server/routes/itemRoutes.js`:
+       - `sanitizeAndEnrichPurchaseItems` automatically enforces uppercase on `itemDescription`, `newDescription`, and `itemName.itemName`.
+       - Added background auto-repair on startup to convert any existing lowercase item descriptions in `itemPurchaseSchema` directly in MongoDB.
+     - In `server/routes/purchaseRoutes.js`:
+       - Added `uppercaseItemsList` helper applied across `create-purchase`, `update-purchase`, `create-purchaseOrder`, and `update-purchaseOrder`.
+       - Added background auto-repair on startup for `purchaseSchema` and `purchaseOrderSchema` documents.
+  5. **Version Bump to v3.6.2 & Binary Generation**:
+     - Bumped version to **`3.6.2`** across `package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+     - Recompiled Web production bundle (`npm run build:web`) into `dist_web/` (0 AST errors, cache-busted `index.html`).
+     - Recompiled Electron bundle (`npm run build:electron`).
+     - Packaged official 64-bit installer `dist/Global Gate Setup 3.6.2.exe` (95.56 MB) and copied to `server/public/downloads/GlobalGateSetup.exe`.
+     - Synced Capacitor Android (`npx cap sync android`) and compiled debug APK `android/app/build/outputs/apk/debug/app-debug.apk` (18.52 MB), copied to `server/public/downloads/GlobalGate.apk`.
+  6. **Deployment & Git Sync**:
+     - Updated `SYSTEM_ARCHITECTURE_AND_PROGRESS.md` with complete session memory.
+     - Committed all changes and pushed to GitHub `main` for automated Railway and Cloudflare Pages deployment.

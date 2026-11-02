@@ -1660,12 +1660,12 @@ function ItemPurchaseViewAdmin() {
           referenceInfo: item.manufacturer + ' / ' + item.manufacturerNumber,
           itemInfo: (item.items || []).map(row => {
             var _row$itemName, _row$itemName2;
-            if ((_row$itemName = row.itemName) !== null && _row$itemName !== void 0 && _row$itemName.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim();
-            if ((_row$itemName2 = row.itemName) !== null && _row$itemName2 !== void 0 && _row$itemName2.name && row.itemName.name.trim() !== '') return row.itemName.name.trim();
-            if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName.trim();
-            return row.newDescription || '';
+            if ((_row$itemName = row.itemName) !== null && _row$itemName !== void 0 && _row$itemName.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim().toUpperCase();
+            if ((_row$itemName2 = row.itemName) !== null && _row$itemName2 !== void 0 && _row$itemName2.name && row.itemName.name.trim() !== '') return row.itemName.name.trim().toUpperCase();
+            if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName.trim().toUpperCase();
+            return (row.newDescription || '').toUpperCase();
           }).filter(Boolean),
-          itemDescriptionInfo: (item.items || []).map(row => row.itemDescription || '').filter(Boolean)
+          itemDescriptionInfo: (item.items || []).map(row => (row.itemDescription || row.newDescription || '').toUpperCase()).filter(Boolean)
         }));
         SetTotalPage(Math.ceil(res.data.totalItem / limit));
         setTotalItemCount(res.data.totalItem || 0);
@@ -1930,7 +1930,7 @@ function ItemPurchaseViewAdmin() {
             var updatedItems = currentData.items.map(Item => {
               var RelatedItem = items.find(Item2 => {
                 var _Item$itemName, _Item$itemName2, _Item2$itemName;
-                return ((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) !== undefined && ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id) === ((_Item2$itemName = Item2.itemName) === null || _Item2$itemName === void 0 ? void 0 : _Item2$itemName._id) || Item2.itemDescription === Item.itemDescription;
+                return ((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) !== undefined && ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id) === ((_Item2$itemName = Item2.itemName) === null || _Item2$itemName === void 0 ? void 0 : _Item2$itemName._id) || (Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase();
               });
               if (RelatedItem) {
                 var itemBuy = parseFloat(Item.itemBuy || 0) - parseFloat(RelatedItem.itemQty || 0);
@@ -1958,7 +1958,7 @@ function ItemPurchaseViewAdmin() {
             var _updatedItems = _currentData.items.map(Item => {
               var RelatedItem = items.find(Item2 => {
                 var _Item$itemName3, _Item$itemName4, _Item2$itemName2;
-                return ((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id) !== undefined && ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4._id) === ((_Item2$itemName2 = Item2.itemName) === null || _Item2$itemName2 === void 0 ? void 0 : _Item2$itemName2._id) || Item2.itemDescription === Item.itemDescription;
+                return ((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id) !== undefined && ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4._id) === ((_Item2$itemName2 = Item2.itemName) === null || _Item2$itemName2 === void 0 ? void 0 : _Item2$itemName2._id) || (Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase();
               });
               if (RelatedItem) {
                 var itemBuy = parseFloat(Item.itemBuy || 0) - parseFloat(RelatedItem.itemQty || 0);
@@ -1984,7 +1984,7 @@ function ItemPurchaseViewAdmin() {
             var _updatedItems2 = _currentData2.items.map(Item => {
               var RelatedItem = items.find(Item2 => {
                 var _Item$itemName5, _Item$itemName6, _Item2$itemName3;
-                return ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5._id) !== undefined && ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6._id) === ((_Item2$itemName3 = Item2.itemName) === null || _Item2$itemName3 === void 0 ? void 0 : _Item2$itemName3._id) || Item2.itemDescription === Item.itemDescription;
+                return ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5._id) !== undefined && ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6._id) === ((_Item2$itemName3 = Item2.itemName) === null || _Item2$itemName3 === void 0 ? void 0 : _Item2$itemName3._id) || (Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase();
               });
               if (RelatedItem) {
                 var itemBuy = parseFloat(Item.itemBuy || 0) - parseFloat(RelatedItem.itemQty || 0);
@@ -2292,12 +2292,22 @@ function ItemPurchaseViewAdmin() {
     field: 'Account',
     headerName: 'Description',
     minWidth: 200,
-    flex: 2
+    flex: 2,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      style: {
+        textTransform: 'uppercase'
+      }
+    }, String(params.value || '').toUpperCase())
   }, {
     field: 'referenceInfo',
     headerName: 'Account',
     minWidth: 150,
-    flex: 1.5
+    flex: 1.5,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      style: {
+        textTransform: 'uppercase'
+      }
+    }, String(params.value || '').toUpperCase())
   }, {
     field: 'status',
     headerName: 'Action',
@@ -2371,7 +2381,12 @@ function ItemPurchaseViewAdmin() {
     field: 'itemDescriptionInfo',
     headerName: 'I-Description',
     minWidth: 120,
-    flex: 1.2
+    flex: 1.2,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      style: {
+        textTransform: 'uppercase'
+      }
+    }, String(Array.isArray(params.value) ? params.value.join(', ') : params.value || '').toUpperCase())
   }, {
     field: 'totalFC',
     headerName: 'TotalFC',
@@ -2754,7 +2769,7 @@ function ItemPurchaseViewAdmin() {
       fontWeight: 'bold',
       textTransform: 'uppercase'
     }
-  }, "Description: "), " ", (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_38__/* .getPurchaseReasonDisplay */ .cc)(itemPurchaseView))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, "Description: "), " ", String((0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_38__/* .getPurchaseReasonDisplay */ .cc)(itemPurchaseView) || '').toUpperCase())), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       height: '',
       width: '100%'
@@ -2776,7 +2791,15 @@ function ItemPurchaseViewAdmin() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Information Description"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Item Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Qty"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Rate(USD)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Taux(Exchange Rate)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Total(USD)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "Total(FC)"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null, itemPurchaseView.items.map((row, i) => {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       key: i
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, row.itemDescription !== undefined ? row.itemDescription : null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, ((_row$itemName3, _row$itemName4, _row$itemName5) => {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, row.itemDescription ? String(row.itemDescription).toUpperCase() : row.newDescription ? String(row.newDescription).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, ((_row$itemName3, _row$itemName4, _row$itemName5) => {
       var name = '';
       if ((_row$itemName3 = row.itemName) !== null && _row$itemName3 !== void 0 && _row$itemName3.itemName && row.itemName.itemName.trim() !== '') name = row.itemName.itemName.trim();else if ((_row$itemName4 = row.itemName) !== null && _row$itemName4 !== void 0 && _row$itemName4.name && row.itemName.name.trim() !== '') name = row.itemName.name.trim();else if (typeof row.itemName === 'string' && row.itemName.trim() !== '') {
         var found = (item || []).find(x => x._id === row.itemName || x.itemName === row.itemName);
@@ -2788,20 +2811,40 @@ function ItemPurchaseViewAdmin() {
         var _found2 = (item || []).find(x => x._id === row._id);
         if (_found2 !== null && _found2 !== void 0 && _found2.itemName) name = _found2.itemName.trim();
       }
-      return name || row.newDescription || '';
-    })()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, row.itemQty), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "$", row.itemRate != null ? parseFloat(row.itemRate).toLocaleString(undefined, {
+      return (name || row.newDescription || '').toUpperCase();
+    })()), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, row.itemQty), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, "$", row.itemRate != null ? parseFloat(row.itemRate).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
-    }) : '0.00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, row.Taux != null ? parseFloat(row.Taux).toLocaleString(undefined, {
+    }) : '0.00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, row.Taux != null ? parseFloat(row.Taux).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
-    }) : '0.00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, "$", row.totalAmount != null ? parseFloat(row.totalAmount).toLocaleString(undefined, {
+    }) : '0.00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, "$", row.totalAmount != null ? parseFloat(row.totalAmount).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }) : row.totalAmountUSD != null ? parseFloat(row.totalAmountUSD).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
-    }) : '0.00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, itemPurchaseView.currency === 'FC' && row.fcConvertToUsdTotal != null && !isNaN(row.fcConvertToUsdTotal) ? parseFloat(row.fcConvertToUsdTotal).toLocaleString(undefined, {
+    }) : '0.00'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+      sx: {
+        textTransform: 'uppercase'
+      }
+    }, itemPurchaseView.currency === 'FC' && row.fcConvertToUsdTotal != null && !isNaN(row.fcConvertToUsdTotal) ? parseFloat(row.fcConvertToUsdTotal).toLocaleString(undefined, {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
     }) : '0.00'));

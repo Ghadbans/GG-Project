@@ -471,7 +471,7 @@ function PurchaseForm() {
   const handleChange = (e, i) => {
     const { name, value } = e.target;
     const list = [...itemsQtyArray]
-    list[i][name] = value;
+    list[i][name] = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
     list[i]['totalAmountUSD'] = Math.round((list[i]['qtyBuy'] * list[i]['itemRate']) * 100) / 100;
     list[i]['fcConvertToUsd'] = Math.round((list[i]['totalAmountFC'] / list[i]['Taux']) * 100) / 100;
     list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd']) + parseFloat(list[i]['totalAmount'])) * 100) / 100;
@@ -724,7 +724,11 @@ function PurchaseForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving('true')
-    const itemsWithoutData = itemsQtyArray.map(({ data, contentType, ...rest }) => rest);
+    const itemsWithoutData = itemsQtyArray.map(({ data, contentType, ...rest }) => ({
+      ...rest,
+      itemDescription: (rest.itemDescription || '').toUpperCase(),
+      newDescription: (rest.newDescription || '').toUpperCase()
+    }));
     const data = {
       outNumber,
       status: 'Open',

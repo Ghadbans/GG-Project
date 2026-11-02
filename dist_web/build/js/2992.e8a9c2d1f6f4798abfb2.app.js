@@ -3648,7 +3648,7 @@ function PurchaseForm() {
       name = _e$target.name,
       value = _e$target.value;
     var list = [...itemsQtyArray];
-    list[i][name] = value;
+    list[i][name] = typeof value === 'string' && name !== 'password' && name !== 'email' ? value.toUpperCase() : value;
     list[i]['totalAmountUSD'] = Math.round(list[i]['qtyBuy'] * list[i]['itemRate'] * 100) / 100;
     list[i]['fcConvertToUsd'] = Math.round(list[i]['totalAmountFC'] / list[i]['Taux'] * 100) / 100;
     list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd']) + parseFloat(list[i]['totalAmount'])) * 100) / 100;
@@ -3921,7 +3921,10 @@ function PurchaseForm() {
         var data = _ref14.data,
           contentType = _ref14.contentType,
           rest = _objectWithoutProperties(_ref14, _excluded4);
-        return rest;
+        return _objectSpread(_objectSpread({}, rest), {}, {
+          itemDescription: (rest.itemDescription || '').toUpperCase(),
+          newDescription: (rest.newDescription || '').toUpperCase()
+        });
       });
       var data = {
         outNumber,

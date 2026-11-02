@@ -1073,9 +1073,10 @@ function PurchaseOrderInfoView() {
         style: {
           textAlign: 'left',
           width: '250px',
-          borderLeft: '1px solid #DDD'
+          borderLeft: '1px solid #DDD',
+          textTransform: 'uppercase'
         }
-      }, Item.itemDescription), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
+      }, Item.itemDescription ? String(Item.itemDescription).toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("td", {
         style: {
           textAlign: 'right',
           width: '30px',

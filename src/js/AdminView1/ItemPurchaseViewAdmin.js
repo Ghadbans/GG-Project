@@ -233,12 +233,12 @@ function ItemPurchaseViewAdmin() {
         Account: getPurchaseReasonDisplay(item),
         referenceInfo: item.manufacturer + ' / ' + item.manufacturerNumber,
         itemInfo: (item.items || []).map((row) => {
-          if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim();
-          if (row.itemName?.name && row.itemName.name.trim() !== '') return row.itemName.name.trim();
-          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName.trim();
-          return row.newDescription || '';
+          if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') return row.itemName.itemName.trim().toUpperCase();
+          if (row.itemName?.name && row.itemName.name.trim() !== '') return row.itemName.name.trim().toUpperCase();
+          if (typeof row.itemName === 'string' && row.itemName.trim() !== '') return row.itemName.trim().toUpperCase();
+          return (row.newDescription || '').toUpperCase();
         }).filter(Boolean),
-        itemDescriptionInfo: (item.items || []).map((row) => row.itemDescription || '').filter(Boolean)
+        itemDescriptionInfo: (item.items || []).map((row) => (row.itemDescription || row.newDescription || '').toUpperCase()).filter(Boolean)
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
       setTotalItemCount(res.data.totalItem || 0); 
@@ -426,7 +426,7 @@ function ItemPurchaseViewAdmin() {
           const currentData = currentRes.data.data;
           
           const updatedItems = currentData.items.map((Item) => {
-            const RelatedItem = items.find((Item2) => (Item.itemName?._id !== undefined && Item.itemName?._id === Item2.itemName?._id) || (Item2.itemDescription === Item.itemDescription));
+            const RelatedItem = items.find((Item2) => (Item.itemName?._id !== undefined && Item.itemName?._id === Item2.itemName?._id) || ((Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase()));
             if (RelatedItem) {
               const itemBuy = parseFloat(Item.itemBuy || 0) - parseFloat(RelatedItem.itemQty || 0);
               const totalGenerale = (parseFloat(Item.itemCost) || 0) * itemBuy;
@@ -447,7 +447,7 @@ function ItemPurchaseViewAdmin() {
           const currentData = currentRes.data.data;
           
           const updatedItems = currentData.items.map((Item) => {
-            const RelatedItem = items.find((Item2) => (Item.itemName?._id !== undefined && Item.itemName?._id === Item2.itemName?._id) || (Item2.itemDescription === Item.itemDescription));
+            const RelatedItem = items.find((Item2) => (Item.itemName?._id !== undefined && Item.itemName?._id === Item2.itemName?._id) || ((Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase()));
             if (RelatedItem) {
               const itemBuy = parseFloat(Item.itemBuy || 0) - parseFloat(RelatedItem.itemQty || 0);
               const totalGenerale = (parseFloat(Item.itemCost) || 0) * itemBuy;
@@ -467,7 +467,7 @@ function ItemPurchaseViewAdmin() {
           const currentData = currentRes.data.data;
           
           const updatedItems = currentData.items.map((Item) => {
-            const RelatedItem = items.find((Item2) => (Item.itemName?._id !== undefined && Item.itemName?._id === Item2.itemName?._id) || (Item2.itemDescription === Item.itemDescription));
+            const RelatedItem = items.find((Item2) => (Item.itemName?._id !== undefined && Item.itemName?._id === Item2.itemName?._id) || ((Item2.itemDescription || '').trim().toUpperCase() === (Item.itemDescription || '').trim().toUpperCase()));
             if (RelatedItem) {
               const itemBuy = parseFloat(Item.itemBuy || 0) - parseFloat(RelatedItem.itemQty || 0);
               const totalGenerale = (parseFloat(Item.itemCost) || 0) * itemBuy;
@@ -700,8 +700,8 @@ function ItemPurchaseViewAdmin() {
   const columns = [
     { field: 'itemPurchaseNumber', headerName: '#', minWidth: 90, flex: 0.8, renderCell: (params) => (<div> <span>IP-0</span><span>{params.row.itemPurchaseNumber}</span> </div>) },
     { field: 'itemPurchaseDate', headerName: 'Date', minWidth: 100, flex: 1, type: 'date', valueGetter: (params) => new Date(params.row.itemPurchaseDate), renderCell: (params) => dayjs(params.row.itemPurchaseDate).format('DD/MM/YYYY') },
-    { field: 'Account', headerName: 'Description', minWidth: 200, flex: 2 },
-    { field: 'referenceInfo', headerName: 'Account', minWidth: 150, flex: 1.5 },
+    { field: 'Account', headerName: 'Description', minWidth: 200, flex: 2, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(params.value || '').toUpperCase()}</span> },
+    { field: 'referenceInfo', headerName: 'Account', minWidth: 150, flex: 1.5, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(params.value || '').toUpperCase()}</span> },
     {
       field: 'status', headerName: 'Action', minWidth: 200, flex: 1.5, renderCell: (params) => {
         const totalWithTax = parseFloat(params.row.totalUSD || params.row.total || 0);
@@ -762,7 +762,7 @@ function ItemPurchaseViewAdmin() {
         );
       }
     },
-    { field: 'itemDescriptionInfo', headerName: 'I-Description', minWidth: 120, flex: 1.2 },
+    { field: 'itemDescriptionInfo', headerName: 'I-Description', minWidth: 120, flex: 1.2, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(Array.isArray(params.value) ? params.value.join(', ') : (params.value || '')).toUpperCase()}</span> },
     { field: 'totalFC', headerName: 'TotalFC', minWidth: 120, flex: 1, renderCell: (params) => `FC${params.row.totalFC?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {
       field: 'total', headerName: 'Total', minWidth: 100, flex: 1, renderCell: (params) => {
@@ -927,7 +927,7 @@ function ItemPurchaseViewAdmin() {
                               :
                               null
                           }
-                          <p><span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Description: </span> {getPurchaseReasonDisplay(itemPurchaseView)}</p>
+                          <p><span style={{ fontWeight: 'bold', textTransform: 'uppercase' }}>Description: </span> {String(getPurchaseReasonDisplay(itemPurchaseView) || '').toUpperCase()}</p>
                         </Grid>
                         <br />
                       </Grid>
@@ -950,8 +950,8 @@ function ItemPurchaseViewAdmin() {
                                 itemPurchaseView.items.map((row, i) => {
                                   return (
                                     <TableRow key={i}>
-                                      <TableCell>{row.itemDescription !== undefined ? row.itemDescription : null}</TableCell>
-                                      <TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>{row.itemDescription ? String(row.itemDescription).toUpperCase() : (row.newDescription ? String(row.newDescription).toUpperCase() : '')}</TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>
                                         {(() => {
                                           let name = '';
                                           if (row.itemName?.itemName && row.itemName.itemName.trim() !== '') name = row.itemName.itemName.trim();
@@ -966,14 +966,14 @@ function ItemPurchaseViewAdmin() {
                                             const found = (item || []).find(x => x._id === row._id);
                                             if (found?.itemName) name = found.itemName.trim();
                                           }
-                                          return name || row.newDescription || '';
+                                          return (name || row.newDescription || '').toUpperCase();
                                         })()}
                                       </TableCell>
-                                      <TableCell>{row.itemQty}</TableCell>
-                                      <TableCell>${row.itemRate != null ? parseFloat(row.itemRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
-                                      <TableCell>{row.Taux != null ? parseFloat(row.Taux).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
-                                      <TableCell>${row.totalAmount != null ? parseFloat(row.totalAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (row.totalAmountUSD != null ? parseFloat(row.totalAmountUSD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00')}</TableCell>
-                                      <TableCell>{itemPurchaseView.currency === 'FC' && row.fcConvertToUsdTotal != null && !isNaN(row.fcConvertToUsdTotal) ? parseFloat(row.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>{row.itemQty}</TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>${row.itemRate != null ? parseFloat(row.itemRate).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>{row.Taux != null ? parseFloat(row.Taux).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>${row.totalAmount != null ? parseFloat(row.totalAmount).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : (row.totalAmountUSD != null ? parseFloat(row.totalAmountUSD).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00')}</TableCell>
+                                      <TableCell sx={{ textTransform: 'uppercase' }}>{itemPurchaseView.currency === 'FC' && row.fcConvertToUsdTotal != null && !isNaN(row.fcConvertToUsdTotal) ? parseFloat(row.fcConvertToUsdTotal).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : '0.00'}</TableCell>
                                     </TableRow>
                                   )
                                 })

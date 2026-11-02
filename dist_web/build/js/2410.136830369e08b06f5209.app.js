@@ -6798,7 +6798,7 @@ function LanguageFixerButton(_ref) {
     _ref$sx = _ref.sx,
     sx = _ref$sx === void 0 ? {} : _ref$sx;
   var isTypo = (0,textAssistUtils/* hasTypo */.rp)(value, mode);
-  var activeTooltip = tooltip || (isTypo ? '⚠️ Typo or lowercase detected! Click ✨ to auto-correct & format in CAPITAL LETTERS' : '✨ Standardize text & format in CAPITAL LETTERS');
+  var activeTooltip = tooltip || (isTypo ? '⚠️ Suggestion available! Click ✨ to auto-correct & polish text' : '✨ Polish & format text');
   var handleFix = e => {
     if (e && e.preventDefault) e.preventDefault();
     if (e && e.stopPropagation) e.stopPropagation();
@@ -6808,12 +6808,12 @@ function LanguageFixerButton(_ref) {
     }
     var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
     if (polished === value.trim()) {
-      react_toastify_esm/* toast */.oR.info('Text is already clean and correctly formatted in CAPITAL LETTERS!');
+      react_toastify_esm/* toast */.oR.info('Text is already clean and formatted!');
     } else {
       if (typeof onFixed === 'function') {
         onFixed(polished);
       }
-      react_toastify_esm/* toast */.oR.success('✨ Polished & formatted in CAPITAL LETTERS!');
+      react_toastify_esm/* toast */.oR.success('✨ Text polished & formatted!');
     }
   };
   return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {

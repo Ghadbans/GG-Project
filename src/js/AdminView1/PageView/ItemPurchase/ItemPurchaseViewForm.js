@@ -487,7 +487,8 @@ function ItemPurchaseViewForm() {
         const { name, value } = e.target;
         setItems(items => items.map(item => {
           if (item.idRow === idRow) {
-            const updatedItem = { ...item, [name]: value };
+            const finalVal = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
+            const updatedItem = { ...item, [name]: finalVal };
             updatedItem.totalAmountUSD = Math.round((parseFloat(updatedItem.itemQty || 0) * parseFloat(updatedItem.itemRate || 0)) * 100) / 100;
             updatedItem.fcConvertToUsd = updatedItem.Taux && updatedItem.Taux !== 0 ? Math.round((parseFloat(updatedItem.totalAmountFC || 0) / parseFloat(updatedItem.Taux)) * 100) / 100 : 0;
             updatedItem.fcConvertToUsdTotal = Math.round((parseFloat(updatedItem.fcConvertToUsd || 0) + parseFloat(updatedItem.totalAmount || 0)) * 100) / 100;
@@ -623,7 +624,11 @@ if (itemArray.length > 0) {
  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
 {/** purchase start**/}
 // Safe Update Logic: handleUpdatePurchase will now fetch and merge records on-the-fly during submission
-const arrayItemRelated = items.filter((row)=>row.itemQty !== 0 && row.itemQty !== '')
+const arrayItemRelated = items.filter((row)=>row.itemQty !== 0 && row.itemQty !== '').map(row => ({
+  ...row,
+  itemDescription: (row.itemDescription || '').toUpperCase(),
+  newDescription: (row.newDescription || '').toUpperCase()
+}))
 
 const handleUpdatePurchase = async () => {
   if (arrayItemRelated.length === 0) return;

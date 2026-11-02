@@ -299,9 +299,9 @@ function ItemPurchaseUpdateForm() {
             idRow: it.idRow || v4(),
             itemName: {
               _id: idVal,
-              itemName: nameStr
+              itemName: (nameStr || '').toUpperCase()
             },
-            itemDescription: descVal,
+            itemDescription: (descVal || '').toUpperCase(),
             itemQty: it.itemQty !== undefined && it.itemQty !== null ? it.itemQty : 0
           };
         }));
@@ -372,9 +372,9 @@ function ItemPurchaseUpdateForm() {
             idRow: it.idRow || v4(),
             itemName: {
               _id: idVal,
-              itemName: nameStr
+              itemName: (nameStr || '').toUpperCase()
             },
-            itemDescription: descVal
+            itemDescription: (descVal || '').toUpperCase()
           };
         }));
         setOldItems(normalizedOld);
@@ -511,12 +511,15 @@ function ItemPurchaseUpdateForm() {
     const { name, value } = e.target;
     setItems(items => items.map(item => {
       if (item.idRow === idRow) {
-        const updatedItem = { ...item, [name]: value };
+        const finalVal = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
+        const updatedItem = { ...item, [name]: finalVal };
         updatedItem.totalAmountUSD = Math.round((parseFloat(updatedItem.itemQty || 0) * parseFloat(updatedItem.itemRate || 0)) * 100) / 100;
         updatedItem.fcConvertToUsd = updatedItem.Taux && updatedItem.Taux !== 0 ? Math.round((parseFloat(updatedItem.totalAmountFC || 0) / parseFloat(updatedItem.Taux)) * 100) / 100 : 0;
         updatedItem.fcConvertToUsdTotal = Math.round((parseFloat(updatedItem.fcConvertToUsd || 0) + parseFloat(updatedItem.totalAmount || 0)) * 100) / 100;
         return updatedItem;
       }
+      item.itemDescription = (item.itemDescription || '').toUpperCase();
+      item.newDescription = (item.newDescription || '').toUpperCase();
       return item;
     }));
   }
@@ -1245,8 +1248,10 @@ function ItemPurchaseUpdateForm() {
 
       item.itemName = {
         _id: idVal,
-        itemName: nameStr
+        itemName: (nameStr || '').toUpperCase()
       };
+      item.itemDescription = (item.itemDescription || '').toUpperCase();
+      item.newDescription = (item.newDescription || '').toUpperCase();
       return item;
     });
     const cleanedProjectName = (reason === 'Other' || !projectName || Object.keys(projectName).length === 0 || (!projectName._id && !projectName.name && !projectName.projectName))

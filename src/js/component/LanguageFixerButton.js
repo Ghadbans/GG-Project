@@ -21,8 +21,8 @@ function LanguageFixerButton({
   const isTypo = hasTypo(value, mode);
   const activeTooltip = tooltip || (
     isTypo
-      ? '⚠️ Typo or lowercase detected! Click ✨ to auto-correct & format in CAPITAL LETTERS'
-      : '✨ Standardize text & format in CAPITAL LETTERS'
+      ? '⚠️ Suggestion available! Click ✨ to auto-correct & polish text'
+      : '✨ Polish & format text'
   );
 
   const handleFix = (e) => {
@@ -36,12 +36,12 @@ function LanguageFixerButton({
 
     const polished = polishText(value, mode);
     if (polished === value.trim()) {
-      toast.info('Text is already clean and correctly formatted in CAPITAL LETTERS!');
+      toast.info('Text is already clean and formatted!');
     } else {
       if (typeof onFixed === 'function') {
         onFixed(polished);
       }
-      toast.success('✨ Polished & formatted in CAPITAL LETTERS!');
+      toast.success('✨ Text polished & formatted!');
     }
   };
 

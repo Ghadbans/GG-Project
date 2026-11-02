@@ -1062,9 +1062,10 @@ async function sanitizeAndEnrichPurchaseItems(items) {
       ...it,
       itemName: {
         _id: idVal || undefined,
-        itemName: nameVal || ''
+        itemName: nameVal ? nameVal.toUpperCase() : ''
       },
-      itemDescription: descVal
+      itemDescription: descVal ? String(descVal).toUpperCase() : '',
+      newDescription: it.newDescription ? String(it.newDescription).toUpperCase() : it.newDescription
     };
   }));
   return enriched;
@@ -1106,7 +1107,8 @@ async function sanitizeAndEnrichPurchaseItems(items) {
               _id: idVal || undefined,
               itemName: nameVal
             },
-            itemDescription: descVal
+            itemDescription: descVal ? String(descVal).toUpperCase() : '',
+      newDescription: it.newDescription ? String(it.newDescription).toUpperCase() : it.newDescription
           };
         }));
         if (modified) {
@@ -1116,6 +1118,33 @@ async function sanitizeAndEnrichPurchaseItems(items) {
     }
   } catch (err) {
     console.error('[SYS] Error in autoRepairEmptyItemPurchases:', err);
+  }
+})();
+
+// Auto-uppercase legacy lowercase item descriptions in itemPurchaseSchema
+(async () => {
+  try {
+    const docs = await itemPurchaseSchema.find({
+      'items.itemDescription': { $regex: /[a-z]/ }
+    }).limit(1000);
+    for (const doc of (docs || [])) {
+      let modified = false;
+      for (const it of (doc.items || [])) {
+        if (typeof it.itemDescription === 'string' && /[a-z]/.test(it.itemDescription)) {
+          it.itemDescription = it.itemDescription.toUpperCase();
+          modified = true;
+        }
+        if (typeof it.newDescription === 'string' && /[a-z]/.test(it.newDescription)) {
+          it.newDescription = it.newDescription.toUpperCase();
+          modified = true;
+        }
+      }
+      if (modified) {
+        await itemPurchaseSchema.updateOne({ _id: doc._id }, { $set: { items: doc.items } });
+      }
+    }
+  } catch (err) {
+    console.error('[SYS] Auto-repair itemPurchase lowercase error:', err);
   }
 })();
 

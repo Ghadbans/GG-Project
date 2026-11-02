@@ -393,7 +393,8 @@ function PurchasesFormView() {
     const { name, value } = e.target;
     SetItems(prevItems => {
       const list = [...prevItems];
-      const item = { ...list[i], [name]: value };
+      const finalVal = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
+      const item = { ...list[i], [name]: finalVal };
       item.totalAmount = Math.round((item.itemQty * item.itemRate) * 100) / 100;
       item.totalCost = Math.round((item.itemQty * item.itemCost) * 100) / 100;
       item.discount = item.totalAmount * item.itemDiscount;
@@ -685,7 +686,7 @@ function PurchasesFormView() {
       projectName,
       purchaseNumber,
       purchaseDate,
-      items, statusInfo,
+      items: (items || []).map(it => ({ ...it, itemDescription: (it.itemDescription || '').toUpperCase(), newDescription: (it.newDescription || '').toUpperCase() })), statusInfo,
       description,
       purchaseName,
       purchaseAmount1,

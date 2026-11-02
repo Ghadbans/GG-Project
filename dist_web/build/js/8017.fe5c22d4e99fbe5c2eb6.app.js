@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[8646],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[8017],{
 
 /***/ 2775
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -1223,72 +1223,58 @@ var CustomerFormView2 = _ref3 => {
 
 /***/ },
 
-/***/ 28646
+/***/ 88017
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(73068);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(96540);
-/* harmony import */ var _component_SidebarDash1__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(49377);
+/* harmony import */ var _component_SideMaintenance2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(44954);
 /* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(68525);
 /* harmony import */ var _Chartview_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(55746);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(69067);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11641);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14073);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86531);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(50779);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(29571);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(2071);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(73896);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(8641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(25239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99380);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(71510);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(33829);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(47767);
-/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(61087);
-/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(48484);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(82299);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(40301);
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(67034);
-/* harmony import */ var _CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(17330);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(39781);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_50___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_50__);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(95236);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(99571);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(2650);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(14977);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(99380);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(71510);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(47767);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_29___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_29__);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(82299);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(40301);
+/* harmony import */ var _CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(17330);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(39781);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(2650);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(14977);
 var _excluded = ["className"],
   _excluded2 = ["className"],
-  _excluded3 = ["className"],
-  _excluded4 = ["children"];
+  _excluded3 = ["className"];
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
 function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
@@ -1350,10 +1336,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay)(_ref => {
+var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1361,7 +1347,7 @@ var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] 
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1369,10 +1355,10 @@ var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] 
     }
   };
 });
-var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay)(_ref3 => {
+var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1380,7 +1366,7 @@ var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] 
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1388,10 +1374,10 @@ var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] 
     }
   };
 });
-var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay)(_ref5 => {
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1399,7 +1385,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] *
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1419,7 +1405,7 @@ var style = {
   px: 4,
   pb: 3
 };
-var style2 = {
+var style2 = (/* unused pure expression or super */ null && ({
   position: 'absolute',
   top: '50%',
   left: '50%',
@@ -1430,9 +1416,9 @@ var style2 = {
   pt: 2,
   px: 4,
   pb: 3
-};
+}));
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -1452,7 +1438,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -1480,26 +1466,29 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .Ay
     })
   };
 });
-function ProjectFormView() {
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .useIsMobile */ .al)();
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_35__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_44__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_44__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__/* .selectCurrentUser */ .xu);
+function SupplierFormUpdate() {
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_41__/* .useIsMobile */ .al)();
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .useParams */ .g)(),
+    id = _useParams.id;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_28__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_34__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
           } catch (error) {
             console.error('Error fetching data:', error);
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .logOut */ .je)());
           }
         } else {
           navigate('/');
@@ -1513,124 +1502,17 @@ function ProjectFormView() {
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_45__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_35__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
-    customer = _useState2[0],
-    setCustomer = _useState2[1];
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+    saving = _useState2[0],
+    setSaving = _useState2[1];
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState4 = _slicedToArray(_useState3, 2),
-    customerName = _useState4[0],
-    setCustomerName = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
-    _useState6 = _slicedToArray(_useState5, 2),
-    projectName = _useState6[0],
-    setProjectName = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
-    _useState8 = _slicedToArray(_useState7, 2),
-    status = _useState8[0],
-    setStatus = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState0 = _slicedToArray(_useState9, 2),
-    phase = _useState0[0],
-    setPhase = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
-    _useState10 = _slicedToArray(_useState1, 2),
-    description = _useState10[0],
-    setDescription = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
-      var date = new Date();
-      return date;
-    }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    startDate = _useState12[0],
-    setStartDate = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
-      var date = new Date();
-      return date;
-    }),
-    _useState14 = _slicedToArray(_useState13, 2),
-    visitDate = _useState14[0],
-    setVisitDate = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState16 = _slicedToArray(_useState15, 2),
-    projectNumber = _useState16[0],
-    setProjectNumber = _useState16[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchlastNumber = /*#__PURE__*/function () {
-      var _ref0 = _asyncToGenerator(function* () {
-        try {
-          var _res$data, _res$data2;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/get-last-saved-project"));
-          var num = res.data && res.data.projectNumber ? parseInt(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.projectNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.projectNumber) || 0) : 0;
-          setProjectNumber(num + 1);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchlastNumber() {
-        return _ref0.apply(this, arguments);
-      };
-    }();
-    fetchlastNumber();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchCustomer = /*#__PURE__*/function () {
-      var _ref1 = _asyncToGenerator(function* () {
-        try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/customer"));
-          setCustomer(res.data.data.reverse());
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchCustomer() {
-        return _ref1.apply(this, arguments);
-      };
-    }();
-    fetchCustomer();
-  }, []);
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState18 = _slicedToArray(_useState17, 2),
-    openAutocomplete1 = _useState18[0],
-    setOpenAutocomplete1 = _useState18[1];
-  var handleOpenOpenAutocomplete1 = e => {
-    e.stopPropagation();
-    setOpenAutocomplete1(true);
-  };
-  var handleCloseOpenAutocomplete1 = () => {
-    setOpenAutocomplete1(false);
-  };
-  var handleCreateCustomer = newCustomer => {
-    setCustomer([newCustomer, ...customer]);
-  };
-  var handleChangeCustomer = newValue => {
-    var selectedOptions = customer.find(option => option === newValue);
-    setCustomerName({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      customerName: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.Customer
-    });
-  };
-  var handleAdd = () => {
-    var abc = [...phase, []];
-    setPhase(abc);
-  };
-  var handleChange = (onChangeValue, i) => {
-    var inputData = [...phase];
-    inputData[i] = onChangeValue.target.value;
-    setPhase(inputData);
-  };
-  var handleDelete = i => {
-    var deletePhase = [...phase];
-    deletePhase.splice(i, 1);
-    setPhase(deletePhase);
-  };
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState20 = _slicedToArray(_useState19, 2),
-    openBack = _useState20[0],
-    setOpenBack = _useState20[1];
+    openBack = _useState4[0],
+    setOpenBack = _useState4[1];
   var handleOpenBack = e => {
     e.preventDefault();
     setOpenBack(true);
@@ -1638,6 +1520,83 @@ function ProjectFormView() {
   var handleCloseBack = () => {
     setOpenBack(false);
   };
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(true),
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    sideBar = _React$useState2[0],
+    setSideBar = _React$useState2[1];
+  var toggleDrawer = () => {
+    setSideBar(!sideBar);
+  };
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState6 = _slicedToArray(_useState5, 2),
+    supplierName = _useState6[0],
+    setSupplierName = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState8 = _slicedToArray(_useState7, 2),
+    storeName = _useState8[0],
+    setStoreName = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState0 = _slicedToArray(_useState9, 2),
+    customerPhone1 = _useState0[0],
+    setCustomerPhone1 = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState10 = _slicedToArray(_useState1, 2),
+    customerPhone2 = _useState10[0],
+    setCustomerPhone2 = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState12 = _slicedToArray(_useState11, 2),
+    address = _useState12[0],
+    setAddress = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState14 = _slicedToArray(_useState13, 2),
+    description = _useState14[0],
+    setDescription = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState16 = _slicedToArray(_useState15, 2),
+    indexId = _useState16[0],
+    setIndexID = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState18 = _slicedToArray(_useState17, 2),
+    reason = _useState18[0],
+    setReason = _useState18[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref0 = _asyncToGenerator(function* () {
+        try {
+          var _res$data;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/get-Supplier/").concat(id));
+          var sup = res === null || res === void 0 || (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
+          if (sup) {
+            setSupplierName(sup.supplierName || sup.name || '');
+            setStoreName(sup.storeName || sup.companyName || '');
+            setCustomerPhone1(sup.customerPhone1 || sup.phone || sup.phone1 || sup.contact || '');
+            setCustomerPhone2(sup.customerPhone2 || sup.phone2 || '');
+            setAddress(sup.address || '');
+            setDescription(sup.description || '');
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchData() {
+        return _ref0.apply(this, arguments);
+      };
+    }();
+    fetchData();
+  }, [id]);
+  var dateComment = new Date();
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState20 = _slicedToArray(_useState19, 2),
+    open1 = _useState20[0],
+    setOpen1 = _useState20[1];
+  var handleOpenUpdate = e => {
+    e.preventDefault();
+    setOpen1(true);
+  };
+  var handleCloseUpdate = () => {
+    setOpen1(false);
+  };
+  {/** Loading Start */}
   var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
     loading = _useState22[0],
@@ -1651,6 +1610,7 @@ function ProjectFormView() {
     ErrorOpenModal = _useState26[0],
     setErrorOpenModal = _useState26[1];
   var handleOpen = () => {
+    setOpen1(false);
     setLoadingOpenModal(true);
     setLoading(true);
     setTimeout(() => {
@@ -1658,6 +1618,7 @@ function ProjectFormView() {
     }, 500);
   };
   var handleError = () => {
+    setOpen1(false);
     setErrorOpenModal(true);
     setLoading(true);
     setTimeout(() => {
@@ -1666,97 +1627,78 @@ function ProjectFormView() {
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
-    setCustomerName({});
-    setProjectName("");
-    setStatus("Pending");
-    setPhase([]);
-    setDescription("");
-    // Reset dates if needed, or keep them as is
-    setProjectNumber(prev => prev + 1);
-    setSaving('');
+    if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_41__/* .isNativeMobile */ .g1)()) {
+      navigate('/SupplierAdminView');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/SupplierAdminView');
+    }
   };
   var handleCloseError = () => {
     setErrorOpenModal(false);
   };
-  var handleDecision = decision => {
-    //Navigate Based on th Decision
-    if (decision === 'previous') {
-      window.history.back();
-    } else if (decision === 'stay') {
-      handleClose();
-    }
-  };
-  var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (ReferenceInfo) {
+  {/** Loading End */}
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState28 = _slicedToArray(_useState27, 2),
+    hideBack = _useState28[0],
+    setHideBack = _useState28[1];
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(function* () {
+      var _user$data;
       var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created ',
-        reason: "".concat(projectName, " For ").concat(customerName.customerName),
-        dateNotification: new Date()
+        idInfo: id,
+        person: ((user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || 'User') + ' Modify SUPPLIER ' + storeName,
+        reason,
+        dateNotification: dateComment
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
       } catch (error) {
         console.log(error);
       }
     });
-    return function handleCreateNotification(_x) {
-      return _ref10.apply(this, arguments);
+    return function handleCreateComment() {
+      return _ref1.apply(this, arguments);
     };
   }();
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState28 = _slicedToArray(_useState27, 2),
-    saving = _useState28[0],
-    setSaving = _useState28[1];
-  var handleSubmit = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      var custName = (customerName === null || customerName === void 0 ? void 0 : customerName.customerName) || (typeof customerName === 'string' ? customerName : '');
-      if (!custName || custName.trim() === '' || custName === 'undefined' || custName === 'null') {
-        react_toastify__WEBPACK_IMPORTED_MODULE_53__/* .toast */ .oR.error('Please select a valid Customer Name before saving.');
-        setSaving('');
-        return;
-      }
-      setSaving('true');
+  var handleSubmitEdit = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(function* (e) {
+      if (e && e.preventDefault) e.preventDefault();
+      setSaving(true);
       var data = {
-        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A)(),
-        customerName,
-        projectName,
-        status,
-        phase,
+        supplierName,
+        storeName,
+        customerPhone1,
+        customerPhone2,
+        phone: customerPhone1,
+        phone1: customerPhone1,
+        phone2: customerPhone2,
+        address,
         description,
-        startDate,
-        visitDate,
-        projectNumber,
-        synced: false
+        updateS: false
       };
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/create-projects"), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_27__/* .ENDPOINT_URL */ .m, "/update-Supplier/").concat(id), data);
         if (res) {
-          // Open Loading View
-          var ReferenceInfo = res.data.data._id;
-          handleCreateNotification(ReferenceInfo);
+          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .invalidateCache */ .gm)('/itemPurchase');
+          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .invalidateCache */ .gm)('/itemPurchase-Information');
+          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .invalidateCache */ .gm)('/Supplier');
+          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_26__/* .invalidateCache */ .gm)('/purchaseOrder');
+          handleCreateComment();
           handleOpen();
         }
       } catch (error) {
-        if (error) {
-          setSaving('');
-          handleError();
-        }
+        console.error('Error updating supplier:', error);
+        handleError();
+      } finally {
+        setSaving(false);
       }
     });
-    return function handleSubmit(_x2) {
-      return _ref11.apply(this, arguments);
+    return function handleSubmitEdit(_x) {
+      return _ref10.apply(this, arguments);
     };
   }();
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(true),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
-    sideBar = _React$useState2[0],
-    setSideBar = _React$useState2[1];
-  var toggleDrawer = () => {
-    setSideBar(!sideBar);
-  };
   if (isMobile) {
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       sx: {
@@ -1792,23 +1734,23 @@ function ProjectFormView() {
         color: '#ffffff',
         p: 0.5
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       variant: "subtitle1",
       sx: {
         fontWeight: 800,
         lineHeight: 1.2,
         color: '#ffffff'
       }
-    }, "New Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "Update Supplier"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#E0E7FF'
       }
-    }, "P-", String(projectNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, storeName || supplierName || 'Supplier'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
       variant: "contained",
       size: "small",
-      onClick: handleSubmit,
-      disabled: loading || saving === 'true',
+      onClick: handleSubmitEdit,
+      disabled: loading || saving,
       sx: {
         backgroundColor: '#10B981',
         color: '#ffffff',
@@ -1820,11 +1762,11 @@ function ProjectFormView() {
           backgroundColor: '#059669'
         }
       }
-    }, saving === 'true' ? 'Saving...' : 'Save')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, saving ? 'Saving...' : 'Save')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       sx: {
         p: 2
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
       sx: {
         borderRadius: 3.5,
         p: 2.5,
@@ -1841,100 +1783,74 @@ function ProjectFormView() {
         mb: 1.5,
         display: 'block'
       }
-    }, "Project Information"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    }, "Supplier Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       container: true,
       spacing: 2
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      fullWidth: true,
       size: "small",
-      options: customer || [],
-      getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.Customer) || (option === null || option === void 0 ? void 0 : option.customerName) || '',
-      onChange: (e, val) => handleChangeCustomer(val),
-      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, params, {
-        label: "Select Customer *",
-        size: "small",
-        fullWidth: true,
-        required: true
-      }))
+      label: "Supplier Name",
+      value: supplierName,
+      onChange: e => setSupplierName(e.target.value)
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       fullWidth: true,
       required: true,
       size: "small",
-      label: "Project Name *",
-      value: projectName,
-      onChange: e => setProjectName(e.target.value)
+      label: "Store Name *",
+      value: storeName,
+      onChange: e => setStoreName(e.target.value)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small",
+      label: "Phone 1",
+      value: customerPhone1,
+      onChange: e => setCustomerPhone1(e.target.value)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small",
+      label: "Phone 2",
+      value: customerPhone2,
+      onChange: e => setCustomerPhone2(e.target.value)
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
       fullWidth: true,
-      size: "small"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-      value: status || 'Pending',
-      label: "Status",
-      onChange: e => setStatus(e.target.value)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-      value: "Pending"
-    }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-      value: "In Progress"
-    }, "In Progress"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-      value: "Completed"
-    }, "Completed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-      value: "Cancelled"
-    }, "Cancelled")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-      item: true,
-      xs: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__/* .LocalizationProvider */ .$, {
-      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__/* .AdapterDayjs */ .R
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__/* .DatePicker */ .l, {
-      label: "Start Date",
-      value: startDate ? dayjs__WEBPACK_IMPORTED_MODULE_50___default()(startDate) : null,
-      onChange: date => setStartDate(date),
-      slotProps: {
-        textField: {
-          fullWidth: true,
-          size: 'small'
-        }
-      },
-      format: "DD/MM/YYYY"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-      item: true,
-      xs: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__/* .LocalizationProvider */ .$, {
-      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__/* .AdapterDayjs */ .R
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__/* .DatePicker */ .l, {
-      label: "Visit Date",
-      value: visitDate ? dayjs__WEBPACK_IMPORTED_MODULE_50___default()(visitDate) : null,
-      onChange: date => setVisitDate(date),
-      slotProps: {
-        textField: {
-          fullWidth: true,
-          size: 'small'
-        }
-      },
-      format: "DD/MM/YYYY"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+      size: "small",
+      label: "Address",
+      value: address,
+      onChange: val => setAddress(val),
+      mode: "upper"
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
       fullWidth: true,
       multiline: true,
       rows: 3,
       size: "small",
-      label: "Description / Scope",
+      label: "Description / Notes",
       value: description,
-      onChange: e => setDescription(e.target.value)
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+      onChange: val => setDescription(val),
+      mode: "upper"
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       size: "large",
-      onClick: handleSubmit,
-      disabled: loading || saving === 'true',
+      onClick: handleSubmitEdit,
+      disabled: loading || saving,
       sx: {
         backgroundColor: '#30368a',
         color: '#ffffff',
@@ -1948,7 +1864,7 @@ function ProjectFormView() {
           backgroundColor: '#202a5a'
         }
       }
-    }, saving === 'true' ? 'Saving Project...' : 'Save Project')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    }, saving ? 'Saving Changes...' : 'Save Changes')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
       open: loadingOpenModal,
       onClose: handleClose
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -1959,7 +1875,7 @@ function ProjectFormView() {
         textAlign: 'center',
         p: 3
       })
-    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
+    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
       sx: {
         color: 'green',
         fontSize: 48,
@@ -1970,16 +1886,16 @@ function ProjectFormView() {
       sx: {
         fontWeight: 800
       }
-    }, "Project Saved Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, "Supplier Updated Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
-      onClick: () => navigate('/ProjectViewAdmin'),
+      onClick: () => navigate('/SupplierAdminView'),
       sx: {
         mt: 2,
         backgroundColor: '#30368a',
         borderRadius: 2
       }
-    }, "Go to Projects")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    }, "Go to Suppliers")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
       open: ErrorOpenModal,
       onClose: handleCloseError
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -1990,7 +1906,7 @@ function ProjectFormView() {
         textAlign: 'center',
         p: 3
       })
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
       sx: {
         color: 'red',
         fontSize: 48,
@@ -2007,7 +1923,7 @@ function ProjectFormView() {
         color: '#64748B',
         mt: 1
       }
-    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "outlined",
       onClick: handleCloseError,
@@ -2017,19 +1933,17 @@ function ProjectFormView() {
       }
     }, "Close"))));
   }
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
@@ -2043,7 +1957,7 @@ function ProjectFormView() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -2051,13 +1965,17 @@ function ProjectFormView() {
     sx: {
       flexGrow: 1
     }
-  }, "Add new Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    onClick: handleOpenBack
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, "update Supplier"), hideBack === 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    onClick: handleOpenBack
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+    style: {
+      color: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
@@ -2068,7 +1986,7 @@ function ProjectFormView() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -2077,7 +1995,7 @@ function ProjectFormView() {
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
@@ -2086,11 +2004,11 @@ function ProjectFormView() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SidebarDash1__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SideMaintenance2__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -2099,100 +2017,30 @@ function ProjectFormView() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 4
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-    onSubmit: handleSubmit
+    onSubmit: handleOpenUpdate
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
-      padding: '15px'
+      padding: '20px'
     },
     spacing: 2,
-    component: _mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A
+    component: _mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disableClearable: true,
-    options: customer,
-    getOptionLabel: option => option.Customer,
-    onChange: (e, newValue) => {
-      handleChangeCustomer(newValue);
-    },
-    PaperComponent: _ref12 => {
-      var children = _ref12.children,
-        other = _objectWithoutProperties(_ref12, _excluded4);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, _extends({}, other, {
-        sx: {
-          backgroundColor: 'white',
-          left: '0',
-          marginTop: '10px'
-        }
-      }), children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-        onClick: e => handleOpenOpenAutocomplete1(e),
-        disabled: user.data.role === 'User',
-        onMouseDown: e => e.preventDefault(),
-        className: "btnCustomer7",
-        style: {
-          width: '100%'
-        }
-      }, "ADD NEW CUSTOMER")));
-    },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, params, {
-      label: "Customer Name",
-      required: true
-    }))
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_36__/* .DemoContainer */ .j, {
-    components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__/* .DatePicker */ .l, {
-    required: true,
-    name: "visitDate",
-    label: "Visit Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_50___default()(visitDate),
-    onChange: date => setVisitDate(date),
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    },
-    format: "DD/MM/YYYY"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_36__/* .DemoContainer */ .j, {
-    components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__/* .DatePicker */ .l, {
-    required: true,
-    name: "startDate",
-    label: "Start Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_50___default()(startDate),
-    onChange: date => setStartDate(date),
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    },
-    format: "DD/MM/YYYY"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
-    required: true,
-    id: "ProjectName",
-    name: "ProjectName",
-    value: ProjectName,
-    label: "Project Name",
-    onChange: val => setProjectName(val),
+    name: "supplierName",
+    id: "supplierName",
+    value: supplierName,
+    label: "Supplier Name",
+    onChange: val => setSupplierName(val),
     sx: {
       width: "100%",
       backgroundColor: "white"
@@ -2201,84 +2049,57 @@ function ProjectFormView() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
+    required: true,
+    name: "storeName",
+    id: "storeName",
+    value: storeName,
+    label: "Store Name",
+    onChange: val => setStoreName(val),
     sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    htmlFor: "projectNumber"
-  }, "Project Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    type: "number",
-    id: "projectNumber",
-    name: "projectNumber",
-    label: "Project Number",
-    value: projectNumber,
-    onChange: e => setProjectNumber(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-      position: "start"
-    }, "P-")
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12
-  }, phase.map((data, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    key: i,
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      padding: '10px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    container: true,
-    style: {
-      alignItems: 'center'
+      width: "100%",
+      backgroundColor: "white"
     },
-    spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    mode: "upper"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 4
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    name: "phase",
-    id: "phase",
-    label: "Phase",
-    value: data,
-    onChange: e => handleChange(e, i),
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
+    name: "address",
+    id: "address",
+    value: address,
+    label: "Address",
+    onChange: val => setAddress(val),
+    sx: {
+      width: "100%",
+      backgroundColor: "white"
+    },
+    mode: "upper"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 4
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    name: "customerPhone1",
+    value: customerPhone1,
+    label: "Phone 1",
+    onChange: e => setCustomerPhone1(e.target.value),
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
-    xs: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
-    className: "btnCustomer",
-    onClick: () => handleDelete(i)
-  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    xs: 4
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    name: "customerPhone2",
+    value: customerPhone2,
+    label: "Phone 2",
+    onChange: e => setCustomerPhone2(e.target.value),
     sx: {
-      width: '100%'
+      width: '100%',
+      backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    id: "status"
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    required: true,
-    id: "status",
-    value: status,
-    onChange: e => setStatus(e.target.value),
-    name: "status",
-    label: "status",
-    defaultValue: "Pending"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    value: "Pending"
-  }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    value: "On-Going"
-  }, "On-Going"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    value: "Stopped"
-  }, "Stopped"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    value: "Completed"
-  }, "Completed")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
@@ -2297,19 +2118,13 @@ function ProjectFormView() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     type: "submit",
     className: "btnCustomer6",
     style: {
       width: '100%'
     }
-  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
-    className: "btnCustomer6",
-    style: {
-      width: '100%',
-      textAlign: 'center'
-    }
-  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, "Save")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     open: openBack,
     onClose: handleCloseBack,
     "aria-labelledby": "modal-modal-title",
@@ -2327,7 +2142,7 @@ function ProjectFormView() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2344,19 +2159,19 @@ function ProjectFormView() {
     sx: {
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Do you want to stop creating project ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Do you want to stop updating customer ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
   }, "Note :"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
     className: "txt2"
-  }, " If you stop creating without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+  }, " If you stop updating without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     type: "submit",
-    onClick: () => navigate('/ProjectViewAdmin'),
+    onClick: () => navigate('/CustomerViewAdmin'),
     className: "btnCustomer",
     style: {
       width: '100%'
@@ -2371,11 +2186,11 @@ function ProjectFormView() {
     style: {
       width: '100%'
     }
-  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleClose,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
@@ -2385,12 +2200,12 @@ function ProjectFormView() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2403,16 +2218,14 @@ function ProjectFormView() {
       justifyContent: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    onClick: () => handleDecision('stay'),
+    type: "button",
+    onClick: handleClose,
     className: "btnCustomer"
-  }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    onClick: () => handleDecision('previous'),
-    className: "btnCustomer"
-  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     open: ErrorOpenModal,
     onClose: handleCloseError,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
@@ -2422,59 +2235,83 @@ function ProjectFormView() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", {
-    style: {
-      color: 'red'
-    }
-  }, "Saving Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data Failed to Saved"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseError
-  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    open: openAutocomplete1,
-    onClose: handleCloseOpenAutocomplete1,
+  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    open: open1,
+    onClose: handleCloseUpdate,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style2), {}, {
-      width: 800
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(BlackTooltip, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    onClick: handleCloseOpenAutocomplete1,
+    onClick: handleCloseUpdate,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Reason Of Updating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
+    onSubmit: handleSubmitEdit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    container: true,
     style: {
-      height: '600px',
-      padding: '20px',
-      overflow: 'hidden',
-      overflowY: 'scroll'
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    required: true,
+    id: "comments",
+    name: "comments",
+    multiline: true,
+    rows: 4,
+    value: reason,
+    onChange: e => setReason(e.target.value),
+    label: "Comments",
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
-    onCreateOption: handleCreateCustomer,
-    onClose: handleCloseOpenAutocomplete1
-  })))));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+    type: "submit",
+    className: "btnCustomer",
+    style: {
+      width: '100%'
+    }
+  }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ProjectFormView);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SupplierFormUpdate);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -2684,7 +2521,7 @@ function LanguageFixerButton(_ref) {
     _ref$sx = _ref.sx,
     sx = _ref$sx === void 0 ? {} : _ref$sx;
   var isTypo = (0,textAssistUtils/* hasTypo */.rp)(value, mode);
-  var activeTooltip = tooltip || (isTypo ? '⚠️ Typo or lowercase detected! Click ✨ to auto-correct & format in CAPITAL LETTERS' : '✨ Standardize text & format in CAPITAL LETTERS');
+  var activeTooltip = tooltip || (isTypo ? '⚠️ Suggestion available! Click ✨ to auto-correct & polish text' : '✨ Polish & format text');
   var handleFix = e => {
     if (e && e.preventDefault) e.preventDefault();
     if (e && e.stopPropagation) e.stopPropagation();
@@ -2694,12 +2531,12 @@ function LanguageFixerButton(_ref) {
     }
     var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
     if (polished === value.trim()) {
-      react_toastify_esm/* toast */.oR.info('Text is already clean and correctly formatted in CAPITAL LETTERS!');
+      react_toastify_esm/* toast */.oR.info('Text is already clean and formatted!');
     } else {
       if (typeof onFixed === 'function') {
         onFixed(polished);
       }
-      react_toastify_esm/* toast */.oR.success('✨ Polished & formatted in CAPITAL LETTERS!');
+      react_toastify_esm/* toast */.oR.success('✨ Text polished & formatted!');
     }
   };
   return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
@@ -2746,17 +2583,88 @@ function LanguageFixerButton(_ref) {
 
 /***/ },
 
-/***/ 49377
+/***/ 44954
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
-/* harmony import */ var _SidebarDash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4640);
+/* harmony import */ var _css_SidebarNew_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(15419);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(47767);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(45395);
+/* harmony import */ var _mui_icons_material_Store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(10420);
+/* harmony import */ var _mui_icons_material_ListAlt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(60450);
+/* harmony import */ var _mui_icons_material_PostAdd__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(312);
+/* harmony import */ var _mui_icons_material_ContentPasteGo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(20807);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(37211);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(57873);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(82241);
 
 
-function SidebarDash1(props) {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SidebarDash__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, props);
+
+
+
+
+
+
+
+
+
+
+
+
+function SideMaintenance2() {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ListAlt__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    primary: "Item"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ContentPasteGo__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    primary: "Item Out"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_PostAdd__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    primary: "Item Return"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Store__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    primary: "Item Purchase"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    primary: "Purchase Order"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .Outlet */ .sv, null));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidebarDash1);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SideMaintenance2);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -3484,107 +3392,6 @@ var hasTypo = function hasTypo(text) {
   var polished = polishText(text, mode);
   return polished !== text.trim();
 };
-
-/***/ },
-
-/***/ 33829
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  A: () => (/* binding */ esm_browser_v4)
-});
-
-;// ./node_modules/uuid/dist/esm-browser/native.js
-const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
-/* harmony default export */ const esm_browser_native = ({
-  randomUUID
-});
-;// ./node_modules/uuid/dist/esm-browser/rng.js
-// Unique ID creation requires a high quality random # generator. In the browser we therefore
-// require the crypto API and do not support built-in fallback to lower quality random number
-// generators (like Math.random()).
-let getRandomValues;
-const rnds8 = new Uint8Array(16);
-function rng() {
-  // lazy load so that environments that need to polyfill have a chance to do so
-  if (!getRandomValues) {
-    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
-    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
-
-    if (!getRandomValues) {
-      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
-    }
-  }
-
-  return getRandomValues(rnds8);
-}
-;// ./node_modules/uuid/dist/esm-browser/stringify.js
-/* unused harmony import specifier */ var validate;
-
-/**
- * Convert array of 16 byte values to UUID string format of the form:
- * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
- */
-
-const byteToHex = [];
-
-for (let i = 0; i < 256; ++i) {
-  byteToHex.push((i + 0x100).toString(16).slice(1));
-}
-
-function unsafeStringify(arr, offset = 0) {
-  // Note: Be careful editing this code!  It's been tuned for performance
-  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
-  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
-}
-
-function stringify(arr, offset = 0) {
-  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
-  // of the following:
-  // - One or more input array values don't map to a hex octet (leading to
-  // "undefined" in the uuid)
-  // - Invalid input values for the RFC `version` or `variant` fields
-
-  if (!validate(uuid)) {
-    throw TypeError('Stringified UUID is invalid');
-  }
-
-  return uuid;
-}
-
-/* harmony default export */ const esm_browser_stringify = ((/* unused pure expression or super */ null && (stringify)));
-;// ./node_modules/uuid/dist/esm-browser/v4.js
-
-
-
-
-function v4(options, buf, offset) {
-  if (esm_browser_native.randomUUID && !buf && !options) {
-    return esm_browser_native.randomUUID();
-  }
-
-  options = options || {};
-  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
-
-  rnds[6] = rnds[6] & 0x0f | 0x40;
-  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
-
-  if (buf) {
-    offset = offset || 0;
-
-    for (let i = 0; i < 16; ++i) {
-      buf[offset + i] = rnds[i];
-    }
-
-    return buf;
-  }
-
-  return unsafeStringify(rnds);
-}
-
-/* harmony default export */ const esm_browser_v4 = (v4);
 
 /***/ }
 

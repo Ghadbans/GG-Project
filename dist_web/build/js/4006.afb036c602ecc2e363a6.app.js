@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[3697],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[4006],{
 
 /***/ 2775
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -40,7 +40,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 83697
+/***/ 54006
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -53,57 +53,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11641);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14073);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(50779);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(29571);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(2071);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(73896);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(86531);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(8641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(25239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(33198);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Badge__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(11154);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(8451);
-/* harmony import */ var _mui_icons_material_Notifications__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(33341);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99380);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(29719);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(71510);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(47767);
-/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(61087);
-/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(48484);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_43__);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(82299);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(40301);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(39781);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(2650);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(14977);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(82022);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(46986);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(86531);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(50779);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(29571);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(2071);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(73896);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(82022);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(8641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(25239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(33198);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99380);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(29719);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(71510);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(47767);
+/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(61087);
+/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(601);
+/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(48484);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(46986);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_41___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_41__);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(82299);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(39781);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(2650);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(14977);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(58331);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(33829);
 var _excluded = ["className"];
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
@@ -163,11 +162,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-
-var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref => {
+var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -175,7 +173,7 @@ var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] 
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -196,7 +194,7 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref3 => {
   var theme = _ref3.theme,
@@ -216,7 +214,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref4 => {
   var theme = _ref4.theme,
@@ -244,13 +242,11 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay
     })
   };
 });
-function PaymentInformationUpdate() {
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .useIsMobile */ .al)();
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_38__/* .useParams */ .g)(),
-    id = _useParams.id;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_38__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_48__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .selectCurrentUser */ .xu);
+function PaymentInformationForm() {
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_52__/* .useIsMobile */ .al)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_35__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_46__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_46__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -264,10 +260,10 @@ function PaymentInformationUpdate() {
       var _ref5 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
@@ -286,7 +282,7 @@ function PaymentInformationUpdate() {
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_49__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__/* .logOut */ .je)());
     navigate('/');
   };
   var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
@@ -301,7 +297,7 @@ function PaymentInformationUpdate() {
     var fetchCustomer = /*#__PURE__*/function () {
       var _ref6 = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/customer"));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/customer"));
           setCustomer(res.data.data.reverse());
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -326,83 +322,56 @@ function PaymentInformationUpdate() {
     _useState0 = _slicedToArray(_useState9, 2),
     bankCharge = _useState0[0],
     setBankCharge = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(isMobile ? 'Cash' : ''),
     _useState10 = _slicedToArray(_useState1, 2),
     modes = _useState10[0],
     setModes = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(isMobile ? 'Invoice' : ''),
+    _useState12 = _slicedToArray(_useState11, 2),
+    reason = _useState12[0],
+    setReason = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
       var date = new Date();
       return date;
     }),
-    _useState12 = _slicedToArray(_useState11, 2),
-    paymentDate = _useState12[0],
-    setPaymentDate = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
     _useState14 = _slicedToArray(_useState13, 2),
-    description = _useState14[0],
-    setDescription = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    paymentDate = _useState14[0],
+    setPaymentDate = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
     _useState16 = _slicedToArray(_useState15, 2),
-    paymentNumber = _useState16[0],
-    setPaymentNumber = _useState16[1];
+    description = _useState16[0],
+    setDescription = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState18 = _slicedToArray(_useState17, 2),
-    rate = _useState18[0],
-    setRate = _useState18[1];
+    paymentNumber = _useState18[0],
+    setPaymentNumber = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState20 = _slicedToArray(_useState19, 2),
-    creditOld = _useState20[0],
-    setCreditOld = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    rate = _useState20[0],
+    setRate = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Payment'),
     _useState22 = _slicedToArray(_useState21, 2),
-    customerId = _useState22[0],
-    setCustomerId = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    transactionType = _useState22[0],
+    setTransactionType = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Cleared'),
     _useState24 = _slicedToArray(_useState23, 2),
-    invoice = _useState24[0],
-    setInvoice = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    status = _useState24[0],
+    setStatus = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Payment'),
     _useState26 = _slicedToArray(_useState25, 2),
-    invoice1 = _useState26[0],
-    setInvoice1 = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState28 = _slicedToArray(_useState27, 2),
-    PaymentReceivedFC = _useState28[0],
-    setPaymentReceivedFC = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState30 = _slicedToArray(_useState29, 2),
-    PaymentReceivedUSD = _useState30[0],
-    setPaymentReceivedUSD = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState32 = _slicedToArray(_useState31, 2),
-    reason = _useState32[0],
-    setReason = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Payment'),
-    _useState34 = _slicedToArray(_useState33, 2),
-    transactionType = _useState34[0],
-    setTransactionType = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Cleared'),
-    _useState36 = _slicedToArray(_useState35, 2),
-    status = _useState36[0],
-    setStatus = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Credit'),
-    _useState38 = _slicedToArray(_useState37, 2),
-    excessAction = _useState38[0],
-    setExcessAction = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState40 = _slicedToArray(_useState39, 2),
-    returnUSD = _useState40[0],
-    setReturnUSD = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState42 = _slicedToArray(_useState41, 2),
-    returnFC = _useState42[0],
-    setReturnFC = _useState42[1];
+    paymentType = _useState26[0],
+    setPaymentType = _useState26[1]; // Detailed type
+
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchlastNumber = /*#__PURE__*/function () {
       var _ref7 = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-payment/").concat(id));
-          setCreditOld(res.data.data.remaining);
+          var _res$data, _res$data2;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-last-saved-payment"));
+          var num = res.data && res.data.paymentNumber ? parseInt(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.paymentNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.paymentNumber) || 0) : 0;
+          setPaymentNumber(num + 1);
+          var resRate = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/rate"));
+          resRate.data.data.map(row => setRate(row.rate));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -413,61 +382,23 @@ function PaymentInformationUpdate() {
     }();
     fetchlastNumber();
   }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchlastNumber = /*#__PURE__*/function () {
-      var _ref8 = _asyncToGenerator(function* () {
-        try {
-          var _res$data, _res$data2;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-payment/").concat(id));
-          setCustomerName(res.data.data.customerName);
-          setCustomerId(res.data.data.customerName._id);
-          setAmount(res.data.data.amount);
-          setBankCharge(res.data.data.bankCharge);
-          setModes(res.data.data.modes);
-          setPaymentDate(res.data.data.paymentDate);
-          setDescription(res.data.data.description);
-          setPaymentNumber(Number(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.paymentNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.paymentNumber) || 0));
-          setCreditOld(res.data.data.remaining);
-          setPaymentReceivedFC(res.data.data.PaymentReceivedFC);
-          setPaymentReceivedUSD(res.data.data.PaymentReceivedUSD);
-          setReason(res.data.data.reason || 'Invoice');
-          setTransactionType(res.data.data.transactionType || 'Payment');
-          setStatus(res.data.data.status || 'Cleared');
-          setExcessAction(res.data.data.excessAction || (res.data.data.returnUSD > 0 || res.data.data.returnFC > 0 ? 'Return' : 'Credit'));
-          setReturnUSD(res.data.data.returnUSD || 0);
-          setReturnFC(res.data.data.returnFC || 0);
-          setInvoice1(res.data.data.TotalAmount ? res.data.data.TotalAmount.filter(row => parseFloat(row.total) !== 0 || parseFloat(row.total) !== 0.00) : []);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchlastNumber() {
-        return _ref8.apply(this, arguments);
-      };
-    }();
-    fetchlastNumber();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchlastNumber = /*#__PURE__*/function () {
-      var _ref9 = _asyncToGenerator(function* () {
-        try {
-          var resRate = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/rate"));
-          resRate.data.data.map(row => setRate(row.rate));
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchlastNumber() {
-        return _ref9.apply(this, arguments);
-      };
-    }();
-    fetchlastNumber();
-  }, []);
   // get Invoice 
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState44 = _slicedToArray(_useState43, 2),
-    oldInvoice = _useState44[0],
-    setOldInvoice = _useState44[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState28 = _slicedToArray(_useState27, 2),
+    invoice = _useState28[0],
+    setInvoice = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState30 = _slicedToArray(_useState29, 2),
+    project = _useState30[0],
+    setProject = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState32 = _slicedToArray(_useState31, 2),
+    oldInvoice = _useState32[0],
+    setOldInvoice = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+    _useState34 = _slicedToArray(_useState33, 2),
+    customerId = _useState34[0],
+    setCustomerId = _useState34[1];
   var handleChangeCustomer = newValue => {
     if (!newValue) {
       handleClear();
@@ -503,14 +434,21 @@ function PaymentInformationUpdate() {
   };
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
-      var _ref0 = _asyncToGenerator(function* () {
+      var _ref8 = _asyncToGenerator(function* () {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/invoice?summary=true"));
-          var resProject = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/projects")).catch(() => ({
-            data: {
-              data: []
-            }
-          }));
+          var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/invoice?summary=true")), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/projects")).catch(() => ({
+              data: {
+                data: []
+              }
+            })), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/purchase?summary=true")).catch(() => ({
+              data: {
+                data: []
+              }
+            }))]),
+            _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 3),
+            res = _yield$Promise$all2[0],
+            resProject = _yield$Promise$all2[1],
+            resPurchase = _yield$Promise$all2[2];
           if (customerId !== null && customerId !== undefined) {
             if (reason === "Invoice" || isMobile && !reason) {
               var _res$data3;
@@ -530,15 +468,13 @@ function PaymentInformationUpdate() {
               setOldInvoice(filterData);
 
               // Filter invoices: for Refund show invoices with paid balances; for Payment show unpaid invoices
-              var exInvoice = filterData.filter(row => {
-                var _ref1, _row$totalInvoice, _ref10, _row$total;
+              var targetInvoices = filterData.filter(row => {
+                var _ref9, _row$totalInvoice, _ref0, _row$total;
                 if (!row) return false;
-                var isAlreadyAttached = (invoice1 || []).some(row1 => String(row1.id || row1._id) === String(row._id));
-                if (isAlreadyAttached) return false;
                 var st = String(row.status || '').trim().toLowerCase();
                 if (st === 'void' || st === 'decline' || st === 'free of charge') return false;
-                var totalInv = Number((_ref1 = (_row$totalInvoice = row.totalInvoice) !== null && _row$totalInvoice !== void 0 ? _row$totalInvoice : row.total) !== null && _ref1 !== void 0 ? _ref1 : 0);
-                var currentPaid = Number((_ref10 = (_row$total = row.total) !== null && _row$total !== void 0 ? _row$total : row.paidAmount) !== null && _ref10 !== void 0 ? _ref10 : 0);
+                var totalInv = Number((_ref9 = (_row$totalInvoice = row.totalInvoice) !== null && _row$totalInvoice !== void 0 ? _row$totalInvoice : row.total) !== null && _ref9 !== void 0 ? _ref9 : 0);
+                var currentPaid = Number((_ref0 = (_row$total = row.total) !== null && _row$total !== void 0 ? _row$total : row.paidAmount) !== null && _ref0 !== void 0 ? _ref0 : 0);
                 var bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
                 if (transactionType === 'Refund') {
                   return currentPaid > 0.001 || st === 'paid' || st === 'partially-paid';
@@ -546,11 +482,12 @@ function PaymentInformationUpdate() {
                 if (!isMobile) {
                   return row.status === 'Sent' || row.status === 'Partially-Paid' || bal > 0.001;
                 }
-                return bal > 0 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
-              }).map(row => {
-                var _ref11, _row$totalInvoice2, _ref12, _row$total2;
-                var totalInv = Number((_ref11 = (_row$totalInvoice2 = row.totalInvoice) !== null && _row$totalInvoice2 !== void 0 ? _row$totalInvoice2 : row.total) !== null && _ref11 !== void 0 ? _ref11 : 0);
-                var currentPaid = Number((_ref12 = (_row$total2 = row.total) !== null && _row$total2 !== void 0 ? _row$total2 : row.paidAmount) !== null && _ref12 !== void 0 ? _ref12 : 0);
+                return bal > 0.001 || ['draft', 'sent', 'pending', 'partially-paid', ''].includes(st);
+              });
+              setInvoice(targetInvoices.map(row => {
+                var _ref1, _row$totalInvoice2, _ref10, _row$total2;
+                var totalInv = Number((_ref1 = (_row$totalInvoice2 = row.totalInvoice) !== null && _row$totalInvoice2 !== void 0 ? _row$totalInvoice2 : row.total) !== null && _ref1 !== void 0 ? _ref1 : 0);
+                var currentPaid = Number((_ref10 = (_row$total2 = row.total) !== null && _row$total2 !== void 0 ? _row$total2 : row.paidAmount) !== null && _ref10 !== void 0 ? _ref10 : 0);
                 var bal = Number(row.balanceDue !== undefined && row.balanceDue !== null ? row.balanceDue : Math.max(0, totalInv - currentPaid));
                 return {
                   id: row._id,
@@ -569,8 +506,7 @@ function PaymentInformationUpdate() {
                   status: row.status || 'Draft',
                   invoiceDate: row.invoiceDate
                 };
-              });
-              setInvoice([...(invoice1 || []), ...exInvoice]);
+              }));
             } else if (reason === "Project") {
               var _resProject$data;
               var filterData2 = (((_resProject$data = resProject.data) === null || _resProject$data === void 0 ? void 0 : _resProject$data.data) || []).filter(row => {
@@ -580,7 +516,8 @@ function PaymentInformationUpdate() {
                 var matchName = String(((_row$customerName7 = row.customerName) === null || _row$customerName7 === void 0 ? void 0 : _row$customerName7.customerName) || row.customerName || '').trim().toLowerCase() === String((customerName === null || customerName === void 0 ? void 0 : customerName.customerName) || '').trim().toLowerCase();
                 return (matchId || matchName) && row.status === "On-Going";
               });
-              var exProject = filterData2.filter(row => !(invoice1 || []).some(row1 => row1.id === row._id)).map(row => ({
+              setProject(filterData2);
+              setInvoice(filterData2.map(row => ({
                 id: row._id,
                 customerName: row.customerName,
                 total: 0,
@@ -594,8 +531,22 @@ function PaymentInformationUpdate() {
                 invoiceAmount: row.budget !== undefined ? row.budget : 0,
                 status: "",
                 invoiceDate: row.startDate
-              }));
-              setInvoice([...(invoice1 || []), ...exProject]);
+              })));
+            } else if (reason === "Customer Credit") {
+              setInvoice([{
+                id: customerId,
+                customerName: customerName,
+                total: 0,
+                amountPaidFC: 0,
+                amountPaidUSD: 0,
+                rateChange: rate || 1,
+                totalConverted: 0,
+                Ref: 'Credit',
+                balanceDue: oldCredit || 0,
+                invoiceAmount: oldCredit || 0,
+                status: "",
+                invoiceDate: new Date()
+              }]);
             }
           }
         } catch (error) {
@@ -603,11 +554,11 @@ function PaymentInformationUpdate() {
         }
       });
       return function fetchData() {
-        return _ref0.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       };
     }();
     fetchData();
-  }, [customerId, customerName === null || customerName === void 0 ? void 0 : customerName.customerName, invoice1, reason, transactionType]);
+  }, [customerId, customerName === null || customerName === void 0 ? void 0 : customerName.customerName, reason, transactionType]);
   var handleChangeCEO = (e, idRow) => {
     var _e$target = e.target,
       name = _e$target.name,
@@ -618,7 +569,7 @@ function PaymentInformationUpdate() {
     list[i]['totalConverted'] = Math.round(list[i]['amountPaidFC'] / list[i]['rateChange'] * 100) / 100;
     list[i]['total'] = Math.round((parseFloat(list[i]['totalConverted']) + parseFloat(list[i]['amountPaidUSD'])) * 100) / 100;
     var maxLimit = transactionType === 'Refund' ? parseFloat(list[i]['maxRefundable'] !== undefined ? list[i]['maxRefundable'] : list[i]['paidAmount'] || 0) : parseFloat(list[i]['balanceDue'] || 0);
-    if (list[i]['total'] > maxLimit) {
+    if (list[i]['total'] > maxLimit && reason === "Invoice") {
       list[i]['amountPaidFC'] = 0;
       list[i]['amountPaidUSD'] = 0;
       list[i]['total'] = 0;
@@ -627,7 +578,8 @@ function PaymentInformationUpdate() {
   };
   var handlePayment = e => {
     e.preventDefault();
-    var remaining = amount;
+    var effectiveMax = modes === 'Credit-Account' ? Math.min(parseFloat(amount || 0), parseFloat(oldCredit || 0)) : parseFloat(amount || 0);
+    var remaining = effectiveMax;
     var totalInvoiceExp = invoice.map(row => {
       var limit = transactionType === 'Refund' ? parseFloat(row.maxRefundable !== undefined ? row.maxRefundable : row.paidAmount || 0) : parseFloat(row.balanceDue || 0);
       var total = Math.min(remaining, limit).toFixed(2);
@@ -638,6 +590,14 @@ function PaymentInformationUpdate() {
     });
     setInvoice(totalInvoiceExp);
   };
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState36 = _slicedToArray(_useState35, 2),
+    PaymentReceivedFC = _useState36[0],
+    setPaymentReceivedFC = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState38 = _slicedToArray(_useState37, 2),
+    PaymentReceivedUSD = _useState38[0],
+    setPaymentReceivedUSD = _useState38[1];
   var balanceDueInfo = invoice.length > 0 ? invoice.reduce((sum, row) => sum + parseFloat(row.balanceDue), 0) : 0;
   var PaymentInfo = invoice.length > 0 ? invoice.reduce((sum, row) => sum + parseFloat(row.total), 0) : 0;
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
@@ -649,31 +609,61 @@ function PaymentInformationUpdate() {
     }
   }, [invoice, modes]);
   var handleChangeModes = e => {
-    setModes(e.target.value);
+    var selectedMode = e.target.value;
+    setModes(selectedMode);
+    if (selectedMode === 'Credit-Account') {
+      setAmount(oldCredit);
+    }
   };
   var totalConvertedFc = Math.round(PaymentReceivedFC / rate * 100) / 100;
   var totalUSdInfo = Math.round((parseFloat(totalConvertedFc) + parseFloat(PaymentReceivedUSD)) * 100) / 100;
-  var remainingInvoice = balanceDueInfo - PaymentInfo;
+  var remainingInvoice = transactionType === 'Payment' ? balanceDueInfo - PaymentInfo : balanceDueInfo + PaymentInfo;
   var remainingValue = reason === "Project" || reason === "Customer Credit" ? parseFloat(amount) : parseFloat(amount) - PaymentInfo;
-  var remaining = Math.round(remainingValue * 100) / 100;
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
+  var remaining = transactionType === 'Payment' ? Math.round(remainingValue * 100) / 100 : -Math.round(remainingValue * 100) / 100;
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState40 = _slicedToArray(_useState39, 2),
+    oldCredit = _useState40[0],
+    setOldCredit = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)('Credit'),
+    _useState42 = _slicedToArray(_useState41, 2),
+    excessAction = _useState42[0],
+    setExcessAction = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState44 = _slicedToArray(_useState43, 2),
+    returnUSD = _useState44[0],
+    setReturnUSD = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState46 = _slicedToArray(_useState45, 2),
-    oldCredit = _useState46[0],
-    setOldCredit = _useState46[1];
+    returnFC = _useState46[0],
+    setReturnFC = _useState46[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchCustomer = /*#__PURE__*/function () {
-      var _ref13 = _asyncToGenerator(function* () {
+      var _ref11 = _asyncToGenerator(function* () {
         if (customerId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(customerId));
-            setOldCredit(res.data.data.credit);
+            var _resPay$data;
+            var _yield$Promise$all3 = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(customerId)), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/payment?customerId=").concat(customerId))]),
+              _yield$Promise$all4 = _slicedToArray(_yield$Promise$all3, 2),
+              resCust = _yield$Promise$all4[0],
+              resPay = _yield$Promise$all4[1];
+            var paymentsList = ((_resPay$data = resPay.data) === null || _resPay$data === void 0 ? void 0 : _resPay$data.data) || [];
+            var calcCredit = 0;
+            paymentsList.forEach(row => {
+              if (row.modes === 'Credit' || row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return' || row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return') {
+                calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
+              } else if (row.modes === 'Credit-Account') {
+                calcCredit -= parseFloat(row.amount || 0);
+              }
+            });
+            var validCredit = Math.max(0, calcCredit);
+            setOldCredit(validCredit);
           } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error fetching customer credit:', error);
           }
         }
       });
       return function fetchCustomer() {
-        return _ref13.apply(this, arguments);
+        return _ref11.apply(this, arguments);
       };
     }();
     fetchCustomer();
@@ -683,88 +673,93 @@ function PaymentInformationUpdate() {
     credit = _useState48[0],
     setCredit = _useState48[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (parseFloat(creditOld) === parseFloat(remaining)) {
-      setCredit(oldCredit);
-    } else if (parseFloat(creditOld) > parseFloat(remaining)) {
-      var totalR = creditOld - remaining;
-      var totalR1 = isNaN(oldCredit - totalR) ? 0 : parseFloat(Number(oldCredit) - totalR);
-      setCredit(totalR1);
-    } else if (parseFloat(creditOld) < parseFloat(remaining)) {
-      var _totalR = remaining - creditOld;
-      var _totalR2 = isNaN(Number(oldCredit) + Number(_totalR)) ? 0 : parseFloat(Number(oldCredit) + Number(_totalR));
-      setCredit(_totalR2);
-    }
-  }, [oldCredit, remaining, creditOld]);
-  var TotalAmount = invoice === null || invoice === void 0 ? void 0 : invoice.filter(row => parseFloat(row.total) !== 0);
-  var invoiceUpdate = reason === "Invoice" && invoice ? invoice.map(row => {
-    var correspondingId = oldInvoice === null || oldInvoice === void 0 ? void 0 : oldInvoice.find(row2 => row2._id === row.id);
-    if (!correspondingId) return null; // Safety check
-
-    var difference = 0;
-    var total = 0;
-    var rowPaid = parseFloat(row.total || 0);
-    var currentPaid = parseFloat(correspondingId.total || 0);
-    var totalInv = parseFloat(correspondingId.totalInvoice || 0);
-    if (transactionType === 'Payment') {
-      total = currentPaid + rowPaid;
-    } else {
-      total = Math.max(0, currentPaid - rowPaid);
-    }
-    total = Math.round(total * 100) / 100;
-    difference = Math.max(0, Math.round((totalInv - total) * 100) / 100);
-    var newStatus = correspondingId.status;
-    if (newStatus !== 'Void' && newStatus !== 'Free of Charge') {
-      if (totalInv > 0 && total >= totalInv - 0.001) {
-        newStatus = 'Paid';
-      } else if (total > 0.001) {
-        newStatus = 'Partially-Paid';
+    var computedCredit = oldCredit;
+    if (modes === 'Credit') {
+      computedCredit = parseFloat(oldCredit || 0) + parseFloat(amount || 0);
+    } else if (modes === 'Credit-Account') {
+      computedCredit = Math.max(0, parseFloat(oldCredit || 0) - PaymentInfo);
+    } else if (remaining > 0) {
+      if (excessAction === 'Return') {
+        var totalReturnUSDVal = (parseFloat(returnUSD) || 0) + (parseFloat(returnFC) || 0) / (parseFloat(rate) || 1);
+        var unreturned = Math.max(0, remaining - totalReturnUSDVal);
+        computedCredit = parseFloat(oldCredit || 0) + unreturned;
       } else {
-        newStatus = 'Sent';
+        computedCredit = parseFloat(oldCredit || 0) + parseFloat(remaining || 0);
       }
     }
-    return {
-      id: row.id,
-      number: correspondingId.invoiceNumber,
-      data: {
-        total: Number(total),
-        balanceDue: difference,
-        status: newStatus
-      }
-    };
-  }).filter(Boolean) : [];
+    setCredit(Math.max(0, computedCredit));
+  }, [oldCredit, remaining, modes, amount, PaymentInfo, excessAction, returnUSD, returnFC, rate]);
+  var TotalAmount = invoice.length > 0 ? invoice.filter(row => parseFloat(row.total) !== 0) : null;
   var handleUpdateInvoice = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* () {
-      var updateRequest = invoiceUpdate !== null ? invoiceUpdate.map(_ref15 => {
-        var id = _ref15.id,
-          data = _ref15.data;
-        return axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(id), data);
-      }) : null;
-      if (updateRequest !== null) {
-        try {
-          yield Promise.all(updateRequest);
-          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_58__/* .invalidateCache */ .gm)('/invoice');
-        } catch (error) {
-          console.log('An error as occur');
+    var _ref12 = _asyncToGenerator(function* () {
+      if (reason === "Invoice") {
+        var invoiceUpdate = invoice.length > 0 ? invoice.map(row => {
+          var correspondingId = oldInvoice.find(row2 => row2._id === row.id);
+          if (!correspondingId) return null;
+          var total = 0;
+          var currentPaid = parseFloat(correspondingId.total || 0);
+          var rowPaid = parseFloat(row.total || 0);
+          if (transactionType === 'Payment') {
+            total = currentPaid + rowPaid;
+          } else {
+            total = Math.max(0, currentPaid - rowPaid);
+          }
+          total = Math.round(total * 100) / 100;
+          var totalInv = parseFloat(correspondingId.totalInvoice || 0);
+          var difference = Math.max(0, Math.round((totalInv - total) * 100) / 100);
+          var status = correspondingId.status;
+          if (status !== 'Void' && status !== 'Free of Charge') {
+            if (totalInv > 0 && total >= totalInv - 0.001) {
+              status = 'Paid';
+            } else if (total > 0.001) {
+              status = 'Partially-Paid';
+            } else {
+              status = 'Sent';
+            }
+          }
+          return {
+            id: row.id,
+            number: correspondingId.invoiceNumber,
+            rowPaid,
+            data: {
+              total,
+              balanceDue: difference,
+              status: status
+            }
+          };
+        }).filter(Boolean) : null;
+        var updateRequest = invoiceUpdate !== null ? invoiceUpdate.filter(row => row.rowPaid > 0).map(_ref13 => {
+          var id = _ref13.id,
+            data = _ref13.data;
+          return axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(id), data);
+        }) : null;
+        if (updateRequest !== null) {
+          try {
+            yield Promise.all(updateRequest);
+            (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_40__/* .invalidateCache */ .gm)('/invoice');
+          } catch (error) {
+            console.log('An error as occur');
+          }
         }
       }
     });
     return function handleUpdateInvoice() {
-      return _ref14.apply(this, arguments);
+      return _ref12.apply(this, arguments);
     };
   }();
   var handleUpdateCredit = /*#__PURE__*/function () {
-    var _ref16 = _asyncToGenerator(function* () {
+    var _ref14 = _asyncToGenerator(function* () {
       var data = {
         credit
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/update-customer/").concat(customerId), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/update-customer/").concat(customerId), data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     });
     return function handleUpdateCredit() {
-      return _ref16.apply(this, arguments);
+      return _ref14.apply(this, arguments);
     };
   }();
   var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
@@ -793,14 +788,6 @@ function PaymentInformationUpdate() {
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
-    if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .isNativeMobile */ .g1)()) {
-      setTimeout(() => {
-        setLoading(false);
-        setLoadingOpenModal(false);
-        navigate('/PaymentView');
-      }, 900);
-      return;
-    }
     setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -814,13 +801,7 @@ function PaymentInformationUpdate() {
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
-    if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .isNativeMobile */ .g1)()) {
-      navigate('/PaymentView');
-    } else if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/PaymentView');
-    }
+    window.location.reload();
   };
   var handleCloseError = () => {
     setErrorOpenModal(false);
@@ -834,21 +815,21 @@ function PaymentInformationUpdate() {
     }
   };
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref17 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
+    var _ref15 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
       var data = {
         idInfo: ReferenceInfo,
-        person: user.data.userName + ' Modify PAYMENT ',
-        reason: 'PAY-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
+        person: user.data.userName + ' Created PAYMENT ',
+        reason: "PAY-".concat(String(ReferenceInfoNumber).padStart(6, '0'), " For ").concat(customerName.customerName),
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
     });
     return function handleCreateNotification(_x, _x2) {
-      return _ref17.apply(this, arguments);
+      return _ref15.apply(this, arguments);
     };
   }();
   var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
@@ -856,12 +837,30 @@ function PaymentInformationUpdate() {
     saving = _useState58[0],
     setSaving = _useState58[1];
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref18 = _asyncToGenerator(function* (e) {
+    var _ref16 = _asyncToGenerator(function* (e) {
       e.preventDefault();
+      if (modes === 'Credit-Account' && PaymentInfo > oldCredit) {
+        alert("Cannot apply $".concat(PaymentInfo.toFixed(2), ". Customer only has $").concat(oldCredit.toFixed(2), " in available credit."));
+        return;
+      }
       setSaving('true');
+      // Calculate tax paid based on the proportion of the invoice being paid
+      var totalTaxPaid = 0;
+      if (reason === "Invoice") {
+        invoice.forEach(row => {
+          var correspondingId = oldInvoice.find(r => r._id === row.id);
+          if (correspondingId && correspondingId.tax && correspondingId.tax > 0 && row.total > 0) {
+            // tax paid = (amount paid / total invoice amount) * total invoice tax
+            var proportion = row.total / correspondingId.totalInvoice;
+            totalTaxPaid += correspondingId.tax * proportion;
+          }
+        });
+      }
       var totalReturnUSDVal = (parseFloat(returnUSD) || 0) + (parseFloat(returnFC) || 0) / (parseFloat(rate) || 1);
       var effectiveRemaining = excessAction === 'Return' ? Math.max(0, remaining - totalReturnUSDVal) : remaining;
       var data = {
+        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A)(),
+        customerName,
         amount,
         bankCharge,
         modes,
@@ -870,24 +869,28 @@ function PaymentInformationUpdate() {
         paymentNumber,
         description,
         PaymentReceivedFC,
+        reason,
         PaymentReceivedUSD,
         remaining: effectiveRemaining,
         excessAction: excessAction || 'Credit',
         returnUSD: excessAction === 'Return' ? Number(returnUSD || 0) : 0,
         returnFC: excessAction === 'Return' ? Number(returnFC || 0) : 0,
-        reason,
         transactionType,
-        status
+        status,
+        tax: Math.round(totalTaxPaid * 100) / 100,
+        synced: false
       };
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_37__/* .ENDPOINT_URL */ .m, "/update-payment/").concat(id), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/create-payment"), data);
         if (res) {
+          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_40__/* .invalidateCache */ .gm)('/payment');
           var ReferenceInfo = res.data.data._id;
           var ReferenceInfoNumber = res.data.data.paymentNumber;
           handleCreateNotification(ReferenceInfo, ReferenceInfoNumber);
-          handleOpen();
+          // handleOpen();
           handleUpdateInvoice();
           handleUpdateCredit();
+          handleOpen();
         }
       } catch (error) {
         if (error) {
@@ -897,7 +900,7 @@ function PaymentInformationUpdate() {
       }
     });
     return function handleSubmit(_x3) {
-      return _ref18.apply(this, arguments);
+      return _ref16.apply(this, arguments);
     };
   }();
   if (isMobile) {
@@ -930,24 +933,24 @@ function PaymentInformationUpdate() {
         gap: 1
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-      onClick: () => (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .isNativeMobile */ .g1)() ? navigate('/PaymentView') : window.history.length > 1 ? navigate(-1) : navigate('/PaymentView'),
+      onClick: () => navigate(-1),
       sx: {
         color: '#ffffff',
         p: 0.5
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       variant: "subtitle1",
       sx: {
         fontWeight: 800,
         lineHeight: 1.2,
         color: '#ffffff'
       }
-    }, "Update Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, "New Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#E0E7FF'
       }
-    }, "PAY-", String(paymentNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, "PAY-", String(paymentNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
       variant: "contained",
       size: "small",
       onClick: handleSubmit,
@@ -967,7 +970,7 @@ function PaymentInformationUpdate() {
       sx: {
         p: 2
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
       sx: {
         borderRadius: 3.5,
         p: 2.5,
@@ -991,55 +994,95 @@ function PaymentInformationUpdate() {
       item: true,
       xs: 12
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-      fullWidth: true,
       size: "small",
-      label: "Customer Name",
-      disabled: true,
-      value: (customerName === null || customerName === void 0 ? void 0 : customerName.customerName) || (customerName === null || customerName === void 0 ? void 0 : customerName.customerFullName) || (customerName === null || customerName === void 0 ? void 0 : customerName.Customer) || ''
+      options: customer || [],
+      getOptionLabel: option => {
+        if (!option) return '';
+        return option.Customer || option.customerName || option.customerFullName || '';
+      },
+      isOptionEqualToValue: (opt, val) => {
+        if (!opt || !val) return false;
+        return opt._id && val._id && opt._id === val._id || opt.Customer && val.customerName && opt.Customer === val.customerName;
+      },
+      value: (customer || []).find(c => customerId && c._id === customerId) || (customerName !== null && customerName !== void 0 && customerName.customerName ? {
+        Customer: customerName.customerName,
+        _id: customerId
+      } : null),
+      onChange: (e, val) => handleChangeCustomer(val),
+      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, params, {
+        label: "Select Customer *",
+        size: "small",
+        fullWidth: true
+      }))
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
-      xs: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      xs: 12
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       fullWidth: true,
       size: "small"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      id: "m-status-label"
-    }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-      labelId: "m-status-label",
-      value: status || 'Cleared',
-      label: "Status",
-      onChange: e => setStatus(e.target.value)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-      value: "Cleared"
-    }, "Cleared"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-      value: "Pending"
-    }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-      value: "Voided"
-    }, "Voided")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, "Payment Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      value: reason || 'Invoice',
+      label: "Payment Reason",
+      onChange: e => setReason(e.target.value)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      value: "Invoice"
+    }, "Invoice"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      value: "Project"
+    }, "Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      value: "Customer Credit"
+    }, "Customer Credit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       fullWidth: true,
       size: "small"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-      id: "m-trans-label"
-    }, "Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-      labelId: "m-trans-label",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, "Transaction Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
       value: transactionType || 'Payment',
-      label: "Type",
-      onChange: e => setTransactionType(e.target.value)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      label: "Transaction Type",
+      onChange: e => {
+        var val = e.target.value;
+        setTransactionType(val);
+        setPaymentReceivedUSD(0);
+        setPaymentReceivedFC(0);
+        setAmount(0);
+        setReturnUSD(0);
+        setReturnFC(0);
+        if (invoice && invoice.length > 0) {
+          setInvoice(invoice.map(r => _objectSpread(_objectSpread({}, r), {}, {
+            total: 0,
+            amountPaidUSD: 0,
+            amountPaidFC: 0
+          })));
+        }
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       value: "Payment"
-    }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       value: "Refund"
     }, "Refund")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      value: status || 'Cleared',
+      label: "Status",
+      onChange: e => setStatus(e.target.value)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      value: "Cleared"
+    }, "Cleared"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      value: "Pending"
+    }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      value: "Voided"
+    }, "Voided")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+      item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_40__/* .LocalizationProvider */ .$, {
-      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_41__/* .AdapterDayjs */ .R
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_42__/* .DatePicker */ .l, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__/* .LocalizationProvider */ .$, {
+      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__/* .AdapterDayjs */ .R
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__/* .DatePicker */ .l, {
       label: "Payment Date",
-      value: paymentDate ? dayjs__WEBPACK_IMPORTED_MODULE_43___default()(paymentDate) : null,
+      value: paymentDate ? dayjs__WEBPACK_IMPORTED_MODULE_41___default()(paymentDate) : null,
       onChange: date => setPaymentDate(date),
       slotProps: {
         textField: {
@@ -1051,25 +1094,25 @@ function PaymentInformationUpdate() {
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       fullWidth: true,
       size: "small"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, "Payment Mode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, "Payment Mode"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
       value: modes || 'Cash',
       label: "Payment Mode",
       onChange: e => handleChangeModes(e)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       value: "Cash"
-    }, "Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    }, "Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       value: "Bank-Transfer"
-    }, "Bank Transfer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    }, "Bank Transfer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       value: "Check"
-    }, "Check"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    }, "Check"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       value: "Credit-Account"
     }, "Credit Account")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       fullWidth: true,
       required: true,
       size: "small",
@@ -1083,7 +1126,7 @@ function PaymentInformationUpdate() {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       fullWidth: true,
       multiline: true,
       rows: 2,
@@ -1091,7 +1134,7 @@ function PaymentInformationUpdate() {
       label: "Reference / Notes",
       value: description,
       onChange: e => setDescription(e.target.value)
-    })))), reason === 'Invoice' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+    })))), reason === 'Invoice' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
       sx: {
         borderRadius: 3.5,
         p: 2.5,
@@ -1114,12 +1157,12 @@ function PaymentInformationUpdate() {
         textTransform: 'uppercase',
         fontSize: '0.82rem'
       }
-    }, "Invoices (", (invoice === null || invoice === void 0 ? void 0 : invoice.length) || 0, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    }, transactionType === 'Refund' ? 'Paid Invoices (Refund Eligible)' : 'Unpaid Invoices', " (", (invoice === null || invoice === void 0 ? void 0 : invoice.length) || 0, ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#64748B'
       }
-    }, (customerName === null || customerName === void 0 ? void 0 : customerName.customerName) || (customerName === null || customerName === void 0 ? void 0 : customerName.customerFullName) || (customerName === null || customerName === void 0 ? void 0 : customerName.Customer) || 'Customer Invoices')), invoice && invoice.length > 0 && Number(amount) > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, customerId ? (customerName === null || customerName === void 0 ? void 0 : customerName.customerName) || 'Selected Customer' : transactionType === 'Refund' ? 'Choose a customer to view refundable invoices' : 'Choose a customer above to view invoices')), invoice && invoice.length > 0 && Number(amount) > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
       size: "small",
       variant: "outlined",
       onClick: handlePayment,
@@ -1143,13 +1186,14 @@ function PaymentInformationUpdate() {
         color: '#64748B',
         fontWeight: 500
       }
-    }, "No invoices attached or awaiting payment.")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }, customerId ? transactionType === 'Refund' ? 'No paid invoices eligible for refund found for this customer.' : 'No unpaid invoices found for this customer.' : transactionType === 'Refund' ? 'Select a customer to see paid invoices eligible for refund.' : 'Select a customer to see invoices awaiting payment.')) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         flexDirection: 'column',
         gap: 1.5
       }
     }, invoice.map((row, idx) => {
+      var _ref17, _row$maxRefundable, _ref18, _row$maxRefundable2;
       var balDue = Number(row.balanceDue || 0);
       var paidUSD = Number(row.amountPaidUSD || 0);
       var refDisplay = "".concat(row.prefix || 'INV-').concat(String(row.Ref || '').padStart(6, '0'));
@@ -1181,7 +1225,7 @@ function PaymentInformationUpdate() {
         sx: {
           color: '#64748B'
         }
-      }, row.invoiceDate ? dayjs__WEBPACK_IMPORTED_MODULE_43___default()(row.invoiceDate).format('DD/MM/YYYY') : 'No date')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
+      }, row.invoiceDate ? dayjs__WEBPACK_IMPORTED_MODULE_41___default()(row.invoiceDate).format('DD/MM/YYYY') : 'No date')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
         label: row.status || 'Draft',
         size: "small",
         sx: {
@@ -1209,24 +1253,25 @@ function PaymentInformationUpdate() {
       }, "$", Number(row.invoiceAmount || 0).toFixed(2))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
         variant: "caption",
         sx: {
-          color: '#DC2626',
+          color: transactionType === 'Refund' ? '#059669' : '#DC2626',
           fontWeight: 700
         }
-      }, "Due: $", balDue.toFixed(2))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      }, transactionType === 'Refund' ? "Paid: ".concat(Number((_ref17 = (_row$maxRefundable = row.maxRefundable) !== null && _row$maxRefundable !== void 0 ? _row$maxRefundable : row.paidAmount) !== null && _ref17 !== void 0 ? _ref17 : 0).toFixed(2)) : "Due: ".concat(balDue.toFixed(2)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
         sx: {
           display: 'flex',
           gap: 1,
           alignItems: 'center',
           mt: 0.5
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
         size: "small",
         type: "number",
-        label: "Pay Amount ($)",
+        label: transactionType === 'Refund' ? "Refund Amount ($)" : "Pay Amount ($)",
         value: row.amountPaidUSD || '',
         name: "amountPaidUSD",
         onChange: e => {
           handleChangeCEO(e, row.id);
+          // Keep total payment amount synchronized if user edits invoice rows directly
           setTimeout(() => {
             var currentTotal = invoice.reduce((sum, item) => sum + (item.id === row.id ? Number(e.target.value) || 0 : Number(item.amountPaidUSD || 0)), 0);
             if (!amount || Number(amount) < currentTotal) {
@@ -1241,9 +1286,10 @@ function PaymentInformationUpdate() {
         },
         inputProps: {
           min: 0,
+          max: transactionType === 'Refund' ? (_ref18 = (_row$maxRefundable2 = row.maxRefundable) !== null && _row$maxRefundable2 !== void 0 ? _row$maxRefundable2 : row.paidAmount) !== null && _ref18 !== void 0 ? _ref18 : 0 : balDue,
           step: 'any'
         }
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
         size: "small",
         variant: "text",
         onClick: () => {
@@ -1268,8 +1314,8 @@ function PaymentInformationUpdate() {
           color: '#30368a',
           whiteSpace: 'nowrap'
         }
-      }, "Pay Full")));
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+      }, transactionType === 'Refund' ? 'Refund Full' : 'Pay Full')));
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       size: "large",
@@ -1288,7 +1334,7 @@ function PaymentInformationUpdate() {
           backgroundColor: '#202a5a'
         }
       }
-    }, saving === 'true' ? 'Saving Changes...' : 'Save Changes')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, saving === 'true' ? 'Saving Payment...' : 'Save Payment')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       open: loadingOpenModal,
       onClose: handleClose
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -1299,7 +1345,7 @@ function PaymentInformationUpdate() {
         textAlign: 'center',
         p: 3
       })
-    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
       sx: {
         color: 'green',
         fontSize: 48,
@@ -1310,7 +1356,7 @@ function PaymentInformationUpdate() {
       sx: {
         fontWeight: 800
       }
-    }, "Payment Updated Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, "Payment Recorded Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       onClick: () => navigate('/PaymentView'),
@@ -1319,7 +1365,7 @@ function PaymentInformationUpdate() {
         backgroundColor: '#30368a',
         borderRadius: 2
       }
-    }, "Go to Payments")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }, "Go to Payments")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
       open: ErrorOpenModal,
       onClose: handleCloseError
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -1330,7 +1376,7 @@ function PaymentInformationUpdate() {
         textAlign: 'center',
         p: 3
       })
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
       sx: {
         color: 'red',
         fontSize: 48,
@@ -1347,7 +1393,7 @@ function PaymentInformationUpdate() {
         color: '#64748B',
         mt: 1
       }
-    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "outlined",
       onClick: handleCloseError,
@@ -1363,13 +1409,13 @@ function PaymentInformationUpdate() {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
@@ -1383,7 +1429,7 @@ function PaymentInformationUpdate() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -1391,18 +1437,16 @@ function PaymentInformationUpdate() {
     sx: {
       flexGrow: 1
     }
-  }, "Update Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Add new Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     onClick: handleOpenBack
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    color: "inherit"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Badge__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
-    badgeContent: 4,
-    color: "secondary"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Notifications__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+    name: user.data.userName,
+    role: user.data.role
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     sx: {
       marginLeft: '10px',
       marginRight: '10px'
@@ -1410,7 +1454,7 @@ function PaymentInformationUpdate() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -1419,7 +1463,7 @@ function PaymentInformationUpdate() {
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
@@ -1428,7 +1472,7 @@ function PaymentInformationUpdate() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
@@ -1441,7 +1485,7 @@ function PaymentInformationUpdate() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 4
@@ -1455,7 +1499,7 @@ function PaymentInformationUpdate() {
       padding: '15px'
     },
     spacing: 2,
-    component: _mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A
+    component: _mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
@@ -1465,7 +1509,7 @@ function PaymentInformationUpdate() {
       gap: '80px',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     multiline: true,
     label: "Customer Name",
     value: customerName.customerName,
@@ -1476,102 +1520,170 @@ function PaymentInformationUpdate() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(BlackTooltip, {
     title: "Clear",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    disabled: true,
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     onClick: handleClear
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
-  }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
     disableClearable: true,
     options: customer,
-    getOptionLabel: option => option.customerFullName ? option.customerFullName : option.companyName,
+    getOptionLabel: option => option.Customer,
     onChange: (e, newValue) => handleChangeCustomer(newValue),
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, _extends({}, params, {
+    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, params, {
       label: "Customer Name",
       required: true
     }))
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
-    xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    xs: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "reason"
+  }, "Payment Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    required: true,
+    id: "reason",
+    name: "reason",
+    value: reason,
+    label: "Payment Reason",
+    onChange: e => {
+      setReason(e.target.value);
+      if (e.target.value === "Project" && modes === "Credit") {
+        setModes("");
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Project"
+  }, "Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Invoice"
+  }, "Invoice"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Customer Credit"
+  }, "Customer Credit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 3
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     id: "transactionType"
-  }, "Transaction Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, "Transaction Type"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     required: true,
     id: "transactionType",
     name: "transactionType",
     value: transactionType,
     label: "Transaction Type",
-    onChange: e => setTransactionType(e.target.value)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    onChange: e => {
+      var val = e.target.value;
+      setTransactionType(val);
+      setPaymentReceivedUSD(0);
+      setPaymentReceivedFC(0);
+      setAmount(0);
+      setReturnUSD(0);
+      setReturnFC(0);
+      if (invoice && invoice.length > 0) {
+        setInvoice(invoice.map(r => _objectSpread(_objectSpread({}, r), {}, {
+          total: 0,
+          amountPaidUSD: 0,
+          amountPaidFC: 0
+        })));
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Payment"
-  }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Payment"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Refund"
   }, "Refund")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 3
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     id: "status"
-  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     required: true,
     id: "status",
     name: "status",
     value: status,
     label: "Status",
     onChange: e => setStatus(e.target.value)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Cleared"
-  }, "Cleared"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Cleared"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Pending"
-  }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Pending"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Voided"
   }, "Voided")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 6
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "modes"
+  }, "Payment Modes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    required: true,
+    id: "modes",
+    name: "modes",
+    value: modes,
+    label: "Payment Modes",
+    onChange: e => handleChangeModes(e)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Cash"
+  }, "Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Bank Transfer"
+  }, "Bank Transfer"), reason !== "Project" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Credit"
+  }, "Credit (Deposit to Customer Credit)"), reason !== "Project" && oldCredit > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    value: "Credit-Account"
+  }, "Use Customer Credit ($", oldCredit === null || oldCredit === void 0 ? void 0 : oldCredit.toFixed(2), " Available)")))), customerId && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     variant: "body2",
     color: "textSecondary"
-  }, "Customer Current Credit: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("strong", null, "$", oldCredit === null || oldCredit === void 0 ? void 0 : oldCredit.toFixed(2)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+  }, "Customer Available Credit: ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("strong", null, "$", oldCredit === null || oldCredit === void 0 ? void 0 : oldCredit.toFixed(2)))), modes === "" || reason === "" ? "" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+    container: true,
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
-    xs: 7
+    xs: modes === 'Bank Transfer' ? 7 : 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
       gap: '10px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "amount"
-  }, transactionType === 'Refund' ? 'Refund Amount' : 'Amount Received'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, transactionType === 'Refund' ? 'Refund Amount' : 'Amount Received'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     required: true,
     id: "amount",
-    value: amount,
     onChange: e => setAmount(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "USD"),
     label: transactionType === 'Refund' ? 'Refund Amount' : 'Amount Received'
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+  })))), modes === 'Bank Transfer' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 5
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "bankCharge"
-  }, "Bank Charge"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Bank Charge"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     type: "number",
     id: "bankCharge",
-    value: bankCharge,
     onChange: e => setBankCharge(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "USD"),
     label: "Bank Charge",
@@ -1579,15 +1691,15 @@ function PaymentInformationUpdate() {
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_40__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_41__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_39__/* .DemoContainer */ .j, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_37__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_38__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_36__/* .DemoContainer */ .j, {
     components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_42__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_39__/* .DatePicker */ .l, {
     required: true,
     name: "paymentDate",
     label: "Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_43___default()(paymentDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_41___default()(paymentDate),
     onChange: date => setPaymentDate(date),
     sx: {
       m: 1,
@@ -1598,46 +1710,23 @@ function PaymentInformationUpdate() {
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    id: "modes"
-  }, "Payment Modes"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    required: true,
-    id: "modes",
-    name: "modes",
-    value: modes,
-    label: "Payment Modes",
-    onChange: e => handleChangeModes(e)
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    value: "Cash"
-  }, "Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    value: "Bank Transfer"
-  }, "Bank Transfer"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-    value: "Credit"
-  }, "Credit")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
-    item: true,
-    xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "paymentNumber"
-  }, "Payment Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Payment Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     type: "number",
     id: "paymentNumber",
     name: "paymentNumber",
     label: "Payment Number",
     value: paymentNumber,
     onChange: e => setPaymentNumber(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
-    }, "PAY-0")
+    }, "PAY-")
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
@@ -1661,9 +1750,9 @@ function PaymentInformationUpdate() {
       display: 'flex',
       alignItems: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "amountPaidFC"
-  }, "Amount Paid FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Amount Paid FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '200px',
       backgroundColor: 'white'
@@ -1673,13 +1762,13 @@ function PaymentInformationUpdate() {
     type: "number",
     value: PaymentReceivedFC,
     onChange: e => setPaymentReceivedFC(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "FC"),
     label: "Amount Paid FC"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "rate"
-  }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '150px',
       backgroundColor: 'white'
@@ -1688,13 +1777,13 @@ function PaymentInformationUpdate() {
     name: "rate",
     value: rate,
     onChange: e => setRate(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "$"),
     label: "Rate"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "amountPaidFC"
-  }, "Amount Paid USD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Amount Paid USD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '200px',
       backgroundColor: 'white'
@@ -1704,13 +1793,13 @@ function PaymentInformationUpdate() {
     type: "number",
     value: PaymentReceivedUSD,
     onChange: e => setPaymentReceivedUSD(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "$"),
     label: "Amount Paid USD"
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     htmlFor: "amountPaidFC"
-  }, "Total Paid USD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, "Total Paid USD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '200px',
       backgroundColor: 'white'
@@ -1719,75 +1808,76 @@ function PaymentInformationUpdate() {
     name: "totalUSdInfo",
     type: "number",
     value: totalUSdInfo,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "$"),
     label: "Total Paid USD"
-  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+  }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
       alignItems: 'center',
       gap: '0'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("table", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tbody", null, invoice === null || invoice === void 0 ? void 0 : invoice.map((row, i) => {
+    var _ref19, _row$maxRefundable3;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", {
       key: row.id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, dayjs__WEBPACK_IMPORTED_MODULE_43___default()(row.invoiceDate).format('DD/MM/YYYY')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, row.prefix === "P-" || row.prefix === "P" || reason === "Project" && !row.prefix ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, dayjs__WEBPACK_IMPORTED_MODULE_41___default()(row.invoiceDate).format('DD/MM')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, row.prefix === "P-" || row.prefix === "P" || reason === "Project" && !row.prefix ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         width: '150px',
         backgroundColor: 'white'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "projectNumber"
-    }, "Project Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, "Project Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       disabled: true,
       type: "text",
       id: "Ref",
       name: "Ref",
       label: "Project Number",
       value: String(row.Ref).padStart(6, '0'),
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
-      }, "P-")
-    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      }, row.prefix || "P-")
+    })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       sx: {
         width: '150px',
         backgroundColor: 'white'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "invoiceNumber"
-    }, "Invoice Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, "Invoice Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       disabled: true,
       type: "text",
       id: "Ref",
       name: "Ref",
       label: "Invoice Number",
       value: String(row.Ref).padStart(6, '0'),
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
-      }, "INV-")
+      }, row.prefix || "INV-")
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
       id: "InvoiceAmount"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "subtotal"
-    }, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, transactionType === 'Refund' ? 'Paid (Refundable)' : 'Balance Due'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       sx: {
-        width: '150px',
+        width: '250px',
         backgroundColor: 'white'
       },
       type: "number",
       id: "subtotal",
-      value: row.balanceDue,
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      value: transactionType === 'Refund' ? (_ref19 = (_row$maxRefundable3 = row.maxRefundable) !== null && _row$maxRefundable3 !== void 0 ? _row$maxRefundable3 : row.paidAmount) !== null && _ref19 !== void 0 ? _ref19 : 0 : row.balanceDue,
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "USD"),
-      label: "subtotal"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      label: transactionType === 'Refund' ? 'Paid (Refundable)' : 'Balance Due'
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "amountPaidFC"
-    }, "Amount Paid FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, "Amount Paid FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       sx: {
         width: '200px',
         backgroundColor: 'white'
@@ -1796,28 +1886,28 @@ function PaymentInformationUpdate() {
       name: "amountPaidFC",
       value: row.amountPaidFC,
       onChange: e => handleChangeCEO(e, row.id),
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "FC"),
       label: "Amount Paid FC"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "rateChange"
-    }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       sx: {
-        width: '150px',
+        width: '90px',
         backgroundColor: 'white'
       },
       id: "rateChange",
       name: "rateChange",
       value: row.rateChange,
       onChange: e => handleChangeCEO(e, row.id),
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "$"),
       label: "Rate"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "amountPaidUSD"
-    }, "Amount Paid USD"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, transactionType === 'Refund' ? 'Refund USD' : 'Amount Paid USD'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       sx: {
         width: '200px',
         backgroundColor: 'white'
@@ -1826,28 +1916,28 @@ function PaymentInformationUpdate() {
       name: "amountPaidUSD",
       value: row.amountPaidUSD,
       onChange: e => handleChangeCEO(e, row.id),
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "USD"),
       label: "Amount Paid USD"
-    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       htmlFor: "total"
-    }, "Total Paid"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    }, transactionType === 'Refund' ? 'Total Refund' : 'Total Paid'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
       disabled: true,
       sx: {
-        width: '150px',
+        width: '200px',
         backgroundColor: 'white'
       },
       id: "total",
       name: "total",
       value: row.total,
       onChange: e => handleChangeCEO(e, row.id),
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "USD"),
       label: "Total Paid"
     }))));
-  })))))), remaining > 0 && modes !== 'Credit-Account' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }))))))), transactionType !== 'Refund' && remaining > 0 && modes !== 'Credit-Account' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     sx: {
       mt: 2,
       mb: 2,
@@ -1872,13 +1962,13 @@ function PaymentInformationUpdate() {
     item: true,
     xs: 12,
     md: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     fullWidth: true,
     size: "small"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    id: "excess-action-label-update"
-  }, "Surplus Option"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-    labelId: "excess-action-label-update",
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    id: "excess-action-label"
+  }, "Surplus Option"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    labelId: "excess-action-label",
     value: excessAction,
     label: "Surplus Option",
     onChange: e => {
@@ -1895,9 +1985,9 @@ function PaymentInformationUpdate() {
     sx: {
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Credit"
-  }, "Keep in Customer Credit ($", remaining.toFixed(2), ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, "Keep in Customer Credit ($", remaining.toFixed(2), ")"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Return"
   }, "Cash Return to Customer (Change)")))), excessAction === 'Return' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
@@ -1936,7 +2026,7 @@ function PaymentInformationUpdate() {
     item: true,
     xs: 12,
     sm: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     fullWidth: true,
     size: "small",
     label: "Return USD ($)",
@@ -1944,7 +2034,7 @@ function PaymentInformationUpdate() {
     value: returnUSD,
     onChange: e => setReturnUSD(e.target.value),
     InputProps: {
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "$")
     },
@@ -1955,7 +2045,7 @@ function PaymentInformationUpdate() {
     item: true,
     xs: 12,
     sm: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     fullWidth: true,
     size: "small",
     label: "Return FC (Today's Rate: ".concat(rate, ")"),
@@ -1963,7 +2053,7 @@ function PaymentInformationUpdate() {
     value: returnFC,
     onChange: e => setReturnFC(e.target.value),
     InputProps: {
-      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+      startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
         position: "start"
       }, "FC")
     },
@@ -2070,7 +2160,7 @@ function PaymentInformationUpdate() {
     style: {
       textAlign: 'left'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, " $ "), remaining))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", null, " $ "), remaining))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
@@ -2085,7 +2175,7 @@ function PaymentInformationUpdate() {
       width: '100%',
       textAlign: 'center'
     }
-  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
     open: openBack,
     onClose: handleCloseBack,
     "aria-labelledby": "modal-modal-title",
@@ -2103,7 +2193,7 @@ function PaymentInformationUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2147,11 +2237,11 @@ function PaymentInformationUpdate() {
     style: {
       width: '100%'
     }
-  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleClose,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
@@ -2161,12 +2251,12 @@ function PaymentInformationUpdate() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -2184,11 +2274,11 @@ function PaymentInformationUpdate() {
   }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     onClick: () => handleDecision('previous'),
     className: "btnCustomer"
-  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
     open: ErrorOpenModal,
     onClose: handleCloseError,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
@@ -2198,12 +2288,12 @@ function PaymentInformationUpdate() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
@@ -2214,7 +2304,7 @@ function PaymentInformationUpdate() {
     onClick: handleCloseError
   }, "Try Again")))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PaymentInformationUpdate);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (PaymentInformationForm);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -2424,7 +2514,7 @@ function LanguageFixerButton(_ref) {
     _ref$sx = _ref.sx,
     sx = _ref$sx === void 0 ? {} : _ref$sx;
   var isTypo = (0,textAssistUtils/* hasTypo */.rp)(value, mode);
-  var activeTooltip = tooltip || (isTypo ? '⚠️ Typo or lowercase detected! Click ✨ to auto-correct & format in CAPITAL LETTERS' : '✨ Standardize text & format in CAPITAL LETTERS');
+  var activeTooltip = tooltip || (isTypo ? '⚠️ Suggestion available! Click ✨ to auto-correct & polish text' : '✨ Polish & format text');
   var handleFix = e => {
     if (e && e.preventDefault) e.preventDefault();
     if (e && e.stopPropagation) e.stopPropagation();
@@ -2434,12 +2524,12 @@ function LanguageFixerButton(_ref) {
     }
     var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
     if (polished === value.trim()) {
-      react_toastify_esm/* toast */.oR.info('Text is already clean and correctly formatted in CAPITAL LETTERS!');
+      react_toastify_esm/* toast */.oR.info('Text is already clean and formatted!');
     } else {
       if (typeof onFixed === 'function') {
         onFixed(polished);
       }
-      react_toastify_esm/* toast */.oR.success('✨ Polished & formatted in CAPITAL LETTERS!');
+      react_toastify_esm/* toast */.oR.success('✨ Text polished & formatted!');
     }
   };
   return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
@@ -3224,6 +3314,107 @@ var hasTypo = function hasTypo(text) {
   var polished = polishText(text, mode);
   return polished !== text.trim();
 };
+
+/***/ },
+
+/***/ 33829
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ esm_browser_v4)
+});
+
+;// ./node_modules/uuid/dist/esm-browser/native.js
+const randomUUID = typeof crypto !== 'undefined' && crypto.randomUUID && crypto.randomUUID.bind(crypto);
+/* harmony default export */ const esm_browser_native = ({
+  randomUUID
+});
+;// ./node_modules/uuid/dist/esm-browser/rng.js
+// Unique ID creation requires a high quality random # generator. In the browser we therefore
+// require the crypto API and do not support built-in fallback to lower quality random number
+// generators (like Math.random()).
+let getRandomValues;
+const rnds8 = new Uint8Array(16);
+function rng() {
+  // lazy load so that environments that need to polyfill have a chance to do so
+  if (!getRandomValues) {
+    // getRandomValues needs to be invoked in a context where "this" is a Crypto implementation.
+    getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto);
+
+    if (!getRandomValues) {
+      throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');
+    }
+  }
+
+  return getRandomValues(rnds8);
+}
+;// ./node_modules/uuid/dist/esm-browser/stringify.js
+/* unused harmony import specifier */ var validate;
+
+/**
+ * Convert array of 16 byte values to UUID string format of the form:
+ * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX
+ */
+
+const byteToHex = [];
+
+for (let i = 0; i < 256; ++i) {
+  byteToHex.push((i + 0x100).toString(16).slice(1));
+}
+
+function unsafeStringify(arr, offset = 0) {
+  // Note: Be careful editing this code!  It's been tuned for performance
+  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434
+  return byteToHex[arr[offset + 0]] + byteToHex[arr[offset + 1]] + byteToHex[arr[offset + 2]] + byteToHex[arr[offset + 3]] + '-' + byteToHex[arr[offset + 4]] + byteToHex[arr[offset + 5]] + '-' + byteToHex[arr[offset + 6]] + byteToHex[arr[offset + 7]] + '-' + byteToHex[arr[offset + 8]] + byteToHex[arr[offset + 9]] + '-' + byteToHex[arr[offset + 10]] + byteToHex[arr[offset + 11]] + byteToHex[arr[offset + 12]] + byteToHex[arr[offset + 13]] + byteToHex[arr[offset + 14]] + byteToHex[arr[offset + 15]];
+}
+
+function stringify(arr, offset = 0) {
+  const uuid = unsafeStringify(arr, offset); // Consistency check for valid UUID.  If this throws, it's likely due to one
+  // of the following:
+  // - One or more input array values don't map to a hex octet (leading to
+  // "undefined" in the uuid)
+  // - Invalid input values for the RFC `version` or `variant` fields
+
+  if (!validate(uuid)) {
+    throw TypeError('Stringified UUID is invalid');
+  }
+
+  return uuid;
+}
+
+/* harmony default export */ const esm_browser_stringify = ((/* unused pure expression or super */ null && (stringify)));
+;// ./node_modules/uuid/dist/esm-browser/v4.js
+
+
+
+
+function v4(options, buf, offset) {
+  if (esm_browser_native.randomUUID && !buf && !options) {
+    return esm_browser_native.randomUUID();
+  }
+
+  options = options || {};
+  const rnds = options.random || (options.rng || rng)(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`
+
+  rnds[6] = rnds[6] & 0x0f | 0x40;
+  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided
+
+  if (buf) {
+    offset = offset || 0;
+
+    for (let i = 0; i < 16; ++i) {
+      buf[offset + i] = rnds[i];
+    }
+
+    return buf;
+  }
+
+  return unsafeStringify(rnds);
+}
+
+/* harmony default export */ const esm_browser_v4 = (v4);
 
 /***/ }
 

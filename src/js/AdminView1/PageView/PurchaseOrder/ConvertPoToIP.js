@@ -259,8 +259,8 @@ function ConvertPoToIP() {
         setItems(poData.itemsQtyArray.map((row) => ({
           idRow: row.idRow,
           itemName: row.itemName,
-          itemDescription: row.itemDescription,
-          newDescription: row.newDescription,
+          itemDescription: (row.itemDescription || '').toUpperCase(),
+          newDescription: (row.newDescription || '').toUpperCase(),
           orderedQty: row.itemQty,
           itemQty: row.qtyBuy,
           itemRate: row.itemRate,
@@ -336,7 +336,7 @@ function ConvertPoToIP() {
     const { name, value } = e.target;
     const list = [...items];
     const i = items.findIndex(Item => Item.idRow === idRow)
-    list[i][name] = value
+    list[i][name] = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
     list[i]['totalAmountUSD'] = Math.round((list[i]['itemQty'] * list[i]['itemRate']) * 100) / 100;
     list[i]['fcConvertToUsd'] = Math.round((list[i]['totalAmountFC'] / list[i]['Taux']) * 100) / 100;
     list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd']) + parseFloat(list[i]['totalAmount'])) * 100) / 100;
@@ -451,7 +451,11 @@ function ConvertPoToIP() {
   const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
   {/** purchase start**/ }
 // Safe Update Logic: handleUpdatePurchase and onStatusUpdate will now fetch and merge records on-the-fly during submission
-const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescription !== undefined)
+const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescription !== undefined).map(row => ({
+  ...row,
+  itemDescription: (row.itemDescription || '').toUpperCase(),
+  newDescription: (row.newDescription || '').toUpperCase()
+}))
 
   const handleUpdatePurchase = async () => {
     if (arrayItemRelated.length === 0 || !projectName?._id) return;

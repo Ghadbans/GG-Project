@@ -562,7 +562,7 @@ function PurchaseFormUpdate() {
     const { name, value } = e.target;
     const list = [...items]
     const i = items.findIndex(Item => Item.idRow === idRow)
-    list[i][name] = value;
+    list[i][name] = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
     list[i]['totalAmount'] = Math.round((list[i]['itemQty'] * list[i]['itemRate']) * 100) / 100;
     list[i]['totalCost'] = Math.round((list[i]['itemQty'] * list[i]['itemCost']) * 100) / 100;
     list[i]['discount'] = list[i]['totalAmount'] * list[i]['itemDiscount'];
@@ -774,7 +774,7 @@ function PurchaseFormUpdate() {
       purchaseDate,
       projectName,
       description,
-      items,
+      items: (items || []).map(it => ({ ...it, itemDescription: (it.itemDescription || '').toUpperCase(), newDescription: (it.newDescription || '').toUpperCase() })),
       purchaseAmount1,
       CheckTvA,
       tax,

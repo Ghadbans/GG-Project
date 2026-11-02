@@ -2664,7 +2664,7 @@ function PurchaseUpdateOrder() {
       value = _e$target.value;
     var list = [...itemsQtyArray];
     var i = itemsQtyArray.findIndex(Item => Item.idRow === idRow);
-    list[i][name] = value;
+    list[i][name] = typeof value === 'string' && name !== 'password' && name !== 'email' ? value.toUpperCase() : value;
     list[i]['totalAmountUSD'] = Math.round(list[i]['qtyBuy'] * list[i]['itemRate'] * 100) / 100;
     list[i]['fcConvertToUsd'] = Math.round(list[i]['totalAmountFC'] / list[i]['Taux'] * 100) / 100;
     list[i]['fcConvertToUsdTotal'] = Math.round((parseFloat(list[i]['fcConvertToUsd']) + parseFloat(list[i]['totalAmount'])) * 100) / 100;
@@ -2917,7 +2917,10 @@ function PurchaseUpdateOrder() {
         var data = _ref12.data,
           contentType = _ref12.contentType,
           rest = _objectWithoutProperties(_ref12, _excluded4);
-        return rest;
+        return _objectSpread(_objectSpread({}, rest), {}, {
+          itemDescription: (rest.itemDescription || '').toUpperCase(),
+          newDescription: (rest.newDescription || '').toUpperCase()
+        });
       });
       var data = {
         itemOutDate,

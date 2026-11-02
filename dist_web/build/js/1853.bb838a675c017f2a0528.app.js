@@ -2799,8 +2799,9 @@ function ItemPurchaseViewForm() {
       value = _e$target.value;
     setItems(items => items.map(item => {
       if (item.idRow === idRow) {
+        var finalVal = typeof value === 'string' && name !== 'password' && name !== 'email' ? value.toUpperCase() : value;
         var updatedItem = _objectSpread(_objectSpread({}, item), {}, {
-          [name]: value
+          [name]: finalVal
         });
         updatedItem.totalAmountUSD = Math.round(parseFloat(updatedItem.itemQty || 0) * parseFloat(updatedItem.itemRate || 0) * 100) / 100;
         updatedItem.fcConvertToUsd = updatedItem.Taux && updatedItem.Taux !== 0 ? Math.round(parseFloat(updatedItem.totalAmountFC || 0) / parseFloat(updatedItem.Taux) * 100) / 100 : 0;
@@ -2940,7 +2941,10 @@ function ItemPurchaseViewForm() {
   }));
   {/** purchase start**/}
   // Safe Update Logic: handleUpdatePurchase will now fetch and merge records on-the-fly during submission
-  var arrayItemRelated = items.filter(row => row.itemQty !== 0 && row.itemQty !== '');
+  var arrayItemRelated = items.filter(row => row.itemQty !== 0 && row.itemQty !== '').map(row => _objectSpread(_objectSpread({}, row), {}, {
+    itemDescription: (row.itemDescription || '').toUpperCase(),
+    newDescription: (row.newDescription || '').toUpperCase()
+  }));
   var handleUpdatePurchase = /*#__PURE__*/function () {
     var _ref12 = _asyncToGenerator(function* () {
       if (arrayItemRelated.length === 0) return;

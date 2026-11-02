@@ -53,6 +53,73 @@ const { buildCustomerFilter, applyCustomerFilter } = require("../utils/customerF
 const { object } = require("joi");
 const { default: mongoose } = require("mongoose");
 
+function uppercaseItemsList(items) {
+  if (!Array.isArray(items)) return items;
+  return items.map(it => {
+    if (!it) return it;
+    const clean = { ...it };
+    if (typeof clean.itemDescription === 'string') clean.itemDescription = clean.itemDescription.toUpperCase();
+    if (typeof clean.newDescription === 'string') clean.newDescription = clean.newDescription.toUpperCase();
+    if (clean.itemName && typeof clean.itemName === 'object' && typeof clean.itemName.itemName === 'string') {
+      clean.itemName = { ...clean.itemName, itemName: clean.itemName.itemName.toUpperCase() };
+    }
+    return clean;
+  });
+}
+
+// Auto-repair legacy lowercase item descriptions in purchaseSchema & purchaseOrderSchema
+(async () => {
+  try {
+    const pDocs = await purchaseSchema.find({
+      $or: [
+        { 'items.itemDescription': { $regex: /[a-z]/ } },
+        { 'items.newDescription': { $regex: /[a-z]/ } }
+      ]
+    }).limit(1000);
+    for (const doc of (pDocs || [])) {
+      let modified = false;
+      for (const it of (doc.items || [])) {
+        if (typeof it.itemDescription === 'string' && /[a-z]/.test(it.itemDescription)) {
+          it.itemDescription = it.itemDescription.toUpperCase();
+          modified = true;
+        }
+        if (typeof it.newDescription === 'string' && /[a-z]/.test(it.newDescription)) {
+          it.newDescription = it.newDescription.toUpperCase();
+          modified = true;
+        }
+      }
+      if (modified) {
+        await purchaseSchema.updateOne({ _id: doc._id }, { $set: { items: doc.items } });
+      }
+    }
+
+    const poDocs = await purchaseOrderSchema.find({
+      $or: [
+        { 'itemsQtyArray.itemDescription': { $regex: /[a-z]/ } },
+        { 'itemsQtyArray.newDescription': { $regex: /[a-z]/ } }
+      ]
+    }).limit(1000);
+    for (const doc of (poDocs || [])) {
+      let modified = false;
+      for (const it of (doc.itemsQtyArray || [])) {
+        if (typeof it.itemDescription === 'string' && /[a-z]/.test(it.itemDescription)) {
+          it.itemDescription = it.itemDescription.toUpperCase();
+          modified = true;
+        }
+        if (typeof it.newDescription === 'string' && /[a-z]/.test(it.newDescription)) {
+          it.newDescription = it.newDescription.toUpperCase();
+          modified = true;
+        }
+      }
+      if (modified) {
+        await purchaseOrderSchema.updateOne({ _id: doc._id }, { $set: { itemsQtyArray: doc.itemsQtyArray } });
+      }
+    }
+  } catch (err) {
+    console.error('[SYS] Auto-repair purchase/PO lowercase error:', err);
+  }
+})();
+
 // const nodemailer = require('nodemailer');
 // const crypto = require('crypto');
 // const bcrypt = require('bcrypt');
@@ -185,7 +252,8 @@ Route.route("/create-purchase").post(async (req, res, next) => {
  const { customerName,purchaseNumber,noteInfo,estimateDefect,estimateSubject,
   purchaseName,projectName,description,Position,
   purchaseDate,status,statusInfo,items,purchaseAmount1,
-  purchaseAmount2,Create,ReferenceName,ReferenceName2} = req.body
+  purchaseAmount2,Create,ReferenceName,ReferenceName2} = req.body;
+  const finalItems = uppercaseItemsList(items);
  try {
   const branchId = req.body.branchId || req.query.branchId;
   const purchaseNumberInfo = await purchaseSchema.findOne(branchId ? { branchId } : {}).sort({
@@ -197,7 +265,7 @@ Route.route("/create-purchase").post(async (req, res, next) => {
       purchaseNumber: sum,
       purchaseName: "PUR-00"+ sum
       ,projectName,description,noteInfo,estimateDefect,estimateSubject,
-      purchaseDate,status,statusInfo,items,purchaseAmount1,Position,
+      purchaseDate,status,statusInfo,items: finalItems,purchaseAmount1,Position,
       purchaseAmount2,Create,ReferenceName,ReferenceName2,
       branchId}).then((result)=>{
       res.json({
@@ -211,7 +279,7 @@ Route.route("/create-purchase").post(async (req, res, next) => {
   } else {
     await purchaseSchema.create({ customerName,purchaseNumber,
       purchaseName,projectName,description,noteInfo,estimateDefect,estimateSubject,
-      purchaseDate,status,statusInfo,items,purchaseAmount1,Position,
+      purchaseDate,status,statusInfo,items: finalItems,purchaseAmount1,Position,
       purchaseAmount2,Create,ReferenceName,ReferenceName2,
       branchId}).then((result)=>{
       res.json({
@@ -244,6 +312,9 @@ Route.route("/get-purchase/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-purchase/:id").put(async (req, res, next) => {
+  if (req.body.items) {
+    req.body.items = uppercaseItemsList(req.body.items);
+  }
   await purchaseSchema
     .findByIdAndUpdate(req.params.id, {
       $set: req.body,
@@ -389,6 +460,7 @@ Route.route("/get-last-saved-purchaseOrder").get(async(req,res, next)=>{
 // Create purchaseOrder
 Route.route("/create-purchaseOrder").post(async (req, res, next) => {
   try {
+    if (req.body.itemsQtyArray) req.body.itemsQtyArray = uppercaseItemsList(req.body.itemsQtyArray);
     const branchId = req.body.branchId || 'HQ';
     let newNumber = req.body.outNumber;
     
@@ -427,6 +499,7 @@ Route.route("/get-purchaseOrder/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-purchaseOrder/:id").put(async (req, res, next) => {
+  if (req.body.itemsQtyArray) req.body.itemsQtyArray = uppercaseItemsList(req.body.itemsQtyArray);
   await purchaseOrderSchema
     .findByIdAndUpdate(req.params.id, {
       $set: req.body,
