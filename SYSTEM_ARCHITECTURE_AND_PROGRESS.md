@@ -3113,3 +3113,45 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   6. **Deployment & Git Sync**:
      - Updated `SYSTEM_ARCHITECTURE_AND_PROGRESS.md` with complete session memory.
      - Staged all changes and pushed to GitHub `main` for automated Railway and Cloudflare Pages deployment.
+
+### Version 3.6.4 (November 02, 2026) - Comprehensive Whole-Sentence Typo Detection & Intelligent Targeted Right-Click Context Menu
+- **User Feedback & Issues Addressed**:
+  1. **Incomplete Sentence Typo Detection**:
+     - When testing sentences with multiple typing slips (e.g., `THE ROTATING AXLE WAS FIXED AND INSTALLED WHN TH ITMEN NT WOKING`), the ✨ suggestions popup was only detecting one word (`WOKING`), completely overlooking other common shorthand/typos such as `WHN` (WHEN), `TH` (THE), `ITMEN` (ITEM), and `NT` (NOT).
+     - Furthermore, once the single detected typo was fixed, the menu displayed *"All words look correct!"* even though several mistakes remained in the sentence.
+  2. **Right-Click Native Menu Suppression**:
+     - Right-clicking in an empty box correctly showed the browser's native context menu (`Undo`, `Redo`, `Cut`, `Copy`, `Paste`, etc.).
+     - However, right-clicking in any box containing a sentence was intercepting all right-clicks and displaying `Spelling & Word Suggestions`, preventing normal `Undo`, `Redo`, `Cut`, and `Copy` actions.
+     - The user requested:
+       *"the Spelling & Word Suggestions should only work when i select the word that i want the Spelling & Word Suggestions to check it or only if it has mistaken ... Spelling & Word Suggestions should be smart and checking all thell sentence only the last word each word should check and give word suggestions for all !!"*
+
+- **Solutions & Implementations**:
+  1. **Expanded Bilingual Vocabulary & Comprehensive Typo Dictionary (`src/js/utils/textAssistUtils.js`)**:
+     - Added comprehensive short-word typo patterns to `TYPO_DICTIONARY`:
+       - `WHN`/`WEN` $\rightarrow$ `WHEN`
+       - `TH`/`TEH`/`HTE` $\rightarrow$ `THE`
+       - `NT` $\rightarrow$ `NOT`
+       - `ITMEN`/`ITME`/`ITMS`/`ITMES`/`ITM` $\rightarrow$ `ITEM`
+       - `WOKING`/`WOKRING`/`WRKING`/`WORKN` $\rightarrow$ `WORKING`
+       - `WZ`/`WAZ` $\rightarrow$ `WAS`, `WR`/`WER` $\rightarrow$ `WERE`, `IZ` $\rightarrow$ `IS`, `AR` $\rightarrow$ `ARE`, `BEN`/`BIN` $\rightarrow$ `BEEN`
+       - `BT` $\rightarrow$ `BUT`, `BCZ`/`BCUZ`/`COZ`/`CUZ` $\rightarrow$ `BECAUSE`, `WTH`/`WID` $\rightarrow$ `WITH`, `FRM` $\rightarrow$ `FROM`, `BFR` $\rightarrow$ `BEFORE`, `AFTR` $\rightarrow$ `AFTER`
+       - `INSTALED`/`INSTLD` $\rightarrow$ `INSTALLED`, `FIXD`/`FIXXED` $\rightarrow$ `FIXED`, `CHKD` $\rightarrow$ `CHECKED`, `AXEL` $\rightarrow$ `AXLE`, `ROTATNG` $\rightarrow$ `ROTATING`, etc.
+     - Enriched `ENGLISH_FRENCH_VOCABULARY` with technical machinery and action terminology (`AXLE`, `AXLES`, `ROTATING`, `ROTATE`, `ROTATED`, `ROTATION`, `FIXED`, `FIX`, `INSTALLED`, `INSTALL`, `ITEM`, `ITEMS`, `SHAFT`, `WHEEL`, `PULLEY`, `CHAIN`, `CYLINDER`, `LATHE`, etc.) so valid technical terms are never falsely flagged.
+     - Guaranteed 100% synchronization: `hasTypo` now uses `!getSuggestions(text, mode).isClean` directly, permanently eliminating false-alarm exclamation badges when suggestions are resolved.
+  2. **Intelligent Targeted Right-Click Context Menu (`src/js/component/SmartTextInput.js`)**:
+     - Right-clicking in an empty space or on correctly spelled words does **NOT** call `e.preventDefault()`, allowing the browser's native context menu (`Undo`, `Redo`, `Cut`, `Copy`, `Paste`, `Select All`) to appear naturally.
+     - When the user highlights/selects text: If the selection contains typos, opens `Spelling & Word Suggestions` scoped to that selection; if the user highlighted clean text (e.g. to Copy it), the native browser menu opens normally.
+     - When no text is selected: Extracts the word directly under the mouse cursor (`selectionStart`). If that word contains a typo, opens the suggestions dropdown targeting that specific word. If clean, opens the native browser menu.
+  3. **Whole-Sentence ✨ Button Inspection (`src/js/component/LanguageFixerButton.js`)**:
+     - Left-clicking the ✨ button on the right of any text field scans the **entire sentence** from start to finish, detecting and displaying **all** typos across the sentence (`WHN`, `TH`, `ITMEN`, `NT`, `WOKING`, etc.) in an interactive dropdown.
+     - The badge displays the exact count of all remaining typos across the entire sentence.
+     - Provides an **"Apply All Corrections (N)"** button to fix all detected typos simultaneously.
+  4. **Quality Verification, Version Bump to v3.6.4 & Production Packaging**:
+     - Pre-build AST check verified with 0 errors (`node scripts/pre-build-check.js`).
+     - Engine test suite verified with all tests passing (`node scripts/test_engine.js`).
+     - Tested sentence: `"THE ROTATING AXLE WAS FIXED AND INSTALLED WHN TH ITMEN NT WOKING"` $\rightarrow$ detected all 5 typos (`WHN`, `TH`, `ITMEN`, `NT`, `WOKING`) and applied all corrections to `"THE ROTATING AXLE WAS FIXED AND INSTALLED WHEN THE ITEM NOT WORKING"` with 0 remaining suggestions and `hasTypo: false`.
+     - Recompiled Web production bundle (`npm run build:web`) with cache-busting.
+     - Recompiled Electron desktop bundle (`npm run build:electron`).
+     - Generated official Windows installer: `dist/Global Gate Setup 3.6.4.exe` (95.52 MB), copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.4.exe`.
+     - Built Android APK via Gradle (`./gradlew assembleDebug`, 18.52 MB), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.4.apk`.
+     - Committed and pushed all changes to GitHub `main` for Railway backend deployment.

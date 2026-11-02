@@ -2526,13 +2526,18 @@ function LanguageFixerButton(_ref) {
     anchorEl = _useState2[0],
     setAnchorEl = _useState2[1];
 
-  // Compute suggestions and diagnostics
-  var analysis = (0,textAssistUtils/* getSuggestions */.KW)(value, mode);
-  var suggestions = analysis.suggestions,
-    hasExtraSpaces = analysis.hasExtraSpaces,
-    hasUncapitalized = analysis.hasUncapitalized,
-    isClean = analysis.isClean;
+  // Compute suggestions and diagnostics for full input
+  var fullAnalysis = (0,textAssistUtils/* getSuggestions */.KW)(value, mode);
+  var suggestions = fullAnalysis.suggestions,
+    hasExtraSpaces = fullAnalysis.hasExtraSpaces,
+    hasUncapitalized = fullAnalysis.hasUncapitalized,
+    isClean = fullAnalysis.isClean;
   var isTypo = !isClean;
+
+  // If opened via right-click with a specific scopeText, compute suggestions for scopeText
+  var isScoped = Boolean(contextMenu && contextMenu.scopeText);
+  var scopeSuggestions = isScoped ? (0,textAssistUtils/* getSuggestions */.KW)(contextMenu.scopeText, mode).suggestions : [];
+  var displaySuggestions = isScoped && scopeSuggestions.length > 0 ? scopeSuggestions : suggestions;
   var isMenuOpen = Boolean(anchorEl) || contextMenu !== null;
   var handleOpenMenu = e => {
     if (e && e.preventDefault) e.preventDefault();
@@ -2555,19 +2560,25 @@ function LanguageFixerButton(_ref) {
       onFixed(updated);
     }
     react_toastify_esm/* toast */.oR.success("\u2728 Replaced \"".concat(original, "\" with \"").concat(replacement, "\"!"));
-
-    // Check remaining suggestions
-    var remaining = (0,textAssistUtils/* getSuggestions */.KW)(updated, mode).suggestions;
-    if (remaining.length === 0) {
+    if (isScoped) {
       handleClose();
+    } else {
+      var remaining = (0,textAssistUtils/* getSuggestions */.KW)(updated, mode).suggestions;
+      if (remaining.length === 0) {
+        handleClose();
+      }
     }
   };
   var handleApplyAll = () => {
-    var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
-    if (typeof onFixed === 'function') {
-      onFixed(polished);
+    var updated = value;
+    for (var s of displaySuggestions) {
+      updated = (0,textAssistUtils/* applySingleCorrection */.ZD)(updated, s.original, s.replacement, mode);
     }
-    react_toastify_esm/* toast */.oR.success('✨ All corrections applied!');
+    updated = (0,textAssistUtils/* applyCleanSpaces */.nW)(updated, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success("\u2728 Applied ".concat(displaySuggestions.length, " correction(s)!"));
     handleClose();
   };
   var handleFormatSpacesOnly = () => {
@@ -2674,7 +2685,7 @@ function LanguageFixerButton(_ref) {
       fontSize: 16,
       color: '#30368a'
     }
-  }), "Spelling & Word Suggestions"), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }), isScoped ? "Spelling Suggestion (\"".concat(contextMenu === null || contextMenu === void 0 ? void 0 : contextMenu.scopeText, "\")") : 'Spelling & Word Suggestions'), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     size: "small",
     onClick: handleClose,
     sx: {
@@ -2691,13 +2702,13 @@ function LanguageFixerButton(_ref) {
       color: '#64748b',
       mt: 0.5
     }
-  }, suggestions.length > 0 ? 'Select which word you want to replace in this sentence:' : 'No word replacements detected in this sentence.')), suggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, displaySuggestions.length > 0 ? isScoped ? 'Click "Fix" to replace this word:' : "Detected ".concat(displaySuggestions.length, " typo(s) across this sentence. Click Fix or Apply All:") : 'No word replacements detected in this sentence.')), displaySuggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       maxHeight: 240,
       overflowY: 'auto',
       py: 0.5
     }
-  }, suggestions.map((s, idx) => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, displaySuggestions.map((s, idx) => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     key: idx,
     onClick: () => handleApplySingle(s.original, s.replacement),
     sx: {
@@ -2758,7 +2769,7 @@ function LanguageFixerButton(_ref) {
       color: '#30368a',
       fontWeight: 600
     }
-  }, "Fix")))), suggestions.length === 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Fix")))), displaySuggestions.length === 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       p: 2,
       display: 'flex',
@@ -2788,7 +2799,7 @@ function LanguageFixerButton(_ref) {
       flexDirection: 'column',
       gap: 0.5
     }
-  }, suggestions.length > 0 && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, displaySuggestions.length > 0 && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: handleApplyAll,
     sx: {
       borderRadius: '6px',
@@ -2807,7 +2818,7 @@ function LanguageFixerButton(_ref) {
     sx: {
       fontSize: 16
     }
-  }), "Apply All Corrections (", suggestions.length, ")"), (hasExtraSpaces || hasUncapitalized) && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }), "Apply All Corrections (", displaySuggestions.length, ")"), (hasExtraSpaces || hasUncapitalized) && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: handleFormatSpacesOnly,
     sx: {
       borderRadius: '6px',
@@ -2884,8 +2895,9 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
  * Drop-in intelligent text input with:
  * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
  * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
- * 3. Interactive suggestion dropdown menu (by clicking ✨ or right-clicking anywhere on text)
- * 4. Real-time typo detection badge & visual warning
+ * 3. Smart suggestion dropdown menu (by clicking ✨ or right-clicking on mistaken/selected words)
+ * 4. Preserves native browser context menu (Undo, Redo, Cut, Copy, Paste) on clean text & empty spaces
+ * 5. Real-time typo detection badge & visual warning
  */
 function SmartTextInput(_ref) {
   var label = _ref.label,
@@ -2926,13 +2938,56 @@ function SmartTextInput(_ref) {
   var dropdownOptions = Array.isArray(options) && options.length > 0 ? options : presetKey && _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] ? _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] : null;
   var isTypo = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .hasTypo */ .rp)(value, mode);
   var handleContextMenu = e => {
-    if (value && typeof value === 'string' && value.trim()) {
-      e.preventDefault();
-      setContextMenu({
-        mouseX: e.clientX,
-        mouseY: e.clientY
-      });
+    if (!value || typeof value !== 'string' || !value.trim()) {
+      // Empty input: allow native browser context menu (Undo, Redo, Cut, Copy, Paste, etc.)
+      return;
     }
+
+    // 1. Check if user has selected / highlighted text with mouse
+    var selectedText = typeof window !== 'undefined' && window.getSelection ? window.getSelection().toString().trim() : '';
+    if (selectedText) {
+      var selAnalysis = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .getSuggestions */ .KW)(selectedText, mode);
+      if (selAnalysis.suggestions.length > 0) {
+        // User highlighted text that contains a mistake -> show suggestions for this selection
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: selectedText
+        });
+        return;
+      }
+      // User highlighted clean text (likely to Copy) -> do NOT prevent default, let native Copy show!
+      return;
+    }
+
+    // 2. No text selected: check which word the cursor is currently on
+    var inputEl = e.target;
+    var clickedWord = '';
+    if (inputEl && typeof inputEl.selectionStart === 'number') {
+      var pos = inputEl.selectionStart;
+      var textVal = inputEl.value || value || '';
+      var leftPart = textVal.slice(0, pos);
+      var rightPart = textVal.slice(pos);
+      var leftMatch = (leftPart.match(/[\w\u00C0-\u017F]+$/) || [''])[0];
+      var rightMatch = (rightPart.match(/^[\w\u00C0-\u017F]+/) || [''])[0];
+      clickedWord = leftMatch + rightMatch;
+    }
+    if (clickedWord) {
+      var wordAnalysis = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .getSuggestions */ .KW)(clickedWord, mode);
+      if (wordAnalysis.suggestions.length > 0) {
+        // Clicked word is a mistake -> show Spelling & Word Suggestions for this word!
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: clickedWord
+        });
+        return;
+      }
+    }
+
+    // 3. Otherwise: clicked on whitespace or clean word -> allow native browser context menu!
   };
   var notifyChange = newVal => {
     if (typeof onChange !== 'function') return;
@@ -3386,6 +3441,203 @@ var TYPO_DICTIONARY = [
 }, {
   pattern: /\b(wrkrs|workrs|wrokers)\b/gi,
   replacement: 'WORKERS'
+},
+// Grammatical shorthand, prepositions, conjunctions, and high-frequency entry typos
+{
+  pattern: /\b(whn|wen)\b/gi,
+  replacement: 'WHEN'
+}, {
+  pattern: /\b(th|teh|hte)\b/gi,
+  replacement: 'THE'
+}, {
+  pattern: /\b(nt)\b/gi,
+  replacement: 'NOT'
+}, {
+  pattern: /\b(bt)\b/gi,
+  replacement: 'BUT'
+}, {
+  pattern: /\b(wz|waz)\b/gi,
+  replacement: 'WAS'
+}, {
+  pattern: /\b(wr|wer)\b/gi,
+  replacement: 'WERE'
+}, {
+  pattern: /\b(iz)\b/gi,
+  replacement: 'IS'
+}, {
+  pattern: /\b(ar)\b/gi,
+  replacement: 'ARE'
+}, {
+  pattern: /\b(ben|bin)\b/gi,
+  replacement: 'BEEN'
+}, {
+  pattern: /\b(hv|hve)\b/gi,
+  replacement: 'HAVE'
+}, {
+  pattern: /\b(hss)\b/gi,
+  replacement: 'HAS'
+}, {
+  pattern: /\b(wth|wid|wit)\b/gi,
+  replacement: 'WITH'
+}, {
+  pattern: /\b(widout|wthout)\b/gi,
+  replacement: 'WITHOUT'
+}, {
+  pattern: /\b(frm|fom)\b/gi,
+  replacement: 'FROM'
+}, {
+  pattern: /\b(bfr|b4)\b/gi,
+  replacement: 'BEFORE'
+}, {
+  pattern: /\b(aftr)\b/gi,
+  replacement: 'AFTER'
+}, {
+  pattern: /\b(bcz|bcuz|coz|cuz|becoz)\b/gi,
+  replacement: 'BECAUSE'
+}, {
+  pattern: /\b(ths|tihs)\b/gi,
+  replacement: 'THIS'
+}, {
+  pattern: /\b(tht|taht)\b/gi,
+  replacement: 'THAT'
+}, {
+  pattern: /\b(thr)\b/gi,
+  replacement: 'THERE'
+}, {
+  pattern: /\b(thier)\b/gi,
+  replacement: 'THEIR'
+}, {
+  pattern: /\b(thms)\b/gi,
+  replacement: 'THEM'
+}, {
+  pattern: /\b(itmen|itme|itms|itmes|itm)\b/gi,
+  replacement: 'ITEM'
+}, {
+  pattern: /\b(woking|wokring|wrking|workn)\b/gi,
+  replacement: 'WORKING'
+}, {
+  pattern: /\b(woked|wrked)\b/gi,
+  replacement: 'WORKED'
+}, {
+  pattern: /\b(instaled|instld|instald)\b/gi,
+  replacement: 'INSTALLED'
+}, {
+  pattern: /\b(fixd|fxd|fixxed)\b/gi,
+  replacement: 'FIXED'
+}, {
+  pattern: /\b(chkd|chked)\b/gi,
+  replacement: 'CHECKED'
+}, {
+  pattern: /\b(axel)\b/gi,
+  replacement: 'AXLE'
+}, {
+  pattern: /\b(rotatng|rotatin)\b/gi,
+  replacement: 'ROTATING'
+}, {
+  pattern: /\b(conect|conected)\b/gi,
+  replacement: 'CONNECTED'
+}, {
+  pattern: /\b(disconect|disconected)\b/gi,
+  replacement: 'DISCONNECTED'
+}, {
+  pattern: /\b(displey|scren)\b/gi,
+  replacement: 'DISPLAY'
+}, {
+  pattern: /\b(cabel)\b/gi,
+  replacement: 'CABLE'
+}, {
+  pattern: /\b(temprature|tempreture)\b/gi,
+  replacement: 'TEMPERATURE'
+}, {
+  pattern: /\b(presure)\b/gi,
+  replacement: 'PRESSURE'
+}, {
+  pattern: /\b(voltge)\b/gi,
+  replacement: 'VOLTAGE'
+}, {
+  pattern: /\b(genrator)\b/gi,
+  replacement: 'GENERATOR'
+}, {
+  pattern: /\b(condensor)\b/gi,
+  replacement: 'CONDENSER'
+}, {
+  pattern: /\b(refridgerator)\b/gi,
+  replacement: 'REFRIGERATOR'
+}, {
+  pattern: /\b(moter)\b/gi,
+  replacement: 'MOTOR'
+}, {
+  pattern: /\b(batry)\b/gi,
+  replacement: 'BATTERY'
+}, {
+  pattern: /\b(breeker)\b/gi,
+  replacement: 'BREAKER'
+}, {
+  pattern: /\b(fuz)\b/gi,
+  replacement: 'FUSE'
+}, {
+  pattern: /\b(valv)\b/gi,
+  replacement: 'VALVE'
+}, {
+  pattern: /\b(pyp|pipp)\b/gi,
+  replacement: 'PIPE'
+}, {
+  pattern: /\b(bering|bearng)\b/gi,
+  replacement: 'BEARING'
+}, {
+  pattern: /\b(berings|bearngs)\b/gi,
+  replacement: 'BEARINGS'
+}, {
+  pattern: /\b(levle)\b/gi,
+  replacement: 'LEVEL'
+}, {
+  pattern: /\b(tite|tightn)\b/gi,
+  replacement: 'TIGHTEN'
+}, {
+  pattern: /\b(tightned)\b/gi,
+  replacement: 'TIGHTENED'
+}, {
+  pattern: /\b(lubricat)\b/gi,
+  replacement: 'LUBRICATE'
+}, {
+  pattern: /\b(lubricatd)\b/gi,
+  replacement: 'LUBRICATED'
+}, {
+  pattern: /\b(calibrat)\b/gi,
+  replacement: 'CALIBRATE'
+}, {
+  pattern: /\b(adjustd)\b/gi,
+  replacement: 'ADJUSTED'
+}, {
+  pattern: /\b(damagd)\b/gi,
+  replacement: 'DAMAGED'
+}, {
+  pattern: /\b(faild)\b/gi,
+  replacement: 'FAILED'
+}, {
+  pattern: /\b(finishd)\b/gi,
+  replacement: 'FINISHED'
+}, {
+  pattern: /\b(suply)\b/gi,
+  replacement: 'SUPPLY'
+}, {
+  pattern: /\b(invois)\b/gi,
+  replacement: 'INVOICE'
+}, {
+  pattern: /\b(recipt)\b/gi,
+  replacement: 'RECEIPT'
+}, {
+  pattern: /\b(purchas)\b/gi,
+  replacement: 'PURCHASE'
+}, {
+  pattern: /\b(amont)\b/gi,
+  replacement: 'AMOUNT'
+}, {
+  pattern: /\b(quantty)\b/gi,
+  replacement: 'QUANTITY'
+}, {
+  pattern: /\b(numbr)\b/gi,
+  replacement: 'NUMBER'
 }];
 
 // Curated vocabulary for word-by-word Damerau-Levenshtein spellchecking
@@ -3399,9 +3651,9 @@ var ENGLISH_FRENCH_VOCABULARY = new Set([
 // Common French Core & Expense Words
 'LE', 'LA', 'LES', 'UN', 'UNE', 'DES', 'DU', 'DE', 'AU', 'AUX', 'EN', 'DANS', 'SUR', 'SOUS', 'PAR', 'POUR', 'AVEC', 'SANS', 'VERS', 'CHEZ', 'CE', 'CET', 'CETTE', 'CES', 'MON', 'MA', 'MES', 'TON', 'TA', 'TES', 'SON', 'SA', 'SES', 'NOTRE', 'NOS', 'VOTRE', 'VOS', 'LEUR', 'LEURS', 'JE', 'TU', 'IL', 'ELLE', 'ON', 'NOUS', 'VOUS', 'ILS', 'ELLES', 'ME', 'TE', 'SE', 'LUI', 'MOI', 'TOI', 'SOI', 'EUX', 'QUI', 'QUE', 'QUOI', 'DONT', 'OU', 'FAIT', 'FAIRE', 'ETRE', 'AVOIR', 'PAS', 'PLUS', 'BIEN', 'BON', 'BONNE', 'MAUVAIS', 'JOUR', 'JOURS', 'MOIS', 'ANNEE', 'TEMPS', 'CHANGER', 'CHANGE', 'CHANGEMENT', 'REMPLACER', 'REMPLACEMENT', 'NETTOYER', 'NETTOYAGE', 'VERIFIER', 'VERIFICATION', 'REGLER', 'REGLAGE', 'NOURRITURE', 'REPAS', 'DEJEUNER', 'DINER', 'PETIT-DEJEUNER', 'BOISSON', 'BOISSONS', 'EAU', 'PAIN', 'CAFE', 'THE', 'SUCRE', 'LAIT', 'RIZ', 'VIANDE', 'POULET', 'POISSON', 'TRAVAILLEUR', 'TRAVAILLEURS', 'OUVRIER', 'OUVRIERS', 'EMPLOYE', 'EMPLOYES', 'PERSONNEL', 'EQUIPE', 'CHAUFFEUR', 'CHAUFFEURS', 'GARDE', 'GARDES', 'TECHNICIEN', 'TECHNICIENS', 'INGENIEUR', 'INGENIEURS', 'MECANICIEN', 'ELECTRICIEN', 'CARBURANT', 'ESSENCE', 'GASOIL', 'DIESEL', 'TRANSPORT', 'FRAIS', 'DEPENSE', 'DEPENSES', 'LOYER', 'ELECTRICITE', 'INTERNET', 'FOURNITURES', 'PAPIER', 'SALAIRE', 'SALAIRES', 'AVANCE', 'PRIME',
 // Appliances & Equipment
-'AIR', 'CONDITIONER', 'APPLIANCE', 'APPLIANCES', 'OVEN', 'MIXER', 'DOUGH', 'WATER', 'PUMP', 'GENERATOR', 'CHILLER', 'COLD', 'ROOM', 'COMPRESSOR', 'MOTOR', 'INVERTER', 'TRANSFORMER', 'CAPACITOR', 'BREAKER', 'CIRCUIT', 'SWITCH', 'BOARD', 'WIRING', 'CABLE', 'SCREEN', 'DISPLAY', 'CAMERA', 'CAMERAS', 'CCTV', 'SECURITY', 'SENSOR', 'THERMOSTAT', 'FUSE', 'VALVE', 'PIPE', 'FILTER', 'BELT', 'BEARING', 'BEARINGS', 'COIL', 'WINDING', 'REFRIGERANT', 'GAS', 'FREON', 'PRESSURE', 'TEMPERATURE', 'VOLTAGE', 'CURRENT', 'POWER', 'ELECTRIC', 'ELECTRICAL', 'MECHANICAL', 'ELECTRONIC', 'HEATING', 'COOLING', 'VENTILATION', 'PANEL', 'RELAY', 'BATTERY', 'CHARGER', 'FREEZER', 'REFRIGERATOR', 'FRIDGE', 'FRYER', 'MACHINE', 'MACHINES', 'HEATER', 'FAN', 'BLOWER', 'PLUG', 'SOCKET', 'CONNECTOR', 'ADAPTER', 'GENERATOR', 'STABILIZER', 'UPS', 'AVR',
+'AIR', 'CONDITIONER', 'APPLIANCE', 'APPLIANCES', 'OVEN', 'MIXER', 'DOUGH', 'WATER', 'PUMP', 'GENERATOR', 'CHILLER', 'COLD', 'ROOM', 'COMPRESSOR', 'MOTOR', 'INVERTER', 'TRANSFORMER', 'CAPACITOR', 'BREAKER', 'CIRCUIT', 'SWITCH', 'BOARD', 'WIRING', 'CABLE', 'SCREEN', 'DISPLAY', 'CAMERA', 'CAMERAS', 'CCTV', 'SECURITY', 'SENSOR', 'THERMOSTAT', 'FUSE', 'VALVE', 'PIPE', 'FILTER', 'BELT', 'BEARING', 'BEARINGS', 'COIL', 'WINDING', 'REFRIGERANT', 'GAS', 'FREON', 'PRESSURE', 'TEMPERATURE', 'VOLTAGE', 'CURRENT', 'POWER', 'ELECTRIC', 'ELECTRICAL', 'MECHANICAL', 'ELECTRONIC', 'HEATING', 'COOLING', 'VENTILATION', 'PANEL', 'RELAY', 'BATTERY', 'CHARGER', 'FREEZER', 'REFRIGERATOR', 'FRIDGE', 'FRYER', 'MACHINE', 'MACHINES', 'HEATER', 'FAN', 'BLOWER', 'PLUG', 'SOCKET', 'CONNECTOR', 'ADAPTER', 'GENERATOR', 'STABILIZER', 'UPS', 'AVR', 'AXLE', 'AXLES', 'ROTATING', 'ROTATE', 'ROTATED', 'ROTATION', 'SHAFT', 'SHAFTS', 'WHEEL', 'WHEELS', 'PULLEY', 'PULLEYS', 'CHAIN', 'CHAINS', 'LATHE', 'LATHES', 'CYLINDER', 'CYLINDERS', 'PISTON', 'PISTONS',
 // Commercial & ERP Terms
-'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT', 'PAYMENT', 'EXPENSE', 'EXPENSES', 'PURCHASE', 'PURCHASES', 'ORDER', 'ORDERS', 'PROJECT', 'PROJECTS', 'EMPLOYEE', 'EMPLOYEES', 'TECHNICIAN', 'SALARY', 'PAYROLL', 'ADVANCE', 'LOAN', 'CASH', 'BANK', 'ACCOUNT', 'BALANCE', 'TOTAL', 'SUBTOTAL', 'TAX', 'VAT', 'TVA', 'DISCOUNT', 'AMOUNT', 'PRICE', 'COST', 'RATE', 'QTY', 'QUANTITY', 'UNIT', 'UNITS', 'DESCRIPTION', 'REMARKS', 'NOTES', 'SERIAL', 'NUMBER', 'BRAND', 'MODEL', 'WARRANTY', 'STATUS', 'DATE', 'TIME', 'CODE', 'STORE', 'STOCK', 'INVENTORY', 'WAREHOUSE', 'TRANSFER', 'CATEGORY', 'DEPARTMENT', 'BRANCH', 'OFFICE', 'FACTORY', 'POS', 'SALES', 'RETAIL', 'WHOLESALE', 'DELIVERY', 'SHIPPING', 'TRANSPORT',
+'ITEM', 'ITEMS', 'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT', 'PAYMENT', 'EXPENSE', 'EXPENSES', 'PURCHASE', 'PURCHASES', 'ORDER', 'ORDERS', 'PROJECT', 'PROJECTS', 'EMPLOYEE', 'EMPLOYEES', 'TECHNICIAN', 'SALARY', 'PAYROLL', 'ADVANCE', 'LOAN', 'CASH', 'BANK', 'ACCOUNT', 'BALANCE', 'TOTAL', 'SUBTOTAL', 'TAX', 'VAT', 'TVA', 'DISCOUNT', 'AMOUNT', 'PRICE', 'COST', 'RATE', 'QTY', 'QUANTITY', 'UNIT', 'UNITS', 'DESCRIPTION', 'REMARKS', 'NOTES', 'SERIAL', 'NUMBER', 'BRAND', 'MODEL', 'WARRANTY', 'STATUS', 'DATE', 'TIME', 'CODE', 'STORE', 'STOCK', 'INVENTORY', 'WAREHOUSE', 'TRANSFER', 'CATEGORY', 'DEPARTMENT', 'BRANCH', 'OFFICE', 'FACTORY', 'POS', 'SALES', 'RETAIL', 'WHOLESALE', 'DELIVERY', 'SHIPPING', 'TRANSPORT',
 // Actions & Verbs
 'CLEANED', 'SERVICED', 'REPLACED', 'FIXED', 'REPAIRED', 'TESTED', 'CHECKED', 'INSTALLED', 'CONFIGURED', 'CALIBRATED', 'ADJUSTED', 'TIGHTENED', 'REWIRED', 'SOLDED', 'WELDED', 'LUBRICATED', 'OVERHAULED', 'ASSEMBLED', 'DISASSEMBLED', 'DELIVERED', 'RECEIVED', 'APPROVED', 'CANCELLED', 'PENDING', 'COMPLETED', 'INSPECTION', 'DIAGNOSTIC', 'OK', 'FAILED', 'ERROR', 'FAULT', 'DEFECT', 'SHORT', 'BURNT', 'OVERHEATING', 'BLOCKED', 'LEAK', 'NOISE', 'CHARGING', 'CONNECTED', 'OFFLINE', 'ONLINE', 'ACTIVE', 'INACTIVE', 'OPEN', 'CLOSED', 'NEW', 'USED', 'URGENT', 'NORMAL', 'HIGH', 'LOW',
 // Technical Acronyms & Units
@@ -3590,13 +3842,13 @@ var polishText = function polishText(text) {
 /**
  * Checks if a string contains any recognized typo, unnormalized spacing,
  * lowercase letters, or any misspelled words that need auto-correction.
- * Guaranteed 100% consistent with polishText.
+ * Guaranteed 100% consistent with getSuggestions.
  */
 var hasTypo = function hasTypo(text) {
   var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
   if (!text || typeof text !== 'string' || !text.trim()) return false;
-  var polished = polishText(text, mode);
-  return polished !== text.trim();
+  var analysis = getSuggestions(text, mode);
+  return !analysis.isClean;
 };
 
 /**

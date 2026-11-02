@@ -164,7 +164,74 @@ export const TYPO_DICTIONARY = [
   { pattern: /\b(chck|chek)\b/gi, replacement: 'CHECK' },
   { pattern: /\b(wokr|wrk)\b/gi, replacement: 'WORK' },
   { pattern: /\b(payd|payed)\b/gi, replacement: 'PAID' },
-  { pattern: /\b(wrkrs|workrs|wrokers)\b/gi, replacement: 'WORKERS' }
+  { pattern: /\b(wrkrs|workrs|wrokers)\b/gi, replacement: 'WORKERS' },
+
+  // Grammatical shorthand, prepositions, conjunctions, and high-frequency entry typos
+  { pattern: /\b(whn|wen)\b/gi, replacement: 'WHEN' },
+  { pattern: /\b(th|teh|hte)\b/gi, replacement: 'THE' },
+  { pattern: /\b(nt)\b/gi, replacement: 'NOT' },
+  { pattern: /\b(bt)\b/gi, replacement: 'BUT' },
+  { pattern: /\b(wz|waz)\b/gi, replacement: 'WAS' },
+  { pattern: /\b(wr|wer)\b/gi, replacement: 'WERE' },
+  { pattern: /\b(iz)\b/gi, replacement: 'IS' },
+  { pattern: /\b(ar)\b/gi, replacement: 'ARE' },
+  { pattern: /\b(ben|bin)\b/gi, replacement: 'BEEN' },
+  { pattern: /\b(hv|hve)\b/gi, replacement: 'HAVE' },
+  { pattern: /\b(hss)\b/gi, replacement: 'HAS' },
+  { pattern: /\b(wth|wid|wit)\b/gi, replacement: 'WITH' },
+  { pattern: /\b(widout|wthout)\b/gi, replacement: 'WITHOUT' },
+  { pattern: /\b(frm|fom)\b/gi, replacement: 'FROM' },
+  { pattern: /\b(bfr|b4)\b/gi, replacement: 'BEFORE' },
+  { pattern: /\b(aftr)\b/gi, replacement: 'AFTER' },
+  { pattern: /\b(bcz|bcuz|coz|cuz|becoz)\b/gi, replacement: 'BECAUSE' },
+  { pattern: /\b(ths|tihs)\b/gi, replacement: 'THIS' },
+  { pattern: /\b(tht|taht)\b/gi, replacement: 'THAT' },
+  { pattern: /\b(thr)\b/gi, replacement: 'THERE' },
+  { pattern: /\b(thier)\b/gi, replacement: 'THEIR' },
+  { pattern: /\b(thms)\b/gi, replacement: 'THEM' },
+  { pattern: /\b(itmen|itme|itms|itmes|itm)\b/gi, replacement: 'ITEM' },
+  { pattern: /\b(woking|wokring|wrking|workn)\b/gi, replacement: 'WORKING' },
+  { pattern: /\b(woked|wrked)\b/gi, replacement: 'WORKED' },
+  { pattern: /\b(instaled|instld|instald)\b/gi, replacement: 'INSTALLED' },
+  { pattern: /\b(fixd|fxd|fixxed)\b/gi, replacement: 'FIXED' },
+  { pattern: /\b(chkd|chked)\b/gi, replacement: 'CHECKED' },
+  { pattern: /\b(axel)\b/gi, replacement: 'AXLE' },
+  { pattern: /\b(rotatng|rotatin)\b/gi, replacement: 'ROTATING' },
+  { pattern: /\b(conect|conected)\b/gi, replacement: 'CONNECTED' },
+  { pattern: /\b(disconect|disconected)\b/gi, replacement: 'DISCONNECTED' },
+  { pattern: /\b(displey|scren)\b/gi, replacement: 'DISPLAY' },
+  { pattern: /\b(cabel)\b/gi, replacement: 'CABLE' },
+  { pattern: /\b(temprature|tempreture)\b/gi, replacement: 'TEMPERATURE' },
+  { pattern: /\b(presure)\b/gi, replacement: 'PRESSURE' },
+  { pattern: /\b(voltge)\b/gi, replacement: 'VOLTAGE' },
+  { pattern: /\b(genrator)\b/gi, replacement: 'GENERATOR' },
+  { pattern: /\b(condensor)\b/gi, replacement: 'CONDENSER' },
+  { pattern: /\b(refridgerator)\b/gi, replacement: 'REFRIGERATOR' },
+  { pattern: /\b(moter)\b/gi, replacement: 'MOTOR' },
+  { pattern: /\b(batry)\b/gi, replacement: 'BATTERY' },
+  { pattern: /\b(breeker)\b/gi, replacement: 'BREAKER' },
+  { pattern: /\b(fuz)\b/gi, replacement: 'FUSE' },
+  { pattern: /\b(valv)\b/gi, replacement: 'VALVE' },
+  { pattern: /\b(pyp|pipp)\b/gi, replacement: 'PIPE' },
+  { pattern: /\b(bering|bearng)\b/gi, replacement: 'BEARING' },
+  { pattern: /\b(berings|bearngs)\b/gi, replacement: 'BEARINGS' },
+  { pattern: /\b(levle)\b/gi, replacement: 'LEVEL' },
+  { pattern: /\b(tite|tightn)\b/gi, replacement: 'TIGHTEN' },
+  { pattern: /\b(tightned)\b/gi, replacement: 'TIGHTENED' },
+  { pattern: /\b(lubricat)\b/gi, replacement: 'LUBRICATE' },
+  { pattern: /\b(lubricatd)\b/gi, replacement: 'LUBRICATED' },
+  { pattern: /\b(calibrat)\b/gi, replacement: 'CALIBRATE' },
+  { pattern: /\b(adjustd)\b/gi, replacement: 'ADJUSTED' },
+  { pattern: /\b(damagd)\b/gi, replacement: 'DAMAGED' },
+  { pattern: /\b(faild)\b/gi, replacement: 'FAILED' },
+  { pattern: /\b(finishd)\b/gi, replacement: 'FINISHED' },
+  { pattern: /\b(suply)\b/gi, replacement: 'SUPPLY' },
+  { pattern: /\b(invois)\b/gi, replacement: 'INVOICE' },
+  { pattern: /\b(recipt)\b/gi, replacement: 'RECEIPT' },
+  { pattern: /\b(purchas)\b/gi, replacement: 'PURCHASE' },
+  { pattern: /\b(amont)\b/gi, replacement: 'AMOUNT' },
+  { pattern: /\b(quantty)\b/gi, replacement: 'QUANTITY' },
+  { pattern: /\b(numbr)\b/gi, replacement: 'NUMBER' }
 ];
 
 // Curated vocabulary for word-by-word Damerau-Levenshtein spellchecking
@@ -226,9 +293,11 @@ export const ENGLISH_FRENCH_VOCABULARY = new Set([
   'ELECTRONIC', 'HEATING', 'COOLING', 'VENTILATION', 'PANEL', 'RELAY', 'BATTERY', 'CHARGER',
   'FREEZER', 'REFRIGERATOR', 'FRIDGE', 'FRYER', 'MACHINE', 'MACHINES', 'HEATER', 'FAN', 'BLOWER',
   'PLUG', 'SOCKET', 'CONNECTOR', 'ADAPTER', 'GENERATOR', 'STABILIZER', 'UPS', 'AVR',
+  'AXLE', 'AXLES', 'ROTATING', 'ROTATE', 'ROTATED', 'ROTATION', 'SHAFT', 'SHAFTS', 'WHEEL', 'WHEELS',
+  'PULLEY', 'PULLEYS', 'CHAIN', 'CHAINS', 'LATHE', 'LATHES', 'CYLINDER', 'CYLINDERS', 'PISTON', 'PISTONS',
 
   // Commercial & ERP Terms
-  'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT',
+  'ITEM', 'ITEMS', 'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT',
   'PAYMENT', 'EXPENSE', 'EXPENSES', 'PURCHASE', 'PURCHASES', 'ORDER', 'ORDERS', 'PROJECT',
   'PROJECTS', 'EMPLOYEE', 'EMPLOYEES', 'TECHNICIAN', 'SALARY', 'PAYROLL', 'ADVANCE', 'LOAN',
   'CASH', 'BANK', 'ACCOUNT', 'BALANCE', 'TOTAL', 'SUBTOTAL', 'TAX', 'VAT', 'TVA', 'DISCOUNT',
@@ -438,12 +507,12 @@ export const polishText = (text, mode = 'upper') => {
 /**
  * Checks if a string contains any recognized typo, unnormalized spacing,
  * lowercase letters, or any misspelled words that need auto-correction.
- * Guaranteed 100% consistent with polishText.
+ * Guaranteed 100% consistent with getSuggestions.
  */
 export const hasTypo = (text, mode = 'upper') => {
   if (!text || typeof text !== 'string' || !text.trim()) return false;
-  const polished = polishText(text, mode);
-  return polished !== text.trim();
+  const analysis = getSuggestions(text, mode);
+  return !analysis.isClean;
 };
 
 /**

@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import LanguageFixerButton from './LanguageFixerButton';
-import { COMMON_PRESETS, polishText, hasTypo } from '../utils/textAssistUtils';
+import { COMMON_PRESETS, polishText, hasTypo, getSuggestions } from '../utils/textAssistUtils';
 
 /**
  * SmartTextInput
  * Drop-in intelligent text input with:
  * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
  * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
- * 3. Interactive suggestion dropdown menu (by clicking ✨ or right-clicking anywhere on text)
- * 4. Real-time typo detection badge & visual warning
+ * 3. Smart suggestion dropdown menu (by clicking ✨ or right-clicking on mistaken/selected words)
+ * 4. Preserves native browser context menu (Undo, Redo, Cut, Copy, Paste) on clean text & empty spaces
+ * 5. Real-time typo detection badge & visual warning
  */
 function SmartTextInput({
   label,
@@ -42,10 +43,60 @@ function SmartTextInput({
   const isTypo = hasTypo(value, mode);
 
   const handleContextMenu = (e) => {
-    if (value && typeof value === 'string' && value.trim()) {
-      e.preventDefault();
-      setContextMenu({ mouseX: e.clientX, mouseY: e.clientY });
+    if (!value || typeof value !== 'string' || !value.trim()) {
+      // Empty input: allow native browser context menu (Undo, Redo, Cut, Copy, Paste, etc.)
+      return;
     }
+
+    // 1. Check if user has selected / highlighted text with mouse
+    const selectedText = (typeof window !== 'undefined' && window.getSelection)
+      ? window.getSelection().toString().trim()
+      : '';
+
+    if (selectedText) {
+      const selAnalysis = getSuggestions(selectedText, mode);
+      if (selAnalysis.suggestions.length > 0) {
+        // User highlighted text that contains a mistake -> show suggestions for this selection
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: selectedText
+        });
+        return;
+      }
+      // User highlighted clean text (likely to Copy) -> do NOT prevent default, let native Copy show!
+      return;
+    }
+
+    // 2. No text selected: check which word the cursor is currently on
+    const inputEl = e.target;
+    let clickedWord = '';
+    if (inputEl && typeof inputEl.selectionStart === 'number') {
+      const pos = inputEl.selectionStart;
+      const textVal = inputEl.value || value || '';
+      const leftPart = textVal.slice(0, pos);
+      const rightPart = textVal.slice(pos);
+      const leftMatch = (leftPart.match(/[\w\u00C0-\u017F]+$/) || [''])[0];
+      const rightMatch = (rightPart.match(/^[\w\u00C0-\u017F]+/) || [''])[0];
+      clickedWord = leftMatch + rightMatch;
+    }
+
+    if (clickedWord) {
+      const wordAnalysis = getSuggestions(clickedWord, mode);
+      if (wordAnalysis.suggestions.length > 0) {
+        // Clicked word is a mistake -> show Spelling & Word Suggestions for this word!
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: clickedWord
+        });
+        return;
+      }
+    }
+
+    // 3. Otherwise: clicked on whitespace or clean word -> allow native browser context menu!
   };
 
   const notifyChange = (newVal) => {

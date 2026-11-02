@@ -45,10 +45,20 @@ function LanguageFixerButton({
 }) {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  // Compute suggestions and diagnostics
-  const analysis = getSuggestions(value, mode);
-  const { suggestions, hasExtraSpaces, hasUncapitalized, isClean } = analysis;
+  // Compute suggestions and diagnostics for full input
+  const fullAnalysis = getSuggestions(value, mode);
+  const { suggestions, hasExtraSpaces, hasUncapitalized, isClean } = fullAnalysis;
   const isTypo = !isClean;
+
+  // If opened via right-click with a specific scopeText, compute suggestions for scopeText
+  const isScoped = Boolean(contextMenu && contextMenu.scopeText);
+  const scopeSuggestions = isScoped
+    ? getSuggestions(contextMenu.scopeText, mode).suggestions
+    : [];
+
+  const displaySuggestions = isScoped && scopeSuggestions.length > 0
+    ? scopeSuggestions
+    : suggestions;
 
   const isMenuOpen = Boolean(anchorEl) || contextMenu !== null;
 
@@ -78,19 +88,26 @@ function LanguageFixerButton({
     }
     toast.success(`✨ Replaced "${original}" with "${replacement}"!`);
 
-    // Check remaining suggestions
-    const remaining = getSuggestions(updated, mode).suggestions;
-    if (remaining.length === 0) {
+    if (isScoped) {
       handleClose();
+    } else {
+      const remaining = getSuggestions(updated, mode).suggestions;
+      if (remaining.length === 0) {
+        handleClose();
+      }
     }
   };
 
   const handleApplyAll = () => {
-    const polished = polishText(value, mode);
-    if (typeof onFixed === 'function') {
-      onFixed(polished);
+    let updated = value;
+    for (const s of displaySuggestions) {
+      updated = applySingleCorrection(updated, s.original, s.replacement, mode);
     }
-    toast.success('✨ All corrections applied!');
+    updated = applyCleanSpaces(updated, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    toast.success(`✨ Applied ${displaySuggestions.length} correction(s)!`);
     handleClose();
   };
 
@@ -181,23 +198,25 @@ function LanguageFixerButton({
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <Typography sx={{ fontSize: 13, fontWeight: 700, color: '#1e293b', display: 'flex', alignItems: 'center', gap: 0.8 }}>
               <AutoAwesomeIcon sx={{ fontSize: 16, color: '#30368a' }} />
-              Spelling & Word Suggestions
+              {isScoped ? `Spelling Suggestion ("${contextMenu?.scopeText}")` : 'Spelling & Word Suggestions'}
             </Typography>
             <IconButton size="small" onClick={handleClose} sx={{ p: 0.2 }}>
               <CloseIcon sx={{ fontSize: 15, color: '#64748b' }} />
             </IconButton>
           </Box>
           <Typography sx={{ fontSize: 11, color: '#64748b', mt: 0.5 }}>
-            {suggestions.length > 0
-              ? 'Select which word you want to replace in this sentence:'
+            {displaySuggestions.length > 0
+              ? (isScoped
+                  ? 'Click "Fix" to replace this word:'
+                  : `Detected ${displaySuggestions.length} typo(s) across this sentence. Click Fix or Apply All:`)
               : 'No word replacements detected in this sentence.'}
           </Typography>
         </Box>
 
         {/* Suggestion Items List */}
-        {suggestions.length > 0 && (
+        {displaySuggestions.length > 0 && (
           <Box sx={{ maxHeight: 240, overflowY: 'auto', py: 0.5 }}>
-            {suggestions.map((s, idx) => (
+            {displaySuggestions.map((s, idx) => (
               <MenuItem
                 key={idx}
                 onClick={() => handleApplySingle(s.original, s.replacement)}
@@ -260,7 +279,7 @@ function LanguageFixerButton({
         )}
 
         {/* Clean State (No Typos) */}
-        {suggestions.length === 0 && (
+        {displaySuggestions.length === 0 && (
           <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
             <CheckCircleOutlineIcon sx={{ fontSize: 20, color: '#16a34a' }} />
             <Typography sx={{ fontSize: 12, color: '#15803d', fontWeight: 600 }}>
@@ -273,7 +292,7 @@ function LanguageFixerButton({
 
         {/* Action Controls */}
         <Box sx={{ p: 1, backgroundColor: '#f8fafc', display: 'flex', flexDirection: 'column', gap: 0.5 }}>
-          {suggestions.length > 0 && (
+          {displaySuggestions.length > 0 && (
             <MenuItem
               onClick={handleApplyAll}
               sx={{
@@ -289,7 +308,7 @@ function LanguageFixerButton({
               }}
             >
               <DoneAllIcon sx={{ fontSize: 16 }} />
-              Apply All Corrections ({suggestions.length})
+              Apply All Corrections ({displaySuggestions.length})
             </MenuItem>
           )}
 

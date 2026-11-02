@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[5646,8027,8646],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[712,5646,8646],{
 
 /***/ 65343
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -1340,7 +1340,7 @@ var CustomerFormView2 = _ref3 => {
 
 /***/ },
 
-/***/ 48027
+/***/ 712
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1364,8 +1364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(86531);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(8641);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(25239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(68864);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(27558);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(68864);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(47419);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(35406);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(11848);
@@ -1381,35 +1381,34 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(8451);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99380);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(71510);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(46986);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(33541);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(29719);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(33829);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(47767);
-/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(61087);
-/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(48484);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_47__);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(82299);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(40301);
-/* harmony import */ var _mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(67775);
-/* harmony import */ var _mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(56841);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(39781);
-/* harmony import */ var _ProjectView_ProjectFormView__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(28646);
-/* harmony import */ var _ProjectView_ProjectFormView2__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(85646);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(2650);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(14977);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(33541);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(29719);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(33829);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(47767);
+/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(61087);
+/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(601);
+/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(48484);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_46__);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(82299);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(67775);
+/* harmony import */ var _mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(56841);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(39781);
+/* harmony import */ var _ProjectView_ProjectFormView__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(28646);
+/* harmony import */ var _ProjectView_ProjectFormView2__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(85646);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(2650);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(14977);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["children"];
@@ -1430,7 +1429,6 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
-
 
 
 
@@ -1527,18 +1525,6 @@ var style = {
   px: 4,
   pb: 3
 };
-var style2 = (/* unused pure expression or super */ null && ({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 800,
-  bgcolor: 'background.paper',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3
-}));
 var drawerWidth = 240;
 var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
@@ -1588,11 +1574,13 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay
     })
   };
 });
-function DailyExpenseForm() {
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_62__/* .useIsMobile */ .al)();
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_42__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_52__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_52__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .selectCurrentUser */ .xu);
+function DailyExpenseUpdate() {
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_61__/* .useIsMobile */ .al)();
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_41__/* .useParams */ .g)(),
+    id = _useParams.id;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_41__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -1600,6 +1588,14 @@ function DailyExpenseForm() {
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState4 = _slicedToArray(_useState3, 2),
+    openAutocomplete2 = _useState4[0],
+    setOpenAutocomplete2 = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState6 = _slicedToArray(_useState5, 2),
+    modalOpenLoading = _useState6[0],
+    setModalOpenLoading = _useState6[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
@@ -1609,7 +1605,7 @@ function DailyExpenseForm() {
             var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
@@ -1628,124 +1624,145 @@ function DailyExpenseForm() {
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState4 = _slicedToArray(_useState3, 2),
-    categories = _useState4[0],
-    setCategories = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState6 = _slicedToArray(_useState5, 2),
-    employee = _useState6[0],
-    setEmployee = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    project = _useState8[0],
-    setProject = _useState8[1];
+    categories = _useState8[0],
+    setCategories = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    project2 = _useState0[0],
-    setProject2 = _useState0[1];
+    employee = _useState0[0],
+    setEmployee = _useState0[1];
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    maintenance = _useState10[0],
-    setMaintenance = _useState10[1];
+    project = _useState10[0],
+    setProject = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState12 = _slicedToArray(_useState11, 2),
+    project2 = _useState12[0],
+    setProject2 = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState14 = _slicedToArray(_useState13, 2),
+    maintenance = _useState14[0],
+    setMaintenance = _useState14[1];
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(''),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     inputValueMaintenance = _React$useState2[0],
     setInputValueMaintenance = _React$useState2[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState12 = _slicedToArray(_useState11, 2),
-    PayRate = _useState12[0],
-    setPayRate = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
-    _useState14 = _slicedToArray(_useState13, 2),
-    expenseCategory = _useState14[0],
-    setExpenseCategory = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
     _useState16 = _slicedToArray(_useState15, 2),
-    employeeName = _useState16[0],
-    setEmployeeName = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    accountNameInfo = _useState16[0],
+    setAccountNameInfo = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
     _useState18 = _slicedToArray(_useState17, 2),
-    accountName = _useState18[0],
-    setAccountName = _useState18[1];
+    expenseCategory = _useState18[0],
+    setExpenseCategory = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
     _useState20 = _slicedToArray(_useState19, 2),
-    reason = _useState20[0],
-    setReason = _useState20[1];
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_1__.useState(''),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
-    inputValueProject = _React$useState4[0],
-    setInputValueProject = _React$useState4[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState22 = _slicedToArray(_useState21, 2),
-    description = _useState22[0],
-    setDescription = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
-      _id: "",
-      name: ""
-    }),
-    _useState24 = _slicedToArray(_useState23, 2),
-    accountNameInfo = _useState24[0],
-    setAccountNameInfo = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
+    description = _useState20[0],
+    setDescription = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
       var date = new Date();
       return date;
     }),
+    _useState22 = _slicedToArray(_useState21, 2),
+    expenseDate = _useState22[0],
+    setExpenseDate = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState24 = _slicedToArray(_useState23, 2),
+    accountName = _useState24[0],
+    setAccountName = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState26 = _slicedToArray(_useState25, 2),
-    expenseDate = _useState26[0],
-    setExpenseDate = _useState26[1];
+    amount = _useState26[0],
+    setAmount = _useState26[1];
   var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState28 = _slicedToArray(_useState27, 2),
-    amount = _useState28[0],
-    setAmount = _useState28[1];
+    rate = _useState28[0],
+    setRate = _useState28[1];
   var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState30 = _slicedToArray(_useState29, 2),
-    rate = _useState30[0],
-    setRate = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    total = _useState30[0],
+    setTotal = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
     _useState32 = _slicedToArray(_useState31, 2),
-    total = _useState32[0],
-    setTotal = _useState32[1];
+    reason1 = _useState32[0],
+    setReason1 = _useState32[1];
   var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState34 = _slicedToArray(_useState33, 2),
     expenseNumber = _useState34[0],
     setExpenseNumber = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState36 = _slicedToArray(_useState35, 2),
-    expensesCategory = _useState36[0],
-    setExpensesCategory = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    employeeName = _useState36[0],
+    setEmployeeName = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
     _useState38 = _slicedToArray(_useState37, 2),
-    CheckTvA = _useState38[0],
-    setCheckTvA = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    projectName = _useState38[0],
+    setProjectName = _useState38[1];
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_1__.useState(''),
+    _React$useState4 = _slicedToArray(_React$useState3, 2),
+    inputValueProject = _React$useState4[0],
+    setInputValueProject = _React$useState4[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState40 = _slicedToArray(_useState39, 2),
-    tax = _useState40[0],
-    setTax = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    CheckTvA = _useState40[0],
+    setCheckTvA = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState42 = _slicedToArray(_useState41, 2),
-    openAutocomplete1 = _useState42[0],
-    setOpenAutocomplete1 = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    tax = _useState42[0],
+    setTax = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState44 = _slicedToArray(_useState43, 2),
-    openAutocomplete2 = _useState44[0],
-    setOpenAutocomplete2 = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    cash = _useState44[0],
+    setCash = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState46 = _slicedToArray(_useState45, 2),
-    cash = _useState46[0],
-    setCash = _useState46[1];
-  var dateComment = new Date();
-  var dateFormate = dayjs__WEBPACK_IMPORTED_MODULE_47___default()(dateComment).format('DD/MM/YYYY');
-  var Create = {
-    person: user.data.userName + ' Created ',
-    dateComment: dateFormate
-  };
+    isDataLoaded = _useState46[0],
+    setIsDataLoaded = _useState46[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
+        try {
+          var _res$data, _res$data2, _res$data3, _res$data4;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-expense/").concat(id));
+          setExpenseCategory(res.data.data.expenseCategory);
+          setDescription(res.data.data.description);
+          setExpenseDate(res.data.data.expenseDate);
+          setAmount(res.data.data.amount);
+          setRate(res.data.data.rate);
+          setTotal(res.data.data.total);
+          setExpenseNumber(Number(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.expenseNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.expenseNumber) || 0));
+          setAccountName(res.data.data.accountName);
+          setEmployeeName(res.data.data.employeeName);
+          setAccountNameInfo(res.data.data.accountNameInfo);
+          setReason1(res.data.data.reason);
+          var hasTva = res.data.data.CheckTvA || res.data.data.checkTvA || res.data.data.CheckTva || res.data.data.hasTVA || res.data.data.tva || false;
+          setCheckTvA(hasTva);
+          setTax(res.data.data.tax || (hasTva ? Number(((_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.total) || ((_res$data4 = res.data) === null || _res$data4 === void 0 ? void 0 : _res$data4.total) || 0) * 0.16 : 0));
+          setIsDataLoaded(true);
+        } catch (error) {
+          console.log(error);
+        }
+      });
+      return function fetchData() {
+        return _ref8.apply(this, arguments);
+      };
+    }();
+    fetchData();
+  }, []);
+  {/** Category && Project Start */}
+  var handleClearCategory = () => {
+    setExpenseCategory({
+      _id: '',
+      expensesCategory: ''
+    });
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref9 = _asyncToGenerator(function* () {
         try {
           var _projectResponse$data, _maintenanceResponse$;
           var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/projects")), axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/expensesCategory")), axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/employee")), axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/maintenance"))]),
@@ -1764,53 +1781,18 @@ function DailyExpenseForm() {
         }
       });
       return function fetchData() {
-        return _ref8.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       };
     }();
     fetchData();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchlastNumber = /*#__PURE__*/function () {
-      var _ref9 = _asyncToGenerator(function* () {
-        try {
-          var _res$data, _res$data2;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-last-saved-expense"));
-          var num = res.data && res.data.expenseNumber ? parseInt(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.expenseNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.expenseNumber) || 0) : 0;
-          setExpenseNumber(num + 1);
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchlastNumber() {
-        return _ref9.apply(this, arguments);
-      };
-    }();
-    fetchlastNumber();
-  }, []);
-  var handleOpenOpenAutocomplete1 = e => {
-    e.stopPropagation();
-    setOpenAutocomplete1(true);
-  };
-  var handleCloseOpenAutocomplete1 = () => {
-    setOpenAutocomplete1(false);
-  };
-  var handleOpenOpenAutocomplete2 = e => {
-    e.stopPropagation();
-    setOpenAutocomplete2(true);
-  };
-  var handleCloseOpenAutocomplete2 = () => {
-    setOpenAutocomplete2(false);
-    setModalOpenLoading(false);
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _cashResponse$data;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/rate"));
-          res.data.data.map(row => setRate(row.rate));
           var cashResponse = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/cash"));
-          setCash((_cashResponse$data = cashResponse.data) === null || _cashResponse$data === void 0 || (_cashResponse$data = _cashResponse$data.data) === null || _cashResponse$data === void 0 ? void 0 : _cashResponse$data.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_47___default()(row.cashDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expenseDate).format('DD/MM/YYYY')).map(row => row.status));
+          setCash((_cashResponse$data = cashResponse.data) === null || _cashResponse$data === void 0 || (_cashResponse$data = _cashResponse$data.data) === null || _cashResponse$data === void 0 ? void 0 : _cashResponse$data.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.cashDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_46___default()(expenseDate).format('DD/MM/YYYY')).map(row => row.status));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -1822,65 +1804,25 @@ function DailyExpenseForm() {
     fetchData();
   }, [expenseDate]);
   var filterCash = cash.map(row => row).toString();
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchData = /*#__PURE__*/function () {
-      var _ref1 = _asyncToGenerator(function* () {
-        try {
-          var _res$data3;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/paymentRate"));
-          (((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) || []).map(row => setPayRate(row.paymentRate));
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      });
-      return function fetchData() {
-        return _ref1.apply(this, arguments);
-      };
-    }();
-    fetchData();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (accountName === 'Employee') return;
-    if (amount > 0) {
-      var currentRate = parseFloat(rate || 1);
-      var newTotal = currentRate > 0 ? parseFloat(amount || 0) / currentRate : 0;
-      var result = Math.round(newTotal * 100) / 100;
-      setTotal(result);
-      setTax(CheckTvA ? Math.round(result * 0.16 * 100) / 100 : 0);
-    } else {
-      // If amount is 0 (manual USD entry), still update the tax based on the current total
-      // But only if total is actually a number
-      var currentTotal = parseFloat(total) || 0;
-      setTax(CheckTvA ? Math.round(currentTotal * 0.16 * 100) / 100 : 0);
-    }
-  }, [amount, rate, total, CheckTvA, accountName]);
-  var handleAccountChange = e => {
-    setAccountName(e.target.value);
-    setAccountNameInfo({
-      _id: "",
-      name: ""
-    });
-    setTotal(0);
-    setAmount(0);
-    setEmployeeName([]);
+  var handleOpenOpenAutocomplete2 = e => {
+    e.stopPropagation();
+    setOpenAutocomplete2(true);
   };
-  var handleChangeReason = e => {
-    setReason(e.target.value);
-    setAccountNameInfo({
-      _id: "",
-      name: ""
-    });
+  var handleCloseOpenAutocomplete2 = () => {
+    setOpenAutocomplete2(false);
+    setModalOpenLoading(false);
   };
+  {/** Category && Project End */}
   {/** Employee Start */}
   var filterEmployee = employee.filter(row => row.status !== 'Suspended' && row.status !== 'Fired' && row.status !== 'Resign');
   var addItem = () => {
     setEmployeeName([...employeeName, {
-      idInfo: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
+      idInfo: (0,uuid__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A)(),
       idRow: "",
       employee: "",
       description: "",
       amount: 0,
-      rate: PayRate,
+      rate: rate,
       total: 0
     }]);
   };
@@ -1891,9 +1833,9 @@ function DailyExpenseForm() {
     var list = [...employeeName];
     list[i][name] = value;
     if (!list[i]['rate'] || parseFloat(list[i]['rate']) === 0) {
-      list[i]['rate'] = PayRate;
+      list[i]['rate'] = rate;
     }
-    var currentRate = parseFloat(list[i]['rate'] || PayRate || 1);
+    var currentRate = parseFloat(list[i]['rate'] || rate || 1);
     var currentAmount = parseFloat(list[i]['amount'] || 0);
     list[i]['total'] = currentRate > 0 ? Math.round(currentAmount / currentRate * 100) / 100 : 0;
     setEmployeeName(list);
@@ -1903,7 +1845,7 @@ function DailyExpenseForm() {
     setEmployeeName(employeeName => employeeName.map(row => row.idInfo === idInfo ? _objectSpread(_objectSpread({}, row), {}, {
       idRow: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
       employee: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.employeeName,
-      rate: row.rate || PayRate
+      rate: row.rate || rate
     }) : row));
   };
   var handleShowAutocomplete = idInfo => {
@@ -1912,7 +1854,7 @@ function DailyExpenseForm() {
       employee: "",
       description: '',
       amount: 0,
-      rate: PayRate,
+      rate: rate,
       total: 0
     }) : row));
   };
@@ -1931,6 +1873,43 @@ function DailyExpenseForm() {
     setAmount(result1);
   }, [employeeName, CheckTvA, accountName]); // Added missing dependencies
   {/** Employee End */}
+  {/** Total Function Start */}
+  var handleAccountChange = e => {
+    setAccountName(e.target.value);
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+    setTotal(0);
+    setAmount(0);
+    setEmployeeName([]);
+  };
+  var handleChangeReason = e => {
+    setReason1(e.target.value);
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (!isDataLoaded) return;
+    if (accountName === 'Employee') return;
+    // Only calculate total from amount/rate if amount is provided
+    if (amount > 0) {
+      var currentRate = parseFloat(rate || 1);
+      var newTotal = currentRate > 0 ? parseFloat(amount || 0) / currentRate : 0;
+      var result = Math.round(newTotal * 100) / 100;
+      setTotal(result);
+      setTax(CheckTvA ? Math.round(result * 0.16 * 100) / 100 : 0);
+    } else {
+      // If amount is 0 (manual USD entry), still update the tax based on the current total
+      // But only if total is actually a number
+      var currentTotal = parseFloat(total) || 0;
+      setTax(CheckTvA ? currentTotal * 0.16 : 0);
+    }
+  }, [amount, rate, total, CheckTvA, isDataLoaded, accountName]);
+  {/** Total Function End */}
+  {/** account info start */}
   var handleChangeProject = newValue => {
     var selectedOptions = project.find(option => option === newValue);
     setAccountNameInfo({
@@ -1959,10 +1938,30 @@ function DailyExpenseForm() {
       name: ""
     });
   };
+  {/** account info end */}
+  {/** Reason Modal start */}
   var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState48 = _slicedToArray(_useState47, 2),
-    openBack = _useState48[0],
-    setOpenBack = _useState48[1];
+    open2 = _useState48[0],
+    setOpen2 = _useState48[1];
+  var handleOpenUpdateReason = e => {
+    e.preventDefault();
+    setOpen2(true);
+  };
+  var handleCloseUpdateReason = () => {
+    setOpen2(false);
+  };
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState50 = _slicedToArray(_useState49, 2),
+    reason = _useState50[0],
+    setReason = _useState50[1];
+  var dateComment = new Date();
+  {/** Reason Modal end */}
+  {/** Loading Start */}
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    openBack = _useState52[0],
+    setOpenBack = _useState52[1];
   var handleOpenBack = e => {
     e.preventDefault();
     setOpenBack(true);
@@ -1970,32 +1969,22 @@ function DailyExpenseForm() {
   var handleCloseBack = () => {
     setOpenBack(false);
   };
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    loading = _useState50[0],
-    setLoading = _useState50[1];
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState52 = _slicedToArray(_useState51, 2),
-    loadingOpenModal = _useState52[0],
-    setLoadingOpenModal = _useState52[1];
   var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState54 = _slicedToArray(_useState53, 2),
-    ErrorOpenModal = _useState54[0],
-    setErrorOpenModal = _useState54[1];
+    loading = _useState54[0],
+    setLoading = _useState54[1];
   var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState56 = _slicedToArray(_useState55, 2),
-    modalOpenLoading = _useState56[0],
-    setModalOpenLoading = _useState56[1];
-  var handleOpenModal = () => {
-    setModalOpenLoading(true);
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
-  };
+    loadingOpenModal = _useState56[0],
+    setLoadingOpenModal = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState58 = _slicedToArray(_useState57, 2),
+    ErrorOpenModal = _useState58[0],
+    setErrorOpenModal = _useState58[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
+    setOpen2(false);
     setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -2003,95 +1992,51 @@ function DailyExpenseForm() {
   var handleError = () => {
     setErrorOpenModal(true);
     setLoading(true);
+    setOpen2(false);
     setTimeout(() => {
       setLoading(false);
     }, 500);
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
-    setAccountName("");
-    setAccountNameInfo({
-      _id: "",
-      name: ""
-    });
-    setExpenseCategory({});
-    setInputValueProject('');
-    setInputValueMaintenance('');
-    setDescription("");
-    setExpenseDate(new Date());
-    setAmount(0);
-    setTotal(0);
-    setEmployeeName([]);
-    setReason("");
-    setCheckTvA(false);
-    setTax(0);
-    setExpenseNumber(prev => Number(prev) + 1);
-    setSaving('');
-  };
-  var handleCloseAdd = () => {
-    setLoadingOpenModal(false);
+    if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_61__/* .isNativeMobile */ .g1)()) {
+      navigate('/DailyExpenses');
+    } else if (window.history.length > 1) {
+      navigate(-1);
+    } else {
+      navigate('/DailyExpenses');
+    }
   };
   var handleCloseError = () => {
     setErrorOpenModal(false);
   };
-  var handleDecision = decision => {
-    //Navigate Based on th Decision
-    if (decision === 'previous') {
-      window.history.back();
-    } else if (decision === 'stay') {
-      handleClose();
-    }
-  };
-  var handleSubmitCategory = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (e) {
-      e.preventDefault();
+  {/** Loading End */}
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState60 = _slicedToArray(_useState59, 2),
+    hideBack = _useState60[0],
+    setHideBack = _useState60[1];
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref1 = _asyncToGenerator(function* () {
       var data = {
-        expensesCategory
-      };
-      try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-expensesCategory"), data);
-        if (res) {
-          handleOpenModal();
-          setCategories([...categories, res.data.data]);
-        }
-      } catch (error) {
-        if (error) {
-          alert('An error as Occur');
-        }
-      }
-    });
-    return function handleSubmitCategory(_x) {
-      return _ref10.apply(this, arguments);
-    };
-  }();
-  var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCategory) {
-      var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created EXPENSE ',
-        reason: "D-".concat(String(ReferenceInfoNumber).padStart(6, '0'), " For ").concat(ReferenceInfoCategory, " to ").concat(accountName, " Account Which Has a Description: ").concat(description),
+        idInfo: id,
+        person: user.data.userName + ' Modify EXPENSE ',
+        reason: 'D-' + String(expenseNumber).padStart(6, '0') + ' ' + reason,
         dateNotification: dateComment
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
       } catch (error) {
         console.log(error);
       }
     });
-    return function handleCreateNotification(_x2, _x3, _x4) {
-      return _ref11.apply(this, arguments);
+    return function handleCreateComment() {
+      return _ref1.apply(this, arguments);
     };
   }();
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState58 = _slicedToArray(_useState57, 2),
-    saving = _useState58[0],
-    setSaving = _useState58[1];
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref12 = _asyncToGenerator(function* (e) {
+    var _ref10 = _asyncToGenerator(function* (e) {
       e.preventDefault();
-      setSaving('true');
       var data = {
-        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
         expenseCategory,
         accountName,
         description,
@@ -2109,35 +2054,26 @@ function DailyExpenseForm() {
         vatAmount: CheckTvA ? Number(total) * 0.16 : 0,
         TvaAmount: CheckTvA ? Number(total) * 0.16 : 0,
         taxUSD: CheckTvA ? Number(total) * 0.16 : 0,
-        rate: accountName === 'Employee' ? PayRate : rate,
+        rate,
         total,
-        expenseNumber,
         accountNameInfo,
-        reason,
-        Create,
-        synced: false
+        reason: reason1,
+        updateS: false
       };
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-expense"), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-expense/").concat(id), data);
         if (res) {
-          var _res$data$data$expens;
-          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_37__/* .invalidateCache */ .gm)('/expense');
+          handleCreateComment();
           handleOpen();
-          var ReferenceInfo = res.data.data._id;
-          var ReferenceInfoNumber = res.data.data.expenseNumber;
-          var ReferenceInfoCategory = ((_res$data$data$expens = res.data.data.expenseCategory) === null || _res$data$data$expens === void 0 ? void 0 : _res$data$data$expens.expensesCategory) || (typeof res.data.data.expenseCategory === 'string' ? res.data.data.expenseCategory : '');
-          // await db.dailyExpenseSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
-          handleCreateNotification(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCategory);
         }
       } catch (error) {
         if (error) {
-          setSaving('');
           handleError();
         }
       }
     });
-    return function handleSubmit(_x5) {
-      return _ref12.apply(this, arguments);
+    return function handleSubmit(_x) {
+      return _ref10.apply(this, arguments);
     };
   }();
   if (isMobile) {
@@ -2175,23 +2111,23 @@ function DailyExpenseForm() {
         color: '#ffffff',
         p: 0.5
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
       variant: "subtitle1",
       sx: {
         fontWeight: 800,
         lineHeight: 1.2,
         color: '#ffffff'
       }
-    }, "New Daily Expense"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    }, "Edit Daily Expense"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#E0E7FF'
       }
-    }, "EXP-", String(expenseNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
+    }, "EXP-", String(expenseNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
       variant: "contained",
       size: "small",
       onClick: handleSubmit,
-      disabled: loading || saving === 'true',
+      disabled: loading,
       sx: {
         backgroundColor: '#10B981',
         color: '#ffffff',
@@ -2203,11 +2139,11 @@ function DailyExpenseForm() {
           backgroundColor: '#059669'
         }
       }
-    }, saving === 'true' ? 'Saving...' : 'Save')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, loading ? 'Saving...' : 'Save')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         p: 2
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_64__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
       sx: {
         borderRadius: 3.5,
         p: 2.5,
@@ -2248,11 +2184,11 @@ function DailyExpenseForm() {
     }, c.expensesCategory))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_44__/* .LocalizationProvider */ .$, {
-      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_45__/* .AdapterDayjs */ .R
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_46__/* .DatePicker */ .l, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_43__/* .LocalizationProvider */ .$, {
+      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_44__/* .AdapterDayjs */ .R
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_45__/* .DatePicker */ .l, {
       label: "Expense Date",
-      value: expenseDate ? dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expenseDate) : null,
+      value: expenseDate ? dayjs__WEBPACK_IMPORTED_MODULE_46___default()(expenseDate) : null,
       onChange: date => setExpenseDate(date),
       slotProps: {
         textField: {
@@ -2288,12 +2224,12 @@ function DailyExpenseForm() {
       value: description,
       onChange: val => setDescription(val),
       mode: "upper"
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       size: "large",
       onClick: handleSubmit,
-      disabled: loading || saving === 'true',
+      disabled: loading,
       sx: {
         backgroundColor: '#30368a',
         color: '#ffffff',
@@ -2307,7 +2243,7 @@ function DailyExpenseForm() {
           backgroundColor: '#202a5a'
         }
       }
-    }, saving === 'true' ? 'Saving Expense...' : 'Save Expense')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    }, loading ? 'Saving Changes...' : 'Save Changes')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
       open: loadingOpenModal,
       onClose: handleClose
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
@@ -2318,7 +2254,7 @@ function DailyExpenseForm() {
         textAlign: 'center',
         p: 3
       })
-    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
       sx: {
         color: 'green',
         fontSize: 48,
@@ -2329,7 +2265,7 @@ function DailyExpenseForm() {
       sx: {
         fontWeight: 800
       }
-    }, "Expense Saved Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
+    }, "Expense Updated Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       onClick: () => navigate('/DailyExpenses'),
@@ -2349,7 +2285,7 @@ function DailyExpenseForm() {
         textAlign: 'center',
         p: 3
       })
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
       sx: {
         color: 'red',
         fontSize: 48,
@@ -2366,7 +2302,7 @@ function DailyExpenseForm() {
         color: '#64748B',
         mt: 1
       }
-    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
+    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "outlined",
       onClick: handleCloseError,
@@ -2410,13 +2346,17 @@ function DailyExpenseForm() {
     sx: {
       flexGrow: 1
     }
-  }, "Add new Expenses"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleOpenBack
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
+  }, "update Expenses"), hideBack === 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_61__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
+  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    onClick: handleOpenBack
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
+    style: {
+      color: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
@@ -2427,7 +2367,7 @@ function DailyExpenseForm() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -2464,7 +2404,7 @@ function DailyExpenseForm() {
       mt: 4
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-    onSubmit: handleSubmit
+    onSubmit: handleOpenUpdateReason
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     container: true,
     style: {
@@ -2476,19 +2416,45 @@ function DailyExpenseForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, expenseCategory.expensesCategory !== '' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '10px',
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    sx: {
+      fontSize: '20px'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    style: {
+      fontWeight: 'bold'
+    }
+  }, " Category: "), " ", expenseCategory.expensesCategory), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(BlackTooltip, {
+    title: "Clear",
+    placement: "right"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    onClick: handleClearCategory,
+    style: {
+      position: 'relative',
+      float: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     id: "expensesCategory",
     options: categories,
     getOptionLabel: Option => Option.expensesCategory,
-    value: Object.keys(expenseCategory).length === 0 ? null : expenseCategory,
-    onChange: (e, newValue) => setExpenseCategory(newValue || {}),
+    onChange: (e, newValue) => setExpenseCategory(newValue),
     sx: {
       width: '100%',
       backgroundColor: 'white'
     },
-    PaperComponent: _ref13 => {
-      var children = _ref13.children,
-        other = _objectWithoutProperties(_ref13, _excluded3);
+    PaperComponent: _ref11 => {
+      var children = _ref11.children,
+        other = _objectWithoutProperties(_ref11, _excluded3);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, _extends({}, other, {
         sx: {
           backgroundColor: 'white',
@@ -2546,26 +2512,26 @@ function DailyExpenseForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     htmlFor: "expenseNumber"
   }, "Expense Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    disabled: true,
     id: "expenseNumber",
     name: "expenseNumber",
     label: "Expense Number",
     value: String(expenseNumber).padStart(6, '0'),
-    onChange: e => setExpenseNumber(parseInt(e.target.value) || 0),
     startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "D-")
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_44__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_45__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_43__/* .DemoContainer */ .j, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_43__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_44__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_42__/* .DemoContainer */ .j, {
     components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_46__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_45__/* .DatePicker */ .l, {
     required: true,
     name: "expenseDate",
     label: "Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expenseDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_46___default()(expenseDate),
     onChange: date => setExpenseDate(date),
     sx: {
       width: '100%',
@@ -2584,7 +2550,7 @@ function DailyExpenseForm() {
   }, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     required: true,
     id: "reason",
-    value: reason,
+    value: reason1,
     onChange: e => handleChangeReason(e),
     name: "reason",
     label: "Reason"
@@ -2600,7 +2566,6 @@ function DailyExpenseForm() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
-    required: true,
     name: "description",
     id: "description",
     label: "Expense Description",
@@ -2613,7 +2578,7 @@ function DailyExpenseForm() {
       backgroundColor: "white"
     },
     mode: "upper"
-  })), reason === "Project" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })), reason1 === "Project" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
@@ -2637,7 +2602,7 @@ function DailyExpenseForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2645,26 +2610,33 @@ function DailyExpenseForm() {
     options: project,
     getOptionLabel: option => option.projectName.toUpperCase(),
     renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
+      label: "Project Name"
+    })),
     onChange: (e, newValue) => handleChangeProject(newValue ? newValue : ''),
     inputValue: inputValueProject,
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref14) => {
-      var inputValue = _ref14.inputValue;
-      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+    filterOptions: (options, _ref12) => {
+      var inputValue = _ref12.inputValue;
+      var lower = (inputValue || '').toLowerCase();
+      return options.filter(option => {
+        var _option$customerName;
+        return ((_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) && option.customerName.customerName.toLowerCase().includes(lower) || option.projectName && option.projectName.toLowerCase().includes(lower) || option.description && option.description.toLowerCase().includes(lower);
+      });
     },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
-      label: "Project Name"
-    })),
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: project2,
-    getOptionLabel: option => option.projectName.toUpperCase(),
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    getOptionLabel: option => option.projectName ? option.projectName.toUpperCase() : '',
+    renderOption: (props, option) => {
+      var _option$customerName2;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", ((_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.customerName) || '', " | ", option.projectName || '', " | ", option.description || '');
+    },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
       label: "Project Name"
     })),
@@ -2673,15 +2645,19 @@ function DailyExpenseForm() {
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref15) => {
-      var inputValue = _ref15.inputValue;
-      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+    filterOptions: (options, _ref13) => {
+      var inputValue = _ref13.inputValue;
+      var lower = (inputValue || '').toLowerCase();
+      return options.filter(option => {
+        var _option$customerName3;
+        return ((_option$customerName3 = option.customerName) === null || _option$customerName3 === void 0 ? void 0 : _option$customerName3.customerName) && option.customerName.customerName.toLowerCase().includes(lower) || option.projectName && option.projectName.toLowerCase().includes(lower) || option.description && option.description.toLowerCase().includes(lower);
+      });
     },
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }))) : null, reason === "Maintenance" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))) : null, reason1 === "Maintenance" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
@@ -2705,30 +2681,30 @@ function DailyExpenseForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: maintenance,
     getOptionLabel: option => {
-      var _option$customerName;
-      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) || '');
+      var _option$customerName4;
+      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName4 = option.customerName) === null || _option$customerName4 === void 0 ? void 0 : _option$customerName4.customerName) || '');
     },
     renderOption: (props, option) => {
-      var _option$customerName2;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
+      var _option$customerName5;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName5 = option.customerName) === null || _option$customerName5 === void 0 ? void 0 : _option$customerName5.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
     },
     onChange: (e, newValue) => handleChangeMaintenance(newValue ? newValue : ''),
     inputValue: inputValueMaintenance,
     onInputChange: (event, newInputValue) => {
       setInputValueMaintenance(newInputValue);
     },
-    filterOptions: (options, _ref16) => {
-      var inputValue = _ref16.inputValue;
+    filterOptions: (options, _ref14) => {
+      var inputValue = _ref14.inputValue;
       return options.filter(option => {
-        var _option$customerName3;
-        return ((_option$customerName3 = option.customerName) === null || _option$customerName3 === void 0 ? void 0 : _option$customerName3.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
+        var _option$customerName6;
+        return ((_option$customerName6 = option.customerName) === null || _option$customerName6 === void 0 ? void 0 : _option$customerName6.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
       });
     },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
@@ -2750,7 +2726,7 @@ function DailyExpenseForm() {
     className: "tableInfo10"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Employee Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Amount FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tbody", null, employeeName ? employeeName.map((row, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", {
     key: row.idInfo
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
     style: {
       height: '100px'
     }
@@ -2789,7 +2765,7 @@ function DailyExpenseForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2833,7 +2809,7 @@ function DailyExpenseForm() {
     disabled: true,
     name: "rate",
     id: "rate",
-    value: row.rate || PayRate,
+    value: row.rate || rate,
     onChange: e => handleChangeEmployee(e, i),
     size: "small",
     sx: {
@@ -2841,7 +2817,6 @@ function DailyExpenseForm() {
       backgroundColor: 'white'
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    disabled: true,
     name: "total",
     id: "total",
     value: row.total,
@@ -2896,6 +2871,26 @@ function DailyExpenseForm() {
       width: '200px',
       backgroundColor: 'white'
     }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
+    colSpan: 2,
+    style: {
+      textAlign: 'center'
+    }
+  }, "VAT (16%)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    checked: CheckTvA,
+    disabled: true
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
+    style: {
+      textAlign: 'center'
+    }
+  }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    disabled: true,
+    label: "Tax $",
+    value: tax.toFixed(2),
+    sx: {
+      width: '200px',
+      backgroundColor: 'white'
+    }
   })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 1
@@ -2909,7 +2904,7 @@ function DailyExpenseForm() {
     placement: "bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: addItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
     className: "btn1",
     style: {
       fontSize: '40px'
@@ -2920,8 +2915,8 @@ function DailyExpenseForm() {
       justifyContent: 'flex-end',
       marginTop: '10px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
       checked: CheckTvA,
       onChange: e => setCheckTvA(e.target.checked)
     }),
@@ -2929,14 +2924,14 @@ function DailyExpenseForm() {
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, accountName === 'Project' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, accountNameInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
       gap: '75px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     label: "Project",
-    value: accountNameInfo.name,
+    value: accountNameInfo.name ? accountNameInfo.name : '',
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -2950,22 +2945,28 @@ function DailyExpenseForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: project,
-    getOptionLabel: option => option.projectName.toUpperCase(),
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    getOptionLabel: option => option.projectName ? option.projectName.toUpperCase() : '',
+    renderOption: (props, option) => {
+      var _option$customerName7;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", ((_option$customerName7 = option.customerName) === null || _option$customerName7 === void 0 ? void 0 : _option$customerName7.customerName) || '', " | ", option.projectName || '', " | ", option.description || '');
+    },
     onChange: (e, newValue) => handleChangeProject(newValue ? newValue : ''),
     inputValue: inputValueProject,
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref17) => {
-      var inputValue = _ref17.inputValue;
-      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+    filterOptions: (options, _ref15) => {
+      var inputValue = _ref15.inputValue;
+      return options.filter(option => {
+        var _option$customerName8;
+        return ((_option$customerName8 = option.customerName) === null || _option$customerName8 === void 0 ? void 0 : _option$customerName8.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName && option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description && option.description.toLowerCase().includes(inputValue.toLowerCase());
+      });
     },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
       label: "Project Name"
@@ -2976,8 +2977,11 @@ function DailyExpenseForm() {
     }
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: project2,
-    getOptionLabel: option => option.projectName.toUpperCase(),
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    getOptionLabel: option => option.projectName ? option.projectName.toUpperCase() : '',
+    renderOption: (props, option) => {
+      var _option$customerName9;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", ((_option$customerName9 = option.customerName) === null || _option$customerName9 === void 0 ? void 0 : _option$customerName9.customerName) || '', " | ", option.projectName || '', " | ", option.description || '');
+    },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
       label: "Project Name"
     })),
@@ -2986,25 +2990,29 @@ function DailyExpenseForm() {
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref18) => {
-      var inputValue = _ref18.inputValue;
-      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+    filterOptions: (options, _ref16) => {
+      var inputValue = _ref16.inputValue;
+      var lower = (inputValue || '').toLowerCase();
+      return options.filter(option => {
+        var _option$customerName0;
+        return ((_option$customerName0 = option.customerName) === null || _option$customerName0 === void 0 ? void 0 : _option$customerName0.customerName) && option.customerName.customerName.toLowerCase().includes(lower) || option.projectName && option.projectName.toLowerCase().includes(lower) || option.description && option.description.toLowerCase().includes(lower);
+      });
     },
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }))) : null, accountName === 'Maintenance' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))) : '') : null, accountName === 'Maintenance' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, accountNameInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
       gap: '75px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     label: "Maintenance",
-    value: accountNameInfo.name,
+    value: accountNameInfo.name ? accountNameInfo.name : '',
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -3018,30 +3026,30 @@ function DailyExpenseForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: maintenance,
     getOptionLabel: option => {
-      var _option$customerName4;
-      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName4 = option.customerName) === null || _option$customerName4 === void 0 ? void 0 : _option$customerName4.customerName) || '');
+      var _option$customerName1;
+      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName1 = option.customerName) === null || _option$customerName1 === void 0 ? void 0 : _option$customerName1.customerName) || '');
     },
     renderOption: (props, option) => {
-      var _option$customerName5;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName5 = option.customerName) === null || _option$customerName5 === void 0 ? void 0 : _option$customerName5.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
+      var _option$customerName10;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName10 = option.customerName) === null || _option$customerName10 === void 0 ? void 0 : _option$customerName10.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
     },
     onChange: (e, newValue) => handleChangeMaintenance(newValue ? newValue : ''),
     inputValue: inputValueMaintenance,
     onInputChange: (event, newInputValue) => {
       setInputValueMaintenance(newInputValue);
     },
-    filterOptions: (options, _ref19) => {
-      var inputValue = _ref19.inputValue;
+    filterOptions: (options, _ref17) => {
+      var inputValue = _ref17.inputValue;
       return options.filter(option => {
-        var _option$customerName6;
-        return ((_option$customerName6 = option.customerName) === null || _option$customerName6 === void 0 ? void 0 : _option$customerName6.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
+        var _option$customerName11;
+        return ((_option$customerName11 = option.customerName) === null || _option$customerName11 === void 0 ? void 0 : _option$customerName11.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
       });
     },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
@@ -3051,11 +3059,10 @@ function DailyExpenseForm() {
       width: '100%',
       backgroundColor: 'white'
     }
-  }))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))) : '') : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
-    required: true,
     name: "description",
     id: "description",
     label: "Expense Description",
@@ -3079,6 +3086,7 @@ function DailyExpenseForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     htmlFor: "amount"
   }, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    required: true,
     id: "amount",
     name: "amount",
     type: "number",
@@ -3106,7 +3114,7 @@ function DailyExpenseForm() {
     value: rate,
     startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null))
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null))
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 3
@@ -3126,7 +3134,7 @@ function DailyExpenseForm() {
     onChange: e => setTotal(e.target.value),
     startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, null))
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null))
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 3,
@@ -3135,28 +3143,22 @@ function DailyExpenseForm() {
       alignItems: 'center',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
       checked: CheckTvA,
       onChange: e => setCheckTvA(e.target.checked)
     }),
     label: "TVA (16%)"
-  }))), filterCash === 'Close' ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     type: "submit",
     className: "btnCustomer6",
     style: {
       width: '100%'
     }
-  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
-    className: "btnCustomer6",
-    style: {
-      width: '100%',
-      textAlign: 'center'
-    }
-  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, "Save")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: openBack,
     onClose: handleCloseBack,
     "aria-labelledby": "modal-modal-title",
@@ -3174,7 +3176,7 @@ function DailyExpenseForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3191,14 +3193,14 @@ function DailyExpenseForm() {
     sx: {
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, "Do you want to stop creating daily expenses ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, "Do you want to stop updating daily expense ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
   }, "Note :"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
     className: "txt2"
-  }, " If you stop creating without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, " If you stop updating without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
@@ -3232,12 +3234,12 @@ function DailyExpenseForm() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3246,16 +3248,14 @@ function DailyExpenseForm() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
-      gap: '20px',
+      gap: '60px',
       justifyContent: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    onClick: () => handleDecision('stay'),
+    type: "button",
+    onClick: handleClose,
     className: "btnCustomer"
-  }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    onClick: () => handleDecision('previous'),
-    className: "btnCustomer"
-  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: ErrorOpenModal,
     onClose: handleCloseError,
     closeAfterTransition: true,
@@ -3269,69 +3269,23 @@ function DailyExpenseForm() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", {
-    style: {
-      color: 'red'
-    }
-  }, "Saving Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
-    className: "txt2"
-  }, "Please Check the Previous Invoice Number And the New Invoice Number Can Not be The Same"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
-    className: "txt1",
-    style: {
-      color: 'red'
-    }
-  }, "Note:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
-    className: "txt2"
-  }, "To Add Number Click On the Arrow Up Button")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data Failed to Saved"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseError
   }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
-    open: modalOpenLoading,
-    onClose: handleCloseOpenAutocomplete2,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A,
-    BackdropProps: {
-      timeout: 500
-    },
-    "aria-labelledby": "modal-modal-title",
-    "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    sx: _objectSpread(_objectSpread({}, style), {}, {
-      width: 500
-    })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    style: {
-      justifyContent: 'center',
-      textAlign: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
-    style: {
-      color: 'green',
-      height: '40px',
-      width: '40px'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data successfully Saved"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '60px',
-      justifyContent: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    onClick: handleCloseOpenAutocomplete2,
-    className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
-    open: openAutocomplete2,
-    onClose: handleCloseOpenAutocomplete2,
+    open: open2,
+    onClose: handleCloseUpdateReason,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
@@ -3342,12 +3296,12 @@ function DailyExpenseForm() {
     title: "Close",
     placement: "left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleCloseOpenAutocomplete2,
+    onClick: handleCloseUpdateReason,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3355,8 +3309,8 @@ function DailyExpenseForm() {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Create Expenses Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-    onSubmit: handleSubmitCategory
+  }, "Reason Of Updating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
+    onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     container: true,
     style: {
@@ -3368,11 +3322,14 @@ function DailyExpenseForm() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    id: "expensesCategory",
-    name: "expensesCategory",
-    value: expensesCategory,
-    label: "Expenses Category",
-    onChange: e => setExpensesCategory(e.target.value),
+    required: true,
+    id: "reason",
+    name: "reason",
+    multiline: true,
+    rows: 4,
+    value: reason,
+    onChange: e => setReason(e.target.value),
+    label: "Comments",
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -3381,13 +3338,14 @@ function DailyExpenseForm() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    className: "btnCustomer6",
+    type: "submit",
+    className: "btnCustomer",
     style: {
       width: '100%'
     }
   }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DailyExpenseForm);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DailyExpenseUpdate);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -5548,13 +5506,18 @@ function LanguageFixerButton(_ref) {
     anchorEl = _useState2[0],
     setAnchorEl = _useState2[1];
 
-  // Compute suggestions and diagnostics
-  var analysis = (0,textAssistUtils/* getSuggestions */.KW)(value, mode);
-  var suggestions = analysis.suggestions,
-    hasExtraSpaces = analysis.hasExtraSpaces,
-    hasUncapitalized = analysis.hasUncapitalized,
-    isClean = analysis.isClean;
+  // Compute suggestions and diagnostics for full input
+  var fullAnalysis = (0,textAssistUtils/* getSuggestions */.KW)(value, mode);
+  var suggestions = fullAnalysis.suggestions,
+    hasExtraSpaces = fullAnalysis.hasExtraSpaces,
+    hasUncapitalized = fullAnalysis.hasUncapitalized,
+    isClean = fullAnalysis.isClean;
   var isTypo = !isClean;
+
+  // If opened via right-click with a specific scopeText, compute suggestions for scopeText
+  var isScoped = Boolean(contextMenu && contextMenu.scopeText);
+  var scopeSuggestions = isScoped ? (0,textAssistUtils/* getSuggestions */.KW)(contextMenu.scopeText, mode).suggestions : [];
+  var displaySuggestions = isScoped && scopeSuggestions.length > 0 ? scopeSuggestions : suggestions;
   var isMenuOpen = Boolean(anchorEl) || contextMenu !== null;
   var handleOpenMenu = e => {
     if (e && e.preventDefault) e.preventDefault();
@@ -5577,19 +5540,25 @@ function LanguageFixerButton(_ref) {
       onFixed(updated);
     }
     react_toastify_esm/* toast */.oR.success("\u2728 Replaced \"".concat(original, "\" with \"").concat(replacement, "\"!"));
-
-    // Check remaining suggestions
-    var remaining = (0,textAssistUtils/* getSuggestions */.KW)(updated, mode).suggestions;
-    if (remaining.length === 0) {
+    if (isScoped) {
       handleClose();
+    } else {
+      var remaining = (0,textAssistUtils/* getSuggestions */.KW)(updated, mode).suggestions;
+      if (remaining.length === 0) {
+        handleClose();
+      }
     }
   };
   var handleApplyAll = () => {
-    var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
-    if (typeof onFixed === 'function') {
-      onFixed(polished);
+    var updated = value;
+    for (var s of displaySuggestions) {
+      updated = (0,textAssistUtils/* applySingleCorrection */.ZD)(updated, s.original, s.replacement, mode);
     }
-    react_toastify_esm/* toast */.oR.success('✨ All corrections applied!');
+    updated = (0,textAssistUtils/* applyCleanSpaces */.nW)(updated, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success("\u2728 Applied ".concat(displaySuggestions.length, " correction(s)!"));
     handleClose();
   };
   var handleFormatSpacesOnly = () => {
@@ -5696,7 +5665,7 @@ function LanguageFixerButton(_ref) {
       fontSize: 16,
       color: '#30368a'
     }
-  }), "Spelling & Word Suggestions"), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }), isScoped ? "Spelling Suggestion (\"".concat(contextMenu === null || contextMenu === void 0 ? void 0 : contextMenu.scopeText, "\")") : 'Spelling & Word Suggestions'), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     size: "small",
     onClick: handleClose,
     sx: {
@@ -5713,13 +5682,13 @@ function LanguageFixerButton(_ref) {
       color: '#64748b',
       mt: 0.5
     }
-  }, suggestions.length > 0 ? 'Select which word you want to replace in this sentence:' : 'No word replacements detected in this sentence.')), suggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, displaySuggestions.length > 0 ? isScoped ? 'Click "Fix" to replace this word:' : "Detected ".concat(displaySuggestions.length, " typo(s) across this sentence. Click Fix or Apply All:") : 'No word replacements detected in this sentence.')), displaySuggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       maxHeight: 240,
       overflowY: 'auto',
       py: 0.5
     }
-  }, suggestions.map((s, idx) => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, displaySuggestions.map((s, idx) => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     key: idx,
     onClick: () => handleApplySingle(s.original, s.replacement),
     sx: {
@@ -5780,7 +5749,7 @@ function LanguageFixerButton(_ref) {
       color: '#30368a',
       fontWeight: 600
     }
-  }, "Fix")))), suggestions.length === 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Fix")))), displaySuggestions.length === 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
     sx: {
       p: 2,
       display: 'flex',
@@ -5810,7 +5779,7 @@ function LanguageFixerButton(_ref) {
       flexDirection: 'column',
       gap: 0.5
     }
-  }, suggestions.length > 0 && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, displaySuggestions.length > 0 && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: handleApplyAll,
     sx: {
       borderRadius: '6px',
@@ -5829,7 +5798,7 @@ function LanguageFixerButton(_ref) {
     sx: {
       fontSize: 16
     }
-  }), "Apply All Corrections (", suggestions.length, ")"), (hasExtraSpaces || hasUncapitalized) && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }), "Apply All Corrections (", displaySuggestions.length, ")"), (hasExtraSpaces || hasUncapitalized) && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
     onClick: handleFormatSpacesOnly,
     sx: {
       borderRadius: '6px',
@@ -5906,8 +5875,9 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
  * Drop-in intelligent text input with:
  * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
  * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
- * 3. Interactive suggestion dropdown menu (by clicking ✨ or right-clicking anywhere on text)
- * 4. Real-time typo detection badge & visual warning
+ * 3. Smart suggestion dropdown menu (by clicking ✨ or right-clicking on mistaken/selected words)
+ * 4. Preserves native browser context menu (Undo, Redo, Cut, Copy, Paste) on clean text & empty spaces
+ * 5. Real-time typo detection badge & visual warning
  */
 function SmartTextInput(_ref) {
   var label = _ref.label,
@@ -5948,13 +5918,56 @@ function SmartTextInput(_ref) {
   var dropdownOptions = Array.isArray(options) && options.length > 0 ? options : presetKey && _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] ? _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] : null;
   var isTypo = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .hasTypo */ .rp)(value, mode);
   var handleContextMenu = e => {
-    if (value && typeof value === 'string' && value.trim()) {
-      e.preventDefault();
-      setContextMenu({
-        mouseX: e.clientX,
-        mouseY: e.clientY
-      });
+    if (!value || typeof value !== 'string' || !value.trim()) {
+      // Empty input: allow native browser context menu (Undo, Redo, Cut, Copy, Paste, etc.)
+      return;
     }
+
+    // 1. Check if user has selected / highlighted text with mouse
+    var selectedText = typeof window !== 'undefined' && window.getSelection ? window.getSelection().toString().trim() : '';
+    if (selectedText) {
+      var selAnalysis = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .getSuggestions */ .KW)(selectedText, mode);
+      if (selAnalysis.suggestions.length > 0) {
+        // User highlighted text that contains a mistake -> show suggestions for this selection
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: selectedText
+        });
+        return;
+      }
+      // User highlighted clean text (likely to Copy) -> do NOT prevent default, let native Copy show!
+      return;
+    }
+
+    // 2. No text selected: check which word the cursor is currently on
+    var inputEl = e.target;
+    var clickedWord = '';
+    if (inputEl && typeof inputEl.selectionStart === 'number') {
+      var pos = inputEl.selectionStart;
+      var textVal = inputEl.value || value || '';
+      var leftPart = textVal.slice(0, pos);
+      var rightPart = textVal.slice(pos);
+      var leftMatch = (leftPart.match(/[\w\u00C0-\u017F]+$/) || [''])[0];
+      var rightMatch = (rightPart.match(/^[\w\u00C0-\u017F]+/) || [''])[0];
+      clickedWord = leftMatch + rightMatch;
+    }
+    if (clickedWord) {
+      var wordAnalysis = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .getSuggestions */ .KW)(clickedWord, mode);
+      if (wordAnalysis.suggestions.length > 0) {
+        // Clicked word is a mistake -> show Spelling & Word Suggestions for this word!
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: clickedWord
+        });
+        return;
+      }
+    }
+
+    // 3. Otherwise: clicked on whitespace or clean word -> allow native browser context menu!
   };
   var notifyChange = newVal => {
     if (typeof onChange !== 'function') return;
@@ -6408,6 +6421,203 @@ var TYPO_DICTIONARY = [
 }, {
   pattern: /\b(wrkrs|workrs|wrokers)\b/gi,
   replacement: 'WORKERS'
+},
+// Grammatical shorthand, prepositions, conjunctions, and high-frequency entry typos
+{
+  pattern: /\b(whn|wen)\b/gi,
+  replacement: 'WHEN'
+}, {
+  pattern: /\b(th|teh|hte)\b/gi,
+  replacement: 'THE'
+}, {
+  pattern: /\b(nt)\b/gi,
+  replacement: 'NOT'
+}, {
+  pattern: /\b(bt)\b/gi,
+  replacement: 'BUT'
+}, {
+  pattern: /\b(wz|waz)\b/gi,
+  replacement: 'WAS'
+}, {
+  pattern: /\b(wr|wer)\b/gi,
+  replacement: 'WERE'
+}, {
+  pattern: /\b(iz)\b/gi,
+  replacement: 'IS'
+}, {
+  pattern: /\b(ar)\b/gi,
+  replacement: 'ARE'
+}, {
+  pattern: /\b(ben|bin)\b/gi,
+  replacement: 'BEEN'
+}, {
+  pattern: /\b(hv|hve)\b/gi,
+  replacement: 'HAVE'
+}, {
+  pattern: /\b(hss)\b/gi,
+  replacement: 'HAS'
+}, {
+  pattern: /\b(wth|wid|wit)\b/gi,
+  replacement: 'WITH'
+}, {
+  pattern: /\b(widout|wthout)\b/gi,
+  replacement: 'WITHOUT'
+}, {
+  pattern: /\b(frm|fom)\b/gi,
+  replacement: 'FROM'
+}, {
+  pattern: /\b(bfr|b4)\b/gi,
+  replacement: 'BEFORE'
+}, {
+  pattern: /\b(aftr)\b/gi,
+  replacement: 'AFTER'
+}, {
+  pattern: /\b(bcz|bcuz|coz|cuz|becoz)\b/gi,
+  replacement: 'BECAUSE'
+}, {
+  pattern: /\b(ths|tihs)\b/gi,
+  replacement: 'THIS'
+}, {
+  pattern: /\b(tht|taht)\b/gi,
+  replacement: 'THAT'
+}, {
+  pattern: /\b(thr)\b/gi,
+  replacement: 'THERE'
+}, {
+  pattern: /\b(thier)\b/gi,
+  replacement: 'THEIR'
+}, {
+  pattern: /\b(thms)\b/gi,
+  replacement: 'THEM'
+}, {
+  pattern: /\b(itmen|itme|itms|itmes|itm)\b/gi,
+  replacement: 'ITEM'
+}, {
+  pattern: /\b(woking|wokring|wrking|workn)\b/gi,
+  replacement: 'WORKING'
+}, {
+  pattern: /\b(woked|wrked)\b/gi,
+  replacement: 'WORKED'
+}, {
+  pattern: /\b(instaled|instld|instald)\b/gi,
+  replacement: 'INSTALLED'
+}, {
+  pattern: /\b(fixd|fxd|fixxed)\b/gi,
+  replacement: 'FIXED'
+}, {
+  pattern: /\b(chkd|chked)\b/gi,
+  replacement: 'CHECKED'
+}, {
+  pattern: /\b(axel)\b/gi,
+  replacement: 'AXLE'
+}, {
+  pattern: /\b(rotatng|rotatin)\b/gi,
+  replacement: 'ROTATING'
+}, {
+  pattern: /\b(conect|conected)\b/gi,
+  replacement: 'CONNECTED'
+}, {
+  pattern: /\b(disconect|disconected)\b/gi,
+  replacement: 'DISCONNECTED'
+}, {
+  pattern: /\b(displey|scren)\b/gi,
+  replacement: 'DISPLAY'
+}, {
+  pattern: /\b(cabel)\b/gi,
+  replacement: 'CABLE'
+}, {
+  pattern: /\b(temprature|tempreture)\b/gi,
+  replacement: 'TEMPERATURE'
+}, {
+  pattern: /\b(presure)\b/gi,
+  replacement: 'PRESSURE'
+}, {
+  pattern: /\b(voltge)\b/gi,
+  replacement: 'VOLTAGE'
+}, {
+  pattern: /\b(genrator)\b/gi,
+  replacement: 'GENERATOR'
+}, {
+  pattern: /\b(condensor)\b/gi,
+  replacement: 'CONDENSER'
+}, {
+  pattern: /\b(refridgerator)\b/gi,
+  replacement: 'REFRIGERATOR'
+}, {
+  pattern: /\b(moter)\b/gi,
+  replacement: 'MOTOR'
+}, {
+  pattern: /\b(batry)\b/gi,
+  replacement: 'BATTERY'
+}, {
+  pattern: /\b(breeker)\b/gi,
+  replacement: 'BREAKER'
+}, {
+  pattern: /\b(fuz)\b/gi,
+  replacement: 'FUSE'
+}, {
+  pattern: /\b(valv)\b/gi,
+  replacement: 'VALVE'
+}, {
+  pattern: /\b(pyp|pipp)\b/gi,
+  replacement: 'PIPE'
+}, {
+  pattern: /\b(bering|bearng)\b/gi,
+  replacement: 'BEARING'
+}, {
+  pattern: /\b(berings|bearngs)\b/gi,
+  replacement: 'BEARINGS'
+}, {
+  pattern: /\b(levle)\b/gi,
+  replacement: 'LEVEL'
+}, {
+  pattern: /\b(tite|tightn)\b/gi,
+  replacement: 'TIGHTEN'
+}, {
+  pattern: /\b(tightned)\b/gi,
+  replacement: 'TIGHTENED'
+}, {
+  pattern: /\b(lubricat)\b/gi,
+  replacement: 'LUBRICATE'
+}, {
+  pattern: /\b(lubricatd)\b/gi,
+  replacement: 'LUBRICATED'
+}, {
+  pattern: /\b(calibrat)\b/gi,
+  replacement: 'CALIBRATE'
+}, {
+  pattern: /\b(adjustd)\b/gi,
+  replacement: 'ADJUSTED'
+}, {
+  pattern: /\b(damagd)\b/gi,
+  replacement: 'DAMAGED'
+}, {
+  pattern: /\b(faild)\b/gi,
+  replacement: 'FAILED'
+}, {
+  pattern: /\b(finishd)\b/gi,
+  replacement: 'FINISHED'
+}, {
+  pattern: /\b(suply)\b/gi,
+  replacement: 'SUPPLY'
+}, {
+  pattern: /\b(invois)\b/gi,
+  replacement: 'INVOICE'
+}, {
+  pattern: /\b(recipt)\b/gi,
+  replacement: 'RECEIPT'
+}, {
+  pattern: /\b(purchas)\b/gi,
+  replacement: 'PURCHASE'
+}, {
+  pattern: /\b(amont)\b/gi,
+  replacement: 'AMOUNT'
+}, {
+  pattern: /\b(quantty)\b/gi,
+  replacement: 'QUANTITY'
+}, {
+  pattern: /\b(numbr)\b/gi,
+  replacement: 'NUMBER'
 }];
 
 // Curated vocabulary for word-by-word Damerau-Levenshtein spellchecking
@@ -6421,9 +6631,9 @@ var ENGLISH_FRENCH_VOCABULARY = new Set([
 // Common French Core & Expense Words
 'LE', 'LA', 'LES', 'UN', 'UNE', 'DES', 'DU', 'DE', 'AU', 'AUX', 'EN', 'DANS', 'SUR', 'SOUS', 'PAR', 'POUR', 'AVEC', 'SANS', 'VERS', 'CHEZ', 'CE', 'CET', 'CETTE', 'CES', 'MON', 'MA', 'MES', 'TON', 'TA', 'TES', 'SON', 'SA', 'SES', 'NOTRE', 'NOS', 'VOTRE', 'VOS', 'LEUR', 'LEURS', 'JE', 'TU', 'IL', 'ELLE', 'ON', 'NOUS', 'VOUS', 'ILS', 'ELLES', 'ME', 'TE', 'SE', 'LUI', 'MOI', 'TOI', 'SOI', 'EUX', 'QUI', 'QUE', 'QUOI', 'DONT', 'OU', 'FAIT', 'FAIRE', 'ETRE', 'AVOIR', 'PAS', 'PLUS', 'BIEN', 'BON', 'BONNE', 'MAUVAIS', 'JOUR', 'JOURS', 'MOIS', 'ANNEE', 'TEMPS', 'CHANGER', 'CHANGE', 'CHANGEMENT', 'REMPLACER', 'REMPLACEMENT', 'NETTOYER', 'NETTOYAGE', 'VERIFIER', 'VERIFICATION', 'REGLER', 'REGLAGE', 'NOURRITURE', 'REPAS', 'DEJEUNER', 'DINER', 'PETIT-DEJEUNER', 'BOISSON', 'BOISSONS', 'EAU', 'PAIN', 'CAFE', 'THE', 'SUCRE', 'LAIT', 'RIZ', 'VIANDE', 'POULET', 'POISSON', 'TRAVAILLEUR', 'TRAVAILLEURS', 'OUVRIER', 'OUVRIERS', 'EMPLOYE', 'EMPLOYES', 'PERSONNEL', 'EQUIPE', 'CHAUFFEUR', 'CHAUFFEURS', 'GARDE', 'GARDES', 'TECHNICIEN', 'TECHNICIENS', 'INGENIEUR', 'INGENIEURS', 'MECANICIEN', 'ELECTRICIEN', 'CARBURANT', 'ESSENCE', 'GASOIL', 'DIESEL', 'TRANSPORT', 'FRAIS', 'DEPENSE', 'DEPENSES', 'LOYER', 'ELECTRICITE', 'INTERNET', 'FOURNITURES', 'PAPIER', 'SALAIRE', 'SALAIRES', 'AVANCE', 'PRIME',
 // Appliances & Equipment
-'AIR', 'CONDITIONER', 'APPLIANCE', 'APPLIANCES', 'OVEN', 'MIXER', 'DOUGH', 'WATER', 'PUMP', 'GENERATOR', 'CHILLER', 'COLD', 'ROOM', 'COMPRESSOR', 'MOTOR', 'INVERTER', 'TRANSFORMER', 'CAPACITOR', 'BREAKER', 'CIRCUIT', 'SWITCH', 'BOARD', 'WIRING', 'CABLE', 'SCREEN', 'DISPLAY', 'CAMERA', 'CAMERAS', 'CCTV', 'SECURITY', 'SENSOR', 'THERMOSTAT', 'FUSE', 'VALVE', 'PIPE', 'FILTER', 'BELT', 'BEARING', 'BEARINGS', 'COIL', 'WINDING', 'REFRIGERANT', 'GAS', 'FREON', 'PRESSURE', 'TEMPERATURE', 'VOLTAGE', 'CURRENT', 'POWER', 'ELECTRIC', 'ELECTRICAL', 'MECHANICAL', 'ELECTRONIC', 'HEATING', 'COOLING', 'VENTILATION', 'PANEL', 'RELAY', 'BATTERY', 'CHARGER', 'FREEZER', 'REFRIGERATOR', 'FRIDGE', 'FRYER', 'MACHINE', 'MACHINES', 'HEATER', 'FAN', 'BLOWER', 'PLUG', 'SOCKET', 'CONNECTOR', 'ADAPTER', 'GENERATOR', 'STABILIZER', 'UPS', 'AVR',
+'AIR', 'CONDITIONER', 'APPLIANCE', 'APPLIANCES', 'OVEN', 'MIXER', 'DOUGH', 'WATER', 'PUMP', 'GENERATOR', 'CHILLER', 'COLD', 'ROOM', 'COMPRESSOR', 'MOTOR', 'INVERTER', 'TRANSFORMER', 'CAPACITOR', 'BREAKER', 'CIRCUIT', 'SWITCH', 'BOARD', 'WIRING', 'CABLE', 'SCREEN', 'DISPLAY', 'CAMERA', 'CAMERAS', 'CCTV', 'SECURITY', 'SENSOR', 'THERMOSTAT', 'FUSE', 'VALVE', 'PIPE', 'FILTER', 'BELT', 'BEARING', 'BEARINGS', 'COIL', 'WINDING', 'REFRIGERANT', 'GAS', 'FREON', 'PRESSURE', 'TEMPERATURE', 'VOLTAGE', 'CURRENT', 'POWER', 'ELECTRIC', 'ELECTRICAL', 'MECHANICAL', 'ELECTRONIC', 'HEATING', 'COOLING', 'VENTILATION', 'PANEL', 'RELAY', 'BATTERY', 'CHARGER', 'FREEZER', 'REFRIGERATOR', 'FRIDGE', 'FRYER', 'MACHINE', 'MACHINES', 'HEATER', 'FAN', 'BLOWER', 'PLUG', 'SOCKET', 'CONNECTOR', 'ADAPTER', 'GENERATOR', 'STABILIZER', 'UPS', 'AVR', 'AXLE', 'AXLES', 'ROTATING', 'ROTATE', 'ROTATED', 'ROTATION', 'SHAFT', 'SHAFTS', 'WHEEL', 'WHEELS', 'PULLEY', 'PULLEYS', 'CHAIN', 'CHAINS', 'LATHE', 'LATHES', 'CYLINDER', 'CYLINDERS', 'PISTON', 'PISTONS',
 // Commercial & ERP Terms
-'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT', 'PAYMENT', 'EXPENSE', 'EXPENSES', 'PURCHASE', 'PURCHASES', 'ORDER', 'ORDERS', 'PROJECT', 'PROJECTS', 'EMPLOYEE', 'EMPLOYEES', 'TECHNICIAN', 'SALARY', 'PAYROLL', 'ADVANCE', 'LOAN', 'CASH', 'BANK', 'ACCOUNT', 'BALANCE', 'TOTAL', 'SUBTOTAL', 'TAX', 'VAT', 'TVA', 'DISCOUNT', 'AMOUNT', 'PRICE', 'COST', 'RATE', 'QTY', 'QUANTITY', 'UNIT', 'UNITS', 'DESCRIPTION', 'REMARKS', 'NOTES', 'SERIAL', 'NUMBER', 'BRAND', 'MODEL', 'WARRANTY', 'STATUS', 'DATE', 'TIME', 'CODE', 'STORE', 'STOCK', 'INVENTORY', 'WAREHOUSE', 'TRANSFER', 'CATEGORY', 'DEPARTMENT', 'BRANCH', 'OFFICE', 'FACTORY', 'POS', 'SALES', 'RETAIL', 'WHOLESALE', 'DELIVERY', 'SHIPPING', 'TRANSPORT',
+'ITEM', 'ITEMS', 'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT', 'PAYMENT', 'EXPENSE', 'EXPENSES', 'PURCHASE', 'PURCHASES', 'ORDER', 'ORDERS', 'PROJECT', 'PROJECTS', 'EMPLOYEE', 'EMPLOYEES', 'TECHNICIAN', 'SALARY', 'PAYROLL', 'ADVANCE', 'LOAN', 'CASH', 'BANK', 'ACCOUNT', 'BALANCE', 'TOTAL', 'SUBTOTAL', 'TAX', 'VAT', 'TVA', 'DISCOUNT', 'AMOUNT', 'PRICE', 'COST', 'RATE', 'QTY', 'QUANTITY', 'UNIT', 'UNITS', 'DESCRIPTION', 'REMARKS', 'NOTES', 'SERIAL', 'NUMBER', 'BRAND', 'MODEL', 'WARRANTY', 'STATUS', 'DATE', 'TIME', 'CODE', 'STORE', 'STOCK', 'INVENTORY', 'WAREHOUSE', 'TRANSFER', 'CATEGORY', 'DEPARTMENT', 'BRANCH', 'OFFICE', 'FACTORY', 'POS', 'SALES', 'RETAIL', 'WHOLESALE', 'DELIVERY', 'SHIPPING', 'TRANSPORT',
 // Actions & Verbs
 'CLEANED', 'SERVICED', 'REPLACED', 'FIXED', 'REPAIRED', 'TESTED', 'CHECKED', 'INSTALLED', 'CONFIGURED', 'CALIBRATED', 'ADJUSTED', 'TIGHTENED', 'REWIRED', 'SOLDED', 'WELDED', 'LUBRICATED', 'OVERHAULED', 'ASSEMBLED', 'DISASSEMBLED', 'DELIVERED', 'RECEIVED', 'APPROVED', 'CANCELLED', 'PENDING', 'COMPLETED', 'INSPECTION', 'DIAGNOSTIC', 'OK', 'FAILED', 'ERROR', 'FAULT', 'DEFECT', 'SHORT', 'BURNT', 'OVERHEATING', 'BLOCKED', 'LEAK', 'NOISE', 'CHARGING', 'CONNECTED', 'OFFLINE', 'ONLINE', 'ACTIVE', 'INACTIVE', 'OPEN', 'CLOSED', 'NEW', 'USED', 'URGENT', 'NORMAL', 'HIGH', 'LOW',
 // Technical Acronyms & Units
@@ -6612,13 +6822,13 @@ var polishText = function polishText(text) {
 /**
  * Checks if a string contains any recognized typo, unnormalized spacing,
  * lowercase letters, or any misspelled words that need auto-correction.
- * Guaranteed 100% consistent with polishText.
+ * Guaranteed 100% consistent with getSuggestions.
  */
 var hasTypo = function hasTypo(text) {
   var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
   if (!text || typeof text !== 'string' || !text.trim()) return false;
-  var polished = polishText(text, mode);
-  return polished !== text.trim();
+  var analysis = getSuggestions(text, mode);
+  return !analysis.isClean;
 };
 
 /**
