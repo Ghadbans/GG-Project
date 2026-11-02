@@ -565,7 +565,7 @@ function ItemOutViewAdmin() {
     { field: 'reason', headerName: 'Reason', width: 150 },
     { field: 'referenceInfo', headerName: 'Description', width: open1 ? 480 : 550 },
     { field: 'itemInfo', headerName: 'Item', width: open1 ? 80 : 130 },
-    { field: 'itemDescriptionInfo', headerName: 'I-Description', width: open1 ? 80 : 130 },
+    { field: 'itemDescriptionInfo', headerName: 'I-Description', width: open1 ? 80 : 130, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(Array.isArray(params.value) ? params.value.join(', ') : (params.value || '')).toUpperCase()}</span> },
     {
       field: 'view', headerName: 'View', width: 50, renderCell: (params) => (
         <ViewTooltip title="View">

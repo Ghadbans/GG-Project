@@ -3073,3 +3073,43 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
   6. **Deployment & Git Sync**:
      - Updated `SYSTEM_ARCHITECTURE_AND_PROGRESS.md` with complete session memory.
      - Committed all changes and pushed to GitHub `main` for automated Railway and Cloudflare Pages deployment.
+
+
+### Version 3.6.3 (November 02, 2026) - Interactive Language Assistant with Granular Dropdown & Right-Click Context Menu, Universal Table Uppercase Fixes
+- **User Feedback & Motivation**:
+  1. **Granular Word Selection**: The user observed that full-sentence auto-correction could sometimes change technical terms, dimension codes (e.g. `4X2`), French phrases, or brand abbreviations into unintended words. The user requested:
+     *"Sometimes it is changing the whole meaning of the sentenace i prefer the user to chose what he want to fix int in the sentenace like when i want to click he can click with the rright click and it will open a drop box has all the auto correct words in the sentencace than the user can chose what he want to auto correct .. what do you think isnt better ! ?"*
+  2. **Comprehensive Table I-Description Uppercase**: Identified additional tables (`PurchaseOrderViewAdmin`, `ItemOutViewAdmin`, `ItemReturnAdminView`, `MaintenanceViewAdmin`, `MaintenanceOrderAdmin`) where `itemDescriptionInfo` / `I-Description` columns required explicit uppercase formatting to match the global capital letters requirement.
+
+- **Solutions & Implementations**:
+  1. **Granular Suggestions Engine (`src/js/utils/textAssistUtils.js`)**:
+     - Created `getSuggestions(text, mode)`: Parses input text, executes phrase-level and single-word typo analysis against technical & bilingual dictionaries, and extracts exact matches with original text snippets, replacements, and match types.
+     - Created `applySingleCorrection(text, original, replacement, mode)`: Replaces ONLY the chosen word or phrase in the sentence using case-insensitive boundaries while preserving every other word, punctuation mark, code, and dimension.
+     - Created `applyCleanSpaces(text, mode)`: Formats spacing and uppercase without modifying any words or vocabulary.
+  2. **Interactive Dropdown Menu Component (`src/js/component/LanguageFixerButton.js`)**:
+     - Rewritten using MUI `<Menu>`, `<MenuItem>`, and `<Chip>` components.
+     - **Dual Trigger**: Clicking the ✨ button OR right-clicking anywhere in the input field opens the suggestions menu directly at the cursor coordinates.
+     - **Visual Diff Chips**: Shows detected original words in red strikethrough chips alongside green suggested replacement chips with an arrow and an individual **"Fix"** button.
+     - Clicking "Fix" applies only that specific replacement immediately and updates the text field.
+     - If all words are clean, displays a reassuring checkmark: `"All words look correct!"`.
+     - **Batch & Format Actions**: Provides `"Apply All Corrections"` and `"Format Spacing & Capitalize Only"` options.
+     - Dynamic orange badge showing exact count of detected suggestions.
+  3. **Right-Click Context Menu Integration (`src/js/component/SmartTextInput.js`)**:
+     - Added `onContextMenu` handler to both the Autocomplete and standard/multiline `TextField` components.
+     - Right-clicking when text is present captures `(clientX, clientY)` and opens the suggestions dropdown at mouse coordinates (`anchorReference="anchorPosition"`).
+  4. **Universal Uppercase Column Rendering Across All Views**:
+     - Updated `PurchaseOrderViewAdmin.js`: Added `renderCell` on `itemDescriptionInfo` column to uppercase text, and updated modal view and print view table cells.
+     - Updated `ItemOutViewAdmin.js`: Added uppercase `renderCell` on `itemDescriptionInfo` column.
+     - Updated `ItemReturnAdminView.js`: Added uppercase `renderCell` on `itemDescriptionInfo` column.
+     - Updated `MaintenanceViewAdmin.js`: Added uppercase `renderCell` on `itemDescriptionInfo` column.
+     - Updated `MaintenanceOrderAdmin.js`: Added uppercase `renderCell` on `itemDescriptionInfo` column.
+  5. **Version Bumping & Production Binaries**:
+     - Bumped system version to **`3.6.3`** in `package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+     - Verified AST and safety with `pre-build-check.js` (0 errors across 238 files) and `test_engine.js` (all tests passed).
+     - Compiled Web bundle (`npm run build:web`) into `dist_web/` with cache-busting.
+     - Compiled Electron desktop bundle (`npm run build:electron`).
+     - Generated official 64-bit installer: `dist/Global Gate Setup 3.6.3.exe` (95.54 MB) and copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.3.exe`.
+     - Compiled Android APK (`gradlew assembleDebug`, 18.52 MB) and copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.3.apk`.
+  6. **Deployment & Git Sync**:
+     - Updated `SYSTEM_ARCHITECTURE_AND_PROGRESS.md` with complete session memory.
+     - Staged all changes and pushed to GitHub `main` for automated Railway and Cloudflare Pages deployment.

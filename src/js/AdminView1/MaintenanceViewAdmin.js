@@ -562,7 +562,7 @@ function MaintenanceViewAdmin() {
       }
     },
     { field: 'defectDescription', headerName: 'Defect', width: sideBar ? 130 : 150 },
-    { field: 'itemDescriptionInfo', headerName: 'I-Description', width: sideBar ? 130 : 150 },
+    { field: 'itemDescriptionInfo', headerName: 'I-Description', width: sideBar ? 130 : 150, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(Array.isArray(params.value) ? params.value.join(', ') : (params.value || '')).toUpperCase()}</span> },
     { field: 'technicianAssign', headerName: 'Technician', width: 130 },
     { field: 'dateField', headerName: 'Service Date', width: 120 },
     { field: 'action', headerName: 'Action', width: 70, renderCell: (params) => { params.row.action !== undefined ? params.row.action : '' } },

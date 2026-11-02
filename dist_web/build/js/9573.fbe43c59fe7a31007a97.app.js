@@ -1,4 +1,4 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[5151],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[9573],{
 
 /***/ 40530
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -446,26 +446,6 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
   d: "m22.7 19-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4"
 }), 'Build'));
-/* harmony export */ __webpack_require__.d(__webpack_exports__, [
-/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ ]);
-
-
-/***/ },
-
-/***/ 8047
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
-"use client";
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
-  d: "M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2m5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12z"
-}), 'Cancel'));
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -2079,148 +2059,69 @@ const GridToolbar = /*#__PURE__*/react.forwardRef(function GridToolbar(props, re
 
 /***/ },
 
-/***/ 45151
+/***/ 9573
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  "default": () => (/* binding */ AdminView1_MaintenanceViewAdmin)
-});
-
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(96540);
-// EXTERNAL MODULE: ./src/js/component/ConfirmDeleteModal.js
-var ConfirmDeleteModal = __webpack_require__(80542);
-// EXTERNAL MODULE: ./src/js/AdminView1/view.css
-var view = __webpack_require__(68525);
-// EXTERNAL MODULE: ./src/js/AdminView1/PageView/Chartview.css
-var Chartview = __webpack_require__(55746);
-// EXTERNAL MODULE: ./src/js/component/SidebarDash.js
-var SidebarDash = __webpack_require__(4640);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Visibility.js
-var Visibility = __webpack_require__(5673);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Edit.js
-var Edit = __webpack_require__(28597);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Delete.js
-var Delete = __webpack_require__(67034);
-// EXTERNAL MODULE: ./node_modules/react-router/dist/index.js
-var dist = __webpack_require__(47767);
-// EXTERNAL MODULE: ./node_modules/react-router-dom/dist/index.js
-var react_router_dom_dist = __webpack_require__(84976);
-// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
-var styled = __webpack_require__(11848);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
-var Typography = __webpack_require__(14073);
-// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
-var IconButton = __webpack_require__(11641);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
-var Box = __webpack_require__(69067);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Pagination/Pagination.js + 6 modules
-var Pagination = __webpack_require__(69279);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Modal/Modal.js + 3 modules
-var Modal = __webpack_require__(35406);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Grid/Grid.js + 2 modules
-var Grid = __webpack_require__(8239);
-// EXTERNAL MODULE: ./node_modules/@mui/material/FormControl/FormControl.js + 1 modules
-var FormControl = __webpack_require__(50779);
-// EXTERNAL MODULE: ./node_modules/@mui/material/InputLabel/InputLabel.js + 1 modules
-var InputLabel = __webpack_require__(29571);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Select/Select.js + 4 modules
-var Select = __webpack_require__(2071);
-// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
-var MenuItem = __webpack_require__(73896);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Backdrop/Backdrop.js + 1 modules
-var Backdrop = __webpack_require__(47419);
-// EXTERNAL MODULE: ./node_modules/@mui/material/TextField/TextField.js + 2 modules
-var TextField = __webpack_require__(844);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
-var Tooltip = __webpack_require__(56655);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/tooltipClasses.js
-var tooltipClasses = __webpack_require__(58331);
-// EXTERNAL MODULE: ./node_modules/@mui/material/AppBar/AppBar.js + 1 modules
-var AppBar = __webpack_require__(89828);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Toolbar/Toolbar.js + 1 modules
-var Toolbar = __webpack_require__(8532);
-// EXTERNAL MODULE: ./node_modules/@mui/material/CssBaseline/CssBaseline.js
-var CssBaseline = __webpack_require__(14519);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Drawer/Drawer.js + 1 modules
-var Drawer = __webpack_require__(88248);
-// EXTERNAL MODULE: ./node_modules/@mui/material/List/List.js + 1 modules
-var List = __webpack_require__(49799);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
-var Divider = __webpack_require__(71543);
-// EXTERNAL MODULE: ./node_modules/@mui/material/Container/Container.js + 1 modules
-var Container = __webpack_require__(97834);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Menu.js
-var Menu = __webpack_require__(62274);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ChevronLeft.js
-var ChevronLeft = __webpack_require__(8451);
-// EXTERNAL MODULE: ./node_modules/axios/lib/axios.js + 48 modules
-var axios = __webpack_require__(99380);
-// EXTERNAL MODULE: ./src/js/utils/apiCache.js
-var apiCache = __webpack_require__(46986);
-// EXTERNAL MODULE: ./src/js/apiConfig.js
-var apiConfig = __webpack_require__(71510);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Assignment.js
-var Assignment = __webpack_require__(17332);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Build.js
-var Build = __webpack_require__(34485);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/HourglassEmpty.js
-var HourglassEmpty = __webpack_require__(62430);
-// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
-var createSvgIcon = __webpack_require__(20561);
-// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
-var jsx_runtime = __webpack_require__(74848);
-;// ./node_modules/@mui/icons-material/esm/ReceiptLong.js
-"use client";
-
-
-
-/* harmony default export */ const ReceiptLong = ((0,createSvgIcon/* default */.A)([/*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M19.5 3.5 18 2l-1.5 1.5L15 2l-1.5 1.5L12 2l-1.5 1.5L9 2 7.5 3.5 6 2v14H3v3c0 1.66 1.34 3 3 3h12c1.66 0 3-1.34 3-3V2zM19 19c0 .55-.45 1-1 1s-1-.45-1-1v-3H8V5h11z"
-}, "0"), /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
-  d: "M9 7h6v2H9zm7 0h2v2h-2zm-7 3h6v2H9zm7 0h2v2h-2z"
-}, "1")], 'ReceiptLong'));
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/EventRepeat.js
-var EventRepeat = __webpack_require__(55002);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Cancel.js
-var Cancel = __webpack_require__(8047);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Add.js
-var Add = __webpack_require__(99682);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/esm/Close.js
-var Close = __webpack_require__(17809);
-// EXTERNAL MODULE: ./node_modules/dayjs/dayjs.min.js
-var dayjs_min = __webpack_require__(74353);
-var dayjs_min_default = /*#__PURE__*/__webpack_require__.n(dayjs_min);
-// EXTERNAL MODULE: ./src/js/component/Loader.js + 1 modules
-var Loader = __webpack_require__(65821);
-// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircle.js
-var CheckCircle = __webpack_require__(20889);
-// EXTERNAL MODULE: ./node_modules/react-redux/es/index.js + 14 modules
-var es = __webpack_require__(13561);
-// EXTERNAL MODULE: ./src/js/features/auth/authSlice.js
-var authSlice = __webpack_require__(32005);
-// EXTERNAL MODULE: ./src/js/component/NetworkLogoutIcon.js
-var NetworkLogoutIcon = __webpack_require__(40301);
-// EXTERNAL MODULE: ./src/js/img/no-data.png
-var no_data = __webpack_require__(20453);
-// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/DataGrid/DataGrid.js + 185 modules
-var DataGrid = __webpack_require__(1835);
-// EXTERNAL MODULE: ./node_modules/@mui/x-data-grid/components/toolbar/GridToolbar.js + 5 modules
-var GridToolbar = __webpack_require__(53071);
-// EXTERNAL MODULE: ./src/js/AdminView1/MessageAdminView.js + 2 modules
-var MessageAdminView = __webpack_require__(83818);
-// EXTERNAL MODULE: ./src/js/AdminView1/NotificationVIewInfo.js
-var NotificationVIewInfo = __webpack_require__(95236);
-// EXTERNAL MODULE: ./src/js/utils/isMobile.js
-var utils_isMobile = __webpack_require__(2650);
-// EXTERNAL MODULE: ./src/js/component/MobileCardList.js + 2 modules
-var MobileCardList = __webpack_require__(353);
-;// ./src/js/AdminView1/MaintenanceViewAdmin.js
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var _component_ConfirmDeleteModal__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(80542);
+/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68525);
+/* harmony import */ var _Chartview_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55746);
+/* harmony import */ var _component_SidebarDash__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4640);
+/* harmony import */ var _mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5673);
+/* harmony import */ var _mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(28597);
+/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(67034);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(84976);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(47767);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(69279);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(50779);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(29571);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(2071);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(73896);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Divider__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(99380);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(71510);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(17332);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(34485);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(17809);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(55002);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(62430);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_43___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_43__);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(65821);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(20889);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(40301);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(20453);
+/* harmony import */ var _img_no_data_png__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(_img_no_data_png__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(1835);
+/* harmony import */ var _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(53071);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(2650);
+/* harmony import */ var _component_MobileCardList__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(353);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -2281,10 +2182,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
+var DeleteTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2292,7 +2193,7 @@ var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2300,10 +2201,10 @@ var DeleteTooltip = (0,styled/* default */.Ay)(_ref => {
     }
   };
 });
-var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
+var EditTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2311,7 +2212,7 @@ var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'gray',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2319,10 +2220,10 @@ var EditTooltip = (0,styled/* default */.Ay)(_ref3 => {
     }
   };
 });
-var ViewTooltip = (0,styled/* default */.Ay)(_ref5 => {
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2330,7 +2231,7 @@ var ViewTooltip = (0,styled/* default */.Ay)(_ref5 => {
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(tooltipClasses/* default */.A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2351,7 +2252,7 @@ var style = {
   pb: 3
 };
 var drawerWidth = 240;
-var MaintenanceViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */.A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -2371,7 +2272,7 @@ var MaintenanceViewAdmin_AppBar = (0,styled/* default */.Ay)(AppBar/* default */
     })
   });
 });
-var MaintenanceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */.Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -2399,22 +2300,22 @@ var MaintenanceViewAdmin_Drawer = (0,styled/* default */.Ay)(Drawer/* default */
     })
   };
 });
-function MaintenanceViewAdmin() {
-  var _user$data, _maintenance$find;
-  var navigate = (0,dist/* useNavigate */.Zp)();
-  var isMobile = (0,utils_isMobile/* useIsMobile */.al)();
-  var dispatch = (0,es/* useDispatch */.wA)();
-  var user = (0,es/* useSelector */.d4)(authSlice/* selectCurrentUser */.xu);
-  (0,react.useEffect)(() => {
+function MaintenanceOrderAdmin() {
+  var _user$data, _user$data4, _user$data5, _maintenance$find;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__/* .useNavigate */ .Zp)();
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .useIsMobile */ .al)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_46__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_46__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__/* .selectCurrentUser */ .xu);
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,authSlice/* setUser */.gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -2432,16 +2333,16 @@ function MaintenanceViewAdmin() {
     }();
     fetchUser();
   }, [dispatch]);
-  var _useState = (0,react.useState)([]),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState2 = _slicedToArray(_useState, 2),
     grantAccess = _useState2[0],
     setGrantAccess = _useState2[1];
-  (0,react.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchNumber = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _res$data;
-          var res = yield (0,apiCache/* cachedGet */.Fe)("".concat(apiConfig/* ENDPOINT_URL */.m, "/grantAccess"));
+          var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_35__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => row.userID === user.data.id).map(row => setGrantAccess(row.modules));
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -2454,90 +2355,93 @@ function MaintenanceViewAdmin() {
     fetchNumber();
   }, [user]);
   var isOwner = (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) === 'GG';
-  var MaintenanceInfoC = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.createM === true);
-  var MaintenanceInfoV = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.viewM === true);
-  var MaintenanceInfoU = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.editM === true);
-  var MaintenanceInfoD = grantAccess.filter(row => (row.moduleName === "Maintenance" || row.moduleName === "Maintenance-Order") && row.access.deleteM === true);
+  var MaintenanceInfoC = grantAccess.filter(row => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.createM === true);
+  var MaintenanceInfoV = grantAccess.filter(row => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.readM === true);
+  var MaintenanceInfoU = grantAccess.filter(row => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.editM === true);
+  var MaintenanceInfoD = grantAccess.filter(row => (row.moduleName === "Maintenance-Order" || row.moduleName === "Maintenance") && row.access.deleteM === true);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,authSlice/* logOut */.je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_47__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState3 = (0,react.useState)([]),
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState4 = _slicedToArray(_useState3, 2),
     maintenance = _useState4[0],
     setMaintenance = _useState4[1];
-  var _useState5 = (0,react.useState)([]),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState6 = _slicedToArray(_useState5, 2),
     newPurchase = _useState6[0],
     setNewPurchase = _useState6[1];
-  var _useState7 = (0,react.useState)(true),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
     _useState8 = _slicedToArray(_useState7, 2),
     loadingData = _useState8[0],
     setLoadingData = _useState8[1];
-  var _useState9 = (0,react.useState)(0),
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('ALL'),
     _useState0 = _slicedToArray(_useState9, 2),
-    page = _useState0[0],
-    setPage = _useState0[1]; // Initialize page state to 0 (0-based index)
-  var _useState1 = (0,react.useState)('ALL'),
-    _useState10 = _slicedToArray(_useState1, 2),
-    statusFilter = _useState10[0],
-    setStatusFilter = _useState10[1];
-  var _useState11 = (0,react.useState)({
+    statusFilter = _useState0[0],
+    setStatusFilter = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       all: 0,
       open: 0,
       pending: 0,
-      close: 0,
-      converted: 0,
-      reschedule: 0,
-      cancel: 0
+      reschedule: 0
     }),
+    _useState10 = _slicedToArray(_useState1, 2),
+    statusCounts = _useState10[0],
+    setStatusCounts = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState12 = _slicedToArray(_useState11, 2),
-    statusCounts = _useState12[0],
-    setStatusCounts = _useState12[1];
-  var limit = isMobile ? 30 : 100;
-  var _useState13 = (0,react.useState)(''),
+    page = _useState12[0],
+    setPage = _useState12[1]; // Initialize page state to 0 (0-based index)
+  var limit = 100;
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState14 = _slicedToArray(_useState13, 2),
     searchTerm = _useState14[0],
     setSearchTerm = _useState14[1]; // Initialize search term state
-  var _useState15 = (0,react.useState)(''),
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState16 = _slicedToArray(_useState15, 2),
     filterField = _useState16[0],
     setFilterField = _useState16[1]; // Initialize filter field state
-  var _useState17 = (0,react.useState)(''),
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState18 = _slicedToArray(_useState17, 2),
     filterValue = _useState18[0],
     setFilterValue = _useState18[1]; // Initialize filter value state
-  var _useState19 = (0,react.useState)(0),
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState20 = _slicedToArray(_useState19, 2),
     totalPage = _useState20[0],
     SetTotalPage = _useState20[1];
-  var _useState21 = (0,react.useState)(0),
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState22 = _slicedToArray(_useState21, 2),
     totalItemCount = _useState22[0],
     setTotalItemCount = _useState22[1];
   var fetchItems = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (page, searchTerm, filterField, filterValue, statusFilter) {
       try {
+        var _user$data2, _user$data3;
+        var hasMainMaintenance = grantAccess.some(row => row.moduleName === "Maintenance" && row.access.readM);
+        var isOffice = (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.role) === 'CEO' || hasMainMaintenance;
         var statusParam = statusFilter && statusFilter !== 'ALL' ? "&status=".concat(encodeURIComponent(statusFilter)) : '';
-        var res = yield axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/maintenance-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim()), "&filterField=").concat(encodeURIComponent((filterField || '').trim()), "&filterValue=").concat(encodeURIComponent((filterValue || '').trim())).concat(statusParam));
-        var formatDate = (res.data.itemI || []).map(item => {
-          var isConverted = item.status === 'Close' && (item.Converted === true || item.Converted === 'true') || item.status === 'Converted' || item.Converted === true || item.Converted === 'true';
-          var rawNum = String(item.serviceNumber || '').replace(/^M-0*/i, '');
-          return _objectSpread(_objectSpread({}, item), {}, {
-            id: item._id,
-            status: isConverted ? 'Converted' : item.status,
-            serviceNumber: "M-00" + rawNum,
-            dateField: dayjs_min_default()(item.serviceDate).format('DD/MM/YYYY'),
-            visit: dayjs_min_default()(item.visitDate).format('DD/MM/YYYY')
-          });
-        });
-        SetTotalPage(Math.ceil(res.data.totalItem / limit));
-        setTotalItemCount(res.data.totalItem || 0); // Ensure totalPage is correctly calculated
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/technician-maintenance-Information?technician=").concat(encodeURIComponent((user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || ''), "&isOffice=").concat(isOffice, "&page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent((searchTerm || '').trim())).concat(statusParam));
+        var formatDate = (res.data.itemI || []).filter(item => {
+          if (!item) return false;
+          if (!isOffice) {
+            var isConverted = item.Converted === true || item.Converted === 'true' || String(item.status || '').toLowerCase() === 'converted';
+            var isClosed = String(item.status || '').toLowerCase() === 'close' || String(item.status || '').toLowerCase() === 'closed';
+            if (isConverted || isClosed) return false;
+          }
+          return true;
+        }).map(item => _objectSpread(_objectSpread({}, item), {}, {
+          id: item._id,
+          serviceNumber: "M-00" + item.serviceNumber,
+          dateField: dayjs__WEBPACK_IMPORTED_MODULE_43___default()(item.serviceDate).format('DD/MM/YYYY'),
+          visit: dayjs__WEBPACK_IMPORTED_MODULE_43___default()(item.visitDate).format('DD/MM/YYYY')
+        }));
+        SetTotalPage(Math.ceil((res.data.totalItem || 0) / limit));
+        setTotalItemCount(isMobile ? formatDate.length : res.data.totalItem || 0);
+        setMaintenance(formatDate);
         if (res.data.statusCounts) {
           setStatusCounts(res.data.statusCounts);
         }
-        setMaintenance(formatDate);
         setLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -2548,12 +2452,6 @@ function MaintenanceViewAdmin() {
       return _ref1.apply(this, arguments);
     };
   }();
-  var handleRefreshSearch = () => {
-    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
-  };
-  (0,react.useEffect)(() => {
-    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
-  }, [page, searchTerm, filterField, filterValue, statusFilter]);
   var handleStatusClick = statusKey => {
     if (statusFilter.toLowerCase() === statusKey.toLowerCase() && statusKey !== 'ALL') {
       setStatusFilter('ALL');
@@ -2562,22 +2460,28 @@ function MaintenanceViewAdmin() {
     }
     setPage(0);
   };
+  var handleRefreshSearch = () => {
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    fetchItems(page, searchTerm, filterField, filterValue, statusFilter);
+  }, [page, searchTerm, filterField, filterValue, statusFilter, user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName, user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.role, grantAccess]);
   var handlePageChange = newPage => {
     setPage(newPage); // Update page state (convert to 0-based index)
   };
-  var _useState23 = (0,react.useState)(false),
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
     loading = _useState24[0],
     setLoading = _useState24[1];
-  var _useState25 = (0,react.useState)(false),
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState26 = _slicedToArray(_useState25, 2),
     ErrorOpenModal = _useState26[0],
     setErrorOpenModal = _useState26[1];
-  var _useState27 = (0,react.useState)(false),
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState28 = _slicedToArray(_useState27, 2),
     loadingOpenModal = _useState28[0],
     setLoadingOpenModal = _useState28[1];
-  var _useState29 = (0,react.useState)(false),
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState30 = _slicedToArray(_useState29, 2),
     modalDeleteOpenLoading = _useState30[0],
     setModalDeleteOpenLoading = _useState30[1];
@@ -2624,11 +2528,11 @@ function MaintenanceViewAdmin() {
       setLoading(false);
     }, 500);
   };
-  var _useState31 = (0,react.useState)(false),
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState32 = _slicedToArray(_useState31, 2),
     open = _useState32[0],
     setOpen = _useState32[1];
-  var _useState33 = (0,react.useState)(null),
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState34 = _slicedToArray(_useState33, 2),
     DeleteId = _useState34[0],
     setDeleteId = _useState34[1];
@@ -2640,34 +2544,34 @@ function MaintenanceViewAdmin() {
     setLoadingOpenModal(false);
     setOpen(false);
   };
-  var _useState35 = (0,react.useState)(false),
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState36 = _slicedToArray(_useState35, 2),
     open1 = _useState36[0],
     setOpen1 = _useState36[1];
-  var _useState37 = (0,react.useState)(null),
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState38 = _slicedToArray(_useState37, 2),
     updateId = _useState38[0],
     setUpdateId = _useState38[1];
-  var _useState39 = (0,react.useState)(""),
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState40 = _slicedToArray(_useState39, 2),
     status = _useState40[0],
     setStatus = _useState40[1];
-  var _useState41 = (0,react.useState)(""),
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState42 = _slicedToArray(_useState41, 2),
     action = _useState42[0],
     setAction = _useState42[1];
-  var _useState43 = (0,react.useState)(""),
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState44 = _slicedToArray(_useState43, 2),
     reason = _useState44[0],
     setReason = _useState44[1];
-  var _useState45 = (0,react.useState)(0),
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState46 = _slicedToArray(_useState45, 2),
     invoiceN = _useState46[0],
     setInvoiceN = _useState46[1];
   {/** Update Invoice Status start */}
-  ;(0,react.useEffect)(() => {
+  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (updateId !== null) {
-      axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-maintenance/").concat(updateId)).then(res => {
+      axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-maintenance/").concat(updateId)).then(res => {
         // get the response data here
         setStatus(res.data.data.status);
         setAction(res.data.data.action);
@@ -2687,7 +2591,7 @@ function MaintenanceViewAdmin() {
         dateNotification: new Date()
       };
       try {
-        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification/"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
       } catch (error) {
         console.log(error);
       }
@@ -2703,7 +2607,7 @@ function MaintenanceViewAdmin() {
         status
       };
       try {
-        var res = yield axios/* default */.A.put("".concat(apiConfig/* ENDPOINT_URL */.m, "/update-maintenance/").concat(updateId), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-maintenance/").concat(updateId), data);
         if (res) {
           handleOpenLoading();
           handleCreateComment();
@@ -2718,13 +2622,6 @@ function MaintenanceViewAdmin() {
   }();
   {/** Update Invoice Status End */}
   var handleOpenUpdate = id => {
-    var target = maintenance.find(m => m._id === id);
-    if (target) {
-      var isConverted = target.status === 'Close' && (target.Converted === true || target.Converted === 'true') || target.status === 'Converted' || target.Converted === true || target.Converted === 'true';
-      if (isConverted) {
-        return;
-      }
-    }
     setOpen1(true);
     setUpdateId(id);
   };
@@ -2732,11 +2629,11 @@ function MaintenanceViewAdmin() {
     setOpen1(false);
     setUpdateId(null);
   };
-  var _useState47 = (0,react.useState)([]),
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState48 = _slicedToArray(_useState47, 2),
     selectedRows = _useState48[0],
     setSelectedRows = _useState48[1];
-  var _useState49 = (0,react.useState)(false),
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState50 = _slicedToArray(_useState49, 2),
     openDeleteMultiple = _useState50[0],
     setOpenDeleteMultiple = _useState50[1];
@@ -2746,7 +2643,7 @@ function MaintenanceViewAdmin() {
   var handleCloseMultiple = () => {
     setOpenDeleteMultiple(false);
   };
-  var _useState51 = (0,react.useState)(false),
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState52 = _slicedToArray(_useState51, 2),
     openDeleteAll = _useState52[0],
     setOpenDeleteAll = _useState52[1];
@@ -2756,7 +2653,7 @@ function MaintenanceViewAdmin() {
   var handleCloseAll = () => {
     setOpenDeleteAll(false);
   };
-  var _useState53 = (0,react.useState)(false),
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState54 = _slicedToArray(_useState53, 2),
     openReasonDelete = _useState54[0],
     setOpenReasonDelete = _useState54[1];
@@ -2770,7 +2667,7 @@ function MaintenanceViewAdmin() {
   var handleDelete = /*#__PURE__*/function () {
     var _ref12 = _asyncToGenerator(function* () {
       try {
-        var res = yield axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-maintenance/").concat(DeleteId));
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/delete-maintenance/").concat(DeleteId));
         if (res) {
           setOpen(false);
           handleDeleteOpenLoading();
@@ -2783,16 +2680,16 @@ function MaintenanceViewAdmin() {
       return _ref12.apply(this, arguments);
     };
   }();
-  var _useState55 = (0,react.useState)([]),
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState56 = _slicedToArray(_useState55, 2),
     MaintenanceDeleted = _useState56[0],
     setMaintenanceDeleted = _useState56[1];
-  (0,react.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchFunction = /*#__PURE__*/function () {
       var _ref13 = _asyncToGenerator(function* () {
         var deletePromises = selectedRows.map(/*#__PURE__*/function () {
           var _ref14 = _asyncToGenerator(function* (idToDelete) {
-            return axios/* default */.A.get("".concat(apiConfig/* ENDPOINT_URL */.m, "/get-maintenance/").concat(idToDelete));
+            return axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-maintenance/").concat(idToDelete));
           });
           return function (_x7) {
             return _ref14.apply(this, arguments);
@@ -2816,7 +2713,7 @@ function MaintenanceViewAdmin() {
     }
   }, [selectedRows]);
   var infoFromState = (selectedRows || []).map(id => {
-    var found = maintenance.find(m => m._id === id || m.id === id);
+    var found = (maintenance || []).find(m => m._id === id || m.id === id);
     return (found === null || found === void 0 ? void 0 : found.serviceNumber) || '';
   }).filter(Boolean);
   var info = infoFromState.length > 0 ? infoFromState.join(', ') : MaintenanceDeleted.length > 0 ? MaintenanceDeleted.join(', ') : selectedRows.length > 0 ? "".concat(selectedRows.length, " record(s)") : '';
@@ -2829,7 +2726,7 @@ function MaintenanceViewAdmin() {
         dateNotification: new Date()
       };
       try {
-        yield axios/* default */.A.post("".concat(apiConfig/* ENDPOINT_URL */.m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
@@ -2848,7 +2745,7 @@ function MaintenanceViewAdmin() {
       }
       var deletePromises = selectedRows.map(/*#__PURE__*/function () {
         var _ref17 = _asyncToGenerator(function* (idToDelete) {
-          return axios/* default */.A.delete("".concat(apiConfig/* ENDPOINT_URL */.m, "/delete-maintenance/").concat(idToDelete));
+          return axios__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A.delete("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/delete-maintenance/").concat(idToDelete));
         });
         return function (_x9) {
           return _ref17.apply(this, arguments);
@@ -2875,17 +2772,17 @@ function MaintenanceViewAdmin() {
     };
   }();
   {/** search start */}
-  var _useState57 = (0,react.useState)(""),
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState58 = _slicedToArray(_useState57, 2),
     searchMaintenance = _useState58[0],
     setSearchMaintenance = _useState58[1];
-  (0,react.useState)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
     var storedValue = localStorage.getItem('QuickFilterMaintenance');
     if (storedValue) {
       setSearchMaintenance(storedValue);
     }
   });
-  var _React$useState = react.useState({
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState({
       items: [],
       quickFilterExcludeHiddenColumns: true,
       quickFilterValues: []
@@ -2893,7 +2790,7 @@ function MaintenanceViewAdmin() {
     _React$useState2 = _slicedToArray(_React$useState, 2),
     filterModel = _React$useState2[0],
     setFilterModel = _React$useState2[1];
-  var _useState59 = (0,react.useState)({}),
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState60 = _slicedToArray(_useState59, 2),
     columnVisibilityModel = _useState60[0],
     setColumnVisibilityModel = _useState60[1];
@@ -2907,7 +2804,7 @@ function MaintenanceViewAdmin() {
     setSearchTerm(searchTerm);
     setFilterModel(newModel);
   };
-  (0,react.useEffect)(() => {
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storedQuick = JSON.parse(localStorage.getItem('QuickFilterMaintenanceTst'));
     if (storedQuick) {
       var _storedQuick$quickFil;
@@ -2921,7 +2818,7 @@ function MaintenanceViewAdmin() {
     }
   }, [searchMaintenance]);
   {/** search end */}
-  var _React$useState3 = react.useState(true),
+  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     sideBar = _React$useState4[0],
     setSideBar = _React$useState4[1];
@@ -2948,20 +2845,9 @@ function MaintenanceViewAdmin() {
     field: 'status',
     headerName: 'Status',
     width: 100,
-    renderCell: params => {
-      var isConverted = params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true') || params.row.status === 'Converted' || params.row.Converted === true || params.row.Converted === 'true';
-      return /*#__PURE__*/react.createElement("div", null, isConverted ? /*#__PURE__*/react.createElement(Typography/* default */.A, {
-        sx: {
-          color: '#00838f',
-          fontWeight: 600
-        }
-      }, "Converted") : /*#__PURE__*/react.createElement(Typography/* default */.A, {
-        sx: {
-          fontWeight: 600,
-          color: params.row.status === "Open" ? "blue" : params.row.status === "Pending" ? "#801313" : params.row.status === "Reschedule" ? "Orange" : params.row.status === "Cancel" ? "red" : params.row.status === "Close" ? "green" : "black"
-        }
-      }, params.row.status));
-    }
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, params.row.status === 'Close' && params.row.Converted === true ? "Converted" : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      color: params.row.status === "Open" ? "blue" : params.row.status === "Pending" ? "#801313" : params.row.status === "Reschedule" ? "Orange" : params.row.status === "Cancel" ? "red" : params.row.status === "Close" ? "green" : "black"
+    }, params.row.status))
   }, {
     field: 'defectDescription',
     headerName: 'Defect',
@@ -2969,7 +2855,12 @@ function MaintenanceViewAdmin() {
   }, {
     field: 'itemDescriptionInfo',
     headerName: 'I-Description',
-    width: sideBar ? 130 : 150
+    width: sideBar ? 130 : 150,
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+      style: {
+        textTransform: 'uppercase'
+      }
+    }, String(Array.isArray(params.value) ? params.value.join(', ') : params.value || '').toUpperCase())
   }, {
     field: 'technicianAssign',
     headerName: 'Technician',
@@ -2989,14 +2880,12 @@ function MaintenanceViewAdmin() {
     field: 'view',
     headerName: 'View',
     width: 40,
-    renderCell: params => /*#__PURE__*/react.createElement(ViewTooltip, {
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
       title: "View"
-    }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-      disabled: MaintenanceInfoV.length === 0
-    }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
-      to: "/MaintenanceViewInformation/".concat(params.row._id),
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
+      to: "/MaintenanceOrderViewInformation/".concat(params.row._id),
       className: "LinkName"
-    }, /*#__PURE__*/react.createElement(Visibility/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Visibility__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -3005,29 +2894,26 @@ function MaintenanceViewAdmin() {
     field: 'edit',
     headerName: 'Edit',
     width: 40,
-    renderCell: params => {
-      var isConverted = params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true') || params.row.status === 'Converted' || params.row.Converted === true || params.row.Converted === 'true';
-      return /*#__PURE__*/react.createElement(EditTooltip, {
-        title: isConverted ? "Cannot edit or change status of converted maintenance order until linked invoice is deleted" : "Edit"
-      }, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
-        onClick: () => handleOpenUpdate(params.row._id),
-        disabled: isConverted || !isOwner && MaintenanceInfoU.length === 0
-      }, /*#__PURE__*/react.createElement(Edit/* default */.A, {
-        style: {
-          color: isConverted || !isOwner && MaintenanceInfoU.length === 0 ? 'lightgray' : 'gray'
-        }
-      }))));
-    }
+    renderCell: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(EditTooltip, {
+      title: "Edit Status"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      disabled: params.row.status === 'Converted' || params.row.status === 'Close',
+      onClick: () => handleOpenUpdate(params.row._id)
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Edit__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+      style: {
+        color: params.row.status === 'Converted' || params.row.status === 'Close' ? 'lightgray' : 'gray'
+      }
+    }))))
   }, {
     field: 'Delete',
     headerName: 'Delete',
     width: 40,
-    renderCell: params => /*#__PURE__*/react.createElement(DeleteTooltip, {
+    renderCell: params => user.data.role === 'User' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(DeleteTooltip, {
       title: "Delete"
-    }, /*#__PURE__*/react.createElement("span", null, "                                ", /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: handleOpenAll,
       disabled: !isOwner && MaintenanceInfoD.length === 0
-    }, /*#__PURE__*/react.createElement(Delete/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
@@ -3035,49 +2921,46 @@ function MaintenanceViewAdmin() {
     }))))
   }];
   if (isMobile) {
-    return loadingData ? /*#__PURE__*/react.createElement("div", {
+    return loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         position: 'relative',
         top: '120px',
         textAlign: 'center'
       }
-    }, /*#__PURE__*/react.createElement(Loader/* default */.A, null)) : /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null)) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         width: '100%',
         py: 1
       }
-    }, /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
-      type: "maintenance",
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+      type: "maintenance_orders",
       data: maintenance,
-      searchPlaceholder: "Search job cards, clients, brands, defects...",
+      searchPlaceholder: "Search maintenance orders, technicians, defects...",
       searchValue: searchTerm,
       onSearchChange: setSearchTerm,
       page: page,
       totalCount: totalItemCount,
       onPageChange: setPage,
-      loading: loadingData,
-      statusFilter: statusFilter,
-      onStatusFilterChange: handleStatusClick,
-      statusCounts: statusCounts
+      loading: loadingData
     }));
   }
-  return /*#__PURE__*/react.createElement("div", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react.createElement(CssBaseline/* default */.Ay, null), /*#__PURE__*/react.createElement(MaintenanceViewAdmin_AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
@@ -3087,7 +2970,7 @@ function MaintenanceViewAdmin() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react.createElement(Menu/* default */.A, null)), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -3095,35 +2978,35 @@ function MaintenanceViewAdmin() {
     sx: {
       flexGrow: 1
     }
-  }, "Maintenance"), /*#__PURE__*/react.createElement(NotificationVIewInfo/* default */.A, null), /*#__PURE__*/react.createElement(MessageAdminView/* default */.A, {
+  }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
-  }), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react.createElement(NetworkLogoutIcon/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })))), /*#__PURE__*/react.createElement(MaintenanceViewAdmin_Drawer, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
     open: sideBar,
     onMouseEnter: () => setSideBar(true),
     onMouseLeave: () => setSideBar(false)
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react.createElement(ChevronLeft/* default */.A, null))), /*#__PURE__*/react.createElement(Divider/* default */.A, null), /*#__PURE__*/react.createElement(List/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react.createElement(SidebarDash/* default */.A, null))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -3132,7 +3015,7 @@ function MaintenanceViewAdmin() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react.createElement(Toolbar/* default */.A, null), /*#__PURE__*/react.createElement(Container/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 0.5,
@@ -3141,14 +3024,13 @@ function MaintenanceViewAdmin() {
         sm: 2
       }
     }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       display: 'grid',
       gridTemplateColumns: {
         xs: 'repeat(2, 1fr)',
-        sm: 'repeat(3, 1fr)',
-        md: 'repeat(4, 1fr)',
-        lg: 'repeat(7, 1fr)'
+        sm: 'repeat(2, 1fr)',
+        md: 'repeat(4, 1fr)'
       },
       gap: 1,
       mb: 0.75,
@@ -3160,7 +3042,7 @@ function MaintenanceViewAdmin() {
     count: statusCounts.all,
     color: '#30368a',
     bgLight: '#eef2ff',
-    icon: /*#__PURE__*/react.createElement(Assignment/* default */.A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#30368a'
@@ -3172,7 +3054,7 @@ function MaintenanceViewAdmin() {
     count: statusCounts.open,
     color: '#1976d2',
     bgLight: '#e3f2fd',
-    icon: /*#__PURE__*/react.createElement(Build/* default */.A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#1976d2'
@@ -3184,34 +3066,10 @@ function MaintenanceViewAdmin() {
     count: statusCounts.pending,
     color: '#ed6c02',
     bgLight: '#fff3e0',
-    icon: /*#__PURE__*/react.createElement(HourglassEmpty/* default */.A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#ed6c02'
-      }
-    })
-  }, {
-    key: 'Close',
-    label: 'CLOSED',
-    count: statusCounts.close,
-    color: '#2e7d32',
-    bgLight: '#e8f5e9',
-    icon: /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#2e7d32'
-      }
-    })
-  }, {
-    key: 'Converted',
-    label: 'CONVERTED',
-    count: statusCounts.converted,
-    color: '#00838f',
-    bgLight: '#e0f7fa',
-    icon: /*#__PURE__*/react.createElement(ReceiptLong, {
-      sx: {
-        fontSize: 15,
-        color: '#00838f'
       }
     })
   }, {
@@ -3220,27 +3078,15 @@ function MaintenanceViewAdmin() {
     count: statusCounts.reschedule,
     color: '#9c27b0',
     bgLight: '#f3e5f5',
-    icon: /*#__PURE__*/react.createElement(EventRepeat/* default */.A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, {
       sx: {
         fontSize: 15,
         color: '#9c27b0'
       }
     })
-  }, {
-    key: 'Cancel',
-    label: 'CANCEL',
-    count: statusCounts.cancel,
-    color: '#d32f2f',
-    bgLight: '#ffebee',
-    icon: /*#__PURE__*/react.createElement(Cancel/* default */.A, {
-      sx: {
-        fontSize: 15,
-        color: '#d32f2f'
-      }
-    })
   }].map(card => {
     var isSelected = statusFilter.toLowerCase() === card.key.toLowerCase();
-    return /*#__PURE__*/react.createElement(Box/* default */.A, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       key: card.key,
       onClick: () => handleStatusClick(card.key),
       sx: {
@@ -3263,7 +3109,7 @@ function MaintenanceViewAdmin() {
           borderColor: card.color
         }
       }
-    }, isSelected && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, isSelected && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         position: 'absolute',
         top: 0,
@@ -3272,14 +3118,14 @@ function MaintenanceViewAdmin() {
         height: '3px',
         backgroundColor: card.color
       }
-    }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         mb: 0.25
       }
-    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       sx: {
         fontSize: '9.5px',
         fontWeight: 700,
@@ -3287,7 +3133,7 @@ function MaintenanceViewAdmin() {
         color: isSelected ? card.color : '#64748b',
         textTransform: 'uppercase'
       }
-    }, card.label), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, card.label), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         width: 22,
         height: 22,
@@ -3297,13 +3143,13 @@ function MaintenanceViewAdmin() {
         alignItems: 'center',
         justifyContent: 'center'
       }
-    }, card.icon)), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    }, card.icon)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'baseline',
         gap: 1
       }
-    }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       sx: {
         fontSize: '16px',
         fontWeight: 800,
@@ -3311,12 +3157,12 @@ function MaintenanceViewAdmin() {
         lineHeight: 1.1
       }
     }, (card.count || 0).toLocaleString())));
-  })), loadingData ? /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement("div", {
+  })), loadingData ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       position: 'relative',
       top: '120px'
     }
-  }, /*#__PURE__*/react.createElement(Loader/* default */.A, null))) : /*#__PURE__*/react.createElement("div", null, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       justifyContent: 'space-between',
@@ -3324,33 +3170,35 @@ function MaintenanceViewAdmin() {
       mb: 0.5,
       mt: 0.25
     }
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, null, maintenance.length > 0 && selectedRows.length > 1 && selectedRows.length < maintenance.length && /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, maintenance.length > 0 && selectedRows.length > 1 && selectedRows.length < maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     disabled: user.data.role !== 'CEO',
     onClick: handleOpenAll,
     className: "btnCustomer2"
-  }, "Delete multiple"), maintenance.length > 0 && selectedRows.length === maintenance.length && /*#__PURE__*/react.createElement("button", {
+  }, "Delete multiple"), maintenance.length > 0 && selectedRows.length === maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleOpenAll,
     disabled: user.data.role !== 'CEO',
     className: "btnCustomer2"
-  }, "Delete all")), !(0,utils_isMobile/* isNativeMobile */.g1)() && /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Delete all")), !(0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .isNativeMobile */ .g1)() && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       gap: 1
     }
-  }, /*#__PURE__*/react.createElement(ViewTooltip, null, /*#__PURE__*/react.createElement("span", null, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
+    title: "Create Maintenance Order"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     disabled: !isOwner && MaintenanceInfoC.length === 0,
     size: "small"
-  }, /*#__PURE__*/react.createElement(react_router_dom_dist/* NavLink */.k2, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_8__/* .NavLink */ .k2, {
     to: '/MaintenanceFormView',
     className: "LinkName"
-  }, /*#__PURE__*/react.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "btnCustomerAdding"
-  }, /*#__PURE__*/react.createElement(Add/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
     sx: {
       fontSize: 18
     }
-  })))))), /*#__PURE__*/react.createElement("button", {
+  })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleRefreshSearch,
     className: "btnCustomer2",
     style: {
@@ -3358,26 +3206,23 @@ function MaintenanceViewAdmin() {
       lineHeight: '32px',
       padding: '0 12px'
     }
-  }, "Refresh Search"))), /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, "Refresh Search"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
-      height: (0,utils_isMobile/* isNativeMobile */.g1)() ? 'auto' : 'calc(100vh - 200px)',
+      height: (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .isNativeMobile */ .g1)() ? 'auto' : 'calc(100vh - 200px)',
       minHeight: 380,
       width: '100%'
     }
-  }, (0,utils_isMobile/* isNativeMobile */.g1)() ? /*#__PURE__*/react.createElement(MobileCardList/* default */.A, {
-    type: "maintenance",
+  }, (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_54__/* .isNativeMobile */ .g1)() ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_MobileCardList__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    type: "maintenance_orders",
     data: maintenance,
-    searchPlaceholder: "Search job cards, clients, brands, defects...",
+    searchPlaceholder: "Search maintenance orders, technicians, defects...",
     searchValue: searchTerm,
     onSearchChange: setSearchTerm,
     page: page,
     totalCount: totalItemCount,
     onPageChange: setPage,
-    loading: loadingData,
-    statusFilter: statusFilter,
-    onStatusFilterChange: handleStatusClick,
-    statusCounts: statusCounts
-  }) : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(DataGrid/* DataGrid */.zh, {
+    loading: loadingData
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_data_grid__WEBPACK_IMPORTED_MODULE_50__/* .DataGrid */ .zh, {
     paginationMode: "server",
     filterMode: "server",
     rowCount: totalItemCount,
@@ -3386,10 +3231,10 @@ function MaintenanceViewAdmin() {
       pageSize: limit
     },
     onPaginationModelChange: newModel => handlePageChange(newModel.page),
-    rows: maintenance,
+    rows: user.data.role === 'User' ? maintenance.filter(r => r.technicianAssign === user.data.userName && r.status !== 'Converted') : maintenance,
     columns: columns,
     slots: {
-      toolbar: GridToolbar/* GridToolbar */.O
+      toolbar: _mui_x_data_grid__WEBPACK_IMPORTED_MODULE_51__/* .GridToolbar */ .O
     },
     onRowSelectionModelChange: newSelection => setSelectedRows(newSelection),
     slotProps: {
@@ -3418,7 +3263,7 @@ function MaintenanceViewAdmin() {
       backgroundColor: 'white',
       padding: '10px'
     }
-  }), /*#__PURE__*/react.createElement(Pagination/* default */.A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     count: totalPage,
     page: page + 1,
     onChange: (e, value) => setPage(value - 1),
@@ -3431,128 +3276,128 @@ function MaintenanceViewAdmin() {
       width: 'fit-content',
       margin: '0 auto'
     }
-  }))))))), /*#__PURE__*/react.createElement(ConfirmDeleteModal/* default */.A, {
+  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ConfirmDeleteModal__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
     open: open,
     handleClose: handleClose,
     handleDelete: handleDelete,
     itemName: ((_maintenance$find = maintenance.find(m => m._id === DeleteId)) === null || _maintenance$find === void 0 ? void 0 : _maintenance$find.serviceNumber) || "this maintenance record"
-  }), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: openDeleteMultiple,
     onClose: handleCloseMultiple,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All selected rows will be deleted"), /*#__PURE__*/react.createElement("div", {
+  }, "Note:"), " All selected rows will be deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer2",
     onClick: handleDeleteMany
-  }, "Delete"), /*#__PURE__*/react.createElement("button", {
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseMultiple
-  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: openDeleteAll,
     onClose: handleCloseAll,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, "Do you want to Delete ?"), selectedRows.length === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < maintenance.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+  }, "Note:"), " Selected rows will be deleted"), selectedRows.length > 1 && selectedRows.length < maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === maintenance.length && /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement("span", {
+  }, "Note:"), " All selected rows will be deleted"), selectedRows.length === maintenance.length && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
-  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react.createElement("div", {
+  }, "Note:"), " All rows will be deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer2",
     onClick: handleOpenReasonDelete
-  }, "Delete"), /*#__PURE__*/react.createElement("button", {
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseAll
-  }, "Cancel"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Cancel"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: open1,
     onClose: handleCloseUpdate,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement(ViewTooltip, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleCloseUpdate,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Update Estimate Status"), /*#__PURE__*/react.createElement("form", {
+  }, "Update Maintenance Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleSubmitUpdateStatus
-  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2
-  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement(FormControl/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     sx: {
       width: '100%'
     }
-  }, /*#__PURE__*/react.createElement(InputLabel/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
     id: "status"
-  }, "Status"), /*#__PURE__*/react.createElement(Select/* default */.A, {
+  }, "Status"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     required: true,
     id: "status",
     value: status,
@@ -3560,131 +3405,130 @@ function MaintenanceViewAdmin() {
     name: "status",
     label: "status",
     defaultValue: "Open"
-  }, /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     value: "Open"
-  }, "Open"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, "Open"), user.data.role !== 'User' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     value: "Reschedule"
-  }, "Reschedule"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, "Reschedule") : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     value: "Pending"
-  }, "Pending"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+  }, "Pending"), user.data.role !== 'User' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     value: "Cancel"
-  }, "Cancel"), /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
-    disabled: action === undefined || action === 'Carry-In',
+  }, "Cancel") : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     value: "Close"
-  }, "Close")))), /*#__PURE__*/react.createElement("br", null), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, "Close")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     style: {
       width: '100%'
     }
-  }, "Update")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Update")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleCloseLoading,
     closeAfterTransition: true,
-    BackdropComponent: Backdrop/* default */.A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react.createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleCloseLoading,
     className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: modalDeleteOpenLoading,
     onClose: handleDeleteCloseLoading,
-    BackdropComponent: Backdrop/* default */.A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement("div", null, loading ? /*#__PURE__*/react.createElement(Loader/* default */.A, null) : /*#__PURE__*/react.createElement("div", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react.createElement("p", null, /*#__PURE__*/react.createElement(CheckCircle/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react.createElement("h2", null, " Data successfully deleted"), /*#__PURE__*/react.createElement("div", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h2", null, " Data successfully deleted"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       display: 'flex',
       gap: '60px',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleDeleteCloseLoading,
     className: "btnCustomer"
-  }, "Close")))))), /*#__PURE__*/react.createElement(Modal/* default */.A, {
+  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
     open: openReasonDelete,
     onClose: handleCloseReasonDelete,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, /*#__PURE__*/react.createElement(ViewTooltip, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(ViewTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleCloseReasonDelete,
     style: {
       position: "relative",
       float: "right"
     }
-  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: "#202a5a"
     }
-  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected orders") : 'this maintenance order'), "?"), /*#__PURE__*/react.createElement("form", {
+  }, "Why do you want to delete: ", info || (selectedRows.length > 1 ? "".concat(selectedRows.length, " selected orders") : 'this maintenance order'), "?"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleDeleteMany
-  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: "center",
       padding: "15px"
     },
     spacing: 2
-  }, /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement(TextField/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     required: true,
     id: "reason",
     name: "reason",
@@ -3698,30 +3542,30 @@ function MaintenanceViewAdmin() {
       width: "100%",
       backgroundColor: "white"
     }
-  })), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     variant: "body2",
     sx: {
       mb: 1,
       mt: 1
     }
-  }, "Type ", /*#__PURE__*/react.createElement("span", {
+  }, "Type ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     style: {
       color: "red",
       fontWeight: "bold"
     }
-  }, "DELETE"), " to confirm bulk action:"), /*#__PURE__*/react.createElement(TextField/* default */.A, {
+  }, "DELETE"), " to confirm bulk action:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     fullWidth: true,
     size: "small",
     placeholder: "Type DELETE here",
     id: "confirmDeleteBulk",
     autoFocus: true
-  })), /*#__PURE__*/react.createElement(Grid/* default */.Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
     className: "btnCustomer",
     style: {
@@ -3736,7 +3580,11 @@ function MaintenanceViewAdmin() {
     }
   }, "Confirm Bulk Delete")))))));
 }
-/* harmony default export */ const AdminView1_MaintenanceViewAdmin = (MaintenanceViewAdmin);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MaintenanceOrderAdmin);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
 
 /***/ },
 

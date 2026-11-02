@@ -425,7 +425,7 @@ function PurchaseOrderViewAdmin() {
     { field: 'reason', headerName: 'Reason', minWidth: 140, flex: 1.2 },
     { field: 'referenceInfo', headerName: 'Description', minWidth: 250, flex: 3 },
     { field: 'itemInfo', headerName: 'Item', minWidth: 100, flex: 1 },
-    { field: 'itemDescriptionInfo', headerName: 'I-Description', minWidth: 120, flex: 1.2 },
+    { field: 'itemDescriptionInfo', headerName: 'I-Description', minWidth: 120, flex: 1.2, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(Array.isArray(params.value) ? params.value.join(', ') : (params.value || '')).toUpperCase()}</span> },
     {
       field: 'Converted', headerName: 'Status', minWidth: 130, flex: 1, renderCell: (params) => (<div> <span>{params.row.Converted === true ? <Typography
         sx={{ color: '#4caf50' }}
@@ -763,7 +763,7 @@ function PurchaseOrderViewAdmin() {
                                                   <>
                                                     <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
                                                     <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>{typeof row.itemName === 'object' ? (row.itemName?.itemName !== 'empty' ? row.itemName?.itemName : '') : (row.itemName || '')}</td>
-                                                    <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}>{row.itemDescription}</td>
+                                                    <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD', textTransform: 'uppercase' }}>{String(row.itemDescription || '').toUpperCase()}</td>
                                                     <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                     <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}></td>
                                                     <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}></td>
@@ -875,7 +875,7 @@ function PurchaseOrderViewAdmin() {
                                             <>
                                               <TableCell>{i + 1}</TableCell>
                                               <TableCell>{typeof row.itemName === 'object' ? (row.itemName?.itemName !== 'empty' ? row.itemName?.itemName : '') : (row.itemName || '')}</TableCell>
-                                              <TableCell>{row.itemDescription}</TableCell>
+                                              <TableCell sx={{ textTransform: 'uppercase' }}>{String(row.itemDescription || '').toUpperCase()}</TableCell>
                                               <TableCell>{row.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
                                               <TableCell>{row.qtyBuy} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</TableCell>
                                               <TableCell>{parseFloat(row.itemRate).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</TableCell>

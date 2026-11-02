@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import LanguageFixerButton from './LanguageFixerButton';
 import { COMMON_PRESETS, polishText, hasTypo } from '../utils/textAssistUtils';
@@ -8,8 +8,8 @@ import { COMMON_PRESETS, polishText, hasTypo } from '../utils/textAssistUtils';
  * Drop-in intelligent text input with:
  * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
  * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
- * 3. Real-time typo detection badge & visual warning
- * 4. Automatic self-healing onBlur
+ * 3. Interactive suggestion dropdown menu (by clicking ✨ or right-clicking anywhere on text)
+ * 4. Real-time typo detection badge & visual warning
  */
 function SmartTextInput({
   label,
@@ -33,11 +33,20 @@ function SmartTextInput({
   inputProps = {},
   ...rest
 }) {
+  const [contextMenu, setContextMenu] = useState(null);
+
   const dropdownOptions = Array.isArray(options) && options.length > 0
     ? options
     : (presetKey && COMMON_PRESETS[presetKey] ? COMMON_PRESETS[presetKey] : null);
 
   const isTypo = hasTypo(value, mode);
+
+  const handleContextMenu = (e) => {
+    if (value && typeof value === 'string' && value.trim()) {
+      e.preventDefault();
+      setContextMenu({ mouseX: e.clientX, mouseY: e.clientY });
+    }
+  };
 
   const notifyChange = (newVal) => {
     if (typeof onChange !== 'function') return;
@@ -86,6 +95,7 @@ function SmartTextInput({
             size={size}
             placeholder={placeholder}
             onBlur={handleBlur}
+            onContextMenu={handleContextMenu}
             inputProps={{
               ...params.inputProps,
               spellCheck: 'true',
@@ -105,6 +115,8 @@ function SmartTextInput({
                     onFixed={(fixed) => notifyChange(fixed)}
                     mode={mode}
                     size={size === 'small' ? 'small' : 'medium'}
+                    contextMenu={contextMenu}
+                    onCloseContextMenu={() => setContextMenu(null)}
                   />
                   {params.InputProps.endAdornment}
                 </InputAdornment>
@@ -139,6 +151,7 @@ function SmartTextInput({
         notifyChange(val);
       }}
       onBlur={handleBlur}
+      onContextMenu={handleContextMenu}
       multiline={multiline}
       rows={rows}
       required={required}
@@ -164,6 +177,8 @@ function SmartTextInput({
               onFixed={(fixed) => notifyChange(fixed)}
               mode={mode}
               size={size === 'small' ? 'small' : 'medium'}
+              contextMenu={contextMenu}
+              onCloseContextMenu={() => setContextMenu(null)}
             />
           </InputAdornment>
         )

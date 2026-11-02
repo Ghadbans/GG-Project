@@ -1,5 +1,25 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[712,5646,8646],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[5646,8027,8646],{
+
+/***/ 65343
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+}), 'ArrowForward');
+
+/***/ },
 
 /***/ 2775
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -18,6 +38,46 @@ var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "m19 9 1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25z"
 }), 'AutoAwesome');
+
+/***/ },
+
+/***/ 58407
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.59 7.58 10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8"
+}), 'CheckCircleOutline');
+
+/***/ },
+
+/***/ 5766
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m18 7-1.41-1.41-6.34 6.34 1.41 1.41zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12zM.41 13.41 6 19l1.41-1.41L1.83 12z"
+}), 'DoneAll');
 
 /***/ },
 
@@ -1280,7 +1340,7 @@ var CustomerFormView2 = _ref3 => {
 
 /***/ },
 
-/***/ 712
+/***/ 48027
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1304,8 +1364,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(86531);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(8641);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(25239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(27558);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(68864);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(27558);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(47419);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(35406);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(11848);
@@ -1321,34 +1381,35 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(8451);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99380);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(33541);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(29719);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(33829);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(47767);
-/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(61087);
-/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(48484);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_46___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_46__);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(82299);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(40301);
-/* harmony import */ var _mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(67775);
-/* harmony import */ var _mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(56841);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(39781);
-/* harmony import */ var _ProjectView_ProjectFormView__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(28646);
-/* harmony import */ var _ProjectView_ProjectFormView2__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(85646);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(95236);
-/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(2650);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(14977);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(46986);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(33541);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(29719);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(33829);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(47767);
+/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(61087);
+/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(601);
+/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(48484);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_47___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_47__);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(82299);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(67775);
+/* harmony import */ var _mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(56841);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(39781);
+/* harmony import */ var _ProjectView_ProjectFormView__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(28646);
+/* harmony import */ var _ProjectView_ProjectFormView2__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(85646);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(95236);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(2650);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(14977);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["children"];
@@ -1369,6 +1430,7 @@ function _extends() { return _extends = Object.assign ? Object.assign.bind() : f
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
+
 
 
 
@@ -1465,6 +1527,18 @@ var style = {
   px: 4,
   pb: 3
 };
+var style2 = (/* unused pure expression or super */ null && ({
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 800,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  pt: 2,
+  px: 4,
+  pb: 3
+}));
 var drawerWidth = 240;
 var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
@@ -1514,13 +1588,11 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay
     })
   };
 });
-function DailyExpenseUpdate() {
-  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_61__/* .useIsMobile */ .al)();
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_41__/* .useParams */ .g)(),
-    id = _useParams.id;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_41__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .selectCurrentUser */ .xu);
+function DailyExpenseForm() {
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_62__/* .useIsMobile */ .al)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_42__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_52__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_52__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(true),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -1528,14 +1600,6 @@ function DailyExpenseUpdate() {
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState4 = _slicedToArray(_useState3, 2),
-    openAutocomplete2 = _useState4[0],
-    setOpenAutocomplete2 = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState6 = _slicedToArray(_useState5, 2),
-    modalOpenLoading = _useState6[0],
-    setModalOpenLoading = _useState6[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
@@ -1545,7 +1609,7 @@ function DailyExpenseUpdate() {
             var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
@@ -1564,145 +1628,124 @@ function DailyExpenseUpdate() {
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .logOut */ .je)());
     navigate('/');
   };
+  var _useState3 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState4 = _slicedToArray(_useState3, 2),
+    categories = _useState4[0],
+    setCategories = _useState4[1];
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    _useState6 = _slicedToArray(_useState5, 2),
+    employee = _useState6[0],
+    setEmployee = _useState6[1];
   var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState8 = _slicedToArray(_useState7, 2),
-    categories = _useState8[0],
-    setCategories = _useState8[1];
+    project = _useState8[0],
+    setProject = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    employee = _useState0[0],
-    setEmployee = _useState0[1];
+    project2 = _useState0[0],
+    setProject2 = _useState0[1];
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    project = _useState10[0],
-    setProject = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState12 = _slicedToArray(_useState11, 2),
-    project2 = _useState12[0],
-    setProject2 = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState14 = _slicedToArray(_useState13, 2),
-    maintenance = _useState14[0],
-    setMaintenance = _useState14[1];
+    maintenance = _useState10[0],
+    setMaintenance = _useState10[1];
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_1__.useState(''),
     _React$useState2 = _slicedToArray(_React$useState, 2),
     inputValueMaintenance = _React$useState2[0],
     setInputValueMaintenance = _React$useState2[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState12 = _slicedToArray(_useState11, 2),
+    PayRate = _useState12[0],
+    setPayRate = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+    _useState14 = _slicedToArray(_useState13, 2),
+    expenseCategory = _useState14[0],
+    setExpenseCategory = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState16 = _slicedToArray(_useState15, 2),
-    accountNameInfo = _useState16[0],
-    setAccountNameInfo = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
+    employeeName = _useState16[0],
+    setEmployeeName = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
     _useState18 = _slicedToArray(_useState17, 2),
-    expenseCategory = _useState18[0],
-    setExpenseCategory = _useState18[1];
+    accountName = _useState18[0],
+    setAccountName = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
     _useState20 = _slicedToArray(_useState19, 2),
-    description = _useState20[0],
-    setDescription = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
-      var date = new Date();
-      return date;
-    }),
-    _useState22 = _slicedToArray(_useState21, 2),
-    expenseDate = _useState22[0],
-    setExpenseDate = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState24 = _slicedToArray(_useState23, 2),
-    accountName = _useState24[0],
-    setAccountName = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState26 = _slicedToArray(_useState25, 2),
-    amount = _useState26[0],
-    setAmount = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState28 = _slicedToArray(_useState27, 2),
-    rate = _useState28[0],
-    setRate = _useState28[1];
-  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState30 = _slicedToArray(_useState29, 2),
-    total = _useState30[0],
-    setTotal = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState32 = _slicedToArray(_useState31, 2),
-    reason1 = _useState32[0],
-    setReason1 = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
-    _useState34 = _slicedToArray(_useState33, 2),
-    expenseNumber = _useState34[0],
-    setExpenseNumber = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
-    _useState36 = _slicedToArray(_useState35, 2),
-    employeeName = _useState36[0],
-    setEmployeeName = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({}),
-    _useState38 = _slicedToArray(_useState37, 2),
-    projectName = _useState38[0],
-    setProjectName = _useState38[1];
+    reason = _useState20[0],
+    setReason = _useState20[1];
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_1__.useState(''),
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     inputValueProject = _React$useState4[0],
     setInputValueProject = _React$useState4[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState22 = _slicedToArray(_useState21, 2),
+    description = _useState22[0],
+    setDescription = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)({
+      _id: "",
+      name: ""
+    }),
+    _useState24 = _slicedToArray(_useState23, 2),
+    accountNameInfo = _useState24[0],
+    setAccountNameInfo = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(() => {
+      var date = new Date();
+      return date;
+    }),
+    _useState26 = _slicedToArray(_useState25, 2),
+    expenseDate = _useState26[0],
+    setExpenseDate = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState28 = _slicedToArray(_useState27, 2),
+    amount = _useState28[0],
+    setAmount = _useState28[1];
+  var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState30 = _slicedToArray(_useState29, 2),
+    rate = _useState30[0],
+    setRate = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState32 = _slicedToArray(_useState31, 2),
+    total = _useState32[0],
+    setTotal = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    _useState34 = _slicedToArray(_useState33, 2),
+    expenseNumber = _useState34[0],
+    setExpenseNumber = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
+    _useState36 = _slicedToArray(_useState35, 2),
+    expensesCategory = _useState36[0],
+    setExpensesCategory = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState38 = _slicedToArray(_useState37, 2),
+    CheckTvA = _useState38[0],
+    setCheckTvA = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState40 = _slicedToArray(_useState39, 2),
-    CheckTvA = _useState40[0],
-    setCheckTvA = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
+    tax = _useState40[0],
+    setTax = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState42 = _slicedToArray(_useState41, 2),
-    tax = _useState42[0],
-    setTax = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
+    openAutocomplete1 = _useState42[0],
+    setOpenAutocomplete1 = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState44 = _slicedToArray(_useState43, 2),
-    cash = _useState44[0],
-    setCash = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    openAutocomplete2 = _useState44[0],
+    setOpenAutocomplete2 = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)([]),
     _useState46 = _slicedToArray(_useState45, 2),
-    isDataLoaded = _useState46[0],
-    setIsDataLoaded = _useState46[1];
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    var fetchData = /*#__PURE__*/function () {
-      var _ref8 = _asyncToGenerator(function* () {
-        try {
-          var _res$data, _res$data2, _res$data3, _res$data4;
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-expense/").concat(id));
-          setExpenseCategory(res.data.data.expenseCategory);
-          setDescription(res.data.data.description);
-          setExpenseDate(res.data.data.expenseDate);
-          setAmount(res.data.data.amount);
-          setRate(res.data.data.rate);
-          setTotal(res.data.data.total);
-          setExpenseNumber(Number(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.expenseNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.expenseNumber) || 0));
-          setAccountName(res.data.data.accountName);
-          setEmployeeName(res.data.data.employeeName);
-          setAccountNameInfo(res.data.data.accountNameInfo);
-          setReason1(res.data.data.reason);
-          var hasTva = res.data.data.CheckTvA || res.data.data.checkTvA || res.data.data.CheckTva || res.data.data.hasTVA || res.data.data.tva || false;
-          setCheckTvA(hasTva);
-          setTax(res.data.data.tax || (hasTva ? Number(((_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.total) || ((_res$data4 = res.data) === null || _res$data4 === void 0 ? void 0 : _res$data4.total) || 0) * 0.16 : 0));
-          setIsDataLoaded(true);
-        } catch (error) {
-          console.log(error);
-        }
-      });
-      return function fetchData() {
-        return _ref8.apply(this, arguments);
-      };
-    }();
-    fetchData();
-  }, []);
-  {/** Category && Project Start */}
-  var handleClearCategory = () => {
-    setExpenseCategory({
-      _id: '',
-      expensesCategory: ''
-    });
+    cash = _useState46[0],
+    setCash = _useState46[1];
+  var dateComment = new Date();
+  var dateFormate = dayjs__WEBPACK_IMPORTED_MODULE_47___default()(dateComment).format('DD/MM/YYYY');
+  var Create = {
+    person: user.data.userName + ' Created ',
+    dateComment: dateFormate
   };
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
-      var _ref9 = _asyncToGenerator(function* () {
+      var _ref8 = _asyncToGenerator(function* () {
         try {
           var _projectResponse$data, _maintenanceResponse$;
           var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/projects")), axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/expensesCategory")), axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/employee")), axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/maintenance"))]),
@@ -1721,18 +1764,53 @@ function DailyExpenseUpdate() {
         }
       });
       return function fetchData() {
-        return _ref9.apply(this, arguments);
+        return _ref8.apply(this, arguments);
       };
     }();
     fetchData();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    var fetchlastNumber = /*#__PURE__*/function () {
+      var _ref9 = _asyncToGenerator(function* () {
+        try {
+          var _res$data, _res$data2;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-last-saved-expense"));
+          var num = res.data && res.data.expenseNumber ? parseInt(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.expenseNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.expenseNumber) || 0) : 0;
+          setExpenseNumber(num + 1);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchlastNumber() {
+        return _ref9.apply(this, arguments);
+      };
+    }();
+    fetchlastNumber();
+  }, []);
+  var handleOpenOpenAutocomplete1 = e => {
+    e.stopPropagation();
+    setOpenAutocomplete1(true);
+  };
+  var handleCloseOpenAutocomplete1 = () => {
+    setOpenAutocomplete1(false);
+  };
+  var handleOpenOpenAutocomplete2 = e => {
+    e.stopPropagation();
+    setOpenAutocomplete2(true);
+  };
+  var handleCloseOpenAutocomplete2 = () => {
+    setOpenAutocomplete2(false);
+    setModalOpenLoading(false);
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var fetchData = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
           var _cashResponse$data;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/rate"));
+          res.data.data.map(row => setRate(row.rate));
           var cashResponse = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/cash"));
-          setCash((_cashResponse$data = cashResponse.data) === null || _cashResponse$data === void 0 || (_cashResponse$data = _cashResponse$data.data) === null || _cashResponse$data === void 0 ? void 0 : _cashResponse$data.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_46___default()(row.cashDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_46___default()(expenseDate).format('DD/MM/YYYY')).map(row => row.status));
+          setCash((_cashResponse$data = cashResponse.data) === null || _cashResponse$data === void 0 || (_cashResponse$data = _cashResponse$data.data) === null || _cashResponse$data === void 0 ? void 0 : _cashResponse$data.filter(row => dayjs__WEBPACK_IMPORTED_MODULE_47___default()(row.cashDate).format('DD/MM/YYYY') === dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expenseDate).format('DD/MM/YYYY')).map(row => row.status));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -1744,25 +1822,65 @@ function DailyExpenseUpdate() {
     fetchData();
   }, [expenseDate]);
   var filterCash = cash.map(row => row).toString();
-  var handleOpenOpenAutocomplete2 = e => {
-    e.stopPropagation();
-    setOpenAutocomplete2(true);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    var fetchData = /*#__PURE__*/function () {
+      var _ref1 = _asyncToGenerator(function* () {
+        try {
+          var _res$data3;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/paymentRate"));
+          (((_res$data3 = res.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.data) || []).map(row => setPayRate(row.paymentRate));
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchData() {
+        return _ref1.apply(this, arguments);
+      };
+    }();
+    fetchData();
+  }, []);
+  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
+    if (accountName === 'Employee') return;
+    if (amount > 0) {
+      var currentRate = parseFloat(rate || 1);
+      var newTotal = currentRate > 0 ? parseFloat(amount || 0) / currentRate : 0;
+      var result = Math.round(newTotal * 100) / 100;
+      setTotal(result);
+      setTax(CheckTvA ? Math.round(result * 0.16 * 100) / 100 : 0);
+    } else {
+      // If amount is 0 (manual USD entry), still update the tax based on the current total
+      // But only if total is actually a number
+      var currentTotal = parseFloat(total) || 0;
+      setTax(CheckTvA ? Math.round(currentTotal * 0.16 * 100) / 100 : 0);
+    }
+  }, [amount, rate, total, CheckTvA, accountName]);
+  var handleAccountChange = e => {
+    setAccountName(e.target.value);
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+    setTotal(0);
+    setAmount(0);
+    setEmployeeName([]);
   };
-  var handleCloseOpenAutocomplete2 = () => {
-    setOpenAutocomplete2(false);
-    setModalOpenLoading(false);
+  var handleChangeReason = e => {
+    setReason(e.target.value);
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
   };
-  {/** Category && Project End */}
   {/** Employee Start */}
   var filterEmployee = employee.filter(row => row.status !== 'Suspended' && row.status !== 'Fired' && row.status !== 'Resign');
   var addItem = () => {
     setEmployeeName([...employeeName, {
-      idInfo: (0,uuid__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A)(),
+      idInfo: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
       idRow: "",
       employee: "",
       description: "",
       amount: 0,
-      rate: rate,
+      rate: PayRate,
       total: 0
     }]);
   };
@@ -1773,9 +1891,9 @@ function DailyExpenseUpdate() {
     var list = [...employeeName];
     list[i][name] = value;
     if (!list[i]['rate'] || parseFloat(list[i]['rate']) === 0) {
-      list[i]['rate'] = rate;
+      list[i]['rate'] = PayRate;
     }
-    var currentRate = parseFloat(list[i]['rate'] || rate || 1);
+    var currentRate = parseFloat(list[i]['rate'] || PayRate || 1);
     var currentAmount = parseFloat(list[i]['amount'] || 0);
     list[i]['total'] = currentRate > 0 ? Math.round(currentAmount / currentRate * 100) / 100 : 0;
     setEmployeeName(list);
@@ -1785,7 +1903,7 @@ function DailyExpenseUpdate() {
     setEmployeeName(employeeName => employeeName.map(row => row.idInfo === idInfo ? _objectSpread(_objectSpread({}, row), {}, {
       idRow: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
       employee: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.employeeName,
-      rate: row.rate || rate
+      rate: row.rate || PayRate
     }) : row));
   };
   var handleShowAutocomplete = idInfo => {
@@ -1794,7 +1912,7 @@ function DailyExpenseUpdate() {
       employee: "",
       description: '',
       amount: 0,
-      rate: rate,
+      rate: PayRate,
       total: 0
     }) : row));
   };
@@ -1813,43 +1931,6 @@ function DailyExpenseUpdate() {
     setAmount(result1);
   }, [employeeName, CheckTvA, accountName]); // Added missing dependencies
   {/** Employee End */}
-  {/** Total Function Start */}
-  var handleAccountChange = e => {
-    setAccountName(e.target.value);
-    setAccountNameInfo({
-      _id: "",
-      name: ""
-    });
-    setTotal(0);
-    setAmount(0);
-    setEmployeeName([]);
-  };
-  var handleChangeReason = e => {
-    setReason1(e.target.value);
-    setAccountNameInfo({
-      _id: "",
-      name: ""
-    });
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
-    if (!isDataLoaded) return;
-    if (accountName === 'Employee') return;
-    // Only calculate total from amount/rate if amount is provided
-    if (amount > 0) {
-      var currentRate = parseFloat(rate || 1);
-      var newTotal = currentRate > 0 ? parseFloat(amount || 0) / currentRate : 0;
-      var result = Math.round(newTotal * 100) / 100;
-      setTotal(result);
-      setTax(CheckTvA ? Math.round(result * 0.16 * 100) / 100 : 0);
-    } else {
-      // If amount is 0 (manual USD entry), still update the tax based on the current total
-      // But only if total is actually a number
-      var currentTotal = parseFloat(total) || 0;
-      setTax(CheckTvA ? currentTotal * 0.16 : 0);
-    }
-  }, [amount, rate, total, CheckTvA, isDataLoaded, accountName]);
-  {/** Total Function End */}
-  {/** account info start */}
   var handleChangeProject = newValue => {
     var selectedOptions = project.find(option => option === newValue);
     setAccountNameInfo({
@@ -1878,30 +1959,10 @@ function DailyExpenseUpdate() {
       name: ""
     });
   };
-  {/** account info end */}
-  {/** Reason Modal start */}
   var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState48 = _slicedToArray(_useState47, 2),
-    open2 = _useState48[0],
-    setOpen2 = _useState48[1];
-  var handleOpenUpdateReason = e => {
-    e.preventDefault();
-    setOpen2(true);
-  };
-  var handleCloseUpdateReason = () => {
-    setOpen2(false);
-  };
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(""),
-    _useState50 = _slicedToArray(_useState49, 2),
-    reason = _useState50[0],
-    setReason = _useState50[1];
-  var dateComment = new Date();
-  {/** Reason Modal end */}
-  {/** Loading Start */}
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState52 = _slicedToArray(_useState51, 2),
-    openBack = _useState52[0],
-    setOpenBack = _useState52[1];
+    openBack = _useState48[0],
+    setOpenBack = _useState48[1];
   var handleOpenBack = e => {
     e.preventDefault();
     setOpenBack(true);
@@ -1909,22 +1970,32 @@ function DailyExpenseUpdate() {
   var handleCloseBack = () => {
     setOpenBack(false);
   };
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    loading = _useState50[0],
+    setLoading = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    loadingOpenModal = _useState52[0],
+    setLoadingOpenModal = _useState52[1];
   var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState54 = _slicedToArray(_useState53, 2),
-    loading = _useState54[0],
-    setLoading = _useState54[1];
+    ErrorOpenModal = _useState54[0],
+    setErrorOpenModal = _useState54[1];
   var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
     _useState56 = _slicedToArray(_useState55, 2),
-    loadingOpenModal = _useState56[0],
-    setLoadingOpenModal = _useState56[1];
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false),
-    _useState58 = _slicedToArray(_useState57, 2),
-    ErrorOpenModal = _useState58[0],
-    setErrorOpenModal = _useState58[1];
+    modalOpenLoading = _useState56[0],
+    setModalOpenLoading = _useState56[1];
+  var handleOpenModal = () => {
+    setModalOpenLoading(true);
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 500);
+  };
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
-    setOpen2(false);
     setTimeout(() => {
       setLoading(false);
     }, 500);
@@ -1932,51 +2003,95 @@ function DailyExpenseUpdate() {
   var handleError = () => {
     setErrorOpenModal(true);
     setLoading(true);
-    setOpen2(false);
     setTimeout(() => {
       setLoading(false);
     }, 500);
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
-    if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_61__/* .isNativeMobile */ .g1)()) {
-      navigate('/DailyExpenses');
-    } else if (window.history.length > 1) {
-      navigate(-1);
-    } else {
-      navigate('/DailyExpenses');
-    }
+    setAccountName("");
+    setAccountNameInfo({
+      _id: "",
+      name: ""
+    });
+    setExpenseCategory({});
+    setInputValueProject('');
+    setInputValueMaintenance('');
+    setDescription("");
+    setExpenseDate(new Date());
+    setAmount(0);
+    setTotal(0);
+    setEmployeeName([]);
+    setReason("");
+    setCheckTvA(false);
+    setTax(0);
+    setExpenseNumber(prev => Number(prev) + 1);
+    setSaving('');
+  };
+  var handleCloseAdd = () => {
+    setLoadingOpenModal(false);
   };
   var handleCloseError = () => {
     setErrorOpenModal(false);
   };
-  {/** Loading End */}
-  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
-    _useState60 = _slicedToArray(_useState59, 2),
-    hideBack = _useState60[0],
-    setHideBack = _useState60[1];
-  var handleCreateComment = /*#__PURE__*/function () {
-    var _ref1 = _asyncToGenerator(function* () {
+  var handleDecision = decision => {
+    //Navigate Based on th Decision
+    if (decision === 'previous') {
+      window.history.back();
+    } else if (decision === 'stay') {
+      handleClose();
+    }
+  };
+  var handleSubmitCategory = /*#__PURE__*/function () {
+    var _ref10 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
       var data = {
-        idInfo: id,
-        person: user.data.userName + ' Modify EXPENSE ',
-        reason: 'D-' + String(expenseNumber).padStart(6, '0') + ' ' + reason,
+        expensesCategory
+      };
+      try {
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-expensesCategory"), data);
+        if (res) {
+          handleOpenModal();
+          setCategories([...categories, res.data.data]);
+        }
+      } catch (error) {
+        if (error) {
+          alert('An error as Occur');
+        }
+      }
+    });
+    return function handleSubmitCategory(_x) {
+      return _ref10.apply(this, arguments);
+    };
+  }();
+  var handleCreateNotification = /*#__PURE__*/function () {
+    var _ref11 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCategory) {
+      var data = {
+        idInfo: ReferenceInfo,
+        person: user.data.userName + ' Created EXPENSE ',
+        reason: "D-".concat(String(ReferenceInfoNumber).padStart(6, '0'), " For ").concat(ReferenceInfoCategory, " to ").concat(accountName, " Account Which Has a Description: ").concat(description),
         dateNotification: dateComment
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
     });
-    return function handleCreateComment() {
-      return _ref1.apply(this, arguments);
+    return function handleCreateNotification(_x2, _x3, _x4) {
+      return _ref11.apply(this, arguments);
     };
   }();
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(''),
+    _useState58 = _slicedToArray(_useState57, 2),
+    saving = _useState58[0],
+    setSaving = _useState58[1];
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (e) {
+    var _ref12 = _asyncToGenerator(function* (e) {
       e.preventDefault();
+      setSaving('true');
       var data = {
+        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
         expenseCategory,
         accountName,
         description,
@@ -1994,26 +2109,35 @@ function DailyExpenseUpdate() {
         vatAmount: CheckTvA ? Number(total) * 0.16 : 0,
         TvaAmount: CheckTvA ? Number(total) * 0.16 : 0,
         taxUSD: CheckTvA ? Number(total) * 0.16 : 0,
-        rate,
+        rate: accountName === 'Employee' ? PayRate : rate,
         total,
+        expenseNumber,
         accountNameInfo,
-        reason: reason1,
-        updateS: false
+        reason,
+        Create,
+        synced: false
       };
       try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/update-expense/").concat(id), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-expense"), data);
         if (res) {
-          handleCreateComment();
+          var _res$data$data$expens;
+          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_37__/* .invalidateCache */ .gm)('/expense');
           handleOpen();
+          var ReferenceInfo = res.data.data._id;
+          var ReferenceInfoNumber = res.data.data.expenseNumber;
+          var ReferenceInfoCategory = ((_res$data$data$expens = res.data.data.expenseCategory) === null || _res$data$data$expens === void 0 ? void 0 : _res$data$data$expens.expensesCategory) || (typeof res.data.data.expenseCategory === 'string' ? res.data.data.expenseCategory : '');
+          // await db.dailyExpenseSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
+          handleCreateNotification(ReferenceInfo, ReferenceInfoNumber, ReferenceInfoCategory);
         }
       } catch (error) {
         if (error) {
+          setSaving('');
           handleError();
         }
       }
     });
-    return function handleSubmit(_x) {
-      return _ref10.apply(this, arguments);
+    return function handleSubmit(_x5) {
+      return _ref12.apply(this, arguments);
     };
   }();
   if (isMobile) {
@@ -2051,23 +2175,23 @@ function DailyExpenseUpdate() {
         color: '#ffffff',
         p: 0.5
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
       variant: "subtitle1",
       sx: {
         fontWeight: 800,
         lineHeight: 1.2,
         color: '#ffffff'
       }
-    }, "Edit Daily Expense"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    }, "New Daily Expense"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
       variant: "caption",
       sx: {
         color: '#E0E7FF'
       }
-    }, "EXP-", String(expenseNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
+    }, "EXP-", String(expenseNumber || 1).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
       variant: "contained",
       size: "small",
       onClick: handleSubmit,
-      disabled: loading,
+      disabled: loading || saving === 'true',
       sx: {
         backgroundColor: '#10B981',
         color: '#ffffff',
@@ -2079,11 +2203,11 @@ function DailyExpenseUpdate() {
           backgroundColor: '#059669'
         }
       }
-    }, loading ? 'Saving...' : 'Save')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, saving === 'true' ? 'Saving...' : 'Save')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       sx: {
         p: 2
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_64__/* ["default"] */ .A, {
       sx: {
         borderRadius: 3.5,
         p: 2.5,
@@ -2124,11 +2248,11 @@ function DailyExpenseUpdate() {
     }, c.expensesCategory))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
       item: true,
       xs: 12
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_43__/* .LocalizationProvider */ .$, {
-      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_44__/* .AdapterDayjs */ .R
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_45__/* .DatePicker */ .l, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_44__/* .LocalizationProvider */ .$, {
+      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_45__/* .AdapterDayjs */ .R
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_46__/* .DatePicker */ .l, {
       label: "Expense Date",
-      value: expenseDate ? dayjs__WEBPACK_IMPORTED_MODULE_46___default()(expenseDate) : null,
+      value: expenseDate ? dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expenseDate) : null,
       onChange: date => setExpenseDate(date),
       slotProps: {
         textField: {
@@ -2164,12 +2288,12 @@ function DailyExpenseUpdate() {
       value: description,
       onChange: val => setDescription(val),
       mode: "upper"
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       size: "large",
       onClick: handleSubmit,
-      disabled: loading,
+      disabled: loading || saving === 'true',
       sx: {
         backgroundColor: '#30368a',
         color: '#ffffff',
@@ -2183,7 +2307,7 @@ function DailyExpenseUpdate() {
           backgroundColor: '#202a5a'
         }
       }
-    }, loading ? 'Saving Changes...' : 'Save Changes')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    }, saving === 'true' ? 'Saving Expense...' : 'Save Expense')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
       open: loadingOpenModal,
       onClose: handleClose
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
@@ -2194,7 +2318,7 @@ function DailyExpenseUpdate() {
         textAlign: 'center',
         p: 3
       })
-    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
+    }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
       sx: {
         color: 'green',
         fontSize: 48,
@@ -2205,7 +2329,7 @@ function DailyExpenseUpdate() {
       sx: {
         fontWeight: 800
       }
-    }, "Expense Updated Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
+    }, "Expense Saved Successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "contained",
       onClick: () => navigate('/DailyExpenses'),
@@ -2225,7 +2349,7 @@ function DailyExpenseUpdate() {
         textAlign: 'center',
         p: 3
       })
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
       sx: {
         color: 'red',
         fontSize: 48,
@@ -2242,7 +2366,7 @@ function DailyExpenseUpdate() {
         color: '#64748B',
         mt: 1
       }
-    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
+    }, "Please check required fields."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
       fullWidth: true,
       variant: "outlined",
       onClick: handleCloseError,
@@ -2286,17 +2410,13 @@ function DailyExpenseUpdate() {
     sx: {
       flexGrow: 1
     }
-  }, "update Expenses"), hideBack === 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
-    style: {
-      color: 'white'
-    }
-  })) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "Add new Expenses"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: handleOpenBack
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_61__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
@@ -2307,7 +2427,7 @@ function DailyExpenseUpdate() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -2344,7 +2464,7 @@ function DailyExpenseUpdate() {
       mt: 4
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-    onSubmit: handleOpenUpdateReason
+    onSubmit: handleSubmit
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     container: true,
     style: {
@@ -2356,45 +2476,19 @@ function DailyExpenseUpdate() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, expenseCategory.expensesCategory !== '' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '10px',
-      alignItems: 'center'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    sx: {
-      fontSize: '20px'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
-    style: {
-      fontWeight: 'bold'
-    }
-  }, " Category: "), " ", expenseCategory.expensesCategory), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(BlackTooltip, {
-    title: "Clear",
-    placement: "right"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleClearCategory,
-    style: {
-      position: 'relative',
-      float: 'right'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     id: "expensesCategory",
     options: categories,
     getOptionLabel: Option => Option.expensesCategory,
-    onChange: (e, newValue) => setExpenseCategory(newValue),
+    value: Object.keys(expenseCategory).length === 0 ? null : expenseCategory,
+    onChange: (e, newValue) => setExpenseCategory(newValue || {}),
     sx: {
       width: '100%',
       backgroundColor: 'white'
     },
-    PaperComponent: _ref11 => {
-      var children = _ref11.children,
-        other = _objectWithoutProperties(_ref11, _excluded3);
+    PaperComponent: _ref13 => {
+      var children = _ref13.children,
+        other = _objectWithoutProperties(_ref13, _excluded3);
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, _extends({}, other, {
         sx: {
           backgroundColor: 'white',
@@ -2452,26 +2546,26 @@ function DailyExpenseUpdate() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     htmlFor: "expenseNumber"
   }, "Expense Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-    disabled: true,
     id: "expenseNumber",
     name: "expenseNumber",
     label: "Expense Number",
     value: String(expenseNumber).padStart(6, '0'),
+    onChange: e => setExpenseNumber(parseInt(e.target.value) || 0),
     startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
     }, "D-")
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_43__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_44__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_42__/* .DemoContainer */ .j, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_44__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_45__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_43__/* .DemoContainer */ .j, {
     components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_45__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_46__/* .DatePicker */ .l, {
     required: true,
     name: "expenseDate",
     label: "Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_46___default()(expenseDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_47___default()(expenseDate),
     onChange: date => setExpenseDate(date),
     sx: {
       width: '100%',
@@ -2490,7 +2584,7 @@ function DailyExpenseUpdate() {
   }, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     required: true,
     id: "reason",
-    value: reason1,
+    value: reason,
     onChange: e => handleChangeReason(e),
     name: "reason",
     label: "Reason"
@@ -2506,6 +2600,7 @@ function DailyExpenseUpdate() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
+    required: true,
     name: "description",
     id: "description",
     label: "Expense Description",
@@ -2518,7 +2613,7 @@ function DailyExpenseUpdate() {
       backgroundColor: "white"
     },
     mode: "upper"
-  })), reason1 === "Project" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })), reason === "Project" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
@@ -2542,12 +2637,32 @@ function DailyExpenseUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: project,
+    getOptionLabel: option => option.projectName.toUpperCase(),
+    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    onChange: (e, newValue) => handleChangeProject(newValue ? newValue : ''),
+    inputValue: inputValueProject,
+    onInputChange: (event, newInputValue) => {
+      setInputValueProject(newInputValue);
+    },
+    filterOptions: (options, _ref14) => {
+      var inputValue = _ref14.inputValue;
+      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+    },
+    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
+      label: "Project Name"
+    })),
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    options: project2,
     getOptionLabel: option => option.projectName.toUpperCase(),
     renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
@@ -2558,46 +2673,15 @@ function DailyExpenseUpdate() {
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref12) => {
-      var inputValue = _ref12.inputValue;
-      var lower = (inputValue || '').toLowerCase();
-      return options.filter(option => {
-        var _option$customerName;
-        return ((_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) && option.customerName.customerName.toLowerCase().includes(lower) || option.projectName && option.projectName.toLowerCase().includes(lower) || option.description && option.description.toLowerCase().includes(lower);
-      });
+    filterOptions: (options, _ref15) => {
+      var inputValue = _ref15.inputValue;
+      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
     },
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    options: project2,
-    getOptionLabel: option => option.projectName ? option.projectName.toUpperCase() : '',
-    renderOption: (props, option) => {
-      var _option$customerName2;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", ((_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.customerName) || '', " | ", option.projectName || '', " | ", option.description || '');
-    },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
-      label: "Project Name"
-    })),
-    onChange: (e, newValue) => handleChangeProject(newValue ? newValue : ''),
-    inputValue: inputValueProject,
-    onInputChange: (event, newInputValue) => {
-      setInputValueProject(newInputValue);
-    },
-    filterOptions: (options, _ref13) => {
-      var inputValue = _ref13.inputValue;
-      var lower = (inputValue || '').toLowerCase();
-      return options.filter(option => {
-        var _option$customerName3;
-        return ((_option$customerName3 = option.customerName) === null || _option$customerName3 === void 0 ? void 0 : _option$customerName3.customerName) && option.customerName.customerName.toLowerCase().includes(lower) || option.projectName && option.projectName.toLowerCase().includes(lower) || option.description && option.description.toLowerCase().includes(lower);
-      });
-    },
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  }))) : null, reason1 === "Maintenance" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))) : null, reason === "Maintenance" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
@@ -2621,30 +2705,30 @@ function DailyExpenseUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: maintenance,
     getOptionLabel: option => {
-      var _option$customerName4;
-      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName4 = option.customerName) === null || _option$customerName4 === void 0 ? void 0 : _option$customerName4.customerName) || '');
+      var _option$customerName;
+      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) || '');
     },
     renderOption: (props, option) => {
-      var _option$customerName5;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName5 = option.customerName) === null || _option$customerName5 === void 0 ? void 0 : _option$customerName5.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
+      var _option$customerName2;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
     },
     onChange: (e, newValue) => handleChangeMaintenance(newValue ? newValue : ''),
     inputValue: inputValueMaintenance,
     onInputChange: (event, newInputValue) => {
       setInputValueMaintenance(newInputValue);
     },
-    filterOptions: (options, _ref14) => {
-      var inputValue = _ref14.inputValue;
+    filterOptions: (options, _ref16) => {
+      var inputValue = _ref16.inputValue;
       return options.filter(option => {
-        var _option$customerName6;
-        return ((_option$customerName6 = option.customerName) === null || _option$customerName6 === void 0 ? void 0 : _option$customerName6.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
+        var _option$customerName3;
+        return ((_option$customerName3 = option.customerName) === null || _option$customerName3 === void 0 ? void 0 : _option$customerName3.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
       });
     },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
@@ -2666,7 +2750,7 @@ function DailyExpenseUpdate() {
     className: "tableInfo10"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Employee Name"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Amount FC"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tbody", null, employeeName ? employeeName.map((row, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", {
     key: row.idInfo
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
     style: {
       height: '100px'
     }
@@ -2705,7 +2789,7 @@ function DailyExpenseUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -2749,7 +2833,7 @@ function DailyExpenseUpdate() {
     disabled: true,
     name: "rate",
     id: "rate",
-    value: row.rate || rate,
+    value: row.rate || PayRate,
     onChange: e => handleChangeEmployee(e, i),
     size: "small",
     sx: {
@@ -2757,6 +2841,7 @@ function DailyExpenseUpdate() {
       backgroundColor: 'white'
     }
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    disabled: true,
     name: "total",
     id: "total",
     value: row.total,
@@ -2811,26 +2896,6 @@ function DailyExpenseUpdate() {
       width: '200px',
       backgroundColor: 'white'
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
-    colSpan: 2,
-    style: {
-      textAlign: 'center'
-    }
-  }, "VAT (16%)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
-    checked: CheckTvA,
-    disabled: true
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", {
-    style: {
-      textAlign: 'center'
-    }
-  }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    disabled: true,
-    label: "Tax $",
-    value: tax.toFixed(2),
-    sx: {
-      width: '200px',
-      backgroundColor: 'white'
-    }
   })))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 1
@@ -2844,7 +2909,7 @@ function DailyExpenseUpdate() {
     placement: "bottom"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: addItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
     className: "btn1",
     style: {
       fontSize: '40px'
@@ -2855,8 +2920,8 @@ function DailyExpenseUpdate() {
       justifyContent: 'flex-end',
       marginTop: '10px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       checked: CheckTvA,
       onChange: e => setCheckTvA(e.target.checked)
     }),
@@ -2864,14 +2929,14 @@ function DailyExpenseUpdate() {
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(react__WEBPACK_IMPORTED_MODULE_1__.Fragment, null, accountName === 'Project' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, accountNameInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
       gap: '75px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     label: "Project",
-    value: accountNameInfo.name ? accountNameInfo.name : '',
+    value: accountNameInfo.name,
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -2885,28 +2950,22 @@ function DailyExpenseUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: project,
-    getOptionLabel: option => option.projectName ? option.projectName.toUpperCase() : '',
-    renderOption: (props, option) => {
-      var _option$customerName7;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", ((_option$customerName7 = option.customerName) === null || _option$customerName7 === void 0 ? void 0 : _option$customerName7.customerName) || '', " | ", option.projectName || '', " | ", option.description || '');
-    },
+    getOptionLabel: option => option.projectName.toUpperCase(),
+    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
     onChange: (e, newValue) => handleChangeProject(newValue ? newValue : ''),
     inputValue: inputValueProject,
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref15) => {
-      var inputValue = _ref15.inputValue;
-      return options.filter(option => {
-        var _option$customerName8;
-        return ((_option$customerName8 = option.customerName) === null || _option$customerName8 === void 0 ? void 0 : _option$customerName8.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName && option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description && option.description.toLowerCase().includes(inputValue.toLowerCase());
-      });
+    filterOptions: (options, _ref17) => {
+      var inputValue = _ref17.inputValue;
+      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
     },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
       label: "Project Name"
@@ -2917,11 +2976,8 @@ function DailyExpenseUpdate() {
     }
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: project2,
-    getOptionLabel: option => option.projectName ? option.projectName.toUpperCase() : '',
-    renderOption: (props, option) => {
-      var _option$customerName9;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", ((_option$customerName9 = option.customerName) === null || _option$customerName9 === void 0 ? void 0 : _option$customerName9.customerName) || '', " | ", option.projectName || '', " | ", option.description || '');
-    },
+    getOptionLabel: option => option.projectName.toUpperCase(),
+    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
       label: "Project Name"
     })),
@@ -2930,29 +2986,25 @@ function DailyExpenseUpdate() {
     onInputChange: (event, newInputValue) => {
       setInputValueProject(newInputValue);
     },
-    filterOptions: (options, _ref16) => {
-      var inputValue = _ref16.inputValue;
-      var lower = (inputValue || '').toLowerCase();
-      return options.filter(option => {
-        var _option$customerName0;
-        return ((_option$customerName0 = option.customerName) === null || _option$customerName0 === void 0 ? void 0 : _option$customerName0.customerName) && option.customerName.customerName.toLowerCase().includes(lower) || option.projectName && option.projectName.toLowerCase().includes(lower) || option.description && option.description.toLowerCase().includes(lower);
-      });
+    filterOptions: (options, _ref18) => {
+      var inputValue = _ref18.inputValue;
+      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
     },
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }))) : '') : null, accountName === 'Maintenance' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))) : null, accountName === 'Maintenance' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, accountNameInfo ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, accountNameInfo.name !== "" ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
       gap: '75px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     label: "Maintenance",
-    value: accountNameInfo.name ? accountNameInfo.name : '',
+    value: accountNameInfo.name,
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -2966,30 +3018,30 @@ function DailyExpenseUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
   })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     options: maintenance,
     getOptionLabel: option => {
-      var _option$customerName1;
-      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName1 = option.customerName) === null || _option$customerName1 === void 0 ? void 0 : _option$customerName1.customerName) || '');
+      var _option$customerName4;
+      return "M-".concat(String(option.serviceNumber || 0).padStart(6, '0'), " - ").concat(((_option$customerName4 = option.customerName) === null || _option$customerName4 === void 0 ? void 0 : _option$customerName4.customerName) || '');
     },
     renderOption: (props, option) => {
-      var _option$customerName10;
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName10 = option.customerName) === null || _option$customerName10 === void 0 ? void 0 : _option$customerName10.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
+      var _option$customerName5;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, props, (_option$customerName5 = option.customerName) === null || _option$customerName5 === void 0 ? void 0 : _option$customerName5.customerName, " | M-", String(option.serviceNumber || 0).padStart(6, '0'), " | ", option.itemDescriptionInfo || option.model || '');
     },
     onChange: (e, newValue) => handleChangeMaintenance(newValue ? newValue : ''),
     inputValue: inputValueMaintenance,
     onInputChange: (event, newInputValue) => {
       setInputValueMaintenance(newInputValue);
     },
-    filterOptions: (options, _ref17) => {
-      var inputValue = _ref17.inputValue;
+    filterOptions: (options, _ref19) => {
+      var inputValue = _ref19.inputValue;
       return options.filter(option => {
-        var _option$customerName11;
-        return ((_option$customerName11 = option.customerName) === null || _option$customerName11 === void 0 ? void 0 : _option$customerName11.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
+        var _option$customerName6;
+        return ((_option$customerName6 = option.customerName) === null || _option$customerName6 === void 0 ? void 0 : _option$customerName6.customerName) && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || "M-".concat(String(option.serviceNumber || 0).padStart(6, '0')).toLowerCase().includes(inputValue.toLowerCase()) || option.model && option.model.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescriptionInfo && option.itemDescriptionInfo.toLowerCase().includes(inputValue.toLowerCase());
       });
     },
     renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
@@ -2999,10 +3051,11 @@ function DailyExpenseUpdate() {
       width: '100%',
       backgroundColor: 'white'
     }
-  }))) : '') : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))) : null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A, {
+    required: true,
     name: "description",
     id: "description",
     label: "Expense Description",
@@ -3026,7 +3079,6 @@ function DailyExpenseUpdate() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     htmlFor: "amount"
   }, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
-    required: true,
     id: "amount",
     name: "amount",
     type: "number",
@@ -3054,7 +3106,7 @@ function DailyExpenseUpdate() {
     value: rate,
     startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, null))
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CurrencyExchange__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null))
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 3
@@ -3074,7 +3126,7 @@ function DailyExpenseUpdate() {
     onChange: e => setTotal(e.target.value),
     startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
       position: "start"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null))
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_MonetizationOn__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, null))
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 3,
@@ -3083,22 +3135,28 @@ function DailyExpenseUpdate() {
       alignItems: 'center',
       justifyContent: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
-    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       checked: CheckTvA,
       onChange: e => setCheckTvA(e.target.checked)
     }),
     label: "TVA (16%)"
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))), filterCash === 'Close' ? null : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     type: "submit",
     className: "btnCustomer6",
     style: {
       width: '100%'
     }
-  }, "Save")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
+    className: "btnCustomer6",
+    style: {
+      width: '100%',
+      textAlign: 'center'
+    }
+  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: openBack,
     onClose: handleCloseBack,
     "aria-labelledby": "modal-modal-title",
@@ -3116,7 +3174,7 @@ function DailyExpenseUpdate() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3133,14 +3191,14 @@ function DailyExpenseUpdate() {
     sx: {
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, "Do you want to stop updating daily expense ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null, "Do you want to stop creating daily expenses ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
   }, "Note :"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
     className: "txt2"
-  }, " If you stop updating without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, " If you stop creating without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
@@ -3174,12 +3232,12 @@ function DailyExpenseUpdate() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3188,14 +3246,16 @@ function DailyExpenseUpdate() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data Saved successfully"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       display: 'flex',
-      gap: '60px',
+      gap: '20px',
       justifyContent: 'center'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    type: "button",
-    onClick: handleClose,
+    onClick: () => handleDecision('stay'),
     className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+    onClick: () => handleDecision('previous'),
+    className: "btnCustomer"
+  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: ErrorOpenModal,
     onClose: handleCloseError,
     closeAfterTransition: true,
@@ -3209,23 +3269,69 @@ function DailyExpenseUpdate() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
       width: '40px'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data Failed to Saved"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", {
+    style: {
+      color: 'red'
+    }
+  }, "Saving Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", {
+    className: "txt2"
+  }, "Please Check the Previous Invoice Number And the New Invoice Number Can Not be The Same"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "txt1",
+    style: {
+      color: 'red'
+    }
+  }, "Note:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("span", {
+    className: "txt2"
+  }, "To Add Number Click On the Arrow Up Button")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseError
   }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
-    open: open2,
-    onClose: handleCloseUpdateReason,
+    open: modalOpenLoading,
+    onClose: handleCloseOpenAutocomplete2,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A,
+    BackdropProps: {
+      timeout: 500
+    },
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", null, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    style: {
+      justifyContent: 'center',
+      textAlign: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+    style: {
+      color: 'green',
+      height: '40px',
+      width: '40px'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("h2", null, " Data successfully Saved"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("div", {
+    style: {
+      display: 'flex',
+      gap: '60px',
+      justifyContent: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
+    onClick: handleCloseOpenAutocomplete2,
+    className: "btnCustomer"
+  }, "Close")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+    open: openAutocomplete2,
+    onClose: handleCloseOpenAutocomplete2,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
@@ -3236,12 +3342,12 @@ function DailyExpenseUpdate() {
     title: "Close",
     placement: "left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleCloseUpdateReason,
+    onClick: handleCloseOpenAutocomplete2,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3249,8 +3355,8 @@ function DailyExpenseUpdate() {
     id: "modal-modal-title",
     variant: "h6",
     component: "h2"
-  }, "Reason Of Updating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
-    onSubmit: handleSubmit
+  }, "Create Expenses Category"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("form", {
+    onSubmit: handleSubmitCategory
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     container: true,
     style: {
@@ -3262,14 +3368,11 @@ function DailyExpenseUpdate() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
-    required: true,
-    id: "reason",
-    name: "reason",
-    multiline: true,
-    rows: 4,
-    value: reason,
-    onChange: e => setReason(e.target.value),
-    label: "Comments",
+    id: "expensesCategory",
+    name: "expensesCategory",
+    value: expensesCategory,
+    label: "Expenses Category",
+    onChange: e => setExpensesCategory(e.target.value),
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -3278,14 +3381,13 @@ function DailyExpenseUpdate() {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("button", {
-    type: "submit",
-    className: "btnCustomer",
+    className: "btnCustomer6",
     style: {
       width: '100%'
     }
   }, "Save")))))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DailyExpenseUpdate);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DailyExpenseForm);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -5368,8 +5470,30 @@ const Zoom = /*#__PURE__*/react.forwardRef(function Zoom(props, ref) {
 var IconButton = __webpack_require__(11641);
 // EXTERNAL MODULE: ./node_modules/@mui/material/Badge/Badge.js + 2 modules
 var Badge = __webpack_require__(11154);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Menu/Menu.js + 1 modules
+var Menu = __webpack_require__(94405);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
+var Box = __webpack_require__(69067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
+var Typography = __webpack_require__(14073);
+// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
+var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
+var Button = __webpack_require__(86990);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
+var Divider = __webpack_require__(71543);
 // EXTERNAL MODULE: ./node_modules/@mui/icons-material/AutoAwesome.js
 var AutoAwesome = __webpack_require__(2775);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ArrowForward.js
+var ArrowForward = __webpack_require__(65343);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircleOutline.js
+var CheckCircleOutline = __webpack_require__(58407);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/DoneAll.js
+var DoneAll = __webpack_require__(5766);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Close.js
+var Close = __webpack_require__(39781);
 // EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
 var react_toastify_esm = __webpack_require__(99571);
 // EXTERNAL MODULE: ./src/js/utils/textAssistUtils.js
@@ -5380,7 +5504,17 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 ;
+
+
+
+
 
 
 
@@ -5388,9 +5522,11 @@ function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = 
 
 /**
  * LanguageFixerButton
- * Smart language & spelling assistant button.
- * Cleans whitespace, corrects technical & bilingual typos, and standardizes to CAPITAL LETTERS.
- * Shows an active alert badge when typos or uncapitalized text are detected.
+ * Interactive language assistant with granular word-by-word suggestions dropdown.
+ * - Left-click or right-click opens an interactive drop-down menu of detected typos.
+ * - Allows user to selectively click and apply ONLY the words they wish to correct.
+ * - Avoids changing the meaning of sentences, codes, dimensions, or technical terms.
+ * - Offers "Apply All" and "Format Spacing Only" options.
  */
 function LanguageFixerButton(_ref) {
   var _ref$value = _ref.value,
@@ -5401,34 +5537,78 @@ function LanguageFixerButton(_ref) {
     tooltip = _ref.tooltip,
     _ref$size = _ref.size,
     size = _ref$size === void 0 ? 'small' : _ref$size,
+    _ref$contextMenu = _ref.contextMenu,
+    contextMenu = _ref$contextMenu === void 0 ? null : _ref$contextMenu,
+    _ref$onCloseContextMe = _ref.onCloseContextMenu,
+    onCloseContextMenu = _ref$onCloseContextMe === void 0 ? null : _ref$onCloseContextMe,
     _ref$sx = _ref.sx,
     sx = _ref$sx === void 0 ? {} : _ref$sx;
-  var isTypo = (0,textAssistUtils/* hasTypo */.rp)(value, mode);
-  var activeTooltip = tooltip || (isTypo ? '⚠️ Suggestion available! Click ✨ to auto-correct & polish text' : '✨ Polish & format text');
-  var handleFix = e => {
+  var _useState = (0,react.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    anchorEl = _useState2[0],
+    setAnchorEl = _useState2[1];
+
+  // Compute suggestions and diagnostics
+  var analysis = (0,textAssistUtils/* getSuggestions */.KW)(value, mode);
+  var suggestions = analysis.suggestions,
+    hasExtraSpaces = analysis.hasExtraSpaces,
+    hasUncapitalized = analysis.hasUncapitalized,
+    isClean = analysis.isClean;
+  var isTypo = !isClean;
+  var isMenuOpen = Boolean(anchorEl) || contextMenu !== null;
+  var handleOpenMenu = e => {
     if (e && e.preventDefault) e.preventDefault();
     if (e && e.stopPropagation) e.stopPropagation();
     if (!value || typeof value !== 'string' || !value.trim()) {
-      react_toastify_esm/* toast */.oR.info('Please enter some text first to polish.');
+      react_toastify_esm/* toast */.oR.info('Please enter some text first to inspect.');
       return;
     }
-    var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
-    if (polished === value.trim()) {
-      react_toastify_esm/* toast */.oR.info('Text is already clean and formatted!');
-    } else {
-      if (typeof onFixed === 'function') {
-        onFixed(polished);
-      }
-      react_toastify_esm/* toast */.oR.success('✨ Text polished & formatted!');
+    setAnchorEl(e.currentTarget);
+  };
+  var handleClose = () => {
+    setAnchorEl(null);
+    if (typeof onCloseContextMenu === 'function') {
+      onCloseContextMenu();
     }
   };
-  return /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
-    title: activeTooltip,
+  var handleApplySingle = (original, replacement) => {
+    var updated = (0,textAssistUtils/* applySingleCorrection */.ZD)(value, original, replacement, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success("\u2728 Replaced \"".concat(original, "\" with \"").concat(replacement, "\"!"));
+
+    // Check remaining suggestions
+    var remaining = (0,textAssistUtils/* getSuggestions */.KW)(updated, mode).suggestions;
+    if (remaining.length === 0) {
+      handleClose();
+    }
+  };
+  var handleApplyAll = () => {
+    var polished = (0,textAssistUtils/* polishText */.LQ)(value, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(polished);
+    }
+    react_toastify_esm/* toast */.oR.success('✨ All corrections applied!');
+    handleClose();
+  };
+  var handleFormatSpacesOnly = () => {
+    var updated = (0,textAssistUtils/* applyCleanSpaces */.nW)(value, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success('✨ Spacing and capitalization cleaned!');
+    handleClose();
+  };
+  var activeTooltip = tooltip || (isTypo ? "\u26A0\uFE0F ".concat(suggestions.length > 0 ? "".concat(suggestions.length, " suggestion(s)") : 'Format issue', " found. Click \u2728 to choose words to fix") : '✨ Text formatting and language assistant');
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+    title: isMenuOpen ? '' : activeTooltip,
     arrow: true,
     TransitionComponent: Zoom_Zoom
   }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
     size: size,
-    onClick: handleFix,
+    onClick: handleOpenMenu,
+    onContextMenu: handleOpenMenu,
     sx: _objectSpread({
       color: isTypo ? '#d97706' : '#30368a',
       backgroundColor: isTypo ? 'rgba(217, 119, 6, 0.12)' : 'rgba(48, 54, 138, 0.08)',
@@ -5443,24 +5623,232 @@ function LanguageFixerButton(_ref) {
       }
     }, sx)
   }, /*#__PURE__*/react.createElement(Badge/* default */.A, {
-    badgeContent: isTypo ? '!' : null,
-    color: "error",
+    badgeContent: suggestions.length > 0 ? suggestions.length : isTypo ? '!' : null,
+    color: suggestions.length > 0 ? 'warning' : 'primary',
     sx: {
       '& .MuiBadge-badge': {
         fontSize: '10px',
-        height: '14px',
-        minWidth: '14px',
+        height: '15px',
+        minWidth: '15px',
         fontWeight: 800,
-        padding: '0 2px',
+        padding: '0 3px',
         top: 2,
-        right: 2
+        right: 2,
+        backgroundColor: suggestions.length > 0 ? '#ea580c' : undefined
       }
     }
   }, /*#__PURE__*/react.createElement(AutoAwesome/* default */.A, {
     sx: {
       fontSize: size === 'small' ? 17 : 20
     }
-  }))));
+  })))), /*#__PURE__*/react.createElement(Menu/* default */.A, {
+    open: isMenuOpen,
+    onClose: handleClose,
+    anchorEl: anchorEl,
+    anchorReference: contextMenu !== null ? 'anchorPosition' : 'anchorEl',
+    anchorPosition: contextMenu !== null ? {
+      top: contextMenu.mouseY,
+      left: contextMenu.mouseX
+    } : undefined,
+    transformOrigin: {
+      horizontal: 'right',
+      vertical: 'top'
+    },
+    anchorOrigin: {
+      horizontal: 'right',
+      vertical: 'bottom'
+    },
+    PaperProps: {
+      sx: {
+        minWidth: 320,
+        maxWidth: 440,
+        borderRadius: '10px',
+        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.15), 0 8px 10px -6px rgba(0,0,0,0.1)',
+        border: '1px solid #e2e8f0',
+        overflow: 'hidden',
+        p: 0
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1.5,
+      pb: 1,
+      backgroundColor: '#f8fafc',
+      borderBottom: '1px solid #e2e8f0'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: '#1e293b',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.8
+    }
+  }, /*#__PURE__*/react.createElement(AutoAwesome/* default */.A, {
+    sx: {
+      fontSize: 16,
+      color: '#30368a'
+    }
+  }), "Spelling & Word Suggestions"), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: handleClose,
+    sx: {
+      p: 0.2
+    }
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+    sx: {
+      fontSize: 15,
+      color: '#64748b'
+    }
+  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: 11,
+      color: '#64748b',
+      mt: 0.5
+    }
+  }, suggestions.length > 0 ? 'Select which word you want to replace in this sentence:' : 'No word replacements detected in this sentence.')), suggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      maxHeight: 240,
+      overflowY: 'auto',
+      py: 0.5
+    }
+  }, suggestions.map((s, idx) => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    key: idx,
+    onClick: () => handleApplySingle(s.original, s.replacement),
+    sx: {
+      py: 1,
+      px: 1.5,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 1,
+      '&:hover': {
+        backgroundColor: 'rgba(48, 54, 138, 0.08)'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.8,
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: s.original,
+    size: "small",
+    sx: {
+      backgroundColor: '#fee2e2',
+      color: '#b91c1c',
+      fontWeight: 700,
+      fontSize: 11,
+      textDecoration: 'line-through',
+      height: 22
+    }
+  }), /*#__PURE__*/react.createElement(ArrowForward/* default */.A, {
+    sx: {
+      fontSize: 13,
+      color: '#94a3b8'
+    }
+  }), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: s.replacement,
+    size: "small",
+    sx: {
+      backgroundColor: '#dcfce7',
+      color: '#15803d',
+      fontWeight: 700,
+      fontSize: 11,
+      height: 22
+    }
+  })), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    sx: {
+      fontSize: 11,
+      py: 0.2,
+      px: 1,
+      minWidth: 44,
+      height: 22,
+      textTransform: 'none',
+      borderColor: '#30368a',
+      color: '#30368a',
+      fontWeight: 600
+    }
+  }, "Fix")))), suggestions.length === 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 2,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(CheckCircleOutline/* default */.A, {
+    sx: {
+      fontSize: 20,
+      color: '#16a34a'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: 12,
+      color: '#15803d',
+      fontWeight: 600
+    }
+  }, "All words look correct!")), /*#__PURE__*/react.createElement(Divider/* default */.A, {
+    sx: {
+      my: 0
+    }
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1,
+      backgroundColor: '#f8fafc',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 0.5
+    }
+  }, suggestions.length > 0 && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    onClick: handleApplyAll,
+    sx: {
+      borderRadius: '6px',
+      py: 0.8,
+      fontSize: 12,
+      fontWeight: 700,
+      color: '#30368a',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      '&:hover': {
+        backgroundColor: 'rgba(48, 54, 138, 0.12)'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DoneAll/* default */.A, {
+    sx: {
+      fontSize: 16
+    }
+  }), "Apply All Corrections (", suggestions.length, ")"), (hasExtraSpaces || hasUncapitalized) && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    onClick: handleFormatSpacesOnly,
+    sx: {
+      borderRadius: '6px',
+      py: 0.8,
+      fontSize: 12,
+      color: '#475569',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      '&:hover': {
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(AutoAwesome/* default */.A, {
+    sx: {
+      fontSize: 15,
+      color: '#64748b'
+    }
+  }), "Format Spacing & Capitalize Only"))));
 }
 /* harmony default export */ const component_LanguageFixerButton = (LanguageFixerButton);
 
@@ -5500,6 +5888,12 @@ function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t =
 function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
 function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
 ;
@@ -5512,8 +5906,8 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
  * Drop-in intelligent text input with:
  * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
  * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
- * 3. Real-time typo detection badge & visual warning
- * 4. Automatic self-healing onBlur
+ * 3. Interactive suggestion dropdown menu (by clicking ✨ or right-clicking anywhere on text)
+ * 4. Real-time typo detection badge & visual warning
  */
 function SmartTextInput(_ref) {
   var label = _ref.label,
@@ -5547,8 +5941,21 @@ function SmartTextInput(_ref) {
     _ref$inputProps = _ref.inputProps,
     inputProps = _ref$inputProps === void 0 ? {} : _ref$inputProps,
     rest = _objectWithoutProperties(_ref, _excluded);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    contextMenu = _useState2[0],
+    setContextMenu = _useState2[1];
   var dropdownOptions = Array.isArray(options) && options.length > 0 ? options : presetKey && _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] ? _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] : null;
   var isTypo = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .hasTypo */ .rp)(value, mode);
+  var handleContextMenu = e => {
+    if (value && typeof value === 'string' && value.trim()) {
+      e.preventDefault();
+      setContextMenu({
+        mouseX: e.clientX,
+        mouseY: e.clientY
+      });
+    }
+  };
   var notifyChange = newVal => {
     if (typeof onChange !== 'function') return;
     var finalVal = mode === 'upper' && typeof newVal === 'string' ? newVal.toUpperCase() : newVal;
@@ -5595,6 +6002,7 @@ function SmartTextInput(_ref) {
           size: size,
           placeholder: placeholder,
           onBlur: handleBlur,
+          onContextMenu: handleContextMenu,
           inputProps: _objectSpread(_objectSpread(_objectSpread({}, params.inputProps), {}, {
             spellCheck: 'true'
           }, inputProps), {}, {
@@ -5612,7 +6020,9 @@ function SmartTextInput(_ref) {
               value: value,
               onFixed: fixed => notifyChange(fixed),
               mode: mode,
-              size: size === 'small' ? 'small' : 'medium'
+              size: size === 'small' ? 'small' : 'medium',
+              contextMenu: contextMenu,
+              onCloseContextMenu: () => setContextMenu(null)
             }), params.InputProps.endAdornment)
           }),
           sx: _objectSpread(_objectSpread({
@@ -5639,6 +6049,7 @@ function SmartTextInput(_ref) {
       notifyChange(val);
     },
     onBlur: handleBlur,
+    onContextMenu: handleContextMenu,
     multiline: multiline,
     rows: rows,
     required: required,
@@ -5663,7 +6074,9 @@ function SmartTextInput(_ref) {
         value: value,
         onFixed: fixed => notifyChange(fixed),
         mode: mode,
-        size: size === 'small' ? 'small' : 'medium'
+        size: size === 'small' ? 'small' : 'medium',
+        contextMenu: contextMenu,
+        onCloseContextMenu: () => setContextMenu(null)
       }))
     },
     sx: _objectSpread(_objectSpread({
@@ -5688,9 +6101,12 @@ function SmartTextInput(_ref) {
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   KW: () => (/* binding */ getSuggestions),
 /* harmony export */   LQ: () => (/* binding */ polishText),
 /* harmony export */   V2: () => (/* binding */ toUpperCaseCode),
+/* harmony export */   ZD: () => (/* binding */ applySingleCorrection),
 /* harmony export */   dr: () => (/* binding */ COMMON_PRESETS),
+/* harmony export */   nW: () => (/* binding */ applyCleanSpaces),
 /* harmony export */   rp: () => (/* binding */ hasTypo)
 /* harmony export */ });
 /* unused harmony exports TYPO_DICTIONARY, ENGLISH_FRENCH_VOCABULARY, damerauLevenshtein, correctWord, normalizeSpaces, correctTypos, toSentenceCase, toTitleCase */
@@ -6203,6 +6619,118 @@ var hasTypo = function hasTypo(text) {
   if (!text || typeof text !== 'string' || !text.trim()) return false;
   var polished = polishText(text, mode);
   return polished !== text.trim();
+};
+
+/**
+ * Extracts granular word-by-word and phrase-by-phrase suggestions for an input string.
+ * Allows the user to selectively choose which auto-corrections to apply.
+ */
+var getSuggestions = function getSuggestions(text) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
+  if (!text || typeof text !== 'string' || !text.trim()) {
+    return {
+      suggestions: [],
+      hasExtraSpaces: false,
+      hasUncapitalized: false,
+      isClean: true
+    };
+  }
+  var raw = text.trim();
+  var suggestions = [];
+  var seenOriginals = new Set();
+  var matchedSpans = [];
+
+  // 1. Scan multi-word phrases from TYPO_DICTIONARY first
+  for (var _ref6 of TYPO_DICTIONARY) {
+    var pattern = _ref6.pattern;
+    var replacement = _ref6.replacement;
+    if (pattern.source.includes('\\s+')) {
+      var regex = new RegExp(pattern.source, 'gi');
+      var match = void 0;
+      while ((match = regex.exec(raw)) !== null) {
+        var matchedText = match[0];
+        var target = mode === 'upper' ? replacement.toUpperCase() : replacement;
+        if (matchedText.trim().toUpperCase() !== target.trim().toUpperCase()) {
+          var key = matchedText.trim().toUpperCase();
+          if (!seenOriginals.has(key)) {
+            seenOriginals.add(key);
+            suggestions.push({
+              original: matchedText.trim(),
+              replacement: target,
+              type: 'phrase'
+            });
+          }
+          matchedSpans.push({
+            start: match.index,
+            end: match.index + matchedText.length
+          });
+        }
+      }
+    }
+  }
+  var isInsideMatchedSpan = (start, end) => {
+    return matchedSpans.some(span => start >= span.start && end <= span.end);
+  };
+
+  // 2. Scan individual words
+  var wordRegex = /[A-Za-z\u00C0-\u017F]+/g;
+  var wordMatch;
+  while ((wordMatch = wordRegex.exec(raw)) !== null) {
+    var word = wordMatch[0];
+    var start = wordMatch.index;
+    var end = start + word.length;
+    if (isInsideMatchedSpan(start, end)) continue;
+    var corrected = correctWord(word);
+    var _target = mode === 'upper' ? corrected.toUpperCase() : corrected;
+    if (_target.toUpperCase() !== word.toUpperCase()) {
+      var _key = word.toUpperCase();
+      if (!seenOriginals.has(_key)) {
+        seenOriginals.add(_key);
+        suggestions.push({
+          original: word,
+          replacement: _target,
+          type: 'word'
+        });
+      }
+    }
+  }
+  var hasExtraSpaces = /\s{2,}/.test(text) || text !== text.trim();
+  var hasUncapitalized = mode === 'upper' && /[a-z]/.test(text);
+  return {
+    suggestions,
+    hasExtraSpaces,
+    hasUncapitalized,
+    isClean: suggestions.length === 0 && !hasExtraSpaces && !hasUncapitalized
+  };
+};
+
+/**
+ * Applies a single selected suggestion to the text without modifying the rest of the sentence.
+ */
+var applySingleCorrection = function applySingleCorrection(text, original, replacement) {
+  var mode = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'upper';
+  if (!text || typeof text !== 'string') return '';
+  var escapeRegex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  var regex = new RegExp("\\b".concat(escapeRegex(original), "\\b"), 'gi');
+  var target = mode === 'upper' ? replacement.toUpperCase() : replacement;
+  var updated = text.replace(regex, target);
+  if (mode === 'upper') {
+    updated = updated.toUpperCase();
+  }
+  return updated;
+};
+
+/**
+ * Standardizes spacing and capitalization without changing any words.
+ */
+var applyCleanSpaces = function applyCleanSpaces(text) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
+  if (!text || typeof text !== 'string') return '';
+  var updated = text.replace(/\s+/g, ' ').trim();
+  if (mode === 'upper') {
+    updated = updated.toUpperCase();
+  }
+  return updated;
 };
 
 /***/ },

@@ -445,3 +445,109 @@ export const hasTypo = (text, mode = 'upper') => {
   const polished = polishText(text, mode);
   return polished !== text.trim();
 };
+
+/**
+ * Extracts granular word-by-word and phrase-by-phrase suggestions for an input string.
+ * Allows the user to selectively choose which auto-corrections to apply.
+ */
+export const getSuggestions = (text, mode = 'upper') => {
+  if (!text || typeof text !== 'string' || !text.trim()) {
+    return { suggestions: [], hasExtraSpaces: false, hasUncapitalized: false, isClean: true };
+  }
+
+  const raw = text.trim();
+  const suggestions = [];
+  const seenOriginals = new Set();
+  const matchedSpans = [];
+
+  // 1. Scan multi-word phrases from TYPO_DICTIONARY first
+  for (const { pattern, replacement } of TYPO_DICTIONARY) {
+    if (pattern.source.includes('\\s+')) {
+      const regex = new RegExp(pattern.source, 'gi');
+      let match;
+      while ((match = regex.exec(raw)) !== null) {
+        const matchedText = match[0];
+        const target = mode === 'upper' ? replacement.toUpperCase() : replacement;
+        if (matchedText.trim().toUpperCase() !== target.trim().toUpperCase()) {
+          const key = matchedText.trim().toUpperCase();
+          if (!seenOriginals.has(key)) {
+            seenOriginals.add(key);
+            suggestions.push({
+              original: matchedText.trim(),
+              replacement: target,
+              type: 'phrase'
+            });
+          }
+          matchedSpans.push({ start: match.index, end: match.index + matchedText.length });
+        }
+      }
+    }
+  }
+
+  const isInsideMatchedSpan = (start, end) => {
+    return matchedSpans.some(span => start >= span.start && end <= span.end);
+  };
+
+  // 2. Scan individual words
+  const wordRegex = /[A-Za-z\u00C0-\u017F]+/g;
+  let wordMatch;
+  while ((wordMatch = wordRegex.exec(raw)) !== null) {
+    const word = wordMatch[0];
+    const start = wordMatch.index;
+    const end = start + word.length;
+
+    if (isInsideMatchedSpan(start, end)) continue;
+
+    const corrected = correctWord(word);
+    const target = mode === 'upper' ? corrected.toUpperCase() : corrected;
+
+    if (target.toUpperCase() !== word.toUpperCase()) {
+      const key = word.toUpperCase();
+      if (!seenOriginals.has(key)) {
+        seenOriginals.add(key);
+        suggestions.push({
+          original: word,
+          replacement: target,
+          type: 'word'
+        });
+      }
+    }
+  }
+
+  const hasExtraSpaces = /\s{2,}/.test(text) || text !== text.trim();
+  const hasUncapitalized = mode === 'upper' && /[a-z]/.test(text);
+
+  return {
+    suggestions,
+    hasExtraSpaces,
+    hasUncapitalized,
+    isClean: suggestions.length === 0 && !hasExtraSpaces && !hasUncapitalized
+  };
+};
+
+/**
+ * Applies a single selected suggestion to the text without modifying the rest of the sentence.
+ */
+export const applySingleCorrection = (text, original, replacement, mode = 'upper') => {
+  if (!text || typeof text !== 'string') return '';
+  const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`\\b${escapeRegex(original)}\\b`, 'gi');
+  const target = mode === 'upper' ? replacement.toUpperCase() : replacement;
+  let updated = text.replace(regex, target);
+  if (mode === 'upper') {
+    updated = updated.toUpperCase();
+  }
+  return updated;
+};
+
+/**
+ * Standardizes spacing and capitalization without changing any words.
+ */
+export const applyCleanSpaces = (text, mode = 'upper') => {
+  if (!text || typeof text !== 'string') return '';
+  let updated = text.replace(/\s+/g, ' ').trim();
+  if (mode === 'upper') {
+    updated = updated.toUpperCase();
+  }
+  return updated;
+};
