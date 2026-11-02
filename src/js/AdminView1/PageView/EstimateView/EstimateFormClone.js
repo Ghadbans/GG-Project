@@ -835,7 +835,7 @@ The GLOBAL GATE Team`;
                                               {...provided.draggableProps}
                                             >
                                               {
-                                                Item.newDescription !== undefined ? (
+                                                (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                   <>
                                                     <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                     <td colSpan={6}><TextField
@@ -868,7 +868,7 @@ The GLOBAL GATE Team`;
                                                                 initialType={Item.contentType}
                                                               />
                                                               <div >
-                                                                <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                                 <TextField
                                                                   name='itemDescription' id='itemDescription'
                                                                   value={Item.itemDescription}
@@ -1040,7 +1040,7 @@ The GLOBAL GATE Team`;
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1074,7 +1074,7 @@ The GLOBAL GATE Team`;
                                                               initialType={Item.contentType}
                                                             />
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}

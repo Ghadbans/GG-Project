@@ -1120,7 +1120,7 @@ const isItemMatch = (item1, item2) => {
       row1.itemsQtyArray?.some((Item) => isItemMatch(Item, row))
     ) || [];
 
-    if (row.newDescription !== undefined) {
+    if (Boolean(row.newDescription && String(row.newDescription).trim() !== '' && (!row.itemName || (typeof row.itemName === 'string' ? row.itemName.trim() === '' : !row.itemName._id && !row.itemName.itemName)))) {
       return (
         <tr style={{ '& > *': { borderBottom: 'unset' } }}>
           <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{index + 1}</span></td>
@@ -1159,7 +1159,7 @@ const isItemMatch = (item1, item2) => {
             <span>{index + 1}</span>
           </td>
           <td style={{ width: '300px', textAlign: 'left', border: '1px solid #DDD' }} align="left">
-            <span hidden={row.itemName ? row.itemName.itemName === 'empty' : ''}>{row.itemName?.itemName || (typeof row.itemName === 'string' && row.itemName !== 'empty' ? row.itemName : '')}</span>
+            <span hidden={Boolean(!row.itemName || String(typeof row.itemName === 'string' ? row.itemName : row.itemName?.itemName).trim().toLowerCase() === 'empty')}>{row.itemName?.itemName || (typeof row.itemName === 'string' && row.itemName.toLowerCase() !== 'empty' ? row.itemName : '')}</span>
             <br />
             <span>{row.itemDescription} {relatedUnit?.itemBrand ? `( ${String(relatedUnit.itemBrand).toUpperCase()} )` : ''} </span>
           </td>
@@ -1739,7 +1739,7 @@ const isItemMatch = (item1, item2) => {
                                         </thead>
                                         <tbody>
                                           {row.items?.map((Item, i) => {
-                                            if (Item.newDescription !== undefined) {
+                                            if (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) {
                                               return (
                                                 <tr key={Item.idRow}>
                                                   <td style={{ padding: '10px', textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
@@ -2015,7 +2015,7 @@ const isItemMatch = (item1, item2) => {
                                           </thead>
 
                                           <tbody>
-                                            {row.items?.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Item.newDescription !== undefined).map((Item, i) => {
+                                            {row.items?.filter(Item => parseFloat(Item.itemQty) >= 0 || parseFloat(Item.itemBuy) > 0 || parseFloat(Item.itemOut) > 0 || Boolean(Item.newDescription && String(Item.newDescription).trim() !== '')).map((Item, i) => {
                                               const relatedUnit = itemMap[Item.itemName?._id]
                                               return (
                                                 <Row3 key={i} row={Item} index={i} relatedUnit={relatedUnit} />

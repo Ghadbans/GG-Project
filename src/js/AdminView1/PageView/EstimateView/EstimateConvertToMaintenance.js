@@ -1113,7 +1113,7 @@ function EstimateConvertToMaintenance() {
                                         {...provided.draggableProps}
                                       >
                                         {
-                                          Item.newDescription !== undefined ? (
+                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                             <>
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td colSpan={5}><TextField
@@ -1148,7 +1148,7 @@ function EstimateConvertToMaintenance() {
                                                             initialType={Item.contentType}
                                                           />
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'
                                                               value={Item.itemDescription}

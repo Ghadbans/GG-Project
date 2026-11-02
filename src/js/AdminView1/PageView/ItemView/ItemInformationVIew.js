@@ -593,7 +593,7 @@ function ItemInformationVIew() {
     (row.manufacturerNumber?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase()) ||
     row.items.some((Item) => Item.itemName !== undefined && (Item.itemName.itemName?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase())) ||
     row.items.some((Item) => Item.itemDescription !== undefined && (Item.itemDescription?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase())) ||
-    row.items.some((Item) => Item.newDescription !== undefined && (Item.newDescription?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase())) ||
+    row.items.some((Item) => Boolean(Item.newDescription && String(Item.newDescription).trim() !== '') && (Item.newDescription?.toString() || "").toLowerCase().includes(debouncedSearch.toLowerCase())) ||
     dayjs(row.itemPurchaseDate).format('DD/MM/YYYY').includes(debouncedSearch)
   ) : itemPurchase).sort((a,b) => new Date(b.itemPurchaseDate || b.date) - new Date(a.itemPurchaseDate || a.date))
 
@@ -663,7 +663,7 @@ function ItemInformationVIew() {
     (row.reference && row.reference.referenceName && row.reference.referenceName.toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
     row.itemsQtyArray.some((Item) => Item.itemName !== undefined && (Item.itemName.itemName?.toString() || "").toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
     row.itemsQtyArray.some((Item) => Item.itemDescription !== undefined && (Item.itemDescription?.toString() || "").toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
-    row.itemsQtyArray.some((Item) => Item.newDescription !== undefined && (Item.newDescription?.toString() || "").toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
+    row.itemsQtyArray.some((Item) => Boolean(Item.newDescription && String(Item.newDescription).trim() !== '') && (Item.newDescription?.toString() || "").toLowerCase().includes(debouncedSearch2.toLowerCase())) ||
     dayjs(row.itemOutDate).format('DD/MM/YYYY').includes(debouncedSearch2)
   ) : newItemOut).sort((a,b) => parseDate(b.itemOutDate || b.date) - parseDate(a.itemOutDate || a.date))
 
@@ -1837,10 +1837,10 @@ function ItemInformationVIew() {
                             </TableHead>
                             <TableBody>
                               {
-                                itemPurchaseView.items.filter(row => parseFloat(row.itemQty) > 0 || row.newDescription !== undefined).map((row, i) => (
+                                itemPurchaseView.items.filter(row => parseFloat(row.itemQty) > 0 || Boolean(row.newDescription && String(row.newDescription).trim() !== '')).map((row, i) => (
                                   <TableRow key={row.idRow}>
                                     {
-                                      row.newDescription !== undefined ?
+                                      Boolean(row.newDescription && String(row.newDescription).trim() !== '' && (!row.itemName || (typeof row.itemName === 'string' ? row.itemName.trim() === '' : !row.itemName._id && !row.itemName.itemName))) ?
                                         <TableCell colSpan={9} align="center" sx={{ fontWeight: 'bold' }}>{row.newDescription}</TableCell>
                                         :
                                         <>
@@ -1939,10 +1939,10 @@ function ItemInformationVIew() {
                             </TableHead>
                             <TableBody>
                               {
-                                itemPurchaseView2.itemsQtyArray.filter((row) => parseFloat(row.newItemOut) > 0 || row.newDescription !== undefined).map((row, i) => (
+                                itemPurchaseView2.itemsQtyArray.filter((row) => parseFloat(row.newItemOut) > 0 || Boolean(row.newDescription && String(row.newDescription).trim() !== '')).map((row, i) => (
                                   <TableRow key={row.idRow}>
                                     {
-                                      row.newDescription !== undefined ?
+                                      Boolean(row.newDescription && String(row.newDescription).trim() !== '' && (!row.itemName || (typeof row.itemName === 'string' ? row.itemName.trim() === '' : !row.itemName._id && !row.itemName.itemName))) ?
                                         <TableCell colSpan={4} align="center" sx={{ fontWeight: 'bold' }}>{row.newDescription}</TableCell>
                                         :
                                         <>

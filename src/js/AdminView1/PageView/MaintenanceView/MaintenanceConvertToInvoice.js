@@ -226,7 +226,7 @@ function MaintenanceConvertToInvoice() {
         setServiceNumber(Number(res.data?.data?.serviceNumber || res.data?.serviceNumber || 0));
         setInvoiceDate(res.data.data.serviceDate);
         const maintItems = (res.data.data.items || []).map(item => {
-          if (item.newDescription !== undefined) return item;
+          if (Boolean(item.newDescription && String(item.newDescription).trim() !== '' && (!item.itemName || (typeof item.itemName === 'string' ? item.itemName.trim() === '' : !item.itemName._id && !item.itemName.itemName)))) return item;
           const rateVal = parseFloat(item.itemRate);
           const costVal = parseFloat(item.itemCost);
           const priceVal = parseFloat(item.itemPrice);
@@ -1018,7 +1018,7 @@ function MaintenanceConvertToInvoice() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1046,7 +1046,7 @@ function MaintenanceConvertToInvoice() {
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}
@@ -1218,7 +1218,7 @@ function MaintenanceConvertToInvoice() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1247,7 +1247,7 @@ function MaintenanceConvertToInvoice() {
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}

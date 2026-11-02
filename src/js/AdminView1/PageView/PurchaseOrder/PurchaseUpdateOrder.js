@@ -891,7 +891,7 @@ function PurchaseUpdateOrder() {
                                                             initialType={Item.contentType}
                                                           />
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                                                               {Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}
                                                             </Typography>
                                                             <TextField

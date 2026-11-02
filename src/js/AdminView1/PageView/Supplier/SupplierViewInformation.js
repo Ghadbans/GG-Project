@@ -619,7 +619,7 @@ function SupplierViewInformation() {
   }, {}) : null
 
   const relatedItemPurchases2 = []
-  itemPurchase.filter((Item) => isMatchingSupplier(Item)).map((Item) => (Item.items || []).filter((item) => parseFloat(item.itemQty) >= 0 || item.newDescription !== undefined).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
+  itemPurchase.filter((Item) => isMatchingSupplier(Item)).map((Item) => (Item.items || []).filter((item) => parseFloat(item.itemQty) >= 0 || Boolean(item.newDescription && String(item.newDescription).trim() !== '')).map((row) => { relatedItemPurchases2.push({ ...row, date: Item.itemPurchaseDate }) }))
 
   const newArray2 = search4 !== '' ? relatedItemPurchases2.filter((row) => {
     const dName = getItemDisplayName(row);
@@ -698,7 +698,7 @@ function SupplierViewInformation() {
                   </thead>
                   <tbody>
                     {
-                      row.items.filter(row3 => parseFloat(row3.itemQty) > 0 || row3.newDescription !== undefined).map((row3, i) => {
+                      row.items.filter(row3 => parseFloat(row3.itemQty) > 0 || Boolean(row3.newDescription && String(row3.newDescription).trim() !== '')).map((row3, i) => {
                         const dName = getItemDisplayName(row3);
                         const iId = getItemId(row3);
                         const catalogItem = (itemInformation || []).find((x) => x._id === iId || (x.itemName && x.itemName === dName));
@@ -707,7 +707,7 @@ function SupplierViewInformation() {
                           <tr key={row3.idRow || i}>
                             <td style={{ border: '1px solid #DDD' }}>{i + 1}</td>
                             {
-                              row3.newDescription !== undefined && !dName ?
+                              Boolean(row3.newDescription && String(row3.newDescription).trim() !== '' && !dName) ?
                                 <td colSpan={8} align="center" style={{ border: '1px solid #DDD', fontWeight: 'bold' }}>{row3.newDescription}</td>
                                 :
                                 <>

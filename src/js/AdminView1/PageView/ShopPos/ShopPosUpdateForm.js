@@ -807,7 +807,7 @@ function ShopPosUpdateForm() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -836,7 +836,7 @@ function ShopPosUpdateForm() {
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>
                                                             </div>
                                                             <div>
                                                               <BlackTooltip title="Clear" placement='top'>
@@ -845,7 +845,7 @@ function ShopPosUpdateForm() {
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
                                                                     <IconButton onClick={() => handleOpenItemUpdate(Item.itemName._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
@@ -988,7 +988,7 @@ function ShopPosUpdateForm() {
                                               {...provided.draggableProps}
                                             >
                                               {
-                                                Item.newDescription !== undefined ? (
+                                                (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                   <>
                                                     <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                     <td colSpan={6}><TextField
@@ -1016,7 +1016,7 @@ function ShopPosUpdateForm() {
                                                         Item.itemName.itemName ? (
                                                           (
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                              <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</Typography>
                                                               <div>
                                                                 <BlackTooltip title="Clear" placement='top'>
                                                                   <IconButton onClick={() => handleShowAutocomplete(Item.idRow)} style={{ position: 'relative', float: 'right' }}>

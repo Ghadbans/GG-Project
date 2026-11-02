@@ -705,7 +705,7 @@ function ItemReturnUpdateForm() {
                       initialType={Item.contentType}
                     />
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', flexGrow: 1 }}>
-                      <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                      <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                         {Item.itemName ? Item.itemName.itemName : ''}
                       </Typography>
                       <TextField

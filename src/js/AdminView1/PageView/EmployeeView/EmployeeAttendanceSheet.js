@@ -198,7 +198,7 @@ if (relatedDay) {
   }
 
   const newArray = useMemo(() => search2 !== '' ? employee.filter((row) =>
-    row.employeeName.toLowerCase().includes(search2.toLowerCase())
+    (row.employeeName ? String(row.employeeName).toLowerCase().includes(search2.toLowerCase()) : false)
   ) : employee, [employee, search2])
 
   const totalCounts = useMemo(() => {

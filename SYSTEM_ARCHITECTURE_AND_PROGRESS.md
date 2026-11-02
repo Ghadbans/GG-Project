@@ -3260,3 +3260,51 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Windows installer `Global Gate Setup 3.6.7.exe` generated in `dist/` and mirrored to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.7.exe`.
    - Android APK compiled via Gradle `assembleDebug` and mirrored to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.7.apk`.
    - Committed all changes and pushed to GitHub `origin main`.
+
+### Version 3.6.8 (November 02, 2026) - Comprehensive Deep System Audit, Universal Section-Divider Invariant Fortification, & Null-Pointer Crash Hazard Elimination
+1. **User Request & Objective**:
+   - The user requested an exhaustive deep audit and test suite run across every module and sub-module in the Global Gate system to verify structural integrity, detect any latent bugs, and ensure 100% crash-free stability across all platforms:
+     *"Im testing it ... i want you to make test for the version Version: 3.6.7 test every module and sub-module make a full deep test and check if there anything need to be fixed or if there is any bug in the system .."*
+
+2. **Automated Deep Audit Engine Execution (`scripts/deep_system_audit.js`)**:
+   - Programmatically audited all 238 frontend files and 88 backend files (326 source files total).
+   - Validated:
+     1. Full AST syntax and parsing (0 syntax errors across all 326 source files).
+     2. Undeclared references and runtime crash risks (`isDesktopApp`, mismatched event handlers, empty math operations).
+     3. DataGrid server pagination & filter compliance (`filterMode="server"` & `paginationMode="server"`).
+     4. Section divider and custom item preservation invariants (`newDescription !== undefined`).
+     5. Real-time caret/cursor position preservation in `SmartTextInput`.
+     6. Backend Express route collisions and duplicate shadowing in `server/routes/Routes.js`.
+     7. Multi-platform version consistency (`package.json`, `server/package.json`, `server/index.js`, `server/routes/downloadRoutes.js`).
+     8. Null-property string/array invocations in client-side `.filter()` methods.
+
+3. **System-Wide Vulnerabilities Resolved & Fortified**:
+   - **Universal Section Divider Invariant Fortification across 24+ Modules**:
+     - *Problem*: In legacy code, document line-item tables checked `if (Item.newDescription !== undefined ? ... : ...)`. If an item object possessed an empty string `newDescription: ""`, JavaScript evaluated `"" !== undefined` as `true`. This incorrectly classified regular items as empty section dividers, spanning the table and hiding descriptions, prices, brands, and quantities across Invoices, Estimates, POS, Job Cards, Maintenance Orders, Stock In/Out/Returns, and Reports.
+     - *Fix*: Replaced all occurrences across 24+ files with the strict invariant check:
+       `Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ?`
+     - *Fortified Modules*:
+       - Estimates: `EstimateInvoiceForm.js`, `EstimateFormClone.js`, `EstimateConvertToMaintenance.js`, `EstimateViewConvertToInvoice.js`, `MakePurchaseConvertToProject.js`, `EstimateViewAdminAll.js`, `EstimateInvoiceFormUpdate.js`
+       - Invoices: `InvoiceForm.js`, `InvoiceFormClone.js`, `InvoiceFormUpdate.js`, `InvoiceViewAdminAll.js`, `MakePurchase.js`
+       - Maintenance & Job Cards: `MaintenanceFormView.js`, `MaintenanceUpdateView.js`, `MaintenanceViewInformation.js`, `MaintenanceFormClone.js`, `MaintenanceConvertToInvoice.js`, `MaintenanceOrderUpdate.js`, `MaintenanceOrderViewInformation.js`
+       - POS & Shop Sales: `ShopPosForm.js`, `ShopPosUpdateForm.js`
+       - Inventory Movements: `ItemOutViewForm.js`, `ItemOutViewUpdate.js`, `ItemReturnUpdateForm.js`, `ItemReturnViewForm.js`
+       - Master Catalogs & Project Management: `ItemInformationVIew.js`, `ProjectViewInformation.js`, `SupplierViewInformation.js`
+       - Analytical Reports: `InvoiceReportInfo.js`, `MaintenanceReportInfo.js`, `PosReportInvoice.js`, `ProjectReportInfo.js`
+   - **Null-Pointer White-Screen Crash Elimination in Report Filter Chains**:
+     - `InventoryMovementReport.js` (L68): Protected `item.name.toLowerCase()` with safe ternary `item.name ? String(item.name).toLowerCase().includes(...) : false`.
+     - `ItemReportInfo.js` (L141-147): Protected `itemName`, `itemStore`, `itemBrand`, `itemDescription`, and `itemManufacturer` against null dereferencing.
+     - `EmployeeAttendanceSheet.js` (L201): Added null-safe guard for `employeeName`.
+   - **Null-Safe `Item.itemName?._id` Dereferencing**:
+     - Fortified `EstimateViewAdminAll.js`, `InvoiceViewAdminAll.js`, and `PurchaseOrderInfoView.js` with optional chaining to prevent unhandled `TypeError: Cannot read properties of undefined (reading '_id')`.
+   - **Case-Insensitive Custom "Empty" Item Matching**:
+     - Standardized checks for custom empty box line items using `String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty'`.
+
+4. **Multi-Platform Production Builds & Releases**:
+   - AST validation verified with 0 errors (`npm run prebuild`).
+   - Test engine verified with 19/19 tests passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Generated official Windows installer: `dist/Global Gate Setup 3.6.8.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.8.exe`.
+   - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.8.apk`.
+   - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.

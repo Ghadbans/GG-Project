@@ -1376,7 +1376,7 @@ function InvoiceForm() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1411,7 +1411,7 @@ function InvoiceForm() {
                                                                  initialType={Item.contentType}
                                                                />
                                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                                 <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                 <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                                                                    {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
                                                                  </Typography>
                                                                  <TextField
@@ -1597,7 +1597,7 @@ function InvoiceForm() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1632,7 +1632,7 @@ function InvoiceForm() {
                                                                  initialType={Item.contentType}
                                                                />
                                                                <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                                 <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                 <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                                                                    {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
                                                                  </Typography>
                                                                  <TextField

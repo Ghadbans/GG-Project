@@ -951,7 +951,7 @@ function ShopPosForm() {
                                                   {...provided.draggableProps}
                                                 >
                                                   {
-                                                    Item.newDescription !== undefined ? (
+                                                    (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                       <>
                                                         <td {...provided.dragHandleProps} style={{ textAlign: 'center', cursor: 'grab', fontSize: '15px', fontWeight: 'bold' }}>{i + 1}</td>
                                                         <td colSpan={6}><TextField
@@ -1132,7 +1132,7 @@ function ShopPosForm() {
                                                     {...provided.draggableProps}
                                                   >
                                                     {
-                                                      Item.newDescription !== undefined ? (
+                                                      (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                         <>
                                                           <td {...provided.dragHandleProps} style={{ textAlign: 'center', cursor: 'grab', fontSize: '15px', fontWeight: 'bold' }}>{i + 1}</td>
                                                           <td colSpan={5}><TextField

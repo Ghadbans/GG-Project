@@ -65,7 +65,7 @@ function InventoryMovementReport({ onInventoryIn, onInventoryOut }) {
         }
 
         return Object.values(movement)
-            .filter(item => item.name.toLowerCase().includes(searchTerm.toLowerCase()))
+            .filter(item => (item.name ? String(item.name).toLowerCase().includes(searchTerm.toLowerCase()) : false))
             .map(item => ({ ...item, balance: item.in - item.out }))
             .sort((a, b) => b.in + b.out - (a.in + a.out));
     }, [onInventoryIn, onInventoryOut, dateRange, searchTerm]);

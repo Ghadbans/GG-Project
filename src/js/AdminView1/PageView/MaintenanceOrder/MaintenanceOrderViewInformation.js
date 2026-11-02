@@ -1494,8 +1494,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                   return (
                                                     <tr key={Item.idRow}>
                                                       {
-                                                        Item.newDescription !== undefined ?
-                                                          (
+                                                        (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                             <>
                                                               <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={4}>{Item.newDescription}</td>
                                                             </>
@@ -1503,7 +1502,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                           :
                                                           (
                                                             <>
-                                                              <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                              <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                               <td style={{ border: '1px solid black' }}>{Item.itemDescription}</td>
                                                               <td style={{ border: '1px solid black' }}>{relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''}</td>
                                                               <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
@@ -1739,8 +1738,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                 return (
                                                   <tr key={Item.idRow}>
                                                     {
-                                                      Item.newDescription !== undefined ?
-                                                        (
+                                                      (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                           <>
                                                             <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={4}>{Item.newDescription}</td>
                                                           </>
@@ -1748,7 +1746,7 @@ const Row2 = ({ totalAmountPlaning, totalAmount2 }) => {
                                                         :
                                                         (
                                                           <>
-                                                            <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
+                                                            <td style={{ border: '1px solid black' }}> <span hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                             <td style={{ border: '1px solid black', width: '200px' }}>{Item.itemDescription}</td>
                                                             <td style={{ border: '1px solid black' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
                                                             <td style={{ border: '1px solid black' }}> <span data-prefix>$ </span>{Item.itemRate}</td>

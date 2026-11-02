@@ -258,8 +258,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                         return (
                           <tr key={Item.idRow}>
                             {
-                              Item.newDescription !== undefined ?
-                                (
+                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                   <>
                                     <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
                                   </>
@@ -267,7 +266,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
                                     <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>
@@ -345,8 +344,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                         return (
                           <tr key={Item.idRow}>
                             {
-                              Item.newDescription !== undefined ?
-                                (
+                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                   <>
                                     <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
                                   </>
@@ -354,7 +352,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
                                     <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemOut} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemCost}</td>
@@ -436,8 +434,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                         return (
                           <tr key={Item.idRow}>
                             {
-                              Item.newDescription !== undefined ?
-                                (
+                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                   <>
                                     <td style={{ textAlign: 'center', border: '1px solid #DDD' }} colSpan={5}>{Item.newDescription}</td>
                                   </>
@@ -445,7 +442,7 @@ function InvoiceReportInfo({ onMonth, onInvoice }) {
                                 :
                                 (
                                   <>
-                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                    <td style={{ border: '1px solid #DDD' }}> <span hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
                                     <td style={{ border: '1px solid #DDD', width: '200px' }}>{Item.itemDescription}</td>
                                     <td style={{ border: '1px solid #DDD' }}>{Item.itemQty} </td>
                                     <td style={{ border: '1px solid #DDD' }}> <span data-prefix>$ </span>{Item.itemRate}</td>

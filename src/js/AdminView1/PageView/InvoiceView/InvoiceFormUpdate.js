@@ -1487,7 +1487,7 @@ function InvoiceFormUpdate() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1511,7 +1511,7 @@ function InvoiceFormUpdate() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -1521,7 +1521,7 @@ function InvoiceFormUpdate() {
                                                                 initialType={Item.contentType}
                                                               />
                                                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                                <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                                                                   {Item.itemName?.itemName?.toUpperCase() || ''}
                                                                 </Typography>
                                                                 <TextField
@@ -1542,7 +1542,7 @@ function InvoiceFormUpdate() {
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
                                                                     <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />
@@ -1707,7 +1707,7 @@ function InvoiceFormUpdate() {
                                             {...provided.draggableProps}
                                           >
                                             {
-                                              Item.newDescription !== undefined ? (
+                                              (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                                 <>
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td colSpan={6}><TextField
@@ -1732,7 +1732,7 @@ function InvoiceFormUpdate() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName?._id || Item.itemName?.itemName === 'empty' ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -1742,7 +1742,7 @@ function InvoiceFormUpdate() {
                                                                 initialType={Item.contentType}
                                                               />
                                                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                                <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                                                                   {Item.itemName?.itemName?.toUpperCase() || ''}
                                                                 </Typography>
                                                                 <TextField
@@ -1763,7 +1763,7 @@ function InvoiceFormUpdate() {
                                                                 </IconButton>
                                                               </BlackTooltip>
                                                               {
-                                                                Item.itemName._id && (
+                                                                Item.itemName?._id && (
                                                                   <BlackTooltip title="Edit" placement='bottom'>
                                                                     <IconButton onClick={() => handleOpenItemUpdate(Item.itemName?._id)} style={{ position: 'relative', float: 'right' }}>
                                                                       <Edit style={{ color: '#202a5a' }} />

@@ -701,13 +701,12 @@ function ItemOutViewForm() {
     return (
       <tr key={Item.idRow}>
         {
-          Item.newDescription !== undefined ?
-            (
+          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
               <>
                 <td ><DragIndicatorRounded /></td>
                 <td colSpan={4}><TextField
                   name='newDescription' id='newDescription'
-                  value={Item.newDescription !== undefined ? Item.newDescription : null}
+                  value={(Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? Item.newDescription : null}
                   size="small"
                   disabled
                   sx={{ width: '100%', backgroundColor: 'white', fontSize: 12 }}
@@ -724,7 +723,7 @@ function ItemOutViewForm() {
                       initialType={Item.contentType}
                     />
                     <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px', flexGrow: 1 }}>
-                      <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
+                      <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
                         {Item.itemName ? Item.itemName.itemName : ''}
                       </Typography>
                       <TextField

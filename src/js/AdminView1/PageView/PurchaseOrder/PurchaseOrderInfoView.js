@@ -704,7 +704,7 @@ function PurchaseOrderInfoView() {
                                                   </thead>
                                                   <tbody>
                                                     {newArray2?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                       return (
                                                         <tr key={Item.idRow}>
                                                           {
@@ -831,7 +831,7 @@ function PurchaseOrderInfoView() {
                                                   </thead>
                                                   <tbody>
                                                     {newArray2?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                       return (
                                                         <tr key={Item.idRow}>
                                                           {
@@ -845,7 +845,7 @@ function PurchaseOrderInfoView() {
                                                               :
                                                               <>
                                                                 <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}><span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? Item.itemName.itemName === 'empty' : Item.itemName === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
+                                                                <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}><span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                                   <br />
                                                                   <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''}</span></td>
                                                                 <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>
@@ -962,7 +962,7 @@ function PurchaseOrderInfoView() {
                                         </thead>
                                         <tbody>
                                           {newArray2?.map((Item, i) => {
-                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                             return (
                                               <tr key={Item.idRow}>
                                                 {
@@ -976,7 +976,7 @@ function PurchaseOrderInfoView() {
                                                     :
                                                     <>
                                                       <td style={{ textAlign: 'center', width: '30px' }}>{i + 1}</td>
-                                                      <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>                <span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? Item.itemName.itemName === 'empty' : Item.itemName === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
+                                                      <td style={{ width: '200px', borderLeft: '1px solid #DDD' }}>                <span hidden={Item.itemName ? (typeof Item.itemName === 'object' ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty') : false}>{Item.itemName ? (typeof Item.itemName === 'object' ? (Item.itemName.itemName ? Item.itemName.itemName.toUpperCase() : '') : String(Item.itemName).toUpperCase()) : ''}</span>
                                                         <br />
                                                         <span>{Item.itemDescription ? Item.itemDescription.toUpperCase() : ''} ( {relatedUnit !== undefined ? relatedUnit.itemBrand.toUpperCase() : ''} )</span></td>
                                                       <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</td>

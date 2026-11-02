@@ -1007,14 +1007,14 @@ function EstimateViewAdminAll() {
                                                   </thead>
                                                   <tbody>
                                                     {row.items?.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                       return (
                                                         <tr key={Item.idRow} >
                                                           {
                                                             Item.itemDescription !== 'Labor Fees' ? (
                                                               <>
                                                                 {
-                                                                  Item.newDescription !== undefined ?
+                                                                  (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                                     (
                                                                       <>
                                                                         <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
@@ -1025,7 +1025,7 @@ function EstimateViewAdminAll() {
                                                                     (
                                                                       <>
                                                                         <td style={{ textAlign: 'center', width: '30px' }}><span>{i + 1}</span></td>
-                                                                        <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                                                        <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                                         <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}><span>{Item.itemDescription.toUpperCase()}</span></td>
                                                                         <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                                         <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>
@@ -1291,14 +1291,14 @@ function EstimateViewAdminAll() {
                                         </thead>
                                         <tbody>
                                           {row.items?.map((Item, i) => {
-                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                            const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                             return (
                                               <tr key={Item.idRow} >
                                                 {
                                                   Item.itemDescription !== 'Labor Fees' ? (
                                                     <>
                                                       {
-                                                        Item.newDescription !== undefined ?
+                                                        (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                           (
                                                             <>
                                                               <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
@@ -1309,7 +1309,7 @@ function EstimateViewAdminAll() {
                                                           (
                                                             <>
                                                               <td style={{ textAlign: 'center', width: '30px' }}><span>{i + 1}</span></td>
-                                                              <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}>{Item.itemName.itemName.toUpperCase()}</span></td>
+                                                              <td style={{ width: '200px', borderLeft: '1px solid #DDD' }} ><span hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty')}>{Item.itemName?.itemName?.toUpperCase() || ''}</span></td>
                                                               <td style={{ textAlign: 'left', width: '250px', borderLeft: '1px solid #DDD' }}><span>{Item.itemDescription.toUpperCase()}</span></td>
                                                               <td style={{ textAlign: 'right', width: '30px', borderLeft: '1px solid #DDD' }}><span>{Item.itemQty} {relatedUnit?.unit ? String(relatedUnit.unit).toUpperCase() : ''}</span></td>
                                                               <td style={{ textAlign: 'right', width: '80px', borderLeft: '1px solid #DDD' }}><span data-prefix>$</span><span>{Item.itemRate}</span></td>

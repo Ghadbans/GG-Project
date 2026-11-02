@@ -673,7 +673,7 @@ function ItemReturnViewForm() {
   const tableRows = newArray2.map((Item, i) => {
     return (<tr key={Item.idRow}>
       {
-        Item.newDescription !== undefined ?
+        (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
           <>
             <td ><DragIndicatorRounded /></td>
             <td colSpan={3}><TextField

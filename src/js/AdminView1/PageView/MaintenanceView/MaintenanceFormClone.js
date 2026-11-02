@@ -954,7 +954,7 @@ function MaintenanceFormClone() {
                                         {...provided.draggableProps}
                                       >
                                         {
-                                          Item.newDescription !== undefined ? (
+                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                             <>
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td colSpan={5}><TextField
@@ -983,7 +983,7 @@ function MaintenanceFormClone() {
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                         <div >
-                                                          <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                                                          <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
                                                           <TextField
                                                             name='itemDescription' id='itemDescription'
                                                             value={Item.itemDescription}

@@ -381,7 +381,7 @@ function InvoiceViewAdminAll() {
   const relatedPurchase = invoice.filter((row) => row._id === id).map((row) => ({
     ...row,
     items: row.items.map((Item) => {
-      const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName._id) : null
+      const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName?._id) : null
       return ({
         ...Item,
         itemOut: newAllOutReturnInfo ? newAllOutReturnInfo.total : 0
@@ -1711,14 +1711,14 @@ function InvoiceViewAdminAll() {
                                                       </thead>
                                                       <tbody>
                                                         {row.items?.map((Item, i) => {
-                                                          const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                          const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                           return (
                                                             <tr key={Item.idRow} >
                                                               {
                                                                 Item.itemDescription !== 'Labor Fees' ? (
                                                                   <>
                                                                     {
-                                                                      Item.newDescription !== undefined ?
+                                                                      (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                                         (
                                                                           <>
                                                                             <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
@@ -1949,14 +1949,14 @@ function InvoiceViewAdminAll() {
                                             </thead>
                                             <tbody>
                                               {row.items?.map((Item, i) => {
-                                                const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                 return (
                                                   <tr key={Item.idRow} >
                                                     {
                                                       Item.itemDescription !== 'Labor Fees' ? (
                                                         <>
                                                           {
-                                                            Item.newDescription !== undefined ?
+                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                               (
                                                                 <>
                                                                   <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
@@ -2271,11 +2271,11 @@ function InvoiceViewAdminAll() {
                                                 <tbody>
                                                   {
                                                     row.items.map((Item, i) => {
-                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                      const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                       return (
                                                         <tr key={Item.idRow}>
                                                           {
-                                                            Item.newDescription !== undefined ?
+                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                               (
                                                                 <>
                                                                   <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
@@ -2334,11 +2334,11 @@ function InvoiceViewAdminAll() {
                                               <tbody>
                                                 {
                                                   row1.items.map((Item, i) => {
-                                                    const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                    const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                     return (
                                                       <tr key={Item.idRow}>
                                                         {
-                                                          Item.newDescription !== undefined ?
+                                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                             (
                                                               <>
                                                                 <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
@@ -2400,11 +2400,11 @@ function InvoiceViewAdminAll() {
                                               <tbody>
                                                 {
                                                   row2.items.map((Item, i) => {
-                                                    const relatedUnit = item.find((Item1) => Item1._id === Item.itemName._id)
+                                                    const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                     return (
                                                       <tr key={Item.idRow}>
                                                         {
-                                                          Item.newDescription !== undefined ?
+                                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                             (
                                                               <>
                                                                 <td style={{ textAlign: 'center', border: '1px solid black' }} colSpan={5}>{Item.newDescription}</td>
@@ -2485,7 +2485,7 @@ function InvoiceViewAdminAll() {
                   return(
                 <tr key={Item.idRow}>
                     {
-           Item.newDescription !== undefined?
+           (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
            (
             <>
           <td style={{textAlign:'center', border:'1px solid #DDD'}}><span>{i+1}</span></td>

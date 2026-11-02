@@ -1330,7 +1330,7 @@ The GLOBAL GATE Team`;
                                       <Draggable key={Item.idRow} draggableId={`droppable${Item.idRow}`} index={i}>
                                         {(provided, snapshot) => (
                                           <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                            {Item.newDescription !== undefined ? (
+                                            {(Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                               <>
                                                 <td {...provided.dragHandleProps}>
                                                   <DragIndicatorRounded />
@@ -1360,7 +1360,7 @@ The GLOBAL GATE Team`;
                                                   <DragIndicatorRounded />
                                                 </td>
                                                 <td style={{ height: '100px' }}>
-                                                  {Item.itemName._id || Item.itemName.itemName === 'empty' ? (
+                                                  {(Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     <div
                                                       style={{
                                                         display: 'flex',
@@ -1376,7 +1376,7 @@ The GLOBAL GATE Team`;
                                                         />
                                                         <div>
                                                           <Typography
-                                                            hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}
+                                                            hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}
                                                             sx={{ fontSize: '23px' }}
                                                           >
                                                             {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
@@ -1402,7 +1402,7 @@ The GLOBAL GATE Team`;
                                                             <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                           </IconButton>
                                                         </BlackTooltip>
-                                                        {Item.itemName._id && (
+                                                        {Item.itemName?._id && (
                                                           <BlackTooltip title="Edit" placement="bottom">
                                                             <IconButton
                                                               onClick={() => handleOpenItemUpdate(Item.itemName._id)}
@@ -1559,7 +1559,7 @@ The GLOBAL GATE Team`;
                                       <Draggable key={Item.idRow} draggableId={`droppable${Item.idRow}`} index={i}>
                                         {(provided, snapshot) => (
                                           <tr ref={provided.innerRef} {...provided.draggableProps}>
-                                            {Item.newDescription !== undefined ? (
+                                            {(Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                               <>
                                                 <td {...provided.dragHandleProps}>
                                                   <DragIndicatorRounded />
@@ -1602,7 +1602,7 @@ The GLOBAL GATE Team`;
                                                   <DragIndicatorRounded />
                                                 </td>
                                                 <td style={{ height: '100px' }}>
-                                                  {Item.itemName._id || Item.itemName.itemName === 'empty' ? (
+                                                  {(Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     <div
                                                       style={{
                                                         display: 'flex',
@@ -1617,7 +1617,7 @@ The GLOBAL GATE Team`;
                                                       />
                                                       <div>
                                                         <Typography
-                                                          hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''}
+                                                          hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}
                                                           sx={{ fontSize: '23px' }}
                                                         >
                                                           {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
@@ -1642,7 +1642,7 @@ The GLOBAL GATE Team`;
                                                             <RemoveCircleOutline style={{ color: '#202a5a' }} />
                                                           </IconButton>
                                                         </BlackTooltip>
-                                                        {Item.itemName._id && (
+                                                        {Item.itemName?._id && (
                                                           <BlackTooltip title="Edit" placement="bottom">
                                                             <IconButton
                                                               onClick={() => handleOpenItemUpdate(Item.itemName._id)}

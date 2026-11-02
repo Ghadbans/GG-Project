@@ -139,11 +139,11 @@ function ItemReportInfo({ onMonth, onItem }) {
     setInfoOptions(e.target.value);
   }
   const newArray = search2 !== '' ? FilterItem.filter((row) =>
-    row.itemName.toLowerCase().includes(search2.toLowerCase()) ||
-    row.itemStore.toLowerCase().includes(search2.toLowerCase()) ||
-    row.itemBrand.toLowerCase().includes(search2.toLowerCase()) ||
-    row.itemDescription.toLowerCase().includes(search2.toLowerCase()) ||
-    row.itemManufacturer.toLowerCase().includes(search2.toLowerCase())
+    (row.itemName ? String(row.itemName).toLowerCase().includes(search2.toLowerCase()) : false) ||
+    (row.itemStore ? String(row.itemStore).toLowerCase().includes(search2.toLowerCase()) : false) ||
+    (row.itemBrand ? String(row.itemBrand).toLowerCase().includes(search2.toLowerCase()) : false) ||
+    (row.itemDescription ? String(row.itemDescription).toLowerCase().includes(search2.toLowerCase()) : false) ||
+    (row.itemManufacturer ? String(row.itemManufacturer).toLowerCase().includes(search2.toLowerCase()) : false)
   ) : FilterItem
 
   const componentRef = useRef();

@@ -832,7 +832,7 @@ const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescr
         <td ><DragIndicatorRounded /></td>
         <td  >
           {
-            Item.newDescription !== undefined ? (
+            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
               <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                 <TextField
                   name='newDescription'
@@ -970,7 +970,7 @@ const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescr
         <td ><DragIndicatorRounded /></td>
         <td  >
           {
-            Item.newDescription !== undefined ? (
+            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ? (
               <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                 <TextField
                   name='newDescription'

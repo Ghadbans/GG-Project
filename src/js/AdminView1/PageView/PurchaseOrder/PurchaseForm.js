@@ -1200,7 +1200,7 @@ function PurchaseForm() {
                                                             initialType={Item.contentType}
                                                           />
                                                           <div >
-                                                            <Typography hidden={Item.itemName ? Item.itemName.itemName === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'
                                                               value={Item.itemDescription}
