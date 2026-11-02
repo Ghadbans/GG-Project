@@ -3226,3 +3226,37 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Windows installer `Global Gate Setup 3.6.6.exe` (95.57 MB) generated in `dist/` and mirrored to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.6.exe`.
    - Android APK compiled via Gradle `assembleDebug` (18.52 MB) and mirrored to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.6.apk`.
    - Committed all changes and pushed to GitHub `origin main`.
+
+### Version 3.6.7 (November 02, 2026) - Real-Time Cursor & Caret Position Preservation in Uppercase Controlled Text Inputs
+1. **Reported Issue & User Feedback**:
+   - When editing text in form fields (such as `Expense Description` in `DailyExpenseForm.js`), users typing or editing text in the beginning or middle of an existing sentence (e.g. inserting letters or correcting words) observed that after typing a single character, the cursor immediately jumped to the very end of the input field.
+   - User report:
+     *"working fine testing it .. but now while im typing and finished typing the sentence if i chose to write back in the begening of the sentence or in the midile of the sentence to a is not accepting typing 1 letter then it is moving me to the end of the sentence .. this wasnt before ! why this is happening now !"*
+
+2. **Root Cause Analysis**:
+   - **DOM Value Re-assignment during Uppercase Normalization**: In `SmartTextInput.js`, inputs enforce uppercase text (`mode === 'upper'`) in `notifyChange` on every keystroke (`finalVal = newVal.toUpperCase()`).
+   - When a user without active Caps Lock types a lowercase character (e.g. `'a'`) in the middle of a sentence, the DOM element temporarily receives the lowercase `'a'`.
+   - React processes `onChange`, updates the parent state to the uppercase string (`'A'`), and compares the new prop `value` with the DOM node's current `.value`.
+   - Because `'a'` !== `'A'`, React imperatively re-assigns `inputNode.value = props.value`.
+   - In accordance with standard browser HTML specifications, whenever an `<input>` or `<textarea>` element's `.value` property is programmatically overwritten in JavaScript, the browser resets the caret selection range (`selectionStart` and `selectionEnd`) to the end of the string (`value.length`).
+   - Consequently, the user's cursor jumped from the middle of the sentence to the very end after a single keystroke.
+
+3. **Solutions & Implementations**:
+   - **`src/js/component/SmartTextInput.js`**:
+     - Added `useRef` for `inputRef` (attached to the underlying HTML `<input>` or `<textarea>`) and `selectionRef` (storing the exact `{ start, end }` coordinates of the caret).
+     - Added `useLayoutEffect`: Runs synchronously during React's commit phase immediately after DOM mutations and BEFORE the browser paints the frame. Restores `inputRef.current.setSelectionRange(start, end)` instantly, preventing the caret from jumping to the end.
+     - Added fallback `requestAnimationFrame`: Schedules an additional selection restoration call right after paint to guarantee cursor stability across batched or asynchronous state updates.
+     - Merged `params.inputProps.ref` and external `rest.inputRef` so that both standalone `TextField`, multiline `textarea`, and `Autocomplete freeSolo` inputs preserve selection position seamlessly.
+   - **`PurchaseFormUpdate.js` & `PurchasesFormView.js`**:
+     - Added caret selection preservation in table item description `handleChange` handlers to safeguard against cursor jumping when editing custom line items.
+   - **Version Bumping & Infrastructure Alignment**:
+     - Bumped version to **`3.6.7`** in `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+4. **Multi-Platform Production Builds & Verification**:
+   - Pre-build AST check passed with 0 errors across all 238 source files (`npm run prebuild`).
+   - Test engine verified with 19/19 test cases passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Windows installer `Global Gate Setup 3.6.7.exe` generated in `dist/` and mirrored to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.7.exe`.
+   - Android APK compiled via Gradle `assembleDebug` and mirrored to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.7.apk`.
+   - Committed all changes and pushed to GitHub `origin main`.

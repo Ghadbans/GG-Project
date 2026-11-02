@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useLayoutEffect } from 'react';
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import LanguageFixerButton from './LanguageFixerButton';
 import { COMMON_PRESETS, polishText, hasTypo, getSuggestions } from '../utils/textAssistUtils';
@@ -11,6 +11,7 @@ import { COMMON_PRESETS, polishText, hasTypo, getSuggestions } from '../utils/te
  * 3. Smart suggestion dropdown menu (by clicking ✨ or right-clicking on mistaken/selected words)
  * 4. Preserves native browser context menu (Undo, Redo, Cut, Copy, Paste) on clean text & empty spaces
  * 5. Real-time typo detection badge & visual warning
+ * 6. Preserves cursor position when uppercasing / editing in middle or beginning of text
  */
 function SmartTextInput({
   label,
@@ -35,12 +36,32 @@ function SmartTextInput({
   ...rest
 }) {
   const [contextMenu, setContextMenu] = useState(null);
+  const inputRef = useRef(null);
+  const selectionRef = useRef(null);
 
   const dropdownOptions = Array.isArray(options) && options.length > 0
     ? options
     : (presetKey && COMMON_PRESETS[presetKey] ? COMMON_PRESETS[presetKey] : null);
 
   const isTypo = hasTypo(value, mode);
+
+  const restoreSelection = (start, end) => {
+    if (inputRef.current && typeof inputRef.current.setSelectionRange === 'function') {
+      try {
+        inputRef.current.setSelectionRange(start, end);
+      } catch (err) {
+        // ignore
+      }
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (selectionRef.current) {
+      const { start, end } = selectionRef.current;
+      restoreSelection(start, end);
+      selectionRef.current = null;
+    }
+  });
 
   const handleContextMenu = (e) => {
     if (!value || typeof value !== 'string' || !value.trim()) {
@@ -111,11 +132,41 @@ function SmartTextInput({
     }
   };
 
+  const handleInputChange = (e) => {
+    const target = e && e.target ? e.target : null;
+    const val = target ? target.value : e;
+    if (target && typeof target.selectionStart === 'number') {
+      const start = target.selectionStart;
+      const end = target.selectionEnd;
+      selectionRef.current = { start, end };
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          restoreSelection(start, end);
+        });
+      }
+    }
+    notifyChange(val);
+  };
+
   const handleBlur = (e) => {
     // Note: Do NOT automatically mutate or change user text on blur.
     // User text is only polished when explicitly clicking the Sparkle ✨ button or right-clicking.
     if (typeof onBlur === 'function') {
       onBlur(e);
+    }
+  };
+
+  const setMergedRef = (node, extraRef) => {
+    inputRef.current = node;
+    if (typeof extraRef === 'function') {
+      extraRef(node);
+    } else if (extraRef && typeof extraRef === 'object') {
+      extraRef.current = node;
+    }
+    if (typeof rest.inputRef === 'function') {
+      rest.inputRef(node);
+    } else if (rest.inputRef && typeof rest.inputRef === 'object') {
+      rest.inputRef.current = node;
     }
   };
 
@@ -130,6 +181,16 @@ function SmartTextInput({
         options={dropdownOptions}
         value={value || ''}
         onInputChange={(event, newInputValue) => {
+          if (event && event.target && typeof event.target.selectionStart === 'number') {
+            const start = event.target.selectionStart;
+            const end = event.target.selectionEnd;
+            selectionRef.current = { start, end };
+            if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+              window.requestAnimationFrame(() => {
+                restoreSelection(start, end);
+              });
+            }
+          }
           notifyChange(newInputValue);
         }}
         onChange={(event, newValue) => {
@@ -139,6 +200,7 @@ function SmartTextInput({
           <TextField
             {...params}
             {...rest}
+            inputRef={(node) => setMergedRef(node, params.inputProps?.ref)}
             id={id}
             name={name}
             label={label}
@@ -193,14 +255,12 @@ function SmartTextInput({
   return (
     <TextField
       {...rest}
+      inputRef={(node) => setMergedRef(node)}
       id={id}
       name={name}
       label={label}
       value={value !== undefined && value !== null ? value : ''}
-      onChange={(e) => {
-        const val = e && e.target ? e.target.value : e;
-        notifyChange(val);
-      }}
+      onChange={handleInputChange}
       onBlur={handleBlur}
       onContextMenu={handleContextMenu}
       multiline={multiline}
