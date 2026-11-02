@@ -170,7 +170,8 @@ function PurchaseItemRow({ Item, i, relatedUnit, formatDate2, itemPurchase, item
     row1.itemsQtyArray?.some((it) => isItemMatch(it, Item))
   ) || [];
 
-  if (Item.newDescription !== undefined) {
+  const isSectionDivider = Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)));
+  if (isSectionDivider) {
     return (
       <tr key={Item.idRow || i}>
         <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>
@@ -1125,7 +1126,7 @@ function PurchasesViewAdminAll() {
                                                       return (
                                                         <tr key={Item.idRow || i}>
                                                           {
-                                                            Item.newDescription !== undefined ?
+                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                               (
                                                                 <>
                                                                   <td style={{ textAlign: 'center', border: '1px solid #DDD' }}><span>{i + 1}</span></td>

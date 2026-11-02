@@ -59,13 +59,43 @@ function uppercaseItemsList(items) {
     if (!it) return it;
     const clean = { ...it };
     if (typeof clean.itemDescription === 'string') clean.itemDescription = clean.itemDescription.toUpperCase();
-    if (typeof clean.newDescription === 'string') clean.newDescription = clean.newDescription.toUpperCase();
+    if (typeof clean.newDescription === 'string') {
+      if (clean.newDescription.trim() === '') {
+        delete clean.newDescription;
+      } else {
+        clean.newDescription = clean.newDescription.toUpperCase();
+      }
+    }
     if (clean.itemName && typeof clean.itemName === 'object' && typeof clean.itemName.itemName === 'string') {
       clean.itemName = { ...clean.itemName, itemName: clean.itemName.itemName.toUpperCase() };
     }
     return clean;
   });
 }
+
+// Auto-cleanup accidental empty newDescription strings on items
+(async () => {
+  try {
+    const emptyDocs = await purchaseSchema.find({
+      'items.newDescription': ''
+    }).limit(1000);
+    for (const doc of (emptyDocs || [])) {
+      let modified = false;
+      for (const it of (doc.items || [])) {
+        if (typeof it.newDescription === 'string' && it.newDescription.trim() === '' && it.itemName) {
+          delete it.newDescription;
+          modified = true;
+        }
+      }
+      if (modified) {
+        doc.markModified('items');
+        await doc.save();
+      }
+    }
+  } catch (err) {
+    console.warn('Auto-cleanup empty newDescription warning:', err.message);
+  }
+})();
 
 // Auto-repair legacy lowercase item descriptions in purchaseSchema & purchaseOrderSchema
 (async () => {

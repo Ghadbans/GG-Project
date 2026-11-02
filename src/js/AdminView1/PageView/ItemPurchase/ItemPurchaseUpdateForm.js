@@ -519,7 +519,7 @@ function ItemPurchaseUpdateForm() {
         return updatedItem;
       }
       item.itemDescription = (item.itemDescription || '').toUpperCase();
-      item.newDescription = (item.newDescription || '').toUpperCase();
+      if (item.newDescription && String(item.newDescription).trim() !== '') { item.newDescription = String(item.newDescription).trim().toUpperCase(); } else { delete item.newDescription; }
       return item;
     }));
   }
@@ -1251,7 +1251,7 @@ function ItemPurchaseUpdateForm() {
         itemName: (nameStr || '').toUpperCase()
       };
       item.itemDescription = (item.itemDescription || '').toUpperCase();
-      item.newDescription = (item.newDescription || '').toUpperCase();
+      if (item.newDescription && String(item.newDescription).trim() !== '') { item.newDescription = String(item.newDescription).trim().toUpperCase(); } else { delete item.newDescription; }
       return item;
     });
     const cleanedProjectName = (reason === 'Other' || !projectName || Object.keys(projectName).length === 0 || (!projectName._id && !projectName.name && !projectName.projectName))

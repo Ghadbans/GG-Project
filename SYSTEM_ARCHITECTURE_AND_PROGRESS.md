@@ -3155,3 +3155,33 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
      - Generated official Windows installer: `dist/Global Gate Setup 3.6.4.exe` (95.52 MB), copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.4.exe`.
      - Built Android APK via Gradle (`./gradlew assembleDebug`, 18.52 MB), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.4.apk`.
      - Committed and pushed all changes to GitHub `main` for Railway backend deployment.
+
+
+### Version 3.6.5 (November 02, 2026) - Purchase Request/Order Data Display & Persistence Safeguards & Construction Vocabulary Expansion
+1. **Purchase Items Disappearance Incident Root Cause Analysis**:
+   - **Reported Incident**: In Version 3.6.3, while editing `PUR-000167 | KREAM | PHASE METAL / ALUMINUM FABWORK`, the user observed that after editing, all items in the purchase view table appeared blank (row numbers 1 to 22 showed, but item descriptions, brands, quantities, and prices appeared omitted).
+   - **Root Cause Identified**: During earlier automatic uppercase formatting additions, `newDescription: (it.newDescription || '').toUpperCase()` was added to the item mapper upon submit. For regular items, `newDescription` was previously `undefined`. The mapper assigned `newDescription: ""` (empty string) to every item row upon save.
+   - **Visual Masking Effect**: In `PurchasesViewAdminAll.js` (lines 173 & 1128), `PurchaseOrderInfoView.js` (lines 712, 839, 970), and `PurchaseFormUpdate.js`, the table rendering logic checked `if (Item.newDescription !== undefined)`. Because in JavaScript `"" !== undefined` evaluates to `true`, every item row was mistakenly treated as a section divider spanning the table, rendering as `<td colSpan={8}>{Item.newDescription}</td>` (an empty cell).
+   - **Zero Data Loss Confirmed**: No items were ever deleted from the database. All 22 items remained intact in MongoDB with their full names, descriptions, brands, quantities, and prices. The SubTotal in the user's screenshot continued to display the full accumulated total of `$8,827.33` and `$33,382.83`.
+
+2. **Permanent Display & Data Integrity Guards Implemented**:
+   - **Strict Section Divider Condition**: In `PurchasesViewAdminAll.js`, `PurchaseOrderInfoView.js`, `PurchaseFormUpdate.js`, `PurchasesFormView.js`, and `PurchaseUpdateOrder.js`, replaced `Item.newDescription !== undefined` with:
+     `Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))`
+     This guarantees that any item with a valid item name or an empty `newDescription` will NEVER be disguised as a section divider.
+   - **Submit Normalization**: In `PurchaseFormUpdate.js`, `PurchasesFormView.js`, `PurchaseUpdateOrder.js`, `PurchaseForm.js`, `ConvertPoToIP.js`, `ItemPurchaseUpdateForm.js`, and `ItemPurchaseViewForm.js`, items are stripped of `newDescription` unless it contains non-empty text.
+   - **Backend Cleanup & Auto-Repair**: Updated `server/routes/purchaseRoutes.js` `uppercaseItemsList` to delete empty `newDescription` strings, and added a startup script to auto-scrub accidental empty `newDescription` properties on legacy purchase records.
+
+3. **Whole-Sentence Typo Detection & Construction/Renovation Vocabulary Expansion**:
+   - **Fix for RENOVATON**: Added explicit rule `\b(renovaton|renovatin|renovashun)\b` -> `RENOVATION` in `TYPO_DICTIONARY`.
+   - **Comprehensive Vocabulary Additions**: Added construction, renovation, fabrication, aluminum, metalwork, mechanics, civil engineering, electrical, HVAC, and project management terms in both English and French to `ENGLISH_FRENCH_VOCABULARY`.
+   - **Sentence Verification**: Verified `RENOVATON TST THE MACHIN` detects all 3 typos across the sentence (`RENOVATON` -> `RENOVATION`, `TST` -> `TEST`, `MACHIN` -> `MACHINE`).
+   - **Context Menu Alignment**: Clean words yield native browser editing menu; misspelled words yield spelling suggestions.
+
+4. **Verification & Multi-Platform Release**:
+   - **AST Validation**: 238 source files passed with 0 errors via `npm run prebuild`.
+   - **Unit Tests**: `scripts/test_engine.js` 19/19 test cases passed.
+   - **Web Bundle**: Built to `dist_web/` and `build/`.
+   - **Electron Bundle**: Built to `dist/`.
+   - **Windows Installer**: `dist/Global Gate Setup 3.6.5.exe` (95.57 MB) generated and mirrored to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.5.exe`.
+   - **Android APK**: Compiled via Gradle `assembleDebug` (17.66 MB) and mirrored to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.5.apk`.
+   - **Git Push**: Pushed to `origin main` for automatic Railway deployment.

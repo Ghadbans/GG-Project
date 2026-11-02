@@ -260,7 +260,7 @@ function ConvertPoToIP() {
           idRow: row.idRow,
           itemName: row.itemName,
           itemDescription: (row.itemDescription || '').toUpperCase(),
-          newDescription: (row.newDescription || '').toUpperCase(),
+          ...(row.newDescription && String(row.newDescription).trim() !== '' ? { newDescription: String(row.newDescription).trim().toUpperCase() } : {}),
           orderedQty: row.itemQty,
           itemQty: row.qtyBuy,
           itemRate: row.itemRate,
@@ -454,7 +454,7 @@ function ConvertPoToIP() {
 const arrayItemRelated = items.filter((row) => row.itemQty !== 0 || row.newDescription !== undefined).map(row => ({
   ...row,
   itemDescription: (row.itemDescription || '').toUpperCase(),
-  newDescription: (row.newDescription || '').toUpperCase()
+  ...(row.newDescription && String(row.newDescription).trim() !== '' ? { newDescription: String(row.newDescription).trim().toUpperCase() } : {})
 }))
 
   const handleUpdatePurchase = async () => {

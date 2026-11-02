@@ -280,7 +280,8 @@ function PurchaseFormUpdate() {
       const matchedPurchase = (resPrec.data?.data || []).filter(isMatchingProjectOrPurchase);
 
       const computedItems = (currentPurchase.items || []).map((Item) => {
-        if (Item.newDescription !== undefined) return Item;
+        const isSectionDivider = Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName._id && !Item.itemName.itemName)));
+        if (isSectionDivider) return Item;
 
         const matchedOutQty = (matchedOut || []).flatMap(io => (io.itemsQtyArray || []).filter(it => isItemMatch(it, Item)))
           .reduce((sum, it) => sum + parseFloat(it.newItemOut || 0), 0);
@@ -774,7 +775,18 @@ function PurchaseFormUpdate() {
       purchaseDate,
       projectName,
       description,
-      items: (items || []).map(it => ({ ...it, itemDescription: (it.itemDescription || '').toUpperCase(), newDescription: (it.newDescription || '').toUpperCase() })),
+      items: (items || []).map(it => {
+        const itemCopy = {
+          ...it,
+          itemDescription: (it.itemDescription || '').toUpperCase()
+        };
+        if (it.newDescription && String(it.newDescription).trim() !== '') {
+          itemCopy.newDescription = String(it.newDescription).trim().toUpperCase();
+        } else {
+          delete itemCopy.newDescription;
+        }
+        return itemCopy;
+      }),
       purchaseAmount1,
       CheckTvA,
       tax,
@@ -1076,7 +1088,7 @@ function PurchaseFormUpdate() {
                                         {...provided.draggableProps}
                                       >
                                         {
-                                          Item.newDescription !== undefined ? (
+                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                             <>
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td colSpan={6}><TextField

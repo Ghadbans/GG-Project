@@ -627,7 +627,7 @@ if (itemArray.length > 0) {
 const arrayItemRelated = items.filter((row)=>row.itemQty !== 0 && row.itemQty !== '').map(row => ({
   ...row,
   itemDescription: (row.itemDescription || '').toUpperCase(),
-  newDescription: (row.newDescription || '').toUpperCase()
+  ...(row.newDescription && String(row.newDescription).trim() !== '' ? { newDescription: String(row.newDescription).trim().toUpperCase() } : {})
 }))
 
 const handleUpdatePurchase = async () => {

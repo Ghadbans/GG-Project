@@ -709,7 +709,7 @@ function PurchaseOrderInfoView() {
                                                         <tr key={Item.idRow}>
                                                           {
 
-                                                            Item.newDescription !== undefined ?
+                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                               <>
                                                                 <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
                                                                 <td colSpan={6} style={{ textAlign: 'center', border: '1px solid #DDD' }} align='center'>{Item.newDescription}</td>
@@ -836,7 +836,7 @@ function PurchaseOrderInfoView() {
                                                         <tr key={Item.idRow}>
                                                           {
 
-                                                            Item.newDescription !== undefined ?
+                                                            (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                               <>
                                                                 <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
                                                                 <td colSpan={6} style={{ textAlign: 'center', border: '1px solid #DDD' }} align='center'>{Item.newDescription}</td>
@@ -967,7 +967,7 @@ function PurchaseOrderInfoView() {
                                               <tr key={Item.idRow}>
                                                 {
 
-                                                  Item.newDescription !== undefined ?
+                                                  (Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName)))) ?
                                                     <>
                                                       <td style={{ textAlign: 'center' }}><span>{i + 1}</span></td>
                                                       <td colSpan={8} style={{ textAlign: 'center', border: '1px solid #DDD' }} align='center'>{Item.newDescription}</td>

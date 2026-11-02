@@ -686,7 +686,18 @@ function PurchasesFormView() {
       projectName,
       purchaseNumber,
       purchaseDate,
-      items: (items || []).map(it => ({ ...it, itemDescription: (it.itemDescription || '').toUpperCase(), newDescription: (it.newDescription || '').toUpperCase() })), statusInfo,
+      items: (items || []).map(it => {
+        const itemCopy = {
+          ...it,
+          itemDescription: (it.itemDescription || '').toUpperCase()
+        };
+        if (it.newDescription && String(it.newDescription).trim() !== '') {
+          itemCopy.newDescription = String(it.newDescription).trim().toUpperCase();
+        } else {
+          delete itemCopy.newDescription;
+        }
+        return itemCopy;
+      }), statusInfo,
       description,
       purchaseName,
       purchaseAmount1,
@@ -929,7 +940,7 @@ function PurchasesFormView() {
                                         {...provided.draggableProps}
                                       >
                                         {
-                                          Item.newDescription !== undefined ? (
+                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                             <>
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td colSpan={6}><TextField

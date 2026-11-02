@@ -727,7 +727,7 @@ function PurchaseForm() {
     const itemsWithoutData = itemsQtyArray.map(({ data, contentType, ...rest }) => ({
       ...rest,
       itemDescription: (rest.itemDescription || '').toUpperCase(),
-      newDescription: (rest.newDescription || '').toUpperCase()
+      ...(rest.newDescription && String(rest.newDescription).trim() !== '' ? { newDescription: String(rest.newDescription).trim().toUpperCase() } : {})
     }));
     const data = {
       outNumber,
@@ -1165,7 +1165,7 @@ function PurchaseForm() {
                                         {...provided.draggableProps}
                                       >
                                         {
-                                          Item.newDescription !== undefined ? (
+                                          (Boolean(Item.newDescription && String(Item.newDescription).trim() !== "" && (!Item.itemName || (typeof Item.itemName === "string" ? Item.itemName.trim() === "" : !Item.itemName._id && !Item.itemName.itemName)))) ? (
                                             <>
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
 
