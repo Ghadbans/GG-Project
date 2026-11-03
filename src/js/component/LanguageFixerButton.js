@@ -19,7 +19,6 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from 'react-toastify';
 import {
-  polishText,
   getSuggestions,
   applySingleCorrection,
   applyCleanSpaces

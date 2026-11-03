@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import SmartTextInput from '../../../component/SmartTextInput';
-import { polishText } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css'
 import '../Chartview.css'
@@ -780,8 +779,8 @@ The GLOBAL GATE Team`;
       customerName,
       estimateNumber: quotationNumber,
       estimateDate,
-      estimateSubject: polishText(estimateSubject, 'sentence'),
-      estimateDefect: polishText(estimateDefect, 'sentence'),
+      estimateSubject: estimateSubject || '',
+      estimateDefect: estimateDefect || '',
       items: itemsWithoutData, subTotal, total, totalW, note, shipping, adjustment, adjustmentNumber, totalInvoice, terms, noteInfo, balanceDue, tax, CheckTvA, updateS: false,
       includeLetter, attachedLetter
     };

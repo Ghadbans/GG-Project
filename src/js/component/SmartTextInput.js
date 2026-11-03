@@ -1,7 +1,7 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import LanguageFixerButton from './LanguageFixerButton';
-import { COMMON_PRESETS, polishText, hasTypo, getSuggestions } from '../utils/textAssistUtils';
+import { COMMON_PRESETS, hasTypo, getSuggestions } from '../utils/textAssistUtils';
 
 /**
  * SmartTextInput

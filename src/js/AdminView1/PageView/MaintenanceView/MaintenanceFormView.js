@@ -50,7 +50,6 @@ import AssetControlReportSection, { DEFAULT_ASSET_CONTROL_REPORT } from './Asset
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import SmartTextInput from '../../../component/SmartTextInput';
-import { polishText, toTitleCase, toUpperCaseCode } from '../../../utils/textAssistUtils';
 
 
 
@@ -772,20 +771,9 @@ function MaintenanceFormView() {
     }
     const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
 
-    // Auto-polish & sanitize all language, text, and codes
-    const finalItemDesc = polishText(itemDescriptionInfo, 'sentence');
-    const finalDefectDesc = polishText(defectDescription, 'sentence');
-    const finalActionTaken = polishText(actionTaken, 'sentence');
-    const finalNote = polishText(note, 'sentence');
-    const finalBrand = polishText(brand, 'title');
-    const finalSerialNo = toUpperCaseCode(serialNo);
-
-    if (finalItemDesc !== itemDescriptionInfo) setItemDescriptionInfo(finalItemDesc);
-    if (finalDefectDesc !== defectDescription) setDefectDescription(finalDefectDesc);
-    if (finalActionTaken !== actionTaken) setActionTaken(finalActionTaken);
     const data = {
        _id: v4(),
-       customerName, serviceNumber, serviceDate, actionTaken: finalActionTaken, visitDate, itemDescriptionInfo: finalItemDesc, warranty, defectDescription: finalDefectDesc, technicianAssign, brand: finalBrand, model, serviceName, action, serialNo: finalSerialNo, status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
+       customerName, serviceNumber, serviceDate, actionTaken: actionTaken || '', visitDate, itemDescriptionInfo: itemDescriptionInfo || '', warranty, defectDescription: defectDescription || '', technicianAssign, brand: brand || '', model, serviceName, action, serialNo: serialNo || '', status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
        note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, synced: false,
        includeAssetControl, assetControlReport
     };

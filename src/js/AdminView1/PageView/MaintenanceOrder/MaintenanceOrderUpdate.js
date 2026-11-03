@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import SmartTextInput from '../../../component/SmartTextInput';
-import { polishText, toTitleCase, toUpperCaseCode } from '../../../utils/textAssistUtils';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
 import '../Chartview.css';
@@ -808,21 +807,19 @@ function MaintenanceOrderUpdate() {
     e.preventDefault();
     const itemsWithoutData = items.map(({ data, contentType, ...rest }) => rest);
 
-    // Auto-correct & polish text, defects, actions, and codes before saving
-    const finalItemDesc = polishText(itemDescriptionInfo, 'sentence');
-    const finalDefectDesc = polishText(defectDescription, 'sentence');
-    const finalActionTaken = polishText(actionTaken, 'sentence');
-    const finalNote = polishText(note, 'sentence');
-    const finalBrand = polishText(brand, 'title');
-    const finalSerialNo = toUpperCaseCode(serialNo);
-
-    if (finalItemDesc !== itemDescriptionInfo) setItemDescriptionInfo(finalItemDesc);
-    if (finalDefectDesc !== defectDescription) setDefectDescription(finalDefectDesc);
-    if (finalActionTaken !== actionTaken) setActionTaken(finalActionTaken);
     const data = {
       customerName,
       serviceDate,
-      actionTaken: finalActionTaken, itemDescriptionInfo: finalItemDesc, warranty, defectDescription: finalDefectDesc, brand: finalBrand, model, technicianAssign, serviceNumber, serviceName, serialNo: finalSerialNo,
+      actionTaken: actionTaken || '',
+      itemDescriptionInfo: itemDescriptionInfo || '',
+      warranty,
+      defectDescription: defectDescription || '',
+      brand: brand || '',
+      model,
+      technicianAssign,
+      serviceNumber,
+      serviceName,
+      serialNo: serialNo || '',
       status: statusInfo || 'Open', action,
       items: itemsWithoutData, adjustmentNumber, totalInvoice, subTotal,
       note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, updateS: false,

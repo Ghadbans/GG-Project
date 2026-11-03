@@ -3459,3 +3459,42 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Generated official Windows installer: `dist/Global Gate Setup 3.6.12.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.12.exe`.
    - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.12.apk`.
    - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.
+
+
+### Version 3.6.13 (November 03, 2026) - Complete Elimination of Automatic Typo Modification on Save & Expanded Technical Vocabulary
+1. **Reported Issue & User Feedback**:
+   - In Maintenance Update (`M-001321`, KREAM RESTAURANT), the user typed `"PRINTER CONNECTIONS"`. The typo badge showed suggestions (`PRINTER -> PAINTER`, `CONNECTION -> CONNECTOR`). The user deliberately ignored the suggestions and did NOT click Fix or Apply.
+   - Upon clicking Save, the form automatically mutated `"PRINTER CONNECTIONS"` into `"PAINTER CONNECTIONS"` in the database.
+   - User report:
+     *"i typed PRINTER CONNECTIONS AND SAVING AFTER saveing it it taking it PAINTER CONNECTIONS !!! why this is happening i told you to diesable the auto correct !! why is taking the printer to painter !! why changing it ! me i ignored to click the stars to fix it ! why the spelling check is making me headace and changing the words that i type !!! even i type wrong words i dont want him to correct it !! just show in the drop box of the stars i press the right click it will show me .. finish ! fix quickly in all modules and sub-modules ..."*
+
+2. **Root Cause Analysis**:
+   - **`polishText` Called in Submit Handlers**:
+     In `handleSubmit` across 5 primary form modules (`MaintenanceUpdateView.js`, `MaintenanceFormView.js`, `MaintenanceOrderUpdate.js`, `EstimateInvoiceFormUpdate.js`, and `InvoiceForm.js`), `polishText(field, 'sentence')` was being called during form submission on fields (`itemDescriptionInfo`, `defectDescription`, `actionTaken`, `note`, `brand`, `estimateSubject`, `estimateDefect`, `invoiceSubject`, `invoiceDefect`).
+     Inside `polishText`, `correctTypos(...)` was automatically executed, which replaced words word-by-word with vocabulary matches behind the user's back upon form submission!
+   - **Vocabulary Gap for Standard IT / Office Terms**:
+     `ENGLISH_FRENCH_VOCABULARY` contained generic construction and electrical terms, but lacked standard computer, office, and networking terms such as `PRINTER`, `PRINTERS`, `CONNECTION`, `CONNECTIONS`. Because `PRINTER` was missing, Damerau-Levenshtein matched it to the closest vocabulary word `PAINTER` (distance 1); and `CONNECTION` matched `CONNECTOR`.
+
+3. **Solutions & Implementations**:
+   - **Database Restoration**:
+     Immediately updated the live MongoDB Atlas database record for Maintenance `M-001321` (`6ae995f15acf3d1d3a47ed09`) to restore `itemDescriptionInfo: "PRINTER CONNECTIONS"`.
+   - **Complete Elimination of Auto-Correction on Save**:
+     - Removed all calls to `polishText(...)` and `toUpperCaseCode(...)` in form submit handlers across all modules (`MaintenanceUpdateView.js`, `MaintenanceFormView.js`, `MaintenanceOrderUpdate.js`, `EstimateInvoiceFormUpdate.js`, `InvoiceForm.js`).
+     - Form submissions now take the user's exact input directly from component state, preserving what the user typed verbatim.
+     - Removed unused `polishText` imports from `EstimateInvoiceForm.js`, `InvoiceFormUpdate.js`, `SmartTextInput.js`, and `LanguageFixerButton.js`.
+   - **Expanded Technical & IT Vocabulary in `textAssistUtils.js`**:
+     - Added comprehensive IT, hardware, office, computer, and networking terms to `ENGLISH_FRENCH_VOCABULARY`: `PRINTER`, `PRINTERS`, `PRINT`, `PRINTING`, `PRINTED`, `CONNECTION`, `CONNECTIONS`, `CONNECT`, `CONNECTED`, `CONNECTING`, `CONNECTIVITY`, `DISCONNECT`, `DISCONNECTED`, `COMPUTER`, `COMPUTERS`, `LAPTOP`, `LAPTOPS`, `DESKTOP`, `DESKTOPS`, `PC`, `SERVER`, `SERVERS`, `ROUTER`, `ROUTERS`, `SWITCH`, `SWITCHES`, `MODEM`, `MODEMS`, `NETWORK`, `NETWORKS`, `NETWORKING`, `ETHERNET`, `LAN`, `WAN`, `WLAN`, `IP`, `KEYBOARD`, `KEYBOARDS`, `MOUSE`, `MICE`, `MONITOR`, `MONITORS`, `SCANNER`, `SCANNERS`, `SCAN`, `SCANNING`, `SCANNED`, `CARTRIDGE`, `CARTRIDGES`, `INK`, `INKS`, `RIBBON`, `RIBBONS`, `USB`, `HDMI`, `VGA`, `PORT`, `PORTS`, `HARDWARE`, `SOFTWARE`, `DRIVE`, `DRIVES`, `DISK`, `DISKS`, `SSD`, `HDD`, `RAM`, `CPU`, `GPU`, `IMPRIMANTE`, `IMPRIMANTES`, `CONNEXION`, `CONNEXIONS`, `ORDINATEUR`, `ORDINATEURS`.
+     - Verified that `PRINTER CONNECTIONS` evaluates to `hasTypo = false` with 0 suggestions.
+   - **Strict Opt-In Correction Architecture**:
+     - Spelling suggestions are ONLY displayed passively in the dropdown of the Sparkle ✨ badge or upon right-clicking.
+     - Words are NEVER changed unless the user explicitly clicks "Fix", "Apply All Corrections", or chooses a specific suggestion from the menu.
+   - **Version Bumping**: Bumped to **`3.6.13`** across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+4. **Multi-Platform Production Builds & Releases**:
+   - AST validation verified with 0 errors (`npm run prebuild`).
+   - Typo / Test engine verified with 21/21 tests passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Generated official Windows installer: `dist/Global Gate Setup 3.6.13.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.13.exe`.
+   - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.13.apk`.
+   - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.

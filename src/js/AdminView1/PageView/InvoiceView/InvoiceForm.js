@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useIsMobile, isNativeMobile } from '../../../utils/isMobile';
 import LanguageFixerButton from '../../../component/LanguageFixerButton';
 import SmartTextInput from '../../../component/SmartTextInput';
-import { polishText } from '../../../utils/textAssistUtils';
 import { toast } from 'react-toastify';
 import SidebarDash1 from '../../../component/SidebarDash1';
 import '../../view.css';
@@ -806,9 +805,9 @@ function InvoiceForm() {
       invoiceNumber,
       invoiceDate,
       invoiceDueDate,
-      invoiceSubject: polishText(invoiceSubject, 'sentence'),
+      invoiceSubject: invoiceSubject || '',
       invoicePurchase,
-      invoiceDefect: polishText(invoiceDefect, 'sentence'),
+      invoiceDefect: invoiceDefect || '',
       status,
       items: itemsWithoutData,
       subTotal,
