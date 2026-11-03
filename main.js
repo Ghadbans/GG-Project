@@ -310,3 +310,72 @@ function clearAppCache(win) {
       console.error('error')
     })
 }
+
+const fs = require('fs');
+const { execFile } = require('child_process');
+
+ipcMain.handle('run-marketing', async (event, payload) => {
+  const { brief, whatsappNumber, platforms = {} } = payload || {};
+  const agentDir = 'C:\\Users\\GG\\fb-whatsapp-agent';
+  const agentScript = path.join(agentDir, 'agent.js');
+  const flyerPath = path.join(agentDir, 'generated_flyer.png');
+
+  if (!fs.existsSync(agentScript)) {
+    return {
+      success: false,
+      error: `Marketing agent script not found at ${agentScript}`
+    };
+  }
+
+  const postToFacebook = platforms.facebook !== false;
+  const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
+
+  const args = [
+    agentScript,
+    brief || 'Special Promotion',
+    `--wa=${whatsappNumber || ''}`,
+    postToFacebook ? '--fb' : '--no-fb',
+    sendWhatsApp ? '--send-wa' : '--no-wa'
+  ];
+
+  return new Promise((resolve) => {
+    execFile('node', args, { cwd: agentDir, timeout: 90000 }, (error, stdout, stderr) => {
+      let flyerBase64 = null;
+      if (fs.existsSync(flyerPath)) {
+        try {
+          const buf = fs.readFileSync(flyerPath);
+          flyerBase64 = `data:image/png;base64,${buf.toString('base64')}`;
+        } catch (e) {
+          console.warn('Could not read flyer file:', e.message);
+        }
+      }
+
+      let fbPostId = null;
+      const fbMatch = (stdout || '').match(/Post ID:\s*([^\s\n\r]+)/i);
+      if (fbMatch) {
+        fbPostId = fbMatch[1];
+      }
+
+      const fbSuccess = Boolean(fbPostId) || (stdout || '').includes('[SUCCESS] Facebook post published');
+      const waSuccess = (stdout || '').includes('[SUCCESS] Flyer & caption delivered to WhatsApp');
+
+      resolve({
+        success: Boolean(flyerBase64) || fbSuccess || waSuccess,
+        brief,
+        flyerBase64,
+        facebook: {
+          success: fbSuccess,
+          postId: fbPostId,
+          postUrl: fbPostId ? `https://www.facebook.com/${fbPostId}` : null,
+          error: !fbSuccess && postToFacebook ? 'Facebook posting failed' : null
+        },
+        whatsapp: {
+          success: waSuccess,
+          target: whatsappNumber,
+          error: !waSuccess && sendWhatsApp ? 'WhatsApp automated dispatch timed out or was not delivered' : null
+        },
+        output: stdout || stderr
+      });
+    });
+  });
+});

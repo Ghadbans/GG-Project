@@ -196,23 +196,34 @@ function MarketingViewAdmin() {
     };
 
     try {
-      // 1. Try local agent microservice on workstation first if running (enables local WhatsApp Web & canvas flyer)
       let resData = null;
-      try {
-        const localRes = await axios.post('http://127.0.0.1:5055/publish', {
-          brief: payload.brief,
-          whatsappNumber: payload.whatsappNumber,
-          postToFacebook: payload.platforms.facebook,
-          sendWhatsApp: payload.platforms.whatsapp,
-        }, { timeout: 3500 });
-        if (localRes.data && localRes.data.success) {
-          resData = localRes.data;
+
+      // 1. If running inside Electron desktop app, execute locally via IPC (guarantees local canvas & FB photo upload)
+      if (window.electron && typeof window.electron.runMarketing === 'function') {
+        try {
+          console.log('[Marketing] Running directly via Electron local agent IPC...');
+          resData = await window.electron.runMarketing(payload);
+        } catch (ipcErr) {
+          console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
         }
-      } catch (_) {
-        // Local agent microservice not responding, proceed to cloud API endpoint
       }
 
-      // 2. Fall back to secure backend API endpoint
+      // 2. If not in Electron, try local microservice if running on workstation
+      if (!resData) {
+        try {
+          const localRes = await axios.post('http://127.0.0.1:5055/publish', {
+            brief: payload.brief,
+            whatsappNumber: payload.whatsappNumber,
+            postToFacebook: payload.platforms.facebook,
+            sendWhatsApp: payload.platforms.whatsapp,
+          }, { timeout: 60000 });
+          if (localRes.data && localRes.data.success) {
+            resData = localRes.data;
+          }
+        } catch (_) {}
+      }
+
+      // 3. Fall back to secure backend API endpoint
       if (!resData) {
         const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload);
         resData = res.data;
@@ -493,12 +504,25 @@ function MarketingViewAdmin() {
                                 </Typography>
                               </Box>
                               {result.whatsapp.target && (
-                                <Chip label={result.whatsapp.target} size="small" color={result.whatsapp.success ? "success" : "default"} />
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <Chip label={result.whatsapp.target} size="small" color={result.whatsapp.success ? "success" : "default"} />
+                                  <Chip
+                                    label="Open Chat"
+                                    size="small"
+                                    component="a"
+                                    href={`https://wa.me/${String(result.whatsapp.target || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(result.copy?.caption || result.brief || '')}`}
+                                    target="_blank"
+                                    clickable
+                                    color="success"
+                                    variant="outlined"
+                                    icon={<LaunchIcon fontSize="small" />}
+                                  />
+                                </Box>
                               )}
                             </Box>
                             {result.whatsapp.error && !result.whatsapp.success && (
                               <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
-                                {result.whatsapp.error}
+                                {result.whatsapp.error} — You can also click "Open Chat" above to dispatch directly via WhatsApp.
                               </Typography>
                             )}
                           </Box>

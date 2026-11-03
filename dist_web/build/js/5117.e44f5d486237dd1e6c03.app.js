@@ -606,7 +606,7 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay
   };
 });
 function MarketingViewAdmin() {
-  var _user$data3, _user$data4, _result$copy;
+  var _user$data3, _user$data4, _result$copy, _result$copy2;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_36__/* .useNavigate */ .Zp)();
   var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_35__/* .useDispatch */ .wA)();
   var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_35__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .selectCurrentUser */ .xu);
@@ -733,25 +733,36 @@ function MarketingViewAdmin() {
         userName: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || ''
       };
       try {
-        // 1. Try local agent microservice on workstation first if running (enables local WhatsApp Web & canvas flyer)
         var resData = null;
-        try {
-          var localRes = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', {
-            brief: payload.brief,
-            whatsappNumber: payload.whatsappNumber,
-            postToFacebook: payload.platforms.facebook,
-            sendWhatsApp: payload.platforms.whatsapp
-          }, {
-            timeout: 3500
-          });
-          if (localRes.data && localRes.data.success) {
-            resData = localRes.data;
+
+        // 1. If running inside Electron desktop app, execute locally via IPC (guarantees local canvas & FB photo upload)
+        if (window.electron && typeof window.electron.runMarketing === 'function') {
+          try {
+            console.log('[Marketing] Running directly via Electron local agent IPC...');
+            resData = yield window.electron.runMarketing(payload);
+          } catch (ipcErr) {
+            console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
           }
-        } catch (_) {
-          // Local agent microservice not responding, proceed to cloud API endpoint
         }
 
-        // 2. Fall back to secure backend API endpoint
+        // 2. If not in Electron, try local microservice if running on workstation
+        if (!resData) {
+          try {
+            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', {
+              brief: payload.brief,
+              whatsappNumber: payload.whatsappNumber,
+              postToFacebook: payload.platforms.facebook,
+              sendWhatsApp: payload.platforms.whatsapp
+            }, {
+              timeout: 60000
+            });
+            if (localRes.data && localRes.data.success) {
+              resData = localRes.data;
+            }
+          } catch (_) {}
+        }
+
+        // 3. Fall back to secure backend API endpoint
         if (!resData) {
           var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
           resData = res.data;
@@ -1216,11 +1227,29 @@ function MarketingViewAdmin() {
     sx: {
       fontWeight: 600
     }
-  }, result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Status')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Status')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     label: result.whatsapp.target,
     size: "small",
     color: result.whatsapp.success ? "success" : "default"
-  })), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    label: "Open Chat",
+    size: "small",
+    component: "a",
+    href: "https://wa.me/".concat(String(result.whatsapp.target || '').replace(/[^0-9]/g, ''), "?text=").concat(encodeURIComponent(((_result$copy = result.copy) === null || _result$copy === void 0 ? void 0 : _result$copy.caption) || result.brief || '')),
+    target: "_blank",
+    clickable: true,
+    color: "success",
+    variant: "outlined",
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+      fontSize: "small"
+    })
+  }))), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "caption",
     sx: {
       color: '#dc2626',
@@ -1228,7 +1257,7 @@ function MarketingViewAdmin() {
       mt: 0.75,
       pl: 4
     }
-  }, result.whatsapp.error))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, result.whatsapp.error, " \u2014 You can also click \"Open Chat\" above to dispatch directly via WhatsApp."))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       textAlign: 'center',
       mt: 2
@@ -1257,7 +1286,7 @@ function MarketingViewAdmin() {
     sx: {
       mt: 2
     }
-  }, "Flyer image is stored on local workstation."), ((_result$copy = result.copy) === null || _result$copy === void 0 ? void 0 : _result$copy.caption) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, "Flyer image is stored on local workstation."), ((_result$copy2 = result.copy) === null || _result$copy2 === void 0 ? void 0 : _result$copy2.caption) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       mt: 2
     }
