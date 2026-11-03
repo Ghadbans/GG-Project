@@ -733,17 +733,49 @@ function MarketingViewAdmin() {
         userName: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || ''
       };
       try {
-        // Connect to the secure backend endpoint POST /api/marketing/publish
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
-        if (res.data && res.data.success) {
-          setResult(res.data);
-          react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Promotional flyer generated & published successfully!');
+        // 1. Try local agent microservice on workstation first if running (enables local WhatsApp Web & canvas flyer)
+        var resData = null;
+        try {
+          var localRes = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', {
+            brief: payload.brief,
+            whatsappNumber: payload.whatsappNumber,
+            postToFacebook: payload.platforms.facebook,
+            sendWhatsApp: payload.platforms.whatsapp
+          }, {
+            timeout: 3500
+          });
+          if (localRes.data && localRes.data.success) {
+            resData = localRes.data;
+          }
+        } catch (_) {
+          // Local agent microservice not responding, proceed to cloud API endpoint
+        }
+
+        // 2. Fall back to secure backend API endpoint
+        if (!resData) {
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
+          resData = res.data;
+        }
+        if (resData && resData.success) {
+          var _resData$facebook, _resData$whatsapp;
+          setResult(resData);
+          var fbOk = (_resData$facebook = resData.facebook) === null || _resData$facebook === void 0 ? void 0 : _resData$facebook.success;
+          var waOk = (_resData$whatsapp = resData.whatsapp) === null || _resData$whatsapp === void 0 ? void 0 : _resData$whatsapp.success;
+          if (fbOk && waOk) {
+            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Flyer published to Facebook & delivered to WhatsApp!');
+          } else if (fbOk) {
+            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Flyer successfully published to Facebook Page!');
+          } else if (waOk) {
+            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Flyer successfully delivered to WhatsApp!');
+          } else {
+            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.info('Flyer preview generated. Check platform statuses on the right.');
+          }
         } else {
-          var _res$data;
-          var err = ((_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.error) || 'Campaign execution returned an error.';
+          var _resData;
+          var err = ((_resData = resData) === null || _resData === void 0 ? void 0 : _resData.error) || 'Campaign execution returned an error.';
           setErrorMessage(err);
           react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.error(err);
-          if (res.data) setResult(res.data);
+          if (resData) setResult(resData);
         }
       } catch (err) {
         var _err$response;
@@ -1109,14 +1141,17 @@ function MarketingViewAdmin() {
     }
   }, result.facebook && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
       p: 1.5,
       backgroundColor: result.facebook.success ? '#f0fdf4' : '#fef2f2',
       borderRadius: 1.5,
       border: '1px solid',
       borderColor: result.facebook.success ? '#bbf7d0' : '#fecaca'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
@@ -1144,16 +1179,27 @@ function MarketingViewAdmin() {
     icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
       fontSize: "small"
     })
-  })), result.whatsapp && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  })), result.facebook.error && !result.facebook.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
     sx: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+      color: '#dc2626',
+      display: 'block',
+      mt: 0.75,
+      pl: 4
+    }
+  }, result.facebook.error)), result.whatsapp && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
       p: 1.5,
       backgroundColor: result.whatsapp.success ? '#f0fdf4' : '#fef2f2',
       borderRadius: 1.5,
       border: '1px solid',
       borderColor: result.whatsapp.success ? '#bbf7d0' : '#fecaca'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
@@ -1170,11 +1216,19 @@ function MarketingViewAdmin() {
     sx: {
       fontWeight: 600
     }
-  }, result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Failed')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Status')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     label: result.whatsapp.target,
     size: "small",
-    color: "success"
-  }))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    color: result.whatsapp.success ? "success" : "default"
+  })), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#dc2626',
+      display: 'block',
+      mt: 0.75,
+      pl: 4
+    }
+  }, result.whatsapp.error))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       textAlign: 'center',
       mt: 2

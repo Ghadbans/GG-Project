@@ -12,7 +12,40 @@ const AGENT_FLYER = path.join(AGENT_DIR, 'generated_flyer.png');
 
 // Fallback Facebook credentials if running on remote server
 const FB_PAGE_ID = process.env.FB_PAGE_ID || '200999390054494';
-const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || '';
+const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABS0SWjis1LGGVEgWxC7dgAXj13kbak5nPvr1wGVUwNkwOY6k8OaDeDUhT2VV2ZAf7hWOV8kAVYYpTA9dtZCheqebyYB7bl3AJsR8WdZCh1NqIdJQ6bo0cm6AQ3PGtseVeZCoqtb5nATFGCaZA4Wumj2bHoggbCrVWuP8j6M8vAkNWGTtEGZBpKhLFuv';
+
+function generateSvgFlyerBase64(headline, details, badge = 'SPECIAL OFFER') {
+  const safeBadge = String(badge || 'SPECIAL OFFER').toUpperCase();
+  const safeHeadline = String(headline || 'PROMOTIONAL OFFER').toUpperCase();
+  const safeDetails = String(details || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+    <rect width="1080" height="1080" fill="#141a29"/>
+    <rect x="0" y="0" width="1080" height="24" fill="#f59e0b"/>
+    <text x="540" y="160" font-family="Arial, sans-serif" font-weight="900" font-size="64" fill="#ffffff" text-anchor="middle" letter-spacing="6">GLOBAL GATE</text>
+    <text x="540" y="210" font-family="Arial, sans-serif" font-weight="600" font-size="24" fill="#f59e0b" text-anchor="middle" letter-spacing="4">OFFICIAL PROMOTION</text>
+    
+    <rect x="360" y="270" width="360" height="60" rx="30" fill="#ef4444"/>
+    <text x="540" y="312" font-family="Arial, sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">${safeBadge}</text>
+    
+    <rect x="90" y="370" width="900" height="430" rx="24" fill="#1e293b" stroke="#334155" stroke-width="3"/>
+    
+    <text x="540" y="470" font-family="Arial, sans-serif" font-weight="900" font-size="40" fill="#f8fafc" text-anchor="middle">${safeHeadline.substring(0, 40)}</text>
+    
+    <foreignObject x="140" y="520" width="800" height="240">
+      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif; font-size: 26px; color: #cbd5e1; text-align: center; line-height: 1.5;">
+        ${safeDetails}
+      </div>
+    </foreignObject>
+    
+    <rect x="290" y="850" width="500" height="80" rx="40" fill="#10b981"/>
+    <text x="540" y="902" font-family="Arial, sans-serif" font-weight="800" font-size="30" fill="#ffffff" text-anchor="middle">💬 WhatsApp: +243 827 722 222</text>
+    
+    <text x="540" y="990" font-family="Arial, sans-serif" font-weight="500" font-size="20" fill="#64748b" text-anchor="middle">Global Gate SARL • Kolwezi, Lualaba, DR Congo</text>
+  </svg>`;
+  
+  return `data:image/svg+xml;base64,${Buffer.from(svg).toString('base64')}`;
+}
 
 /**
  * Access Control Middleware for Marketing
@@ -194,14 +227,28 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       }
     }
 
+    const discountMatch = String(brief).match(/(\d+%\s*(?:off|discount|remise))/i);
+    const priceMatch = String(brief).match(/(\$\s*\d+(?:\.\d+)?|\d+(?:\.\d+)?\s*(?:\$|usd|fc))/i);
+    const badge = discountMatch ? discountMatch[1].toUpperCase() : (priceMatch ? 'BEST PRICE' : 'SPECIAL OFFER');
+    let headline = String(brief).replace(/(offer for this week|offer|special offer|promo|promotion|pour cette semaine)\s*[:-]?\s*/gi, '').trim();
+    if (headline.length > 40) headline = headline.substring(0, 40) + '...';
+
+    const flyerBase64 = generateSvgFlyerBase64(headline, brief, badge);
+
     return res.json({
       success: true,
       brief,
-      flyerBase64: null,
-      facebook: fbResult || { success: false, error: 'Facebook credentials not configured on server' },
+      copy: {
+        badge,
+        headline,
+        details: brief,
+        caption: `🔥 **GLOBAL GATE - SPECIAL PROMOTION** 🔥\n\n📢 **${headline.toUpperCase()}**\n\n✨ **Details:** ${brief}\n\n📞 **Contact us today:** +243 827 722 222\n#GlobalGate #Promotion #SpecialOffer`
+      },
+      flyerBase64,
+      facebook: fbResult || { success: false, error: 'Facebook publish failed or not selected.' },
       whatsapp: {
         success: false,
-        error: 'WhatsApp Web dispatch requires the local agent on the workstation.'
+        error: 'WhatsApp Web dispatch requires the local agent running on the workstation.'
       }
     });
   } catch (cloudErr) {

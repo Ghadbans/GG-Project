@@ -196,17 +196,47 @@ function MarketingViewAdmin() {
     };
 
     try {
-      // Connect to the secure backend endpoint POST /api/marketing/publish
-      const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload);
+      // 1. Try local agent microservice on workstation first if running (enables local WhatsApp Web & canvas flyer)
+      let resData = null;
+      try {
+        const localRes = await axios.post('http://127.0.0.1:5055/publish', {
+          brief: payload.brief,
+          whatsappNumber: payload.whatsappNumber,
+          postToFacebook: payload.platforms.facebook,
+          sendWhatsApp: payload.platforms.whatsapp,
+        }, { timeout: 3500 });
+        if (localRes.data && localRes.data.success) {
+          resData = localRes.data;
+        }
+      } catch (_) {
+        // Local agent microservice not responding, proceed to cloud API endpoint
+      }
 
-      if (res.data && res.data.success) {
-        setResult(res.data);
-        toast.success('🎉 Promotional flyer generated & published successfully!');
+      // 2. Fall back to secure backend API endpoint
+      if (!resData) {
+        const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload);
+        resData = res.data;
+      }
+
+      if (resData && resData.success) {
+        setResult(resData);
+        const fbOk = resData.facebook?.success;
+        const waOk = resData.whatsapp?.success;
+
+        if (fbOk && waOk) {
+          toast.success('🎉 Flyer published to Facebook & delivered to WhatsApp!');
+        } else if (fbOk) {
+          toast.success('🎉 Flyer successfully published to Facebook Page!');
+        } else if (waOk) {
+          toast.success('🎉 Flyer successfully delivered to WhatsApp!');
+        } else {
+          toast.info('Flyer preview generated. Check platform statuses on the right.');
+        }
       } else {
-        const err = res.data?.error || 'Campaign execution returned an error.';
+        const err = resData?.error || 'Campaign execution returned an error.';
         setErrorMessage(err);
         toast.error(err);
-        if (res.data) setResult(res.data);
+        if (resData) setResult(resData);
       }
     } catch (err) {
       console.error('Marketing publish failed:', err);
@@ -424,38 +454,52 @@ function MarketingViewAdmin() {
                       {/* Platform status chips */}
                       <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 2.5 }}>
                         {result.facebook && (
-                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1.5, backgroundColor: result.facebook.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.facebook.success ? '#bbf7d0' : '#fecaca' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <FacebookIcon sx={{ color: '#1877f2' }} />
-                              <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                {result.facebook.success ? 'Published to Facebook Page' : 'Facebook Dispatch Failed'}
-                              </Typography>
+                          <Box sx={{ p: 1.5, backgroundColor: result.facebook.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.facebook.success ? '#bbf7d0' : '#fecaca' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <FacebookIcon sx={{ color: '#1877f2' }} />
+                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                  {result.facebook.success ? 'Published to Facebook Page' : 'Facebook Dispatch Failed'}
+                                </Typography>
+                              </Box>
+                              {result.facebook.postId && (
+                                <Chip
+                                  label={`Post: ${result.facebook.postId}`}
+                                  size="small"
+                                  component="a"
+                                  href={result.facebook.postUrl || `https://www.facebook.com/${result.facebook.postId}`}
+                                  target="_blank"
+                                  clickable
+                                  color="primary"
+                                  icon={<LaunchIcon fontSize="small" />}
+                                />
+                              )}
                             </Box>
-                            {result.facebook.postId && (
-                              <Chip
-                                label={`Post: ${result.facebook.postId}`}
-                                size="small"
-                                component="a"
-                                href={result.facebook.postUrl || `https://www.facebook.com/${result.facebook.postId}`}
-                                target="_blank"
-                                clickable
-                                color="primary"
-                                icon={<LaunchIcon fontSize="small" />}
-                              />
+                            {result.facebook.error && !result.facebook.success && (
+                              <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
+                                {result.facebook.error}
+                              </Typography>
                             )}
                           </Box>
                         )}
 
                         {result.whatsapp && (
-                          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', p: 1.5, backgroundColor: result.whatsapp.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.whatsapp.success ? '#bbf7d0' : '#fecaca' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                              <WhatsAppIcon sx={{ color: '#25d366' }} />
-                              <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                {result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Failed'}
-                              </Typography>
+                          <Box sx={{ p: 1.5, backgroundColor: result.whatsapp.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.whatsapp.success ? '#bbf7d0' : '#fecaca' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <WhatsAppIcon sx={{ color: '#25d366' }} />
+                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                  {result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Status'}
+                                </Typography>
+                              </Box>
+                              {result.whatsapp.target && (
+                                <Chip label={result.whatsapp.target} size="small" color={result.whatsapp.success ? "success" : "default"} />
+                              )}
                             </Box>
-                            {result.whatsapp.target && (
-                              <Chip label={result.whatsapp.target} size="small" color="success" />
+                            {result.whatsapp.error && !result.whatsapp.success && (
+                              <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
+                                {result.whatsapp.error}
+                              </Typography>
                             )}
                           </Box>
                         )}
