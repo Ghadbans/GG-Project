@@ -339,7 +339,7 @@ ipcMain.handle('run-marketing', async (event, payload) => {
   ];
 
   return new Promise((resolve) => {
-    execFile('node', args, { cwd: agentDir, timeout: 90000 }, (error, stdout, stderr) => {
+    execFile('node', args, { cwd: agentDir, timeout: 120000 }, (error, stdout, stderr) => {
       let flyerBase64 = null;
       if (fs.existsSync(flyerPath)) {
         try {
@@ -372,6 +372,7 @@ ipcMain.handle('run-marketing', async (event, payload) => {
         whatsapp: {
           success: waSuccess,
           target: whatsappNumber,
+          message: waSuccess ? 'WhatsApp Delivered Successfully' : null,
           error: !waSuccess && sendWhatsApp ? 'WhatsApp automated dispatch timed out or was not delivered' : null
         },
         output: stdout || stderr

@@ -1227,7 +1227,7 @@ function MarketingViewAdmin() {
     sx: {
       fontWeight: 600
     }
-  }, result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Status')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, result.whatsapp.success ? result.whatsapp.message || 'WhatsApp Delivered Successfully' : 'WhatsApp Delivery Failed')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',

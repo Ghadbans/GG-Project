@@ -500,7 +500,7 @@ function MarketingViewAdmin() {
                               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                 <WhatsAppIcon sx={{ color: '#25d366' }} />
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                  {result.whatsapp.success ? 'Delivered via WhatsApp' : 'WhatsApp Delivery Status'}
+                                  {result.whatsapp.success ? (result.whatsapp.message || 'WhatsApp Delivered Successfully') : 'WhatsApp Delivery Failed'}
                                 </Typography>
                               </Box>
                               {result.whatsapp.target && (

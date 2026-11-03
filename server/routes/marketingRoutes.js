@@ -162,7 +162,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       sendWhatsApp ? '--send-wa' : '--no-wa'
     ];
 
-    return execFile('node', args, { cwd: AGENT_DIR, timeout: 60000 }, (error, stdout, stderr) => {
+    return execFile('node', args, { cwd: AGENT_DIR, timeout: 120000 }, (error, stdout, stderr) => {
       if (error) {
         console.error('[Marketing] Agent execution error:', error, stderr);
       }
@@ -200,6 +200,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         whatsapp: {
           success: waSuccess,
           target: whatsappNumber,
+          message: waSuccess ? 'WhatsApp Delivered Successfully' : null,
           error: !waSuccess && sendWhatsApp ? 'WhatsApp dispatch did not confirm delivery' : null
         },
         output: stdout
