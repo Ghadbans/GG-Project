@@ -12,7 +12,7 @@ const AGENT_FLYER = path.join(AGENT_DIR, 'generated_flyer.png');
 
 // Fallback Facebook credentials if running on remote server
 const FB_PAGE_ID = process.env.FB_PAGE_ID || '200999390054494';
-const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABS0SWjis1LGGVEgWxC7dgAXj13kbak5nPvr1wGVUwNkwOY6k8OaDeDUhT2VV2ZAf7hWOV8kAVYYpTA9dtZCheqebyYB7bl3AJsR8WdZCh1NqIdJQ6bo0cm6AQ3PGtseVeZCoqtb5nATFGCaZA4Wumj2bHoggbCrVWuP8j6M8vAkNWGTtEGZBpKhLFuv';
+const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABS7sQE37IefZBRZCBBKoS6LrfsQCRZC4s2oI3CrjuiNqagf08mOHQmAkmAfKAij4uv5fqMz9fUd4zy5la8xlXiuevvocTg0ZAmYj1ou3SbYVvJgXDl0j4PVw6IHD18Vv2eZCD0aUQxUHwjtqN6MffaGPtoCNesW8U6n612WHf9O87xDbg0yUUsj6TVDwCbTTatcy8I2frlh7DvOPw6JlAcfEYbKXAZD';
 
 function generateSvgFlyerBase64(headline, details, badge = 'SPECIAL OFFER') {
   const safeBadge = String(badge || 'SPECIAL OFFER').toUpperCase();
