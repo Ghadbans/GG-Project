@@ -52,7 +52,7 @@ axios.interceptors.response.use((response) => {
         
         const modifyModules = (modules) => {
           if (Array.isArray(modules)) {
-            const allModules = ["Dashboard", "Customer", "Expenses", "Estimate", "Fleet Management", "Invoice", "Item-Out", "Item-Purchase", "Item-Return", "Item", "Maintenance", "Pay-Roll", "Payment", "Purchase", "Project", "Rate", "Employee", "Admin", "User", "Role", "Company Profile", "Branch", "Location", "Item-Group", "Item-Category", "Supplier", "Stock", "Transfer", "Reports", "Settings", "Account", "Asset", "Grant Access", "Purchase-Order", "Point-Of-Sell", "Block-Factory", "Block-Mixer", "Backup", "Layout-Print"];
+            const allModules = ["Dashboard", "Customer", "Expenses", "Estimate", "Fleet Management", "Invoice", "Item-Out", "Item-Purchase", "Item-Return", "Item", "Maintenance", "Pay-Roll", "Payment", "Purchase", "Project", "Rate", "Employee", "Admin", "User", "Role", "Company Profile", "Branch", "Location", "Item-Group", "Item-Category", "Supplier", "Stock", "Transfer", "Reports", "Settings", "Account", "Asset", "Grant Access", "Purchase-Order", "Point-Of-Sell", "Block-Factory", "Block-Mixer", "Backup", "Layout-Print", "Marketing"];
             allModules.forEach(modName => {
               let m = modules.find(x => x && x.moduleName === modName);
               if (!m) {

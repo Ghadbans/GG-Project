@@ -270,10 +270,14 @@ function GrantAccessUpdateView() {
     _useState12 = _slicedToArray(_useState11, 2),
     backupVisibility = _useState12[0],
     setBackupVisibility = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    branchOptions = _useState14[0],
-    setBranchOptions = _useState14[1];
+    marketing = _useState14[0],
+    setMarketing = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState16 = _slicedToArray(_useState15, 2),
+    branchOptions = _useState16[0],
+    setBranchOptions = _useState16[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchBranches = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
@@ -306,6 +310,7 @@ function GrantAccessUpdateView() {
           setNotificationVisibility(res.data.data.notificationVisibility || false);
           setMessageVisibility(res.data.data.messageVisibility || false);
           setBackupVisibility(res.data.data.backupVisibility || false);
+          setMarketing(res.data.data.marketing || false);
           var fetchedModules = res.data.data.modules;
           if (!fetchedModules.find(m => m.moduleName === 'Purchase-Order')) {
             fetchedModules.push({
@@ -463,18 +468,18 @@ function GrantAccessUpdateView() {
     updateModule[i].access[type] = !updateModule[i].access[type];
     setModules(updateModule);
   };
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState16 = _slicedToArray(_useState15, 2),
-    loading = _useState16[0],
-    setLoading = _useState16[1];
   var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    loadingOpenModal = _useState18[0],
-    setLoadingOpenModal = _useState18[1];
+    loading = _useState18[0],
+    setLoading = _useState18[1];
   var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState20 = _slicedToArray(_useState19, 2),
-    ErrorOpenModal = _useState20[0],
-    setErrorOpenModal = _useState20[1];
+    loadingOpenModal = _useState20[0],
+    setLoadingOpenModal = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState22 = _slicedToArray(_useState21, 2),
+    ErrorOpenModal = _useState22[0],
+    setErrorOpenModal = _useState22[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -535,7 +540,8 @@ function GrantAccessUpdateView() {
         costVisibility,
         notificationVisibility,
         messageVisibility,
-        backupVisibility
+        backupVisibility,
+        marketing
       };
       try {
         var res = yield axios__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_28__/* .ENDPOINT_URL */ .m, "/update-grantAccess/").concat(id), data);
@@ -809,6 +815,17 @@ function GrantAccessUpdateView() {
       onChange: e => setBackupVisibility(e.target.checked)
     }),
     label: "Backup: ".concat(backupVisibility ? 'Granted' : 'Denied')
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 3
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      checked: marketing,
+      onChange: e => setMarketing(e.target.checked)
+    }),
+    label: "Marketing: ".concat(marketing ? 'Granted' : 'Denied')
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     item: true,
     xs: 12

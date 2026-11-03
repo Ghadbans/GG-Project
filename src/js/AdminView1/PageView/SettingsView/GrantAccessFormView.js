@@ -175,12 +175,14 @@ function GrantAccessFormView() {
     { id: 24, moduleName: 'Layout-Print', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
     { id: 25, moduleName: 'Supplier', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
       { id: 26, moduleName: 'Maintenance-Order', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
+    { id: 27, moduleName: 'Marketing', access: { readM: false, createM: false, viewM: false, editM: false, deleteM: false } },
   ])
   const [branches, setBranches] = useState([]);
   const [costVisibility, setCostVisibility] = useState(false);
   const [notificationVisibility, setNotificationVisibility] = useState(false);
   const [messageVisibility, setMessageVisibility] = useState(false);
   const [backupVisibility, setBackupVisibility] = useState(false);
+  const [marketing, setMarketing] = useState(false);
   const [branchOptions, setBranchOptions] = useState([]);
 
   useEffect(() => {
@@ -285,7 +287,8 @@ function GrantAccessFormView() {
       costVisibility,
       notificationVisibility,
       messageVisibility,
-      backupVisibility
+      backupVisibility,
+      marketing
     };
     setSaving('true')
     try {
@@ -534,6 +537,17 @@ function GrantAccessFormView() {
                             />
                           }
                           label={`Backup: ${backupVisibility ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={marketing}
+                              onChange={(e) => setMarketing(e.target.checked)}
+                            />
+                          }
+                          label={`Marketing: ${marketing ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                     </Grid>

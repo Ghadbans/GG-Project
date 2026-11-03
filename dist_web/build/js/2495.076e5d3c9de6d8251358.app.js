@@ -512,6 +512,16 @@ function GrantAccessFormView() {
         editM: false,
         deleteM: false
       }
+    }, {
+      id: 27,
+      moduleName: 'Marketing',
+      access: {
+        readM: false,
+        createM: false,
+        viewM: false,
+        editM: false,
+        deleteM: false
+      }
     }]),
     _useState8 = _slicedToArray(_useState7, 2),
     modules = _useState8[0],
@@ -536,10 +546,14 @@ function GrantAccessFormView() {
     _useState16 = _slicedToArray(_useState15, 2),
     backupVisibility = _useState16[0],
     setBackupVisibility = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState18 = _slicedToArray(_useState17, 2),
-    branchOptions = _useState18[0],
-    setBranchOptions = _useState18[1];
+    marketing = _useState18[0],
+    setMarketing = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState20 = _slicedToArray(_useState19, 2),
+    branchOptions = _useState20[0],
+    setBranchOptions = _useState20[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchBranches = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
@@ -587,18 +601,18 @@ function GrantAccessFormView() {
     updateModule[i].access[type] = !updateModule[i].access[type];
     setModules(updateModule);
   };
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState20 = _slicedToArray(_useState19, 2),
-    loading = _useState20[0],
-    setLoading = _useState20[1];
   var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState22 = _slicedToArray(_useState21, 2),
-    loadingOpenModal = _useState22[0],
-    setLoadingOpenModal = _useState22[1];
+    loading = _useState22[0],
+    setLoading = _useState22[1];
   var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState24 = _slicedToArray(_useState23, 2),
-    ErrorOpenModal = _useState24[0],
-    setErrorOpenModal = _useState24[1];
+    loadingOpenModal = _useState24[0],
+    setLoadingOpenModal = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState26 = _slicedToArray(_useState25, 2),
+    ErrorOpenModal = _useState26[0],
+    setErrorOpenModal = _useState26[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -646,10 +660,10 @@ function GrantAccessFormView() {
       return _ref0.apply(this, arguments);
     };
   }();
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState26 = _slicedToArray(_useState25, 2),
-    saving = _useState26[0],
-    setSaving = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState28 = _slicedToArray(_useState27, 2),
+    saving = _useState28[0],
+    setSaving = _useState28[1];
   var handleSubmit = /*#__PURE__*/function () {
     var _ref1 = _asyncToGenerator(function* (e) {
       e.preventDefault();
@@ -665,7 +679,8 @@ function GrantAccessFormView() {
         costVisibility,
         notificationVisibility,
         messageVisibility,
-        backupVisibility
+        backupVisibility,
+        marketing
       };
       setSaving('true');
       try {
@@ -954,6 +969,17 @@ function GrantAccessFormView() {
       onChange: e => setBackupVisibility(e.target.checked)
     }),
     label: "Backup: ".concat(backupVisibility ? 'Granted' : 'Denied')
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12,
+    sm: 6,
+    md: 3
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      checked: marketing,
+      onChange: e => setMarketing(e.target.checked)
+    }),
+    label: "Marketing: ".concat(marketing ? 'Granted' : 'Denied')
   }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .Ay, {
     item: true,
     xs: 12

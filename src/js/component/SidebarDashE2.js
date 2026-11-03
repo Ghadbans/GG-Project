@@ -15,6 +15,7 @@ import Close from '@mui/icons-material/Close';
 import CategoryIcon from '@mui/icons-material/Category';
 import StoreIcon from '@mui/icons-material/Store';
 import DirectionsCarIcon from '@mui/icons-material/DirectionsCar';
+import CampaignIcon from '@mui/icons-material/Campaign';
 import SideBlockFactory from './SideBlockFactory';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -73,6 +74,7 @@ function SidebarDashE2({ onView, isSubmenu }) {
   }, [dispatch]);
 
   const [grantAccess, setGrantAccess] = useState([]);
+  const [grantAccessDoc, setGrantAccessDoc] = useState(null);
   const [loadingAccess, setLoadingAccess] = useState(true);
   useEffect(() => {
     if (user?.data?.id) {
@@ -81,6 +83,7 @@ function SidebarDashE2({ onView, isSubmenu }) {
           const res = await cachedGet(`${ENDPOINT_URL}/grantAccess`);
           const userAccess = res.data?.data?.filter((row) => row.userID === user.data.id);
           if (userAccess.length > 0) {
+            setGrantAccessDoc(userAccess[0]);
             userAccess.map((row) => setGrantAccess(row.modules));
           }
         } catch (error) {
@@ -98,6 +101,8 @@ function SidebarDashE2({ onView, isSubmenu }) {
   }
 
   const MainInfo = grantAccess.filter((row) => row.moduleName === "Main" && row.access.readM === true);
+  const MarketingInfo = grantAccess.filter((row) => row.moduleName === "Marketing" && row.access.readM === true);
+  const hasMarketingAccess = user.data?.userName === 'GG' || Boolean(grantAccessDoc?.marketing) || MarketingInfo.length > 0;
   const RateInfo = grantAccess.filter((row) => row.moduleName === "Rate" && row.access.readM === true);
   const EmployeeInfo = grantAccess.filter((row) => row.moduleName === "Employee" && row.access.readM === true);
   const FleetInfo = grantAccess.filter((row) => row.moduleName === "Fleet Management" && row.access.readM === true);
@@ -119,6 +124,14 @@ function SidebarDashE2({ onView, isSubmenu }) {
               </ListItemButton>
             )
           }
+          {hasMarketingAccess && (
+            <ListItemButton disabled={loadingAccess} sx={{ color: 'gray' }} component={NavLink} to="/MarketingViewAdmin" onClick={handleNavClick} style={isActive('/MarketingViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+              <ListItemIcon sx={{ color: 'gray' }} style={isActive('/MarketingViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
+                <CampaignIcon />
+              </ListItemIcon>
+              <ListItemText primary="Marketing" />
+            </ListItemButton>
+          )}
           <ListItemButton disabled={loadingAccess || (user.data?.userName !== 'GG' && RateInfo.length === 0)} sx={{ color: 'gray' }} component={NavLink} to="/RateViewAdmin" onClick={handleNavClick} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
             <ListItemIcon sx={{ color: 'gray' }} style={isActive('/RateViewAdmin') ? { backgroundColor: '#30368a', color: 'white' } : null}>
               <CurrencyExchange />

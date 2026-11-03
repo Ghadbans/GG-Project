@@ -192,11 +192,15 @@ app.use("/download", downloadRoutes);
 app.use("/downloads", downloadRoutes);
 
 
+const marketingRoutes = require('./routes/marketingRoutes');
+app.use('/api/marketing', marketingRoutes);
+app.use('/endpoint/marketing', marketingRoutes);
+
 const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.5.87-payroll-fix]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.13', attachments: true, uptime: process.uptime() })); // health check
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.14', attachments: true, uptime: process.uptime() })); // health check
 
 // DEBUG & INIT ROUTES
 app.get('/debug-db', async (req, res) => {
@@ -259,6 +263,7 @@ app.get('/init-permissions', async (req, res) => {
       grantAccess.notificationVisibility = true;
       grantAccess.messageVisibility = true;
       grantAccess.backupVisibility = true;
+      grantAccess.marketing = true;
       await grantAccess.save();
       return res.send('Permissions for GG updated to FULL ACCESS.');
     }
@@ -270,7 +275,8 @@ app.get('/init-permissions', async (req, res) => {
       costVisibility: true,
       notificationVisibility: true,
       messageVisibility: true,
-      backupVisibility: true
+      backupVisibility: true,
+      marketing: true
     });
 
     await grantAccess.save();

@@ -3238,6 +3238,27 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 25099
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M18 11v2h4v-2zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61M20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4M4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34"
+}), 'Campaign');
+
+/***/ },
+
 /***/ 82299
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -93653,7 +93674,7 @@ function SidebarDash(_ref) {
   var BlockFactoryInfo = grantAccess.filter(row => row.moduleName === "Block-Factory" && row.access.readM === true);
   var POSInfo = grantAccess.filter(row => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
   var StoreInfo = grantAccess.filter(row => (row.moduleName === "Item" || row.moduleName === "Supplier" || row.moduleName === "Item-Out" || row.moduleName === "Item-Return" || row.moduleName === "Item-Purchase" || row.moduleName === "Purchase-Order") && row.access.readM === true);
-  var MoreInfo = grantAccess.filter(row => (row.moduleName === "Rate" || row.moduleName === "Fleet Management" || row.moduleName === "Employee" || row.moduleName === "Pay-Roll") && row.access.readM === true);
+  var MoreInfo = grantAccess.filter(row => (row.moduleName === "Rate" || row.moduleName === "Fleet Management" || row.moduleName === "Employee" || row.moduleName === "Pay-Roll" || row.moduleName === "Marketing") && row.access.readM === true);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, show1 === 1 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     sx: {
       color: 'gray'
@@ -94051,12 +94072,13 @@ function SidebarDash(_ref) {
 /* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(39781);
 /* harmony import */ var _mui_icons_material_Store__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(10420);
 /* harmony import */ var _mui_icons_material_DirectionsCar__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(96849);
-/* harmony import */ var _SideBlockFactory__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(34620);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(32005);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(99380);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(46986);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(71510);
+/* harmony import */ var _mui_icons_material_Campaign__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(25099);
+/* harmony import */ var _SideBlockFactory__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(34620);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(32005);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(99380);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(46986);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(71510);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -94089,8 +94111,9 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 
 
 
+
 function SidebarDashE2(_ref) {
-  var _user$data2, _user$data3, _user$data4, _user$data5;
+  var _user$data2, _user$data3, _user$data4, _user$data5, _user$data6;
   var onView = _ref.onView,
     isSubmenu = _ref.isSubmenu;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .Zp)();
@@ -94120,18 +94143,18 @@ function SidebarDashE2(_ref) {
     localStorage.removeItem('activeSidebarMenu');
     localStorage.removeItem('activeSidebarMenuE2');
   }, []);
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_21__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_21__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_22__/* .selectCurrentUser */ .xu);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_22__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_22__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_23__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref2 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_25__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_26__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_22__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_23__/* .setUser */ .gV)({
               userName: Name,
               role: Role,
               id: res.data.data._id
@@ -94154,10 +94177,14 @@ function SidebarDashE2(_ref) {
     _useState6 = _slicedToArray(_useState5, 2),
     grantAccess = _useState6[0],
     setGrantAccess = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    loadingAccess = _useState8[0],
-    setLoadingAccess = _useState8[1];
+    grantAccessDoc = _useState8[0],
+    setGrantAccessDoc = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState0 = _slicedToArray(_useState9, 2),
+    loadingAccess = _useState0[0],
+    setLoadingAccess = _useState0[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var _user$data;
     if (user !== null && user !== void 0 && (_user$data = user.data) !== null && _user$data !== void 0 && _user$data.id) {
@@ -94165,9 +94192,10 @@ function SidebarDashE2(_ref) {
         var _ref3 = _asyncToGenerator(function* () {
           try {
             var _res$data;
-            var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_24__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_25__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+            var res = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_25__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_26__/* .ENDPOINT_URL */ .m, "/grantAccess"));
             var userAccess = (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.filter(row => row.userID === user.data.id);
             if (userAccess.length > 0) {
+              setGrantAccessDoc(userAccess[0]);
               userAccess.map(row => setGrantAccess(row.modules));
             }
           } catch (error) {
@@ -94187,6 +94215,8 @@ function SidebarDashE2(_ref) {
     return null;
   }
   var MainInfo = grantAccess.filter(row => row.moduleName === "Main" && row.access.readM === true);
+  var MarketingInfo = grantAccess.filter(row => row.moduleName === "Marketing" && row.access.readM === true);
+  var hasMarketingAccess = ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) === 'GG' || Boolean(grantAccessDoc === null || grantAccessDoc === void 0 ? void 0 : grantAccessDoc.marketing) || MarketingInfo.length > 0;
   var RateInfo = grantAccess.filter(row => row.moduleName === "Rate" && row.access.readM === true);
   var EmployeeInfo = grantAccess.filter(row => row.moduleName === "Employee" && row.access.readM === true);
   var FleetInfo = grantAccess.filter(row => row.moduleName === "Fleet Management" && row.access.readM === true);
@@ -94204,8 +94234,30 @@ function SidebarDashE2(_ref) {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_MoreVert__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "Main"
+  })), hasMarketingAccess && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+    disabled: loadingAccess,
+    sx: {
+      color: 'gray'
+    },
+    component: react_router_dom__WEBPACK_IMPORTED_MODULE_2__/* .NavLink */ .k2,
+    to: "/MarketingViewAdmin",
+    onClick: handleNavClick,
+    style: isActive('/MarketingViewAdmin') ? {
+      backgroundColor: '#30368a',
+      color: 'white'
+    } : null
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      color: 'gray'
+    },
+    style: isActive('/MarketingViewAdmin') ? {
+      backgroundColor: '#30368a',
+      color: 'white'
+    } : null
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Campaign__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    primary: "Marketing"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) !== 'GG' && RateInfo.length === 0,
+    disabled: loadingAccess || ((_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) !== 'GG' && RateInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -94227,7 +94279,7 @@ function SidebarDashE2(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "Rate"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) !== 'GG' && FleetInfo.length === 0,
+    disabled: loadingAccess || ((_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) !== 'GG' && FleetInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -94249,7 +94301,7 @@ function SidebarDashE2(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DirectionsCar__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "Fleet Management"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) !== 'GG' && EmployeeInfo.length === 0,
+    disabled: loadingAccess || ((_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) !== 'GG' && EmployeeInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -94271,7 +94323,7 @@ function SidebarDashE2(_ref) {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Groups__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     primary: "Employee"
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
-    disabled: loadingAccess || ((_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) !== 'GG' && PRollInfo.length === 0,
+    disabled: loadingAccess || ((_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.userName) !== 'GG' && PRollInfo.length === 0,
     sx: {
       color: 'gray'
     },
@@ -94410,7 +94462,7 @@ function SidebarDashE2(_ref) {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
     component: "div",
     inset: true
-  }, "Block Factory Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideBlockFactory__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, null)) : null);
+  }, "Block Factory Menu"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SideBlockFactory__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, null)) : null);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidebarDashE2);
 
@@ -95005,7 +95057,7 @@ var useIsMobile = () => {
 /* harmony export */   ru: () => (/* binding */ getRoutePermission),
 /* harmony export */   wN: () => (/* binding */ fetchUserGrantAccess)
 /* harmony export */ });
-/* unused harmony export normalizeModuleName */
+/* unused harmony exports normalizeModuleName, canAccessMarketing */
 /* harmony import */ var _apiCache__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(46986);
 /* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(71510);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -95520,6 +95572,12 @@ var ROUTE_PERMISSION_MAP = [
   module: 'Fleet Management',
   action: 'read'
 },
+// Marketing
+{
+  pattern: /^\/marketingviewadmin/i,
+  module: 'Marketing',
+  action: 'read'
+},
 // Settings & Access Control
 {
   pattern: /^\/rolepermission/i,
@@ -95568,6 +95626,11 @@ function getRoutePermission() {
 function fetchUserGrantAccess(_x) {
   return _fetchUserGrantAccess.apply(this, arguments);
 }
+
+/**
+ * Check if user has marketing module access.
+ * GG master account has unconditional access bypass.
+ */
 function _fetchUserGrantAccess() {
   _fetchUserGrantAccess = _asyncToGenerator(function* (userId) {
     if (!userId) return [];
@@ -95582,6 +95645,20 @@ function _fetchUserGrantAccess() {
     }
   });
   return _fetchUserGrantAccess.apply(this, arguments);
+}
+function canAccessMarketing(user) {
+  var _user$data2;
+  var grantAccess = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  if (!user) return false;
+  var userName = user.userName || ((_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || '';
+  if (userName === 'GG') return true;
+  if ((grantAccess === null || grantAccess === void 0 ? void 0 : grantAccess.marketing) === true) return true;
+  if (Array.isArray(grantAccess === null || grantAccess === void 0 ? void 0 : grantAccess.modules)) {
+    var _mod$access, _mod$access2;
+    var mod = grantAccess.modules.find(m => String(m.moduleName).toLowerCase() === 'marketing');
+    if (mod && ((_mod$access = mod.access) !== null && _mod$access !== void 0 && _mod$access.readM || (_mod$access2 = mod.access) !== null && _mod$access2 !== void 0 && _mod$access2.createM)) return true;
+  }
+  return false;
 }
 
 /***/ },
@@ -123218,7 +123295,7 @@ Object.assign(esm_lookup, {
 (module) {
 
 "use strict";
-module.exports = {"rE":"3.6.13"};
+module.exports = {"rE":"3.6.14"};
 
 /***/ },
 
@@ -123350,7 +123427,7 @@ module.exports = /*#__PURE__*/JSON.parse('{"--header-logo-width":"240px","--glob
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames based on template
-/******/ 			return "" + chunkId + "." + {"100":"d23238aee0088fe6311f","116":"aecf84c095a623a3ddca","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"b349f00eb45346469219","457":"91454dcc93db765c3f52","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"3ac1eaf0beb56050a08f","742":"a835f4bf4f64f42161ad","778":"f8950b7fd584414ccde4","806":"fa65da9ad44081d53908","808":"f3d42c7ada5ce53e925e","864":"ac9193b4bf40eb4964a0","885":"1bf936390cb298f3f301","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"61c93941ef0e30fbb8e1","1168":"b2f690e1d5399977dcaf","1223":"3198d9568e03c7fae083","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"411d911c2f9d1179322d","1624":"1e1d88c032094f247d47","1645":"5182b4dc1bb7075f9f56","1679":"d87580d55184b2bf3789","1722":"74e7bac5ac08b9611a0e","1853":"3274cc498dbc67b00dae","1861":"b7634fa92c4aa00d7ec7","1919":"f13f0a75923071521492","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"a0f9ddb8c2ef0c7bdc2e","2495":"a4b8da4d44fe8cbf9fdc","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"a7b8ac539ac8175e1c3a","2605":"ba188b670cd55a5fc3c7","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"efb158243ceaf1d08a5e","2821":"f45314f5f44d2175de35","2835":"9961100838063eab2c60","2982":"0100e55beed195268b1e","2992":"7053fb040575279b1b40","3009":"567b00944880ad958271","3058":"7fd0706992dfd8500924","3094":"df87a4853ddb2177d1e8","3229":"9a18814208e0e3a62450","3426":"9cb1758364fcce20cb39","3502":"c31003c93cbba1941304","3547":"1e2de2721983f1041975","3697":"44d5c9d3f037ec5ae195","3741":"37d03a8a510f8bda1f4a","3808":"c182f07cf1d8803a7db9","3976":"0b8bef47b1036421fa98","4001":"a2ebfaa8344674eccac7","4006":"c40f81d76eaf02bd971b","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"d502db1bff8b88a2ec20","4444":"a660c208331174844f75","4783":"a1806ed1e3111f115363","5059":"628654fd8f024ff22adb","5151":"65d5436b749304a75231","5194":"a8c14a0906a2f52920b3","5391":"e4e699595ce33c2bbda1","5394":"77b2a3a2dff8cae8e170","5646":"e60fac6efda1f9f7e548","5669":"7dd77c65e44c3dc05cd9","5754":"659db805ae05cd3da725","5824":"521ac8d2f5a3658a4871","5881":"79832ae83620a9e237a6","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"42004723b74872a5b8e6","6619":"8bb447cd910320602080","6671":"feea5005a60472cf64db","6685":"3c2cc496989d0c76ec37","6725":"3cbe3dc840007dbf3e6d","6744":"66f16a7ab51e26e081ff","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"78fd3f6866660128b77f","7270":"aef71d036742a212ea6b","7384":"4b96c193883df1b83e71","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"344ee685c77434638a04","7539":"eee72e07ac8f6d8dc151","7592":"e6cb9d50e3e95c93b5a7","7612":"4350fee6d3810d39aa55","7645":"c2c59f76506cb6d4f624","7757":"cc1877d2cafafb461006","7801":"1707850294304e537db8","7897":"2ae4badc5372576c7a36","7941":"cabe05d06bd3508a5591","7997":"2e21126ab3301ab4a2fa","8011":"a985e65536277971a101","8017":"d9c4389aa832817ffddf","8027":"c629cd9ade2fe272a8ba","8060":"1d040f49be1d69646d5f","8117":"25756ad53d0d4449d1f8","8282":"0f0dcf6a62e566605068","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"2368490c6e4f790cc9e2","8685":"2e4858ba3af14fde840a","8838":"7aef03237b1ac369d652","8849":"99a0e337bf4c06eb79d5","8970":"86f51603a5fec4482804","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"57e435ecf0c0b6f8291a","9528":"4dd9c43eb666c40b578c","9564":"750128b2d66eab6a9fd4","9573":"fbe43c59fe7a31007a97","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"fe19d5d4f3d12caf9da2","9773":"39e2ebc020e24d8ddf86","9846":"51bc1d1ec09fccb6843d","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
+/******/ 			return "" + chunkId + "." + {"100":"d23238aee0088fe6311f","116":"aecf84c095a623a3ddca","118":"67282ee0f46830583293","223":"11c50fcf642acaf01578","296":"f29e824f38522a627939","327":"c88df084641bfac45cdc","441":"b349f00eb45346469219","457":"91454dcc93db765c3f52","483":"6fdf7d28f4a344461077","590":"28953f61605420ae99a4","614":"aa1a4baa485591a45a5d","712":"3ac1eaf0beb56050a08f","742":"a835f4bf4f64f42161ad","778":"f8950b7fd584414ccde4","806":"fa65da9ad44081d53908","808":"f3d42c7ada5ce53e925e","864":"ac9193b4bf40eb4964a0","885":"1bf936390cb298f3f301","956":"714a795f2697a3584e2f","1019":"1d406482e04e60bb652f","1096":"61c93941ef0e30fbb8e1","1168":"b2f690e1d5399977dcaf","1223":"3198d9568e03c7fae083","1251":"9da50dc8470bc764d3b6","1364":"ce142e0366ac7cdec7bf","1390":"a28f1a9c7193c75a2232","1500":"ab9d28731f35b660feac","1624":"1e1d88c032094f247d47","1645":"5182b4dc1bb7075f9f56","1679":"d87580d55184b2bf3789","1722":"74e7bac5ac08b9611a0e","1853":"3274cc498dbc67b00dae","1861":"b7634fa92c4aa00d7ec7","1919":"f13f0a75923071521492","1985":"c372e67729f897b94140","2120":"260136f37f71dde36ba1","2122":"3bb2aa27befa4fa366d9","2153":"dfaa809d81b011fe402a","2410":"a0f9ddb8c2ef0c7bdc2e","2495":"076e5d3c9de6d8251358","2517":"956f7558989fb2a45d33","2529":"4184ea0b2e089c7b1cb8","2533":"a7b8ac539ac8175e1c3a","2605":"ba188b670cd55a5fc3c7","2608":"a86e0ce81d9f46c9b9e6","2611":"f7d9b0f51ca0ac53ae4e","2756":"2e4d9a6b9a21c6a4e68d","2757":"68776b517befffb1bc05","2778":"efb158243ceaf1d08a5e","2821":"f45314f5f44d2175de35","2835":"9961100838063eab2c60","2982":"0100e55beed195268b1e","2992":"7053fb040575279b1b40","3009":"567b00944880ad958271","3058":"7fd0706992dfd8500924","3094":"df87a4853ddb2177d1e8","3229":"9a18814208e0e3a62450","3426":"9cb1758364fcce20cb39","3502":"c31003c93cbba1941304","3547":"1e2de2721983f1041975","3697":"44d5c9d3f037ec5ae195","3741":"37d03a8a510f8bda1f4a","3808":"c182f07cf1d8803a7db9","3976":"0b8bef47b1036421fa98","4001":"a2ebfaa8344674eccac7","4006":"c40f81d76eaf02bd971b","4107":"78bb8e93491e33a3e285","4184":"3b4cf5e10e20efefc90a","4237":"ae9e77c6d4f5a70c297a","4270":"d502db1bff8b88a2ec20","4444":"a660c208331174844f75","4783":"a1806ed1e3111f115363","5059":"628654fd8f024ff22adb","5117":"88b8df9ee04123c3d522","5151":"65d5436b749304a75231","5194":"a8c14a0906a2f52920b3","5391":"e4e699595ce33c2bbda1","5394":"77b2a3a2dff8cae8e170","5646":"e60fac6efda1f9f7e548","5669":"7dd77c65e44c3dc05cd9","5754":"659db805ae05cd3da725","5824":"521ac8d2f5a3658a4871","5881":"79832ae83620a9e237a6","5910":"6707b21bda340d85f399","5919":"54736d734509b60bd51b","6155":"b138b520a04a8385cf28","6226":"42004723b74872a5b8e6","6619":"8bb447cd910320602080","6671":"feea5005a60472cf64db","6685":"3c2cc496989d0c76ec37","6725":"3cbe3dc840007dbf3e6d","6744":"66f16a7ab51e26e081ff","7120":"fbec0e4401c2f3946a30","7171":"918e19a0ed17fcdfa115","7189":"85c6638ff9e2dc26d50d","7269":"78fd3f6866660128b77f","7270":"aef71d036742a212ea6b","7384":"4b96c193883df1b83e71","7405":"53dd5e5077e4f953ad70","7444":"b53c12d6ba889fd7ff49","7445":"344ee685c77434638a04","7539":"eee72e07ac8f6d8dc151","7592":"e6cb9d50e3e95c93b5a7","7612":"4350fee6d3810d39aa55","7645":"c2c59f76506cb6d4f624","7757":"cc1877d2cafafb461006","7801":"1707850294304e537db8","7897":"2ae4badc5372576c7a36","7941":"cabe05d06bd3508a5591","7997":"2e21126ab3301ab4a2fa","8011":"a985e65536277971a101","8017":"d9c4389aa832817ffddf","8027":"c629cd9ade2fe272a8ba","8060":"1d040f49be1d69646d5f","8117":"25756ad53d0d4449d1f8","8282":"0f0dcf6a62e566605068","8354":"176023e85ee8d67dc8c1","8442":"4dc34606f2dc199c6158","8520":"bd678456cc879023807e","8646":"2368490c6e4f790cc9e2","8685":"2e4858ba3af14fde840a","8838":"7aef03237b1ac369d652","8849":"99a0e337bf4c06eb79d5","8970":"86f51603a5fec4482804","9127":"09e89f7f015fd77f84f4","9220":"861c86c07129ab78a89d","9246":"a5bb21ccda4d5e9f6ee1","9250":"739e41027b099328904d","9260":"ebf3b7b938e195a708ee","9357":"57e435ecf0c0b6f8291a","9528":"4dd9c43eb666c40b578c","9564":"750128b2d66eab6a9fd4","9573":"fbe43c59fe7a31007a97","9575":"e9bf1fcbb360227bdd13","9670":"012e43f63f6fefe161c8","9762":"fe19d5d4f3d12caf9da2","9773":"39e2ebc020e24d8ddf86","9846":"51bc1d1ec09fccb6843d","9971":"b6805410425463ef81f5"}[chunkId] + ".app.js";
 /******/ 		};
 /******/ 	})();
 /******/ 	
@@ -139265,6 +139342,7 @@ var TewmViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* impor
 var PayRollViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 3009).then(__webpack_require__.bind(__webpack_require__, 3009)));
 var ExpensesViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 9575).then(__webpack_require__.bind(__webpack_require__, 79575)));
 var RateViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 614).then(__webpack_require__.bind(__webpack_require__, 70614)));
+var MarketingViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 5117).then(__webpack_require__.bind(__webpack_require__, 35117)));
 var SettingsViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 2120).then(__webpack_require__.bind(__webpack_require__, 12120)));
 var ReportsViewAdmin = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 5669).then(__webpack_require__.bind(__webpack_require__, 75669)));
 var PaymentView = /*#__PURE__*/react.lazy(() => __webpack_require__.e(/* import() */ 5391).then(__webpack_require__.bind(__webpack_require__, 85391)));
@@ -139793,6 +139871,9 @@ function App_App() {
     path: "BranchManagement",
     element: /*#__PURE__*/react.createElement(BranchManagement, null)
   }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
+    path: "MarketingViewAdmin",
+    element: /*#__PURE__*/react.createElement(MarketingViewAdmin, null)
+  }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
     path: "RateViewAdmin",
     element: /*#__PURE__*/react.createElement(RateViewAdmin, null)
   }), /*#__PURE__*/react.createElement(react_router_dist/* Route */.qh, {
@@ -139958,7 +140039,7 @@ axios/* default */.A.interceptors.response.use(response => {
       }
       var modifyModules = modules => {
         if (Array.isArray(modules)) {
-          var allModules = ["Dashboard", "Customer", "Expenses", "Estimate", "Fleet Management", "Invoice", "Item-Out", "Item-Purchase", "Item-Return", "Item", "Maintenance", "Pay-Roll", "Payment", "Purchase", "Project", "Rate", "Employee", "Admin", "User", "Role", "Company Profile", "Branch", "Location", "Item-Group", "Item-Category", "Supplier", "Stock", "Transfer", "Reports", "Settings", "Account", "Asset", "Grant Access", "Purchase-Order", "Point-Of-Sell", "Block-Factory", "Block-Mixer", "Backup", "Layout-Print"];
+          var allModules = ["Dashboard", "Customer", "Expenses", "Estimate", "Fleet Management", "Invoice", "Item-Out", "Item-Purchase", "Item-Return", "Item", "Maintenance", "Pay-Roll", "Payment", "Purchase", "Project", "Rate", "Employee", "Admin", "User", "Role", "Company Profile", "Branch", "Location", "Item-Group", "Item-Category", "Supplier", "Stock", "Transfer", "Reports", "Settings", "Account", "Asset", "Grant Access", "Purchase-Order", "Point-Of-Sell", "Block-Factory", "Block-Mixer", "Backup", "Layout-Print", "Marketing"];
           allModules.forEach(modName => {
             var m = modules.find(x => x && x.moduleName === modName);
             if (!m) {

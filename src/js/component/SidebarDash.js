@@ -130,7 +130,7 @@ function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
   const BlockFactoryInfo = grantAccess.filter((row) => row.moduleName === "Block-Factory" && row.access.readM === true);
   const POSInfo = grantAccess.filter((row) => row.moduleName === "Point-Of-Sell" && row.access.readM === true);
   const StoreInfo = grantAccess.filter((row) => (row.moduleName === "Item" || row.moduleName === "Supplier" || row.moduleName === "Item-Out" || row.moduleName === "Item-Return" || row.moduleName === "Item-Purchase" || row.moduleName === "Purchase-Order") && row.access.readM === true);
-  const MoreInfo = grantAccess.filter((row) => (row.moduleName === "Rate" || row.moduleName === "Fleet Management" || row.moduleName === "Employee" || row.moduleName === "Pay-Roll") && row.access.readM === true);
+  const MoreInfo = grantAccess.filter((row) => (row.moduleName === "Rate" || row.moduleName === "Fleet Management" || row.moduleName === "Employee" || row.moduleName === "Pay-Roll" || row.moduleName === "Marketing") && row.access.readM === true);
   return (
     <>
       {show1 === 1 ?

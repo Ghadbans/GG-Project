@@ -212,6 +212,9 @@ const ROUTE_PERMISSION_MAP = [
   { pattern: /^\/fleetformview/i, module: 'Fleet Management', action: 'create' },
   { pattern: /^\/fleetviewadmin/i, module: 'Fleet Management', action: 'read' },
 
+  // Marketing
+  { pattern: /^\/marketingviewadmin/i, module: 'Marketing', action: 'read' },
+
   // Settings & Access Control
   { pattern: /^\/rolepermission/i, module: 'Grant-Access', action: 'read', ggOnly: true },
   { pattern: /^\/grantaccess/i, module: 'Grant-Access', action: 'read', ggOnly: true },
@@ -246,4 +249,23 @@ export async function fetchUserGrantAccess(userId) {
     console.error('Error fetching grantAccess in permissionUtils:', err);
     return [];
   }
+}
+
+/**
+ * Check if user has marketing module access.
+ * GG master account has unconditional access bypass.
+ */
+export function canAccessMarketing(user, grantAccess = {}) {
+  if (!user) return false;
+  const userName = user.userName || user.data?.userName || '';
+  if (userName === 'GG') return true;
+
+  if (grantAccess?.marketing === true) return true;
+
+  if (Array.isArray(grantAccess?.modules)) {
+    const mod = grantAccess.modules.find(m => String(m.moduleName).toLowerCase() === 'marketing');
+    if (mod && (mod.access?.readM || mod.access?.createM)) return true;
+  }
+
+  return false;
 }

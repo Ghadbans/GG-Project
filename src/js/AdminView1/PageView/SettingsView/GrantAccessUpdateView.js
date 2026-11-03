@@ -153,6 +153,7 @@ function GrantAccessUpdateView() {
   const [notificationVisibility, setNotificationVisibility] = useState(false);
   const [messageVisibility, setMessageVisibility] = useState(false);
   const [backupVisibility, setBackupVisibility] = useState(false);
+  const [marketing, setMarketing] = useState(false);
   const [branchOptions, setBranchOptions] = useState([]);
 
   useEffect(() => {
@@ -181,6 +182,7 @@ function GrantAccessUpdateView() {
         setNotificationVisibility(res.data.data.notificationVisibility || false);
         setMessageVisibility(res.data.data.messageVisibility || false);
         setBackupVisibility(res.data.data.backupVisibility || false);
+        setMarketing(res.data.data.marketing || false);
         let fetchedModules = res.data.data.modules;
 
         
@@ -338,7 +340,8 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
       costVisibility,
       notificationVisibility,
       messageVisibility,
-      backupVisibility
+      backupVisibility,
+      marketing
     };
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-grantAccess/${id}`, data)
@@ -579,6 +582,17 @@ fetchedModules = fetchedModules.map((m, index) => ({ ...m, id: index + 1 }));
                             />
                           }
                           label={`Backup: ${backupVisibility ? 'Granted' : 'Denied'}`}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6} md={3}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={marketing}
+                              onChange={(e) => setMarketing(e.target.checked)}
+                            />
+                          }
+                          label={`Marketing: ${marketing ? 'Granted' : 'Denied'}`}
                         />
                       </Grid>
                     </Grid>
