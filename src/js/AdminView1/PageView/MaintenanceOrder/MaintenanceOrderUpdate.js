@@ -461,6 +461,19 @@ function MaintenanceOrderUpdate() {
   }
   const handleChange = (e, idRow) => {
     const { name, value } = e.target;
+    const target = e.target;
+    const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+    const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+    if (start !== null && target && typeof target.setSelectionRange === 'function') {
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        });
+      }
+      setTimeout(() => {
+        try { target.setSelectionRange(start, end); } catch (err) {}
+      }, 0);
+    }
     const list = [...items];
     const i = items.findIndex(Item => Item.idRow === idRow)
     list[i][name] = value;

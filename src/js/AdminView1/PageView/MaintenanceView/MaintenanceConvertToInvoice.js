@@ -335,6 +335,19 @@ function MaintenanceConvertToInvoice() {
   }, [])
   const handleChange = (e, i) => {
     const { name, value } = e.target;
+    const target = e.target;
+    const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+    const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+    if (start !== null && target && typeof target.setSelectionRange === 'function') {
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        });
+      }
+      setTimeout(() => {
+        try { target.setSelectionRange(start, end); } catch (err) {}
+      }, 0);
+    }
     const list = [...items];
     list[i][name] = value;
     if (list[i]['itemDiscount'] > 5) {

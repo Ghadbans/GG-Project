@@ -1596,7 +1596,22 @@ const handleQty = async () => {
                  name='description' 
                  label='Description'
                  value={description}
-                 onChange={(e)=>setDescription(e.target.value.toUpperCase())}
+                 onChange={(e) => {
+      const target = e.target;
+      const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+      const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+      setDescription(target.value.toUpperCase());
+      if (start !== null && target && typeof target.setSelectionRange === 'function') {
+        if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+          window.requestAnimationFrame(() => {
+            try { target.setSelectionRange(start, end); } catch (err) {}
+          });
+        }
+        setTimeout(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        }, 0);
+      }
+    }}
                  sx={{ width: '100%', backgroundColor:'white' }}       
              />)
                }

@@ -277,6 +277,19 @@ function EstimateViewConvertToInvoice() {
   }
   const handleChange = (e, i) => {
     const { name, value } = e.target;
+    const target = e.target;
+    const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+    const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+    if (start !== null && target && typeof target.setSelectionRange === 'function') {
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        });
+      }
+      setTimeout(() => {
+        try { target.setSelectionRange(start, end); } catch (err) {}
+      }, 0);
+    }
     const list = [...items];
     list[i][name] = value;
     if (list[i]['itemDiscount'] > 5) {
@@ -1226,7 +1239,22 @@ function EstimateViewConvertToInvoice() {
                         rows={4}
                         value={note}
                         label='Invoice Note'
-                        onChange={(e) => setNote(e.target.value.toUpperCase())}
+                        onChange={(e) => {
+      const target = e.target;
+      const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+      const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+      setNote(target.value.toUpperCase());
+      if (start !== null && target && typeof target.setSelectionRange === 'function') {
+        if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+          window.requestAnimationFrame(() => {
+            try { target.setSelectionRange(start, end); } catch (err) {}
+          });
+        }
+        setTimeout(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        }, 0);
+      }
+    }}
                         sx={{ width: '50%', backgroundColor: 'white' }}
                       />
                       <table className="firstTable">

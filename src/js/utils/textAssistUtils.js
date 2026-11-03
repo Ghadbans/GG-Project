@@ -671,3 +671,27 @@ export const applyCleanSpaces = (text, mode = 'upper') => {
   }
   return updated;
 };
+
+/**
+ * Safely preserves the input caret / cursor position when controlled state is updated.
+ * Used across forms, text fields, and table rows to prevent cursor jumping to the end.
+ */
+export const preserveCursorOnChange = (e, callback) => {
+  const target = e && e.target ? e.target : null;
+  const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+  const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+  if (typeof callback === 'function') {
+    callback();
+  }
+  if (start !== null && target && typeof target.setSelectionRange === 'function') {
+    if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+      window.requestAnimationFrame(() => {
+        try { target.setSelectionRange(start, end); } catch (err) {}
+      });
+    }
+    setTimeout(() => {
+      try { target.setSelectionRange(start, end); } catch (err) {}
+    }, 0);
+  }
+};
+

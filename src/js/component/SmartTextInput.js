@@ -1,4 +1,4 @@
-import React, { useState, useRef, useLayoutEffect } from 'react';
+import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { Autocomplete, TextField, InputAdornment } from '@mui/material';
 import LanguageFixerButton from './LanguageFixerButton';
 import { COMMON_PRESETS, polishText, hasTypo, getSuggestions } from '../utils/textAssistUtils';
@@ -11,7 +11,7 @@ import { COMMON_PRESETS, polishText, hasTypo, getSuggestions } from '../utils/te
  * 3. Smart suggestion dropdown menu (by clicking ✨ or right-clicking on mistaken/selected words)
  * 4. Preserves native browser context menu (Undo, Redo, Cut, Copy, Paste) on clean text & empty spaces
  * 5. Real-time typo detection badge & visual warning
- * 6. Preserves cursor position when uppercasing / editing in middle or beginning of text
+ * 6. Preserves cursor position when uppercasing / editing in middle or beginning of text across all modules
  */
 function SmartTextInput({
   label,
@@ -46,9 +46,10 @@ function SmartTextInput({
   const isTypo = hasTypo(value, mode);
 
   const restoreSelection = (start, end) => {
-    if (inputRef.current && typeof inputRef.current.setSelectionRange === 'function') {
+    const el = inputRef.current;
+    if (el && typeof el.setSelectionRange === 'function') {
       try {
-        inputRef.current.setSelectionRange(start, end);
+        el.setSelectionRange(start, end);
       } catch (err) {
         // ignore
       }
@@ -56,6 +57,13 @@ function SmartTextInput({
   };
 
   useLayoutEffect(() => {
+    if (selectionRef.current) {
+      const { start, end } = selectionRef.current;
+      restoreSelection(start, end);
+    }
+  });
+
+  useEffect(() => {
     if (selectionRef.current) {
       const { start, end } = selectionRef.current;
       restoreSelection(start, end);
@@ -133,7 +141,7 @@ function SmartTextInput({
   };
 
   const handleInputChange = (e) => {
-    const target = e && e.target ? e.target : null;
+    const target = (e && e.target) ? e.target : inputRef.current;
     const val = target ? target.value : e;
     if (target && typeof target.selectionStart === 'number') {
       const start = target.selectionStart;
@@ -144,6 +152,9 @@ function SmartTextInput({
           restoreSelection(start, end);
         });
       }
+      setTimeout(() => {
+        restoreSelection(start, end);
+      }, 0);
     }
     notifyChange(val);
   };
@@ -156,12 +167,19 @@ function SmartTextInput({
     }
   };
 
-  const setMergedRef = (node, extraRef) => {
-    inputRef.current = node;
+  const setMergedRef = (node, extraRef, thirdRef) => {
+    if (node) {
+      inputRef.current = node;
+    }
     if (typeof extraRef === 'function') {
       extraRef(node);
     } else if (extraRef && typeof extraRef === 'object') {
       extraRef.current = node;
+    }
+    if (typeof thirdRef === 'function') {
+      thirdRef(node);
+    } else if (thirdRef && typeof thirdRef === 'object') {
+      thirdRef.current = node;
     }
     if (typeof rest.inputRef === 'function') {
       rest.inputRef(node);
@@ -179,28 +197,42 @@ function SmartTextInput({
         freeSolo
         disabled={disabled}
         options={dropdownOptions}
-        value={value || ''}
-        onInputChange={(event, newInputValue) => {
-          if (event && event.target && typeof event.target.selectionStart === 'number') {
-            const start = event.target.selectionStart;
-            const end = event.target.selectionEnd;
-            selectionRef.current = { start, end };
-            if (typeof window !== 'undefined' && window.requestAnimationFrame) {
-              window.requestAnimationFrame(() => {
+        inputValue={value !== undefined && value !== null ? String(value) : ''}
+        value={null}
+        onInputChange={(event, newInputValue, reason) => {
+          if (reason === 'input') {
+            const target = (event && event.target && typeof event.target.selectionStart === 'number')
+              ? event.target
+              : inputRef.current;
+            if (target && typeof target.selectionStart === 'number') {
+              const start = target.selectionStart;
+              const end = target.selectionEnd;
+              selectionRef.current = { start, end };
+              if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+                window.requestAnimationFrame(() => {
+                  restoreSelection(start, end);
+                });
+              }
+              setTimeout(() => {
                 restoreSelection(start, end);
-              });
+              }, 0);
             }
+            notifyChange(newInputValue);
+          } else if (reason === 'clear') {
+            notifyChange('');
           }
-          notifyChange(newInputValue);
         }}
         onChange={(event, newValue) => {
-          notifyChange(newValue || '');
+          const chosen = typeof newValue === 'string'
+            ? newValue
+            : (newValue && typeof newValue === 'object' ? (newValue.label || newValue.itemName || newValue.title || '') : '');
+          notifyChange(chosen || '');
         }}
         renderInput={(params) => (
           <TextField
             {...params}
             {...rest}
-            inputRef={(node) => setMergedRef(node, params.inputProps?.ref)}
+            inputRef={(node) => setMergedRef(node, params.InputProps?.ref, params.inputProps?.ref)}
             id={id}
             name={name}
             label={label}
@@ -309,4 +341,3 @@ function SmartTextInput({
 }
 
 export default SmartTextInput;
-

@@ -3424,3 +3424,38 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Generated official Windows installer: `dist/Global Gate Setup 3.6.11.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.11.exe`.
    - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.11.apk`.
    - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.
+
+
+### Version 3.6.12 (November 03, 2026) - Universal Cursor Position Preservation Across All System Inputs & Autocomplete Fields
+1. **Reported Issue & User Feedback**:
+   - In Maintenance Update (`MaintenanceUpdateView.js`), when users finished typing a sentence in inputs such as `Defect Description` (`"GEAR BOX PROBLEM"`) and attempted to insert characters in the beginning or middle of the sentence, typing a single character immediately caused the caret/cursor to jump to the very end of the input field.
+   - User report:
+     *"again !! when im finsih writing in the box the sentence than if i want to add another word in the begening or in the middle is taking the 1st letter than push me to the end !!! this happened before and you fixed it !! check it and check if this happening in all the modules ! not only in this module !"*
+
+2. **Root Cause Analysis**:
+   - **MUI Autocomplete Internal `useEffect` Reset in `freeSolo`**:
+     In `<SmartTextInput />`, fields with dropdown preset options (such as `Defect Description`, `Appliance Description`, `Action Taken`, etc.) utilize MUI's `<Autocomplete freeSolo>`.
+     Previously, `<Autocomplete value={value || ''}>` was passed without directly controlling `inputValue`. On every keystroke, React updated the parent state to uppercase. MUI Autocomplete's internal `useEffect` detected `value !== previousProps.value` and executed `resetInputValue(null, value)`, which dispatched an internal reset state update asynchronously after rendering.
+     This second render pass caused the DOM `<input>` element's `.value` to be imperatively reassigned by Autocomplete after the initial `useLayoutEffect` had already cleared the selection ref. Under standard browser HTML specifications, programmatic assignment of `.value` resets caret coordinates to the string length (`value.length`), throwing the user's cursor to the very end.
+   - **System-Wide Exposure in Table Rows & Standalone Controlled Inputs**:
+     Similar cursor jumps could occur in table line item description fields (`handleChange` across 14 order/document update forms) and standalone controlled fields where `.toUpperCase()` was called directly on `e.target.value`.
+
+3. **Solutions & Implementations**:
+   - **`SmartTextInput.js` Architecture Overhaul**:
+     - Switched `<Autocomplete freeSolo>` to directly control `inputValue={value !== undefined && value !== null ? String(value) : ''}` with `value={null}`. By keeping `value` constant at `null`, MUI's internal `useEffect` detects `!valueChange` and never triggers `resetInputValue` or secondary DOM resets.
+     - Implemented triple-layer caret restoration: Synchronous `useLayoutEffect` (before paint), asynchronous `useEffect` (after React & child effects settle), and fallback `requestAnimationFrame` + `setTimeout(0)`.
+     - Merged all input refs (`params.InputProps.ref`, `params.inputProps.ref`, `rest.inputRef`) to guarantee `inputRef.current` always resolves to the true HTML input/textarea element.
+   - **Universal `preserveCursorOnChange` & Table Item Fortification**:
+     - Added `preserveCursorOnChange` helper in `src/js/utils/textAssistUtils.js`.
+     - Fortified line item `handleChange` handlers across 14 document views: `MaintenanceUpdateView.js`, `MaintenanceFormView.js`, `MaintenanceOrderUpdate.js`, `MaintenanceConvertToInvoice.js`, `EstimateInvoiceForm.js`, `EstimateInvoiceFormUpdate.js`, `EstimateViewConvertToInvoice.js`, `InvoiceForm.js`, `InvoiceFormUpdate.js`, `PurchaseForm.js`, `PurchaseUpdateOrder.js`, `ConvertPoToIP.js`, `MakePurchaseConvertToProject.js`, and `MakePurchase.js`.
+     - Fortified all 14 standalone controlled uppercase inputs across Customer, Employee, Project, Supplier, and Purchase modules.
+   - **Version Bumping**: Bumped to **`3.6.12`** across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+4. **Multi-Platform Production Builds & Releases**:
+   - AST validation verified with 0 errors (`npm run prebuild`).
+   - Typo / Test engine verified with 19/19 tests passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Generated official Windows installer: `dist/Global Gate Setup 3.6.12.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.12.exe`.
+   - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.12.apk`.
+   - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.

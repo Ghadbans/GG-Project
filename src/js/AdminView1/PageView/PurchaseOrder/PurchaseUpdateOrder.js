@@ -254,6 +254,19 @@ function PurchaseUpdateOrder() {
   {/** Item Change Start */ }
   const handleChange = (e, idRow) => {
     const { name, value } = e.target;
+    const target = e.target;
+    const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+    const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+    if (start !== null && target && typeof target.setSelectionRange === 'function') {
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        });
+      }
+      setTimeout(() => {
+        try { target.setSelectionRange(start, end); } catch (err) {}
+      }, 0);
+    }
     const list = [...itemsQtyArray]
     const i = itemsQtyArray.findIndex(Item => Item.idRow === idRow)
     list[i][name] = (typeof value === 'string' && name !== 'password' && name !== 'email') ? value.toUpperCase() : value;
@@ -713,7 +726,22 @@ function PurchaseUpdateOrder() {
                       name='manufacturer'
                       label='Manufacturer'
                       value={manufacturer !== undefined ? manufacturer : ''}
-                      onChange={(e) => setManufacturer(e.target.value.toUpperCase())}
+                      onChange={(e) => {
+      const target = e.target;
+      const start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+      const end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+      setManufacturer(target.value.toUpperCase());
+      if (start !== null && target && typeof target.setSelectionRange === 'function') {
+        if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+          window.requestAnimationFrame(() => {
+            try { target.setSelectionRange(start, end); } catch (err) {}
+          });
+        }
+        setTimeout(() => {
+          try { target.setSelectionRange(start, end); } catch (err) {}
+        }, 0);
+      }
+    }}
                       sx={{ width: '100%', backgroundColor: 'white' }}
                     />
                   </Grid>
