@@ -3384,3 +3384,43 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Generated official Windows installer: `dist/Global Gate Setup 3.6.10.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.10.exe`.
    - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.10.apk`.
    - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.
+
+
+### Version 3.6.11 (November 03, 2026) - Custom Empty-Box Line Item Retention on Maintenance-to-Invoice Conversion
+1. **Reported Issue & User Feedback**:
+   - In Maintenance Order `M-000912 | PAILLOTE AURALIA GUEST-HOUSE & RESTAURANT`, Row 25 was created as a custom ad-hoc line item with an empty catalog item, description `"BRUM"`, Quantity `0.5`, Rate `$65`, and Total `$32.50`.
+   - When converting the maintenance order to an invoice via `MaintenanceConvertToInvoice.js`, Row 25 converted with the rate and total intact, but the line item box converted into an empty Autocomplete dropdown, losing the description `"BRUM"`.
+   - User report:
+     *"What happened in purchase request is happening in the maintence order when i converte Maintenance order to invoice and it has empty box filed by user when converting to invoice its converting with empty box but taking the price .. like it supposed to take the BRUM from maintenance to invoice not empty box ..."*
+
+2. **Root Cause Analysis**:
+   - **Hardcoded Autocomplete Condition in `MaintenanceConvertToInvoice.js`**:
+     Lines 1045 and 1246 evaluated `Item.itemName.itemName ? (...) : (<Autocomplete ...>)`. For custom line items where `itemName.itemName` is `""` or `'empty'` and only `itemDescription` contains the custom label (e.g. `"BRUM"`), the expression evaluated to `false`, causing the view to render an empty Autocomplete dropdown.
+   - **Empty Box Creation Initialization**:
+     In `addItemWhite` (the custom empty-box button), `itemName` was initialized to `{ _id: "", itemName: "" }` instead of `{ _id: "", itemName: "empty" }`, preventing custom items from correctly displaying.
+   - **Systemic Across Other Maintenance & Estimate Views**:
+     Similar fragile evaluations existed in `MaintenanceUpdateView.js`, `MaintenanceOrderUpdate.js`, `MaintenanceFormView.js`, `EstimateViewConvertToInvoice.js`, and `InvoiceViewAdminAll.js`.
+
+3. **Solutions & Implementations**:
+   - **Robust Custom Item Detection & Description Preservation**:
+     Updated the item display condition across `MaintenanceConvertToInvoice.js`, `MaintenanceUpdateView.js`, `MaintenanceOrderUpdate.js`, `MaintenanceFormView.js`, and `EstimateViewConvertToInvoice.js` to:
+     `Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))`
+     This guarantees that any item with a description (such as `"BRUM"` or `"BLACK OXYD 25L"`) renders the text box with `itemDescription` seamlessly.
+   - **Auto-Sanitization on Load**:
+     On data load in `MaintenanceConvertToInvoice.js`, `MaintenanceUpdateView.js`, and `EstimateViewConvertToInvoice.js`, items with a non-empty `itemDescription` but no catalog item name are automatically normalized to `{ _id: '', itemName: 'empty' }`.
+   - **Catalog Header Visibility**:
+     Hidden check updated to ensure the uppercase item header is hidden whenever `itemName` is `'empty'` or blank, cleanly showing only the custom description text box.
+   - **Safe Rendering in Invoice & Selection Views**:
+     Added null-safe fallbacks in `InvoiceViewAdminAll.js` (`item.itemName?.itemName || item.itemDescription || ''`) and `MaintenanceConvertToInvoice.js` item selectors to prevent runtime crashes when custom items are converted or viewed.
+   - **Database Record Verification for M-000912**:
+     Verified and repaired MongoDB document for `M-000912` (ID: `69ae83aeba750873b5093d00`): Row 25 `idRow: "09c3bbf7-9113-4602-b6c4-cbdc13cf032e"`, `itemName: { _id: "", itemName: "empty" }`, `itemDescription: "BRUM"`, `itemQty: 0.5`, `itemRate: 65`, `itemAmount: 32.5`, `totalAmount: 32.5`.
+   - **Version Bumping**: Bumped to **`3.6.11`** across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+4. **Multi-Platform Production Builds & Releases**:
+   - AST validation verified with 0 errors (`npm run prebuild`).
+   - Typo / Test engine verified with 19/19 tests passing (`node scripts/test_engine.js`).
+   - Web production bundle compiled to `dist_web/` and `build/`.
+   - Electron desktop bundle compiled to `dist/`.
+   - Generated official Windows installer: `dist/Global Gate Setup 3.6.11.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.11.exe`.
+   - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.11.apk`.
+   - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.

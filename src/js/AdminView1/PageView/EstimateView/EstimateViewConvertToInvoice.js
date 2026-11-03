@@ -221,7 +221,16 @@ function EstimateViewConvertToInvoice() {
           const calculatedRate = qty > 0 && amount > 0
             ? Math.round((totalBeforeDiscount / qty) * 100) / 100
             : (item.itemRate || 0);
-          return { ...item, itemRate: calculatedRate };
+          let itemNameObj = item.itemName;
+          const hasDesc = Boolean(item.itemDescription && String(item.itemDescription).trim() !== '');
+          const hasItemName = Boolean(itemNameObj && (typeof itemNameObj === 'string' ? itemNameObj.trim() !== '' && itemNameObj.trim().toLowerCase() !== 'empty' : (itemNameObj.itemName && String(itemNameObj.itemName).trim() !== '' && String(itemNameObj.itemName).trim().toLowerCase() !== 'empty')));
+          if (hasDesc && !hasItemName) {
+            itemNameObj = {
+              _id: (typeof itemNameObj === 'object' ? itemNameObj?._id : '') || '',
+              itemName: 'empty'
+            };
+          }
+          return { ...item, itemName: itemNameObj, itemRate: calculatedRate };
         }));
         setSubTotal(res.data.data.subTotal);
         setTotal(res.data.data.total);
@@ -856,11 +865,11 @@ function EstimateViewConvertToInvoice() {
                                                     <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                     <td style={{ height: '100px' }}>
                                                       {
-                                                        Item.itemName.itemName ? (
+                                                        (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                           (
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                               <div >
-                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                                <Typography hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' || String(Item.itemName?.itemName || '').trim() === '')} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')) : ''}</Typography>
                                                                 <TextField
                                                                   name='itemDescription' id='itemDescription'
                                                                   value={Item.itemDescription}
@@ -1057,11 +1066,11 @@ function EstimateViewConvertToInvoice() {
                                                     <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                     <td style={{ height: '100px' }}>
                                                       {
-                                                        Item.itemName.itemName ? (
+                                                        (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                           (
                                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                               <div >
-                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                                <Typography hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' || String(Item.itemName?.itemName || '').trim() === '')} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')) : ''}</Typography>
                                                                 <TextField
                                                                   name='itemDescription' id='itemDescription'
                                                                   value={Item.itemDescription}

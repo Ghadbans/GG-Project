@@ -245,8 +245,18 @@ function MaintenanceConvertToInvoice() {
           const discountVal = Math.round((totalAmount * discount) * 100) / 100;
           const percentage = Math.round((discountVal / 100) * 100) / 100;
           const itemAmount = Math.round((totalAmount - percentage) * 100) / 100;
+          let itemNameObj = item.itemName;
+          const hasDesc = Boolean(item.itemDescription && String(item.itemDescription).trim() !== '');
+          const hasItemName = Boolean(itemNameObj && (typeof itemNameObj === 'string' ? itemNameObj.trim() !== '' && itemNameObj.trim().toLowerCase() !== 'empty' : (itemNameObj.itemName && String(itemNameObj.itemName).trim() !== '' && String(itemNameObj.itemName).trim().toLowerCase() !== 'empty')));
+          if (hasDesc && !hasItemName) {
+            itemNameObj = {
+              _id: (typeof itemNameObj === 'object' ? itemNameObj?._id : '') || '',
+              itemName: 'empty'
+            };
+          }
           return {
             ...item,
+            itemName: itemNameObj,
             itemRate: rate,
             totalAmount,
             discount: discountVal,
@@ -383,7 +393,7 @@ function MaintenanceConvertToInvoice() {
       idRow: v4(),
       itemName: {
         _id: "",
-        itemName: ""
+        itemName: "empty"
       },
       itemDescription: "",
       itemDiscount: 0,
@@ -598,6 +608,7 @@ function MaintenanceConvertToInvoice() {
         _id: null,
         itemName: null
       },
+      itemDescription: ""
     } : row))
   }
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
@@ -1042,11 +1053,11 @@ function MaintenanceConvertToInvoice() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName.itemName ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' || String(Item.itemName?.itemName || '').trim() === '')} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')) : ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}
@@ -1243,11 +1254,11 @@ function MaintenanceConvertToInvoice() {
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName.itemName ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' || String(Item.itemName?.itemName || '').trim() === '')} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')) : ''}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}
@@ -1585,7 +1596,7 @@ function MaintenanceConvertToInvoice() {
                   {
                     items.map(item => (
                       item.idRow !== selectedRowId && (
-                        <MenuItem key={item.idRow} value={item.idRow}>{item.itemName.itemName}</MenuItem>)
+                        <MenuItem key={item.idRow} value={item.idRow}>{typeof item.itemName === 'string' ? item.itemName : (item.itemName?.itemName || item.itemDescription || '')}</MenuItem>)
                     ))
                   }
                 </Select>

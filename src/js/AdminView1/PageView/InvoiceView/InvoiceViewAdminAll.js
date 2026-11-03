@@ -347,8 +347,8 @@ function InvoiceViewAdminAll() {
 
   const related = itemOut.length > 0 ? itemOut.reduce((acc, row) => {
     row.itemsQtyArray.filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
-      const ItemName = item.itemName.itemName;
-      const Id = item.itemName._id;
+      const ItemName = typeof item.itemName === 'string' ? item.itemName : (item.itemName?.itemName || item.itemDescription || '');
+      const Id = item.itemName?._id || item.idRow;
       if (!acc[ItemName]) {
         acc[ItemName] = { ItemName, Id, total: 0 }
       }
@@ -359,8 +359,8 @@ function InvoiceViewAdminAll() {
 
   const relatedReturn = itemReturn.length > 0 ? itemReturn.reduce((acc, row) => {
     row.itemsQtyArray.filter((item) => parseFloat(item.newItemOut) > 0).forEach((item) => {
-      const ItemName1 = item.itemName.itemName;
-      const Id1 = item.itemName._id;
+      const ItemName1 = typeof item.itemName === 'string' ? item.itemName : (item.itemName?.itemName || item.itemDescription || '');
+      const Id1 = item.itemName?._id || item.idRow;
       if (!acc[ItemName1]) {
         acc[ItemName1] = { ItemName1, Id1, total1: 0 }
       }
@@ -952,7 +952,7 @@ function InvoiceViewAdminAll() {
   const data5 = items.map((Item, i) => {
     return ({
       no: i + 1,
-      item: Item.itemName.itemName,
+      item: typeof Item.itemName === 'string' ? Item.itemName : (Item.itemName?.itemName || ''),
       itemDescription: Item.itemDescription,
       itemQty: Item.itemQty,
       itemRate: '$' + Item.itemRate,

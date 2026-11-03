@@ -500,7 +500,7 @@ function MaintenanceFormView() {
       idRow: v4(),
       itemName: {
         _id: "",
-        itemName: ""
+        itemName: "empty"
       },
       itemDescription: "",
       itemDiscount: 0,
@@ -554,7 +554,7 @@ function MaintenanceFormView() {
       idRow: v4(),
       itemName: {
         _id: "",
-        itemName: ""
+        itemName: "empty"
       },
       itemDescription: "",
       itemDiscount: 0,
@@ -1617,7 +1617,7 @@ function MaintenanceFormView() {
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td style={{ height: '100px' }}>
                                                 {
-                                                  Item.itemName.itemName ? (
+                                                  (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -1627,7 +1627,7 @@ function MaintenanceFormView() {
                                                             initialType={Item.contentType}
                                                           />
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                                                            <Typography hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' || String(Item.itemName?.itemName || '').trim() === '')} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')) : ''}</Typography>
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'
                                                               value={Item.itemDescription}

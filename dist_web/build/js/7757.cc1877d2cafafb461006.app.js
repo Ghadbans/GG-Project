@@ -1710,8 +1710,9 @@ function InvoiceViewAdminAll() {
   {/** Item out sync start */}
   var related = itemOut.length > 0 ? itemOut.reduce((acc, row) => {
     row.itemsQtyArray.filter(item => parseFloat(item.newItemOut) > 0).forEach(item => {
-      var ItemName = item.itemName.itemName;
-      var Id = item.itemName._id;
+      var _item$itemName, _item$itemName2;
+      var ItemName = typeof item.itemName === 'string' ? item.itemName : ((_item$itemName = item.itemName) === null || _item$itemName === void 0 ? void 0 : _item$itemName.itemName) || item.itemDescription || '';
+      var Id = ((_item$itemName2 = item.itemName) === null || _item$itemName2 === void 0 ? void 0 : _item$itemName2._id) || item.idRow;
       if (!acc[ItemName]) {
         acc[ItemName] = {
           ItemName,
@@ -1725,8 +1726,9 @@ function InvoiceViewAdminAll() {
   }, {}) : null;
   var relatedReturn = itemReturn.length > 0 ? itemReturn.reduce((acc, row) => {
     row.itemsQtyArray.filter(item => parseFloat(item.newItemOut) > 0).forEach(item => {
-      var ItemName1 = item.itemName.itemName;
-      var Id1 = item.itemName._id;
+      var _item$itemName3, _item$itemName4;
+      var ItemName1 = typeof item.itemName === 'string' ? item.itemName : ((_item$itemName3 = item.itemName) === null || _item$itemName3 === void 0 ? void 0 : _item$itemName3.itemName) || item.itemDescription || '';
+      var Id1 = ((_item$itemName4 = item.itemName) === null || _item$itemName4 === void 0 ? void 0 : _item$itemName4._id) || item.idRow;
       if (!acc[ItemName1]) {
         acc[ItemName1] = {
           ItemName1,
@@ -2442,9 +2444,10 @@ function InvoiceViewAdminAll() {
     noteInfo: 'Note ' + row.noteInfo
   }));
   var data5 = items.map((Item, i) => {
+    var _Item$itemName2;
     return {
       no: i + 1,
-      item: Item.itemName.itemName,
+      item: typeof Item.itemName === 'string' ? Item.itemName : ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) || '',
       itemDescription: Item.itemDescription,
       itemQty: Item.itemQty,
       itemRate: '$' + Item.itemRate,
@@ -3448,10 +3451,10 @@ function InvoiceViewAdminAll() {
         backgroundColor: '#e8f7fe'
       }
     }, "Total"))), /*#__PURE__*/react.createElement("tbody", null, (_row$items = row.items) === null || _row$items === void 0 ? void 0 : _row$items.map((Item, i) => {
-      var _Item$itemName3, _Item$itemName4;
+      var _Item$itemName4, _Item$itemName5;
       var relatedUnit = item.find(Item1 => {
-        var _Item$itemName2;
-        return Item1._id === ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id);
+        var _Item$itemName3;
+        return Item1._id === ((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id);
       });
       return /*#__PURE__*/react.createElement("tr", {
         key: Item.idRow
@@ -3476,8 +3479,8 @@ function InvoiceViewAdminAll() {
           borderLeft: '1px solid #DDD'
         }
       }, /*#__PURE__*/react.createElement("span", {
-        hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3.itemName).trim().toLowerCase() === 'empty')
-      }, ((_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 || (_Item$itemName4 = _Item$itemName4.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
+        hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName).trim().toLowerCase() === 'empty')
+      }, ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 || (_Item$itemName5 = _Item$itemName5.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
         style: {
           textAlign: 'left',
           width: '250px',
@@ -3946,10 +3949,10 @@ function InvoiceViewAdminAll() {
         backgroundColor: '#e8f7fe'
       }
     }, "Total"))), /*#__PURE__*/react.createElement("tbody", null, (_row$items2 = row.items) === null || _row$items2 === void 0 ? void 0 : _row$items2.map((Item, i) => {
-      var _Item$itemName6, _Item$itemName7;
+      var _Item$itemName7, _Item$itemName8;
       var relatedUnit = item.find(Item1 => {
-        var _Item$itemName5;
-        return Item1._id === ((_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5._id);
+        var _Item$itemName6;
+        return Item1._id === ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6._id);
       });
       return /*#__PURE__*/react.createElement("tr", {
         key: Item.idRow
@@ -3974,8 +3977,8 @@ function InvoiceViewAdminAll() {
           borderLeft: '1px solid #DDD'
         }
       }, /*#__PURE__*/react.createElement("span", {
-        hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6.itemName).trim().toLowerCase() === 'empty')
-      }, ((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 || (_Item$itemName7 = _Item$itemName7.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
+        hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7.itemName).trim().toLowerCase() === 'empty')
+      }, ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 || (_Item$itemName8 = _Item$itemName8.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
         style: {
           textAlign: 'left',
           width: '250px',
@@ -4529,10 +4532,10 @@ function InvoiceViewAdminAll() {
         border: '1px solid black'
       }
     }, "Total Cost"))), /*#__PURE__*/react.createElement("tbody", null, row.items.map((Item, i) => {
-      var _Item$itemName9, _Item$itemName0, _parseFloat;
+      var _Item$itemName0, _Item$itemName1, _parseFloat;
       var relatedUnit = item.find(Item1 => {
-        var _Item$itemName8;
-        return Item1._id === ((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8._id);
+        var _Item$itemName9;
+        return Item1._id === ((_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9._id);
       });
       return /*#__PURE__*/react.createElement("tr", {
         key: Item.idRow
@@ -4547,8 +4550,8 @@ function InvoiceViewAdminAll() {
           border: '1px solid black'
         }
       }, " ", /*#__PURE__*/react.createElement("span", {
-        hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9.itemName).trim().toLowerCase() === 'empty')
-      }, ((_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 || (_Item$itemName0 = _Item$itemName0.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
+        hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0.itemName).trim().toLowerCase() === 'empty')
+      }, ((_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 || (_Item$itemName1 = _Item$itemName1.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
         style: {
           border: '1px solid black',
           width: '200px'
@@ -4655,10 +4658,10 @@ function InvoiceViewAdminAll() {
           border: '1px solid black'
         }
       }, "Total Cost"))), /*#__PURE__*/react.createElement("tbody", null, row1.items.map((Item, i) => {
-        var _Item$itemName10, _Item$itemName11, _parseFloat5;
+        var _Item$itemName11, _Item$itemName12, _parseFloat5;
         var relatedUnit = item.find(Item1 => {
-          var _Item$itemName1;
-          return Item1._id === ((_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1._id);
+          var _Item$itemName10;
+          return Item1._id === ((_Item$itemName10 = Item.itemName) === null || _Item$itemName10 === void 0 ? void 0 : _Item$itemName10._id);
         });
         return /*#__PURE__*/react.createElement("tr", {
           key: Item.idRow
@@ -4673,8 +4676,8 @@ function InvoiceViewAdminAll() {
             border: '1px solid black'
           }
         }, " ", /*#__PURE__*/react.createElement("span", {
-          hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName10 = Item.itemName) === null || _Item$itemName10 === void 0 ? void 0 : _Item$itemName10.itemName).trim().toLowerCase() === 'empty')
-        }, ((_Item$itemName11 = Item.itemName) === null || _Item$itemName11 === void 0 || (_Item$itemName11 = _Item$itemName11.itemName) === null || _Item$itemName11 === void 0 ? void 0 : _Item$itemName11.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
+          hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName11 = Item.itemName) === null || _Item$itemName11 === void 0 ? void 0 : _Item$itemName11.itemName).trim().toLowerCase() === 'empty')
+        }, ((_Item$itemName12 = Item.itemName) === null || _Item$itemName12 === void 0 || (_Item$itemName12 = _Item$itemName12.itemName) === null || _Item$itemName12 === void 0 ? void 0 : _Item$itemName12.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
           style: {
             border: '1px solid black',
             width: '200px'
@@ -4790,10 +4793,10 @@ function InvoiceViewAdminAll() {
           border: '1px solid black'
         }
       }, "Total Cost"))), /*#__PURE__*/react.createElement("tbody", null, row2.items.map((Item, i) => {
-        var _Item$itemName13, _Item$itemName14, _parseFloat8;
+        var _Item$itemName14, _Item$itemName15, _parseFloat8;
         var relatedUnit = item.find(Item1 => {
-          var _Item$itemName12;
-          return Item1._id === ((_Item$itemName12 = Item.itemName) === null || _Item$itemName12 === void 0 ? void 0 : _Item$itemName12._id);
+          var _Item$itemName13;
+          return Item1._id === ((_Item$itemName13 = Item.itemName) === null || _Item$itemName13 === void 0 ? void 0 : _Item$itemName13._id);
         });
         return /*#__PURE__*/react.createElement("tr", {
           key: Item.idRow
@@ -4808,8 +4811,8 @@ function InvoiceViewAdminAll() {
             border: '1px solid black'
           }
         }, " ", /*#__PURE__*/react.createElement("span", {
-          hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName13 = Item.itemName) === null || _Item$itemName13 === void 0 ? void 0 : _Item$itemName13.itemName).trim().toLowerCase() === 'empty')
-        }, ((_Item$itemName14 = Item.itemName) === null || _Item$itemName14 === void 0 || (_Item$itemName14 = _Item$itemName14.itemName) === null || _Item$itemName14 === void 0 ? void 0 : _Item$itemName14.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
+          hidden: Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName14 = Item.itemName) === null || _Item$itemName14 === void 0 ? void 0 : _Item$itemName14.itemName).trim().toLowerCase() === 'empty')
+        }, ((_Item$itemName15 = Item.itemName) === null || _Item$itemName15 === void 0 || (_Item$itemName15 = _Item$itemName15.itemName) === null || _Item$itemName15 === void 0 ? void 0 : _Item$itemName15.toUpperCase()) || '')), /*#__PURE__*/react.createElement("td", {
           style: {
             border: '1px solid black',
             width: '200px'

@@ -293,13 +293,25 @@ function MaintenanceUpdateView() {
           setServiceNumber(mData.serviceNumber || 0);
           setTechnicianAssign(mData.technicianAssign || '');
           setCustomerName(mData.customerName || null);
-          const sanitizedItems = (mData.items || []).map((item) => ({
-            ...item,
-            itemAmount: Number(item.itemAmount != null ? item.itemAmount : ((parseFloat(item.itemQty) || 0) * (parseFloat(item.itemRate) || 0))) || 0,
-            itemQty: item.itemQty != null ? item.itemQty : 0,
-            itemRate: item.itemRate != null ? item.itemRate : 0,
-            itemDiscount: item.itemDiscount != null ? item.itemDiscount : 0,
-          }));
+          const sanitizedItems = (mData.items || []).map((item) => {
+            let itemNameObj = item.itemName;
+            const hasDesc = Boolean(item.itemDescription && String(item.itemDescription).trim() !== '');
+            const hasItemName = Boolean(itemNameObj && (typeof itemNameObj === 'string' ? itemNameObj.trim() !== '' && itemNameObj.trim().toLowerCase() !== 'empty' : (itemNameObj.itemName && String(itemNameObj.itemName).trim() !== '' && String(itemNameObj.itemName).trim().toLowerCase() !== 'empty')));
+            if (hasDesc && !hasItemName) {
+              itemNameObj = {
+                _id: (typeof itemNameObj === 'object' ? itemNameObj?._id : '') || '',
+                itemName: 'empty'
+              };
+            }
+            return {
+              ...item,
+              itemName: itemNameObj,
+              itemAmount: Number(item.itemAmount != null ? item.itemAmount : ((parseFloat(item.itemQty) || 0) * (parseFloat(item.itemRate) || 0))) || 0,
+              itemQty: item.itemQty != null ? item.itemQty : 0,
+              itemRate: item.itemRate != null ? item.itemRate : 0,
+              itemDiscount: item.itemDiscount != null ? item.itemDiscount : 0,
+            };
+          });
           SetItems(sanitizedItems);
           setConverted(mData.Converted || "");
           setAdjustmentNumber(mData.adjustmentNumber || 0);
@@ -540,7 +552,7 @@ function MaintenanceUpdateView() {
       idRow: v4(),
       itemName: {
         _id: "",
-        itemName: ""
+        itemName: "empty"
       },
       itemDescription: "",
       itemDiscount: 0,
@@ -569,7 +581,7 @@ function MaintenanceUpdateView() {
       idRow: v4(),
       itemName: {
         _id: "",
-        itemName: ""
+        itemName: "empty"
       },
       itemDescription: "",
       itemDiscount: 0,
@@ -1917,7 +1929,7 @@ function MaintenanceUpdateView() {
                                                 <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                 <td style={{ height: '100px' }}>
                                                   {
-                                                    Item.itemName._id || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' ? (
+                                                    (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                       (
                                                         <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                                                           <ItemThumbnail
@@ -1926,7 +1938,7 @@ function MaintenanceUpdateView() {
                                                             initialType={Item.contentType}
                                                           />
                                                           <div >
-                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                            <Typography hidden={Boolean(!Item.itemName || String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' || String(Item.itemName?.itemName || '').trim() === '')} sx={{ fontSize: '23px' }}>{Item.itemName ? (typeof Item.itemName === 'string' ? Item.itemName.toUpperCase() : (Item.itemName?.itemName?.toUpperCase() || '')) : ''}</Typography>
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'
                                                               value={Item.itemDescription}
