@@ -21,6 +21,26 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 61561
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96M14 13v4h-4v-4H7l5-5 5 5z"
+}), 'CloudUpload');
+
+/***/ },
+
 /***/ 51249
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -61,6 +81,29 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
   d: "M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2m13 2h-2.5A3.5 3.5 0 0 0 12 8.5V11h-2v3h2v7h3v-7h3v-3h-3V9a1 1 0 0 1 1-1h2V5z"
 }), 'Facebook');
+
+/***/ },
+
+/***/ 77193
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+'use client';
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var React = _interopRequireWildcard(__webpack_require__(96540));
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function (e) { return e ? t : r; })(e); }
+function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != typeof e && "function" != typeof e) return { default: e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && Object.prototype.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n.default = e, t && t.set(e, n), n; }
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8 1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3z"
+}), 'Instagram');
 
 /***/ },
 
@@ -499,21 +542,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Campaign__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(25099);
 /* harmony import */ var _mui_icons_material_Facebook__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(53837);
 /* harmony import */ var _mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(61451);
-/* harmony import */ var _mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(56434);
-/* harmony import */ var _mui_icons_material_ErrorOutline__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(51249);
-/* harmony import */ var _mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(2775);
-/* harmony import */ var _mui_icons_material_Send__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(40443);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(99380);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(99571);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(13561);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(47767);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(32005);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(71510);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(46986);
-/* harmony import */ var _component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(34687);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(95236);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(83818);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_Instagram__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(77193);
+/* harmony import */ var _mui_icons_material_CloudUpload__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(61561);
+/* harmony import */ var _mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(81730);
+/* harmony import */ var _mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(56434);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_ErrorOutline__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(51249);
+/* harmony import */ var _mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(2775);
+/* harmony import */ var _mui_icons_material_Send__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(40443);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(99380);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(99571);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(13561);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(47767);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(32005);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(71510);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(46986);
+/* harmony import */ var _component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(34687);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(95236);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(83818);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(40301);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -528,6 +575,9 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 ;
+
+
+
 
 
 
@@ -607,9 +657,9 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay
 });
 function MarketingViewAdmin() {
   var _user$data3, _user$data4, _result$copy, _result$copy2;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_36__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_35__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_35__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .selectCurrentUser */ .xu);
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_40__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_39__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_39__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -625,35 +675,67 @@ function MarketingViewAdmin() {
     _useState6 = _slicedToArray(_useState5, 2),
     whatsappNumber = _useState6[0],
     setWhatsappNumber = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      facebook: true,
-      whatsapp: true
-    }),
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
     _useState8 = _slicedToArray(_useState7, 2),
-    targetPlatforms = _useState8[0],
-    setTargetPlatforms = _useState8[1];
-  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    productImage = _useState8[0],
+    setProductImage = _useState8[1];
+  var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState0 = _slicedToArray(_useState9, 2),
-    loading = _useState0[0],
-    setLoading = _useState0[1];
-  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    productImageName = _useState0[0],
+    setProductImageName = _useState0[1];
+  var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
+      facebook: true,
+      whatsapp: true,
+      instagram: true
+    }),
     _useState10 = _slicedToArray(_useState1, 2),
-    result = _useState10[0],
-    setResult = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    targetPlatforms = _useState10[0],
+    setTargetPlatforms = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    errorMessage = _useState12[0],
-    setErrorMessage = _useState12[1];
+    loading = _useState12[0],
+    setLoading = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState14 = _slicedToArray(_useState13, 2),
+    result = _useState14[0],
+    setResult = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState16 = _slicedToArray(_useState15, 2),
+    errorMessage = _useState16[0],
+    setErrorMessage = _useState16[1];
+  var handleImageUpload = e => {
+    var _e$target$files;
+    var file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Please select an image file (PNG, JPG, WEBP).');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Image size should be under 15MB.');
+      return;
+    }
+    var reader = new FileReader();
+    reader.onload = uploadEvent => {
+      setProductImage(uploadEvent.target.result);
+      setProductImageName(file.name);
+    };
+    reader.readAsDataURL(file);
+  };
+  var handleRemoveImage = () => {
+    setProductImage(null);
+    setProductImageName('');
+  };
 
   // Access Permission Verification
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState14 = _slicedToArray(_useState13, 2),
-    hasAccess = _useState14[0],
-    setHasAccess = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState16 = _slicedToArray(_useState15, 2),
-    loadingPermission = _useState16[0],
-    setLoadingPermission = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState18 = _slicedToArray(_useState17, 2),
+    hasAccess = _useState18[0],
+    setHasAccess = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState20 = _slicedToArray(_useState19, 2),
+    loadingPermission = _useState20[0],
+    setLoadingPermission = _useState20[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUserAndAccess = /*#__PURE__*/function () {
@@ -664,11 +746,11 @@ function MarketingViewAdmin() {
         }
         try {
           var _resAccess$data;
-          var resUser = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+          var resUser = yield axios__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_42__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
           var name = resUser.data.data.employeeName;
           var role = resUser.data.data.role;
           var id = resUser.data.data._id;
-          dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .setUser */ .gV)({
+          dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__/* .setUser */ .gV)({
             userName: name,
             role,
             id
@@ -682,7 +764,7 @@ function MarketingViewAdmin() {
           }
 
           // Check GrantAccess permissions
-          var resAccess = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_39__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var resAccess = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_43__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_42__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           var userAccess = resAccess === null || resAccess === void 0 || (_resAccess$data = resAccess.data) === null || _resAccess$data === void 0 || (_resAccess$data = _resAccess$data.data) === null || _resAccess$data === void 0 ? void 0 : _resAccess$data.find(row => row.userID === id);
           var isMarketingGranted = Boolean((userAccess === null || userAccess === void 0 ? void 0 : userAccess.marketing) || Array.isArray(userAccess === null || userAccess === void 0 ? void 0 : userAccess.modules) && userAccess.modules.some(m => {
             var _m$access, _m$access2;
@@ -704,7 +786,7 @@ function MarketingViewAdmin() {
   }, [dispatch, navigate]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_37__/* .setUser */ .gV)(null));
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__/* .setUser */ .gV)(null));
     navigate('/');
   };
   var handlePublish = /*#__PURE__*/function () {
@@ -712,11 +794,11 @@ function MarketingViewAdmin() {
       var _user$data, _user$data2;
       if (e && e.preventDefault) e.preventDefault();
       if (!brief.trim()) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.warning('Please enter a promotional brief first.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Please enter a promotional brief first.');
         return;
       }
-      if (!targetPlatforms.facebook && !targetPlatforms.whatsapp) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.warning('Please select at least one target platform (Facebook or WhatsApp).');
+      if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Please select at least one target platform (Facebook, WhatsApp, or Instagram).');
         return;
       }
       setLoading(true);
@@ -725,9 +807,11 @@ function MarketingViewAdmin() {
       var payload = {
         brief: brief.trim(),
         whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
+        productImage: productImage || null,
         platforms: {
           facebook: targetPlatforms.facebook,
-          whatsapp: targetPlatforms.whatsapp
+          whatsapp: targetPlatforms.whatsapp,
+          instagram: targetPlatforms.instagram
         },
         userId: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.id) || localStorage.getItem('user'),
         userName: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || ''
@@ -748,11 +832,13 @@ function MarketingViewAdmin() {
         // 2. If not in Electron, try local microservice if running on workstation
         if (!resData) {
           try {
-            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', {
+            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', {
               brief: payload.brief,
               whatsappNumber: payload.whatsappNumber,
+              productImage: payload.productImage,
               postToFacebook: payload.platforms.facebook,
-              sendWhatsApp: payload.platforms.whatsapp
+              sendWhatsApp: payload.platforms.whatsapp,
+              postToInstagram: payload.platforms.instagram
             }, {
               timeout: 60000
             });
@@ -764,28 +850,29 @@ function MarketingViewAdmin() {
 
         // 3. Fall back to secure backend API endpoint
         if (!resData) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_42__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
           resData = res.data;
         }
         if (resData && resData.success) {
-          var _resData$facebook, _resData$whatsapp;
+          var _resData$facebook, _resData$whatsapp, _resData$instagram;
           setResult(resData);
           var fbOk = (_resData$facebook = resData.facebook) === null || _resData$facebook === void 0 ? void 0 : _resData$facebook.success;
           var waOk = (_resData$whatsapp = resData.whatsapp) === null || _resData$whatsapp === void 0 ? void 0 : _resData$whatsapp.success;
-          if (fbOk && waOk) {
-            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Flyer published to Facebook & delivered to WhatsApp!');
-          } else if (fbOk) {
-            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Flyer successfully published to Facebook Page!');
-          } else if (waOk) {
-            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.success('🎉 Flyer successfully delivered to WhatsApp!');
+          var igOk = (_resData$instagram = resData.instagram) === null || _resData$instagram === void 0 ? void 0 : _resData$instagram.success;
+          var successChannels = [];
+          if (fbOk) successChannels.push('Facebook');
+          if (waOk) successChannels.push('WhatsApp');
+          if (igOk) successChannels.push('Instagram');
+          if (successChannels.length > 0) {
+            react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.success("\uD83C\uDF89 Flyer successfully dispatched to ".concat(successChannels.join(' & '), "!"));
           } else {
-            react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.info('Flyer preview generated. Check platform statuses on the right.');
+            react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.info('Flyer preview generated. Check platform statuses on the right.');
           }
         } else {
           var _resData;
           var err = ((_resData = resData) === null || _resData === void 0 ? void 0 : _resData.error) || 'Campaign execution returned an error.';
           setErrorMessage(err);
-          react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.error(err);
+          react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.error(err);
           if (resData) setResult(resData);
         }
       } catch (err) {
@@ -793,7 +880,7 @@ function MarketingViewAdmin() {
         console.error('Marketing publish failed:', err);
         var serverErr = ((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message || 'Failed to connect to marketing agent.';
         setErrorMessage(serverErr);
-        react_toastify__WEBPACK_IMPORTED_MODULE_34__/* .toast */ .oR.error(serverErr);
+        react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.error(serverErr);
       } finally {
         setLoading(false);
       }
@@ -830,7 +917,7 @@ function MarketingViewAdmin() {
         textAlign: 'center',
         borderRadius: 2
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ErrorOutline__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ErrorOutline__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
       color: "error",
       sx: {
         fontSize: 60,
@@ -895,13 +982,13 @@ function MarketingViewAdmin() {
       flexGrow: 1,
       fontWeight: 600
     }
-  }, "Marketing Campaign & Flyer Publisher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_42__/* ["default"] */ .A, {
+  }, "Marketing Campaign & Flyer Publisher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
     name: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || '',
     role: (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.role) || ''
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -923,7 +1010,7 @@ function MarketingViewAdmin() {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -987,7 +1074,7 @@ function MarketingViewAdmin() {
       alignItems: 'center',
       gap: 1
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
     color: "warning"
   }), " Campaign Brief & Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     component: "form",
@@ -1012,7 +1099,124 @@ function MarketingViewAdmin() {
       mb: 2.5,
       backgroundColor: '#ffffff'
     }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      mb: 2.5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      mb: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 600,
+      color: '#475569'
+    }
+  }, "Product Photo (Optional - Embedded into Flyer)"), productImage && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    size: "small",
+    color: "error",
+    startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null),
+    onClick: handleRemoveImage,
+    disabled: loading,
+    sx: {
+      textTransform: 'none',
+      py: 0
+    }
+  }, "Remove Photo")), !productImage ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    component: "label",
+    sx: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      border: '2px dashed #cbd5e1',
+      borderRadius: 2,
+      p: 2.5,
+      cursor: 'pointer',
+      backgroundColor: '#f8fafc',
+      transition: 'all 0.2s ease',
+      '&:hover': {
+        borderColor: '#30368a',
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "file",
+    accept: "image/*",
+    style: {
+      display: 'none'
+    },
+    onChange: handleImageUpload,
+    disabled: loading
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CloudUpload__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
+    sx: {
+      fontSize: 36,
+      color: '#64748b',
+      mb: 0.5
+    }
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600,
+      color: '#334155'
+    }
+  }, "Click or Drag to Upload Product Photo"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#94a3b8'
+    }
+  }, "PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio)")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 2,
+      p: 1.5,
+      border: '1px solid #e2e8f0',
+      borderRadius: 2,
+      backgroundColor: '#f8fafc'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    component: "img",
+    src: productImage,
+    alt: "Product Thumbnail",
+    sx: {
+      width: 60,
+      height: 60,
+      objectFit: 'contain',
+      borderRadius: 1.5,
+      border: '1px solid #cbd5e1',
+      backgroundColor: '#ffffff'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      flexGrow: 1,
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600,
+      color: '#1e293b'
+    },
+    noWrap: true
+  }, productImageName || 'Selected Product Photo'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#10b981',
+      fontWeight: 600,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.5
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
+    sx: {
+      fontSize: 14
+    }
+  }), " Ready for flyer composition")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "subtitle2",
     sx: {
       fontWeight: 600,
@@ -1040,7 +1244,7 @@ function MarketingViewAdmin() {
     sx: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: 3,
+      gap: 2.5,
       mb: 3
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
@@ -1101,6 +1305,35 @@ function MarketingViewAdmin() {
         fontWeight: 500
       }
     }, "WhatsApp Web Direct Message"))
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      checked: targetPlatforms.instagram,
+      onChange: e => setTargetPlatforms(_objectSpread(_objectSpread({}, targetPlatforms), {}, {
+        instagram: e.target.checked
+      })),
+      disabled: loading,
+      sx: {
+        color: '#e1306c',
+        '&.Mui-checked': {
+          color: '#e1306c'
+        }
+      }
+    }),
+    label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.8
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Instagram__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+      sx: {
+        color: '#e1306c'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      sx: {
+        fontWeight: 500
+      }
+    }, "Instagram Feed (@globalgate.sarl)"))
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     type: "submit",
     variant: "contained",
@@ -1109,7 +1342,7 @@ function MarketingViewAdmin() {
     startIcon: loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
       size: 20,
       color: "inherit"
-    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Send__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null),
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Send__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null),
     sx: {
       backgroundColor: '#30368a',
       py: 1.5,
@@ -1187,7 +1420,7 @@ function MarketingViewAdmin() {
     target: "_blank",
     clickable: true,
     color: "primary",
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
       fontSize: "small"
     })
   })), result.facebook.error && !result.facebook.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -1246,7 +1479,7 @@ function MarketingViewAdmin() {
     clickable: true,
     color: "success",
     variant: "outlined",
-    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
       fontSize: "small"
     })
   }))), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -1257,7 +1490,61 @@ function MarketingViewAdmin() {
       mt: 0.75,
       pl: 4
     }
-  }, result.whatsapp.error, " \u2014 You can also click \"Open Chat\" above to dispatch directly via WhatsApp."))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, result.whatsapp.error, " \u2014 You can also click \"Open Chat\" above to dispatch directly via WhatsApp.")), result.instagram && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      p: 1.5,
+      backgroundColor: result.instagram.success ? '#fdf2f8' : '#fef2f2',
+      borderRadius: 1.5,
+      border: '1px solid',
+      borderColor: result.instagram.success ? '#fbcfe8' : '#fecaca'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Instagram__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+    sx: {
+      color: '#e1306c'
+    }
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600
+    }
+  }, result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Status / Notice')), result.instagram.postId && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    label: "Post: ".concat(result.instagram.postId),
+    size: "small",
+    component: "a",
+    href: result.instagram.postUrl || "https://www.instagram.com/p/".concat(result.instagram.postId),
+    target: "_blank",
+    clickable: true,
+    sx: {
+      backgroundColor: '#e1306c',
+      color: '#fff'
+    },
+    icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+      fontSize: "small",
+      sx: {
+        color: '#fff !important'
+      }
+    })
+  })), result.instagram.error && !result.instagram.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#b45309',
+      display: 'block',
+      mt: 0.75,
+      pl: 4
+    }
+  }, result.instagram.error))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       textAlign: 'center',
       mt: 2

@@ -121,7 +121,7 @@ router.get('/flyer', (req, res) => {
  * POST /publish - Generate flyer and publish to Facebook and/or WhatsApp
  */
 router.post('/publish', verifyMarketingAccess, async (req, res) => {
-  const { brief, whatsappNumber, platforms = {} } = req.body;
+  const { brief, whatsappNumber, platforms = {}, productImage = null } = req.body;
 
   if (!brief || !String(brief).trim()) {
     return res.status(400).json({ success: false, error: 'Promotional brief is required.' });
@@ -129,6 +129,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
   const postToFacebook = platforms.facebook !== false;
   const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
+  const postToInstagram = Boolean(platforms.instagram);
 
   // Strategy 1: If local agent daemon is listening on port 5055, forward request directly
   try {
@@ -139,7 +140,9 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         brief,
         whatsappNumber,
         postToFacebook,
-        sendWhatsApp
+        sendWhatsApp,
+        postToInstagram,
+        productImage
       }),
       signal: AbortSignal.timeout(60000)
     });
@@ -154,13 +157,30 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
   // Strategy 2: Execute local agent.js script via Node child_process
   if (fs.existsSync(AGENT_SCRIPT)) {
     console.log('[Marketing] Executing local agent script at:', AGENT_SCRIPT);
+
+    let tempProductImagePath = null;
+    if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+      try {
+        const base64Data = productImage.replace(/^data:image\/\w+;base64,/, '');
+        tempProductImagePath = path.join(AGENT_DIR, 'temp_product.png');
+        fs.writeFileSync(tempProductImagePath, Buffer.from(base64Data, 'base64'));
+      } catch (e) {
+        console.warn('[Marketing] Could not write temp product image:', e.message);
+      }
+    }
+
     const args = [
       AGENT_SCRIPT,
       brief,
       `--wa=${whatsappNumber || ''}`,
       postToFacebook ? '--fb' : '--no-fb',
-      sendWhatsApp ? '--send-wa' : '--no-wa'
+      sendWhatsApp ? '--send-wa' : '--no-wa',
+      postToInstagram ? '--send-ig' : '--no-ig'
     ];
+
+    if (tempProductImagePath && fs.existsSync(tempProductImagePath)) {
+      args.push(`--product-image=${tempProductImagePath}`);
+    }
 
     return execFile('node', args, { cwd: AGENT_DIR, timeout: 120000 }, (error, stdout, stderr) => {
       if (error) {
@@ -179,23 +199,36 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
       // Parse Facebook Post ID from stdout if available
       let fbPostId = null;
-      const fbMatch = stdout.match(/Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/"postId":\s*"([^"]+)"/i);
+      const fbMatch = stdout.match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/Post ID:\s*([^\s\n\r]+)/i);
       if (fbMatch) {
         fbPostId = fbMatch[1];
       }
 
-      // Check if WhatsApp sent
+      let igPostId = null;
+      const igMatch = stdout.match(/Instagram post published! Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/"instagram":\s*\{\s*"success":\s*true,\s*"postId":\s*"([^"]+)"/i);
+      if (igMatch) {
+        igPostId = igMatch[1];
+      }
+
+      const fbSuccess = Boolean(fbPostId) || stdout.includes('[SUCCESS] Facebook post published');
       const waSuccess = stdout.includes('[SUCCESS] Flyer & caption delivered to WhatsApp');
+      const igSuccess = Boolean(igPostId) || stdout.includes('[SUCCESS] Instagram post published');
+
+      let igError = null;
+      if (!igSuccess && postToInstagram) {
+        const igErrMatch = stdout.match(/Instagram posting failed:\s*([^\n\r]+)/i) || stdout.match(/Instagram Permission Missing:\s*([^\n\r]+)/i);
+        igError = igErrMatch ? igErrMatch[1] : 'Instagram publication failed or requires permissions';
+      }
 
       return res.json({
-        success: !error || Boolean(flyerBase64),
+        success: !error || Boolean(flyerBase64) || fbSuccess || waSuccess || igSuccess,
         brief,
         flyerBase64,
         facebook: {
-          success: Boolean(fbPostId),
+          success: fbSuccess,
           postId: fbPostId,
           postUrl: fbPostId ? `https://www.facebook.com/${fbPostId}` : null,
-          error: !fbPostId && postToFacebook ? 'Facebook dispatch did not return post ID' : null
+          error: !fbSuccess && postToFacebook ? 'Facebook photo dispatch did not return post ID' : null
         },
         whatsapp: {
           success: waSuccess,
@@ -203,31 +236,20 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
           message: waSuccess ? 'WhatsApp Delivered Successfully' : null,
           error: !waSuccess && sendWhatsApp ? 'WhatsApp dispatch did not confirm delivery' : null
         },
+        instagram: {
+          success: igSuccess,
+          postId: igPostId,
+          postUrl: igPostId ? `https://www.instagram.com/p/${igPostId}` : null,
+          error: igError
+        },
         output: stdout
       });
     });
   }
 
   // Strategy 3: Cloud / Remote fallback (when running on Railway server without local agent directory)
-  console.log('[Marketing] Running in remote environment. Attempting direct Facebook Graph API publish...');
+  console.log('[Marketing] Running in remote environment. Attempting direct Facebook Graph API photo publish...');
   try {
-    let fbResult = null;
-    if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
-      const caption = `🔥 **GLOBAL GATE - SPECIAL PROMOTION** 🔥\n\n${brief}\n\n📞 Contact: +243 827 722 222\n#GlobalGate #Promotion`;
-      const fbUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed?message=${encodeURIComponent(caption)}&access_token=${FB_PAGE_ACCESS_TOKEN}`;
-      const fbRes = await fetch(fbUrl, { method: 'POST' });
-      const fbData = await fbRes.json();
-      if (fbData.id) {
-        fbResult = {
-          success: true,
-          postId: fbData.id,
-          postUrl: `https://www.facebook.com/${fbData.id}`
-        };
-      } else {
-        fbResult = { success: false, error: fbData.error?.message || 'Facebook publish failed' };
-      }
-    }
-
     const discountMatch = String(brief).match(/(\d+%\s*(?:off|discount|remise))/i);
     const priceMatch = String(brief).match(/(\$\s*\d+(?:\.\d+)?|\d+(?:\.\d+)?\s*(?:\$|usd|fc))/i);
     const badge = discountMatch ? discountMatch[1].toUpperCase() : (priceMatch ? 'BEST PRICE' : 'SPECIAL OFFER');
@@ -235,6 +257,32 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
     if (headline.length > 40) headline = headline.substring(0, 40) + '...';
 
     const flyerBase64 = generateSvgFlyerBase64(headline, brief, badge);
+    const caption = `🔥 **GLOBAL GATE - SPECIAL PROMOTION** 🔥\n\n📢 **${headline.toUpperCase()}**\n\n✨ **Details:** ${brief}\n\n📞 **Contact us today:** +243 827 722 222\n#GlobalGate #Promotion #SpecialOffer`;
+
+    let fbResult = null;
+    if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
+      // STRICT PHOTO PUBLISHING: Convert SVG to buffer and post to /photos
+      const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
+      const blob = new Blob([svgBuffer], { type: 'image/svg+xml' });
+      const formData = new FormData();
+      formData.append('source', blob, 'flyer.svg');
+      formData.append('caption', caption);
+      formData.append('access_token', FB_PAGE_ACCESS_TOKEN);
+
+      const fbUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`;
+      const fbRes = await fetch(fbUrl, { method: 'POST', body: formData });
+      const fbData = await fbRes.json();
+      if (fbData.post_id || fbData.id) {
+        const pid = fbData.post_id || fbData.id;
+        fbResult = {
+          success: true,
+          postId: pid,
+          postUrl: `https://www.facebook.com/${pid}`
+        };
+      } else {
+        fbResult = { success: false, error: fbData.error?.message || 'Facebook photo upload failed' };
+      }
+    }
 
     return res.json({
       success: true,
@@ -243,13 +291,17 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         badge,
         headline,
         details: brief,
-        caption: `🔥 **GLOBAL GATE - SPECIAL PROMOTION** 🔥\n\n📢 **${headline.toUpperCase()}**\n\n✨ **Details:** ${brief}\n\n📞 **Contact us today:** +243 827 722 222\n#GlobalGate #Promotion #SpecialOffer`
+        caption
       },
       flyerBase64,
       facebook: fbResult || { success: false, error: 'Facebook publish failed or not selected.' },
       whatsapp: {
         success: false,
         error: 'WhatsApp Web dispatch requires the local agent running on the workstation.'
+      },
+      instagram: {
+        success: false,
+        error: 'Instagram dispatch requires local workstation or public image hosting.'
       }
     });
   } catch (cloudErr) {

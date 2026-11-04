@@ -315,7 +315,7 @@ const fs = require('fs');
 const { execFile } = require('child_process');
 
 ipcMain.handle('run-marketing', async (event, payload) => {
-  const { brief, whatsappNumber, platforms = {} } = payload || {};
+  const { brief, whatsappNumber, platforms = {}, productImage = null } = payload || {};
   const agentDir = 'C:\\Users\\GG\\fb-whatsapp-agent';
   const agentScript = path.join(agentDir, 'agent.js');
   const flyerPath = path.join(agentDir, 'generated_flyer.png');
@@ -329,14 +329,31 @@ ipcMain.handle('run-marketing', async (event, payload) => {
 
   const postToFacebook = platforms.facebook !== false;
   const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
+  const postToInstagram = Boolean(platforms.instagram);
+
+  let tempProductImagePath = null;
+  if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+    try {
+      const base64Data = productImage.replace(/^data:image\/\w+;base64,/, '');
+      tempProductImagePath = path.join(agentDir, 'temp_product.png');
+      fs.writeFileSync(tempProductImagePath, Buffer.from(base64Data, 'base64'));
+    } catch (e) {
+      console.warn('Could not write temp product image:', e.message);
+    }
+  }
 
   const args = [
     agentScript,
     brief || 'Special Promotion',
     `--wa=${whatsappNumber || ''}`,
     postToFacebook ? '--fb' : '--no-fb',
-    sendWhatsApp ? '--send-wa' : '--no-wa'
+    sendWhatsApp ? '--send-wa' : '--no-wa',
+    postToInstagram ? '--send-ig' : '--no-ig'
   ];
+
+  if (tempProductImagePath && fs.existsSync(tempProductImagePath)) {
+    args.push(`--product-image=${tempProductImagePath}`);
+  }
 
   return new Promise((resolve) => {
     execFile('node', args, { cwd: agentDir, timeout: 120000 }, (error, stdout, stderr) => {
@@ -351,16 +368,29 @@ ipcMain.handle('run-marketing', async (event, payload) => {
       }
 
       let fbPostId = null;
-      const fbMatch = (stdout || '').match(/Post ID:\s*([^\s\n\r]+)/i);
+      const fbMatch = (stdout || '').match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || (stdout || '').match(/Post ID:\s*([^\s\n\r]+)/i);
       if (fbMatch) {
         fbPostId = fbMatch[1];
       }
 
+      let igPostId = null;
+      const igMatch = (stdout || '').match(/Instagram post published! Post ID:\s*([^\s\n\r]+)/i) || (stdout || '').match(/"instagram":\s*\{\s*"success":\s*true,\s*"postId":\s*"([^"]+)"/i);
+      if (igMatch) {
+        igPostId = igMatch[1];
+      }
+
       const fbSuccess = Boolean(fbPostId) || (stdout || '').includes('[SUCCESS] Facebook post published');
       const waSuccess = (stdout || '').includes('[SUCCESS] Flyer & caption delivered to WhatsApp');
+      const igSuccess = Boolean(igPostId) || (stdout || '').includes('[SUCCESS] Instagram post published');
+
+      let igError = null;
+      if (!igSuccess && postToInstagram) {
+        const igErrMatch = (stdout || '').match(/Instagram posting failed:\s*([^\n\r]+)/i) || (stdout || '').match(/Instagram Permission Missing:\s*([^\n\r]+)/i);
+        igError = igErrMatch ? igErrMatch[1] : 'Instagram publication failed or requires permissions';
+      }
 
       resolve({
-        success: Boolean(flyerBase64) || fbSuccess || waSuccess,
+        success: Boolean(flyerBase64) || fbSuccess || waSuccess || igSuccess,
         brief,
         flyerBase64,
         facebook: {
@@ -374,6 +404,12 @@ ipcMain.handle('run-marketing', async (event, payload) => {
           target: whatsappNumber,
           message: waSuccess ? 'WhatsApp Delivered Successfully' : null,
           error: !waSuccess && sendWhatsApp ? 'WhatsApp automated dispatch timed out or was not delivered' : null
+        },
+        instagram: {
+          success: igSuccess,
+          postId: igPostId,
+          postUrl: igPostId ? `https://www.instagram.com/p/${igPostId}` : null,
+          error: igError
         },
         output: stdout || stderr
       });

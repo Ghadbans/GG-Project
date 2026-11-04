@@ -29,6 +29,9 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import CampaignIcon from '@mui/icons-material/Campaign';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LaunchIcon from '@mui/icons-material/Launch';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -103,13 +106,40 @@ function MarketingViewAdmin() {
   // Form State
   const [brief, setBrief] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState('+243 827 722 222');
+  const [productImage, setProductImage] = useState(null);
+  const [productImageName, setProductImageName] = useState('');
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
+    instagram: true,
   });
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      toast.warning('Please select an image file (PNG, JPG, WEBP).');
+      return;
+    }
+    if (file.size > 15 * 1024 * 1024) {
+      toast.warning('Image size should be under 15MB.');
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      setProductImage(uploadEvent.target.result);
+      setProductImageName(file.name);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemoveImage = () => {
+    setProductImage(null);
+    setProductImageName('');
+  };
 
   // Access Permission Verification
   const [hasAccess, setHasAccess] = useState(true);
@@ -175,8 +205,8 @@ function MarketingViewAdmin() {
       return;
     }
 
-    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp) {
-      toast.warning('Please select at least one target platform (Facebook or WhatsApp).');
+    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
+      toast.warning('Please select at least one target platform (Facebook, WhatsApp, or Instagram).');
       return;
     }
 
@@ -187,9 +217,11 @@ function MarketingViewAdmin() {
     const payload = {
       brief: brief.trim(),
       whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
+      productImage: productImage || null,
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
+        instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
       userName: user?.data?.userName || '',
@@ -214,8 +246,10 @@ function MarketingViewAdmin() {
           const localRes = await axios.post('http://127.0.0.1:5055/publish', {
             brief: payload.brief,
             whatsappNumber: payload.whatsappNumber,
+            productImage: payload.productImage,
             postToFacebook: payload.platforms.facebook,
             sendWhatsApp: payload.platforms.whatsapp,
+            postToInstagram: payload.platforms.instagram,
           }, { timeout: 60000 });
           if (localRes.data && localRes.data.success) {
             resData = localRes.data;
@@ -233,13 +267,15 @@ function MarketingViewAdmin() {
         setResult(resData);
         const fbOk = resData.facebook?.success;
         const waOk = resData.whatsapp?.success;
+        const igOk = resData.instagram?.success;
 
-        if (fbOk && waOk) {
-          toast.success('🎉 Flyer published to Facebook & delivered to WhatsApp!');
-        } else if (fbOk) {
-          toast.success('🎉 Flyer successfully published to Facebook Page!');
-        } else if (waOk) {
-          toast.success('🎉 Flyer successfully delivered to WhatsApp!');
+        const successChannels = [];
+        if (fbOk) successChannels.push('Facebook');
+        if (waOk) successChannels.push('WhatsApp');
+        if (igOk) successChannels.push('Instagram');
+
+        if (successChannels.length > 0) {
+          toast.success(`🎉 Flyer successfully dispatched to ${successChannels.join(' & ')}!`);
         } else {
           toast.info('Flyer preview generated. Check platform statuses on the right.');
         }
@@ -378,6 +414,97 @@ function MarketingViewAdmin() {
                       sx={{ mb: 2.5, backgroundColor: '#ffffff' }}
                     />
 
+                    {/* Product Photo Uploader (Optional) */}
+                    <Box sx={{ mb: 2.5 }}>
+                      <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569' }}>
+                          Product Photo (Optional - Embedded into Flyer)
+                        </Typography>
+                        {productImage && (
+                          <Button
+                            size="small"
+                            color="error"
+                            startIcon={<DeleteOutlineIcon />}
+                            onClick={handleRemoveImage}
+                            disabled={loading}
+                            sx={{ textTransform: 'none', py: 0 }}
+                          >
+                            Remove Photo
+                          </Button>
+                        )}
+                      </Box>
+                      {!productImage ? (
+                        <Box
+                          component="label"
+                          sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: '2px dashed #cbd5e1',
+                            borderRadius: 2,
+                            p: 2.5,
+                            cursor: 'pointer',
+                            backgroundColor: '#f8fafc',
+                            transition: 'all 0.2s ease',
+                            '&:hover': {
+                              borderColor: '#30368a',
+                              backgroundColor: '#f1f5f9'
+                            }
+                          }}
+                        >
+                          <input
+                            type="file"
+                            accept="image/*"
+                            style={{ display: 'none' }}
+                            onChange={handleImageUpload}
+                            disabled={loading}
+                          />
+                          <CloudUploadIcon sx={{ fontSize: 36, color: '#64748b', mb: 0.5 }} />
+                          <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
+                            Click or Drag to Upload Product Photo
+                          </Typography>
+                          <Typography variant="caption" sx={{ color: '#94a3b8' }}>
+                            PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio)
+                          </Typography>
+                        </Box>
+                      ) : (
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 2,
+                            p: 1.5,
+                            border: '1px solid #e2e8f0',
+                            borderRadius: 2,
+                            backgroundColor: '#f8fafc'
+                          }}
+                        >
+                          <Box
+                            component="img"
+                            src={productImage}
+                            alt="Product Thumbnail"
+                            sx={{
+                              width: 60,
+                              height: 60,
+                              objectFit: 'contain',
+                              borderRadius: 1.5,
+                              border: '1px solid #cbd5e1',
+                              backgroundColor: '#ffffff'
+                            }}
+                          />
+                          <Box sx={{ flexGrow: 1, overflow: 'hidden' }}>
+                            <Typography variant="body2" sx={{ fontWeight: 600, color: '#1e293b' }} noWrap>
+                              {productImageName || 'Selected Product Photo'}
+                            </Typography>
+                            <Typography variant="caption" sx={{ color: '#10b981', fontWeight: 600, display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                              <CheckCircleIcon sx={{ fontSize: 14 }} /> Ready for flyer composition
+                            </Typography>
+                          </Box>
+                        </Box>
+                      )}
+                    </Box>
+
                     <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
                       WhatsApp Contact Number (Optional)
                     </Typography>
@@ -393,7 +520,7 @@ function MarketingViewAdmin() {
                     <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
                       Target Dispatch Platforms:
                     </Typography>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 3 }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2.5, mb: 3 }}>
                       <FormControlLabel
                         control={
                           <Checkbox
@@ -423,6 +550,22 @@ function MarketingViewAdmin() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <WhatsAppIcon sx={{ color: '#25d366' }} />
                             <Typography sx={{ fontWeight: 500 }}>WhatsApp Web Direct Message</Typography>
+                          </Box>
+                        }
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={targetPlatforms.instagram}
+                            onChange={(e) => setTargetPlatforms({ ...targetPlatforms, instagram: e.target.checked })}
+                            disabled={loading}
+                            sx={{ color: '#e1306c', '&.Mui-checked': { color: '#e1306c' } }}
+                          />
+                        }
+                        label={
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
+                            <InstagramIcon sx={{ color: '#e1306c' }} />
+                            <Typography sx={{ fontWeight: 500 }}>Instagram Feed (@globalgate.sarl)</Typography>
                           </Box>
                         }
                       />
@@ -523,6 +666,36 @@ function MarketingViewAdmin() {
                             {result.whatsapp.error && !result.whatsapp.success && (
                               <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
                                 {result.whatsapp.error} — You can also click "Open Chat" above to dispatch directly via WhatsApp.
+                              </Typography>
+                            )}
+                          </Box>
+                        )}
+
+                        {result.instagram && (
+                          <Box sx={{ p: 1.5, backgroundColor: result.instagram.success ? '#fdf2f8' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.instagram.success ? '#fbcfe8' : '#fecaca' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                <InstagramIcon sx={{ color: '#e1306c' }} />
+                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                  {result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Status / Notice'}
+                                </Typography>
+                              </Box>
+                              {result.instagram.postId && (
+                                <Chip
+                                  label={`Post: ${result.instagram.postId}`}
+                                  size="small"
+                                  component="a"
+                                  href={result.instagram.postUrl || `https://www.instagram.com/p/${result.instagram.postId}`}
+                                  target="_blank"
+                                  clickable
+                                  sx={{ backgroundColor: '#e1306c', color: '#fff' }}
+                                  icon={<LaunchIcon fontSize="small" sx={{ color: '#fff !important' }} />}
+                                />
+                              )}
+                            </Box>
+                            {result.instagram.error && !result.instagram.success && (
+                              <Typography variant="caption" sx={{ color: '#b45309', display: 'block', mt: 0.75, pl: 4 }}>
+                                {result.instagram.error}
                               </Typography>
                             )}
                           </Box>
