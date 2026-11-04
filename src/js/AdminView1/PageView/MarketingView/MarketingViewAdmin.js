@@ -115,7 +115,7 @@ function MarketingViewAdmin() {
     facebook: true,
     whatsapp: true,
     whatsappStatus: true,
-    instagram: false,
+    instagram: true,
   });
   const [previewGenerated, setPreviewGenerated] = useState(false);
   const [loadingPreview, setLoadingPreview] = useState(false);
@@ -478,7 +478,7 @@ function MarketingViewAdmin() {
                       fullWidth
                       multiline
                       rows={4}
-                      placeholder="e.g. OFFER OF THIS WEEK CEMENT SACK $15.5 MOQ 500 - Best quality for construction projects in Kolwezi!"
+                      placeholder="Enter your promotional brief or offer details..."
                       value={brief}
                       onChange={(e) => {
                         setBrief(e.target.value);
@@ -657,7 +657,7 @@ function MarketingViewAdmin() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <InstagramIcon sx={{ color: '#e1306c' }} />
                             <Typography sx={{ fontWeight: 500 }}>Instagram Feed (@globalgate.sarl)</Typography>
-                            <Chip label="Requires Scope" size="small" sx={{ height: 18, fontSize: '0.65rem', backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 600 }} />
+                            <Chip label="Ready" size="small" sx={{ height: 18, fontSize: '0.65rem', backgroundColor: '#ecfdf5', color: '#047857', fontWeight: 600 }} />
                           </Box>
                         }
                       />
@@ -835,7 +835,7 @@ function MarketingViewAdmin() {
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                                   <InstagramIcon sx={{ color: '#e1306c' }} />
                                   <Typography variant="body2" sx={{ fontWeight: 600, color: result.instagram.success ? '#1e293b' : '#92400e' }}>
-                                    {result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Scope Guidance'}
+                                    {result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Status / Notice'}
                                   </Typography>
                                 </Box>
                                 {result.instagram.postId ? (
@@ -850,7 +850,7 @@ function MarketingViewAdmin() {
                                     icon={<LaunchIcon fontSize="small" sx={{ color: '#fff !important' }} />}
                                   />
                                 ) : (
-                                  <Chip label="Scope Required" size="small" sx={{ height: 20, fontSize: '0.7rem', backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 600 }} />
+                                  <Chip label="Notice" size="small" sx={{ height: 20, fontSize: '0.7rem', backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 600 }} />
                                 )}
                               </Box>
                               {result.instagram.error && !result.instagram.success && (

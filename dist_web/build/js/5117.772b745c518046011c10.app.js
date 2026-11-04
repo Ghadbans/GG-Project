@@ -712,7 +712,7 @@ function MarketingViewAdmin() {
       facebook: true,
       whatsapp: true,
       whatsappStatus: true,
-      instagram: false
+      instagram: true
     }),
     _useState10 = _slicedToArray(_useState1, 2),
     targetPlatforms = _useState10[0],
@@ -1191,7 +1191,7 @@ function MarketingViewAdmin() {
     fullWidth: true,
     multiline: true,
     rows: 4,
-    placeholder: "e.g. OFFER OF THIS WEEK CEMENT SACK $15.5 MOQ 500 - Best quality for construction projects in Kolwezi!",
+    placeholder: "Enter your promotional brief or offer details...",
     value: brief,
     onChange: e => {
       setBrief(e.target.value);
@@ -1467,13 +1467,13 @@ function MarketingViewAdmin() {
         fontWeight: 500
       }
     }, "Instagram Feed (@globalgate.sarl)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-      label: "Requires Scope",
+      label: "Ready",
       size: "small",
       sx: {
         height: 18,
         fontSize: '0.65rem',
-        backgroundColor: '#fef3c7',
-        color: '#b45309',
+        backgroundColor: '#ecfdf5',
+        color: '#047857',
         fontWeight: 600
       }
     }))
@@ -1741,7 +1741,7 @@ function MarketingViewAdmin() {
       fontWeight: 600,
       color: result.instagram.success ? '#1e293b' : '#92400e'
     }
-  }, result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Scope Guidance')), result.instagram.postId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Status / Notice')), result.instagram.postId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     label: "Post: ".concat(result.instagram.postId),
     size: "small",
     component: "a",
@@ -1759,7 +1759,7 @@ function MarketingViewAdmin() {
       }
     })
   }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
-    label: "Scope Required",
+    label: "Notice",
     size: "small",
     sx: {
       height: 20,

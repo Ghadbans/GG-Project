@@ -10,9 +10,12 @@ const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
 const AGENT_SCRIPT = path.join(AGENT_DIR, 'agent.js');
 const AGENT_FLYER = path.join(AGENT_DIR, 'generated_flyer.png');
 
+// In-memory cache for latest generated flyer
+let latestFlyerBuffer = null;
+
 // Fallback Facebook credentials if running on remote server
 const FB_PAGE_ID = process.env.FB_PAGE_ID || '200999390054494';
-const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABSxsDnH7Afo1BD4NZCuYncZC7rZA0s8u8gkBQG5ZAjkSxovM12jSpKhuX6BF8eHpIBNSQsfb8bNxpNfoWpiojh2ZAAll328EzndUEIk8ZCNPiCS7nQCeAoORTQZB8nSVPBHKZC7RRcfHMbOwScq5EF8E4LKNx4FeDa75rfZBJ80D9ajCqUAFu15uSRvnXv';
+const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABS3b5Bms9NfCQU4uM3qkyCxn6RMZBZCOCIMqhFzo8HUagkrZAmlsyWDm28b7lYEZCHGXNhzCavZCXH0voFuwWnafqtlzed80lhZCNzu2qXtX5b1WIPw3FwDBEnIpI23DgIcmBjCPIj8NgYZB7WcPp021uIvR0H8VapmiSIdpTn1L9wsLtRsvbHpgbeMC';
 
 function generateSvgFlyerBase64(headline, details, badge = 'SPECIAL OFFER') {
   const safeBadge = String(badge || 'SPECIAL OFFER').toUpperCase();
@@ -110,6 +113,10 @@ router.get('/status', (req, res) => {
  * GET /flyer - Get latest generated flyer image
  */
 router.get('/flyer', (req, res) => {
+  if (latestFlyerBuffer) {
+    res.setHeader('Content-Type', 'image/png');
+    return res.end(latestFlyerBuffer);
+  }
   if (fs.existsSync(AGENT_FLYER)) {
     res.setHeader('Content-Type', 'image/png');
     return fs.createReadStream(AGENT_FLYER).pipe(res);
@@ -200,6 +207,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       if (fs.existsSync(AGENT_FLYER)) {
         try {
           const buf = fs.readFileSync(AGENT_FLYER);
+          latestFlyerBuffer = buf;
           flyerBase64 = `data:image/png;base64,${buf.toString('base64')}`;
         } catch (e) {
           console.warn('[Marketing] Failed to read flyer base64:', e.message);
@@ -283,10 +291,13 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
     if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
       // STRICT PHOTO PUBLISHING: Convert SVG to buffer and post to /photos
       const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
+      latestFlyerBuffer = svgBuffer;
       const blob = new Blob([svgBuffer], { type: 'image/svg+xml' });
       const formData = new FormData();
       formData.append('source', blob, 'flyer.svg');
       formData.append('caption', caption);
+      formData.append('published', 'true');
+      formData.append('no_story', 'false');
       formData.append('access_token', FB_PAGE_ACCESS_TOKEN);
 
       const fbUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`;
@@ -301,6 +312,39 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         };
       } else {
         fbResult = { success: false, error: fbData.error?.message || 'Facebook photo upload failed' };
+      }
+    }
+
+    let igResult = null;
+    if (postToInstagram && FB_PAGE_ACCESS_TOKEN) {
+      try {
+        const igAccountId = process.env.IG_ACCOUNT_ID || '17841454469800173';
+        let imageUrl = null;
+        if (fbResult?.postId) {
+          try {
+            const photoRes = await fetch(`https://graph.facebook.com/v21.0/${fbResult.postId}?fields=images&access_token=${FB_PAGE_ACCESS_TOKEN}`);
+            const pData = await photoRes.json();
+            imageUrl = pData.images?.[0]?.source;
+          } catch (_) {}
+        }
+        if (!imageUrl) {
+          imageUrl = 'https://api.globalgate.sarl/api/marketing/flyer';
+        }
+        const cRes = await fetch(`https://graph.facebook.com/v21.0/${igAccountId}/media?image_url=${encodeURIComponent(imageUrl)}&caption=${encodeURIComponent(caption)}&access_token=${FB_PAGE_ACCESS_TOKEN}`, { method: 'POST' });
+        const cData = await cRes.json();
+        if (cData.id) {
+          const pRes = await fetch(`https://graph.facebook.com/v21.0/${igAccountId}/media_publish?creation_id=${cData.id}&access_token=${FB_PAGE_ACCESS_TOKEN}`, { method: 'POST' });
+          const pData = await pRes.json();
+          if (pData.id) {
+            igResult = { success: true, postId: pData.id, postUrl: `https://www.instagram.com/p/${pData.id}` };
+          } else {
+            igResult = { success: false, error: pData.error?.message || 'Instagram publish failed' };
+          }
+        } else {
+          igResult = { success: false, error: cData.error?.message || 'Instagram container creation failed' };
+        }
+      } catch (igErr) {
+        igResult = { success: false, error: igErr.message };
       }
     }
 
@@ -319,9 +363,9 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         success: false,
         error: 'WhatsApp Web dispatch requires the local agent running on the workstation.'
       },
-      instagram: {
+      instagram: igResult || {
         success: false,
-        error: 'Instagram dispatch requires local workstation or public image hosting.'
+        error: postToInstagram ? 'Instagram dispatch failed.' : 'Instagram dispatch not selected.'
       }
     });
   } catch (cloudErr) {

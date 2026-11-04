@@ -3608,3 +3608,35 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - **Desktop Executable (.exe):** Built via Electron Builder (`npm run make:win`) -> `dist/Global Gate Setup 3.6.14.exe` (95.68 MB); copied to `server/public/downloads/GlobalGate-v3.6.14.exe` and `server/public/downloads/GlobalGateSetup.exe`.
    - **Mobile Application (Android):** Synchronized web bundle via Capacitor (`npx cap sync android`) into `android/app/src/main/assets/public/` and compiled native debug APK via Gradle (`npm run build:apk` / `scripts/build-apk.ps1`) into `android/app/build/outputs/apk/debug/app-debug.apk` (14.96 MB); copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.14.apk`.
    - **Cloud Sync:** All changes pushed to GitHub `origin main` to trigger live Railway backend server and Cloudflare web portal updates.
+
+### Version 3.6.15 (November 04, 2026) - Instagram Publishing Activation, Facebook Timeline Visibility & Marketing Hardening
+1. **Pristine Brief Initialization**:
+   - In `MarketingViewAdmin.js`, cleared out all hardcoded default text from the campaign brief.
+   - `brief` state initializes strictly as an empty string (`useState('')`) with an unobtrusive placeholder: `placeholder="Enter your promotional brief or offer details..."`.
+
+2. **Permanent Instagram-Enabled Page Access Token**:
+   - Exchanged Meta Page Token for a permanent, never-expiring Page Access Token (`expires_at: 0`) with complete permission suite: `pages_show_list`, `business_management`, `instagram_basic`, `instagram_content_publish`, `pages_read_engagement`, `pages_manage_posts`, `public_profile`.
+   - Linked Instagram Business Account: `@globalgate.sarl` (ID `17841454469800173` / `17841438791758893`) linked to Facebook Page `GG SARL` (`200999390054494`).
+   - Token stored permanently in `.env` and `C:\Users\GG\fb-whatsapp-agent\.env` under `FB_PAGE_ACCESS_TOKEN`.
+
+3. **Facebook Public Timeline & Feed Visibility Enforced**:
+   - In `postToFacebook` / `publishToFacebook` (in `agent.js` and `server/routes/marketingRoutes.js`), explicitly included:
+     * `published: 'true'`
+     * `no_story: 'false'`
+   - Guarantees all photo uploads appear directly on the public page timeline/feed so outside visitors and clients immediately see the promotional flyers.
+
+4. **Instagram Feed Publishing Activation**:
+   - Removed the "Requires Scope" disabled lock on the Instagram checkbox in `MarketingViewAdmin.js`, adding a green "Ready" badge.
+   - Active two-stage Instagram Publishing pipeline (`POST /v21.0/{ig_user_id}/media` container creation followed by `POST /v21.0/{ig_user_id}/media_publish`).
+   - Supports CDN-backed image source resolution directly from Meta's CDN and the public server endpoint `https://api.globalgate.sarl/api/marketing/flyer`.
+
+5. **WhatsApp Status Story Non-Fatal Isolation**:
+   - In `sendViaWhatsApp`, wrapped `status@broadcast` dispatch inside its own isolated try/catch block.
+   - Any upstream status story warning is caught cleanly as a non-fatal warning, guaranteeing that direct message delivery succeeds and reports `success: true` to the UI without interruption.
+
+6. **Multi-Platform Releases & Deployment (v3.6.15)**:
+   - Version incremented across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+   - AST pre-build safety verification passed with 0 errors across 239 source files.
+   - Web application bundle compiled into `dist_web/`.
+   - Android Capacitor assets synchronized and native debug APK compiled via Gradle into `GlobalGate-v3.6.15.apk` and `GlobalGate.apk`.
+   - Windows desktop installer compiled into `Global Gate Setup 3.6.15.exe`, `GlobalGate-v3.6.15.exe`, and `GlobalGateSetup.exe`.
