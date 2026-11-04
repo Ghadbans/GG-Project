@@ -3594,3 +3594,17 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 
 5. **Instagram Business Publishing Pipeline**:
    - Integrated Instagram containerized publishing pipeline architecture via Meta Graph API linked Instagram Business account (`@globalgate.sarl`) container (`POST /{ig_user_id}/media` followed by `POST /{ig_user_id}/media_publish`).
+
+6. **Universal Item Row Clearing & Dual-State Free-Text Write-In Toggle Across 27 Modules (Section 58)**:
+   - **Reported Incident:** When clearing an item in item tables, the item title and numbers often lingered or failed to return to the initial state, preventing smooth toggling between catalog autocomplete and free-text write-in mode.
+   - **Full Pristine Reset in `handleShowAutocomplete`:** Completely resets `itemName: { _id: null, itemName: null }`, `data: null`, `contentType: null`, `itemDescription: ""`, and all numeric pricing and stock fields to 0 (`stock: 0, itemQty: 0, itemRate: 0, itemAmount: 0, itemCost: 0, totalAmount: 0, discount: 0, itemDiscount: 0, percentage: 0, itemBuy: 0, totalGenerale: 0, totalCost: 0, itemOut: 0, newItemOut: 0`). Row condition evaluates to `false` and smoothly reverts to the `<Autocomplete>` picker identical to clicking the `+` add button.
+   - **Clean Free-Text Reset in `handleShowAutocompleteDescription`:** Sets `itemName: { _id: null, itemName: 'empty' }`, `data: null`, `contentType: null`, `itemDescription: ""`, and zeroed numeric fields. Item title is hidden via `<Typography hidden>`, providing a clean write-in box for custom uncataloged items, repairs, and notes.
+   - **Universal Application Across 27 Files:** Standardized across all Invoices, Estimates, Maintenance, Maintenance Orders, Purchases, Purchase Orders, POS, Item Out, and Item Return modules.
+   - **Crash-Proof Typography Evaluation:** Standardized null-safe and 'empty'-safe uppercase render across all 27 components, eliminating `TypeError: Cannot read properties of null (reading 'toUpperCase')`.
+
+7. **Multi-Platform Production Verification & Releases (v3.6.14)**:
+   - **AST Quality Gate:** Verified with 0 syntax errors across all 239 source files (`npm run prebuild`).
+   - **Web Application Bundle:** Compiled via Webpack (`npm run build:web`) into `dist_web/` with cache-busting entrypoints; deployed to Cloudflare Pages via GitHub `origin main`.
+   - **Desktop Executable (.exe):** Built via Electron Builder (`npm run make:win`) -> `dist/Global Gate Setup 3.6.14.exe` (95.68 MB); copied to `server/public/downloads/GlobalGate-v3.6.14.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+   - **Mobile Application (Android):** Synchronized web bundle via Capacitor (`npx cap sync android`) into `android/app/src/main/assets/public/` and compiled native debug APK via Gradle (`npm run build:apk` / `scripts/build-apk.ps1`) into `android/app/build/outputs/apk/debug/app-debug.apk` (14.96 MB); copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.14.apk`.
+   - **Cloud Sync:** All changes pushed to GitHub `origin main` to trigger live Railway backend server and Cloudflare web portal updates.
