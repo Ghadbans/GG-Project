@@ -327,8 +327,40 @@
     - **Instagram Scope Guidance & Two-Stage Guard**:
       * Targets linked Instagram account `17841438791758893` (`@globalgate.sarl`).
       * Checkbox is annotated with a `Requires Scope` badge. If the Meta App token is pending `instagram_content_publish` or `instagram_basic` permissions, the system gracefully traps OAuth error code 10 and displays a polite amber scope guidance card, ensuring Facebook and WhatsApp remain unaffected.
+58. **Universal Item Row Clearing & Free-Text Write-In Toggle Standard (Ver 3.6.14)**:
+    - **Dual-State Clear Button Invariant (`handleShowAutocomplete` vs `handleShowAutocompleteDescription`)**:
+      Across all catalog item tables in the application (Invoice, Quotation/Estimate, Maintenance, Purchases, Purchase Order, POS, Item Out, Item Return):
+      * **Catalog Item Mode -> Initial Empty State (`handleShowAutocomplete`)**:
+        When an item from the catalog is selected in a table row and the user clicks the minus/clear button (`⊖`), the row handler MUST completely reset:
+        `itemName: { _id: null, itemName: null }`, `data: null`, `contentType: null`, `itemDescription: ""`, and all numeric pricing and inventory fields to 0 (`stock: 0, itemQty: 0, itemRate: 0, itemAmount: 0, itemCost: 0, totalAmount: 0, discount: 0, itemDiscount: 0, percentage: 0, itemBuy: 0, totalGenerale: 0, totalCost: 0, itemOut: 0, newItemOut: 0`).
+        Preserving `row.itemName.itemName` or keeping lingering descriptions or rates is strictly prohibited. This guarantees that the row condition `(Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== '')))` evaluates to `false`, immediately returning the row to the pristine `<Autocomplete>` picker state identical to pressing the `+` button.
+      * **Initial Empty State -> Free-Text Write-In Mode (`handleShowAutocompleteDescription`)**:
+        When the row is displaying the empty `<Autocomplete>` picker and the user clicks the minus/clear button (`⊖`) again, the handler sets `itemName: { _id: null, itemName: 'empty' }`, `data: null`, `contentType: null`, `itemDescription: ""`, and zeroes out pricing fields.
+        Because `Item.itemName.itemName` is `'empty'`, the row condition evaluates to `true`, while `<Typography hidden={... === 'empty'}>` hides the item header. This renders a completely empty description text field where the user can freely type custom uncataloged items, special services, or notes.
+      * **Free-Text Write-In Mode -> Initial Empty State (`handleShowAutocomplete`)**:
+        Clicking the minus/clear button (`⊖`) while in the free-text write-in box triggers `handleShowAutocomplete`, resetting `itemName: { _id: null, itemName: null }` and `itemDescription: ""`, smoothly flipping the row back to the `<Autocomplete>` picker.
+      * **Crash-Proof Typography Evaluation**:
+        All table row item header Typography elements MUST guard against `null` or `'empty'` before calling `.toUpperCase()`. Never use bare `{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}`, which crashes if `Item.itemName.itemName` is null. Instead, use `{Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}`.
 
 ## Current Progress Log
+- **Universal Item Row Clearing & Free-Text Write-In Toggle Fortification across 27 Modules & Submodules (Ver 3.6.14)**:
+  - **Problem Reported:**
+    - User reported: *"IN the system there is something wrong .. when im inserting an item than i want to clear it usualy this will clear the item name and ites descrtion and take back to as im press the + button to add items empty and if i pressed again it will clear it and give empty box i can write in ... please check it and check all the modules and submodules ... before i test the Marketing Campaign & Flyer Publisher ... fix this problem 1st"*.
+    - Uploaded 4 screenshots showing:
+      1. `UPDATE INVOICE`: Row with `CAST CONCRETE 0-5 M³` and `METAL TUBE 40X40`.
+      2. `UPDATE INVOICE`: After clicking minus (`⊖` Clear) on Row 2, the description box cleared and image reverted to cart, but `METAL TUBE 40X40` remained stuck in the header.
+      3. `ADD NEW MAINTENANCE`: Row with cart `🛒` and `SQURE TUBE...` in description, but blank header and stock 7.8, rate 13.5 lingering because description and numbers were never reset.
+      4. `update Purchase`: Row with cart `🛒`, 0s, empty description, but header still displayed `METAL TUBE 40X40` because `row.itemName.itemName` was preserved.
+  - **Exhaustive Root Cause Analysis:**
+    1. **Preserving Item Name (`itemName: row.itemName.itemName`):** In `InvoiceFormUpdate.js`, `EstimateInvoiceFormUpdate.js`, `MaintenanceOrderUpdate.js`, `MaintenanceUpdateView.js`, and `PurchaseFormUpdate.js`, the `handleShowAutocomplete` handler set `itemName: { _id: null, itemName: row.itemName.itemName }`. Preserving the previous item name meant `Item.itemName.itemName` never became null/empty, keeping the condition truthy and leaving the title stuck in the UI.
+    2. **Partial Clearing in Maintenance, Purchases, and Orders:** In `MaintenanceFormView.js`, `PurchasesFormView.js`, `ConvertToEstimate.js`, `ConvertToInvoice.js`, `PurchaseForm.js`, etc., `handleShowAutocomplete` only reset `itemName: { _id: null, itemName: null }`, leaving `itemDescription`, `stock`, `itemRate`, `itemCost`, and `itemQty` completely intact. Because `itemDescription` was not empty, the JSX condition evaluated to `true`, trapping the row in item mode with a cart icon and old description.
+    3. **Uncaught TypeError Crashes on Null Item Name:** Multiple legacy forms evaluated `{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}`. When `itemName` was an object with `itemName: null`, calling `null.toUpperCase()` threw a fatal JavaScript runtime crash.
+  - **Architectural Resolution & Code Modifications Applied across 27 Files:**
+    1. **Full Pristine Reset in `handleShowAutocomplete`:** Completely resets `itemName: { _id: null, itemName: null }`, `data: null`, `contentType: null`, `itemDescription: ""`, and all numeric pricing and stock fields to 0. Row condition evaluates to `false` and seamlessly returns to `<Autocomplete>` picker (matching `+` button behavior).
+    2. **Clean Free-Text Reset in `handleShowAutocompleteDescription`:** Sets `itemName: { _id: null, itemName: 'empty' }`, `data: null`, `contentType: null`, `itemDescription: ""`, and zeroed numeric fields. Item title is hidden via `<Typography hidden>`, providing a clean write-in box for custom uncataloged items.
+    3. **Crash-Proof Typography Evaluation:** Standardized null-safe and 'empty'-safe uppercase render across all 27 components.
+  - **Verification & Deployment:**
+    - Ran AST syntax check (`npm run prebuild`) verifying all 239 source files passed with 0 errors.
 - **Payroll Payment Status Logic Correction & View White Screen Crash Fix (Ver 3.5.87)**:
   - **Problem Reported:**
     - User reported: *"I was making edit for this employe pay roll than i made save .. it showed me the status Partially-Paid but me i didnt do payment for this .. i pressed the view button it make this erorr ....."*

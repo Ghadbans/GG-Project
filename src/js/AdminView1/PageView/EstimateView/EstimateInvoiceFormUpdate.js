@@ -675,8 +675,10 @@ The GLOBAL GATE Team`;
       ...row,
       itemName: {
         _id: null,
-        itemName: row.itemName.itemName
+        itemName: null
       },
+      data: null,
+      contentType: null,
       itemDescription: "",
       itemDiscount: 0,
       itemQty: 0,
@@ -699,8 +701,27 @@ The GLOBAL GATE Team`;
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
+        _id: null,
         itemName: 'empty'
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
@@ -1391,7 +1412,7 @@ The GLOBAL GATE Team`;
                                                             hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}
                                                             sx={{ fontSize: '23px' }}
                                                           >
-                                                            {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                            {Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}
                                                           </Typography>
                                                           <TextField
                                                             name="itemDescription"
@@ -1632,7 +1653,7 @@ The GLOBAL GATE Team`;
                                                           hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''}
                                                           sx={{ fontSize: '23px' }}
                                                         >
-                                                          {Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}
+                                                          {Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}
                                                         </Typography>
                                                         <TextField
                                                           name="itemDescription"

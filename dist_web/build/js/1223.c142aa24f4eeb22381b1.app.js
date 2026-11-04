@@ -1,5 +1,5 @@
 "use strict";
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[8520,9762],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[1223,8520],{
 
 /***/ 42961
 (__unused_webpack_module, exports, __webpack_require__) {
@@ -2019,7 +2019,7 @@ var CustomerFormView2 = _ref3 => {
 
 /***/ },
 
-/***/ 9762
+/***/ 61223
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -2041,28 +2041,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(73896);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(33198);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(14977);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(87393);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(37636);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(86990);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(69279);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99380);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(33541);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(29719);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(71510);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(99380);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(33541);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(29719);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(71510);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(14977);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(87393);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(37636);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(69279);
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(33829);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(47767);
 /* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(61087);
@@ -2074,17 +2074,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(92659);
 /* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(20889);
 /* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(82299);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(46986);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(40301);
-/* harmony import */ var _CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(17330);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(39781);
-/* harmony import */ var _ItemView_ItemFormView2__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(88520);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(95236);
-/* harmony import */ var _component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(87793);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(40301);
+/* harmony import */ var _CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(17330);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(39781);
+/* harmony import */ var _ItemView_ItemFormView2__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(88520);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(95236);
+/* harmony import */ var _component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(87793);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["className"];
@@ -2148,11 +2147,10 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-
-var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay)(_ref => {
+var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2160,7 +2158,7 @@ var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] 
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2168,10 +2166,10 @@ var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] 
     }
   };
 });
-var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay)(_ref3 => {
+var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2179,7 +2177,7 @@ var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] 
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2187,10 +2185,10 @@ var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] 
     }
   };
 });
-var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay)(_ref5 => {
+var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_ref5 => {
   var className = _ref5.className,
     props = _objectWithoutProperties(_ref5, _excluded3);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -2198,7 +2196,7 @@ var ViewTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] *
 })(_ref6 => {
   var theme = _ref6.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -2231,7 +2229,7 @@ var style2 = (/* unused pure expression or super */ null && ({
   pb: 3
 }));
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref7 => {
   var theme = _ref7.theme,
@@ -2251,7 +2249,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay)(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref8 => {
   var theme = _ref8.theme,
@@ -2279,26 +2277,29 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay
     })
   };
 });
-function ItemOutViewForm() {
+
+function ItemReturnViewForm() {
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_41__/* .useParams */ .g)(),
+    id = _useParams.id;
   var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_41__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_52__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_52__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .selectCurrentUser */ .xu);
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_51__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (storesUserId) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
             var Name = res.data.data.employeeName;
             var Role = res.data.data.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .setUser */ .gV)({
               userName: Name,
               role: Role
             }));
           } catch (error) {
             console.error('Error fetching data:', error);
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .logOut */ .je)());
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .logOut */ .je)());
           }
         } else {
           navigate('/');
@@ -2312,13 +2313,10 @@ function ItemOutViewForm() {
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_53__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_52__/* .logOut */ .je)());
     navigate('/');
   };
-  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
-      var date = new Date();
-      return date;
-    }),
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState2 = _slicedToArray(_useState, 2),
     itemOutDate = _useState2[0],
     setItemOutDate = _useState2[1];
@@ -2328,161 +2326,163 @@ function ItemOutViewForm() {
     setReason = _useState4[1];
   var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState6 = _slicedToArray(_useState5, 2),
-    description = _useState6[0],
-    setDescription = _useState6[1];
-  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    reason2 = _useState6[0],
+    setReason2 = _useState6[1];
+  var _useState7 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
     _useState8 = _slicedToArray(_useState7, 2),
-    items = _useState8[0],
-    SetItems = _useState8[1];
+    description = _useState8[0],
+    setDescription = _useState8[1];
   var _useState9 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState0 = _slicedToArray(_useState9, 2),
-    items1 = _useState0[0],
-    SetItems1 = _useState0[1];
+    itemsQtyArray = _useState0[0],
+    SetItemsQtyArray = _useState0[1];
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState10 = _slicedToArray(_useState1, 2),
-    itemsQtyArray = _useState10[0],
-    SetItemsQtyArray = _useState10[1];
-  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    projects = _useState10[0],
+    setProject = _useState10[1];
+  var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState12 = _slicedToArray(_useState11, 2),
-    shopOpen = _useState12[0],
-    setShopOpen = _useState12[1];
+    outNumber = _useState12[0],
+    setOutNumber = _useState12[1];
   var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState14 = _slicedToArray(_useState13, 2),
-    shopItems = _useState14[0],
-    setShopItems = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    maintenance = _useState14[0],
+    setMaintenance = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState16 = _slicedToArray(_useState15, 2),
-    shopSearch = _useState16[0],
-    setShopSearch = _useState16[1];
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    invoice = _useState16[0],
+    setInvoice = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState18 = _slicedToArray(_useState17, 2),
-    shopPage = _useState18[0],
-    setShopPage = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    projectId = _useState18[0],
+    setProjectId = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState20 = _slicedToArray(_useState19, 2),
-    shopTotalPages = _useState20[0],
-    setShopTotalPages = _useState20[1];
-  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    serviceId = _useState20[0],
+    setServiceId = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState22 = _slicedToArray(_useState21, 2),
-    rate = _useState22[0],
-    setRate = _useState22[1];
-  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    invoiceId = _useState22[0],
+    setInvoiceId = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState24 = _slicedToArray(_useState23, 2),
-    shopLoading = _useState24[0],
-    setShopLoading = _useState24[1];
-  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    ItemInformation = _useState24[0],
+    setItemInformation = _useState24[1];
+  var _useState25 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
     _useState26 = _slicedToArray(_useState25, 2),
-    projects = _useState26[0],
-    setProject = _useState26[1];
-  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    reference = _useState26[0],
+    setReference = _useState26[1];
+  var _useState27 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState28 = _slicedToArray(_useState27, 2),
-    employee = _useState28[0],
-    setEmployee = _useState28[1];
+    shopOpen = _useState28[0],
+    setShopOpen = _useState28[1];
   var _useState29 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState30 = _slicedToArray(_useState29, 2),
-    maintenance = _useState30[0],
-    setMaintenance = _useState30[1];
-  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    shopItems = _useState30[0],
+    setShopItems = _useState30[1];
+  var _useState31 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState32 = _slicedToArray(_useState31, 2),
-    invoice = _useState32[0],
-    setInvoice = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    shopSearch = _useState32[0],
+    setShopSearch = _useState32[1];
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState34 = _slicedToArray(_useState33, 2),
-    serviceNumber = _useState34[0],
-    setServiceNumber = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    shopPage = _useState34[0],
+    setShopPage = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
     _useState36 = _slicedToArray(_useState35, 2),
-    projectName = _useState36[0],
-    setProjectName = _useState36[1];
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    shopTotalPages = _useState36[0],
+    setShopTotalPages = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
     _useState38 = _slicedToArray(_useState37, 2),
-    employeeName = _useState38[0],
-    setEmployeeName = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    rate = _useState38[0],
+    setRate = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState40 = _slicedToArray(_useState39, 2),
-    invoiceName = _useState40[0],
-    setInvoiceName = _useState40[1];
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState42 = _slicedToArray(_useState41, 2),
-    projectId = _useState42[0],
-    setProjectId = _useState42[1];
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState44 = _slicedToArray(_useState43, 2),
-    serviceId = _useState44[0],
-    setServiceId = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState46 = _slicedToArray(_useState45, 2),
-    invoiceId = _useState46[0],
-    setInvoiceId = _useState46[1];
-  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
-    _React$useState2 = _slicedToArray(_React$useState, 2),
-    inputValue2 = _React$useState2[0],
-    setInputValue2 = _React$useState2[1];
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(''),
-    _React$useState4 = _slicedToArray(_React$useState3, 2),
-    inputValueProject = _React$useState4[0],
-    setInputValueProject = _React$useState4[1];
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState48 = _slicedToArray(_useState47, 2),
-    outNumber = _useState48[0],
-    setOutNumber = _useState48[1];
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState50 = _slicedToArray(_useState49, 2),
-    ItemInformation = _useState50[0],
-    setItemInformation = _useState50[1];
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState52 = _slicedToArray(_useState51, 2),
-    reference = _useState52[0],
-    setReference = _useState52[1];
-  var Create = {
-    person: user.data.userName,
-    dateComment: dayjs__WEBPACK_IMPORTED_MODULE_46___default()(new Date()).format('DD/MM/YYYY-HH:mm')
-  };
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var handleFetch = /*#__PURE__*/function () {
+    shopLoading = _useState40[0],
+    setShopLoading = _useState40[1];
+  {/** Get item out start */}
+  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchData = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
-          var _resItemOut$data, _resItemOut$data2, _resProject$data, _resMaintenance$data, _resInvoice$data;
-          var resItemOut = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/get-last-saved-itemOut"));
-          var num = resItemOut.data && resItemOut.data.outNumber ? parseInt(((_resItemOut$data = resItemOut.data) === null || _resItemOut$data === void 0 || (_resItemOut$data = _resItemOut$data.data) === null || _resItemOut$data === void 0 ? void 0 : _resItemOut$data.outNumber) || ((_resItemOut$data2 = resItemOut.data) === null || _resItemOut$data2 === void 0 ? void 0 : _resItemOut$data2.outNumber) || 0) : 0;
-          setOutNumber(num + 1);
-          var resItem = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/item"));
-          setItemInformation(resItem.data.data.reverse());
-          var resPurchase = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/purchase?summary=true"));
-          var resProject = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/projects"));
-          setProject((_resProject$data = resProject.data) === null || _resProject$data === void 0 || (_resProject$data = _resProject$data.data) === null || _resProject$data === void 0 ? void 0 : _resProject$data.filter(row => {
-            var _resPurchase$data;
-            return row.status === 'On-Going' && ((_resPurchase$data = resPurchase.data) === null || _resPurchase$data === void 0 || (_resPurchase$data = _resPurchase$data.data) === null || _resPurchase$data === void 0 ? void 0 : _resPurchase$data.find(Item => Item.projectName._id === row._id && Item.items.some(Item1 => Item1.itemQty > Item1.itemOut)));
-          }).reverse());
-          var resEmployee = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/employee"));
-          setEmployee(resEmployee.data.data);
-          var resMaintenance = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/maintenance?summary=true"));
-          setMaintenance((_resMaintenance$data = resMaintenance.data) === null || _resMaintenance$data === void 0 || (_resMaintenance$data = _resMaintenance$data.data) === null || _resMaintenance$data === void 0 ? void 0 : _resMaintenance$data.filter(row => row.items.some(Item => Item.itemQty > Item.itemOut)));
-          var resInvoice = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/invoice?summary=true"));
-          var newData = (_resInvoice$data = resInvoice.data) === null || _resInvoice$data === void 0 || (_resInvoice$data = _resInvoice$data.data) === null || _resInvoice$data === void 0 ? void 0 : _resInvoice$data.filter(row => row.items.some(Item => Item.itemQty > Item.itemOut) && !resPurchase.data.data.some(Item => Item._id === row.ReferenceName2) && !resMaintenance.data.data.some(Item2 => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName));
+          var _res$data, _res$data2;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(id));
+          setItemOutDate(res.data.data.itemOutDate);
+          setOutNumber(Number(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.outNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.outNumber) || 0));
+          setReason(res.data.data.reason);
+          setDescription(res.data.data.description);
+          SetItemsQtyArray(res.data.data.itemsQtyArray);
+          setDescription(res.data.data.description);
+          setReference(res.data.data.reference);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchData() {
+        return _ref0.apply(this, arguments);
+      };
+    }();
+    fetchData();
+  }, [id]);
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState42 = _slicedToArray(_useState41, 2),
+    OldArray = _useState42[0],
+    setOldArray = _useState42[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var fetchDataId = /*#__PURE__*/function () {
+      var _ref1 = _asyncToGenerator(function* () {
+        try {
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(id));
+          setOldArray(res.data.data.itemsQtyArray);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      });
+      return function fetchDataId() {
+        return _ref1.apply(this, arguments);
+      };
+    }();
+    fetchDataId();
+  }, [id]);
+  {/** Get item out end */}
+  {/** Information about all reference start */}
+  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var handleFetch = /*#__PURE__*/function () {
+      var _ref10 = _asyncToGenerator(function* () {
+        try {
+          var _resInvoice$data;
+          var resItem = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/item"));
+          setItemInformation(resItem.data.data);
+          var resProject = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/purchase?summary=true"));
+          setProject(resProject.data.data);
+          var resMaintenance = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/maintenance?summary=true"));
+          setMaintenance(resMaintenance.data.data);
+          var resInvoice = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/invoice?summary=true"));
+          var newData = (_resInvoice$data = resInvoice.data) === null || _resInvoice$data === void 0 || (_resInvoice$data = _resInvoice$data.data) === null || _resInvoice$data === void 0 ? void 0 : _resInvoice$data.filter(row => !row.ReferenceName && !row.ReferenceName2);
           setInvoice(newData);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
       });
       return function handleFetch() {
-        return _ref0.apply(this, arguments);
+        return _ref10.apply(this, arguments);
       };
     }();
     handleFetch();
   }, []);
+  {/** Information about all reference end */}
 
   // Fetch Shop Items & Rate
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (shopOpen) {
       // Only fetch if side shop is open
       var fetchShop = /*#__PURE__*/function () {
-        var _ref1 = _asyncToGenerator(function* () {
+        var _ref11 = _asyncToGenerator(function* () {
           setShopLoading(true);
           try {
-            var resRate = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/rate"));
+            var resRate = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/rate"));
             resRate.data.data.forEach(row => setRate(row.rate));
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/item-shop?page=").concat(shopPage, "&limit=20&search=").concat(encodeURIComponent(shopSearch)));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/item-shop?page=").concat(shopPage, "&limit=20&search=").concat(encodeURIComponent(shopSearch)));
             setShopTotalPages(res.data.totalPages);
             setShopItems(res.data.items.filter(row => row.typeItem === "Goods").reverse());
             setShopLoading(false);
@@ -2492,7 +2492,7 @@ function ItemOutViewForm() {
           }
         });
         return function fetchShop() {
-          return _ref1.apply(this, arguments);
+          return _ref11.apply(this, arguments);
         };
       }();
       fetchShop();
@@ -2508,7 +2508,7 @@ function ItemOutViewForm() {
   var toggleShop = () => {
     setShopOpen(!shopOpen);
   };
-  var handleAddToItemOut = shopItem => {
+  var handleAddToItemReturnUpdate = shopItem => {
     // Check if item already exists
     var existingItemIndex = itemsQtyArray.findIndex(item => item.itemName._id === shopItem._id);
     if (existingItemIndex !== -1) {
@@ -2530,274 +2530,77 @@ function ItemOutViewForm() {
         },
         itemDescription: shopItem.itemDescription,
         newItemOut: 1,
+        // Since it's update, we might want to default itemQty and itemOut
+        itemQty: 0,
+        itemOut: 0,
         data: shopItem.data,
         contentType: shopItem.contentType
       };
       SetItemsQtyArray([...itemsQtyArray, newItem]);
     }
   };
-  var handleChangeReason = e => {
-    setReason(e.target.value);
-    setEmployeeName(null);
-    setInvoiceName(null);
-    setProjectName(null);
-    setServiceNumber(null);
-    setReference(null);
-    SetItemsQtyArray([]);
-  };
-  var handleChangeEmployee = newValue => {
-    var selectedOptions = employee.find(option => option === newValue);
-    setEmployeeName({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      name: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.employeeName
+  {/**  Filter based on reference start */}
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState44 = _slicedToArray(_useState43, 2),
+    filteredInvoice = _useState44[0],
+    setFilteredInvoice = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState46 = _slicedToArray(_useState45, 2),
+    filteredProject = _useState46[0],
+    setFilteredProject = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState48 = _slicedToArray(_useState47, 2),
+    filteredMaintenance = _useState48[0],
+    setFilteredMaintenance = _useState48[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!(reference !== null && reference !== void 0 && reference._id)) return;
+    invoice.filter(row => row._id === reference._id).forEach(row => {
+      setFilteredInvoice(row.items);
+      setInvoiceId(row._id);
     });
-    setReference({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      referenceName: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.employeeName
+    projects.filter(row => {
+      var _row$projectName;
+      return ((_row$projectName = row.projectName) === null || _row$projectName === void 0 ? void 0 : _row$projectName._id) === reference._id || row._id === reference._id;
+    }).forEach(row => {
+      setFilteredProject(row.items);
+      setProjectId(row._id);
     });
-  };
-  var handleChangeService = newValue => {
-    var selectedOptions = maintenance.find(option => option === newValue);
-    setServiceNumber({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      serviceNumber: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.serviceNumber
+    maintenance.filter(row => row._id === reference._id).forEach(row => {
+      setFilteredMaintenance(row.items);
+      setServiceId(row._id);
     });
-    setReference({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      referenceName: (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.serviceName) + ' / ' + (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.customerName.customerName)
-    });
-  };
-  var handleChangeProject = newValue => {
-    var selectedOptions = projects.find(option => option === newValue);
-    setProjectName({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      projectName: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.projectName
-    });
-    setReference({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      referenceName: selectedOptions ? "P-".concat(String(selectedOptions.projectNumber).padStart(6, '0'), " / ").concat(selectedOptions.projectName) : ''
-    });
-  };
-  var handleChangeInvoice = newValue => {
-    var _selectedOptions$cust;
-    var selectedOptions = invoice.find(option => option === newValue);
-    var clientName = (selectedOptions === null || selectedOptions === void 0 || (_selectedOptions$cust = selectedOptions.customerName) === null || _selectedOptions$cust === void 0 ? void 0 : _selectedOptions$cust.customerName) || (typeof (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.customerName) === 'string' ? selectedOptions.customerName : '') || '';
-    var invNum = (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.invoiceNumber) !== undefined ? 'INV-' + String(selectedOptions.invoiceNumber).padStart(6, '0') : (selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.invoiceName) || '';
-    var formattedName = invNum && clientName ? "".concat(invNum, " / ").concat(clientName) : invNum || clientName || '';
-    setInvoiceName({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      invoiceNumber: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.invoiceNumber
-    });
-    setReference({
-      _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
-      referenceName: formattedName
-    });
-  };
-  {/**Purchase Filter start */}
-  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchId = /*#__PURE__*/function () {
-      var _ref10 = _asyncToGenerator(function* () {
-        if (projectName !== null) {
-          try {
-            var _res$data, _res$data2, _res$data3;
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/purchase?summary=true"));
-            (_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 || _res$data.filter(row => projectName ? row.projectName._id === projectName._id : '').map(row => SetItems(row.items));
-            (_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 || _res$data2.filter(row => projectName ? row.projectName._id === projectName._id : '').map(row => SetItems1(row.items));
-            (_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 || _res$data3.filter(row => projectName ? row.projectName._id === projectName._id : '').map(row => setProjectId(row._id));
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else if (serviceNumber !== null) {
-          try {
-            var _res$data4, _res$data5, _res$data6;
-            var _res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/maintenance?summary=true"));
-            (_res$data4 = _res.data) === null || _res$data4 === void 0 || (_res$data4 = _res$data4.data) === null || _res$data4 === void 0 || _res$data4.filter(row => serviceNumber ? row._id === serviceNumber._id : '').map(row => SetItems(row.items));
-            (_res$data5 = _res.data) === null || _res$data5 === void 0 || (_res$data5 = _res$data5.data) === null || _res$data5 === void 0 || _res$data5.filter(row => serviceNumber ? row._id === serviceNumber._id : '').map(row => SetItems1(row.items));
-            (_res$data6 = _res.data) === null || _res$data6 === void 0 || (_res$data6 = _res$data6.data) === null || _res$data6 === void 0 || _res$data6.filter(row => serviceNumber ? row._id === serviceNumber._id : '').map(row => setServiceId(row._id));
-          } catch (error) {}
-        } else if (invoiceName !== null) {
-          try {
-            var _res2$data, _res2$data2, _res2$data3;
-            var _res2 = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/invoice?summary=true"));
-            (_res2$data = _res2.data) === null || _res2$data === void 0 || (_res2$data = _res2$data.data) === null || _res2$data === void 0 || _res2$data.filter(row => invoiceName ? row._id === invoiceName._id : '').map(row => SetItems(row.items));
-            (_res2$data2 = _res2.data) === null || _res2$data2 === void 0 || (_res2$data2 = _res2$data2.data) === null || _res2$data2 === void 0 || _res2$data2.filter(row => invoiceName ? row._id === invoiceName._id : '').map(row => SetItems1(row.items));
-            (_res2$data3 = _res2.data) === null || _res2$data3 === void 0 || (_res2$data3 = _res2$data3.data) === null || _res2$data3 === void 0 || _res2$data3.filter(row => invoiceName ? row._id === invoiceName._id : '').map(row => setInvoiceId(row._id));
-          } catch (error) {}
-        }
-      });
-      return function fetchId() {
-        return _ref10.apply(this, arguments);
-      };
-    }();
-    fetchId();
-  }, [projectName, serviceNumber, invoiceName]);
-  {/**Maintenance Filter end */}
-  ;(0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var result = items.map(row => {
-      return {
-        idRow: row.idRow,
-        itemName: row.itemName,
-        itemDescription: row.itemDescription,
-        newItemOut: row.newItemOut,
-        newDescription: row.newDescription
-      };
-    });
-    SetItemsQtyArray(result);
-  }, [items]);
-  var handleClear = () => {
-    setReference(null);
-    SetItemsQtyArray([]);
-  };
+  }, [invoice, projects, maintenance, reference]);
+  {/**  Filter based on reference end */}
   {/** Item Change Start */}
-  var handleChange = (idRow, key, value) => {
-    var list = [...itemsQtyArray];
-    var i = itemsQtyArray.findIndex(Item => Item.idRow === idRow);
-    list[i][key] = value;
-    SetItemsQtyArray(list);
-  };
-  {/** Item Change End */}
-  {/** Update Qty of project */}
-  var handleUpdatePurchase = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* () {
-      if (projectId) {
-        try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/get-purchase/").concat(projectId));
-          var currentPurchase = res.data.data;
-          var result = currentPurchase.items.map(row => {
-            var newItem = itemsQtyArray.find(Item => {
-              var _Item$itemName, _row$itemName, _Item$itemName2;
-              return Item.idRow && row.idRow ? Item.idRow === row.idRow : ((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) === ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id) && ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) !== '';
-            });
-            if (newItem && parseFloat(newItem.newItemOut || 0) > 0) {
-              var itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut);
-              return _objectSpread(_objectSpread({}, row), {}, {
-                itemOut
-              });
-            }
-            return row;
-          });
-          var data = {
-            items: result
-          };
-          return yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/update-purchase/").concat(projectId), data);
-        } catch (error) {
-          console.error(error);
-        }
-      } else if (serviceId) {
-        try {
-          var _res3 = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/get-maintenance/").concat(serviceId));
-          var currentMaintenance = _res3.data.data;
-          var _result = currentMaintenance.items.map(row => {
-            var newItem = itemsQtyArray.find(Item => Item.idRow === row.idRow);
-            if (newItem) {
-              var itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut);
-              return _objectSpread(_objectSpread({}, row), {}, {
-                itemOut
-              });
-            }
-            return row;
-          });
-          var _data = {
-            items: _result
-          };
-          return yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/update-maintenance/").concat(serviceId), _data);
-        } catch (error) {
-          console.error(error);
-        }
-      } else if (invoiceId) {
-        try {
-          var _res4 = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/get-invoice/").concat(invoiceId));
-          var currentInvoice = _res4.data.data;
-          var _result2 = currentInvoice.items.map(row => {
-            var newItem = itemsQtyArray.find(Item => Item.idRow === row.idRow);
-            if (newItem) {
-              var itemOut = parseFloat(row.itemOut || 0) + parseFloat(newItem.newItemOut);
-              return _objectSpread(_objectSpread({}, row), {}, {
-                itemOut
-              });
-            }
-            return row;
-          });
-          var _data2 = {
-            items: _result2
-          };
-          return yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(invoiceId), _data2);
-        } catch (error) {
-          console.error(error);
-        }
-      }
-    });
-    return function handleUpdatePurchase() {
-      return _ref11.apply(this, arguments);
-    };
-  }();
-  {/** Update Qty of project */}
-  var handleUpdateQty = /*#__PURE__*/function () {
-    var _ref12 = _asyncToGenerator(function* () {
-      var initialState = {};
-      var QtyUpdate = {};
-      //Get Qty Arrays
-      var QtyNew = itemsQtyArray.filter(row => {
-        var _row$itemName2, _row$itemName3;
-        return ((_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2._id) !== '' && ((_row$itemName3 = row.itemName) === null || _row$itemName3 === void 0 ? void 0 : _row$itemName3._id) !== undefined;
-      }).map(Item => Item.newItemOut !== 0 ? Item.newItemOut : 0);
-      //Get ItemName Id
-      itemsQtyArray.filter(row => {
-        var _row$itemName4, _row$itemName5;
-        return ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4._id) !== '' && ((_row$itemName5 = row.itemName) === null || _row$itemName5 === void 0 ? void 0 : _row$itemName5._id) !== undefined;
-      }).forEach((Item, index) => {
-        initialState["id".concat(index + 1)] = {
-          ids: Item.itemName._id
-        };
-      });
-      // Get Value
-      var getRequestId = Object.values(initialState).map(_ref13 => {
-        var ids = _ref13.ids;
-        return axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/get-item/").concat(ids));
-      });
-      try {
-        var res = yield Promise.all(getRequestId);
-        res.forEach((resp, index) => {
-          QtyUpdate["id".concat(index + 1)] = {
-            ids: resp.data.data._id,
-            data: {
-              itemQuantity: resp.data.data.itemQuantity - QtyNew[index]
-            }
-          };
-        });
-      } catch (error) {
-        console.log('No related id');
-      }
-      // Update Value 
-      var updateRequest = Object.values(QtyUpdate).map(_ref14 => {
-        var ids = _ref14.ids,
-          data = _ref14.data;
-        return axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/update-item/").concat(ids), data);
-      });
-      try {
-        yield Promise.all(updateRequest);
-      } catch (error) {
-        console.log('No related id');
-      }
-    });
-    return function handleUpdateQty() {
-      return _ref12.apply(this, arguments);
-    };
-  }();
   var handleShowAutocomplete = idRow => {
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map(row => row.idRow === idRow ? _objectSpread(_objectSpread({}, row), {}, {
       itemName: {
         _id: null,
         itemName: null
-      }
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      newItemOut: 0
     }) : row));
+  };
+  var handleChange = (e, idRow) => {
+    var _e$target = e.target,
+      name = _e$target.name,
+      value = _e$target.value;
+    var list = [...itemsQtyArray];
+    var i = itemsQtyArray.findIndex(Item => Item.idRow === idRow);
+    list[i][name] = value;
+    SetItemsQtyArray(list);
   };
   var addItem = () => {
     SetItemsQtyArray([...itemsQtyArray, {
       idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A)(),
       itemName: {},
       itemDescription: "",
-      newItemOut: 0
+      itemQty: 0,
+      newItemOut: 0,
+      itemOut: 0
     }]);
   };
   var handleChangeItem = (idRow, newValue) => {
@@ -2807,15 +2610,223 @@ function ItemOutViewForm() {
         _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
         itemName: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.itemName
       },
-      data: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.data,
-      contentType: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.contentType,
       itemDescription: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.itemDescription
     }) : row));
   };
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState54 = _slicedToArray(_useState53, 2),
-    openBack = _useState54[0],
-    setOpenBack = _useState54[1];
+  {/** Item Change End */}
+  {/** Update Info start */}
+  var handleUpdateInfo = /*#__PURE__*/function () {
+    var _ref12 = _asyncToGenerator(function* () {
+      var difference = [];
+      var sumToAdd = [];
+      OldArray.map(row => {
+        var newItem = itemsQtyArray.find(row1 => {
+          var _row1$itemName, _row$itemName;
+          return row1.idRow && row.idRow ? row1.idRow === row.idRow : ((_row1$itemName = row1.itemName) === null || _row1$itemName === void 0 ? void 0 : _row1$itemName._id) === ((_row$itemName = row.itemName) === null || _row$itemName === void 0 ? void 0 : _row$itemName._id);
+        });
+        if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
+          var _row$itemName2;
+          var diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut);
+          difference.push({
+            idRow: row.idRow,
+            id: (_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2._id,
+            qty: diff
+          });
+        } else if (newItem && parseFloat(newItem.newItemOut) > parseFloat(row.newItemOut)) {
+          var _row$itemName3;
+          var _diff = parseFloat(newItem.newItemOut) - parseFloat(row.newItemOut);
+          sumToAdd.push({
+            idRow: row.idRow,
+            id: (_row$itemName3 = row.itemName) === null || _row$itemName3 === void 0 ? void 0 : _row$itemName3._id,
+            qty: _diff
+          });
+        }
+      });
+      if (projectId) {
+        try {
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-purchase/").concat(projectId));
+          var currentProject = res.data.data;
+          var updatedItems = currentProject.items.map(row => {
+            var add = sumToAdd.find(item => item.idRow === row.idRow);
+            var diff = difference.find(item => item.idRow === row.idRow);
+            if (add) return _objectSpread(_objectSpread({}, row), {}, {
+              itemOut: (parseFloat(row.itemOut) || 0) - add.qty
+            });
+            if (diff) return _objectSpread(_objectSpread({}, row), {}, {
+              itemOut: (parseFloat(row.itemOut) || 0) + diff.qty
+            });
+            return row;
+          });
+          yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/update-purchase/").concat(projectId), {
+            items: updatedItems
+          });
+        } catch (e) {
+          console.error("Error updating project", e);
+        }
+      } else if (invoiceId) {
+        try {
+          var _res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-invoice/").concat(invoiceId));
+          var currentInvoice = _res.data.data;
+          var _updatedItems = currentInvoice.items.map(row => {
+            var add = sumToAdd.find(item => item.idRow === row.idRow);
+            var diff = difference.find(item => item.idRow === row.idRow);
+            if (add) return _objectSpread(_objectSpread({}, row), {}, {
+              itemOut: (parseFloat(row.itemOut) || 0) - add.qty
+            });
+            if (diff) return _objectSpread(_objectSpread({}, row), {}, {
+              itemOut: (parseFloat(row.itemOut) || 0) + diff.qty
+            });
+            return row;
+          });
+          yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/update-invoice/").concat(invoiceId), {
+            items: _updatedItems
+          });
+        } catch (e) {
+          console.error("Error updating invoice", e);
+        }
+      } else if (serviceId) {
+        try {
+          var _res2 = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-maintenance/").concat(serviceId));
+          var currentMaintenance = _res2.data.data;
+          var _updatedItems2 = currentMaintenance.items.map(row => {
+            var add = sumToAdd.find(item => item.idRow === row.idRow);
+            var diff = difference.find(item => item.idRow === row.idRow);
+            if (add) return _objectSpread(_objectSpread({}, row), {}, {
+              itemOut: (parseFloat(row.itemOut) || 0) - add.qty
+            });
+            if (diff) return _objectSpread(_objectSpread({}, row), {}, {
+              itemOut: (parseFloat(row.itemOut) || 0) + diff.qty
+            });
+            return row;
+          });
+          yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/update-maintenance/").concat(serviceId), {
+            items: _updatedItems2
+          });
+        } catch (e) {
+          console.error("Error updating maintenance", e);
+        }
+      }
+    });
+    return function handleUpdateInfo() {
+      return _ref12.apply(this, arguments);
+    };
+  }();
+  {/** Update Info end */}
+  {/** Update Qty of project */}
+  var handleUpdateQty = /*#__PURE__*/function () {
+    var _ref13 = _asyncToGenerator(function* () {
+      var difference = [];
+      var sumToAdd = [];
+      OldArray.map(row => {
+        var newItem = itemsQtyArray.find(row1 => {
+          var _row$itemName4;
+          return row1.itemName._id === ((_row$itemName4 = row.itemName) === null || _row$itemName4 === void 0 ? void 0 : _row$itemName4._id);
+        });
+        if (newItem && parseFloat(row.newItemOut) > parseFloat(newItem.newItemOut)) {
+          var _row$itemName5;
+          var diff = parseFloat(row.newItemOut) - parseFloat(newItem.newItemOut);
+          difference.push({
+            idRow: row.idRow,
+            id: (_row$itemName5 = row.itemName) === null || _row$itemName5 === void 0 ? void 0 : _row$itemName5._id,
+            qty: diff
+          });
+        } else if (newItem && parseFloat(newItem.newItemOut) > parseFloat(row.newItemOut)) {
+          var _row$itemName6;
+          var _diff2 = parseFloat(newItem.newItemOut) - parseFloat(row.newItemOut);
+          sumToAdd.push({
+            idRow: row.idRow,
+            id: (_row$itemName6 = row.itemName) === null || _row$itemName6 === void 0 ? void 0 : _row$itemName6._id,
+            qty: _diff2
+          });
+        }
+      });
+      if (difference && difference.length > 0) {
+        var initialStateId = {};
+        var QtyUpdate = {};
+        //Get ItemName Id
+        difference.filter(Item => Item.id !== '' && Item.id !== undefined).forEach((Item, index) => {
+          initialStateId["item".concat(index + 1)] = {
+            ids: Item.id,
+            itemDbQty: parseFloat(Item.qty)
+          };
+        });
+        // Get Value
+        var getRequestId = Object.values(initialStateId).map(_ref14 => {
+          var ids = _ref14.ids;
+          return axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-item/").concat(ids));
+        });
+        try {
+          var res = yield Promise.all(getRequestId);
+          res.forEach((resp, index) => {
+            QtyUpdate["itemDb".concat(index + 1)] = {
+              ids: resp.data.data._id,
+              data: {
+                itemQuantity: resp.data.data.itemQuantity - initialStateId["item".concat(index + 1)].itemDbQty
+              }
+            };
+          });
+        } catch (error) {
+          console.log('An error as occur');
+        }
+        ;
+        // Update Value 
+        // const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
+        //   return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
+        // })
+        // try {
+        //   await Promise.all(updateRequest);
+        // } catch (error) {
+        //   console.log('An error as occur');
+        // }
+      }
+      if (sumToAdd && sumToAdd.length > 0) {
+        var _initialStateId = {};
+        var _QtyUpdate = {};
+        //Get ItemName Id
+        sumToAdd.filter(Item => Item.id !== '' && Item.id !== undefined).forEach((Item, index) => {
+          _initialStateId["item".concat(index + 1)] = {
+            ids: Item.id,
+            itemDbQty: parseFloat(Item.qty)
+          };
+        });
+        // Get Value
+        var _getRequestId = Object.values(_initialStateId).map(_ref15 => {
+          var ids = _ref15.ids;
+          return axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-item/").concat(ids));
+        });
+        try {
+          var _res3 = yield Promise.all(_getRequestId);
+          _res3.forEach((resp, index) => {
+            _QtyUpdate["itemDb".concat(index + 1)] = {
+              ids: resp.data.data._id,
+              data: {
+                itemQuantity: resp.data.data.itemQuantity + parseFloat(_initialStateId["item".concat(index + 1)].itemDbQty)
+              }
+            };
+          });
+        } catch (error) {
+          console.log('An error as occur');
+        }
+        ;
+        // Update Value 
+        // const updateRequest = Object.values(QtyUpdate).map(({ ids, data }) => {
+        //   return axios.put(`${ENDPOINT_URL}/update-item/${ids}`, data)
+        // })
+        // try {
+        //   await Promise.all(updateRequest);
+        // } catch (error) {
+        //   console.log('An error as occur');
+        // }
+      }
+    });
+    return function handleUpdateQty() {
+      return _ref13.apply(this, arguments);
+    };
+  }();
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    openBack = _useState50[0],
+    setOpenBack = _useState50[1];
   var handleOpenBack = e => {
     e.preventDefault();
     setOpenBack(true);
@@ -2823,22 +2834,33 @@ function ItemOutViewForm() {
   var handleCloseBack = () => {
     setOpenBack(false);
   };
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState52 = _slicedToArray(_useState51, 2),
+    open2 = _useState52[0],
+    setOpen2 = _useState52[1];
+  var handleOpenUpdateReason = e => {
+    e.preventDefault();
+    setOpen2(true);
+  };
+  var handleCloseUpdateReason = () => {
+    setOpen2(false);
+  };
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState54 = _slicedToArray(_useState53, 2),
+    loading = _useState54[0],
+    setLoading = _useState54[1];
   var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState56 = _slicedToArray(_useState55, 2),
-    loading = _useState56[0],
-    setLoading = _useState56[1];
+    loadingOpenModal = _useState56[0],
+    setLoadingOpenModal = _useState56[1];
   var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState58 = _slicedToArray(_useState57, 2),
-    loadingOpenModal = _useState58[0],
-    setLoadingOpenModal = _useState58[1];
+    loadingOpenModalUpdate = _useState58[0],
+    setLoadingOpenModalUpdate = _useState58[1];
   var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState60 = _slicedToArray(_useState59, 2),
-    loadingOpenModalUpdate = _useState60[0],
-    setLoadingOpenModalUpdate = _useState60[1];
-  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState62 = _slicedToArray(_useState61, 2),
-    ErrorOpenModal = _useState62[0],
-    setErrorOpenModal = _useState62[1];
+    ErrorOpenModal = _useState60[0],
+    setErrorOpenModal = _useState60[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setLoading(true);
@@ -2878,111 +2900,94 @@ function ItemOutViewForm() {
       handleClose();
     }
   };
-  var reasonInfo = reference !== null ? reference.referenceName : description;
-  var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref15 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
+  var handleCreateComment = /*#__PURE__*/function () {
+    var _ref16 = _asyncToGenerator(function* () {
       var data = {
-        idInfo: ReferenceInfo,
-        person: user.data.userName + ' Created ',
-        reason: 'O-' + ReferenceInfoNumber + ' For ' + reasonInfo,
+        idInfo: id,
+        person: "".concat(user.data.userName, " Modify R-").concat(String(outNumber).padStart(6, '0')),
+        reason: reason2,
         dateNotification: new Date()
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
       } catch (error) {
         console.log(error);
       }
     });
-    return function handleCreateNotification(_x, _x2) {
-      return _ref15.apply(this, arguments);
+    return function handleCreateComment() {
+      return _ref16.apply(this, arguments);
     };
   }();
-  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState64 = _slicedToArray(_useState63, 2),
-    saving = _useState64[0],
-    setSaving = _useState64[1];
   var handleQty = /*#__PURE__*/function () {
-    var _ref16 = _asyncToGenerator(function* () {
+    var _ref17 = _asyncToGenerator(function* () {
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/CalculateTotal"));
+        yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/CalculateTotal"));
       } catch (error) {
         console.log(error);
       }
     });
     return function handleQty() {
-      return _ref16.apply(this, arguments);
-    };
-  }();
-  var handleSubmit = /*#__PURE__*/function () {
-    var _ref17 = _asyncToGenerator(function* (e) {
-      e.preventDefault();
-      setSaving('true');
-      var data = {
-        outNumber,
-        itemOutDate,
-        reason,
-        description,
-        itemsQtyArray,
-        reference,
-        Create
-      };
-      try {
-        var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_39__/* .ENDPOINT_URL */ .m, "/create-itemOut"), data);
-        if (res) {
-          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_50__/* .invalidateCache */ .gm)('/itemOut-Information');
-          (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_50__/* .invalidateCache */ .gm)('/itemOut');
-          // Open Loading View
-          var ReferenceInfo = res.data.data._id;
-          var ReferenceInfoNumber = res.data.data.outNumber;
-          yield handleCreateNotification(ReferenceInfo, ReferenceInfoNumber);
-          yield handleQty();
-          yield handleUpdatePurchase();
-          handleOpen();
-        } else {
-          alert('An Error as Occur');
-        }
-      } catch (error) {
-        if (error) {
-          setSaving('');
-          handleError();
-        }
-      }
-    });
-    return function handleSubmit(_x3) {
       return _ref17.apply(this, arguments);
     };
   }();
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
-    _React$useState6 = _slicedToArray(_React$useState5, 2),
-    sideBar = _React$useState6[0],
-    setSideBar = _React$useState6[1];
+  var handleSubmit = /*#__PURE__*/function () {
+    var _ref18 = _asyncToGenerator(function* (e) {
+      e.preventDefault();
+      var data = {
+        itemOutDate,
+        description,
+        itemsQtyArray
+      };
+      try {
+        // Fetch fresh state from server
+        var currentRes = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/get-itemReturn/").concat(id));
+        var currentReturn = currentRes.data.data;
+
+        // Merge local changes with server state
+        var updatedData = _objectSpread(_objectSpread({}, currentReturn), data);
+        var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.put("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_34__/* .ENDPOINT_URL */ .m, "/update-itemReturn/").concat(id), updatedData);
+        if (res) {
+          // Open Loading View
+          yield handleUpdateInfo();
+          handleCreateComment();
+          handleQty();
+          handleOpen();
+        }
+      } catch (error) {
+        console.error("Error updating item return:", error);
+        handleError();
+      }
+    });
+    return function handleSubmit(_x) {
+      return _ref18.apply(this, arguments);
+    };
+  }();
+  var _React$useState = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
+    _React$useState2 = _slicedToArray(_React$useState, 2),
+    sideBar = _React$useState2[0],
+    setSideBar = _React$useState2[1];
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
-  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState66 = _slicedToArray(_useState65, 2),
-    search2 = _useState66[0],
-    setSearch2 = _useState66[1];
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState62 = _slicedToArray(_useState61, 2),
+    search2 = _useState62[0],
+    setSearch2 = _useState62[1];
   var handleSearch2 = e => {
     var value = e.target.value;
     setSearch2(value);
   };
   var newArray2 = search2 !== '' ? itemsQtyArray.filter(Item => Item.itemName && Item.itemName.itemName.toLowerCase().includes(search2.toLowerCase()) || Item.itemDescription && Item.itemDescription.toLowerCase().includes(search2.toLowerCase()) || Item.newDescription && Item.newDescription.toLowerCase().includes(search2.toLowerCase())) : itemsQtyArray;
-  var tableRows = reason !== 'Dotation' ? newArray2.map((Item, i) => {
-    var _Item$itemName4, _Item$itemName5;
-    var related = items.find(row => row.idRow === Item.idRow);
-    var relatedItemQty = ItemInformation.find(row2 => {
-      var _Item$itemName3;
-      return row2._id === ((_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id);
-    });
+  var tableRows = newArray2.map((Item, i) => {
+    var _Item$itemName;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
       key: Item.idRow
-    }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
-      colSpan: 4
+    }, Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+      colSpan: 3
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
       name: "newDescription",
       id: "newDescription",
-      value: Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? Item.newDescription : null,
+      value: Item.newDescription,
       size: "small",
       disabled: true,
       sx: {
@@ -2990,14 +2995,14 @@ function ItemOutViewForm() {
         backgroundColor: 'white',
         fontSize: 12
       }
-    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    }))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
       sx: {
         display: 'flex',
         alignItems: 'center',
         gap: '15px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
-      itemId: (_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4._id,
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      itemId: (_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id,
       initialData: Item.data,
       initialType: Item.contentType
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -3008,7 +3013,6 @@ function ItemOutViewForm() {
         flexGrow: 1
       }
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName5 = Item.itemName) === null || _Item$itemName5 === void 0 ? void 0 : _Item$itemName5.itemName).trim().toLowerCase() === 'empty' : '',
       sx: {
         fontSize: '20px',
         fontWeight: 'bold'
@@ -3017,7 +3021,7 @@ function ItemOutViewForm() {
       disabled: true,
       name: "itemDescription",
       id: "itemDescription",
-      value: Item.itemDescription ? Item.itemDescription : '',
+      value: Item.itemDescription,
       multiline: true,
       rows: 2,
       size: "small",
@@ -3027,62 +3031,22 @@ function ItemOutViewForm() {
         fontSize: 11
       }
     })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      disabled: true,
-      name: "itemQty",
-      id: "itemQty",
-      value: (related === null || related === void 0 ? void 0 : related.itemQty) !== undefined ? related.itemQty : 0,
-      size: "small",
-      sx: {
-        width: '100px',
-        backgroundColor: 'white'
-      }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      disabled: true,
-      size: "small",
-      name: "itemOut",
-      id: "itemOut",
-      value: (related === null || related === void 0 ? void 0 : related.itemOut) !== undefined ? related.itemOut : 0,
-      sx: {
-        width: '100px',
-        backgroundColor: 'white'
-      }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, (related === null || related === void 0 ? void 0 : related.itemQty) !== undefined && related.itemQty > related.itemOut ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      disabled: relatedItemQty && parseFloat(relatedItemQty.itemQuantity) <= 0,
-      required: true,
       size: "small",
       name: "newItemOut",
       id: "newItemOut",
-      helperText: relatedItemQty && relatedItemQty.itemQuantity !== undefined ? 'Stock :' + relatedItemQty.itemQuantity : 0,
       value: Item.newItemOut,
-      onChange: e => {
-        var value = e.target.value;
-        if (!isNaN(value) && value !== '') {
-          var numericValue = parseInt(value, 10);
-          var maxStock = (relatedItemQty === null || relatedItemQty === void 0 ? void 0 : relatedItemQty.itemQuantity) || 0;
-          var maxNeeded = typeof related !== 'undefined' && (related === null || related === void 0 ? void 0 : related.itemQty) !== undefined ? related.itemQty - (related.itemOut || 0) : Infinity;
-          var maxAllowed = Math.min(maxStock, maxNeeded);
-          if (numericValue <= maxAllowed) {
-            handleChange(Item.idRow, 'newItemOut', value);
-          } else {
-            handleChange(Item.idRow, 'newItemOut', '');
-          }
-        } else {
-          handleChange(Item.idRow, 'newItemOut', '');
-        }
-      },
+      onChange: e => handleChange(e, Item.idRow),
       sx: {
         width: '100px',
-        backgroundColor: 'white',
-        marginTop: '22px'
+        backgroundColor: 'white'
       }
-    }) : 'Completed')));
-  }) : null;
+    }))));
+  });
   var tableRows2 = itemsQtyArray.map((Item, i) => {
-    var _Item$itemName6, _Item$itemName7;
-    var relatedItemQty = ItemInformation.find(row2 => row2._id === Item.itemName._id);
+    var _Item$itemName2;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
       key: Item.idRow
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, (_Item$itemName6 = Item.itemName) !== null && _Item$itemName6 !== void 0 && _Item$itemName6.itemName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, Item.itemName.itemName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -3098,8 +3062,8 @@ function ItemOutViewForm() {
         alignItems: 'center',
         gap: '15px'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
-      itemId: (_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id,
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      itemId: (_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2._id,
       initialData: Item.data,
       initialType: Item.contentType
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
@@ -3137,7 +3101,7 @@ function ItemOutViewForm() {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -3145,11 +3109,7 @@ function ItemOutViewForm() {
       disableClearable: true,
       options: ItemInformation,
       getOptionLabel: option => option.itemName,
-      renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, _extends({}, props, {
-        sx: {
-          backgroundColor: '#f2f2f2'
-        }
-      }), option.itemName),
+      renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, option.itemName),
       renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, _extends({
         multiline: true,
         rows: 4
@@ -3157,8 +3117,8 @@ function ItemOutViewForm() {
         required: true
       })),
       onChange: (e, newValue) => handleChangeItem(Item.idRow, newValue),
-      filterOptions: (options, _ref18) => {
-        var inputValue = _ref18.inputValue;
+      filterOptions: (options, _ref19) => {
+        var inputValue = _ref19.inputValue;
         return options.filter(option => option.itemName && option.itemName.toLowerCase().includes(inputValue.toLowerCase()) || option.itemBrand && option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) || option.itemNumber && option.itemNumber.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescription && option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()));
       },
       size: "small",
@@ -3167,47 +3127,29 @@ function ItemOutViewForm() {
         backgroundColor: 'white'
       }
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
-      disabled: relatedItemQty && parseFloat(relatedItemQty.itemQuantity) <= 0,
       required: true,
+      name: "itemOut",
+      id: "itemOut",
+      value: Item.itemOut,
       size: "small",
-      name: "newItemOut",
-      id: "newItemOut",
-      helperText: relatedItemQty && relatedItemQty.itemQuantity !== undefined ? 'Stock :' + relatedItemQty.itemQuantity : 0,
-      value: Item.newItemOut,
-      onChange: e => {
-        var value = e.target.value;
-        if (!isNaN(value) && value !== '') {
-          var numericValue = parseInt(value, 10);
-          var maxStock = (relatedItemQty === null || relatedItemQty === void 0 ? void 0 : relatedItemQty.itemQuantity) || 0;
-          if (numericValue <= maxStock) {
-            handleChange(Item.idRow, 'newItemOut', value);
-          } else {
-            handleChange(Item.idRow, 'newItemOut', '');
-          }
-        } else {
-          handleChange(Item.idRow, 'newItemOut', '');
-        }
-      },
+      onChange: e => handleChange(e, Item.idRow),
       sx: {
         width: '100px',
-        backgroundColor: 'white',
-        marginTop: '22px'
+        backgroundColor: 'white'
       }
     })));
   });
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
@@ -3221,7 +3163,7 @@ function ItemOutViewForm() {
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -3229,13 +3171,13 @@ function ItemOutViewForm() {
     sx: {
       flexGrow: 1
     }
-  }, "Make new Item Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, "MAKE NEW ITEM RETURN"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: handleOpenBack
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     name: user.data.userName,
     role: user.data.role
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
@@ -3246,14 +3188,16 @@ function ItemOutViewForm() {
   }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_54__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
-    open: sideBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, {
+    open: sideBar,
+    onMouseEnter: () => setSideBar(true),
+    onMouseLeave: () => setSideBar(false)
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
@@ -3262,7 +3206,7 @@ function ItemOutViewForm() {
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
@@ -3275,13 +3219,13 @@ function ItemOutViewForm() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 4
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
-    onSubmit: handleSubmit
+    onSubmit: handleOpenUpdateReason
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     container: true,
     style: {
@@ -3319,30 +3263,25 @@ function ItemOutViewForm() {
     id: "reason"
   }, "Reason"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     required: true,
+    disabled: true,
     id: "reason",
     value: reason,
-    onChange: e => handleChangeReason(e),
     name: "reason",
     label: "Reason"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     value: "Project"
   }, "Project"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
-    value: "Maintenance"
-  }, "Maintenance"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    value: "Service"
+  }, "Service"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     value: "Dotation"
   }, "Item Assign"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     value: "Invoice"
   }, "Direct-Invoice")))), reason !== 'Project' ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, reference !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '80px',
-      alignItems: 'center'
-    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     multiline: true,
+    disabled: true,
     label: "Project Name",
     rows: 2,
     value: reference.referenceName,
@@ -3350,102 +3289,15 @@ function ItemOutViewForm() {
       width: '100%',
       backgroundColor: 'white'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
-    title: "Clear",
-    placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleClear
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    options: projects,
-    getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.projectName) || '',
-    renderOption: (props, option) => {
-      var _option$customerName;
-      var cust = (option === null || option === void 0 || (_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '';
-      var proj = (option === null || option === void 0 ? void 0 : option.projectName) || '';
-      var desc = (option === null || option === void 0 ? void 0 : option.description) || '';
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, " ", cust, " | ", proj, " | ", desc);
-    },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, _extends({}, params, {
-      label: "Project Name"
-    })),
-    onChange: (e, newValue) => handleChangeProject(newValue ? newValue : 0),
-    inputValue: inputValueProject,
-    onInputChange: (event, newInputValue) => {
-      setInputValueProject(newInputValue);
-    },
-    filterOptions: (options, _ref19) => {
-      var inputValue = _ref19.inputValue;
-      var q = (inputValue || '').toLowerCase();
-      return options.filter(option => {
-        var _option$customerName2;
-        var cust = ((option === null || option === void 0 || (_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '').toLowerCase();
-        var proj = ((option === null || option === void 0 ? void 0 : option.projectName) || '').toLowerCase();
-        var desc = ((option === null || option === void 0 ? void 0 : option.description) || '').toLowerCase();
-        return cust.includes(q) || proj.includes(q) || desc.includes(q);
-      });
-    },
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  })), reason !== 'Maintenance' ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
+  })), reason !== 'Service' ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, reference !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '80px',
-      alignItems: 'center'
-    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     multiline: true,
+    disabled: true,
     label: "Project Name",
     rows: 2,
     value: reference.referenceName,
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
-    title: "Clear",
-    placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleClear
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    options: maintenance,
-    getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.serviceName) || '',
-    renderOption: (props, option) => {
-      var _option$customerName3;
-      var cust = (option === null || option === void 0 || (_option$customerName3 = option.customerName) === null || _option$customerName3 === void 0 ? void 0 : _option$customerName3.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '';
-      var serv = (option === null || option === void 0 ? void 0 : option.serviceName) || '';
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, " ", cust, " | ", serv);
-    },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, _extends({}, params, {
-      label: "Maintenance Number"
-    })),
-    onChange: (e, newValue) => handleChangeService(newValue ? newValue : ''),
-    inputValue: inputValue2,
-    onInputChange: (event, newInputValue) => {
-      setInputValue2(newInputValue);
-    },
-    filterOptions: (options, _ref20) => {
-      var inputValue = _ref20.inputValue;
-      var q = (inputValue || '').toLowerCase();
-      return options.filter(option => {
-        var _option$customerName4;
-        var cust = ((option === null || option === void 0 || (_option$customerName4 = option.customerName) === null || _option$customerName4 === void 0 ? void 0 : _option$customerName4.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '').toLowerCase();
-        var serv = ((option === null || option === void 0 ? void 0 : option.serviceName) || '').toLowerCase();
-        return cust.includes(q) || serv.includes(q);
-      });
-    },
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -3453,14 +3305,9 @@ function ItemOutViewForm() {
   })), reason !== 'Dotation' ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, reference !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '80px',
-      alignItems: 'center'
-    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     multiline: true,
+    disabled: true,
     label: "Employee Name",
     rows: 2,
     value: reference.referenceName,
@@ -3468,72 +3315,15 @@ function ItemOutViewForm() {
       width: '100%',
       backgroundColor: 'white'
     }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
-    title: "Clear",
-    placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleClear
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    options: employee,
-    getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.employeeName) || '',
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, (option === null || option === void 0 ? void 0 : option.employeeName) || ''),
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, _extends({}, params, {
-      label: "Employee Name"
-    })),
-    onChange: (e, newValue) => handleChangeEmployee(newValue ? newValue : ''),
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
   })), reason !== 'Invoice' ? '' : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, reference !== null ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      gap: '80px',
-      alignItems: 'center'
-    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
     multiline: true,
+    disabled: true,
     label: "Invoice",
     rows: 2,
     value: reference.referenceName,
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
-    title: "Clear",
-    placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-    onClick: handleClear
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
-    options: invoice,
-    getOptionLabel: option => {
-      var _option$customerName5;
-      var cust = (option === null || option === void 0 || (_option$customerName5 = option.customerName) === null || _option$customerName5 === void 0 ? void 0 : _option$customerName5.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '';
-      var invNum = (option === null || option === void 0 ? void 0 : option.invoiceNumber) !== undefined ? String(option.invoiceNumber).padStart(6, '0') : '';
-      return cust ? "".concat(cust, "/INV-").concat(invNum) : "INV-".concat(invNum);
-    },
-    renderOption: (props, option) => {
-      var _option$customerName6;
-      var cust = (option === null || option === void 0 || (_option$customerName6 = option.customerName) === null || _option$customerName6 === void 0 ? void 0 : _option$customerName6.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '';
-      var invNum = (option === null || option === void 0 ? void 0 : option.invoiceNumber) !== undefined ? String(option.invoiceNumber).padStart(6, '0') : '';
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, cust ? "".concat(cust, "/INV-").concat(invNum) : "INV-".concat(invNum));
-    },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, _extends({}, params, {
-      label: "Invoice"
-    })),
-    onChange: (e, newValue) => handleChangeInvoice(newValue ? newValue : ''),
     sx: {
       width: '100%',
       backgroundColor: 'white'
@@ -3552,11 +3342,8 @@ function ItemOutViewForm() {
     placement: "left"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: addItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
-    className: "btn1",
-    style: {
-      fontSize: '40px'
-    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
+    className: "btn1"
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
     className: "tableInfo10",
     style: {
@@ -3568,7 +3355,7 @@ function ItemOutViewForm() {
     align: "left"
   }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
     align: "left"
-  }, "QTY Out"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, tableRows2))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
+  }, "QTY OUT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, tableRows2))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", {
     style: {
       position: 'relative',
       float: 'right',
@@ -3591,11 +3378,7 @@ function ItemOutViewForm() {
     align: "left"
   }, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
     align: "left"
-  }, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-    align: "left"
-  }, "QTY Out"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
-    align: "left"
-  }, "Out"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, tableRows)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
+  }, "QTY OUT"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, tableRows)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
@@ -3613,19 +3396,13 @@ function ItemOutViewForm() {
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
     className: "btnCustomer6",
     style: {
       width: '100%'
     }
-  }, "Save") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", {
-    className: "btnCustomer6",
-    style: {
-      width: '100%',
-      textAlign: 'center'
-    }
-  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+  }, "Save")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     open: openBack,
     onClose: handleCloseBack,
     "aria-labelledby": "modal-modal-title",
@@ -3643,7 +3420,7 @@ function ItemOutViewForm() {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3660,19 +3437,19 @@ function ItemOutViewForm() {
     sx: {
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Do you want to stop making item out ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, null, "Do you want to stop making item return ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
   }, "Note :"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2"
-  }, " If you stop making item out without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
+  }, " If you stop making item return without saving, all your changes will be lost"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     type: "submit",
-    onClick: () => navigate('/ItemOutViewAdmin'),
+    onClick: () => navigate('/ItemReturnAdminView'),
     className: "btnCustomer",
     style: {
       width: '100%'
@@ -3687,7 +3464,7 @@ function ItemOutViewForm() {
     style: {
       width: '100%'
     }
-  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleClose,
     closeAfterTransition: true,
@@ -3701,7 +3478,7 @@ function ItemOutViewForm() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
@@ -3724,7 +3501,7 @@ function ItemOutViewForm() {
   }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: () => handleDecision('previous'),
     className: "btnCustomer"
-  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     open: ErrorOpenModal,
     onClose: handleCloseError,
     closeAfterTransition: true,
@@ -3738,7 +3515,7 @@ function ItemOutViewForm() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
@@ -3756,7 +3533,7 @@ function ItemOutViewForm() {
   }, "Saving Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseError
-  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .A, {
+  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     open: loadingOpenModalUpdate,
     onClose: handleCloseUpdate,
     closeAfterTransition: true,
@@ -3770,7 +3547,7 @@ function ItemOutViewForm() {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
@@ -3790,7 +3567,67 @@ function ItemOutViewForm() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleCloseUpdate,
     className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay, {
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+    open: open2,
+    onClose: handleCloseUpdateReason,
+    "aria-labelledby": "modal-modal-title",
+    "aria-describedby": "modal-modal-description"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    sx: _objectSpread(_objectSpread({}, style), {}, {
+      width: 500
+    })
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
+    title: "Close",
+    placement: "left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+    onClick: handleCloseUpdateReason,
+    style: {
+      position: 'relative',
+      float: 'right'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, {
+    style: {
+      color: '#202a5a'
+    }
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    id: "modal-modal-title",
+    variant: "h6",
+    component: "h2"
+  }, "Reason Of Updating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
+    container: true,
+    style: {
+      alignItems: 'center',
+      padding: '15px'
+    },
+    spacing: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    required: true,
+    id: "reason",
+    name: "reason",
+    multiline: true,
+    rows: 4,
+    value: reason2,
+    onChange: e => setReason2(e.target.value),
+    label: "Comments",
+    sx: {
+      width: '100%',
+      backgroundColor: 'white'
+    }
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
+    item: true,
+    xs: 12
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
+    type: "submit",
+    className: "btnCustomer",
+    style: {
+      width: '100%'
+    }
+  }, "Save")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay, {
     anchor: "right",
     open: shopOpen,
     onClose: toggleShop,
@@ -3811,7 +3648,7 @@ function ItemOutViewForm() {
     component: "div"
   }, "Select Item from Shop"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     onClick: toggleShop
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_55__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     display: "flex",
     mb: 2
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
@@ -3821,7 +3658,7 @@ function ItemOutViewForm() {
     value: shopSearch,
     onChange: handleShopSearchChange,
     size: "small"
-  })), shopLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  })), shopLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     sx: {
       flexGrow: 1,
       overflowY: 'auto',
@@ -3831,18 +3668,18 @@ function ItemOutViewForm() {
     container: true,
     spacing: 2
   }, shopItems.map(item => {
-    var _ref21, _item$itemSellingPric;
+    var _ref20, _item$itemSellingPric;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Ay, {
       item: true,
       xs: 6,
       key: item._id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
       sx: {
         height: '100%',
         display: 'flex',
         flexDirection: 'column'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
       component: "img",
       height: "120",
       image: item.data && item.contentType ? "data:".concat(item.contentType, ";base64,").concat(item.data) : undefined,
@@ -3851,7 +3688,7 @@ function ItemOutViewForm() {
         objectFit: 'contain',
         padding: '5px'
       }
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, {
       sx: {
         flexGrow: 1,
         padding: '10px'
@@ -3863,7 +3700,7 @@ function ItemOutViewForm() {
     }, item.itemName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       variant: "body2",
       color: "text.secondary"
-    }, "FC ", (_ref21 = item.itemSellingPrice * rate) === null || _ref21 === void 0 ? void 0 : _ref21.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "FC ", (_ref20 = item.itemSellingPrice * rate) === null || _ref20 === void 0 ? void 0 : _ref20.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
       variant: "body2",
       color: "primary",
       fontWeight: "bold"
@@ -3871,11 +3708,11 @@ function ItemOutViewForm() {
       variant: "caption",
       display: "block",
       gutterBottom: true
-    }, "Stock: ", item.itemQuantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+    }, "Stock: ", item.itemQuantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
       variant: "contained",
       size: "small",
       fullWidth: true,
-      onClick: () => handleAddToItemOut(item),
+      onClick: () => handleAddToItemReturnUpdate(item),
       sx: {
         marginTop: '5px'
       }
@@ -3884,7 +3721,7 @@ function ItemOutViewForm() {
     display: "flex",
     justifyContent: "center",
     mt: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, {
     count: shopTotalPages,
     page: shopPage,
     onChange: handleShopPageChange,
@@ -3892,7 +3729,7 @@ function ItemOutViewForm() {
     color: "primary"
   })))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemOutViewForm);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemReturnViewForm);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);

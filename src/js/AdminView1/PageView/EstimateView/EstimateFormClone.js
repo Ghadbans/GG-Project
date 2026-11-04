@@ -400,6 +400,8 @@ The GLOBAL GATE Team`;
         _id: null,
         itemName: null
       },
+      data: null,
+      contentType: null,
       itemDescription: "",
       itemDiscount: 0,
       itemQty: 0,
@@ -422,8 +424,27 @@ The GLOBAL GATE Team`;
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
+        _id: null,
         itemName: 'empty'
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
   useEffect(() => {
@@ -859,7 +880,7 @@ The GLOBAL GATE Team`;
                                                     <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                     <td style={{ height: '100px' }}>
                                                       {
-                                                        Item.itemName.itemName ? (
+                                                        (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                           (
                                                             <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                                                               <ItemThumbnail
@@ -868,7 +889,7 @@ The GLOBAL GATE Team`;
                                                                 initialType={Item.contentType}
                                                               />
                                                               <div >
-                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                                <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}</Typography>
                                                                 <TextField
                                                                   name='itemDescription' id='itemDescription'
                                                                   value={Item.itemDescription}
@@ -1065,7 +1086,7 @@ The GLOBAL GATE Team`;
                                                   <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                                   <td style={{ height: '100px' }}>
                                                     {
-                                                      Item.itemName.itemName ? (
+                                                      (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                         (
                                                           <div style={{ display: 'flex', gap: '30px', alignItems: 'center' }}>
                                                             <ItemThumbnail
@@ -1074,7 +1095,7 @@ The GLOBAL GATE Team`;
                                                               initialType={Item.contentType}
                                                             />
                                                             <div >
-                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}</Typography>
+                                                              <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}</Typography>
                                                               <TextField
                                                                 name='itemDescription' id='itemDescription'
                                                                 value={Item.itemDescription}

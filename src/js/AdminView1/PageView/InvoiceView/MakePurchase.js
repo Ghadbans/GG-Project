@@ -348,36 +348,59 @@ function MakePurchase() {
   {/** Item InFO */}
 
 const handleShowAutocomplete = (idRow) => {
-  SetItems(items=> items.map((row)=> row.idRow === idRow ?{...row, 
-    itemName:{
-      _id:null,
-      itemName:null
-   }, 
-   itemDescription: "",
-   itemDiscount:0,
-   itemQty:0,
-   itemRate:0,
-   itemAmount:0,
-   itemCost:0,
-   totalAmount:0,
-   discount:0,
-   percentage:0,
-   itemBuy:0,
-   itemWeight: "",
-   totalGenerale:0,
-   totalCost:0,
-   stock: 0,
-   itemOut:0,
-   newItemOut:0,
-   }: row))
-}
+    SetItems(items => items.map((row) => row.idRow === idRow ? {
+      ...row,
+      itemName: {
+        _id: null,
+        itemName: null
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
+    } : row))
+  }
 const handleShowAutocompleteDescription = (idRow) => {
-  SetItems(items=> items.map((row)=> row.idRow === idRow ?{...row, 
-    itemName:{
-      itemName: 'empty'
-   }, 
-   }: row))
-}
+    SetItems(items => items.map((row) => row.idRow === idRow ? {
+      ...row,
+      itemName: {
+        _id: null,
+        itemName: 'empty'
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
+    } : row))
+  }
   const deleteItem = idRow =>{
     SetItems (items => items.filter((Item)=> Item.idRow !==idRow));
   };
@@ -812,7 +835,7 @@ const handleCreateItem = (newItem)=> {
             (  
               <div style={{display:'flex', justifyContent:'space-between',alignItems:'center'}}>
               <div >
-              <Typography hidden = { Item.itemName?String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty':''} sx={{fontSize:'23px'}}>{Item.itemName?Item.itemName.itemName.toUpperCase():''}</Typography>
+              <Typography hidden = { Item.itemName?String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty':''} sx={{fontSize:'23px'}}>{Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}</Typography>
               <TextField 
                 name='itemDescription' id='itemDescription' 
                 value={Item.itemDescription}

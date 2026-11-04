@@ -614,14 +614,51 @@ function EstimateConvertToMaintenance() {
         _id: null,
         itemName: null
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
   const handleShowAutocompleteDescription = (idRow) => {
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
+        _id: null,
         itemName: 'empty'
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
   useEffect(() => {
@@ -1138,7 +1175,7 @@ function EstimateConvertToMaintenance() {
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td style={{ height: '100px' }}>
                                                 {
-                                                  Item.itemName.itemName ? (
+                                                  (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
@@ -1148,7 +1185,7 @@ function EstimateConvertToMaintenance() {
                                                             initialType={Item.contentType}
                                                           />
                                                           <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName ? Item.itemName.itemName : ''}</Typography>
+                                                            <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '23px' }}>{Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName : '')}</Typography>
                                                             <TextField
                                                               name='itemDescription' id='itemDescription'
                                                               value={Item.itemDescription}

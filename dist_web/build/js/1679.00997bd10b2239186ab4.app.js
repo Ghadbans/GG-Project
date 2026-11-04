@@ -1,4 +1,109 @@
-(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[2153,8520,8838],{
+(this["webpackChunkgg_management"] = this["webpackChunkgg_management"] || []).push([[1679,2153,8520],{
+
+/***/ 65343
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+}), 'ArrowForward');
+
+/***/ },
+
+/***/ 2775
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m19 9 1.25-2.75L23 5l-2.75-1.25L19 1l-1.25 2.75L15 5l2.75 1.25zm-7.5.5L9 4 6.5 9.5 1 12l5.5 2.5L9 20l2.5-5.5L17 12zM19 15l-1.25 2.75L15 19l2.75 1.25L19 23l1.25-2.75L23 19l-2.75-1.25z"
+}), 'AutoAwesome');
+
+/***/ },
+
+/***/ 58407
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M16.59 7.58 10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8"
+}), 'CheckCircleOutline');
+
+/***/ },
+
+/***/ 5766
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m18 7-1.41-1.41-6.34 6.34 1.41 1.41zm4.24-1.41L11.66 16.17 7.48 12l-1.41 1.41L11.66 19l12-12zM.41 13.41 6 19l1.41-1.41L1.83 12z"
+}), 'DoneAll');
+
+/***/ },
+
+/***/ 42961
+(__unused_webpack_module, exports, __webpack_require__) {
+
+"use strict";
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M15.55 13c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.37-.66-.11-1.48-.87-1.48H5.21l-.94-2H1v2h2l3.6 7.59-1.35 2.44C4.52 15.37 5.48 17 7 17h12v-2H7l1.1-2zM6.16 6h12.15l-2.76 5H8.53zM7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2m10 0c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2"
+}), 'ShoppingCartOutlined');
+
+/***/ },
 
 /***/ 99682
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
@@ -60,6 +165,26 @@
 
 /***/ },
 
+/***/ 40250
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var _utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(20561);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(74848);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A)( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("path", {
+  d: "M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4z"
+}), 'Refresh'));
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
 /***/ 29719
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -77,6 +202,747 @@
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
 
+
+/***/ },
+
+/***/ 87393
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ CardMedia_CardMedia)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/CardMedia/cardMediaClasses.js
+
+
+function getCardMediaUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiCardMedia', slot);
+}
+const cardMediaClasses = (0,generateUtilityClasses/* default */.A)('MuiCardMedia', ['root', 'media', 'img']);
+/* harmony default export */ const CardMedia_cardMediaClasses = ((/* unused pure expression or super */ null && (cardMediaClasses)));
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/CardMedia/CardMedia.js
+'use client';
+
+
+
+const _excluded = ["children", "className", "component", "image", "src", "style"];
+
+
+
+
+
+
+
+
+
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    isMediaComponent,
+    isImageComponent
+  } = ownerState;
+  const slots = {
+    root: ['root', isMediaComponent && 'media', isImageComponent && 'img']
+  };
+  return (0,composeClasses/* default */.A)(slots, getCardMediaUtilityClass, classes);
+};
+const CardMediaRoot = (0,styled/* default */.Ay)('div', {
+  name: 'MuiCardMedia',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    const {
+      isMediaComponent,
+      isImageComponent
+    } = ownerState;
+    return [styles.root, isMediaComponent && styles.media, isImageComponent && styles.img];
+  }
+})(({
+  ownerState
+}) => (0,esm_extends/* default */.A)({
+  display: 'block',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'no-repeat',
+  backgroundPosition: 'center'
+}, ownerState.isMediaComponent && {
+  width: '100%'
+}, ownerState.isImageComponent && {
+  // ⚠️ object-fit is not supported by IE11.
+  objectFit: 'cover'
+}));
+const MEDIA_COMPONENTS = ['video', 'audio', 'picture', 'iframe', 'img'];
+const IMAGE_COMPONENTS = ['picture', 'img'];
+const CardMedia = /*#__PURE__*/react.forwardRef(function CardMedia(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiCardMedia'
+  });
+  const {
+      children,
+      className,
+      component = 'div',
+      image,
+      src,
+      style
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const isMediaComponent = MEDIA_COMPONENTS.indexOf(component) !== -1;
+  const composedStyle = !isMediaComponent && image ? (0,esm_extends/* default */.A)({
+    backgroundImage: `url("${image}")`
+  }, style) : style;
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    component,
+    isMediaComponent,
+    isImageComponent: IMAGE_COMPONENTS.indexOf(component) !== -1
+  });
+  const classes = useUtilityClasses(ownerState);
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(CardMediaRoot, (0,esm_extends/* default */.A)({
+    className: (0,clsx/* default */.A)(classes.root, className),
+    as: component,
+    role: !isMediaComponent && image ? 'img' : undefined,
+    ref: ref,
+    style: composedStyle,
+    ownerState: ownerState,
+    src: isMediaComponent ? image || src : undefined
+  }, other, {
+    children: children
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const CardMedia_CardMedia = (CardMedia);
+
+/***/ },
+
+/***/ 69279
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ Pagination_Pagination)
+});
+
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(34164);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(75659);
+// EXTERNAL MODULE: ./node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(25669);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(38413);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(31609);
+;// ./node_modules/@mui/material/Pagination/paginationClasses.js
+
+
+function getPaginationUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPagination', slot);
+}
+const paginationClasses = (0,generateUtilityClasses/* default */.A)('MuiPagination', ['root', 'ul', 'outlined', 'text']);
+/* harmony default export */ const Pagination_paginationClasses = ((/* unused pure expression or super */ null && (paginationClasses)));
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/useControlled/useControlled.js
+var useControlled = __webpack_require__(2501);
+;// ./node_modules/@mui/material/usePagination/usePagination.js
+'use client';
+
+
+
+const _excluded = ["boundaryCount", "componentName", "count", "defaultPage", "disabled", "hideNextButton", "hidePrevButton", "onChange", "page", "showFirstButton", "showLastButton", "siblingCount"];
+
+function usePagination(props = {}) {
+  // keep default values in sync with @default tags in Pagination.propTypes
+  const {
+      boundaryCount = 1,
+      componentName = 'usePagination',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      hideNextButton = false,
+      hidePrevButton = false,
+      onChange: handleChange,
+      page: pageProp,
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const [page, setPageState] = (0,useControlled/* default */.A)({
+    controlled: pageProp,
+    default: defaultPage,
+    name: componentName,
+    state: 'page'
+  });
+  const handleClick = (event, value) => {
+    if (!pageProp) {
+      setPageState(value);
+    }
+    if (handleChange) {
+      handleChange(event, value);
+    }
+  };
+
+  // https://dev.to/namirsab/comment/2050
+  const range = (start, end) => {
+    const length = end - start + 1;
+    return Array.from({
+      length
+    }, (_, i) => start + i);
+  };
+  const startPages = range(1, Math.min(boundaryCount, count));
+  const endPages = range(Math.max(count - boundaryCount + 1, boundaryCount + 1), count);
+  const siblingsStart = Math.max(Math.min(
+  // Natural start
+  page - siblingCount,
+  // Lower boundary when page is high
+  count - boundaryCount - siblingCount * 2 - 1),
+  // Greater than startPages
+  boundaryCount + 2);
+  const siblingsEnd = Math.min(Math.max(
+  // Natural end
+  page + siblingCount,
+  // Upper boundary when page is low
+  boundaryCount + siblingCount * 2 + 2),
+  // Less than endPages
+  endPages.length > 0 ? endPages[0] - 2 : count - 1);
+
+  // Basic list of items to render
+  // for example itemList = ['first', 'previous', 1, 'ellipsis', 4, 5, 6, 'ellipsis', 10, 'next', 'last']
+  const itemList = [...(showFirstButton ? ['first'] : []), ...(hidePrevButton ? [] : ['previous']), ...startPages,
+  // Start ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsStart > boundaryCount + 2 ? ['start-ellipsis'] : boundaryCount + 1 < count - boundaryCount ? [boundaryCount + 1] : []),
+  // Sibling pages
+  ...range(siblingsStart, siblingsEnd),
+  // End ellipsis
+  // eslint-disable-next-line no-nested-ternary
+  ...(siblingsEnd < count - boundaryCount - 1 ? ['end-ellipsis'] : count - boundaryCount > boundaryCount ? [count - boundaryCount] : []), ...endPages, ...(hideNextButton ? [] : ['next']), ...(showLastButton ? ['last'] : [])];
+
+  // Map the button type to its page number
+  const buttonPage = type => {
+    switch (type) {
+      case 'first':
+        return 1;
+      case 'previous':
+        return page - 1;
+      case 'next':
+        return page + 1;
+      case 'last':
+        return count;
+      default:
+        return null;
+    }
+  };
+
+  // Convert the basic item list to PaginationItem props objects
+  const items = itemList.map(item => {
+    return typeof item === 'number' ? {
+      onClick: event => {
+        handleClick(event, item);
+      },
+      type: 'page',
+      page: item,
+      selected: item === page,
+      disabled,
+      'aria-current': item === page ? 'true' : undefined
+    } : {
+      onClick: event => {
+        handleClick(event, buttonPage(item));
+      },
+      type: item,
+      page: buttonPage(item),
+      selected: false,
+      disabled: disabled || item.indexOf('ellipsis') === -1 && (item === 'next' || item === 'last' ? page >= count : page <= 1)
+    };
+  });
+  return (0,esm_extends/* default */.A)({
+    items
+  }, other);
+}
+// EXTERNAL MODULE: ./node_modules/@mui/system/colorManipulator.js
+var colorManipulator = __webpack_require__(771);
+// EXTERNAL MODULE: ./node_modules/@mui/system/esm/RtlProvider/index.js
+var RtlProvider = __webpack_require__(73788);
+;// ./node_modules/@mui/material/PaginationItem/paginationItemClasses.js
+
+
+function getPaginationItemUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.Ay)('MuiPaginationItem', slot);
+}
+const paginationItemClasses = (0,generateUtilityClasses/* default */.A)('MuiPaginationItem', ['root', 'page', 'sizeSmall', 'sizeLarge', 'text', 'textPrimary', 'textSecondary', 'outlined', 'outlinedPrimary', 'outlinedSecondary', 'rounded', 'ellipsis', 'firstLast', 'previousNext', 'focusVisible', 'disabled', 'selected', 'icon', 'colorPrimary', 'colorSecondary']);
+/* harmony default export */ const PaginationItem_paginationItemClasses = (paginationItemClasses);
+// EXTERNAL MODULE: ./node_modules/@mui/material/ButtonBase/ButtonBase.js + 4 modules
+var ButtonBase = __webpack_require__(18850);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28466);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/FirstPage.js
+var FirstPage = __webpack_require__(28775);
+// EXTERNAL MODULE: ./node_modules/@mui/material/internal/svg-icons/LastPage.js
+var LastPage = __webpack_require__(35067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/createSvgIcon.js
+var createSvgIcon = __webpack_require__(20561);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateBefore.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateBefore = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"
+}), 'NavigateBefore'));
+;// ./node_modules/@mui/material/internal/svg-icons/NavigateNext.js
+'use client';
+
+
+
+
+/**
+ * @ignore - internal component.
+ */
+
+/* harmony default export */ const NavigateNext = ((0,createSvgIcon/* default */.A)( /*#__PURE__*/(0,jsx_runtime.jsx)("path", {
+  d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
+}), 'NavigateNext'));
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(11848);
+;// ./node_modules/@mui/material/PaginationItem/PaginationItem.js
+'use client';
+
+
+
+const PaginationItem_excluded = ["className", "color", "component", "components", "disabled", "page", "selected", "shape", "size", "slots", "type", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const overridesResolver = (props, styles) => {
+  const {
+    ownerState
+  } = props;
+  return [styles.root, styles[ownerState.variant], styles[`size${(0,capitalize/* default */.A)(ownerState.size)}`], ownerState.variant === 'text' && styles[`text${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.variant === 'outlined' && styles[`outlined${(0,capitalize/* default */.A)(ownerState.color)}`], ownerState.shape === 'rounded' && styles.rounded, ownerState.type === 'page' && styles.page, (ownerState.type === 'start-ellipsis' || ownerState.type === 'end-ellipsis') && styles.ellipsis, (ownerState.type === 'previous' || ownerState.type === 'next') && styles.previousNext, (ownerState.type === 'first' || ownerState.type === 'last') && styles.firstLast];
+};
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    color,
+    disabled,
+    selected,
+    size,
+    shape,
+    type,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', `size${(0,capitalize/* default */.A)(size)}`, variant, shape, color !== 'standard' && `color${(0,capitalize/* default */.A)(color)}`, color !== 'standard' && `${variant}${(0,capitalize/* default */.A)(color)}`, disabled && 'disabled', selected && 'selected', {
+      page: 'page',
+      first: 'firstLast',
+      last: 'firstLast',
+      'start-ellipsis': 'ellipsis',
+      'end-ellipsis': 'ellipsis',
+      previous: 'previousNext',
+      next: 'previousNext'
+    }[type]],
+    icon: ['icon']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationItemUtilityClass, classes);
+};
+const PaginationItemEllipsis = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  height: 'auto',
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}));
+const PaginationItemPage = (0,styled/* default */.Ay)(ButtonBase/* default */.A, {
+  name: 'MuiPaginationItem',
+  slot: 'Root',
+  overridesResolver
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, theme.typography.body2, {
+  borderRadius: 32 / 2,
+  textAlign: 'center',
+  boxSizing: 'border-box',
+  minWidth: 32,
+  height: 32,
+  padding: '0 6px',
+  margin: '0 3px',
+  color: (theme.vars || theme).palette.text.primary,
+  [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.focus
+  },
+  [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+    opacity: (theme.vars || theme).palette.action.disabledOpacity
+  },
+  transition: theme.transitions.create(['color', 'background-color'], {
+    duration: theme.transitions.duration.short
+  }),
+  '&:hover': {
+    backgroundColor: (theme.vars || theme).palette.action.hover,
+    // Reset on touch devices, it doesn't add specificity
+    '@media (hover: none)': {
+      backgroundColor: 'transparent'
+    }
+  },
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: {
+    backgroundColor: (theme.vars || theme).palette.action.selected,
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.hoverOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.hoverOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette.action.selected
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.selectedChannel} / calc(${theme.vars.palette.action.selectedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette.action.selected, theme.palette.action.selectedOpacity + theme.palette.action.focusOpacity)
+    },
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      opacity: 1,
+      color: (theme.vars || theme).palette.action.disabled,
+      backgroundColor: (theme.vars || theme).palette.action.selected
+    }
+  }
+}, ownerState.size === 'small' && {
+  minWidth: 26,
+  height: 26,
+  borderRadius: 26 / 2,
+  margin: '0 1px',
+  padding: '0 4px'
+}, ownerState.size === 'large' && {
+  minWidth: 40,
+  height: 40,
+  borderRadius: 40 / 2,
+  padding: '0 10px',
+  fontSize: theme.typography.pxToRem(15)
+}, ownerState.shape === 'rounded' && {
+  borderRadius: (theme.vars || theme).shape.borderRadius
+}), ({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({}, ownerState.variant === 'text' && {
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].contrastText,
+    backgroundColor: (theme.vars || theme).palette[ownerState.color].main,
+    '&:hover': {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark,
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: (theme.vars || theme).palette[ownerState.color].main
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: (theme.vars || theme).palette[ownerState.color].dark
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}, ownerState.variant === 'outlined' && {
+  border: theme.vars ? `1px solid rgba(${theme.vars.palette.common.onBackgroundChannel} / 0.23)` : `1px solid ${theme.palette.mode === 'light' ? 'rgba(0, 0, 0, 0.23)' : 'rgba(255, 255, 255, 0.23)'}`,
+  [`&.${PaginationItem_paginationItemClasses.selected}`]: (0,esm_extends/* default */.A)({}, ownerState.color !== 'standard' && {
+    color: (theme.vars || theme).palette[ownerState.color].main,
+    border: `1px solid ${theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / 0.5)` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, 0.5)}`,
+    backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / ${theme.vars.palette.action.activatedOpacity})` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity),
+    '&:hover': {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity),
+      // Reset on touch devices, it doesn't add specificity
+      '@media (hover: none)': {
+        backgroundColor: 'transparent'
+      }
+    },
+    [`&.${PaginationItem_paginationItemClasses.focusVisible}`]: {
+      backgroundColor: theme.vars ? `rgba(${theme.vars.palette[ownerState.color].mainChannel} / calc(${theme.vars.palette.action.activatedOpacity} + ${theme.vars.palette.action.focusOpacity}))` : (0,colorManipulator/* alpha */.X4)(theme.palette[ownerState.color].main, theme.palette.action.activatedOpacity + theme.palette.action.focusOpacity)
+    }
+  }, {
+    [`&.${PaginationItem_paginationItemClasses.disabled}`]: {
+      borderColor: (theme.vars || theme).palette.action.disabledBackground,
+      color: (theme.vars || theme).palette.action.disabled
+    }
+  })
+}));
+const PaginationItemPageIcon = (0,styled/* default */.Ay)('div', {
+  name: 'MuiPaginationItem',
+  slot: 'Icon',
+  overridesResolver: (props, styles) => styles.icon
+})(({
+  theme,
+  ownerState
+}) => (0,esm_extends/* default */.A)({
+  fontSize: theme.typography.pxToRem(20),
+  margin: '0 -8px'
+}, ownerState.size === 'small' && {
+  fontSize: theme.typography.pxToRem(18)
+}, ownerState.size === 'large' && {
+  fontSize: theme.typography.pxToRem(22)
+}));
+const PaginationItem = /*#__PURE__*/react.forwardRef(function PaginationItem(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPaginationItem'
+  });
+  const {
+      className,
+      color = 'standard',
+      component,
+      components = {},
+      disabled = false,
+      page,
+      selected = false,
+      shape = 'circular',
+      size = 'medium',
+      slots = {},
+      type = 'page',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, PaginationItem_excluded);
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    color,
+    disabled,
+    selected,
+    shape,
+    size,
+    type,
+    variant
+  });
+  const isRtl = (0,RtlProvider/* useRtl */.I)();
+  const classes = useUtilityClasses(ownerState);
+  const normalizedIcons = isRtl ? {
+    previous: slots.next || components.next || NavigateNext,
+    next: slots.previous || components.previous || NavigateBefore,
+    last: slots.first || components.first || FirstPage/* default */.A,
+    first: slots.last || components.last || LastPage/* default */.A
+  } : {
+    previous: slots.previous || components.previous || NavigateBefore,
+    next: slots.next || components.next || NavigateNext,
+    first: slots.first || components.first || FirstPage/* default */.A,
+    last: slots.last || components.last || LastPage/* default */.A
+  };
+  const Icon = normalizedIcons[type];
+  return type === 'start-ellipsis' || type === 'end-ellipsis' ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemEllipsis, {
+    ref: ref,
+    ownerState: ownerState,
+    className: (0,clsx/* default */.A)(classes.root, className),
+    children: "\u2026"
+  }) : /*#__PURE__*/(0,jsx_runtime.jsxs)(PaginationItemPage, (0,esm_extends/* default */.A)({
+    ref: ref,
+    ownerState: ownerState,
+    component: component,
+    disabled: disabled,
+    className: (0,clsx/* default */.A)(classes.root, className)
+  }, other, {
+    children: [type === 'page' && page, Icon ? /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItemPageIcon, {
+      as: Icon,
+      ownerState: ownerState,
+      className: classes.icon
+    }) : null]
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const PaginationItem_PaginationItem = (PaginationItem);
+;// ./node_modules/@mui/material/Pagination/Pagination.js
+'use client';
+
+
+
+const Pagination_excluded = ["boundaryCount", "className", "color", "count", "defaultPage", "disabled", "getItemAriaLabel", "hideNextButton", "hidePrevButton", "onChange", "page", "renderItem", "shape", "showFirstButton", "showLastButton", "siblingCount", "size", "variant"];
+
+
+
+
+
+
+
+
+
+
+
+const Pagination_useUtilityClasses = ownerState => {
+  const {
+    classes,
+    variant
+  } = ownerState;
+  const slots = {
+    root: ['root', variant],
+    ul: ['ul']
+  };
+  return (0,composeClasses/* default */.A)(slots, getPaginationUtilityClass, classes);
+};
+const PaginationRoot = (0,styled/* default */.Ay)('nav', {
+  name: 'MuiPagination',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, styles[ownerState.variant]];
+  }
+})({});
+const PaginationUl = (0,styled/* default */.Ay)('ul', {
+  name: 'MuiPagination',
+  slot: 'Ul',
+  overridesResolver: (props, styles) => styles.ul
+})({
+  display: 'flex',
+  flexWrap: 'wrap',
+  alignItems: 'center',
+  padding: 0,
+  margin: 0,
+  listStyle: 'none'
+});
+function defaultGetAriaLabel(type, page, selected) {
+  if (type === 'page') {
+    return `${selected ? '' : 'Go to '}page ${page}`;
+  }
+  return `Go to ${type} page`;
+}
+const Pagination = /*#__PURE__*/react.forwardRef(function Pagination(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.b)({
+    props: inProps,
+    name: 'MuiPagination'
+  });
+  const {
+      boundaryCount = 1,
+      className,
+      color = 'standard',
+      count = 1,
+      defaultPage = 1,
+      disabled = false,
+      getItemAriaLabel = defaultGetAriaLabel,
+      hideNextButton = false,
+      hidePrevButton = false,
+      renderItem = item => /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationItem_PaginationItem, (0,esm_extends/* default */.A)({}, item)),
+      shape = 'circular',
+      showFirstButton = false,
+      showLastButton = false,
+      siblingCount = 1,
+      size = 'medium',
+      variant = 'text'
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, Pagination_excluded);
+  const {
+    items
+  } = usePagination((0,esm_extends/* default */.A)({}, props, {
+    componentName: 'Pagination'
+  }));
+  const ownerState = (0,esm_extends/* default */.A)({}, props, {
+    boundaryCount,
+    color,
+    count,
+    defaultPage,
+    disabled,
+    getItemAriaLabel,
+    hideNextButton,
+    hidePrevButton,
+    renderItem,
+    shape,
+    showFirstButton,
+    showLastButton,
+    siblingCount,
+    size,
+    variant
+  });
+  const classes = Pagination_useUtilityClasses(ownerState);
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationRoot, (0,esm_extends/* default */.A)({
+    "aria-label": "pagination navigation",
+    className: (0,clsx/* default */.A)(classes.root, className),
+    ownerState: ownerState,
+    ref: ref
+  }, other, {
+    children: /*#__PURE__*/(0,jsx_runtime.jsx)(PaginationUl, {
+      className: classes.ul,
+      ownerState: ownerState,
+      children: items.map((item, index) => /*#__PURE__*/(0,jsx_runtime.jsx)("li", {
+        children: renderItem((0,esm_extends/* default */.A)({}, item, {
+          color,
+          'aria-label': getItemAriaLabel(item.type, item.page, item.selected),
+          shape,
+          size,
+          variant
+        }))
+      }, index))
+    })
+  }));
+});
+
+// @default tags synced with default values from usePagination
+
+ false ? 0 : void 0;
+/* harmony default export */ const Pagination_Pagination = (Pagination);
 
 /***/ },
 
@@ -1286,73 +2152,85 @@ var CustomerFormView2 = _ref3 => {
 
 /***/ },
 
-/***/ 8838
+/***/ 51679
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
-/* harmony import */ var _component_SidebarDash1__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49377);
-/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(68525);
-/* harmony import */ var _Chartview_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(55746);
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(67034);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(69067);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(11641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(14073);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(71543);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(8239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(60538);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(844);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(86531);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(50779);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(29571);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(8641);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(25239);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(47419);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(35406);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(11848);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(56655);
-/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(58331);
-/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(89828);
-/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(8532);
-/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(14519);
-/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(88248);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(49799);
-/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(97834);
-/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(62274);
-/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(8451);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(99380);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(71510);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(99682);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(33541);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(72297);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(29719);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(33829);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(47767);
-/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(61087);
-/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(75737);
-/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(601);
-/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(48484);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(74353);
-/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_42___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_42__);
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(92659);
-/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(20889);
-/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(82299);
-/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(65821);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(13561);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(32005);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(40301);
-/* harmony import */ var _CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(17330);
-/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(39781);
-/* harmony import */ var _ItemView_ItemFormView2__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(88520);
-/* harmony import */ var _ItemView_ItemUpdateView2__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(32153);
-/* harmony import */ var number_to_words__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(15381);
-/* harmony import */ var number_to_words__WEBPACK_IMPORTED_MODULE_54___default = /*#__PURE__*/__webpack_require__.n(number_to_words__WEBPACK_IMPORTED_MODULE_54__);
-/* harmony import */ var react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(16069);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(83818);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(95236);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(99571);
-/* harmony import */ var _dexieDb__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(33613);
+/* harmony import */ var _utils_isMobile__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2650);
+/* harmony import */ var _component_LanguageFixerButton__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51254);
+/* harmony import */ var _component_SmartTextInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(73068);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(99571);
+/* harmony import */ var _component_SidebarDash1__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(49377);
+/* harmony import */ var _view_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(68525);
+/* harmony import */ var _Chartview_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(55746);
+/* harmony import */ var _mui_icons_material_Search__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(64745);
+/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(67034);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(69067);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(11641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(14073);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(86531);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(8239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(71543);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(60538);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(50779);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(29571);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(8641);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(25239);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(47419);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(35406);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(11848);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(56655);
+/* harmony import */ var _mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(58331);
+/* harmony import */ var _mui_material_AppBar__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(89828);
+/* harmony import */ var _mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(8532);
+/* harmony import */ var _mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(14519);
+/* harmony import */ var _mui_material_Drawer__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(88248);
+/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(49799);
+/* harmony import */ var _mui_material_Container__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(97834);
+/* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(62274);
+/* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(8451);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(99380);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(99682);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(33541);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(72297);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(40250);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(29719);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(33829);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(47767);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(71510);
+/* harmony import */ var _mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(61087);
+/* harmony import */ var _mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(75737);
+/* harmony import */ var _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(601);
+/* harmony import */ var _mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(48484);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(46986);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(74353);
+/* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_49___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_49__);
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_50__ = __webpack_require__(92659);
+/* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_51__ = __webpack_require__(20889);
+/* harmony import */ var _mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_52__ = __webpack_require__(82299);
+/* harmony import */ var _component_Loader__WEBPACK_IMPORTED_MODULE_53__ = __webpack_require__(65821);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_54__ = __webpack_require__(13561);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_55__ = __webpack_require__(32005);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_56__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__ = __webpack_require__(39781);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_58__ = __webpack_require__(86990);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_59__ = __webpack_require__(14977);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_60__ = __webpack_require__(87393);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_61__ = __webpack_require__(37636);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_62__ = __webpack_require__(69279);
+/* harmony import */ var _CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_63__ = __webpack_require__(17330);
+/* harmony import */ var _ItemView_ItemFormView2__WEBPACK_IMPORTED_MODULE_64__ = __webpack_require__(88520);
+/* harmony import */ var _ItemView_ItemUpdateView2__WEBPACK_IMPORTED_MODULE_65__ = __webpack_require__(32153);
+/* harmony import */ var _component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_66__ = __webpack_require__(87793);
+/* harmony import */ var number_to_words__WEBPACK_IMPORTED_MODULE_67__ = __webpack_require__(15381);
+/* harmony import */ var number_to_words__WEBPACK_IMPORTED_MODULE_67___default = /*#__PURE__*/__webpack_require__.n(number_to_words__WEBPACK_IMPORTED_MODULE_67__);
+/* harmony import */ var react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__ = __webpack_require__(16069);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_69__ = __webpack_require__(83818);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_70__ = __webpack_require__(95236);
+/* harmony import */ var _dexieDb__WEBPACK_IMPORTED_MODULE_71__ = __webpack_require__(33613);
 var _excluded = ["className"],
   _excluded2 = ["className"],
   _excluded3 = ["data", "contentType"],
@@ -1422,10 +2300,18 @@ function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t =
 
 
 
-var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_ref => {
+
+
+
+
+
+
+
+
+var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_ref => {
   var className = _ref.className,
     props = _objectWithoutProperties(_ref, _excluded);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1433,7 +2319,7 @@ var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] 
 })(_ref2 => {
   var theme = _ref2.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: 'red',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1441,10 +2327,10 @@ var LightTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] 
     }
   };
 });
-var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_ref3 => {
+var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_ref3 => {
   var className = _ref3.className,
     props = _objectWithoutProperties(_ref3, _excluded2);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, _extends({}, props, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .A, _extends({}, props, {
     classes: {
       popper: className
     }
@@ -1452,7 +2338,7 @@ var BlackTooltip = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] 
 })(_ref4 => {
   var theme = _ref4.theme;
   return {
-    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A.tooltip)]: {
+    ["& .".concat(_mui_material_Tooltip__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A.tooltip)]: {
       backgroundColor: '#202a5a',
       color: 'white',
       boxShadow: theme.shadows[1],
@@ -1485,7 +2371,7 @@ var style2 = {
   pb: 3
 };
 var drawerWidth = 240;
-var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A, {
+var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_mui_material_AppBar__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref5 => {
   var theme = _ref5.theme,
@@ -1505,7 +2391,7 @@ var AppBar = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay
     })
   });
 });
-var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .Ay, {
+var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay)(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .Ay, {
   shouldForwardProp: prop => prop !== 'open'
 })(_ref6 => {
   var theme = _ref6.theme,
@@ -1533,13 +2419,11 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .Ay
     })
   };
 });
-function InvoiceFormClone() {
-  var _user$data2, _user$data3, _user$data4, _user$data6;
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_37__/* .useParams */ .g)(),
-    id = _useParams.id;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_37__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_47__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_47__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .selectCurrentUser */ .xu);
+function InvoiceForm() {
+  var isMobile = (0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_1__/* .useIsMobile */ .al)();
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_42__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_54__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_54__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_55__/* .selectCurrentUser */ .xu);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUser = /*#__PURE__*/function () {
@@ -1547,10 +2431,10 @@ function InvoiceFormClone() {
         if (storesUserId) {
           if (navigator.onLine) {
             try {
-              var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+              var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
               var Name = res.data.data.employeeName;
               var Role = res.data.data.role;
-              dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .setUser */ .gV)({
+              dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_55__/* .setUser */ .gV)({
                 userName: Name,
                 role: Role
               }));
@@ -1558,12 +2442,12 @@ function InvoiceFormClone() {
               console.error('Error fetching data:', error);
             }
           } else {
-            var resLocalInfo = yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.employeeUserSchema.get({
+            var resLocalInfo = yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.employeeUserSchema.get({
               _id: storesUserId
             });
             var _Name = resLocalInfo.employeeName;
             var _Role = resLocalInfo.role;
-            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .setUser */ .gV)({
+            dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_55__/* .setUser */ .gV)({
               userName: _Name,
               role: _Role
             }));
@@ -1580,10 +2464,10 @@ function InvoiceFormClone() {
   }, [dispatch]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_48__/* .logOut */ .je)());
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_55__/* .logOut */ .je)());
     navigate('/');
   };
-  var apiUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-invoice");
+  var apiUrl = "".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/create-invoice");
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
       var date = new Date();
       return date;
@@ -1662,29 +2546,53 @@ function InvoiceFormClone() {
     _useState32 = _slicedToArray(_useState31, 2),
     noteInfo = _useState32[0],
     setNoteInfo = _useState32[1];
-  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(""),
+  var _useState33 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState34 = _slicedToArray(_useState33, 2),
-    actionTaken = _useState34[0],
-    setActionTaken = _useState34[1];
-  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. "),
+    shopOpen = _useState34[0],
+    setShopOpen = _useState34[1];
+  var _useState35 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
     _useState36 = _slicedToArray(_useState35, 2),
-    terms = _useState36[0],
-    setTerms = _useState36[1];
+    shopItems = _useState36[0],
+    setShopItems = _useState36[1];
+  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState38 = _slicedToArray(_useState37, 2),
+    shopSearch = _useState38[0],
+    setShopSearch = _useState38[1];
+  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState40 = _slicedToArray(_useState39, 2),
+    shopPage = _useState40[0],
+    setShopPage = _useState40[1];
+  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(1),
+    _useState42 = _slicedToArray(_useState41, 2),
+    shopTotalPages = _useState42[0],
+    setShopTotalPages = _useState42[1];
+  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState44 = _slicedToArray(_useState43, 2),
+    rate = _useState44[0],
+    setRate = _useState44[1];
+  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState46 = _slicedToArray(_useState45, 2),
+    shopLoading = _useState46[0],
+    setShopLoading = _useState46[1];
+  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)("ESTIMATES ARE FOR LABOR AND ADDITIONAL MATERIAL ONLY, MATERIALS SOLD ARE NEITHER TAKEN BACK OR EXCHANGED WE WILL NOT BE RESPONSIBLE FOR LOSS OR DAMAGE CAUSED BY FIRE, THEFT, TESTING, DEFECTED PARE PARTS, OR ANY OTHER CAUSE BEYOND OUR CONTROL. "),
+    _useState48 = _slicedToArray(_useState47, 2),
+    terms = _useState48[0],
+    setTerms = _useState48[1];
   var dateComment = new Date();
-  var invoiceName = "INV-".concat(String(invoiceNumber).padStart(6, '0'));
+  var invoiceName = "INV-" + String(invoiceNumber).padStart(6, '0');
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchlastNumber = /*#__PURE__*/function () {
       var _ref8 = _asyncToGenerator(function* () {
         if (navigator.onLine) {
           try {
             var _res$data, _res$data2;
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-last-saved-invoice"));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/get-last-saved-invoice"));
             setInvoiceNumber(parseInt(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.invoiceNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.invoiceNumber) || 0) + 1);
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         } else {
-          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.invoiceSchema.toArray();
+          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.invoiceSchema.toArray();
           var latest = offLineCustomer1.reduce((max, row) => row.invoiceNumber > max.invoiceNumber ? row : max, offLineCustomer1[0]);
           setInvoiceNumber(parseInt(latest.invoiceNumber) + 1);
         }
@@ -1696,106 +2604,139 @@ function InvoiceFormClone() {
     fetchlastNumber();
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchData = /*#__PURE__*/function () {
+    var fetchItem = /*#__PURE__*/function () {
       var _ref9 = _asyncToGenerator(function* () {
         if (navigator.onLine) {
           try {
-            var _res$data3, _res$data4;
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-invoice/").concat(id));
-            setCustomerName(res.data.data.customerName);
-            setInvoiceSubject(res.data.data.invoiceSubject);
-            setInvoiceDefect(res.data.data.invoiceDefect);
-            SetItems(res.data.data.items.map(row => _objectSpread(_objectSpread({}, row), {}, {
-              itemOut: 0
-            })));
-            setSubTotal(res.data.data.subTotal);
-            setNote(res.data.data.note);
-            setShipping(res.data.data.shipping);
-            setAdjustment(res.data.data.adjustment);
-            setAdjustmentNumber(Number(((_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.adjustmentNumber) || ((_res$data4 = res.data) === null || _res$data4 === void 0 ? void 0 : _res$data4.adjustmentNumber) || 0));
-            setTerms(res.data.data.terms);
-            setNoteInfo(res.data.data.noteInfo);
-            setActionTaken(res.data.data.actionTaken);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          var resLocal = yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.invoiceSchema.get({
-            _id: id
-          });
-          setCustomerName(resLocal.customerName);
-          setInvoiceNumber(resLocal.invoiceNumber);
-          setInvoiceDefect(resLocal.invoiceDefect);
-          SetItems(resLocal.map(row => _objectSpread(_objectSpread({}, row), {}, {
-            itemOut: 0
-          })));
-          setSubTotal(resLocal.subTotal);
-          setNote(resLocal.note);
-          setShipping(resLocal.shipping);
-          setAdjustment(resLocal.adjustment);
-          setAdjustmentNumber(resLocal.adjustmentNumber);
-          setTerms(resLocal.terms);
-          setNoteInfo(resLocal.noteInfo);
-          setActionTaken(resLocal.actionTaken);
-        }
-      });
-      return function fetchData() {
-        return _ref9.apply(this, arguments);
-      };
-    }();
-    fetchData();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchlastNumber = /*#__PURE__*/function () {
-      var _ref0 = _asyncToGenerator(function* () {
-        if (navigator.onLine) {
-          try {
-            var _res$data5, _res$data6;
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-last-saved-invoice"));
-            setInvoiceNumber(parseInt(((_res$data5 = res.data) === null || _res$data5 === void 0 || (_res$data5 = _res$data5.data) === null || _res$data5 === void 0 ? void 0 : _res$data5.invoiceNumber) || ((_res$data6 = res.data) === null || _res$data6 === void 0 ? void 0 : _res$data6.invoiceNumber) || 0) + 1);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        } else {
-          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.invoiceSchema.toArray();
-          var latest = offLineCustomer1.reduce((max, row) => row.invoiceNumber > max.invoiceNumber ? row : max, offLineCustomer1[0]);
-          setInvoiceNumber(parseInt(latest.invoiceNumber) + 1);
-        }
-      });
-      return function fetchlastNumber() {
-        return _ref0.apply(this, arguments);
-      };
-    }();
-    fetchlastNumber();
-  }, []);
-  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var fetchItem = /*#__PURE__*/function () {
-      var _ref1 = _asyncToGenerator(function* () {
-        if (navigator.onLine) {
-          try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/item"));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/item"));
             setItemInformation(res.data.data.reverse());
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         } else {
-          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.itemSchema.toArray();
+          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.itemSchema.toArray();
           setItemInformation(offLineCustomer1.reverse());
         }
       });
       return function fetchItem() {
-        return _ref1.apply(this, arguments);
+        return _ref9.apply(this, arguments);
       };
     }();
     fetchItem();
   }, []);
+
+  // Fetch Shop Items & Rate
+  var fetchShop = /*#__PURE__*/function () {
+    var _ref0 = _asyncToGenerator(function* () {
+      setShopLoading(true);
+      if (navigator.onLine) {
+        try {
+          var resRate = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/rate"));
+          resRate.data.data.forEach(row => setRate(row.rate));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/item-shop?page=").concat(shopPage, "&limit=20&search=").concat(encodeURIComponent(shopSearch)));
+          setShopTotalPages(res.data.totalPages);
+          setShopItems(res.data.items.filter(row => row.typeItem === "Goods").reverse());
+          setShopLoading(false);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+          setShopLoading(false);
+        }
+      } else {
+        var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.itemSchema.toArray();
+        setShopItems(offLineCustomer1.filter(row => row.typeItem === "Goods").reverse());
+        setShopLoading(false);
+        var offLineRate = yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.rateSchema.toArray();
+        offLineRate.forEach(row => setRate(row.rate));
+      }
+    });
+    return function fetchShop() {
+      return _ref0.apply(this, arguments);
+    };
+  }();
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (shopOpen) {
+      // Only fetch if side shop is open
+      fetchShop();
+    }
+  }, [shopPage, shopSearch, shopOpen]);
+  var handleRefreshShop = () => {
+    setShopSearch('');
+    setShopPage(1);
+    fetchShop();
+  };
+  var handleShopPageChange = (e, newPage) => {
+    setShopPage(newPage);
+  };
+  var handleShopSearchChange = e => {
+    setShopSearch(e.target.value);
+    setShopPage(1);
+  };
+  var toggleShop = () => {
+    setShopOpen(!shopOpen);
+  };
+  var handleAddToInvoice = shopItem => {
+    // Check if item already exists
+    var existingItemIndex = items.findIndex(item => item.itemName._id === shopItem._id);
+    if (existingItemIndex !== -1) {
+      // Item exists, update quantity
+      var updatedItems = [...items];
+      var currentItem = updatedItems[existingItemIndex];
+      var newQty = parseInt(currentItem.itemQty) + 1;
+      if (newQty > currentItem.stock) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_4__/* .toast */ .oR.error("Stock Exceeded!", {
+          position: "top-center"
+        });
+        return;
+      }
+      updatedItems[existingItemIndex] = _objectSpread(_objectSpread({}, currentItem), {}, {
+        itemQty: newQty,
+        itemAmount: Math.round(newQty * currentItem.itemRate * 100) / 100,
+        totalAmount: Math.round(newQty * currentItem.itemRate * 100) / 100,
+        discount: Math.round(newQty * currentItem.itemRate * currentItem.itemDiscount * 100) / 100,
+        percentage: Math.round(newQty * currentItem.itemRate * currentItem.itemDiscount * 100) / 100 / 100,
+        totalCost: Math.round(newQty * currentItem.itemCost * 100) / 100,
+        totalGenerale: Math.round(currentItem.itemCost * currentItem.itemBuy * 100) / 100
+      });
+      SetItems(updatedItems);
+    } else {
+      // Item does not exist, add new
+      var newItem = {
+        idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
+        itemName: {
+          _id: shopItem._id,
+          itemName: shopItem.itemName
+        },
+        data: shopItem.data,
+        contentType: shopItem.contentType,
+        itemDescription: shopItem.itemDescription,
+        itemDiscount: 0,
+        itemQty: 1,
+        itemRate: shopItem.itemSellingPrice,
+        itemAmount: shopItem.itemSellingPrice,
+        itemCost: shopItem.itemCostPrice,
+        totalAmount: shopItem.itemSellingPrice,
+        discount: 0,
+        percentage: 0,
+        itemBuy: 0,
+        itemWeight: shopItem.itemWeight || "",
+        totalGenerale: 0,
+        totalCost: shopItem.itemCostPrice,
+        stock: shopItem.itemQuantity,
+        itemOut: 0,
+        newItemOut: 0
+      };
+      SetItems([...items, newItem]);
+    }
+  };
   var handleChangeItem = (idRow, newValue) => {
-    var selectedOptions = ItemInformation.find(option => option === newValue);
+    var selectedOptions = newValue;
     SetItems(items => items.map(row => row.idRow === idRow ? _objectSpread(_objectSpread({}, row), {}, {
       itemName: {
         _id: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions._id,
         itemName: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.itemName
       },
+      data: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.data,
+      contentType: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.contentType,
       itemCost: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.itemCostPrice,
       itemDescription: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.itemDescription,
       itemRate: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.itemSellingPrice,
@@ -1806,6 +2747,23 @@ function InvoiceFormClone() {
     var _e$target = e.target,
       name = _e$target.name,
       value = _e$target.value;
+    var target = e.target;
+    var start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+    var end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+    if (start !== null && target && typeof target.setSelectionRange === 'function') {
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          try {
+            target.setSelectionRange(start, end);
+          } catch (err) {}
+        });
+      }
+      setTimeout(() => {
+        try {
+          target.setSelectionRange(start, end);
+        } catch (err) {}
+      }, 0);
+    }
     var list = [...items];
     list[i][name] = value;
     if (list[i]['itemDiscount'] > 5) {
@@ -1837,7 +2795,7 @@ function InvoiceFormClone() {
   var addItem = () => {
     SetItems([...items, {
       typeItem: '',
-      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A)(),
+      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
       itemName: {
         _id: "",
         itemName: ""
@@ -1863,7 +2821,7 @@ function InvoiceFormClone() {
   var addItemWhite = () => {
     SetItems([...items, {
       newDescription: "",
-      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A)(),
+      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
       itemName: {
         _id: "",
         itemName: ""
@@ -1888,7 +2846,7 @@ function InvoiceFormClone() {
   };
   var addItemRow = i => {
     var newItem = {
-      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A)(),
+      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
       itemName: {
         _id: "",
         itemName: ""
@@ -1917,7 +2875,7 @@ function InvoiceFormClone() {
   var addItemWhiteRow = i => {
     var newItem = {
       newDescription: "",
-      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A)(),
+      idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
       itemName: {
         _id: "",
         itemName: ""
@@ -1968,6 +2926,8 @@ function InvoiceFormClone() {
         _id: null,
         itemName: null
       },
+      data: null,
+      contentType: null,
       itemDescription: "",
       itemDiscount: 0,
       itemQty: 0,
@@ -1989,33 +2949,52 @@ function InvoiceFormClone() {
   var handleShowAutocompleteDescription = idRow => {
     SetItems(items => items.map(row => row.idRow === idRow ? _objectSpread(_objectSpread({}, row), {}, {
       itemName: {
+        _id: null,
         itemName: 'empty'
-      }
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0
     }) : row));
   };
-  var _useState37 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState38 = _slicedToArray(_useState37, 2),
-    openItemUpdate = _useState38[0],
-    setOpenItemUpdate = _useState38[1];
-  var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
-    _useState40 = _slicedToArray(_useState39, 2),
-    idItem = _useState40[0],
-    setIdItem = _useState40[1];
+  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState50 = _slicedToArray(_useState49, 2),
+    openItemUpdate = _useState50[0],
+    setOpenItemUpdate = _useState50[1];
+  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState52 = _slicedToArray(_useState51, 2),
+    idItem = _useState52[0],
+    setIdItem = _useState52[1];
   var handleOpenItemUpdate = /*#__PURE__*/function () {
-    var _ref10 = _asyncToGenerator(function* (id) {
+    var _ref1 = _asyncToGenerator(function* (id) {
       setOpenItemUpdate(true);
       setIdItem(id);
     });
     return function handleOpenItemUpdate(_x) {
-      return _ref10.apply(this, arguments);
+      return _ref1.apply(this, arguments);
     };
   }();
   var handleCloseItemUpdate = /*#__PURE__*/function () {
-    var _ref11 = _asyncToGenerator(function* () {
+    var _ref10 = _asyncToGenerator(function* () {
       setOpenItemUpdate(false);
       if (idItem) {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/get-item/").concat(idItem));
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/get-item/").concat(idItem));
           SetItems(items => items.map(row => {
             var _row$itemName2;
             return ((_row$itemName2 = row.itemName) === null || _row$itemName2 === void 0 ? void 0 : _row$itemName2._id) === res.data.data._id ? _objectSpread(_objectSpread({}, row), {}, {
@@ -2039,43 +3018,43 @@ function InvoiceFormClone() {
       }
     });
     return function handleCloseItemUpdate() {
-      return _ref11.apply(this, arguments);
+      return _ref10.apply(this, arguments);
     };
   }();
   {/** Item InFO End */}
-  var _useState41 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
-    _useState42 = _slicedToArray(_useState41, 2),
-    customer = _useState42[0],
-    setCustomer = _useState42[1];
+  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)([]),
+    _useState54 = _slicedToArray(_useState53, 2),
+    customer = _useState54[0],
+    setCustomer = _useState54[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var fetchCustomer = /*#__PURE__*/function () {
-      var _ref12 = _asyncToGenerator(function* () {
+      var _ref11 = _asyncToGenerator(function* () {
         if (navigator.onLine) {
           try {
-            var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/customer"));
+            var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/customer"));
             setCustomer(res.data.data.reverse());
           } catch (error) {
             console.error('Error fetching data:', error);
           }
         } else {
-          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.customerSchema.toArray();
+          var offLineCustomer1 = yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.customerSchema.toArray();
           setCustomer(offLineCustomer1.reverse());
         }
       });
       return function fetchCustomer() {
-        return _ref12.apply(this, arguments);
+        return _ref11.apply(this, arguments);
       };
     }();
     fetchCustomer();
   }, []);
-  var _useState43 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
-    _useState44 = _slicedToArray(_useState43, 2),
-    customerName = _useState44[0],
-    setCustomerName = _useState44[1];
-  var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState46 = _slicedToArray(_useState45, 2),
-    openAutocomplete1 = _useState46[0],
-    setOpenAutocomplete1 = _useState46[1];
+  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({}),
+    _useState56 = _slicedToArray(_useState55, 2),
+    customerName = _useState56[0],
+    setCustomerName = _useState56[1];
+  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState58 = _slicedToArray(_useState57, 2),
+    openAutocomplete1 = _useState58[0],
+    setOpenAutocomplete1 = _useState58[1];
   var handleOpenOpenAutocomplete1 = e => {
     e.stopPropagation();
     setOpenAutocomplete1(true);
@@ -2094,19 +3073,40 @@ function InvoiceFormClone() {
       billingAddress: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.billingAddress,
       billingCity: selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.billingCity
     });
+    if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Net 3") {
+      var currentDate = new Date();
+      currentDate.setDate(currentDate.getDate() + 3);
+      setInvoiceDueDate(currentDate);
+    } else if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Net 10") {
+      var _currentDate = new Date();
+      _currentDate.setDate(_currentDate.getDate() + 10);
+      setInvoiceDueDate(_currentDate);
+    } else if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Net 15") {
+      var _currentDate2 = new Date();
+      _currentDate2.setDate(_currentDate2.getDate() + 15);
+      setInvoiceDueDate(_currentDate2);
+    } else if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Net 20") {
+      var _currentDate3 = new Date();
+      _currentDate3.setDate(_currentDate3.getDate() + 20);
+      setInvoiceDueDate(_currentDate3);
+    } else if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Net 25") {
+      var _currentDate4 = new Date();
+      _currentDate4.setDate(_currentDate4.getDate() + 25);
+      setInvoiceDueDate(_currentDate4);
+    } else if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Due end of the month") {
+      var _currentDate5 = new Date();
+      _currentDate5.setDate(_currentDate5.getMonth() + 1);
+      _currentDate5.setDate(0);
+      setInvoiceDueDate(_currentDate5);
+    } else if ((selectedOptions === null || selectedOptions === void 0 ? void 0 : selectedOptions.paymentTerms) === "Due on Receipt") {
+      var _currentDate6 = new Date();
+      setInvoiceDueDate(_currentDate6);
+    }
   };
-  var handleClearCustomer = () => {
-    setCustomerName({
-      _id: '',
-      customerName: '',
-      billingAddress: '',
-      billingCity: ''
-    });
-  };
-  var _useState47 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState48 = _slicedToArray(_useState47, 2),
-    openAutocomplete2 = _useState48[0],
-    setOpenAutocomplete2 = _useState48[1];
+  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState60 = _slicedToArray(_useState59, 2),
+    openAutocomplete2 = _useState60[0],
+    setOpenAutocomplete2 = _useState60[1];
   var handleOpenOpenAutocomplete2 = e => {
     e.stopPropagation();
     setOpenAutocomplete2(true);
@@ -2118,26 +3118,27 @@ function InvoiceFormClone() {
     setItemInformation([newItem, ...ItemInformation]);
   };
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
-    var result1 = items.reduce((sum, row) => sum + row.itemAmount, 0);
-    setSubTotal(result1.toFixed(2));
-    var newTotal = Math.round((Number(subTotal) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100;
+    var result1 = items.reduce((sum, row) => sum + (parseFloat(row.itemAmount) || 0), 0);
+    var val = isFinite(result1) ? result1 : 0;
+    setSubTotal(val.toFixed(2));
+    var newTotal = Math.round((Number(val) + Number(shipping) + Number(adjustmentNumber)) * 100) / 100;
     setTotalInvoice(newTotal);
-    var newBalance = Math.round((totalInvoice - total) * 100) / 100;
+    var newBalance = Math.round((newTotal - total) * 100) / 100;
     setBalanceDue(newBalance);
   });
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (totalInvoice) {
       var wholePart = Math.floor(totalInvoice);
       var fractionalPart = (totalInvoice % 1).toFixed(2).split('.')[1];
-      var wholeWords = number_to_words__WEBPACK_IMPORTED_MODULE_54___default().toWords(wholePart);
-      var fractionalWords = number_to_words__WEBPACK_IMPORTED_MODULE_54___default().toWords(fractionalPart);
+      var wholeWords = number_to_words__WEBPACK_IMPORTED_MODULE_67___default().toWords(wholePart);
+      var fractionalWords = number_to_words__WEBPACK_IMPORTED_MODULE_67___default().toWords(fractionalPart);
       setTotalW("".concat(wholeWords, " and ").concat(fractionalWords, " cents"));
     }
   }, [totalInvoice]);
-  var _useState49 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState50 = _slicedToArray(_useState49, 2),
-    open1 = _useState50[0],
-    setOpen1 = _useState50[1];
+  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState62 = _slicedToArray(_useState61, 2),
+    open1 = _useState62[0],
+    setOpen1 = _useState62[1];
   var handleOpenBack = e => {
     e.preventDefault();
     setOpen1(true);
@@ -2145,22 +3146,22 @@ function InvoiceFormClone() {
   var handleCloseBack = () => {
     setOpen1(false);
   };
-  var _useState51 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState52 = _slicedToArray(_useState51, 2),
-    loading = _useState52[0],
-    setLoading = _useState52[1];
-  var _useState53 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState54 = _slicedToArray(_useState53, 2),
-    loadingOpenModal = _useState54[0],
-    setLoadingOpenModal = _useState54[1];
-  var _useState55 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState56 = _slicedToArray(_useState55, 2),
-    loadingOpenModalUpdate = _useState56[0],
-    setLoadingOpenModalUpdate = _useState56[1];
-  var _useState57 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
-    _useState58 = _slicedToArray(_useState57, 2),
-    ErrorOpenModal = _useState58[0],
-    setErrorOpenModal = _useState58[1];
+  var _useState63 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState64 = _slicedToArray(_useState63, 2),
+    loading = _useState64[0],
+    setLoading = _useState64[1];
+  var _useState65 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState66 = _slicedToArray(_useState65, 2),
+    loadingOpenModal = _useState66[0],
+    setLoadingOpenModal = _useState66[1];
+  var _useState67 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState68 = _slicedToArray(_useState67, 2),
+    loadingOpenModalUpdate = _useState68[0],
+    setLoadingOpenModalUpdate = _useState68[1];
+  var _useState69 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
+    _useState70 = _slicedToArray(_useState69, 2),
+    ErrorOpenModal = _useState70[0],
+    setErrorOpenModal = _useState70[1];
   var handleOpen = () => {
     setLoadingOpenModal(true);
     setOpen1(false);
@@ -2186,7 +3187,11 @@ function InvoiceFormClone() {
   };
   var handleClose = () => {
     setLoadingOpenModal(false);
-    window.location.reload();
+    if ((0,_utils_isMobile__WEBPACK_IMPORTED_MODULE_1__/* .isNativeMobile */ .g1)()) {
+      navigate('/InvoiceViewAdmin');
+    } else {
+      window.location.reload();
+    }
   };
   var handleCloseUpdate = () => {
     setLoadingOpenModalUpdate(false);
@@ -2202,71 +3207,70 @@ function InvoiceFormClone() {
       handleClose();
     }
   };
-  var _useState59 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
-    _useState60 = _slicedToArray(_useState59, 2),
-    referenceInfo = _useState60[0],
-    setReferenceInfo = _useState60[1];
+  var _useState71 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0),
+    _useState72 = _slicedToArray(_useState71, 2),
+    referenceInfo = _useState72[0],
+    setReferenceInfo = _useState72[1];
   var invoicePurchase = '';
   var handleCreateNotification = /*#__PURE__*/function () {
-    var _ref13 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
-      var _user$data;
+    var _ref12 = _asyncToGenerator(function* (ReferenceInfo, ReferenceInfoNumber) {
       var data = {
         idInfo: ReferenceInfo,
-        person: ((user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.userName) || '') + ' Created ',
-        reason: "INV-".concat(String(ReferenceInfoNumber).padStart(6, '0'), " For ").concat(customerName.customerName),
+        person: user.data.userName + ' Created ',
+        reason: 'INV-' + String(ReferenceInfoNumber).padStart(6, '0') + ' For ' + customerName.customerName,
         dateNotification: dateComment
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_31__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
     });
     return function handleCreateNotification(_x2, _x3) {
-      return _ref13.apply(this, arguments);
+      return _ref12.apply(this, arguments);
     };
   }();
-  var status = '';
-  if (total > 0 && total < totalInvoice) {
-    status = 'Partially-Paid';
-  } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
-    status = 'Paid';
-  } else {
-    status = 'Draft';
-  }
-  var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
-    _useState62 = _slicedToArray(_useState61, 2),
-    saving = _useState62[0],
-    setSaving = _useState62[1];
+  var _useState73 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState74 = _slicedToArray(_useState73, 2),
+    saving = _useState74[0],
+    setSaving = _useState74[1];
   var handleSubmit = /*#__PURE__*/function () {
-    var _ref14 = _asyncToGenerator(function* (e) {
+    var _ref13 = _asyncToGenerator(function* (e) {
       e.preventDefault();
       var custName = (customerName === null || customerName === void 0 ? void 0 : customerName.customerName) || (typeof customerName === 'string' ? customerName : '');
       if (!custName || custName.trim() === '' || custName === 'undefined' || custName === 'null') {
-        react_toastify__WEBPACK_IMPORTED_MODULE_58__/* .toast */ .oR.error('Please select a valid Customer Name before saving.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_4__/* .toast */ .oR.error('Please select a valid Customer Name before saving.');
         setSaving('');
         return;
       }
       setSaving('true');
-      var itemsWithoutData = items.map(_ref15 => {
-        var data = _ref15.data,
-          contentType = _ref15.contentType,
-          rest = _objectWithoutProperties(_ref15, _excluded3);
+      var status = '';
+      if (total > 0 && total < totalInvoice) {
+        status = 'Partially-Paid';
+      } else if (parseFloat(total) === parseFloat(totalInvoice) && parseFloat(total) !== 0) {
+        status = 'Paid';
+      } else {
+        status = 'Draft';
+      }
+      var itemsWithoutData = items.map(_ref14 => {
+        var data = _ref14.data,
+          contentType = _ref14.contentType,
+          rest = _objectWithoutProperties(_ref14, _excluded3);
         return rest;
       });
       var data = {
+        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
         customerName,
         invoiceNumber,
         invoiceDate,
         invoiceDueDate,
-        invoiceSubject,
+        invoiceSubject: invoiceSubject || '',
         invoicePurchase,
-        invoiceDefect,
+        invoiceDefect: invoiceDefect || '',
         status,
         items: itemsWithoutData,
         subTotal,
         noteInfo,
-        actionTaken,
         total,
         balanceDue,
         totalW,
@@ -2281,27 +3285,30 @@ function InvoiceFormClone() {
       };
       if (navigator.onLine) {
         try {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A.post(apiUrl, data);
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_43__/* .ENDPOINT_URL */ .m, "/create-invoice"), data);
           if (res) {
+            (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_48__/* .invalidateCache */ .gm)('/invoice');
             setReferenceInfo(res.data.data.invoiceNumber);
             // Open Loading View
             var ReferenceInfo = res.data.data._id;
             var ReferenceInfoNumber = res.data.data.invoiceNumber;
             handleCreateNotification(ReferenceInfo, ReferenceInfoNumber);
+            //await db.invoiceSchema.add({...res.data.data,_id:res.data.data._id, synced: true })
             handleOpen();
           }
         } catch (error) {
           if (error) {
+            setSaving('');
             handleError();
           }
         }
       } else {
-        yield _dexieDb__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A.invoiceSchema.put(data);
+        yield _dexieDb__WEBPACK_IMPORTED_MODULE_71__/* ["default"] */ .A.invoiceSchema.put(data);
         handleOpen();
       }
     });
     return function handleSubmit(_x4) {
-      return _ref14.apply(this, arguments);
+      return _ref13.apply(this, arguments);
     };
   }();
   var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0__.useState(true),
@@ -2311,36 +3318,515 @@ function InvoiceFormClone() {
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
+  if (isMobile) {
+    var formatMoney = amount => {
+      var num = Number(amount) || 0;
+      return '$ ' + num.toLocaleString('en-US', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+    };
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        width: '100%',
+        minHeight: '100vh',
+        backgroundColor: '#F8FAFC',
+        pb: 'calc(90px + env(safe-area-inset-bottom, 0px))'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        position: 'sticky',
+        top: 0,
+        zIndex: 1000,
+        backgroundColor: '#30368a',
+        color: '#ffffff',
+        px: 2,
+        pt: 'calc(10px + env(safe-area-inset-top, 0px))',
+        pb: '10px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      onClick: () => navigate(-1),
+      sx: {
+        color: '#ffffff',
+        p: 0.5
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "subtitle1",
+      sx: {
+        fontWeight: 800,
+        lineHeight: 1.2,
+        color: '#ffffff'
+      }
+    }, "New Invoice"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#E0E7FF'
+      }
+    }, "INV-", String(invoiceNumber).padStart(6, '0')))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+      variant: "contained",
+      size: "small",
+      onClick: handleSubmit,
+      disabled: loading || saving === 'true',
+      sx: {
+        backgroundColor: '#10B981',
+        color: '#ffffff',
+        fontWeight: 700,
+        textTransform: 'none',
+        borderRadius: 2,
+        px: 2,
+        '&:hover': {
+          backgroundColor: '#059669'
+        }
+      }
+    }, saving === 'true' ? 'Saving...' : 'Create')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        p: 2
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2.5,
+        mb: 2,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        mb: 1.5,
+        display: 'block'
+      }
+    }, "Invoice Overview"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: "small",
+      options: customer || [],
+      getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.customerName) || (option === null || option === void 0 ? void 0 : option.name) || '',
+      value: customerName !== null && customerName !== void 0 && customerName.customerName ? customerName : null,
+      onChange: (e, val) => {
+        if (val) {
+          setCustomerName(val);
+        } else {
+          setCustomerName({});
+        }
+      },
+      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
+        label: "Select Customer *",
+        size: "small",
+        fullWidth: true,
+        sx: {
+          mb: 2
+        }
+      }))
+    }), ((customerName === null || customerName === void 0 ? void 0 : customerName.billingAddress) || (customerName === null || customerName === void 0 ? void 0 : customerName.address)) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        display: 'block',
+        mb: 2
+      }
+    }, "\uD83D\uDCCD ", (customerName === null || customerName === void 0 ? void 0 : customerName.billingAddress) || (customerName === null || customerName === void 0 ? void 0 : customerName.address)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+      container: true,
+      spacing: 2
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_45__/* .LocalizationProvider */ .$, {
+      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_46__/* .AdapterDayjs */ .R
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_47__/* .DatePicker */ .l, {
+      label: "Invoice Date",
+      value: invoiceDate ? dayjs__WEBPACK_IMPORTED_MODULE_49___default()(invoiceDate) : null,
+      onChange: date => setInvoiceDate(date),
+      slotProps: {
+        textField: {
+          fullWidth: true,
+          size: 'small'
+        }
+      },
+      format: "DD/MM/YYYY"
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_45__/* .LocalizationProvider */ .$, {
+      dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_46__/* .AdapterDayjs */ .R
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_47__/* .DatePicker */ .l, {
+      label: "Due Date",
+      value: invoiceDueDate ? dayjs__WEBPACK_IMPORTED_MODULE_49___default()(invoiceDueDate) : null,
+      onChange: date => setInvoiceDueDate(date),
+      slotProps: {
+        textField: {
+          fullWidth: true,
+          size: 'small'
+        }
+      },
+      format: "DD/MM/YYYY"
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 12
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      fullWidth: true,
+      size: "small",
+      label: "Subject / Reference",
+      value: invoiceSubject || '',
+      onChange: e => setInvoiceSubject(e.target.value)
+    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2.5,
+        mb: 2,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 1.5
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase'
+      }
+    }, "Line Items (", items.length, ")")), items.map((it, idx) => {
+      var _it$itemName, _it$itemName2;
+      var name = (it === null || it === void 0 || (_it$itemName = it.itemName) === null || _it$itemName === void 0 ? void 0 : _it$itemName.itemName) || (it === null || it === void 0 || (_it$itemName2 = it.itemName) === null || _it$itemName2 === void 0 ? void 0 : _it$itemName2.name) || (it === null || it === void 0 ? void 0 : it.newDescription) || "Item #".concat(idx + 1);
+      var desc = (it === null || it === void 0 ? void 0 : it.itemDescription) || '';
+      var qty = Number((it === null || it === void 0 ? void 0 : it.itemQty) || 1);
+      var rate = Number((it === null || it === void 0 ? void 0 : it.itemRate) || 0);
+      var amount = Number((it === null || it === void 0 ? void 0 : it.itemAmount) || qty * rate);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        key: it.idRow || idx,
+        sx: {
+          py: 1.5,
+          borderBottom: idx < items.length - 1 ? '1px solid #F1F5F9' : 'none'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        sx: {
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-start'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        sx: {
+          flex: 1,
+          pr: 1
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+        variant: "subtitle2",
+        sx: {
+          fontWeight: 700,
+          color: '#1E293B'
+        }
+      }, name), desc && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+        variant: "caption",
+        sx: {
+          color: '#64748B',
+          display: 'block'
+        }
+      }, desc)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+        size: "small",
+        onClick: () => deleteItem(it.idRow),
+        sx: {
+          color: '#EF4444'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
+        fontSize: "small"
+      }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        sx: {
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          mt: 1.5,
+          flexWrap: 'wrap',
+          gap: 1
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        sx: {
+          display: 'flex',
+          alignItems: 'center',
+          backgroundColor: '#F1F5F9',
+          borderRadius: 2,
+          px: 1
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+        size: "small",
+        onClick: () => {
+          var newQty = Math.max(1, qty - 1);
+          var newAmount = Math.round(newQty * rate * 100) / 100;
+          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? _objectSpread(_objectSpread({}, itemRow), {}, {
+            itemQty: newQty,
+            itemAmount: newAmount,
+            totalAmount: newAmount
+          }) : itemRow));
+        }
+      }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+        variant: "body2",
+        sx: {
+          fontWeight: 700,
+          px: 1.5,
+          minWidth: 20,
+          textAlign: 'center'
+        }
+      }, qty), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+        size: "small",
+        onClick: () => {
+          var newQty = qty + 1;
+          var newAmount = Math.round(newQty * rate * 100) / 100;
+          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? _objectSpread(_objectSpread({}, itemRow), {}, {
+            itemQty: newQty,
+            itemAmount: newAmount,
+            totalAmount: newAmount
+          }) : itemRow));
+        }
+      }, "+")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+        sx: {
+          display: 'flex',
+          alignItems: 'center',
+          gap: 1
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+        size: "small",
+        label: "Rate",
+        type: "number",
+        value: rate || '',
+        onChange: e => {
+          var newRate = Number(e.target.value) || 0;
+          var newAmount = Math.round(qty * newRate * 100) / 100;
+          SetItems(prev => prev.map(itemRow => itemRow.idRow === it.idRow ? _objectSpread(_objectSpread({}, itemRow), {}, {
+            itemRate: newRate,
+            itemAmount: newAmount,
+            totalAmount: newAmount
+          }) : itemRow));
+        },
+        sx: {
+          width: 100
+        }
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+        variant: "subtitle2",
+        sx: {
+          fontWeight: 800,
+          color: '#30368a',
+          minWidth: 70,
+          textAlign: 'right'
+        }
+      }, formatMoney(amount)))));
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        mt: 2,
+        pt: 2,
+        borderTop: '1px dashed #E2E8F0'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+      size: "small",
+      options: ItemInformation || [],
+      getOptionLabel: option => (option === null || option === void 0 ? void 0 : option.itemName) || (option === null || option === void 0 ? void 0 : option.name) || '',
+      onChange: (e, val) => {
+        if (val) {
+          var itemRate = Number(val.rate || val.sellingPrice || val.price || 0);
+          SetItems(prev => [...prev, {
+            idRow: (0,uuid__WEBPACK_IMPORTED_MODULE_41__/* ["default"] */ .A)(),
+            itemName: {
+              _id: val._id,
+              itemName: val.itemName
+            },
+            itemDescription: val.itemDescription || '',
+            itemQty: 1,
+            itemRate: itemRate,
+            itemAmount: itemRate,
+            totalAmount: itemRate,
+            itemDiscount: 0,
+            itemCost: val.cost || 0,
+            discount: 0,
+            percentage: 0,
+            itemBuy: 0,
+            itemWeight: '',
+            totalGenerale: 0,
+            totalCost: 0,
+            stock: val.stock || 0,
+            itemOut: 0,
+            newItemOut: 0
+          }]);
+        }
+      },
+      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
+        placeholder: "+ Add Item from Inventory...",
+        size: "small"
+      }))
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2.5,
+        mb: 2,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        mb: 1.5,
+        display: 'block'
+      }
+    }, "Financial Summary"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        mb: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "body2",
+      sx: {
+        color: '#64748B'
+      }
+    }, "Sub Total:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "body2",
+      sx: {
+        fontWeight: 700,
+        color: '#1E293B'
+      }
+    }, formatMoney(subTotal))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        mb: 1
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "body2",
+      sx: {
+        color: '#64748B'
+      }
+    }, "Adjustment / Labor:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      size: "small",
+      type: "number",
+      value: adjustmentNumber || '',
+      onChange: e => setAdjustmentNumber(e.target.value),
+      sx: {
+        width: 120
+      }
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      sx: {
+        my: 1.5
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "subtitle1",
+      sx: {
+        fontWeight: 800,
+        color: '#1E293B'
+      }
+    }, "Total Invoice:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "h6",
+      sx: {
+        fontWeight: 900,
+        color: '#10B981'
+      }
+    }, formatMoney(totalInvoice)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      sx: {
+        borderRadius: 3.5,
+        p: 2.5,
+        mb: 3,
+        backgroundColor: '#ffffff',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.04)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      sx: {
+        color: '#64748B',
+        fontWeight: 700,
+        textTransform: 'uppercase',
+        mb: 1.5,
+        display: 'block'
+      }
+    }, "Notes & Terms"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+      fullWidth: true,
+      multiline: true,
+      rows: 3,
+      size: "small",
+      label: "Customer Notes",
+      value: note || '',
+      onChange: e => setNote(e.target.value)
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+        p: 2,
+        backgroundColor: '#ffffff',
+        borderTop: '1px solid #E2E8F0',
+        zIndex: 1000,
+        boxShadow: '0 -2px 10px rgba(0,0,0,0.05)'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+      fullWidth: true,
+      variant: "contained",
+      size: "large",
+      onClick: handleSubmit,
+      disabled: loading || saving === 'true',
+      sx: {
+        backgroundColor: '#30368a',
+        color: '#ffffff',
+        fontWeight: 800,
+        py: 1.5,
+        borderRadius: 2.5,
+        textTransform: 'none',
+        fontSize: '1rem',
+        '&:hover': {
+          backgroundColor: '#202560'
+        }
+      }
+    }, saving === 'true' ? 'Saving Invoice...' : "Create Invoice (".concat(formatMoney(totalInvoice), ")")))));
+  }
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     className: "Homeemployee"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: {
       display: 'flex'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_CssBaseline__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .Ay, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(AppBar, {
     position: "absolute",
     open: sideBar,
     sx: {
       backgroundColor: '#30368a'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     sx: {
       pr: '24px' // keep right padding when drawer closed
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     edge: "start",
     color: "inherit",
     "aria-label": "open drawer",
     onClick: toggleDrawer,
     sx: _objectSpread({
-      marginRight: {
-        xs: '4px',
-        sm: '24px'
-      }
+      marginRight: '36px'
     }, sideBar && {
       display: 'none'
     })
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     component: "h1",
     variant: "h6",
     color: "inherit",
@@ -2348,51 +3834,44 @@ function InvoiceFormClone() {
     sx: {
       flexGrow: 1
     }
-  }, "Add new invoice"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, "Add new invoice"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleOpenBack
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_43__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
-    name: (user === null || user === void 0 || (_user$data2 = user.data) === null || _user$data2 === void 0 ? void 0 : _user$data2.userName) || '',
-    role: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.role) || ''
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_70__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_69__/* ["default"] */ .A, {
+    name: user.data.userName,
+    role: user.data.role
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     sx: {
       marginLeft: '10px',
       marginRight: '10px'
     }
-  }, (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) || ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, user.data.userName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     color: "inherit",
-    size: "small",
-    sx: {
-      p: {
-        xs: "3px",
-        sm: "8px"
-      }
-    },
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_56__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(Drawer, {
     variant: "permanent",
     open: sideBar
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'flex-end',
       px: [1]
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: toggleDrawer
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_29__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_26__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_List__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash1__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDash1__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -2401,61 +3880,35 @@ function InvoiceFormClone() {
       height: '100vh',
       overflow: 'auto'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_27__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Toolbar__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Container__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
     maxWidth: "none",
     sx: {
       mt: 4
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("form", {
     onSubmit: handleSubmit
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     container: true,
     style: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2,
-    component: _mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    component: _mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, customerName.customerName !== '' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    style: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
-    disabled: true,
-    name: "CUstomer Name",
-    value: customerName.customerName !== undefined ? customerName.customerName : '',
-    sx: {
-      width: '100%'
-    }
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
-    title: "Clear",
-    placement: "top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-    onClick: handleClearCustomer,
-    style: {
-      position: 'relative',
-      float: 'right'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
-    style: {
-      color: '#202a5a'
-    }
-  })))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+    disableClearable: true,
     options: customer,
     getOptionLabel: option => option.Customer,
     onChange: (e, newValue) => {
       handleChangeCustomer(newValue);
     },
-    PaperComponent: _ref16 => {
-      var _user$data5;
-      var children = _ref16.children,
-        other = _objectWithoutProperties(_ref16, _excluded4);
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, _extends({}, other, {
+    PaperComponent: _ref15 => {
+      var children = _ref15.children,
+        other = _objectWithoutProperties(_ref15, _excluded4);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, other, {
         sx: {
           backgroundColor: 'white',
           left: '0',
@@ -2463,7 +3916,7 @@ function InvoiceFormClone() {
         }
       }), children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
         onClick: e => handleOpenOpenAutocomplete1(e),
-        disabled: (user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.role) || '' === 'User',
+        disabled: user.data.role === 'User',
         onMouseDown: e => e.preventDefault(),
         className: "btnCustomer7",
         style: {
@@ -2471,108 +3924,101 @@ function InvoiceFormClone() {
         }
       }, "ADD NEW CUSTOMER")));
     },
-    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, _extends({}, params, {
+    renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({}, params, {
       label: "Customer Name",
       required: true
     }))
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 4
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .A, {
     htmlFor: "invoiceNumber"
-  }, "Invoice Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, "Invoice Number"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     type: "number",
     id: "invoiceNumber",
     name: "invoiceNumber",
     label: "Invoice Number",
     value: invoiceNumber,
     onChange: e => setInvoiceNumber(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       position: "start"
     }, "INV-")
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 4
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_39__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_40__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_38__/* .DemoContainer */ .j, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_45__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_46__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_44__/* .DemoContainer */ .j, {
     components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_41__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_47__/* .DatePicker */ .l, {
     required: true,
     name: "invoiceDate",
     label: "Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_42___default()(invoiceDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_49___default()(invoiceDate),
     onChange: date => setInvoiceDate(date),
     sx: {
       width: '100%',
       backgroundColor: 'white'
     },
     format: "DD/MM/YYYY"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 4
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_39__/* .LocalizationProvider */ .$, {
-    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_40__/* .AdapterDayjs */ .R
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_38__/* .DemoContainer */ .j, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_LocalizationProvider__WEBPACK_IMPORTED_MODULE_45__/* .LocalizationProvider */ .$, {
+    dateAdapter: _mui_x_date_pickers_AdapterDayjs__WEBPACK_IMPORTED_MODULE_46__/* .AdapterDayjs */ .R
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_internals_demo__WEBPACK_IMPORTED_MODULE_44__/* .DemoContainer */ .j, {
     components: ['DatePicker']
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_41__/* .DatePicker */ .l, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_x_date_pickers_DatePicker__WEBPACK_IMPORTED_MODULE_47__/* .DatePicker */ .l, {
     required: true,
     name: "invoiceDueDate",
     label: "Due Date",
-    value: dayjs__WEBPACK_IMPORTED_MODULE_42___default()(invoiceDueDate),
+    value: dayjs__WEBPACK_IMPORTED_MODULE_49___default()(invoiceDueDate),
     onChange: date => setInvoiceDueDate(date),
     sx: {
       width: '100%',
       backgroundColor: 'white'
     },
     format: "DD/MM/YYYY"
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     id: "invoiceSubject",
     name: "invoiceSubject",
     label: "Subject",
+    presetKey: "subjects",
     value: invoiceSubject,
-    onChange: e => setInvoiceSubject(e.target.value),
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    onChange: val => setInvoiceSubject(val),
+    mode: "upper"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     id: "invoiceDefect",
     name: "invoiceDefect",
     label: "Defect",
+    presetKey: "defects",
     value: invoiceDefect,
-    onChange: e => setInvoiceDefect(e.target.value),
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    onChange: val => setInvoiceDefect(val),
+    mode: "upper"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     id: "noteInfo",
     name: "noteInfo",
+    label: "Invoice Note",
     multiline: true,
     rows: 3,
     value: noteInfo,
-    label: "Note",
-    onChange: e => setNoteInfo(e.target.value),
-    sx: {
-      width: '100%',
-      backgroundColor: 'white'
-    }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+    onChange: val => setNoteInfo(val),
+    mode: "upper"
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -2581,14 +4027,15 @@ function InvoiceFormClone() {
       position: 'fixed',
       zIndex: 1,
       float: 'right',
-      right: '-5px'
+      right: '-5px',
+      top: '400px'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
     title: "Add",
     placement: "top"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: addItem
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
     className: "btn1",
     style: {
       fontSize: '40px'
@@ -2596,44 +4043,56 @@ function InvoiceFormClone() {
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
     title: "Add",
     placement: "bottom"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: addItemWhite
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
     className: "btn1",
     style: {
       backgroundColor: 'gray',
       fontSize: '40px'
     }
-  }))))), user !== null && user !== void 0 && (_user$data6 = user.data) !== null && _user$data6 !== void 0 && _user$data6.role || '' === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__/* .DragDropContext */ .JY, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("section", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
+    title: "ITEM LIST",
+    placement: "left"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    onClick: toggleShop
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Search__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+    className: "btn1",
+    style: {
+      backgroundColor: '#202a5a',
+      fontSize: '40px'
+    }
+  }))))), user.data.role === 'CEO' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__/* .DragDropContext */ .JY, {
     onDragEnd: handleDragEnd
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
     className: "tableInfo10",
     style: {
       marginLeft: '-20px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Stock-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Discount %"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__/* .Droppable */ .gL, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Stock-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Discount %"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__/* .Droppable */ .gL, {
     droppableId: "droppable"
   }, (provided, snapshot) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", _extends({
     id: "droppable"
   }, provided.droppableProps, {
     ref: provided.innerRef
-  }), items.map((Item, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__/* .Draggable */ .sx, {
+  }), items.map((Item, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__/* .Draggable */ .sx, {
     key: Item.idRow,
     draggableId: "droppable".concat(Item.idRow),
     index: i
   }, (provided, snapshot) => {
-    var _Item$itemName;
+    var _Item$itemName, _Item$itemName2, _Item$itemName3, _Item$itemName4, _Item$itemName5, _Item$itemName6;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", _extends({
       ref: provided.innerRef
-    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       colSpan: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       required: true,
       name: "newDescription",
       id: "newDescription",
       value: Item.newDescription,
       onChange: e => handleChangeCEO(e, i),
       size: "small",
+      disabled: user.data.role === 'User',
       sx: {
         width: '100%',
         backgroundColor: 'white',
@@ -2642,29 +4101,46 @@ function InvoiceFormClone() {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LightTooltip, {
       title: "Delete",
       sx: {}
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => deleteItem(Item.idRow)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
-    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         height: '100px'
       }
-    }, Item.itemName.itemName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, Boolean(((_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName = Item.itemName) === null || _Item$itemName === void 0 ? void 0 : _Item$itemName.itemName).trim().toLowerCase() === 'empty' : '',
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       sx: {
-        fontSize: '23px'
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px'
       }
-    }, Item.itemName ? Item.itemName.itemName.toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_66__/* ["default"] */ .A, {
+      itemId: (_Item$itemName3 = Item.itemName) === null || _Item$itemName3 === void 0 ? void 0 : _Item$itemName3._id,
+      initialData: Item.data,
+      initialType: Item.contentType
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName4 = Item.itemName) === null || _Item$itemName4 === void 0 ? void 0 : _Item$itemName4.itemName).trim().toLowerCase() === 'empty' : '',
+      sx: {
+        fontSize: '20px',
+        fontWeight: 'bold'
+      }
+    }, (_Item$itemName5 = Item.itemName) !== null && _Item$itemName5 !== void 0 && _Item$itemName5.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemDescription",
       id: "itemDescription",
       value: Item.itemDescription,
@@ -2673,33 +4149,36 @@ function InvoiceFormClone() {
       onChange: e => handleChangeCEO(e, i),
       size: "small",
       sx: {
-        width: '440px',
+        width: '250px',
         backgroundColor: 'white',
         fontSize: 12
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Clear",
       placement: "top"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => handleShowAutocomplete(Item.idRow),
       style: {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
-    }))), Item.itemName._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
+    }))), ((_Item$itemName6 = Item.itemName) === null || _Item$itemName6 === void 0 ? void 0 : _Item$itemName6._id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Edit",
       placement: "bottom"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-      onClick: () => handleOpenItemUpdate(Item.itemName._id),
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      onClick: () => {
+        var _Item$itemName7;
+        return handleOpenItemUpdate((_Item$itemName7 = Item.itemName) === null || _Item$itemName7 === void 0 ? void 0 : _Item$itemName7._id);
+      },
       style: {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -2708,16 +4187,16 @@ function InvoiceFormClone() {
         display: 'flex',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
       disableClearable: true,
       options: filterItemInformation,
       getOptionLabel: option => option.itemName + '/' + option.itemBrand,
-      renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, _extends({}, props, {
+      renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, props, {
         sx: {
           backgroundColor: '#f2f2f2'
         }
       }), option.itemName + '/' + option.itemBrand),
-      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, _extends({
+      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({
         multiline: true,
         rows: 4
       }, params, {
@@ -2727,17 +4206,16 @@ function InvoiceFormClone() {
       onInputChange: (event, newInputValue) => {
         setInputValue(newInputValue);
       },
-      filterOptions: (options, _ref17) => {
-        var inputValue = _ref17.inputValue;
+      filterOptions: (options, _ref16) => {
+        var inputValue = _ref16.inputValue;
         return options.filter(option => option.itemName.toLowerCase().includes(inputValue.toLowerCase()) || option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()));
       },
       onChange: (e, newValue) => handleChangeItem(Item.idRow, newValue),
       size: "small",
-      PaperComponent: _ref18 => {
-        var _user$data7;
-        var children = _ref18.children,
-          other = _objectWithoutProperties(_ref18, _excluded5);
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, _extends({}, other, {
+      PaperComponent: _ref17 => {
+        var children = _ref17.children,
+          other = _objectWithoutProperties(_ref17, _excluded5);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, other, {
           sx: {
             backgroundColor: 'white',
             left: '0',
@@ -2745,7 +4223,7 @@ function InvoiceFormClone() {
           }
         }), children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
           onClick: e => handleOpenOpenAutocomplete2(e),
-          disabled: (user === null || user === void 0 || (_user$data7 = user.data) === null || _user$data7 === void 0 ? void 0 : _user$data7.role) || '' === 'User',
+          disabled: user.data.role === 'User',
           onMouseDown: e => e.preventDefault(),
           className: "btnCustomer7",
           style: {
@@ -2760,17 +4238,17 @@ function InvoiceFormClone() {
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Clear",
       placement: "top"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => handleShowAutocompleteDescription(Item.idRow),
       style: {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       disabled: true,
       name: "stock",
       id: "stock",
@@ -2781,7 +4259,7 @@ function InvoiceFormClone() {
         width: '100px',
         backgroundColor: 'white'
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemQty",
       id: "itemQty",
       onChange: e => handleChangeCEO(e, i),
@@ -2791,7 +4269,7 @@ function InvoiceFormClone() {
         width: '100px',
         backgroundColor: 'white'
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemRate",
       id: "itemRate",
       value: Item.itemRate,
@@ -2801,7 +4279,7 @@ function InvoiceFormClone() {
         width: '100px',
         backgroundColor: 'white'
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemDiscount",
       id: "itemDiscount",
       value: Item.itemDiscount,
@@ -2817,9 +4295,9 @@ function InvoiceFormClone() {
     }, Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LightTooltip, {
       title: "Delete",
       sx: {}
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => deleteItem(Item.idRow)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
@@ -2831,53 +4309,53 @@ function InvoiceFormClone() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "New-Row",
       placement: "bottom"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => addItemRow(i)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Blank-Row",
       placement: "bottom"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => addItemWhiteRow(i)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
       style: {
         color: 'gray'
       }
     })))))));
-  })), provided.placeholder))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__/* .DragDropContext */ .JY, {
+  })), provided.placeholder))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__/* .DragDropContext */ .JY, {
     onDragEnd: handleDragEnd
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
     className: "tableInfo10",
     style: {
       marginLeft: '-20px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Stock-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Discount %"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__/* .Droppable */ .gL, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("thead", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "#"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Item"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Stock-A"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Quantity"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Rate"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Discount %"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Amount"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "Action"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__/* .Droppable */ .gL, {
     droppableId: "droppable"
   }, (provided, snapshot) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", _extends({
     id: "droppable"
   }, provided.droppableProps, {
     ref: provided.innerRef
-  }), items.map((Item, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_55__/* .Draggable */ .sx, {
+  }), items.map((Item, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_beautiful_dnd__WEBPACK_IMPORTED_MODULE_68__/* .Draggable */ .sx, {
     key: Item.idRow,
     draggableId: "droppable".concat(Item.idRow),
     index: i
   }, (provided, snapshot) => {
-    var _user$data8, _Item$itemName2;
+    var _Item$itemName8, _Item$itemName9, _Item$itemName0, _Item$itemName1, _Item$itemName10, _Item$itemName11;
     return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", _extends({
       ref: provided.innerRef
-    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }, provided.draggableProps), Boolean(Item.newDescription && String(Item.newDescription).trim() !== '' && (!Item.itemName || (typeof Item.itemName === 'string' ? Item.itemName.trim() === '' : !Item.itemName._id && !Item.itemName.itemName))) ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       colSpan: 6
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       required: true,
       name: "newDescription",
       id: "newDescription",
       value: Item.newDescription,
       onChange: e => handleChange(e, i),
       size: "small",
-      disabled: (user === null || user === void 0 || (_user$data8 = user.data) === null || _user$data8 === void 0 ? void 0 : _user$data8.role) || '' === 'User',
+      disabled: user.data.role === 'User',
       sx: {
         width: '100%',
         backgroundColor: 'white',
@@ -2886,29 +4364,46 @@ function InvoiceFormClone() {
     })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LightTooltip, {
       title: "Delete",
       sx: {}
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => deleteItem(Item.idRow)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
       }
-    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
+    }))))) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", provided.dragHandleProps, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
       style: {
         height: '100px'
       }
-    }, Item.itemName.itemName ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+    }, Boolean(((_Item$itemName8 = Item.itemName) === null || _Item$itemName8 === void 0 ? void 0 : _Item$itemName8._id) || typeof Item.itemName === 'string' && Item.itemName.trim() !== '' || ((_Item$itemName9 = Item.itemName) === null || _Item$itemName9 === void 0 ? void 0 : _Item$itemName9.itemName) && String(Item.itemName.itemName).trim() !== '' || Item.itemDescription && String(Item.itemDescription).trim() !== '') ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
       style: {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
-      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName2 = Item.itemName) === null || _Item$itemName2 === void 0 ? void 0 : _Item$itemName2.itemName).trim().toLowerCase() === 'empty' : '',
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
       sx: {
-        fontSize: '23px'
+        display: 'flex',
+        alignItems: 'center',
+        gap: '15px'
       }
-    }, Item.itemName ? Item.itemName.itemName.toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_ItemThumbnail__WEBPACK_IMPORTED_MODULE_66__/* ["default"] */ .A, {
+      itemId: (_Item$itemName0 = Item.itemName) === null || _Item$itemName0 === void 0 ? void 0 : _Item$itemName0._id,
+      initialData: Item.data,
+      initialType: Item.contentType
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '5px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      hidden: Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : (_Item$itemName1 = Item.itemName) === null || _Item$itemName1 === void 0 ? void 0 : _Item$itemName1.itemName).trim().toLowerCase() === 'empty' : '',
+      sx: {
+        fontSize: '20px',
+        fontWeight: 'bold'
+      }
+    }, (_Item$itemName10 = Item.itemName) !== null && _Item$itemName10 !== void 0 && _Item$itemName10.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : ''), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemDescription",
       id: "itemDescription",
       value: Item.itemDescription,
@@ -2918,33 +4413,36 @@ function InvoiceFormClone() {
       size: "small",
       disabled: true,
       sx: {
-        width: '440px',
+        width: '250px',
         backgroundColor: 'white',
         fontSize: 12
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
+    }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Clear",
       placement: "top"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => handleShowAutocomplete(Item.idRow),
       style: {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
-    }))), Item.itemName._id && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
+    }))), ((_Item$itemName11 = Item.itemName) === null || _Item$itemName11 === void 0 ? void 0 : _Item$itemName11._id) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Edit",
       placement: "bottom"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
-      onClick: () => handleOpenItemUpdate(Item.itemName._id),
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+      onClick: () => {
+        var _Item$itemName12;
+        return handleOpenItemUpdate((_Item$itemName12 = Item.itemName) === null || _Item$itemName12 === void 0 ? void 0 : _Item$itemName12._id);
+      },
       style: {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_34__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
@@ -2953,12 +4451,12 @@ function InvoiceFormClone() {
         display: 'flex',
         alignItems: 'center'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
       disableClearable: true,
       options: filterItemInformation,
       getOptionLabel: option => option.itemName + '/' + option.itemBrand,
-      renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, option.itemName + '/' + option.itemBrand),
-      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, _extends({
+      renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, props, option.itemName + '/' + option.itemBrand),
+      renderInput: params => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, _extends({
         multiline: true,
         rows: 4
       }, params, {
@@ -2968,17 +4466,16 @@ function InvoiceFormClone() {
       onInputChange: (event, newInputValue) => {
         setInputValue(newInputValue);
       },
-      filterOptions: (options, _ref19) => {
-        var inputValue = _ref19.inputValue;
+      filterOptions: (options, _ref18) => {
+        var inputValue = _ref18.inputValue;
         return options.filter(option => option.itemName.toLowerCase().includes(inputValue.toLowerCase()) || option.itemBrand.toLowerCase().includes(inputValue.toLowerCase()) || option.itemDescription.toLowerCase().includes(inputValue.toLowerCase()));
       },
       onChange: (e, newValue) => handleChangeItem(Item.idRow, newValue),
       size: "small",
-      PaperComponent: _ref20 => {
-        var _user$data9;
-        var children = _ref20.children,
-          other = _objectWithoutProperties(_ref20, _excluded6);
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, _extends({}, other, {
+      PaperComponent: _ref19 => {
+        var children = _ref19.children,
+          other = _objectWithoutProperties(_ref19, _excluded6);
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, _extends({}, other, {
           sx: {
             backgroundColor: 'white',
             left: '0',
@@ -2986,7 +4483,7 @@ function InvoiceFormClone() {
           }
         }), children, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
           onClick: e => handleOpenOpenAutocomplete2(e),
-          disabled: (user === null || user === void 0 || (_user$data9 = user.data) === null || _user$data9 === void 0 ? void 0 : _user$data9.role) || '' === 'User',
+          disabled: user.data.role === 'User',
           onMouseDown: e => e.preventDefault(),
           className: "btnCustomer7",
           style: {
@@ -3001,17 +4498,17 @@ function InvoiceFormClone() {
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Clear",
       placement: "top"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => handleShowAutocompleteDescription(Item.idRow),
       style: {
         position: 'relative',
         float: 'right'
       }
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_40__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
-    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    }))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       disabled: true,
       name: "stock",
       id: "stock",
@@ -3022,7 +4519,7 @@ function InvoiceFormClone() {
         width: '100px',
         backgroundColor: 'white'
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemQty",
       id: "itemQty",
       onChange: e => handleChange(e, i),
@@ -3032,7 +4529,7 @@ function InvoiceFormClone() {
         width: '100px',
         backgroundColor: 'white'
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemRate",
       id: "itemRate",
       value: Item.itemRate,
@@ -3043,7 +4540,7 @@ function InvoiceFormClone() {
         width: '100px',
         backgroundColor: 'white'
       }
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
       name: "itemDiscount",
       id: "itemDiscount",
       value: Item.itemDiscount,
@@ -3059,9 +4556,9 @@ function InvoiceFormClone() {
     }, Number(Item.itemAmount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(LightTooltip, {
       title: "Delete",
       sx: {}
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => deleteItem(Item.idRow)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .A, {
       style: {
         cursor: 'pointer',
         color: 'red'
@@ -3073,23 +4570,23 @@ function InvoiceFormClone() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "New-Row",
       placement: "bottom"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => addItemRow(i)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
       style: {
         color: '#202a5a'
       }
     }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
       title: "Blank-Row",
       placement: "bottom"
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
       onClick: () => addItemWhiteRow(i)
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, {
       style: {
         color: 'gray'
       }
     })))))));
-  })), provided.placeholder)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })), provided.placeholder)))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
@@ -3098,20 +4595,21 @@ function InvoiceFormClone() {
       gap: '20px',
       justifyContent: 'space-between'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SmartTextInput__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
     id: "note",
     name: "note",
+    label: "Note",
     multiline: true,
-    rows: 4,
+    rows: 3,
     value: note,
-    label: "Invoice Note",
-    onChange: e => setNote(e.target.value),
-    sx: {
-      width: '50%',
-      backgroundColor: 'white'
-    }
+    onChange: val => setNote(val),
+    mode: "upper"
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("table", {
-    className: "firstTable"
+    className: "firstTable",
+    style: {
+      borderCollapse: 'collapse',
+      width: '100%'
+    }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tbody", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
     style: {
       borderBottom: '1px solid black'
@@ -3122,19 +4620,19 @@ function InvoiceFormClone() {
     }
   }, "Sub-Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     disabled: true,
     type: "number",
     id: "subTotal",
     size: "small",
     name: "subTotal",
     value: subTotal,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -3147,25 +4645,25 @@ function InvoiceFormClone() {
     }
   }, "Shipping Fees"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     id: "shipping",
     size: "small",
     name: "shipping",
     value: shipping,
     onChange: e => setShipping(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
     style: {
       borderBottom: '1px solid black'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "      ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", null, "      ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     name: "adjustment",
     id: "adjustment",
     size: "small",
@@ -3179,18 +4677,18 @@ function InvoiceFormClone() {
     style: {
       borderBottom: '1px solid black'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     id: "adjustmentNumber",
     size: "small",
     name: "adjustmentNumber",
     value: adjustmentNumber,
     onChange: e => setAdjustmentNumber(e.target.value),
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -3203,19 +4701,19 @@ function InvoiceFormClone() {
     }
   }, "Total"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     disabled: true,
     type: "number",
     id: "totalInvoice",
     size: "small",
     name: "totalInvoice",
     value: totalInvoice,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", {
@@ -3228,25 +4726,25 @@ function InvoiceFormClone() {
     }
   }, "Balance Due"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", {
     align: "center"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
     sx: {
       width: '100%',
       backgroundColor: 'white'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .A, {
     type: "number",
     id: "balanceDue",
     size: "small",
     name: "balanceDue",
     value: balanceDue,
-    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+    startAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .A, {
       position: "start"
     }, "$")
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("tr", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("th", {
     style: {
       textAlign: 'left'
     }
-  }, "Total In Words"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, "Total In Words"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     name: "totalW",
     id: "totalW",
     value: totalW,
@@ -3256,10 +4754,10 @@ function InvoiceFormClone() {
       backgroundColor: 'white'
     },
     maxRows: 3
-  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     id: "terms",
     name: "terms",
     multiline: true,
@@ -3271,7 +4769,7 @@ function InvoiceFormClone() {
       width: '60%',
       backgroundColor: 'white'
     }
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
   }, saving !== 'true' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
@@ -3286,49 +4784,49 @@ function InvoiceFormClone() {
       width: '100%',
       textAlign: 'center'
     }
-  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "Saving...")))))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: open1,
     onClose: handleCloseBack,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleCloseBack,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
-  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     container: true,
     sx: {
       alignItems: 'center',
       padding: '15px'
     },
     spacing: 2
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 12,
     sx: {
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, null, "Do you want to stop creating Invoice ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, null, "Do you want to stop creating Invoice ? "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2",
     style: {
       color: 'red'
     }
   }, "Note :"), " ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
     className: "txt2"
-  }, " If you stop creating without saving, all your changes will be lost")), "  "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, " If you stop creating without saving, all your changes will be lost")), "  "), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
@@ -3338,7 +4836,7 @@ function InvoiceFormClone() {
     style: {
       width: '100%'
     }
-  }, "Yes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
+  }, "Yes")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
     item: true,
     xs: 6
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
@@ -3348,26 +4846,26 @@ function InvoiceFormClone() {
     style: {
       width: '100%'
     }
-  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "No"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: loadingOpenModal,
     onClose: handleClose,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3385,26 +4883,132 @@ function InvoiceFormClone() {
   }, "Add New"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: () => handleDecision('previous'),
     className: "btnCustomer"
-  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "Go Back"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material_Drawer__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .Ay, {
+    anchor: "right",
+    open: shopOpen,
+    onClose: toggleShop,
+    PaperProps: {
+      sx: {
+        width: '500px',
+        backgroundColor: '#f5f5f5',
+        padding: '20px'
+      }
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    mb: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+    variant: "h6",
+    component: "div"
+  }, "Select Item from Shop"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    onClick: toggleShop
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    display: "flex",
+    alignItems: "center",
+    mb: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+    fullWidth: true,
+    label: "Search Shop",
+    variant: "outlined",
+    size: "small",
+    value: shopSearch,
+    onChange: handleShopSearchChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
+    onClick: handleRefreshShop,
+    color: "primary",
+    sx: {
+      ml: 1
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A, null))), shopLoading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    sx: {
+      flexGrow: 1,
+      overflowY: 'auto',
+      maxHeight: 'calc(100vh - 180px)'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+    container: true,
+    spacing: 2
+  }, shopItems.map(item => {
+    var _ref20, _item$itemSellingPric;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Ay, {
+      item: true,
+      xs: 6,
+      key: item._id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_59__/* ["default"] */ .A, {
+      sx: {
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_60__/* ["default"] */ .A, {
+      component: "img",
+      height: "120",
+      image: item.data && item.contentType ? "data:".concat(item.contentType, ";base64,").concat(item.data) : undefined,
+      alt: item.itemName,
+      sx: {
+        objectFit: 'contain',
+        padding: '5px'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_61__/* ["default"] */ .A, {
+      sx: {
+        flexGrow: 1,
+        padding: '10px'
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "subtitle2",
+      component: "div"
+    }, item.itemName), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "body2",
+      color: "text.secondary"
+    }, "FC ", (_ref20 = item.itemSellingPrice * rate) === null || _ref20 === void 0 ? void 0 : _ref20.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "body2",
+      color: "primary",
+      fontWeight: "bold"
+    }, "$ ", (_item$itemSellingPric = item.itemSellingPrice) === null || _item$itemSellingPric === void 0 ? void 0 : _item$itemSellingPric.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
+      variant: "caption",
+      display: "block",
+      gutterBottom: true
+    }, "Stock: ", item.itemQuantity), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_58__/* ["default"] */ .A, {
+      variant: "contained",
+      size: "small",
+      fullWidth: true,
+      onClick: () => handleAddToInvoice(item),
+      sx: {
+        marginTop: '5px'
+      }
+    }, "Add"))));
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    display: "flex",
+    justifyContent: "center",
+    mt: 2
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_62__/* ["default"] */ .A, {
+    count: shopTotalPages,
+    page: shopPage,
+    onChange: handleShopPageChange,
+    size: "small",
+    color: "primary"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: ErrorOpenModal,
     onClose: handleCloseError,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Cancel__WEBPACK_IMPORTED_MODULE_52__/* ["default"] */ .A, {
     style: {
       color: 'red',
       height: '40px',
@@ -3417,26 +5021,26 @@ function InvoiceFormClone() {
   }, "Saving Failed"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     className: "btnCustomer",
     onClick: handleCloseError
-  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "Try Again")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: loadingOpenModalUpdate,
     onClose: handleCloseUpdate,
     closeAfterTransition: true,
-    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A,
+    BackdropComponent: _mui_material__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .A,
     BackdropProps: {
       timeout: 500
     },
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style), {}, {
       width: 500
     })
-  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+  }, loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_Loader__WEBPACK_IMPORTED_MODULE_53__/* ["default"] */ .A, null) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
     style: {
       justifyContent: 'center',
       textAlign: 'center'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
     style: {
       color: 'green',
       height: '40px',
@@ -3451,25 +5055,25 @@ function InvoiceFormClone() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("button", {
     onClick: handleCloseUpdate,
     className: "btnCustomer"
-  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  }, "Close"))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: openAutocomplete1,
     onClose: handleCloseOpenAutocomplete1,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style2), {}, {
       width: 800
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleCloseOpenAutocomplete1,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3480,28 +5084,28 @@ function InvoiceFormClone() {
       overflow: 'hidden',
       overflowY: 'scroll'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_CustomerVIew_CustomerFormView2__WEBPACK_IMPORTED_MODULE_63__/* ["default"] */ .A, {
     onCreateOption: handleCreateCustomer,
     onClose: handleCloseOpenAutocomplete1
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: openAutocomplete2,
     onClose: handleCloseOpenAutocomplete2,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style2), {}, {
       width: 800
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleCloseOpenAutocomplete2,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3512,28 +5116,28 @@ function InvoiceFormClone() {
       overflow: 'hidden',
       overflowY: 'scroll'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ItemView_ItemFormView2__WEBPACK_IMPORTED_MODULE_52__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ItemView_ItemFormView2__WEBPACK_IMPORTED_MODULE_64__["default"], {
     onCreateOption: handleCreateItem,
     onClose: handleCloseOpenAutocomplete2
-  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .A, {
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .A, {
     open: openItemUpdate,
     onClose: handleCloseItemUpdate,
     "aria-labelledby": "modal-modal-title",
     "aria-describedby": "modal-modal-description"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
     sx: _objectSpread(_objectSpread({}, style2), {}, {
       width: 800
     })
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(BlackTooltip, {
     title: "Close",
     placement: "left"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .A, {
     onClick: handleCloseItemUpdate,
     style: {
       position: 'relative',
       float: 'right'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_51__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Close__WEBPACK_IMPORTED_MODULE_57__/* ["default"] */ .A, {
     style: {
       color: '#202a5a'
     }
@@ -3544,12 +5148,12 @@ function InvoiceFormClone() {
       overflow: 'hidden',
       overflowY: 'scroll'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ItemView_ItemUpdateView2__WEBPACK_IMPORTED_MODULE_53__["default"], {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_ItemView_ItemUpdateView2__WEBPACK_IMPORTED_MODULE_65__["default"], {
     onClose: handleCloseItemUpdate,
     id: idItem
   })))));
 }
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InvoiceFormClone);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (InvoiceForm);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "default", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -5642,6 +7246,683 @@ function ItemUpdateView2(_ref5) {
 
 /***/ },
 
+/***/ 87793
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(81385);
+/* harmony import */ var _mui_icons_material_ShoppingCartOutlined__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(42961);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(99380);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(71510);
+/* harmony import */ var _utils_formatUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37402);
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+
+// In-memory module cache to avoid redundant network requests across table rows
+var itemImageCache = new Map();
+var ItemThumbnail = _ref => {
+  var itemId = _ref.itemId,
+    initialData = _ref.initialData,
+    initialType = _ref.initialType;
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(() => {
+      var initialUrl = (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_5__/* .normalizeImageDataUrl */ .sA)(initialData, initialType);
+      if (initialUrl) {
+        if (itemId) itemImageCache.set(String(itemId), initialUrl);
+        return initialUrl;
+      }
+      if (itemId && itemImageCache.has(String(itemId))) {
+        return itemImageCache.get(String(itemId));
+      }
+      return null;
+    }),
+    _useState2 = _slicedToArray(_useState, 2),
+    src = _useState2[0],
+    setSrc = _useState2[1];
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var isMounted = true;
+    var initialUrl = (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_5__/* .normalizeImageDataUrl */ .sA)(initialData, initialType);
+    if (initialUrl) {
+      if (itemId) itemImageCache.set(String(itemId), initialUrl);
+      setSrc(initialUrl);
+      return;
+    }
+    if (!itemId || itemId === "undefined" || itemId === "null") {
+      setSrc(null);
+      return;
+    }
+    var key = String(itemId);
+    if (itemImageCache.has(key)) {
+      setSrc(itemImageCache.get(key));
+      return;
+    }
+    var fetchImage = /*#__PURE__*/function () {
+      var _ref2 = _asyncToGenerator(function* () {
+        try {
+          var _res$data;
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_4__/* .ENDPOINT_URL */ .m, "/get-item/").concat(itemId));
+          if (!isMounted) return;
+          var item = (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.data;
+          var url = (0,_utils_formatUtils__WEBPACK_IMPORTED_MODULE_5__/* .normalizeImageDataUrl */ .sA)(item === null || item === void 0 ? void 0 : item.data, item === null || item === void 0 ? void 0 : item.contentType);
+          itemImageCache.set(key, url);
+          setSrc(url);
+        } catch (err) {
+          if (isMounted) {
+            itemImageCache.set(key, null);
+            setSrc(null);
+          }
+        }
+      });
+      return function fetchImage() {
+        return _ref2.apply(this, arguments);
+      };
+    }();
+    fetchImage();
+    return () => {
+      isMounted = false;
+    };
+  }, [itemId, initialData, initialType]);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+    variant: "rounded",
+    src: src || undefined,
+    imgProps: {
+      onError: () => setSrc(null)
+    },
+    sx: {
+      width: 80,
+      height: 80,
+      backgroundColor: '#f0f0f0',
+      border: '1px solid #ddd'
+    }
+  }, !src && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_ShoppingCartOutlined__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      fontSize: 40,
+      color: '#999'
+    }
+  }));
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ItemThumbnail);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 51254
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  A: () => (/* binding */ component_LanguageFixerButton)
+});
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(96540);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Tooltip/Tooltip.js
+var Tooltip = __webpack_require__(56655);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/extends.js
+var esm_extends = __webpack_require__(58168);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/esm/objectWithoutPropertiesLoose.js
+var objectWithoutPropertiesLoose = __webpack_require__(98587);
+// EXTERNAL MODULE: ./node_modules/react-transition-group/esm/Transition.js + 1 modules
+var Transition = __webpack_require__(80851);
+// EXTERNAL MODULE: ./node_modules/@mui/utils/esm/getReactElementRef/getReactElementRef.js
+var getReactElementRef = __webpack_require__(57223);
+// EXTERNAL MODULE: ./node_modules/@mui/material/styles/useTheme.js
+var useTheme = __webpack_require__(44675);
+// EXTERNAL MODULE: ./node_modules/@mui/material/transitions/utils.js
+var utils = __webpack_require__(35186);
+// EXTERNAL MODULE: ./node_modules/@mui/material/utils/useForkRef.js
+var useForkRef = __webpack_require__(96852);
+// EXTERNAL MODULE: ./node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(74848);
+;// ./node_modules/@mui/material/Zoom/Zoom.js
+'use client';
+
+
+
+const _excluded = ["addEndListener", "appear", "children", "easing", "in", "onEnter", "onEntered", "onEntering", "onExit", "onExited", "onExiting", "style", "timeout", "TransitionComponent"];
+
+
+
+
+
+
+
+
+
+const styles = {
+  entering: {
+    transform: 'none'
+  },
+  entered: {
+    transform: 'none'
+  }
+};
+
+/**
+ * The Zoom transition can be used for the floating variant of the
+ * [Button](/material-ui/react-button/#floating-action-buttons) component.
+ * It uses [react-transition-group](https://github.com/reactjs/react-transition-group) internally.
+ */
+const Zoom = /*#__PURE__*/react.forwardRef(function Zoom(props, ref) {
+  const theme = (0,useTheme/* default */.A)();
+  const defaultTimeout = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen
+  };
+  const {
+      addEndListener,
+      appear = true,
+      children,
+      easing,
+      in: inProp,
+      onEnter,
+      onEntered,
+      onEntering,
+      onExit,
+      onExited,
+      onExiting,
+      style,
+      timeout = defaultTimeout,
+      // eslint-disable-next-line react/prop-types
+      TransitionComponent = Transition/* default */.Ay
+    } = props,
+    other = (0,objectWithoutPropertiesLoose/* default */.A)(props, _excluded);
+  const nodeRef = react.useRef(null);
+  const handleRef = (0,useForkRef/* default */.A)(nodeRef, (0,getReactElementRef/* default */.A)(children), ref);
+  const normalizedTransitionCallback = callback => maybeIsAppearing => {
+    if (callback) {
+      const node = nodeRef.current;
+
+      // onEnterXxx and onExitXxx callbacks have a different arguments.length value.
+      if (maybeIsAppearing === undefined) {
+        callback(node);
+      } else {
+        callback(node, maybeIsAppearing);
+      }
+    }
+  };
+  const handleEntering = normalizedTransitionCallback(onEntering);
+  const handleEnter = normalizedTransitionCallback((node, isAppearing) => {
+    (0,utils/* reflow */.q)(node); // So the animation always start from the start.
+
+    const transitionProps = (0,utils/* getTransitionProps */.c)({
+      style,
+      timeout,
+      easing
+    }, {
+      mode: 'enter'
+    });
+    node.style.webkitTransition = theme.transitions.create('transform', transitionProps);
+    node.style.transition = theme.transitions.create('transform', transitionProps);
+    if (onEnter) {
+      onEnter(node, isAppearing);
+    }
+  });
+  const handleEntered = normalizedTransitionCallback(onEntered);
+  const handleExiting = normalizedTransitionCallback(onExiting);
+  const handleExit = normalizedTransitionCallback(node => {
+    const transitionProps = (0,utils/* getTransitionProps */.c)({
+      style,
+      timeout,
+      easing
+    }, {
+      mode: 'exit'
+    });
+    node.style.webkitTransition = theme.transitions.create('transform', transitionProps);
+    node.style.transition = theme.transitions.create('transform', transitionProps);
+    if (onExit) {
+      onExit(node);
+    }
+  });
+  const handleExited = normalizedTransitionCallback(onExited);
+  const handleAddEndListener = next => {
+    if (addEndListener) {
+      // Old call signature before `react-transition-group` implemented `nodeRef`
+      addEndListener(nodeRef.current, next);
+    }
+  };
+  return /*#__PURE__*/(0,jsx_runtime.jsx)(TransitionComponent, (0,esm_extends/* default */.A)({
+    appear: appear,
+    in: inProp,
+    nodeRef: nodeRef,
+    onEnter: handleEnter,
+    onEntered: handleEntered,
+    onEntering: handleEntering,
+    onExit: handleExit,
+    onExited: handleExited,
+    onExiting: handleExiting,
+    addEndListener: handleAddEndListener,
+    timeout: timeout
+  }, other, {
+    children: (state, childProps) => {
+      return /*#__PURE__*/react.cloneElement(children, (0,esm_extends/* default */.A)({
+        style: (0,esm_extends/* default */.A)({
+          transform: 'scale(0)',
+          visibility: state === 'exited' && !inProp ? 'hidden' : undefined
+        }, styles[state], style, children.props.style),
+        ref: handleRef
+      }, childProps));
+    }
+  }));
+});
+ false ? 0 : void 0;
+/* harmony default export */ const Zoom_Zoom = (Zoom);
+// EXTERNAL MODULE: ./node_modules/@mui/material/IconButton/IconButton.js + 1 modules
+var IconButton = __webpack_require__(11641);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Badge/Badge.js + 2 modules
+var Badge = __webpack_require__(11154);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Menu/Menu.js + 1 modules
+var Menu = __webpack_require__(94405);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Box/Box.js + 2 modules
+var Box = __webpack_require__(69067);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Typography/Typography.js + 1 modules
+var Typography = __webpack_require__(14073);
+// EXTERNAL MODULE: ./node_modules/@mui/material/MenuItem/MenuItem.js + 1 modules
+var MenuItem = __webpack_require__(73896);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Chip/Chip.js + 2 modules
+var Chip = __webpack_require__(82022);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Button/Button.js + 3 modules
+var Button = __webpack_require__(86990);
+// EXTERNAL MODULE: ./node_modules/@mui/material/Divider/Divider.js
+var Divider = __webpack_require__(71543);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/AutoAwesome.js
+var AutoAwesome = __webpack_require__(2775);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/ArrowForward.js
+var ArrowForward = __webpack_require__(65343);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/CheckCircleOutline.js
+var CheckCircleOutline = __webpack_require__(58407);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/DoneAll.js
+var DoneAll = __webpack_require__(5766);
+// EXTERNAL MODULE: ./node_modules/@mui/icons-material/Close.js
+var Close = __webpack_require__(39781);
+// EXTERNAL MODULE: ./node_modules/react-toastify/dist/react-toastify.esm.mjs
+var react_toastify_esm = __webpack_require__(99571);
+// EXTERNAL MODULE: ./src/js/utils/textAssistUtils.js
+var textAssistUtils = __webpack_require__(68427);
+;// ./src/js/component/LanguageFixerButton.js
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+;
+
+
+
+
+
+
+
+
+
+/**
+ * LanguageFixerButton
+ * Interactive language assistant with granular word-by-word suggestions dropdown.
+ * - Left-click or right-click opens an interactive drop-down menu of detected typos.
+ * - Allows user to selectively click and apply ONLY the words they wish to correct.
+ * - Avoids changing the meaning of sentences, codes, dimensions, or technical terms.
+ * - Offers "Apply All" and "Format Spacing Only" options.
+ */
+function LanguageFixerButton(_ref) {
+  var _ref$value = _ref.value,
+    value = _ref$value === void 0 ? '' : _ref$value,
+    onFixed = _ref.onFixed,
+    _ref$mode = _ref.mode,
+    mode = _ref$mode === void 0 ? 'upper' : _ref$mode,
+    tooltip = _ref.tooltip,
+    _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 'small' : _ref$size,
+    _ref$contextMenu = _ref.contextMenu,
+    contextMenu = _ref$contextMenu === void 0 ? null : _ref$contextMenu,
+    _ref$onCloseContextMe = _ref.onCloseContextMenu,
+    onCloseContextMenu = _ref$onCloseContextMe === void 0 ? null : _ref$onCloseContextMe,
+    _ref$sx = _ref.sx,
+    sx = _ref$sx === void 0 ? {} : _ref$sx;
+  var _useState = (0,react.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    anchorEl = _useState2[0],
+    setAnchorEl = _useState2[1];
+
+  // Compute suggestions and diagnostics for full input
+  var fullAnalysis = (0,textAssistUtils/* getSuggestions */.KW)(value, mode);
+  var suggestions = fullAnalysis.suggestions,
+    hasExtraSpaces = fullAnalysis.hasExtraSpaces,
+    hasUncapitalized = fullAnalysis.hasUncapitalized,
+    isClean = fullAnalysis.isClean;
+  var isTypo = !isClean;
+
+  // If opened via right-click with a specific scopeText, compute suggestions for scopeText
+  var isScoped = Boolean(contextMenu && contextMenu.scopeText);
+  var scopeSuggestions = isScoped ? (0,textAssistUtils/* getSuggestions */.KW)(contextMenu.scopeText, mode).suggestions : [];
+  var displaySuggestions = isScoped && scopeSuggestions.length > 0 ? scopeSuggestions : suggestions;
+  var isMenuOpen = Boolean(anchorEl) || contextMenu !== null;
+  var handleOpenMenu = e => {
+    if (e && e.preventDefault) e.preventDefault();
+    if (e && e.stopPropagation) e.stopPropagation();
+    if (!value || typeof value !== 'string' || !value.trim()) {
+      react_toastify_esm/* toast */.oR.info('Please enter some text first to inspect.');
+      return;
+    }
+    setAnchorEl(e.currentTarget);
+  };
+  var handleClose = () => {
+    setAnchorEl(null);
+    if (typeof onCloseContextMenu === 'function') {
+      onCloseContextMenu();
+    }
+  };
+  var handleApplySingle = (original, replacement) => {
+    var updated = (0,textAssistUtils/* applySingleCorrection */.ZD)(value, original, replacement, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success("\u2728 Replaced \"".concat(original, "\" with \"").concat(replacement, "\"!"));
+    if (isScoped) {
+      handleClose();
+    } else {
+      var remaining = (0,textAssistUtils/* getSuggestions */.KW)(updated, mode).suggestions;
+      if (remaining.length === 0) {
+        handleClose();
+      }
+    }
+  };
+  var handleApplyAll = () => {
+    var updated = value;
+    for (var s of displaySuggestions) {
+      updated = (0,textAssistUtils/* applySingleCorrection */.ZD)(updated, s.original, s.replacement, mode);
+    }
+    updated = (0,textAssistUtils/* applyCleanSpaces */.nW)(updated, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success("\u2728 Applied ".concat(displaySuggestions.length, " correction(s)!"));
+    handleClose();
+  };
+  var handleFormatSpacesOnly = () => {
+    var updated = (0,textAssistUtils/* applyCleanSpaces */.nW)(value, mode);
+    if (typeof onFixed === 'function') {
+      onFixed(updated);
+    }
+    react_toastify_esm/* toast */.oR.success('✨ Spacing and capitalization cleaned!');
+    handleClose();
+  };
+  var activeTooltip = tooltip || (isTypo ? "\u26A0\uFE0F ".concat(suggestions.length > 0 ? "".concat(suggestions.length, " suggestion(s)") : 'Format issue', " found. Click \u2728 to choose words to fix") : '✨ Text formatting and language assistant');
+  return /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement(Tooltip/* default */.A, {
+    title: isMenuOpen ? '' : activeTooltip,
+    arrow: true,
+    TransitionComponent: Zoom_Zoom
+  }, /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: size,
+    onClick: handleOpenMenu,
+    onContextMenu: handleOpenMenu,
+    sx: _objectSpread({
+      color: isTypo ? '#d97706' : '#30368a',
+      backgroundColor: isTypo ? 'rgba(217, 119, 6, 0.12)' : 'rgba(48, 54, 138, 0.08)',
+      p: 0.6,
+      ml: 0.5,
+      border: isTypo ? '1px dashed #f59e0b' : '1px solid transparent',
+      transition: 'all 0.2s ease-in-out',
+      '&:hover': {
+        backgroundColor: isTypo ? '#d97706' : '#30368a',
+        color: '#ffffff',
+        transform: 'scale(1.08)'
+      }
+    }, sx)
+  }, /*#__PURE__*/react.createElement(Badge/* default */.A, {
+    badgeContent: suggestions.length > 0 ? suggestions.length : isTypo ? '!' : null,
+    color: suggestions.length > 0 ? 'warning' : 'primary',
+    sx: {
+      '& .MuiBadge-badge': {
+        fontSize: '10px',
+        height: '15px',
+        minWidth: '15px',
+        fontWeight: 800,
+        padding: '0 3px',
+        top: 2,
+        right: 2,
+        backgroundColor: suggestions.length > 0 ? '#ea580c' : undefined
+      }
+    }
+  }, /*#__PURE__*/react.createElement(AutoAwesome/* default */.A, {
+    sx: {
+      fontSize: size === 'small' ? 17 : 20
+    }
+  })))), /*#__PURE__*/react.createElement(Menu/* default */.A, {
+    open: isMenuOpen,
+    onClose: handleClose,
+    anchorEl: anchorEl,
+    anchorReference: contextMenu !== null ? 'anchorPosition' : 'anchorEl',
+    anchorPosition: contextMenu !== null ? {
+      top: contextMenu.mouseY,
+      left: contextMenu.mouseX
+    } : undefined,
+    transformOrigin: {
+      horizontal: 'right',
+      vertical: 'top'
+    },
+    anchorOrigin: {
+      horizontal: 'right',
+      vertical: 'bottom'
+    },
+    PaperProps: {
+      sx: {
+        minWidth: 320,
+        maxWidth: 440,
+        borderRadius: '10px',
+        boxShadow: '0 10px 25px -5px rgba(0,0,0,0.15), 0 8px 10px -6px rgba(0,0,0,0.1)',
+        border: '1px solid #e2e8f0',
+        overflow: 'hidden',
+        p: 0
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1.5,
+      pb: 1,
+      backgroundColor: '#f8fafc',
+      borderBottom: '1px solid #e2e8f0'
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between'
+    }
+  }, /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: 13,
+      fontWeight: 700,
+      color: '#1e293b',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.8
+    }
+  }, /*#__PURE__*/react.createElement(AutoAwesome/* default */.A, {
+    sx: {
+      fontSize: 16,
+      color: '#30368a'
+    }
+  }), isScoped ? "Spelling Suggestion (\"".concat(contextMenu === null || contextMenu === void 0 ? void 0 : contextMenu.scopeText, "\")") : 'Spelling & Word Suggestions'), /*#__PURE__*/react.createElement(IconButton/* default */.A, {
+    size: "small",
+    onClick: handleClose,
+    sx: {
+      p: 0.2
+    }
+  }, /*#__PURE__*/react.createElement(Close/* default */.A, {
+    sx: {
+      fontSize: 15,
+      color: '#64748b'
+    }
+  }))), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: 11,
+      color: '#64748b',
+      mt: 0.5
+    }
+  }, displaySuggestions.length > 0 ? isScoped ? 'Click "Fix" to replace this word:' : "Detected ".concat(displaySuggestions.length, " typo(s) across this sentence. Click Fix or Apply All:") : 'No word replacements detected in this sentence.')), displaySuggestions.length > 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      maxHeight: 240,
+      overflowY: 'auto',
+      py: 0.5
+    }
+  }, displaySuggestions.map((s, idx) => /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    key: idx,
+    onClick: () => handleApplySingle(s.original, s.replacement),
+    sx: {
+      py: 1,
+      px: 1.5,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 1,
+      '&:hover': {
+        backgroundColor: 'rgba(48, 54, 138, 0.08)'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      display: 'flex',
+      alignItems: 'center',
+      gap: 0.8,
+      overflow: 'hidden'
+    }
+  }, /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: s.original,
+    size: "small",
+    sx: {
+      backgroundColor: '#fee2e2',
+      color: '#b91c1c',
+      fontWeight: 700,
+      fontSize: 11,
+      textDecoration: 'line-through',
+      height: 22
+    }
+  }), /*#__PURE__*/react.createElement(ArrowForward/* default */.A, {
+    sx: {
+      fontSize: 13,
+      color: '#94a3b8'
+    }
+  }), /*#__PURE__*/react.createElement(Chip/* default */.A, {
+    label: s.replacement,
+    size: "small",
+    sx: {
+      backgroundColor: '#dcfce7',
+      color: '#15803d',
+      fontWeight: 700,
+      fontSize: 11,
+      height: 22
+    }
+  })), /*#__PURE__*/react.createElement(Button/* default */.A, {
+    size: "small",
+    variant: "outlined",
+    sx: {
+      fontSize: 11,
+      py: 0.2,
+      px: 1,
+      minWidth: 44,
+      height: 22,
+      textTransform: 'none',
+      borderColor: '#30368a',
+      color: '#30368a',
+      fontWeight: 600
+    }
+  }, "Fix")))), displaySuggestions.length === 0 && /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 2,
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1
+    }
+  }, /*#__PURE__*/react.createElement(CheckCircleOutline/* default */.A, {
+    sx: {
+      fontSize: 20,
+      color: '#16a34a'
+    }
+  }), /*#__PURE__*/react.createElement(Typography/* default */.A, {
+    sx: {
+      fontSize: 12,
+      color: '#15803d',
+      fontWeight: 600
+    }
+  }, "All words look correct!")), /*#__PURE__*/react.createElement(Divider/* default */.A, {
+    sx: {
+      my: 0
+    }
+  }), /*#__PURE__*/react.createElement(Box/* default */.A, {
+    sx: {
+      p: 1,
+      backgroundColor: '#f8fafc',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 0.5
+    }
+  }, displaySuggestions.length > 0 && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    onClick: handleApplyAll,
+    sx: {
+      borderRadius: '6px',
+      py: 0.8,
+      fontSize: 12,
+      fontWeight: 700,
+      color: '#30368a',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      '&:hover': {
+        backgroundColor: 'rgba(48, 54, 138, 0.12)'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(DoneAll/* default */.A, {
+    sx: {
+      fontSize: 16
+    }
+  }), "Apply All Corrections (", displaySuggestions.length, ")"), (hasExtraSpaces || hasUncapitalized) && /*#__PURE__*/react.createElement(MenuItem/* default */.A, {
+    onClick: handleFormatSpacesOnly,
+    sx: {
+      borderRadius: '6px',
+      py: 0.8,
+      fontSize: 12,
+      color: '#475569',
+      display: 'flex',
+      alignItems: 'center',
+      gap: 1,
+      '&:hover': {
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, /*#__PURE__*/react.createElement(AutoAwesome/* default */.A, {
+    sx: {
+      fontSize: 15,
+      color: '#64748b'
+    }
+  }), "Format Spacing & Capitalize Only"))));
+}
+/* harmony default export */ const component_LanguageFixerButton = (LanguageFixerButton);
+
+/***/ },
+
 /***/ 49377
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
@@ -5654,6 +7935,372 @@ function SidebarDash1(props) {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_SidebarDash__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, props);
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SidebarDash1);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, [
+/* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
+/* harmony export */ ]);
+
+
+/***/ },
+
+/***/ 73068
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96540);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(86531);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(844);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(25239);
+/* harmony import */ var _LanguageFixerButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(51254);
+/* harmony import */ var _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(68427);
+var _excluded = ["label", "value", "onChange", "onBlur", "presetKey", "options", "mode", "multiline", "rows", "id", "name", "required", "fullWidth", "size", "sx", "disabled", "placeholder", "passEvent", "inputProps"];
+function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
+function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
+function _objectWithoutProperties(e, t) { if (null == e) return {}; var o, r, i = _objectWithoutPropertiesLoose(e, t); if (Object.getOwnPropertySymbols) { var n = Object.getOwnPropertySymbols(e); for (r = 0; r < n.length; r++) o = n[r], -1 === t.indexOf(o) && {}.propertyIsEnumerable.call(e, o) && (i[o] = e[o]); } return i; }
+function _objectWithoutPropertiesLoose(r, e) { if (null == r) return {}; var t = {}; for (var n in r) if ({}.hasOwnProperty.call(r, n)) { if (-1 !== e.indexOf(n)) continue; t[n] = r[n]; } return t; }
+;
+
+
+
+
+/**
+ * SmartTextInput
+ * Drop-in intelligent text input with:
+ * 1. Free-solo searchable dropdown (user can type freely OR pick from presets)
+ * 2. Embedded Click Sparkle ✨ Language & Typo Fixer button (ALL CAPS default)
+ * 3. Smart suggestion dropdown menu (by clicking ✨ or right-clicking on mistaken/selected words)
+ * 4. Preserves native browser context menu (Undo, Redo, Cut, Copy, Paste) on clean text & empty spaces
+ * 5. Real-time typo detection badge & visual warning
+ * 6. Preserves cursor position when uppercasing / editing in middle or beginning of text across all modules
+ */
+function SmartTextInput(_ref) {
+  var label = _ref.label,
+    _ref$value = _ref.value,
+    value = _ref$value === void 0 ? '' : _ref$value,
+    onChange = _ref.onChange,
+    onBlur = _ref.onBlur,
+    presetKey = _ref.presetKey,
+    options = _ref.options,
+    _ref$mode = _ref.mode,
+    mode = _ref$mode === void 0 ? 'upper' : _ref$mode,
+    _ref$multiline = _ref.multiline,
+    multiline = _ref$multiline === void 0 ? false : _ref$multiline,
+    _ref$rows = _ref.rows,
+    rows = _ref$rows === void 0 ? 1 : _ref$rows,
+    id = _ref.id,
+    name = _ref.name,
+    _ref$required = _ref.required,
+    required = _ref$required === void 0 ? false : _ref$required,
+    _ref$fullWidth = _ref.fullWidth,
+    fullWidth = _ref$fullWidth === void 0 ? true : _ref$fullWidth,
+    _ref$size = _ref.size,
+    size = _ref$size === void 0 ? 'medium' : _ref$size,
+    _ref$sx = _ref.sx,
+    sx = _ref$sx === void 0 ? {} : _ref$sx,
+    _ref$disabled = _ref.disabled,
+    disabled = _ref$disabled === void 0 ? false : _ref$disabled,
+    placeholder = _ref.placeholder,
+    _ref$passEvent = _ref.passEvent,
+    passEvent = _ref$passEvent === void 0 ? false : _ref$passEvent,
+    _ref$inputProps = _ref.inputProps,
+    inputProps = _ref$inputProps === void 0 ? {} : _ref$inputProps,
+    rest = _objectWithoutProperties(_ref, _excluded);
+  var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState2 = _slicedToArray(_useState, 2),
+    contextMenu = _useState2[0],
+    setContextMenu = _useState2[1];
+  var inputRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var selectionRef = (0,react__WEBPACK_IMPORTED_MODULE_0__.useRef)(null);
+  var dropdownOptions = Array.isArray(options) && options.length > 0 ? options : presetKey && _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] ? _utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .COMMON_PRESETS */ .dr[presetKey] : null;
+  var isTypo = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .hasTypo */ .rp)(value, mode);
+  var restoreSelection = (start, end) => {
+    var el = inputRef.current;
+    if (el && typeof el.setSelectionRange === 'function') {
+      try {
+        el.setSelectionRange(start, end);
+      } catch (err) {
+        // ignore
+      }
+    }
+  };
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useLayoutEffect)(() => {
+    if (selectionRef.current) {
+      var _selectionRef$current = selectionRef.current,
+        start = _selectionRef$current.start,
+        end = _selectionRef$current.end;
+      restoreSelection(start, end);
+    }
+  });
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (selectionRef.current) {
+      var _selectionRef$current2 = selectionRef.current,
+        start = _selectionRef$current2.start,
+        end = _selectionRef$current2.end;
+      restoreSelection(start, end);
+      selectionRef.current = null;
+    }
+  });
+  var handleContextMenu = e => {
+    if (!value || typeof value !== 'string' || !value.trim()) {
+      // Empty input: allow native browser context menu (Undo, Redo, Cut, Copy, Paste, etc.)
+      return;
+    }
+
+    // 1. Check if user has selected / highlighted text with mouse
+    var selectedText = typeof window !== 'undefined' && window.getSelection ? window.getSelection().toString().trim() : '';
+    if (selectedText) {
+      var selAnalysis = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .getSuggestions */ .KW)(selectedText, mode);
+      if (selAnalysis.suggestions.length > 0) {
+        // User highlighted text that contains a mistake -> show suggestions for this selection
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: selectedText
+        });
+        return;
+      }
+      // User highlighted clean text (likely to Copy) -> do NOT prevent default, let native Copy show!
+      return;
+    }
+
+    // 2. No text selected: check which word the cursor is currently on
+    var inputEl = e.target;
+    var clickedWord = '';
+    if (inputEl && typeof inputEl.selectionStart === 'number') {
+      var pos = inputEl.selectionStart;
+      var textVal = inputEl.value || value || '';
+      var leftPart = textVal.slice(0, pos);
+      var rightPart = textVal.slice(pos);
+      var leftMatch = (leftPart.match(/[\w\u00C0-\u017F]+$/) || [''])[0];
+      var rightMatch = (rightPart.match(/^[\w\u00C0-\u017F]+/) || [''])[0];
+      clickedWord = leftMatch + rightMatch;
+    }
+    if (clickedWord) {
+      var wordAnalysis = (0,_utils_textAssistUtils__WEBPACK_IMPORTED_MODULE_5__/* .getSuggestions */ .KW)(clickedWord, mode);
+      if (wordAnalysis.suggestions.length > 0) {
+        // Clicked word is a mistake -> show Spelling & Word Suggestions for this word!
+        e.preventDefault();
+        setContextMenu({
+          mouseX: e.clientX,
+          mouseY: e.clientY,
+          scopeText: clickedWord
+        });
+        return;
+      }
+    }
+
+    // 3. Otherwise: clicked on whitespace or clean word -> allow native browser context menu!
+  };
+  var notifyChange = newVal => {
+    if (typeof onChange !== 'function') return;
+    var finalVal = mode === 'upper' && typeof newVal === 'string' ? newVal.toUpperCase() : newVal;
+    if (passEvent) {
+      onChange({
+        target: {
+          name: name || id || '',
+          value: finalVal
+        }
+      });
+    } else {
+      onChange(finalVal);
+    }
+  };
+  var handleInputChange = e => {
+    var target = e && e.target ? e.target : inputRef.current;
+    var val = target ? target.value : e;
+    if (target && typeof target.selectionStart === 'number') {
+      var start = target.selectionStart;
+      var end = target.selectionEnd;
+      selectionRef.current = {
+        start,
+        end
+      };
+      if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+        window.requestAnimationFrame(() => {
+          restoreSelection(start, end);
+        });
+      }
+      setTimeout(() => {
+        restoreSelection(start, end);
+      }, 0);
+    }
+    notifyChange(val);
+  };
+  var handleBlur = e => {
+    // Note: Do NOT automatically mutate or change user text on blur.
+    // User text is only polished when explicitly clicking the Sparkle ✨ button or right-clicking.
+    if (typeof onBlur === 'function') {
+      onBlur(e);
+    }
+  };
+  var setMergedRef = (node, extraRef, thirdRef) => {
+    if (node) {
+      inputRef.current = node;
+    }
+    if (typeof extraRef === 'function') {
+      extraRef(node);
+    } else if (extraRef && typeof extraRef === 'object') {
+      extraRef.current = node;
+    }
+    if (typeof thirdRef === 'function') {
+      thirdRef(node);
+    } else if (thirdRef && typeof thirdRef === 'object') {
+      thirdRef.current = node;
+    }
+    if (typeof rest.inputRef === 'function') {
+      rest.inputRef(node);
+    } else if (rest.inputRef && typeof rest.inputRef === 'object') {
+      rest.inputRef.current = node;
+    }
+  };
+  var textTransformStyle = mode === 'upper' ? 'uppercase' : 'none';
+
+  // If dropdown options exist and it's not multiline, use freeSolo Autocomplete
+  if (dropdownOptions && !multiline) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A, {
+      freeSolo: true,
+      disabled: disabled,
+      options: dropdownOptions,
+      inputValue: value !== undefined && value !== null ? String(value) : '',
+      value: null,
+      onInputChange: (event, newInputValue, reason) => {
+        if (reason === 'input') {
+          var target = event && event.target && typeof event.target.selectionStart === 'number' ? event.target : inputRef.current;
+          if (target && typeof target.selectionStart === 'number') {
+            var start = target.selectionStart;
+            var end = target.selectionEnd;
+            selectionRef.current = {
+              start,
+              end
+            };
+            if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+              window.requestAnimationFrame(() => {
+                restoreSelection(start, end);
+              });
+            }
+            setTimeout(() => {
+              restoreSelection(start, end);
+            }, 0);
+          }
+          notifyChange(newInputValue);
+        } else if (reason === 'clear') {
+          notifyChange('');
+        }
+      },
+      onChange: (event, newValue) => {
+        var chosen = typeof newValue === 'string' ? newValue : newValue && typeof newValue === 'object' ? newValue.label || newValue.itemName || newValue.title || '' : '';
+        notifyChange(chosen || '');
+      },
+      renderInput: params => {
+        var _params$inputProps2;
+        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, _extends({}, params, rest, {
+          inputRef: node => {
+            var _params$InputProps, _params$inputProps;
+            return setMergedRef(node, (_params$InputProps = params.InputProps) === null || _params$InputProps === void 0 ? void 0 : _params$InputProps.ref, (_params$inputProps = params.inputProps) === null || _params$inputProps === void 0 ? void 0 : _params$inputProps.ref);
+          },
+          id: id,
+          name: name,
+          label: label,
+          required: required,
+          size: size,
+          placeholder: placeholder,
+          onBlur: handleBlur,
+          onContextMenu: handleContextMenu,
+          inputProps: _objectSpread(_objectSpread(_objectSpread({}, params.inputProps), {}, {
+            spellCheck: 'true'
+          }, inputProps), {}, {
+            style: _objectSpread(_objectSpread({
+              textTransform: textTransformStyle
+            }, (inputProps === null || inputProps === void 0 ? void 0 : inputProps.style) || {}), ((_params$inputProps2 = params.inputProps) === null || _params$inputProps2 === void 0 ? void 0 : _params$inputProps2.style) || {})
+          }),
+          InputProps: _objectSpread(_objectSpread({}, params.InputProps), {}, {
+            endAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+              position: "end",
+              sx: {
+                gap: 0.5
+              }
+            }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_LanguageFixerButton__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+              value: value,
+              onFixed: fixed => notifyChange(fixed),
+              mode: mode,
+              size: size === 'small' ? 'small' : 'medium',
+              contextMenu: contextMenu,
+              onCloseContextMenu: () => setContextMenu(null)
+            }), params.InputProps.endAdornment)
+          }),
+          sx: _objectSpread(_objectSpread({
+            width: fullWidth ? '100%' : 'auto',
+            backgroundColor: 'white'
+          }, isTypo ? {
+            '& .MuiOutlinedInput-notchedOutline': {
+              borderColor: '#f59e0b'
+            }
+          } : {}), sx)
+        }));
+      }
+    });
+  }
+
+  // Standard or multiline TextField with Sparkle Button
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, _extends({}, rest, {
+    inputRef: node => setMergedRef(node),
+    id: id,
+    name: name,
+    label: label,
+    value: value !== undefined && value !== null ? value : '',
+    onChange: handleInputChange,
+    onBlur: handleBlur,
+    onContextMenu: handleContextMenu,
+    multiline: multiline,
+    rows: rows,
+    required: required,
+    size: size,
+    disabled: disabled,
+    placeholder: placeholder,
+    inputProps: _objectSpread(_objectSpread({
+      spellCheck: 'true'
+    }, inputProps), {}, {
+      style: _objectSpread({
+        textTransform: textTransformStyle
+      }, (inputProps === null || inputProps === void 0 ? void 0 : inputProps.style) || {})
+    }),
+    InputProps: {
+      endAdornment: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+        position: "end",
+        sx: multiline ? {
+          alignSelf: 'flex-start',
+          mt: 1
+        } : {}
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_LanguageFixerButton__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+        value: value,
+        onFixed: fixed => notifyChange(fixed),
+        mode: mode,
+        size: size === 'small' ? 'small' : 'medium',
+        contextMenu: contextMenu,
+        onCloseContextMenu: () => setContextMenu(null)
+      }))
+    },
+    sx: _objectSpread(_objectSpread({
+      width: fullWidth ? '100%' : 'auto',
+      backgroundColor: 'white'
+    }, isTypo ? {
+      '& .MuiOutlinedInput-notchedOutline': {
+        borderColor: '#f59e0b'
+      }
+    } : {}), sx)
+  }));
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (SmartTextInput);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
 /* harmony export */   "A", 0, /* export default binding */ __WEBPACK_DEFAULT_EXPORT__
 /* harmony export */ ]);
@@ -5760,6 +8407,1116 @@ db.version(1).stores({
   syncMetadata: '++id, tableName, lastSync, recordCount'
 });
 /* harmony default export */ const dexieDb = (db);
+
+/***/ },
+
+/***/ 37402
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   cc: () => (/* binding */ getPurchaseReasonDisplay),
+/* harmony export */   sA: () => (/* binding */ normalizeImageDataUrl)
+/* harmony export */ });
+/* unused harmony exports safeNumber, formatUSD, formatFC, formatDualCurrency, formatCustomerName, formatSupplierName, formatEmployeeName, formatPurchaseReasonDisplay, safeString */
+/**
+ * Global Gate Enterprise Defensive Formatting & Extraction Utility
+ * Provides null-safe numerical and entity formatting across Desktop, Web, and Mobile.
+ */
+
+var safeNumber = function safeNumber(val) {
+  var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+  if (val === null || val === undefined || val === '') return fallback;
+  var num = typeof val === 'number' ? val : parseFloat(String(val).replace(/,/g, ''));
+  return isNaN(num) ? fallback : num;
+};
+var formatUSD = function formatUSD(val) {
+  var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  var num = safeNumber(val);
+  return '$ ' + num.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+var formatFC = function formatFC(val) {
+  var decimals = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  var num = safeNumber(val);
+  return 'FC ' + num.toFixed(decimals).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+};
+var formatDualCurrency = function formatDualCurrency(fcVal, usdVal) {
+  var rate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 1;
+  var fc = safeNumber(fcVal);
+  var usd = safeNumber(usdVal);
+  var r = safeNumber(rate, 1);
+  if (fc > 0 && usd > 0) {
+    return "".concat(formatFC(fc), " & ").concat(formatUSD(usd));
+  } else if (fc > 0) {
+    return "".concat(formatFC(fc), " (").concat(formatUSD(fc / r), ")");
+  } else if (usd > 0) {
+    return "".concat(formatUSD(usd), " (").concat(formatFC(usd * r), ")");
+  }
+  return '$ 0.00';
+};
+var formatCustomerName = c => {
+  if (!c) return '';
+  if (typeof c === 'string') return c.trim().toUpperCase();
+  var name = c.Customer || c.customerName || c.companyName || c.customerFullName || c.name || '';
+  return String(name).trim().toUpperCase();
+};
+var formatSupplierName = s => {
+  if (!s) return '';
+  if (typeof s === 'string') return s.trim().toUpperCase();
+  var name = s.supplierName || s.storeName || s.StoreName || s.name || '';
+  return String(name).trim().toUpperCase();
+};
+var formatEmployeeName = e => {
+  if (!e) return '';
+  if (typeof e === 'string') return e.trim().toUpperCase();
+  var name = e.employeeName || e.name || e.person || '';
+  return String(name).trim().toUpperCase();
+};
+var normalizeImageDataUrl = (raw, contentType) => {
+  if (!raw) return null;
+  var ct = contentType || 'image/jpeg';
+  if (typeof raw === 'string') {
+    var trimmed = raw.trim();
+    if (trimmed.length < 10 || trimmed === 'undefined' || trimmed === 'null') return null;
+    if (trimmed.startsWith('data:')) return trimmed;
+    if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) return trimmed;
+    return "data:".concat(ct, ";base64,").concat(trimmed);
+  }
+  var bytes = null;
+  if (Array.isArray(raw)) {
+    bytes = new Uint8Array(raw);
+  } else if (raw.data && (Array.isArray(raw.data) || raw.data instanceof Uint8Array)) {
+    bytes = new Uint8Array(raw.data);
+  } else if (raw instanceof Uint8Array) {
+    bytes = raw;
+  } else if (raw.buffer && raw.buffer instanceof ArrayBuffer) {
+    bytes = new Uint8Array(raw.buffer);
+  }
+  if (!bytes || bytes.length === 0) return null;
+
+  // Auto-detect MIME type from magic bytes if possible
+  var detectedType = ct;
+  if (bytes.length >= 4) {
+    if (bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF) {
+      detectedType = 'image/jpeg';
+    } else if (bytes[0] === 0x89 && bytes[1] === 0x50 && bytes[2] === 0x4E && bytes[3] === 0x47) {
+      detectedType = 'image/png';
+    } else if (bytes[0] === 0x47 && bytes[1] === 0x49 && bytes[2] === 0x46) {
+      detectedType = 'image/gif';
+    } else if (bytes[0] === 0x52 && bytes[1] === 0x49 && bytes[2] === 0x46 && bytes[3] === 0x46) {
+      detectedType = 'image/webp';
+    }
+  }
+
+  // Quick ASCII header check (avoid full UTF-8 decoding on large binary buffers)
+  var asciiHead = '';
+  var headLen = Math.min(bytes.length, 32);
+  for (var i = 0; i < headLen; i++) {
+    asciiHead += String.fromCharCode(bytes[i]);
+  }
+  if (asciiHead.startsWith('data:')) {
+    try {
+      var fullStr = new TextDecoder('utf-8').decode(bytes);
+      return fullStr.trim();
+    } catch (e) {}
+  } else if (asciiHead.startsWith('iVBOR') || asciiHead.startsWith('/9j/') || asciiHead.startsWith('R0lGOD') || asciiHead.startsWith('UklGR')) {
+    try {
+      var _fullStr = new TextDecoder('utf-8').decode(bytes);
+      return "data:".concat(detectedType, ";base64,").concat(_fullStr.trim());
+    } catch (e) {}
+  }
+
+  // Robust, stack-safe binary to base64 conversion (1024 chunk size works on all Android WebViews)
+  try {
+    var binary = '';
+    var len = bytes.byteLength || bytes.length;
+    var chunkSize = 1024;
+    for (var _i = 0; _i < len; _i += chunkSize) {
+      var sub = bytes.subarray ? bytes.subarray(_i, Math.min(_i + chunkSize, len)) : bytes.slice(_i, Math.min(_i + chunkSize, len));
+      binary += String.fromCharCode.apply(null, sub);
+    }
+    var b64 = typeof window !== 'undefined' && window.btoa ? window.btoa(binary) : typeof Buffer !== 'undefined' ? Buffer.from(bytes).toString('base64') : '';
+    return b64 ? "data:".concat(detectedType, ";base64,").concat(b64) : null;
+  } catch (err) {
+    console.error('Error converting image binary:', err);
+    return null;
+  }
+};
+
+/**
+ * Defensive Purchase Reason / Project / Description formatter
+ * Handles all permutations of projectName (string, object with name/projectName/_id, empty object {}, null, undefined)
+ * and falls back cleanly to description and reason so item purchase reasons never disappear.
+ */
+var formatPurchaseReasonDisplay = function formatPurchaseReasonDisplay(purchase) {
+  var projects = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  if (!purchase) return '';
+  var proj = purchase.projectName;
+  var projName = typeof proj === 'object' && proj !== null ? proj.projectName || proj.name || '' : proj || '';
+  if (!projName && proj && typeof proj === 'object' && proj._id && Array.isArray(projects) && projects.length > 0) {
+    var foundProj = projects.find(p => p._id === proj._id);
+    if (foundProj) {
+      var _foundProj$customerNa;
+      var pNum = foundProj.projectNumber !== undefined ? "P-".concat(String(foundProj.projectNumber).padStart(6, '0')) : '';
+      var client = ((_foundProj$customerNa = foundProj.customerName) === null || _foundProj$customerNa === void 0 ? void 0 : _foundProj$customerNa.customerName) || '';
+      var pTitle = foundProj.projectName || '';
+      projName = pNum ? client ? "".concat(pNum, " / ").concat(client, " - ").concat(pTitle) : "".concat(pNum, " / ").concat(pTitle) : pTitle;
+    }
+  }
+  if (projName && String(projName).trim() !== '') {
+    return String(projName).trim();
+  }
+  if (purchase.description && String(purchase.description).trim() !== '') {
+    return String(purchase.description).trim();
+  }
+  if (purchase.reason && String(purchase.reason).trim() !== '') {
+    return String(purchase.reason).trim();
+  }
+  return '';
+};
+var getPurchaseReasonDisplay = formatPurchaseReasonDisplay;
+
+/**
+ * Universal Defensive String Coercion
+ * Safely converts any value (strings, numbers, null, undefined, or nested objects) into a renderable React string.
+ */
+var safeString = function safeString(val) {
+  var fallback = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
+  if (val === null || val === undefined) return fallback;
+  if (typeof val === 'string') return val;
+  if (typeof val === 'number' || typeof val === 'boolean') return String(val);
+  if (typeof val === 'object') {
+    return val.projectName || val.name || val.Customer || val.customerName || val.employeeName || val.storeName || fallback;
+  }
+  return String(val);
+};
+/* unused harmony default export */ var __WEBPACK_DEFAULT_EXPORT__ = ((/* unused pure expression or super */ null && ({
+  safeNumber,
+  formatUSD,
+  formatFC,
+  formatDualCurrency,
+  formatCustomerName,
+  formatSupplierName,
+  formatEmployeeName,
+  normalizeImageDataUrl,
+  formatPurchaseReasonDisplay,
+  getPurchaseReasonDisplay,
+  safeString
+})));
+
+/***/ },
+
+/***/ 68427
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   KW: () => (/* binding */ getSuggestions),
+/* harmony export */   ZD: () => (/* binding */ applySingleCorrection),
+/* harmony export */   dr: () => (/* binding */ COMMON_PRESETS),
+/* harmony export */   nW: () => (/* binding */ applyCleanSpaces),
+/* harmony export */   rp: () => (/* binding */ hasTypo)
+/* harmony export */ });
+/* unused harmony exports TYPO_DICTIONARY, ENGLISH_FRENCH_VOCABULARY, damerauLevenshtein, correctWord, normalizeSpaces, correctTypos, toSentenceCase, toTitleCase, toUpperCaseCode, polishText, preserveCursorOnChange */
+/**
+ * GG Management - Intelligent Language & Text Assistance Utility
+ * Provides typo auto-correction, technical terminology standardization,
+ * whitespace cleaning, Damerau-Levenshtein word-by-word spellchecking,
+ * and universal CAPITAL LETTERS formatting.
+ */
+
+var COMMON_PRESETS = {
+  defects: ['NO POWER', 'NOT CHARGING', 'OVERHEATING', 'MOTOR BLOCKED', 'SHORT CIRCUIT', 'ABNORMAL NOISE', 'WATER LEAK', 'GAS LEAK', 'PERIODIC MAINTENANCE', 'DISPLAY FAULT', 'BURNT COIL', 'MECHANICAL BREAKDOWN', 'LOW PRESSURE', 'TRIPPING BREAKER', 'INTERMITTENT ON/OFF FAULT', 'VIDEO SIGNAL LOST / FLICKERING', 'SENSOR / THERMOSTAT ERROR', 'BLOWN FUSE'],
+  appliances: ['AIR CONDITIONER', 'GENERATOR', 'CCTV SECURITY CAMERAS', 'BAKERY DOUGH MIXER', 'ELECTRIC OVEN', 'WATER PUMP', 'COLD ROOM / CHILLER', 'ELECTRIC MOTOR', 'INVERTER / UPS', 'TRANSFORMER', 'ICE MACHINE', 'AIR COMPRESSOR', 'DEEP FRYER', 'REFRIGERATOR / FREEZER', 'ELECTRICAL CONTROL PANEL'],
+  actions: ['DIAGNOSTIC & INSPECTION OK', 'REPLACED CAPACITOR', 'CLEANED & SERVICED', 'REWIRED ELECTRICAL CONNECTIONS', 'MOTOR REWOUND & TESTED', 'REFRIGERANT GAS REFILLED', 'REPLACED BEARINGS & BELTS', 'TESTED & FULLY OPERATIONAL', 'CALIBRATED & ADJUSTED', 'REPLACED BURNT COIL', 'FIRMWARE UPDATED & SYSTEM RESET'],
+  subjects: ['MAINTENANCE & REPAIR SERVICES', 'SUPPLY OF ELECTRICAL EQUIPMENT', 'TROUBLESHOOTING & EMERGENCY REPAIR', 'PREVENTIVE MAINTENANCE CONTRACT', 'INSTALLATION & COMMISSIONING', 'TECHNICAL INSPECTION & AUDIT', 'SECURITY & SURVEILLANCE SYSTEM SERVICE']
+};
+
+// Common bilingual & technical typos encountered during shop/technician data entry
+var TYPO_DICTIONARY = [
+// Multi-word phrases with actual typos (evaluated first)
+{
+  pattern: /\b(ari|air)\s+(contoner|condoner|condishioner|conditionner)\b/gi,
+  replacement: 'AIR CONDITIONER'
+}, {
+  pattern: /\b(uot\s+of\s+(ordder|ordr|order)|out\s+of\s+(ordder|ordr))\b/gi,
+  replacement: 'OUT OF ORDER'
+}, {
+  pattern: /\b(not\s+charch(ing)?|not\s+charg(ing)?|ne\s+charge\s+pas)\b/gi,
+  replacement: 'NOT CHARGING'
+}, {
+  pattern: /\b(no\s+powr(e)?|no\s+pwer|pas\s+de\s+courant|pas\s+de\s+tension|coupe\s+courant|ne\s+s['\s]?allume\s+pas)\b/gi,
+  replacement: 'NO POWER'
+}, {
+  pattern: /\b(court[\s\-_]circuit|court[\s\-_]circui)\b/gi,
+  replacement: 'SHORT CIRCUIT'
+}, {
+  pattern: /\b(four\s+elec(trique)?)\b/gi,
+  replacement: 'ELECTRIC OVEN'
+}, {
+  pattern: /\b(pompe\s+a\s+eau|pompe\s+d['\s]?eau)\b/gi,
+  replacement: 'WATER PUMP'
+}, {
+  pattern: /\b(groupe\s+electro(gene)?)\b/gi,
+  replacement: 'GENERATOR'
+}, {
+  pattern: /\b(chambre\s+froide)\b/gi,
+  replacement: 'COLD ROOM'
+}, {
+  pattern: /\b(fuite\s+d['\s]?eau)\b/gi,
+  replacement: 'WATER LEAK'
+}, {
+  pattern: /\b(fuite\s+de\s+gaz)\b/gi,
+  replacement: 'GAS LEAK'
+}, {
+  pattern: /\b(bruit\s+anormal|bruyant)\b/gi,
+  replacement: 'ABNORMAL NOISE'
+}, {
+  pattern: /\b(moteur\s+bloqu[eé])\b/gi,
+  replacement: 'MOTOR BLOCKED'
+}, {
+  pattern: /\b(entretien\s+periodique)\b/gi,
+  replacement: 'PERIODIC MAINTENANCE'
+}, {
+  pattern: /\b(ne\s+marche\s+pas|marche\s+pas|not\s+work(ing)?)\b/gi,
+  replacement: 'NOT WORKING'
+}, {
+  pattern: /\b(tset\s+wronge?|test\s+wronge?|tste\s+wronge?)\b/gi,
+  replacement: 'TEST WRONG'
+}, {
+  pattern: /\b(lfie\s+ihis\s+good|life\s+ihis\s+good|lfie\s+is\s+good)\b/gi,
+  replacement: 'LIFE IS GOOD'
+}, {
+  pattern: /\b(fait\s+on[\s\-_/]*off)\b/gi,
+  replacement: 'DOING ON/OFF'
+}, {
+  pattern: /\b(en\s+panne|hors\s+service)\b/gi,
+  replacement: 'OUT OF ORDER'
+},
+// Single word typos and colloquialisms
+{
+  pattern: /\b(renovaton|renovatin|renovashun)\b/gi,
+  replacement: 'RENOVATION'
+}, {
+  pattern: /\b(fabricaton|fabricatin)\b/gi,
+  replacement: 'FABRICATION'
+}, {
+  pattern: /\b(constructon|constructin)\b/gi,
+  replacement: 'CONSTRUCTION'
+}, {
+  pattern: /\b(instalation|instalaion)\b/gi,
+  replacement: 'INSTALLATION'
+}, {
+  pattern: /\b(maintanance|maintanence|maintenace)\b/gi,
+  replacement: 'MAINTENANCE'
+}, {
+  pattern: /\b(aluminam|aliminum|aliminium)\b/gi,
+  replacement: 'ALUMINUM'
+}, {
+  pattern: /\b(electic|electical)\b/gi,
+  replacement: 'ELECTRICAL'
+}, {
+  pattern: /\b(mecanic|mecanique)\b/gi,
+  replacement: 'MECHANICAL'
+}, {
+  pattern: /\b(delivry|delivary)\b/gi,
+  replacement: 'DELIVERY'
+}, {
+  pattern: /\b(suppliy|suppiler)\b/gi,
+  replacement: 'SUPPLIER'
+}, {
+  pattern: /\b(purchse|purcase)\b/gi,
+  replacement: 'PURCHASE'
+}, {
+  pattern: /\b(reciept)\b/gi,
+  replacement: 'RECEIPT'
+}, {
+  pattern: /\b(expenss|expence)\b/gi,
+  replacement: 'EXPENSE'
+}, {
+  pattern: /\b(discription)\b/gi,
+  replacement: 'DESCRIPTION'
+}, {
+  pattern: /\b(specifcation|specifaction)\b/gi,
+  replacement: 'SPECIFICATION'
+}, {
+  pattern: /\b(ari)\b/gi,
+  replacement: 'AIR'
+}, {
+  pattern: /\b(contoner|condoner|condishioner|conditionner)\b/gi,
+  replacement: 'CONDITIONER'
+}, {
+  pattern: /\b(uot)\b/gi,
+  replacement: 'OUT'
+}, {
+  pattern: /\b(ordder|ordr)\b/gi,
+  replacement: 'ORDER'
+}, {
+  pattern: /\b(fullow|fllow)\b/gi,
+  replacement: 'FOLLOW'
+}, {
+  pattern: /\b(tste|tset|tesst|tst)\b/gi,
+  replacement: 'TEST'
+}, {
+  pattern: /\b(lfie|lyfe)\b/gi,
+  replacement: 'LIFE'
+}, {
+  pattern: /\b(ihis|isi)\b/gi,
+  replacement: 'IS'
+}, {
+  pattern: /\b(machin|mashin|machiene|machne|mchine)\b/gi,
+  replacement: 'MACHINE'
+}, {
+  pattern: /\b(camra|camer|kamra)\b/gi,
+  replacement: 'CAMERA'
+}, {
+  pattern: /\b(cc\s+tv)\b/gi,
+  replacement: 'CCTV'
+}, {
+  pattern: /\b(wronge|rong|wrog|wrng)\b/gi,
+  replacement: 'WRONG'
+}, {
+  pattern: /\b(powre|powr|pwer|poer)\b/gi,
+  replacement: 'POWER'
+}, {
+  pattern: /\b(probl[eèé]me?|problm|prob)\b/gi,
+  replacement: 'PROBLEM'
+}, {
+  pattern: /\b(elec|electrique|eletrique)\b/gi,
+  replacement: 'ELECTRICAL'
+}, {
+  pattern: /\b(maint|maintenace|mientenace|maintenence|mantenance)\b/gi,
+  replacement: 'MAINTENANCE'
+}, {
+  pattern: /\b(reparation|reparer|reparartion|repar)\b/gi,
+  replacement: 'REPAIR'
+}, {
+  pattern: /\b(moteur|motuer|motteur)\b/gi,
+  replacement: 'MOTOR'
+}, {
+  pattern: /\b(batteri|batterie|baterie)\b/gi,
+  replacement: 'BATTERY'
+}, {
+  pattern: /\b(climatiseur|clim)\b/gi,
+  replacement: 'AIR CONDITIONER'
+}, {
+  pattern: /\b(generateur|groupe)\b/gi,
+  replacement: 'GENERATOR'
+}, {
+  pattern: /\b(boulangerie)\b/gi,
+  replacement: 'BAKERY'
+}, {
+  pattern: /\b(petrin)\b/gi,
+  replacement: 'DOUGH MIXER'
+}, {
+  pattern: /\b(compresseur|compresor)\b/gi,
+  replacement: 'COMPRESSOR'
+}, {
+  pattern: /\b(disjoncteur|disjonctuer)\b/gi,
+  replacement: 'CIRCUIT BREAKER'
+}, {
+  pattern: /\b(transformateur|transfo)\b/gi,
+  replacement: 'TRANSFORMER'
+}, {
+  pattern: /\b(bobinage|bobinne)\b/gi,
+  replacement: 'COIL WINDING'
+}, {
+  pattern: /\b(condensateur|condo|capaciter)\b/gi,
+  replacement: 'CAPACITOR'
+}, {
+  pattern: /\b(roulement|roulements)\b/gi,
+  replacement: 'BEARINGS'
+}, {
+  pattern: /\b(ventilateur|ventillo|ventilo)\b/gi,
+  replacement: 'VENTILATOR / FAN'
+}, {
+  pattern: /\b(surchauffe|overheat|overheating)\b/gi,
+  replacement: 'OVERHEATING'
+}, {
+  pattern: /\b(ecran|ecrant)\b/gi,
+  replacement: 'SCREEN / DISPLAY'
+}, {
+  pattern: /\b(cablage|cablagge)\b/gi,
+  replacement: 'WIRING'
+}, {
+  pattern: /\b(nettoy[eé]|netoyage|nettoyage|clean|cleand)\b/gi,
+  replacement: 'CLEANED'
+}, {
+  pattern: /\b(remplac[eé]|remplacment|remplacement|chnge)\b/gi,
+  replacement: 'REPLACED'
+}, {
+  pattern: /\b(diagnostique)\b/gi,
+  replacement: 'DIAGNOSTIC'
+}, {
+  pattern: /\b(operationnel|operationel)\b/gi,
+  replacement: 'OPERATIONAL'
+}, {
+  pattern: /\b(technicien|technition)\b/gi,
+  replacement: 'TECHNICIAN'
+}, {
+  pattern: /\b(servis|servce)\b/gi,
+  replacement: 'SERVICE'
+}, {
+  pattern: /\b(coup|coupe|coupure)\b/gi,
+  replacement: 'CUT'
+}, {
+  pattern: /\b(casse|casser|casses|brokn|borken)\b/gi,
+  replacement: 'BROKEN'
+}, {
+  pattern: /\b(brule|brulee|bruler|burnd)\b/gi,
+  replacement: 'BURNT'
+}, {
+  pattern: /\b(bloque|bloquer|bloq)\b/gi,
+  replacement: 'BLOCKED'
+}, {
+  pattern: /\b(fuite|fuit)\b/gi,
+  replacement: 'LEAK'
+}, {
+  pattern: /\b(charch|chargeur)\b/gi,
+  replacement: 'CHARGING'
+}, {
+  pattern: /\b(costomer|custmer|customr|cleint|clien)\b/gi,
+  replacement: 'CUSTOMER'
+}, {
+  pattern: /\b(suplier|suppliar|fourniseur|fournissur)\b/gi,
+  replacement: 'SUPPLIER'
+}, {
+  pattern: /\b(invocie|invoce|factur)\b/gi,
+  replacement: 'INVOICE'
+}, {
+  pattern: /\b(quattion|quotatn|devis)\b/gi,
+  replacement: 'QUOTATION'
+}, {
+  pattern: /\b(payemnt|paymnt|peymnt)\b/gi,
+  replacement: 'PAYMENT'
+}, {
+  pattern: /\b(expens|expeses|depense)\b/gi,
+  replacement: 'EXPENSE'
+}, {
+  pattern: /\b(projct|progect|porject)\b/gi,
+  replacement: 'PROJECT'
+}, {
+  pattern: /\b(employe|emploe|personel)\b/gi,
+  replacement: 'EMPLOYEE'
+}, {
+  pattern: /\b(discripton|descrip|descriptoin|descreption)\b/gi,
+  replacement: 'DESCRIPTION'
+}, {
+  pattern: /\b(addres|adres|adress)\b/gi,
+  replacement: 'ADDRESS'
+}, {
+  pattern: /\b(waranty|warenty|woranty|garanti|garantie)\b/gi,
+  replacement: 'WARRANTY'
+}, {
+  pattern: /\b(seriel|serail|seral)\b/gi,
+  replacement: 'SERIAL'
+}, {
+  pattern: /\b(recived|recieve|recu)\b/gi,
+  replacement: 'RECEIVED'
+}, {
+  pattern: /\b(deliverd|delivry|livraison)\b/gi,
+  replacement: 'DELIVERED'
+}, {
+  pattern: /\b(compleat|complet|termnated)\b/gi,
+  replacement: 'COMPLETED'
+}, {
+  pattern: /\b(canceld|cancelld|annule)\b/gi,
+  replacement: 'CANCELLED'
+}, {
+  pattern: /\b(urgent|urgant)\b/gi,
+  replacement: 'URGENT'
+}, {
+  pattern: /\b(approvd|aprovd|aprouved)\b/gi,
+  replacement: 'APPROVED'
+}, {
+  pattern: /\b(requst|reqest|demande)\b/gi,
+  replacement: 'REQUEST'
+}, {
+  pattern: /\b(quantite|qantity|qte|qty)\b/gi,
+  replacement: 'QUANTITY'
+}, {
+  pattern: /\b(balanc|balnce|solde)\b/gi,
+  replacement: 'BALANCE'
+}, {
+  pattern: /\b(disscount|discont|remise)\b/gi,
+  replacement: 'DISCOUNT'
+}, {
+  pattern: /\b(shiping|shiped)\b/gi,
+  replacement: 'SHIPPING'
+}, {
+  pattern: /\b(swtch|swicth|swich)\b/gi,
+  replacement: 'SWITCH'
+}, {
+  pattern: /\b(plase|plese)\b/gi,
+  replacement: 'PLEASE'
+}, {
+  pattern: /\b(chck|chek)\b/gi,
+  replacement: 'CHECK'
+}, {
+  pattern: /\b(wokr|wrk)\b/gi,
+  replacement: 'WORK'
+}, {
+  pattern: /\b(payd|payed)\b/gi,
+  replacement: 'PAID'
+}, {
+  pattern: /\b(wrkrs|workrs|wrokers)\b/gi,
+  replacement: 'WORKERS'
+},
+// Grammatical shorthand, prepositions, conjunctions, and high-frequency entry typos
+{
+  pattern: /\b(whn|wen)\b/gi,
+  replacement: 'WHEN'
+}, {
+  pattern: /\b(th|teh|hte)\b/gi,
+  replacement: 'THE'
+}, {
+  pattern: /\b(nt)\b/gi,
+  replacement: 'NOT'
+}, {
+  pattern: /\b(bt)\b/gi,
+  replacement: 'BUT'
+}, {
+  pattern: /\b(wz|waz)\b/gi,
+  replacement: 'WAS'
+}, {
+  pattern: /\b(wr|wer)\b/gi,
+  replacement: 'WERE'
+}, {
+  pattern: /\b(iz)\b/gi,
+  replacement: 'IS'
+}, {
+  pattern: /\b(ar)\b/gi,
+  replacement: 'ARE'
+}, {
+  pattern: /\b(ben|bin)\b/gi,
+  replacement: 'BEEN'
+}, {
+  pattern: /\b(hv|hve)\b/gi,
+  replacement: 'HAVE'
+}, {
+  pattern: /\b(hss)\b/gi,
+  replacement: 'HAS'
+}, {
+  pattern: /\b(wth|wid|wit)\b/gi,
+  replacement: 'WITH'
+}, {
+  pattern: /\b(widout|wthout)\b/gi,
+  replacement: 'WITHOUT'
+}, {
+  pattern: /\b(frm|fom)\b/gi,
+  replacement: 'FROM'
+}, {
+  pattern: /\b(bfr|b4)\b/gi,
+  replacement: 'BEFORE'
+}, {
+  pattern: /\b(aftr)\b/gi,
+  replacement: 'AFTER'
+}, {
+  pattern: /\b(bcz|bcuz|coz|cuz|becoz)\b/gi,
+  replacement: 'BECAUSE'
+}, {
+  pattern: /\b(ths|tihs)\b/gi,
+  replacement: 'THIS'
+}, {
+  pattern: /\b(tht|taht)\b/gi,
+  replacement: 'THAT'
+}, {
+  pattern: /\b(thr)\b/gi,
+  replacement: 'THERE'
+}, {
+  pattern: /\b(thier)\b/gi,
+  replacement: 'THEIR'
+}, {
+  pattern: /\b(thms)\b/gi,
+  replacement: 'THEM'
+}, {
+  pattern: /\b(itmen|itme|itms|itmes|itm)\b/gi,
+  replacement: 'ITEM'
+}, {
+  pattern: /\b(woking|wokring|wrking|workn)\b/gi,
+  replacement: 'WORKING'
+}, {
+  pattern: /\b(woked|wrked)\b/gi,
+  replacement: 'WORKED'
+}, {
+  pattern: /\b(instaled|instld|instald)\b/gi,
+  replacement: 'INSTALLED'
+}, {
+  pattern: /\b(fixd|fxd|fixxed)\b/gi,
+  replacement: 'FIXED'
+}, {
+  pattern: /\b(chkd|chked)\b/gi,
+  replacement: 'CHECKED'
+}, {
+  pattern: /\b(axel)\b/gi,
+  replacement: 'AXLE'
+}, {
+  pattern: /\b(rotatng|rotatin)\b/gi,
+  replacement: 'ROTATING'
+}, {
+  pattern: /\b(conect|conected)\b/gi,
+  replacement: 'CONNECTED'
+}, {
+  pattern: /\b(disconect|disconected)\b/gi,
+  replacement: 'DISCONNECTED'
+}, {
+  pattern: /\b(displey|scren)\b/gi,
+  replacement: 'DISPLAY'
+}, {
+  pattern: /\b(cabel)\b/gi,
+  replacement: 'CABLE'
+}, {
+  pattern: /\b(temprature|tempreture)\b/gi,
+  replacement: 'TEMPERATURE'
+}, {
+  pattern: /\b(presure)\b/gi,
+  replacement: 'PRESSURE'
+}, {
+  pattern: /\b(voltge)\b/gi,
+  replacement: 'VOLTAGE'
+}, {
+  pattern: /\b(genrator)\b/gi,
+  replacement: 'GENERATOR'
+}, {
+  pattern: /\b(condensor)\b/gi,
+  replacement: 'CONDENSER'
+}, {
+  pattern: /\b(refridgerator)\b/gi,
+  replacement: 'REFRIGERATOR'
+}, {
+  pattern: /\b(moter)\b/gi,
+  replacement: 'MOTOR'
+}, {
+  pattern: /\b(batry)\b/gi,
+  replacement: 'BATTERY'
+}, {
+  pattern: /\b(breeker)\b/gi,
+  replacement: 'BREAKER'
+}, {
+  pattern: /\b(fuz)\b/gi,
+  replacement: 'FUSE'
+}, {
+  pattern: /\b(valv)\b/gi,
+  replacement: 'VALVE'
+}, {
+  pattern: /\b(pyp|pipp)\b/gi,
+  replacement: 'PIPE'
+}, {
+  pattern: /\b(bering|bearng)\b/gi,
+  replacement: 'BEARING'
+}, {
+  pattern: /\b(berings|bearngs)\b/gi,
+  replacement: 'BEARINGS'
+}, {
+  pattern: /\b(levle)\b/gi,
+  replacement: 'LEVEL'
+}, {
+  pattern: /\b(tite|tightn)\b/gi,
+  replacement: 'TIGHTEN'
+}, {
+  pattern: /\b(tightned)\b/gi,
+  replacement: 'TIGHTENED'
+}, {
+  pattern: /\b(lubricat)\b/gi,
+  replacement: 'LUBRICATE'
+}, {
+  pattern: /\b(lubricatd)\b/gi,
+  replacement: 'LUBRICATED'
+}, {
+  pattern: /\b(calibrat)\b/gi,
+  replacement: 'CALIBRATE'
+}, {
+  pattern: /\b(adjustd)\b/gi,
+  replacement: 'ADJUSTED'
+}, {
+  pattern: /\b(damagd)\b/gi,
+  replacement: 'DAMAGED'
+}, {
+  pattern: /\b(faild)\b/gi,
+  replacement: 'FAILED'
+}, {
+  pattern: /\b(finishd)\b/gi,
+  replacement: 'FINISHED'
+}, {
+  pattern: /\b(suply)\b/gi,
+  replacement: 'SUPPLY'
+}, {
+  pattern: /\b(invois)\b/gi,
+  replacement: 'INVOICE'
+}, {
+  pattern: /\b(recipt)\b/gi,
+  replacement: 'RECEIPT'
+}, {
+  pattern: /\b(purchas)\b/gi,
+  replacement: 'PURCHASE'
+}, {
+  pattern: /\b(amont)\b/gi,
+  replacement: 'AMOUNT'
+}, {
+  pattern: /\b(quantty)\b/gi,
+  replacement: 'QUANTITY'
+}, {
+  pattern: /\b(numbr)\b/gi,
+  replacement: 'NUMBER'
+}];
+
+// Curated vocabulary for word-by-word Damerau-Levenshtein spellchecking
+var ENGLISH_FRENCH_VOCABULARY = new Set([
+// Numbers (English & French)
+'ZERO', 'ONE', 'TWO', 'THREE', 'FOUR', 'FIVE', 'SIX', 'SEVEN', 'EIGHT', 'NINE', 'TEN', 'ELEVEN', 'TWELVE', 'THIRTEEN', 'FOURTEEN', 'FIFTEEN', 'SIXTEEN', 'TWENTY', 'THIRTY', 'FORTY', 'FIFTY', 'HUNDRED', 'THOUSAND', 'UN', 'DEUX', 'TROIS', 'QUATRE', 'CINQ', 'SIX', 'SEPT', 'HUIT', 'NEUF', 'DIX', 'ONZE', 'DOUZE', 'TREIZE', 'QUATORZE', 'QUINZE', 'SEIZE', 'VINGT', 'TRENTE', 'QUARANTE', 'CINQUANTE', 'CENT', 'MILLE',
+// Common English Core Words & Prepositions
+'THE', 'BE', 'TO', 'OF', 'OFF', 'ON', 'UP', 'DOWN', 'AND', 'A', 'IN', 'THAT', 'HAVE', 'I', 'IT', 'FOR', 'NOT', 'WITH', 'HE', 'AS', 'YOU', 'DO', 'AT', 'THIS', 'BUT', 'HIS', 'BY', 'FROM', 'THEY', 'WE', 'SAY', 'HER', 'SHE', 'OR', 'AN', 'WILL', 'MY', 'ALL', 'WOULD', 'THERE', 'THEIR', 'WHAT', 'SO', 'OUT', 'IF', 'ABOUT', 'WHO', 'GET', 'WHICH', 'GO', 'ME', 'WHEN', 'MAKE', 'CAN', 'LIKE', 'TIME', 'NO', 'JUST', 'HIM', 'KNOW', 'TAKE', 'PEOPLE', 'INTO', 'YEAR', 'YOUR', 'GOOD', 'SOME', 'COULD', 'THEM', 'SEE', 'OTHER', 'THAN', 'THEN', 'NOW', 'LOOK', 'ONLY', 'COME', 'ITS', 'OVER', 'UNDER', 'THINK', 'ALSO', 'BACK', 'AFTER', 'USE', 'HOW', 'OUR', 'WORK', 'WORKS', 'WORKED', 'WORKING', 'FIRST', 'WELL', 'WAY', 'EVEN', 'NEW', 'OLD', 'WANT', 'BECAUSE', 'ANY', 'THESE', 'GIVE', 'DAY', 'MOST', 'US', 'IS', 'ARE', 'WAS', 'WERE', 'BEEN', 'DONE', 'DID', 'DOES', 'DOING', 'TEST', 'TESTS', 'TESTED', 'TESTING', 'WRONG', 'LIFE', 'ORDER', 'ORDERS', 'CHECK', 'CHECKS', 'FOLLOW', 'FOLLOWS', 'FOLLOWED', 'FOLLOWING', 'BROKEN', 'BURNT', 'BLOCKED', 'LEAK', 'LEAKS', 'CLEAN', 'CLEANED', 'SERVICE', 'SERVICES', 'REPAIR', 'REPAIRS', 'REPAIRED', 'REPLACED', 'INSPECT', 'INSPECTED', 'INSPECTION', 'DIAGNOSTIC', 'OPERATIONAL', 'MAINTENANCE', 'LEFT', 'RIGHT', 'TOP', 'BOTTOM', 'FRONT', 'REAR', 'FAST', 'SLOW', 'SAFE', 'OPEN', 'CLOSE', 'CLOSED', 'BAD', 'TRUE', 'FALSE',
+// Food, Meals, Expenses & Staff (English)
+'FOOD', 'FOODS', 'MEAL', 'MEALS', 'LUNCH', 'DINNER', 'BREAKFAST', 'DRINK', 'DRINKS', 'WATER', 'TEA', 'COFFEE', 'SUGAR', 'BREAD', 'MILK', 'RICE', 'MEAT', 'CHICKEN', 'FISH', 'FRUIT', 'FRUITS', 'VEGETABLE', 'VEGETABLES', 'SNACK', 'SNACKS', 'KITCHEN', 'COOK', 'COOKING', 'RESTAURANT', 'CATERING', 'REFRESHMENT', 'REFRESHMENTS', 'WORKER', 'WORKERS', 'STAFF', 'TEAM', 'CREW', 'LABOR', 'LABOUR', 'LABORER', 'LABORERS', 'DRIVER', 'DRIVERS', 'GUARD', 'GUARDS', 'OFFICER', 'CLEANER', 'CLEANERS', 'OPERATOR', 'OPERATORS', 'SUPERVISOR', 'SUPERVISORS', 'MANAGER', 'MANAGERS', 'DIRECTOR', 'DIRECTORS', 'ASSISTANT', 'ASSISTANTS', 'HELPER', 'HELPERS', 'CASHIER', 'CASHIERS', 'ACCOUNTANT', 'ACCOUNTANTS', 'MECHANIC', 'MECHANICS', 'ELECTRICIAN', 'ELECTRICIANS', 'PLUMBER', 'PLUMBERS', 'TRANSPORT', 'TRANSPORTATION', 'TAXI', 'BUS', 'FUEL', 'PETROL', 'DIESEL', 'OIL', 'TIRE', 'TIRES', 'TYRE', 'TYRES', 'PARKING', 'TOLL', 'FARE', 'RENT', 'HOTEL', 'TRAVEL', 'TICKET', 'FLIGHT', 'VISA', 'PASSPORT', 'ALLOWANCE', 'PERDIEM', 'SALARY', 'SALARIES', 'ADVANCE', 'LOAN', 'BONUS', 'COMMISSION', 'FEE', 'FEES', 'CHARGE', 'CHARGES', 'TAX', 'TAXES', 'TVA', 'VAT', 'CUSTOMS', 'DUTY', 'CLEARANCE', 'FINE', 'PENALTY', 'PRINTING', 'COURIER', 'POSTAGE', 'DELIVERY', 'SHIPPING', 'FREIGHT', 'TONER', 'PAPER', 'STATIONERY', 'SUPPLIES', 'TOOL', 'TOOLS', 'MATERIAL', 'MATERIALS', 'EQUIPMENT', 'INTERNET', 'WIFI', 'PHONE', 'TELEPHONE', 'AIRTIME', 'CREDIT', 'CARD', 'ELECTRICITY', 'POWER', 'INSURANCE', 'MEDICAL', 'MEDICINE', 'HEALTH', 'HOSPITAL', 'CLINIC', 'UNIFORM', 'UNIFORMS', 'SAFETY', 'BOOTS', 'HELMET', 'GLOVES', 'VEST', 'GIFT', 'DONATION', 'CHARITY', 'MISCELLANEOUS', 'OTHER', 'OTHERS',
+// Common French Core & Expense Words
+'LE', 'LA', 'LES', 'UN', 'UNE', 'DES', 'DU', 'DE', 'AU', 'AUX', 'EN', 'DANS', 'SUR', 'SOUS', 'PAR', 'POUR', 'AVEC', 'SANS', 'VERS', 'CHEZ', 'CE', 'CET', 'CETTE', 'CES', 'MON', 'MA', 'MES', 'TON', 'TA', 'TES', 'SON', 'SA', 'SES', 'NOTRE', 'NOS', 'VOTRE', 'VOS', 'LEUR', 'LEURS', 'JE', 'TU', 'IL', 'ELLE', 'ON', 'NOUS', 'VOUS', 'ILS', 'ELLES', 'ME', 'TE', 'SE', 'LUI', 'MOI', 'TOI', 'SOI', 'EUX', 'QUI', 'QUE', 'QUOI', 'DONT', 'OU', 'FAIT', 'FAIRE', 'ETRE', 'AVOIR', 'PAS', 'PLUS', 'BIEN', 'BON', 'BONNE', 'MAUVAIS', 'JOUR', 'JOURS', 'MOIS', 'ANNEE', 'TEMPS', 'CHANGER', 'CHANGE', 'CHANGEMENT', 'REMPLACER', 'REMPLACEMENT', 'NETTOYER', 'NETTOYAGE', 'VERIFIER', 'VERIFICATION', 'REGLER', 'REGLAGE', 'NOURRITURE', 'REPAS', 'DEJEUNER', 'DINER', 'PETIT-DEJEUNER', 'BOISSON', 'BOISSONS', 'EAU', 'PAIN', 'CAFE', 'THE', 'SUCRE', 'LAIT', 'RIZ', 'VIANDE', 'POULET', 'POISSON', 'TRAVAILLEUR', 'TRAVAILLEURS', 'OUVRIER', 'OUVRIERS', 'EMPLOYE', 'EMPLOYES', 'PERSONNEL', 'EQUIPE', 'CHAUFFEUR', 'CHAUFFEURS', 'GARDE', 'GARDES', 'TECHNICIEN', 'TECHNICIENS', 'INGENIEUR', 'INGENIEURS', 'MECANICIEN', 'ELECTRICIEN', 'CARBURANT', 'ESSENCE', 'GASOIL', 'DIESEL', 'TRANSPORT', 'FRAIS', 'DEPENSE', 'DEPENSES', 'LOYER', 'ELECTRICITE', 'INTERNET', 'FOURNITURES', 'PAPIER', 'SALAIRE', 'SALAIRES', 'AVANCE', 'PRIME',
+// Appliances & Equipment
+'AIR', 'CONDITIONER', 'APPLIANCE', 'APPLIANCES', 'OVEN', 'MIXER', 'DOUGH', 'WATER', 'PUMP', 'GENERATOR', 'CHILLER', 'COLD', 'ROOM', 'COMPRESSOR', 'MOTOR', 'INVERTER', 'TRANSFORMER', 'CAPACITOR', 'BREAKER', 'CIRCUIT', 'SWITCH', 'BOARD', 'WIRING', 'CABLE', 'SCREEN', 'DISPLAY', 'CAMERA', 'CAMERAS', 'CCTV', 'SECURITY', 'SENSOR', 'THERMOSTAT', 'FUSE', 'VALVE', 'PIPE', 'FILTER', 'BELT', 'BEARING', 'BEARINGS', 'COIL', 'WINDING', 'REFRIGERANT', 'GAS', 'FREON', 'PRESSURE', 'TEMPERATURE', 'VOLTAGE', 'CURRENT', 'POWER', 'ELECTRIC', 'ELECTRICAL', 'MECHANICAL', 'ELECTRONIC', 'HEATING', 'COOLING', 'VENTILATION', 'PANEL', 'RELAY', 'BATTERY', 'CHARGER', 'FREEZER', 'REFRIGERATOR', 'FRIDGE', 'FRYER', 'MACHINE', 'MACHINES', 'HEATER', 'FAN', 'BLOWER', 'PLUG', 'SOCKET', 'CONNECTOR', 'ADAPTER', 'GENERATOR', 'STABILIZER', 'UPS', 'AVR', 'AXLE', 'AXLES', 'ROTATING', 'ROTATE', 'ROTATED', 'ROTATION', 'SHAFT', 'SHAFTS', 'WHEEL', 'WHEELS', 'PULLEY', 'PULLEYS', 'CHAIN', 'CHAINS', 'LATHE', 'LATHES', 'CYLINDER', 'CYLINDERS', 'PISTON', 'PISTONS',
+// IT, Computer, Office, Hardware & Networking
+'PRINTER', 'PRINTERS', 'PRINT', 'PRINTING', 'PRINTED', 'CONNECTION', 'CONNECTIONS', 'CONNECT', 'CONNECTED', 'CONNECTING', 'CONNECTIVITY', 'DISCONNECT', 'DISCONNECTED', 'COMPUTER', 'COMPUTERS', 'LAPTOP', 'LAPTOPS', 'DESKTOP', 'DESKTOPS', 'PC', 'SERVER', 'SERVERS', 'ROUTER', 'ROUTERS', 'SWITCH', 'SWITCHES', 'MODEM', 'MODEMS', 'NETWORK', 'NETWORKS', 'NETWORKING', 'ETHERNET', 'LAN', 'WAN', 'WLAN', 'IP', 'KEYBOARD', 'KEYBOARDS', 'MOUSE', 'MICE', 'MONITOR', 'MONITORS', 'SCANNER', 'SCANNERS', 'SCAN', 'SCANNING', 'SCANNED', 'CARTRIDGE', 'CARTRIDGES', 'INK', 'INKS', 'RIBBON', 'RIBBONS', 'USB', 'HDMI', 'VGA', 'PORT', 'PORTS', 'HARDWARE', 'SOFTWARE', 'DRIVE', 'DRIVES', 'DISK', 'DISKS', 'SSD', 'HDD', 'RAM', 'CPU', 'GPU', 'IMPRIMANTE', 'IMPRIMANTES', 'CONNEXION', 'CONNEXIONS', 'ORDINATEUR', 'ORDINATEURS',
+// Commercial & ERP Terms
+'ITEM', 'ITEMS', 'CUSTOMER', 'CLIENT', 'SUPPLIER', 'VENDOR', 'INVOICE', 'QUOTATION', 'ESTIMATE', 'RECEIPT', 'PAYMENT', 'EXPENSE', 'EXPENSES', 'PURCHASE', 'PURCHASES', 'ORDER', 'ORDERS', 'PROJECT', 'PROJECTS', 'EMPLOYEE', 'EMPLOYEES', 'TECHNICIAN', 'SALARY', 'PAYROLL', 'ADVANCE', 'LOAN', 'CASH', 'BANK', 'ACCOUNT', 'BALANCE', 'TOTAL', 'SUBTOTAL', 'TAX', 'VAT', 'TVA', 'DISCOUNT', 'AMOUNT', 'PRICE', 'COST', 'RATE', 'QTY', 'QUANTITY', 'UNIT', 'UNITS', 'DESCRIPTION', 'REMARKS', 'NOTES', 'SERIAL', 'NUMBER', 'BRAND', 'MODEL', 'WARRANTY', 'STATUS', 'DATE', 'TIME', 'CODE', 'STORE', 'STOCK', 'INVENTORY', 'WAREHOUSE', 'TRANSFER', 'CATEGORY', 'DEPARTMENT', 'BRANCH', 'OFFICE', 'FACTORY', 'POS', 'SALES', 'RETAIL', 'WHOLESALE', 'DELIVERY', 'SHIPPING', 'TRANSPORT',
+// Actions & Verbs
+'CLEANED', 'SERVICED', 'REPLACED', 'FIXED', 'REPAIRED', 'TESTED', 'CHECKED', 'INSTALLED', 'CONFIGURED', 'CALIBRATED', 'ADJUSTED', 'TIGHTENED', 'REWIRED', 'SOLDED', 'WELDED', 'LUBRICATED', 'OVERHAULED', 'ASSEMBLED', 'DISASSEMBLED', 'DELIVERED', 'RECEIVED', 'APPROVED', 'CANCELLED', 'PENDING', 'COMPLETED', 'INSPECTION', 'DIAGNOSTIC', 'OK', 'FAILED', 'ERROR', 'FAULT', 'DEFECT', 'SHORT', 'BURNT', 'OVERHEATING', 'BLOCKED', 'LEAK', 'NOISE', 'CHARGING', 'CONNECTED', 'OFFLINE', 'ONLINE', 'ACTIVE', 'INACTIVE', 'OPEN', 'CLOSED', 'NEW', 'USED', 'URGENT', 'NORMAL', 'HIGH', 'LOW',
+// Construction, Renovation, Building & Civil Works
+'RENOVATION', 'RENOVATIONS', 'RENOVATE', 'RENOVATED', 'RENOVATING', 'CONSTRUCTION', 'CONSTRUCTIONS', 'CONSTRUCT', 'CONSTRUCTED', 'CONSTRUCTING', 'BUILDING', 'BUILDINGS', 'BUILD', 'BUILT', 'FOUNDATION', 'FOUNDATIONS', 'EXCAVATION', 'CONCRETE', 'CEMENT', 'MORTAR', 'GRAVEL', 'SAND', 'AGGREGATE', 'BRICK', 'BRICKS', 'BLOCK', 'BLOCKS', 'PAVING', 'PAVEMENT', 'PLASTER', 'PLASTERING', 'DRYWALL', 'GYPSUM', 'CEILING', 'CEILINGS', 'ROOF', 'ROOFS', 'ROOFING', 'TILE', 'TILES', 'TILING', 'CERAMIC', 'GRANITE', 'MARBLE', 'FLOOR', 'FLOORS', 'FLOORING', 'EPOXY', 'PAINT', 'PAINTS', 'PAINTING', 'PAINTER', 'PAINTERS', 'PRIMER', 'COATING', 'WATERPROOFING', 'INSULATION', 'SCAFFOLDING', 'STRUCTURE', 'STRUCTURES', 'STRUCTURAL', 'DEMOLITION', 'FORMWORK', 'REBAR', 'REINFORCEMENT', 'PARTITION', 'PARTITIONS', 'SITE', 'WORKSHOP', 'FINISH', 'FINISHING', 'FITOUT', 'FIT-OUT',
+// Metal, Aluminum & Fabrication
+'ALUMINUM', 'ALUMINIUM', 'STEEL', 'STAINLESS', 'METAL', 'METALS', 'METALLIC', 'FABRICATION', 'FABRICATING', 'FABRICATED', 'FABWORK', 'WELDING', 'WELDER', 'WELDERS', 'WELD', 'WELDED', 'ELECTRODE', 'ELECTRODES', 'ROD', 'RODS', 'DISC', 'DISCS', 'CUTTING', 'GRINDING', 'PROFILE', 'PROFILES', 'SHEET', 'SHEETS', 'PLATE', 'PLATES', 'BEAM', 'BEAMS', 'COLUMN', 'COLUMNS', 'TRUSS', 'TRUSSES', 'FRAME', 'FRAMES', 'DOOR', 'DOORS', 'WINDOW', 'WINDOWS', 'GLASS', 'GLAZING', 'LOCK', 'LOCKS', 'HANDLE', 'HANDLES', 'HINGE', 'HINGES', 'BOLT', 'BOLTS', 'NUT', 'NUTS', 'SCREW', 'SCREWS', 'ANCHOR', 'ANCHORS', 'RIVET', 'RIVETS', 'BRACKET', 'BRACKETS', 'RAILING', 'RAILINGS', 'BALUSTRADE', 'BALUSTRADES', 'CANOPY', 'CANOPIES', 'SHUTTER', 'SHUTTERS', 'CLADDING', 'FACADE', 'FACADES',
+// French Construction & Renovation Terms
+'BATIMENT', 'BATIMENTS', 'CHAMP', 'CHANTIER', 'FONDATION', 'BETON', 'CIMENT', 'MORTIER', 'GRAVIER', 'SABLE', 'BRIQUE', 'BRIQUES', 'PAVE', 'PAVES', 'PLATRE', 'PLAFOND', 'PLAFONDS', 'TOIT', 'TOITURE', 'CARRELAGE', 'CARREAUX', 'CERAMIQUE', 'GRANIT', 'MARBRE', 'SOL', 'PEINTURE', 'PEINTURES', 'PEINTRE', 'PEINTRES', 'ECHAFAUDAGE', 'CHARPENTE', 'MENUISERIE', 'ALUMINIUM', 'METALLIQUE', 'METALLIQUES', 'SOUDURE', 'SOUDURES', 'SOUDEUR', 'SOUDEURS', 'DECOUPE', 'MEULAGE', 'TOLE', 'TOLES', 'PROFIL', 'PROFILES', 'FER', 'ACIER', 'INOX', 'VITRERIE', 'VERRE', 'PORTE', 'PORTES', 'FENETRE', 'FENETRES', 'SERRURE', 'SERRURES', 'POIGNEE', 'POIGNEES', 'CHARNIERE', 'CHARNIERES', 'BOULON', 'BOULONS', 'ECROU', 'ECROUS', 'VIS', 'CHEVILLE', 'CHEVILLES', 'RIVET', 'RIVETS', 'SUPPORT', 'SUPPORTS', 'GARDE-CORPS', 'RAMPE', 'VOLET', 'VOLETS',
+// Technical Acronyms & Units
+'USD', 'CDF', 'FC', 'EUR', 'GBP', 'V', 'A', 'W', 'KW', 'KVA', 'HP', 'HZ', 'RPM', 'PSI', 'BAR', 'KG', 'G', 'L', 'ML', 'MM', 'CM', 'M', 'KM', 'PCS', 'SET', 'BOX', 'ROLL', 'MTR', 'PKT', 'PAIR', 'AC', 'DC', 'LED', 'LCD', 'CPU', 'RAM', 'SSD', 'HDD', 'USB', 'HDMI', 'VGA', 'LAN', 'WIFI', 'DVR', 'NVR', 'IP', 'HD', 'FHD', 'UHD', 'TV', 'PC', 'DVD', 'CD']);
+
+/**
+ * Calculates Damerau-Levenshtein distance (insertions, deletions, substitutions, transpositions).
+ */
+function damerauLevenshtein(a, b) {
+  if (a === b) return 0;
+  var al = a.length;
+  var bl = b.length;
+  if (al === 0) return bl;
+  if (bl === 0) return al;
+  var matrix = [];
+  for (var i = 0; i <= al; i++) {
+    matrix[i] = [i];
+  }
+  for (var j = 0; j <= bl; j++) {
+    matrix[0][j] = j;
+  }
+  for (var _i = 1; _i <= al; _i++) {
+    for (var _j = 1; _j <= bl; _j++) {
+      var cost = a[_i - 1] === b[_j - 1] ? 0 : 1;
+      matrix[_i][_j] = Math.min(matrix[_i - 1][_j] + 1,
+      // deletion
+      matrix[_i][_j - 1] + 1,
+      // insertion
+      matrix[_i - 1][_j - 1] + cost // substitution
+      );
+      if (_i > 1 && _j > 1 && a[_i - 1] === b[_j - 2] && a[_i - 2] === b[_j - 1]) {
+        matrix[_i][_j] = Math.min(matrix[_i][_j], matrix[_i - 2][_j - 2] + cost); // transposition
+      }
+    }
+  }
+  return matrix[al][bl];
+}
+
+/**
+ * Corrects an individual word using vocabulary and Damerau-Levenshtein distance.
+ */
+function correctWord(word) {
+  if (!word || typeof word !== 'string') return word;
+  var upper = word.toUpperCase();
+
+  // 1. Skip codes, numbers, single letters, or words already in vocabulary
+  if (ENGLISH_FRENCH_VOCABULARY.has(upper)) return upper;
+  if (/^\d+$/.test(word) || /^[A-Z]-\d+$/i.test(upper)) {
+    return upper;
+  }
+
+  // 2. Check exact matches in single-word typo dictionary (evaluated first for all lengths)
+  for (var _ref2 of TYPO_DICTIONARY) {
+    var pattern = _ref2.pattern;
+    var replacement = _ref2.replacement;
+    if (new RegExp(pattern.source, 'i').test(upper) && !pattern.source.includes('\\s+')) {
+      return replacement.toUpperCase();
+    }
+  }
+
+  // 3. For short words (length <= 4), do NOT fuzzy match!
+  // Single-word typos for short words (1 to 4 chars) are handled strictly by TYPO_DICTIONARY
+  // (e.g. ARI -> AIR, UOT -> OUT, TSET -> TEST, LFIE -> LIFE, WOKR -> WORK).
+  // This prevents valid 4-letter words (like FOOD, WOOD, GOOD, BOOK, LOOK, CARS, WORK, SHOP)
+  // from ever being mutated or collapsed into other words.
+  if (upper.length <= 4) {
+    return upper;
+  }
+
+  // 4. Find closest match in vocabulary via Damerau-Levenshtein distance (for words length >= 5)
+  var bestMatch = null;
+  var bestDist = 999;
+  for (var vocabWord of ENGLISH_FRENCH_VOCABULARY) {
+    // Only test words of similar length (within 2 characters)
+    if (Math.abs(vocabWord.length - upper.length) > 2) continue;
+    var dist = damerauLevenshtein(upper, vocabWord);
+    // Allow edit distance 1 for 5-6 char words, distance 2 for words >=7 chars
+    var maxAllowed = vocabWord.length <= 6 ? 1 : 2;
+    if (dist <= maxAllowed && dist < bestDist) {
+      bestDist = dist;
+      bestMatch = vocabWord;
+      if (dist === 1 && Math.abs(vocabWord.length - upper.length) <= 1) {
+        break; // Fast exit on high-confidence match
+      }
+    }
+  }
+  return bestMatch || upper;
+}
+
+/**
+ * Normalizes multi-spaces and trims leading/trailing whitespace.
+ */
+var normalizeSpaces = text => {
+  if (!text || typeof text !== 'string') return '';
+  return text.replace(/\s+/g, ' ').trim();
+};
+
+/**
+ * Replaces known typos and standardizes terminology word by word.
+ */
+var correctTypos = function correctTypos(text) {
+  var forceUpper = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+  if (!text || typeof text !== 'string') return '';
+  var cleaned = text;
+
+  // 1. Run multi-word phrase patterns first
+  var _loop = function _loop() {
+    var pattern = _ref4.pattern;
+    var replacement = _ref4.replacement;
+    cleaned = cleaned.replace(pattern, match => {
+      if (forceUpper || match === match.toUpperCase()) {
+        return replacement.toUpperCase();
+      }
+      return replacement;
+    });
+  };
+  for (var _ref4 of TYPO_DICTIONARY) {
+    _loop();
+  }
+
+  // 2. Run word-by-word spelling correction on all individual words
+  cleaned = cleaned.replace(/[A-Za-z\u00C0-\u017F]+/g, word => {
+    return correctWord(word);
+  });
+  return cleaned;
+};
+
+/**
+ * Formats string to Sentence case.
+ */
+var toSentenceCase = text => {
+  if (!text || typeof text !== 'string') return '';
+  return text.replace(/(^\s*|\.\s+)([a-z\u00E0-\u00FC])/g, (m, sep, char) => {
+    return sep + char.toUpperCase();
+  });
+};
+
+/**
+ * Formats string to Title Case.
+ */
+var toTitleCase = text => {
+  if (!text || typeof text !== 'string') return '';
+  var minorWords = /^(a|an|the|and|but|or|for|nor|on|at|to|from|by|over|in|of|de|du|des|la|le|les|et|en|ou|par|pour|sur)$/i;
+  return text.toLowerCase().split(' ').map((word, index) => {
+    if (index === 0 || !minorWords.test(word)) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+    return word.toLowerCase();
+  }).join(' ');
+};
+
+/**
+ * Standardizes model numbers, serials, and codes to UPPERCASE with single spaces.
+ */
+var toUpperCaseCode = text => {
+  if (!text || typeof text !== 'string') return '';
+  return normalizeSpaces(text).toUpperCase();
+};
+
+/**
+ * Master polishing function that cleans whitespace, fixes typos word-by-word,
+ * and standardizes to universal CAPITAL LETTERS.
+ * @param {string} text - Raw input text
+ * @param {'upper'|'sentence'|'title'|'none'} mode - Desired casing mode (defaults to 'upper')
+ */
+var polishText = function polishText(text) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
+  if (!text || typeof text !== 'string') return '';
+  var result = normalizeSpaces(text);
+  if (!result) return '';
+
+  // 1. Correct technical and language typos (multi-word and word-by-word)
+  result = correctTypos(result, mode === 'upper');
+
+  // 2. Apply requested casing mode (default is universal 'upper' CAPITAL LETTERS)
+  if (mode === 'upper') {
+    result = result.toUpperCase();
+  } else if (mode === 'sentence') {
+    result = toSentenceCase(result);
+  } else if (mode === 'title') {
+    result = toTitleCase(result);
+  }
+  return result;
+};
+
+/**
+ * Checks if a string contains any recognized typo, unnormalized spacing,
+ * lowercase letters, or any misspelled words that need auto-correction.
+ * Guaranteed 100% consistent with getSuggestions.
+ */
+var hasTypo = function hasTypo(text) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
+  if (!text || typeof text !== 'string' || !text.trim()) return false;
+  var analysis = getSuggestions(text, mode);
+  return !analysis.isClean;
+};
+
+/**
+ * Extracts granular word-by-word and phrase-by-phrase suggestions for an input string.
+ * Allows the user to selectively choose which auto-corrections to apply.
+ */
+var getSuggestions = function getSuggestions(text) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
+  if (!text || typeof text !== 'string' || !text.trim()) {
+    return {
+      suggestions: [],
+      hasExtraSpaces: false,
+      hasUncapitalized: false,
+      isClean: true
+    };
+  }
+  var raw = text.trim();
+  var suggestions = [];
+  var seenOriginals = new Set();
+  var matchedSpans = [];
+
+  // 1. Scan multi-word phrases from TYPO_DICTIONARY first
+  for (var _ref6 of TYPO_DICTIONARY) {
+    var pattern = _ref6.pattern;
+    var replacement = _ref6.replacement;
+    if (pattern.source.includes('\\s+')) {
+      var regex = new RegExp(pattern.source, 'gi');
+      var match = void 0;
+      while ((match = regex.exec(raw)) !== null) {
+        var matchedText = match[0];
+        var target = mode === 'upper' ? replacement.toUpperCase() : replacement;
+        if (matchedText.trim().toUpperCase() !== target.trim().toUpperCase()) {
+          var key = matchedText.trim().toUpperCase();
+          if (!seenOriginals.has(key)) {
+            seenOriginals.add(key);
+            suggestions.push({
+              original: matchedText.trim(),
+              replacement: target,
+              type: 'phrase'
+            });
+          }
+          matchedSpans.push({
+            start: match.index,
+            end: match.index + matchedText.length
+          });
+        }
+      }
+    }
+  }
+  var isInsideMatchedSpan = (start, end) => {
+    return matchedSpans.some(span => start >= span.start && end <= span.end);
+  };
+
+  // 2. Scan individual words
+  var wordRegex = /[A-Za-z\u00C0-\u017F]+/g;
+  var wordMatch;
+  while ((wordMatch = wordRegex.exec(raw)) !== null) {
+    var word = wordMatch[0];
+    var start = wordMatch.index;
+    var end = start + word.length;
+    if (isInsideMatchedSpan(start, end)) continue;
+    var corrected = correctWord(word);
+    var _target = mode === 'upper' ? corrected.toUpperCase() : corrected;
+    if (_target.toUpperCase() !== word.toUpperCase()) {
+      var _key = word.toUpperCase();
+      if (!seenOriginals.has(_key)) {
+        seenOriginals.add(_key);
+        suggestions.push({
+          original: word,
+          replacement: _target,
+          type: 'word'
+        });
+      }
+    }
+  }
+  var hasExtraSpaces = /\s{2,}/.test(text) || text !== text.trim();
+  var hasUncapitalized = mode === 'upper' && /[a-z]/.test(text);
+  return {
+    suggestions,
+    hasExtraSpaces,
+    hasUncapitalized,
+    isClean: suggestions.length === 0 && !hasExtraSpaces && !hasUncapitalized
+  };
+};
+
+/**
+ * Applies a single selected suggestion to the text without modifying the rest of the sentence.
+ */
+var applySingleCorrection = function applySingleCorrection(text, original, replacement) {
+  var mode = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'upper';
+  if (!text || typeof text !== 'string') return '';
+  var escapeRegex = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  var regex = new RegExp("\\b".concat(escapeRegex(original), "\\b"), 'gi');
+  var target = mode === 'upper' ? replacement.toUpperCase() : replacement;
+  var updated = text.replace(regex, target);
+  if (mode === 'upper') {
+    updated = updated.toUpperCase();
+  }
+  return updated;
+};
+
+/**
+ * Standardizes spacing and capitalization without changing any words.
+ */
+var applyCleanSpaces = function applyCleanSpaces(text) {
+  var mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'upper';
+  if (!text || typeof text !== 'string') return '';
+  var updated = text.replace(/\s+/g, ' ').trim();
+  if (mode === 'upper') {
+    updated = updated.toUpperCase();
+  }
+  return updated;
+};
+
+/**
+ * Safely preserves the input caret / cursor position when controlled state is updated.
+ * Used across forms, text fields, and table rows to prevent cursor jumping to the end.
+ */
+var preserveCursorOnChange = (e, callback) => {
+  var target = e && e.target ? e.target : null;
+  var start = target && typeof target.selectionStart === 'number' ? target.selectionStart : null;
+  var end = target && typeof target.selectionEnd === 'number' ? target.selectionEnd : null;
+  if (typeof callback === 'function') {
+    callback();
+  }
+  if (start !== null && target && typeof target.setSelectionRange === 'function') {
+    if (typeof window !== 'undefined' && window.requestAnimationFrame) {
+      window.requestAnimationFrame(() => {
+        try {
+          target.setSelectionRange(start, end);
+        } catch (err) {}
+      });
+    }
+    setTimeout(() => {
+      try {
+        target.setSelectionRange(start, end);
+      } catch (err) {}
+    }, 0);
+  }
+};
 
 /***/ },
 

@@ -385,8 +385,27 @@ function PurchasesFormView() {
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
+        _id: null,
         itemName: 'empty'
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
   const handleChange = (e, i) => {
@@ -587,6 +606,24 @@ function PurchasesFormView() {
         _id: null,
         itemName: null
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
@@ -975,7 +1012,7 @@ function PurchasesFormView() {
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td style={{ height: '100px' }}>
                                                 {
-                                                  Item.itemName.itemName ? (
+                                                  (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     (
                                                       <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: '15px' }}>
                                                         <ItemThumbnail

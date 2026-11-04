@@ -283,14 +283,39 @@ function PurchaseUpdateOrder() {
         _id: null,
         itemName: null
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemQty: 0,
+      itemRate: 0,
+      qtyBuy: 0,
+      totalAmountUSD: 0,
+      fcConvertToUsd: 0,
+      fcConvertToUsdTotal: 0,
+      totalAmount: 0,
+      totalAmountFC: 0,
+      stock: 0
     } : row))
   }
   const handleShowAutocompleteDescription = (idRow) => {
     SetItemsQtyArray(itemsQtyArray => itemsQtyArray.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
+        _id: null,
         itemName: 'empty'
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemQty: 0,
+      itemRate: 0,
+      qtyBuy: 0,
+      totalAmountUSD: 0,
+      fcConvertToUsd: 0,
+      fcConvertToUsdTotal: 0,
+      totalAmount: 0,
+      totalAmountFC: 0,
+      stock: 0
     } : row))
   }
   const addItem = () => {
@@ -909,7 +934,7 @@ function PurchaseUpdateOrder() {
                                               <td {...provided.dragHandleProps} ><DragIndicatorRounded /></td>
                                               <td style={{ height: '100px' }}>
                                                 {
-                                                  Item.itemName.itemName ? (
+                                                  (Boolean(Item.itemName?._id || (typeof Item.itemName === 'string' && Item.itemName.trim() !== '') || (Item.itemName?.itemName && String(Item.itemName.itemName).trim() !== '') || (Item.itemDescription && String(Item.itemDescription).trim() !== ''))) ? (
                                                     (
                                                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                                         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>

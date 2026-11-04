@@ -384,43 +384,82 @@ const handleChange = (e,i) => {
      }: row))
   }
 const handleShowAutocomplete = (idRow) => {
-    SetItems(items=> items.map((row)=> row.idRow === idRow ?{...row, 
-      itemName:{
-        _id:null,
-        itemName:null
-     }, 
-     }: row))
+    SetItems(items => items.map((row) => row.idRow === idRow ? {
+      ...row,
+      itemName: {
+        _id: null,
+        itemName: null
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
+    } : row))
   }
   const handleShowAutocompleteDescription = (idRow) => {
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
-      itemName: { _id: null, itemName: null },
-      itemDescription: '',
+      itemName: {
+        _id: null,
+        itemName: 'empty'
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
       itemRate: 0,
-      stock: 0
-    } : row));
-  };
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
+    } : row))
+  }
   const [openItemUpdate, setOpenItemUpdate] = useState(false);
-  const [idItem,setIdItem] = useState(null)
-  
-  const handleOpenItemUpdate = async(id) => {
+  const [idItem, setIdItem] = useState(null);
+
+  const handleOpenItemUpdate = async (id) => {
     setOpenItemUpdate(true);
     setIdItem(id);
   };
-  const handleCloseItemUpdate = async() => {
+  const handleCloseItemUpdate = async () => {
     setOpenItemUpdate(false);
     if (idItem) {
       try {
-        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`)
-        SetItems(items=> items.map((row)=> row.itemName?._id === res.data.data._id ? {...row, 
-          itemDescription:res.data.data.itemDescription,
+        const res = await axios.get(`${ENDPOINT_URL}/get-item/${idItem}`);
+        SetItems(items => items.map((row) => row.itemName?._id === res.data.data._id ? {
+          ...row,
+          itemDescription: res.data.data.itemDescription,
           costRate: res.data.data.itemCostPrice,
           itemRate: res.data.data.itemSellingPrice,
           stock: res.data.data.stockOnHand
-          }: row)) 
+        } : row));
       } catch (error) {
-        
-      }}
+
+      }
+    }
   };
   const [openAutocomplete2, setOpenAutocomplete2] = useState(false);
 

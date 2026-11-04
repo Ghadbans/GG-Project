@@ -2794,7 +2794,11 @@ function ItemReturnUpdateForm() {
       itemName: {
         _id: null,
         itemName: null
-      }
+      },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      newItemOut: 0
     }) : row));
   };
   var addItem = () => {

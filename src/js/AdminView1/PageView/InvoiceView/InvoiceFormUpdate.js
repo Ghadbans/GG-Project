@@ -636,8 +636,10 @@ function InvoiceFormUpdate() {
       ...row,
       itemName: {
         _id: null,
-        itemName: row.itemName.itemName
+        itemName: null
       },
+      data: null,
+      contentType: null,
       itemDescription: "",
       itemDiscount: 0,
       itemQty: 0,
@@ -660,8 +662,27 @@ function InvoiceFormUpdate() {
     SetItems(items => items.map((row) => row.idRow === idRow ? {
       ...row,
       itemName: {
+        _id: null,
         itemName: 'empty'
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      itemDiscount: 0,
+      itemQty: 0,
+      itemRate: 0,
+      itemAmount: 0,
+      itemCost: 0,
+      totalAmount: 0,
+      discount: 0,
+      percentage: 0,
+      itemBuy: 0,
+      itemWeight: "",
+      totalGenerale: 0,
+      totalCost: 0,
+      stock: 0,
+      itemOut: 0,
+      newItemOut: 0,
     } : row))
   }
 
@@ -1534,7 +1555,7 @@ function InvoiceFormUpdate() {
                                                               />
                                                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                                                 <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
-                                                                  {Item.itemName?.itemName?.toUpperCase() || ''}
+                                                                  {Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : ''}
                                                                 </Typography>
                                                                 <TextField
                                                                   name='itemDescription' id='itemDescription'
@@ -1755,7 +1776,7 @@ function InvoiceFormUpdate() {
                                                               />
                                                               <Box sx={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                                                                 <Typography hidden={Item.itemName ? String(typeof Item.itemName === 'string' ? Item.itemName : Item.itemName?.itemName).trim().toLowerCase() === 'empty' : ''} sx={{ fontSize: '20px', fontWeight: 'bold' }}>
-                                                                  {Item.itemName?.itemName?.toUpperCase() || ''}
+                                                                  {Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : ''}
                                                                 </Typography>
                                                                 <TextField
                                                                   name='itemDescription' id='itemDescription'

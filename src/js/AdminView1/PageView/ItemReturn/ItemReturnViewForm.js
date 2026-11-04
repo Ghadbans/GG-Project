@@ -340,6 +340,10 @@ function ItemReturnViewForm() {
         _id: null,
         itemName: null
       },
+      data: null,
+      contentType: null,
+      itemDescription: "",
+      newItemOut: 0,
     } : row))
   }
   const handleChange = (e, idRow) => {
