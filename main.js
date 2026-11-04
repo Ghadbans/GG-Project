@@ -315,7 +315,7 @@ const fs = require('fs');
 const { execFile } = require('child_process');
 
 ipcMain.handle('run-marketing', async (event, payload) => {
-  const { brief, whatsappNumber, platforms = {}, productImage = null } = payload || {};
+  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false } = payload || {};
   const agentDir = 'C:\\Users\\GG\\fb-whatsapp-agent';
   const agentScript = path.join(agentDir, 'agent.js');
   const flyerPath = path.join(agentDir, 'generated_flyer.png');
@@ -329,6 +329,7 @@ ipcMain.handle('run-marketing', async (event, payload) => {
 
   const postToFacebook = platforms.facebook !== false;
   const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
+  const sendWhatsAppStatus = Boolean(platforms.whatsappStatus);
   const postToInstagram = Boolean(platforms.instagram);
 
   let tempProductImagePath = null;
@@ -345,11 +346,17 @@ ipcMain.handle('run-marketing', async (event, payload) => {
   const args = [
     agentScript,
     brief || 'Special Promotion',
-    `--wa=${whatsappNumber || ''}`,
-    postToFacebook ? '--fb' : '--no-fb',
-    sendWhatsApp ? '--send-wa' : '--no-wa',
-    postToInstagram ? '--send-ig' : '--no-ig'
+    `--wa=${whatsappNumber || ''}`
   ];
+
+  if (previewOnly) {
+    args.push('--preview-only');
+  } else {
+    args.push(postToFacebook ? '--fb' : '--no-fb');
+    args.push(sendWhatsApp ? '--send-wa' : '--no-wa');
+    if (sendWhatsAppStatus) args.push('--wa-status');
+    args.push(postToInstagram ? '--send-ig' : '--no-ig');
+  }
 
   if (tempProductImagePath && fs.existsSync(tempProductImagePath)) {
     args.push(`--product-image=${tempProductImagePath}`);
@@ -381,29 +388,40 @@ ipcMain.handle('run-marketing', async (event, payload) => {
 
       const fbSuccess = Boolean(fbPostId) || (stdout || '').includes('[SUCCESS] Facebook post published');
       const waSuccess = (stdout || '').includes('[SUCCESS] Flyer & caption delivered to WhatsApp');
+      const waStatusSuccess = (stdout || '').includes('[SUCCESS] Flyer & caption published to WhatsApp Status');
       const igSuccess = Boolean(igPostId) || (stdout || '').includes('[SUCCESS] Instagram post published');
 
       let igError = null;
-      if (!igSuccess && postToInstagram) {
+      if (!igSuccess && postToInstagram && !previewOnly) {
         const igErrMatch = (stdout || '').match(/Instagram posting failed:\s*([^\n\r]+)/i) || (stdout || '').match(/Instagram Permission Missing:\s*([^\n\r]+)/i);
         igError = igErrMatch ? igErrMatch[1] : 'Instagram publication failed or requires permissions';
       }
 
+      const headlineMatch = (stdout || '').match(/"headline":\s*"([^"]+)"/i);
+      const parsedHeadline = headlineMatch ? headlineMatch[1] : null;
+
       resolve({
         success: Boolean(flyerBase64) || fbSuccess || waSuccess || igSuccess,
+        previewOnly: Boolean(previewOnly),
         brief,
+        headline: parsedHeadline,
         flyerBase64,
         facebook: {
           success: fbSuccess,
           postId: fbPostId,
           postUrl: fbPostId ? `https://www.facebook.com/${fbPostId}` : null,
-          error: !fbSuccess && postToFacebook ? 'Facebook posting failed' : null
+          error: !fbSuccess && postToFacebook && !previewOnly ? 'Facebook posting failed' : null
         },
         whatsapp: {
-          success: waSuccess,
+          success: waSuccess || waStatusSuccess,
           target: whatsappNumber,
-          message: waSuccess ? 'WhatsApp Delivered Successfully' : null,
-          error: !waSuccess && sendWhatsApp ? 'WhatsApp automated dispatch timed out or was not delivered' : null
+          statusStory: waStatusSuccess,
+          message: (waSuccess && waStatusSuccess)
+            ? 'WhatsApp Delivered to Contact & Status Story'
+            : (waStatusSuccess ? 'WhatsApp Published to Status Story' : (waSuccess ? 'WhatsApp Delivered Successfully' : null)),
+          error: (!waSuccess && !waStatusSuccess && (sendWhatsApp || sendWhatsAppStatus) && !previewOnly)
+            ? 'WhatsApp automated dispatch timed out or was not delivered'
+            : null
         },
         instagram: {
           success: igSuccess,

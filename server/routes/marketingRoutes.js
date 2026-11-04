@@ -121,7 +121,7 @@ router.get('/flyer', (req, res) => {
  * POST /publish - Generate flyer and publish to Facebook and/or WhatsApp
  */
 router.post('/publish', verifyMarketingAccess, async (req, res) => {
-  const { brief, whatsappNumber, platforms = {}, productImage = null } = req.body;
+  const { brief, whatsappNumber, platforms = {}, productImage = null, previewOnly = false } = req.body;
 
   if (!brief || !String(brief).trim()) {
     return res.status(400).json({ success: false, error: 'Promotional brief is required.' });
@@ -129,6 +129,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
   const postToFacebook = platforms.facebook !== false;
   const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
+  const sendWhatsAppStatus = Boolean(platforms.whatsappStatus);
   const postToInstagram = Boolean(platforms.instagram);
 
   // Strategy 1: If local agent daemon is listening on port 5055, forward request directly
@@ -141,8 +142,10 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         whatsappNumber,
         postToFacebook,
         sendWhatsApp,
+        sendWhatsAppStatus,
         postToInstagram,
-        productImage
+        productImage,
+        previewOnly
       }),
       signal: AbortSignal.timeout(60000)
     });
@@ -172,11 +175,17 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
     const args = [
       AGENT_SCRIPT,
       brief,
-      `--wa=${whatsappNumber || ''}`,
-      postToFacebook ? '--fb' : '--no-fb',
-      sendWhatsApp ? '--send-wa' : '--no-wa',
-      postToInstagram ? '--send-ig' : '--no-ig'
+      `--wa=${whatsappNumber || ''}`
     ];
+
+    if (previewOnly) {
+      args.push('--preview-only');
+    } else {
+      args.push(postToFacebook ? '--fb' : '--no-fb');
+      args.push(sendWhatsApp ? '--send-wa' : '--no-wa');
+      if (sendWhatsAppStatus) args.push('--wa-status');
+      args.push(postToInstagram ? '--send-ig' : '--no-ig');
+    }
 
     if (tempProductImagePath && fs.existsSync(tempProductImagePath)) {
       args.push(`--product-image=${tempProductImagePath}`);
@@ -212,29 +221,40 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
       const fbSuccess = Boolean(fbPostId) || stdout.includes('[SUCCESS] Facebook post published');
       const waSuccess = stdout.includes('[SUCCESS] Flyer & caption delivered to WhatsApp');
+      const waStatusSuccess = stdout.includes('[SUCCESS] Flyer & caption published to WhatsApp Status');
       const igSuccess = Boolean(igPostId) || stdout.includes('[SUCCESS] Instagram post published');
 
       let igError = null;
-      if (!igSuccess && postToInstagram) {
+      if (!igSuccess && postToInstagram && !previewOnly) {
         const igErrMatch = stdout.match(/Instagram posting failed:\s*([^\n\r]+)/i) || stdout.match(/Instagram Permission Missing:\s*([^\n\r]+)/i);
         igError = igErrMatch ? igErrMatch[1] : 'Instagram publication failed or requires permissions';
       }
 
+      const headlineMatch = stdout.match(/"headline":\s*"([^"]+)"/i);
+      const parsedHeadline = headlineMatch ? headlineMatch[1] : null;
+
       return res.json({
         success: !error || Boolean(flyerBase64) || fbSuccess || waSuccess || igSuccess,
+        previewOnly: Boolean(previewOnly),
         brief,
+        headline: parsedHeadline,
         flyerBase64,
         facebook: {
           success: fbSuccess,
           postId: fbPostId,
           postUrl: fbPostId ? `https://www.facebook.com/${fbPostId}` : null,
-          error: !fbSuccess && postToFacebook ? 'Facebook photo dispatch did not return post ID' : null
+          error: !fbSuccess && postToFacebook && !previewOnly ? 'Facebook photo dispatch did not return post ID' : null
         },
         whatsapp: {
-          success: waSuccess,
+          success: waSuccess || waStatusSuccess,
           target: whatsappNumber,
-          message: waSuccess ? 'WhatsApp Delivered Successfully' : null,
-          error: !waSuccess && sendWhatsApp ? 'WhatsApp dispatch did not confirm delivery' : null
+          statusStory: waStatusSuccess,
+          message: (waSuccess && waStatusSuccess)
+            ? 'WhatsApp Delivered to Contact & Status Story'
+            : (waStatusSuccess ? 'WhatsApp Published to Status Story' : (waSuccess ? 'WhatsApp Delivered Successfully' : null)),
+          error: (!waSuccess && !waStatusSuccess && (sendWhatsApp || sendWhatsAppStatus) && !previewOnly)
+            ? 'WhatsApp dispatch did not confirm delivery'
+            : null
         },
         instagram: {
           success: igSuccess,

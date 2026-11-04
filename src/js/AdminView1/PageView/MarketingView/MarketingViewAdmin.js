@@ -37,6 +37,9 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import SendIcon from '@mui/icons-material/Send';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -111,9 +114,12 @@ function MarketingViewAdmin() {
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
-    instagram: true,
+    whatsappStatus: true,
+    instagram: false,
   });
-  const [loading, setLoading] = useState(false);
+  const [previewGenerated, setPreviewGenerated] = useState(false);
+  const [loadingPreview, setLoadingPreview] = useState(false);
+  const [loadingPublish, setLoadingPublish] = useState(false);
   const [result, setResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -132,6 +138,7 @@ function MarketingViewAdmin() {
     reader.onload = (uploadEvent) => {
       setProductImage(uploadEvent.target.result);
       setProductImageName(file.name);
+      setPreviewGenerated(false);
     };
     reader.readAsDataURL(file);
   };
@@ -139,6 +146,7 @@ function MarketingViewAdmin() {
   const handleRemoveImage = () => {
     setProductImage(null);
     setProductImageName('');
+    setPreviewGenerated(false);
   };
 
   // Access Permission Verification
@@ -197,7 +205,7 @@ function MarketingViewAdmin() {
     navigate('/');
   };
 
-  const handlePublish = async (e) => {
+  const handleGeneratePreview = async (e) => {
     if (e && e.preventDefault) e.preventDefault();
 
     if (!brief.trim()) {
@@ -205,22 +213,18 @@ function MarketingViewAdmin() {
       return;
     }
 
-    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
-      toast.warning('Please select at least one target platform (Facebook, WhatsApp, or Instagram).');
-      return;
-    }
-
-    setLoading(true);
+    setLoadingPreview(true);
     setErrorMessage('');
-    setResult(null);
 
     const payload = {
       brief: brief.trim(),
       whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
       productImage: productImage || null,
+      previewOnly: true,
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
+        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -230,34 +234,94 @@ function MarketingViewAdmin() {
     try {
       let resData = null;
 
-      // 1. If running inside Electron desktop app, execute locally via IPC (guarantees local canvas & FB photo upload)
       if (window.electron && typeof window.electron.runMarketing === 'function') {
         try {
-          console.log('[Marketing] Running directly via Electron local agent IPC...');
+          console.log('[Marketing] Generating preview via Electron local IPC...');
           resData = await window.electron.runMarketing(payload);
         } catch (ipcErr) {
           console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
         }
       }
 
-      // 2. If not in Electron, try local microservice if running on workstation
       if (!resData) {
         try {
-          const localRes = await axios.post('http://127.0.0.1:5055/publish', {
-            brief: payload.brief,
-            whatsappNumber: payload.whatsappNumber,
-            productImage: payload.productImage,
-            postToFacebook: payload.platforms.facebook,
-            sendWhatsApp: payload.platforms.whatsapp,
-            postToInstagram: payload.platforms.instagram,
-          }, { timeout: 60000 });
+          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 45000 });
           if (localRes.data && localRes.data.success) {
             resData = localRes.data;
           }
         } catch (_) {}
       }
 
-      // 3. Fall back to secure backend API endpoint
+      if (!resData) {
+        const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload);
+        resData = res.data;
+      }
+
+      if (resData && resData.success) {
+        setResult(resData);
+        setPreviewGenerated(true);
+        toast.success('🎨 Flyer preview generated! Review the card and click "Approve & Publish" when ready.');
+      } else {
+        const err = resData?.error || 'Preview generation failed.';
+        setErrorMessage(err);
+        toast.error(err);
+        if (resData) setResult(resData);
+      }
+    } catch (err) {
+      console.error('Marketing preview failed:', err);
+      const serverErr = err.response?.data?.error || err.message || 'Failed to generate flyer preview.';
+      setErrorMessage(serverErr);
+      toast.error(serverErr);
+    } finally {
+      setLoadingPreview(false);
+    }
+  };
+
+  const handleApproveAndPublish = async () => {
+    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.whatsappStatus && !targetPlatforms.instagram) {
+      toast.warning('Please select at least one target dispatch platform.');
+      return;
+    }
+
+    setLoadingPublish(true);
+    setErrorMessage('');
+
+    const payload = {
+      brief: brief.trim(),
+      whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
+      productImage: productImage || null,
+      previewOnly: false,
+      platforms: {
+        facebook: targetPlatforms.facebook,
+        whatsapp: targetPlatforms.whatsapp,
+        whatsappStatus: targetPlatforms.whatsappStatus,
+        instagram: targetPlatforms.instagram,
+      },
+      userId: user?.data?.id || localStorage.getItem('user'),
+      userName: user?.data?.userName || '',
+    };
+
+    try {
+      let resData = null;
+
+      if (window.electron && typeof window.electron.runMarketing === 'function') {
+        try {
+          console.log('[Marketing] Running publish via Electron local agent IPC...');
+          resData = await window.electron.runMarketing(payload);
+        } catch (ipcErr) {
+          console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
+        }
+      }
+
+      if (!resData) {
+        try {
+          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 60000 });
+          if (localRes.data && localRes.data.success) {
+            resData = localRes.data;
+          }
+        } catch (_) {}
+      }
+
       if (!resData) {
         const res = await axios.post(`${API_BASE_URL}/api/marketing/publish`, payload);
         resData = res.data;
@@ -271,13 +335,21 @@ function MarketingViewAdmin() {
 
         const successChannels = [];
         if (fbOk) successChannels.push('Facebook');
-        if (waOk) successChannels.push('WhatsApp');
+        if (waOk) {
+          if (resData.whatsapp?.statusStory && !targetPlatforms.whatsapp) {
+            successChannels.push('WhatsApp Status');
+          } else if (resData.whatsapp?.statusStory) {
+            successChannels.push('WhatsApp DM & Status');
+          } else {
+            successChannels.push('WhatsApp');
+          }
+        }
         if (igOk) successChannels.push('Instagram');
 
         if (successChannels.length > 0) {
           toast.success(`🎉 Flyer successfully dispatched to ${successChannels.join(' & ')}!`);
         } else {
-          toast.info('Flyer preview generated. Check platform statuses on the right.');
+          toast.info('Publishing completed. Check platform statuses on the right.');
         }
       } else {
         const err = resData?.error || 'Campaign execution returned an error.';
@@ -291,7 +363,7 @@ function MarketingViewAdmin() {
       setErrorMessage(serverErr);
       toast.error(serverErr);
     } finally {
-      setLoading(false);
+      setLoadingPublish(false);
     }
   };
 
@@ -398,7 +470,7 @@ function MarketingViewAdmin() {
                     <AutoAwesomeIcon color="warning" /> Campaign Brief & Details
                   </Typography>
 
-                  <Box component="form" onSubmit={handlePublish}>
+                  <Box component="form" onSubmit={handleGeneratePreview}>
                     <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
                       Promotional Brief / Offer Description *
                     </Typography>
@@ -406,10 +478,13 @@ function MarketingViewAdmin() {
                       fullWidth
                       multiline
                       rows={4}
-                      placeholder="e.g. Offer for this Week Cement Sack Carrilu MOQ 500 sack $15.5 - Best quality for construction projects in Kolwezi!"
+                      placeholder="e.g. OFFER OF THIS WEEK CEMENT SACK $15.5 MOQ 500 - Best quality for construction projects in Kolwezi!"
                       value={brief}
-                      onChange={(e) => setBrief(e.target.value)}
-                      disabled={loading}
+                      onChange={(e) => {
+                        setBrief(e.target.value);
+                        setPreviewGenerated(false);
+                      }}
+                      disabled={loadingPreview || loadingPublish}
                       required
                       sx={{ mb: 2.5, backgroundColor: '#ffffff' }}
                     />
@@ -426,7 +501,7 @@ function MarketingViewAdmin() {
                             color="error"
                             startIcon={<DeleteOutlineIcon />}
                             onClick={handleRemoveImage}
-                            disabled={loading}
+                            disabled={loadingPreview || loadingPublish}
                             sx={{ textTransform: 'none', py: 0 }}
                           >
                             Remove Photo
@@ -458,14 +533,14 @@ function MarketingViewAdmin() {
                             accept="image/*"
                             style={{ display: 'none' }}
                             onChange={handleImageUpload}
-                            disabled={loading}
+                            disabled={loadingPreview || loadingPublish}
                           />
                           <CloudUploadIcon sx={{ fontSize: 36, color: '#64748b', mb: 0.5 }} />
                           <Typography variant="body2" sx={{ fontWeight: 600, color: '#334155' }}>
                             Click or Drag to Upload Product Photo
                           </Typography>
                           <Typography variant="caption" sx={{ color: '#94a3b8' }}>
-                            PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio)
+                            PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio & 24px padding)
                           </Typography>
                         </Box>
                       ) : (
@@ -513,20 +588,20 @@ function MarketingViewAdmin() {
                       placeholder="+243 827 722 222"
                       value={whatsappNumber}
                       onChange={(e) => setWhatsappNumber(e.target.value)}
-                      disabled={loading}
+                      disabled={loadingPreview || loadingPublish}
                       sx={{ mb: 2.5, backgroundColor: '#ffffff' }}
                     />
 
                     <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
                       Target Dispatch Platforms:
                     </Typography>
-                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2.5, mb: 3 }}>
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 3 }}>
                       <FormControlLabel
                         control={
                           <Checkbox
                             checked={targetPlatforms.facebook}
                             onChange={(e) => setTargetPlatforms({ ...targetPlatforms, facebook: e.target.checked })}
-                            disabled={loading}
+                            disabled={loadingPreview || loadingPublish}
                             sx={{ color: '#1877f2', '&.Mui-checked': { color: '#1877f2' } }}
                           />
                         }
@@ -542,14 +617,30 @@ function MarketingViewAdmin() {
                           <Checkbox
                             checked={targetPlatforms.whatsapp}
                             onChange={(e) => setTargetPlatforms({ ...targetPlatforms, whatsapp: e.target.checked })}
-                            disabled={loading}
+                            disabled={loadingPreview || loadingPublish}
                             sx={{ color: '#25d366', '&.Mui-checked': { color: '#25d366' } }}
                           />
                         }
                         label={
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <WhatsAppIcon sx={{ color: '#25d366' }} />
-                            <Typography sx={{ fontWeight: 500 }}>WhatsApp Web Direct Message</Typography>
+                            <Typography sx={{ fontWeight: 500 }}>WhatsApp Direct Message</Typography>
+                          </Box>
+                        }
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={targetPlatforms.whatsappStatus}
+                            onChange={(e) => setTargetPlatforms({ ...targetPlatforms, whatsappStatus: e.target.checked })}
+                            disabled={loadingPreview || loadingPublish}
+                            sx={{ color: '#10b981', '&.Mui-checked': { color: '#10b981' } }}
+                          />
+                        }
+                        label={
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
+                            <AutoStoriesIcon sx={{ color: '#10b981' }} />
+                            <Typography sx={{ fontWeight: 500 }}>WhatsApp Status (Story)</Typography>
                           </Box>
                         }
                       />
@@ -558,7 +649,7 @@ function MarketingViewAdmin() {
                           <Checkbox
                             checked={targetPlatforms.instagram}
                             onChange={(e) => setTargetPlatforms({ ...targetPlatforms, instagram: e.target.checked })}
-                            disabled={loading}
+                            disabled={loadingPreview || loadingPublish}
                             sx={{ color: '#e1306c', '&.Mui-checked': { color: '#e1306c' } }}
                           />
                         }
@@ -566,30 +657,79 @@ function MarketingViewAdmin() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <InstagramIcon sx={{ color: '#e1306c' }} />
                             <Typography sx={{ fontWeight: 500 }}>Instagram Feed (@globalgate.sarl)</Typography>
+                            <Chip label="Requires Scope" size="small" sx={{ height: 18, fontSize: '0.65rem', backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 600 }} />
                           </Box>
                         }
                       />
                     </Box>
 
-                    <Button
-                      type="submit"
-                      variant="contained"
-                      size="large"
-                      disabled={loading || !brief.trim()}
-                      startIcon={loading ? <CircularProgress size={20} color="inherit" /> : <SendIcon />}
-                      sx={{
-                        backgroundColor: '#30368a',
-                        py: 1.5,
-                        px: 4,
-                        fontSize: '1rem',
-                        fontWeight: 600,
-                        textTransform: 'none',
-                        borderRadius: 1.5,
-                        '&:hover': { backgroundColor: '#202a5a' }
-                      }}
-                    >
-                      {loading ? 'Generating & Publishing...' : 'Generate & Publish Campaign'}
-                    </Button>
+                    {/* Stage 1 vs Stage 2 Action Buttons */}
+                    {!previewGenerated ? (
+                      <Button
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        disabled={loadingPreview || !brief.trim()}
+                        startIcon={loadingPreview ? <CircularProgress size={20} color="inherit" /> : <AutoAwesomeIcon />}
+                        sx={{
+                          backgroundColor: '#30368a',
+                          py: 1.5,
+                          px: 4,
+                          fontSize: '1rem',
+                          fontWeight: 600,
+                          textTransform: 'none',
+                          borderRadius: 1.5,
+                          '&:hover': { backgroundColor: '#202a5a' }
+                        }}
+                      >
+                        {loadingPreview ? 'Generating Flyer Preview...' : '🎨 Generate Flyer Preview'}
+                      </Button>
+                    ) : (
+                      <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, alignItems: 'center' }}>
+                        <Button
+                          type="button"
+                          variant="contained"
+                          size="large"
+                          disabled={loadingPublish}
+                          onClick={handleApproveAndPublish}
+                          startIcon={loadingPublish ? <CircularProgress size={20} color="inherit" /> : <RocketLaunchIcon />}
+                          sx={{
+                            backgroundColor: '#10b981',
+                            py: 1.5,
+                            px: 3.5,
+                            fontSize: '1rem',
+                            fontWeight: 600,
+                            textTransform: 'none',
+                            borderRadius: 1.5,
+                            '&:hover': { backgroundColor: '#059669' }
+                          }}
+                        >
+                          {loadingPublish ? 'Publishing to Selected Platforms...' : '🚀 Approve & Publish'}
+                        </Button>
+
+                        <Button
+                          type="button"
+                          variant="outlined"
+                          size="large"
+                          disabled={loadingPreview || loadingPublish}
+                          onClick={handleGeneratePreview}
+                          startIcon={loadingPreview ? <CircularProgress size={18} color="inherit" /> : <RefreshIcon />}
+                          sx={{
+                            py: 1.5,
+                            px: 2.5,
+                            fontSize: '0.95rem',
+                            fontWeight: 600,
+                            textTransform: 'none',
+                            borderRadius: 1.5,
+                            borderColor: '#64748b',
+                            color: '#334155',
+                            '&:hover': { borderColor: '#1e293b', backgroundColor: '#f1f5f9' }
+                          }}
+                        >
+                          🔄 Regenerate
+                        </Button>
+                      </Box>
+                    )}
                   </Box>
                 </CardContent>
               </Card>
@@ -605,106 +745,127 @@ function MarketingViewAdmin() {
 
                   {result ? (
                     <Box>
-                      {/* Platform status chips */}
-                      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 2.5 }}>
-                        {result.facebook && (
-                          <Box sx={{ p: 1.5, backgroundColor: result.facebook.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.facebook.success ? '#bbf7d0' : '#fecaca' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <FacebookIcon sx={{ color: '#1877f2' }} />
-                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                  {result.facebook.success ? 'Published to Facebook Page' : 'Facebook Dispatch Failed'}
-                                </Typography>
-                              </Box>
-                              {result.facebook.postId && (
-                                <Chip
-                                  label={`Post: ${result.facebook.postId}`}
-                                  size="small"
-                                  component="a"
-                                  href={result.facebook.postUrl || `https://www.facebook.com/${result.facebook.postId}`}
-                                  target="_blank"
-                                  clickable
-                                  color="primary"
-                                  icon={<LaunchIcon fontSize="small" />}
-                                />
-                              )}
-                            </Box>
-                            {result.facebook.error && !result.facebook.success && (
-                              <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
-                                {result.facebook.error}
-                              </Typography>
-                            )}
-                          </Box>
-                        )}
+                      {/* Preview Mode Alert Banner */}
+                      {result.previewOnly && (
+                        <Alert severity="info" sx={{ mb: 2.5, borderRadius: 1.5, backgroundColor: '#eff6ff', borderColor: '#bfdbfe', color: '#1e3a8a' }}>
+                          <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                            🎨 Flyer Preview Generated
+                          </Typography>
+                          <Typography variant="caption" sx={{ display: 'block', mt: 0.5, color: '#2563eb' }}>
+                            Review the generated layout below. When satisfied, click <strong>"🚀 Approve & Publish"</strong> on the left to broadcast to selected social channels.
+                          </Typography>
+                        </Alert>
+                      )}
 
-                        {result.whatsapp && (
-                          <Box sx={{ p: 1.5, backgroundColor: result.whatsapp.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.whatsapp.success ? '#bbf7d0' : '#fecaca' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <WhatsAppIcon sx={{ color: '#25d366' }} />
-                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                  {result.whatsapp.success ? (result.whatsapp.message || 'WhatsApp Delivered Successfully') : 'WhatsApp Delivery Failed'}
-                                </Typography>
-                              </Box>
-                              {result.whatsapp.target && (
+                      {/* Platform status chips (when published) */}
+                      {!result.previewOnly && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, mb: 2.5 }}>
+                          {result.facebook && (
+                            <Box sx={{ p: 1.5, backgroundColor: result.facebook.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.facebook.success ? '#bbf7d0' : '#fecaca' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                  <Chip label={result.whatsapp.target} size="small" color={result.whatsapp.success ? "success" : "default"} />
+                                  <FacebookIcon sx={{ color: '#1877f2' }} />
+                                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                    {result.facebook.success ? 'Published to Facebook Page' : 'Facebook Dispatch Failed'}
+                                  </Typography>
+                                </Box>
+                                {result.facebook.postId && (
                                   <Chip
-                                    label="Open Chat"
+                                    label={`Post: ${result.facebook.postId}`}
                                     size="small"
                                     component="a"
-                                    href={`https://wa.me/${String(result.whatsapp.target || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(result.copy?.caption || result.brief || '')}`}
+                                    href={result.facebook.postUrl || `https://www.facebook.com/${result.facebook.postId}`}
                                     target="_blank"
                                     clickable
-                                    color="success"
-                                    variant="outlined"
+                                    color="primary"
                                     icon={<LaunchIcon fontSize="small" />}
                                   />
-                                </Box>
-                              )}
-                            </Box>
-                            {result.whatsapp.error && !result.whatsapp.success && (
-                              <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
-                                {result.whatsapp.error} — You can also click "Open Chat" above to dispatch directly via WhatsApp.
-                              </Typography>
-                            )}
-                          </Box>
-                        )}
-
-                        {result.instagram && (
-                          <Box sx={{ p: 1.5, backgroundColor: result.instagram.success ? '#fdf2f8' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.instagram.success ? '#fbcfe8' : '#fecaca' }}>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                                <InstagramIcon sx={{ color: '#e1306c' }} />
-                                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                  {result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Status / Notice'}
-                                </Typography>
+                                )}
                               </Box>
-                              {result.instagram.postId && (
-                                <Chip
-                                  label={`Post: ${result.instagram.postId}`}
-                                  size="small"
-                                  component="a"
-                                  href={result.instagram.postUrl || `https://www.instagram.com/p/${result.instagram.postId}`}
-                                  target="_blank"
-                                  clickable
-                                  sx={{ backgroundColor: '#e1306c', color: '#fff' }}
-                                  icon={<LaunchIcon fontSize="small" sx={{ color: '#fff !important' }} />}
-                                />
+                              {result.facebook.error && !result.facebook.success && (
+                                <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
+                                  {result.facebook.error}
+                                </Typography>
                               )}
                             </Box>
-                            {result.instagram.error && !result.instagram.success && (
-                              <Typography variant="caption" sx={{ color: '#b45309', display: 'block', mt: 0.75, pl: 4 }}>
-                                {result.instagram.error}
-                              </Typography>
-                            )}
-                          </Box>
-                        )}
-                      </Box>
+                          )}
+
+                          {result.whatsapp && (
+                            <Box sx={{ p: 1.5, backgroundColor: result.whatsapp.success ? '#f0fdf4' : '#fef2f2', borderRadius: 1.5, border: '1px solid', borderColor: result.whatsapp.success ? '#bbf7d0' : '#fecaca' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <WhatsAppIcon sx={{ color: '#25d366' }} />
+                                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                    {result.whatsapp.success ? (result.whatsapp.message || 'WhatsApp Delivered Successfully') : 'WhatsApp Delivery Failed'}
+                                  </Typography>
+                                </Box>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
+                                  {result.whatsapp.target && (
+                                    <>
+                                      <Chip label={result.whatsapp.target} size="small" color={result.whatsapp.success ? "success" : "default"} />
+                                      <Chip
+                                        label="Open Chat"
+                                        size="small"
+                                        component="a"
+                                        href={`https://wa.me/${String(result.whatsapp.target || '').replace(/[^0-9]/g, '')}?text=${encodeURIComponent(result.copy?.caption || result.brief || '')}`}
+                                        target="_blank"
+                                        clickable
+                                        color="success"
+                                        variant="outlined"
+                                        icon={<LaunchIcon fontSize="small" />}
+                                      />
+                                    </>
+                                  )}
+                                  {result.whatsapp.statusStory && (
+                                    <Chip label="Status Story" size="small" color="success" />
+                                  )}
+                                </Box>
+                              </Box>
+                              {result.whatsapp.error && !result.whatsapp.success && (
+                                <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
+                                  {result.whatsapp.error} — You can also click "Open Chat" above to dispatch directly via WhatsApp.
+                                </Typography>
+                              )}
+                            </Box>
+                          )}
+
+                          {result.instagram && (
+                            <Box sx={{ p: 1.5, backgroundColor: result.instagram.success ? '#fdf2f8' : '#fffbeb', borderRadius: 1.5, border: '1px solid', borderColor: result.instagram.success ? '#fbcfe8' : '#fef3c7' }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                  <InstagramIcon sx={{ color: '#e1306c' }} />
+                                  <Typography variant="body2" sx={{ fontWeight: 600, color: result.instagram.success ? '#1e293b' : '#92400e' }}>
+                                    {result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Scope Guidance'}
+                                  </Typography>
+                                </Box>
+                                {result.instagram.postId ? (
+                                  <Chip
+                                    label={`Post: ${result.instagram.postId}`}
+                                    size="small"
+                                    component="a"
+                                    href={result.instagram.postUrl || `https://www.instagram.com/p/${result.instagram.postId}`}
+                                    target="_blank"
+                                    clickable
+                                    sx={{ backgroundColor: '#e1306c', color: '#fff' }}
+                                    icon={<LaunchIcon fontSize="small" sx={{ color: '#fff !important' }} />}
+                                  />
+                                ) : (
+                                  <Chip label="Scope Required" size="small" sx={{ height: 20, fontSize: '0.7rem', backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 600 }} />
+                                )}
+                              </Box>
+                              {result.instagram.error && !result.instagram.success && (
+                                <Typography variant="caption" sx={{ color: '#b45309', display: 'block', mt: 0.75, pl: 3.5, lineHeight: 1.4 }}>
+                                  {result.instagram.error}
+                                </Typography>
+                              )}
+                            </Box>
+                          )}
+                        </Box>
+                      )}
 
                       {/* Generated Flyer Image */}
                       {result.flyerBase64 ? (
-                        <Box sx={{ textAlign: 'center', mt: 2 }}>
+                        <Box sx={{ textAlign: 'center', mt: 1.5 }}>
                           <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1, textAlign: 'left' }}>
                             Generated Flyer (1080x1080)
                           </Typography>
@@ -727,7 +888,18 @@ function MarketingViewAdmin() {
                         </Alert>
                       )}
 
-                      {/* Caption Preview */}
+                      {/* Headline & Caption Preview */}
+                      {(result.headline || result.copy?.headline) && (
+                        <Box sx={{ mt: 2 }}>
+                          <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 0.5 }}>
+                            Flyer Headline:
+                          </Typography>
+                          <Paper sx={{ p: 1.2, backgroundColor: '#f1f5f9', fontWeight: 700, fontSize: '0.9rem', color: '#0f172a' }}>
+                            {result.headline || result.copy?.headline}
+                          </Paper>
+                        </Box>
+                      )}
+
                       {result.copy?.caption && (
                         <Box sx={{ mt: 2 }}>
                           <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 0.5 }}>
@@ -743,10 +915,10 @@ function MarketingViewAdmin() {
                     <Box sx={{ textAlign: 'center', py: 8, color: '#94a3b8' }}>
                       <CampaignIcon sx={{ fontSize: 64, mb: 1.5, opacity: 0.4 }} />
                       <Typography variant="body1" sx={{ fontWeight: 500 }}>
-                        No campaign published yet.
+                        No flyer preview generated yet.
                       </Typography>
                       <Typography variant="body2" sx={{ color: '#94a3b8', mt: 0.5 }}>
-                        Enter your promotional brief on the left and click "Generate & Publish" to preview the generated flyer and post details here.
+                        Enter your promotional brief on the left and click "Generate Flyer Preview" to review the card and copy before publishing.
                       </Typography>
                     </Box>
                   )}

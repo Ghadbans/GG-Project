@@ -305,6 +305,28 @@
       * High-res output is written to `C:\Users\GG\fb-whatsapp-agent\generated_flyer.png` on the local workstation and surfaced immediately in the desktop application as Base64 data URL.
     - **Instagram Integration**:
       * Direct publishing pipeline via Meta Graph API linked Instagram Business account (`@globalgate.sarl`) container (`POST /{ig_user_id}/media` followed by `POST /{ig_user_id}/media_publish`).
+57. **Two-Stage Marketing Protocol, Canvas Typography Invariant, and Framed Product Showcase Standard (Ver 3.6.14)**:
+    - **Two-Stage Campaign Workflow (Preview vs Publish)**:
+      * The Marketing module strictly separates the visual drafting phase from public broadcasting.
+      * **Stage 1 ("🎨 Generate Flyer Preview")**: Triggers `previewOnly: true`. Generates AI copy and renders the 1080×1080 canvas layout locally to `C:\Users\GG\fb-whatsapp-agent\generated_flyer.png`. Returns Base64 immediately for in-app visual inspection without initiating network requests to Facebook, WhatsApp, or Instagram.
+      * **Stage 2 ("🚀 Approve & Publish" & "🔄 Regenerate")**: Once the preview is reviewed and approved, the user clicks "Approve & Publish" to execute the broadcast across selected platforms (Facebook, WhatsApp DM, WhatsApp Status Stories, and Instagram). If alterations are needed, "Regenerate" produces new variations without broadcasting.
+    - **Canvas Typography & Zero-Truncation Invariant**:
+      * Arbitrary string clipping or hard ellipses (e.g. `substring(0, 35) + '...'`) are strictly prohibited in marketing headlines, captions, and flyer cards.
+      * The canvas graphics engine implements `renderDynamicHeadline()`: dynamically auto-scales typography (from 48px down to 32px) and wraps across lines to render complete promo descriptions (e.g. "OFFER OF THIS WEEK CEMENT SACK $15.5 MOQ 500") without clipping, cutoffs, or dots.
+    - **Professional Product Visual Framing Standard**:
+      * When a user uploads a product photo (PNG, JPG, WEBP), it is framed inside a dedicated product showcase card:
+        - Card background: `#141d2e` dark-glass fill with a 2px `#334155` border.
+        - Soft drop shadow (`shadowColor: rgba(0,0,0,0.45)`, `shadowBlur: 24`, `shadowOffsetY: 8`).
+        - Sleek subtle radial glow (`rgba(245, 158, 11, 0.16)`) positioned directly behind the item to give depth and pop against the dark palette.
+        - 24px internal padding ensuring product edges never touch container borders.
+        - Preserved aspect ratio (`contain` fit) centered both horizontally and vertically.
+    - **WhatsApp Direct Message + Status (Story) Dispatch**:
+      * In addition to direct message chat routing via `targetChatId`, the system provides a dedicated checkbox: `[x] Post to WhatsApp Status (Story)`.
+      * Status broadcast publishes to `status@broadcast` via `client.sendMessage('status@broadcast', media, { caption })`.
+      * Main process and UI track status story delivery independently and display a dedicated success badge.
+    - **Instagram Scope Guidance & Two-Stage Guard**:
+      * Targets linked Instagram account `17841438791758893` (`@globalgate.sarl`).
+      * Checkbox is annotated with a `Requires Scope` badge. If the Meta App token is pending `instagram_content_publish` or `instagram_basic` permissions, the system gracefully traps OAuth error code 10 and displays a polite amber scope guidance card, ensuring Facebook and WhatsApp remain unaffected.
 
 ## Current Progress Log
 - **Payroll Payment Status Logic Correction & View White Screen Crash Fix (Ver 3.5.87)**:

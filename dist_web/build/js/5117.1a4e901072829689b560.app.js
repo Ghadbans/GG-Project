@@ -21,6 +21,26 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
+/***/ 37785
+(__unused_webpack_module, exports, __webpack_require__) {
+
+var __webpack_unused_export__;
+
+"use client";
+
+var _interopRequireDefault = __webpack_require__(24994);
+__webpack_unused_export__ = ({
+  value: true
+});
+exports.A = void 0;
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
+var _jsxRuntime = __webpack_require__(74848);
+var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "m19 1-5 5v11l5-4.5zM1 6v14.65c0 .25.25.5.5.5.1 0 .15-.05.25-.05C3.1 20.45 5.05 20 6.5 20c1.95 0 4.05.4 5.5 1.5V6c-1.45-1.1-3.55-1.5-5.5-1.5S2.45 4.9 1 6m22 13.5V6c-.6-.45-1.25-.75-2-1v13.5c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5v2c1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.3 4.75 1.05.1.05.15.05.25.05.25 0 .5-.25.5-.5z"
+}), 'AutoStories');
+
+/***/ },
+
 /***/ 61561
 (__unused_webpack_module, exports, __webpack_require__) {
 
@@ -127,7 +147,7 @@ var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRun
 
 /***/ },
 
-/***/ 40443
+/***/ 80242
 (__unused_webpack_module, exports, __webpack_require__) {
 
 var __webpack_unused_export__;
@@ -142,8 +162,8 @@ exports.A = void 0;
 var _createSvgIcon = _interopRequireDefault(__webpack_require__(42032));
 var _jsxRuntime = __webpack_require__(74848);
 var _default = exports.A = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
-  d: "M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
-}), 'Send');
+  d: "M9.19 6.35c-2.04 2.29-3.44 5.58-3.57 5.89L2 10.69l4.05-4.05c.47-.47 1.15-.68 1.81-.55zM11.17 17s3.74-1.55 5.89-3.7c5.4-5.4 4.5-9.62 4.21-10.57-.95-.3-5.17-1.19-10.57 4.21C8.55 9.09 7 12.83 7 12.83zm6.48-2.19c-2.29 2.04-5.58 3.44-5.89 3.57L13.31 22l4.05-4.05c.47-.47.68-1.15.55-1.81zM9 18c0 .83-.34 1.58-.88 2.12C6.94 21.3 2 22 2 22s.7-4.94 1.88-6.12C4.42 15.34 5.17 15 6 15c1.66 0 3 1.34 3 3m4-9c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2"
+}), 'RocketLaunch');
 
 /***/ },
 
@@ -549,18 +569,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_CheckCircle__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(20889);
 /* harmony import */ var _mui_icons_material_ErrorOutline__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(51249);
 /* harmony import */ var _mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(2775);
-/* harmony import */ var _mui_icons_material_Send__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(40443);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(99380);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(99571);
-/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(13561);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(47767);
-/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(32005);
-/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(71510);
-/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(46986);
-/* harmony import */ var _component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(34687);
-/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(95236);
-/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(83818);
-/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(40301);
+/* harmony import */ var _mui_icons_material_Refresh__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(42702);
+/* harmony import */ var _mui_icons_material_RocketLaunch__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(80242);
+/* harmony import */ var _mui_icons_material_AutoStories__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(37785);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(99380);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(99571);
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(13561);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(47767);
+/* harmony import */ var _features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__ = __webpack_require__(32005);
+/* harmony import */ var _apiConfig__WEBPACK_IMPORTED_MODULE_44__ = __webpack_require__(71510);
+/* harmony import */ var _utils_apiCache__WEBPACK_IMPORTED_MODULE_45__ = __webpack_require__(46986);
+/* harmony import */ var _component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_46__ = __webpack_require__(34687);
+/* harmony import */ var _NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_47__ = __webpack_require__(95236);
+/* harmony import */ var _MessageAdminView__WEBPACK_IMPORTED_MODULE_48__ = __webpack_require__(83818);
+/* harmony import */ var _component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_49__ = __webpack_require__(40301);
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
 function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
@@ -575,6 +597,9 @@ function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object
 function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == typeof i ? i : i + ""; }
 function _toPrimitive(t, r) { if ("object" != typeof t || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != typeof i) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 ;
+
+
+
 
 
 
@@ -656,10 +681,10 @@ var Drawer = (0,_mui_material__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .Ay
   };
 });
 function MarketingViewAdmin() {
-  var _user$data3, _user$data4, _result$copy, _result$copy2;
-  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_40__/* .useNavigate */ .Zp)();
-  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_39__/* .useDispatch */ .wA)();
-  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_39__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__/* .selectCurrentUser */ .xu);
+  var _user$data5, _user$data6, _result$copy, _result$copy2, _result$copy3, _result$copy4;
+  var navigate = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_42__/* .useNavigate */ .Zp)();
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_41__/* .useDispatch */ .wA)();
+  var user = (0,react_redux__WEBPACK_IMPORTED_MODULE_41__/* .useSelector */ .d4)(_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .selectCurrentUser */ .xu);
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState2 = _slicedToArray(_useState, 2),
     sideBar = _useState2[0],
@@ -686,56 +711,67 @@ function MarketingViewAdmin() {
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       facebook: true,
       whatsapp: true,
-      instagram: true
+      whatsappStatus: true,
+      instagram: false
     }),
     _useState10 = _slicedToArray(_useState1, 2),
     targetPlatforms = _useState10[0],
     setTargetPlatforms = _useState10[1];
   var _useState11 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState12 = _slicedToArray(_useState11, 2),
-    loading = _useState12[0],
-    setLoading = _useState12[1];
-  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    previewGenerated = _useState12[0],
+    setPreviewGenerated = _useState12[1];
+  var _useState13 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState14 = _slicedToArray(_useState13, 2),
-    result = _useState14[0],
-    setResult = _useState14[1];
-  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    loadingPreview = _useState14[0],
+    setLoadingPreview = _useState14[1];
+  var _useState15 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false),
     _useState16 = _slicedToArray(_useState15, 2),
-    errorMessage = _useState16[0],
-    setErrorMessage = _useState16[1];
+    loadingPublish = _useState16[0],
+    setLoadingPublish = _useState16[1];
+  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null),
+    _useState18 = _slicedToArray(_useState17, 2),
+    result = _useState18[0],
+    setResult = _useState18[1];
+  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
+    _useState20 = _slicedToArray(_useState19, 2),
+    errorMessage = _useState20[0],
+    setErrorMessage = _useState20[1];
   var handleImageUpload = e => {
     var _e$target$files;
     var file = (_e$target$files = e.target.files) === null || _e$target$files === void 0 ? void 0 : _e$target$files[0];
     if (!file) return;
     if (!file.type.startsWith('image/')) {
-      react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Please select an image file (PNG, JPG, WEBP).');
+      react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.warning('Please select an image file (PNG, JPG, WEBP).');
       return;
     }
     if (file.size > 15 * 1024 * 1024) {
-      react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Image size should be under 15MB.');
+      react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.warning('Image size should be under 15MB.');
       return;
     }
     var reader = new FileReader();
     reader.onload = uploadEvent => {
       setProductImage(uploadEvent.target.result);
       setProductImageName(file.name);
+      setPreviewGenerated(false);
     };
     reader.readAsDataURL(file);
   };
   var handleRemoveImage = () => {
     setProductImage(null);
     setProductImageName('');
+    setPreviewGenerated(false);
   };
 
   // Access Permission Verification
-  var _useState17 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState18 = _slicedToArray(_useState17, 2),
-    hasAccess = _useState18[0],
-    setHasAccess = _useState18[1];
-  var _useState19 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
-    _useState20 = _slicedToArray(_useState19, 2),
-    loadingPermission = _useState20[0],
-    setLoadingPermission = _useState20[1];
+  var _useState21 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState22 = _slicedToArray(_useState21, 2),
+    hasAccess = _useState22[0],
+    setHasAccess = _useState22[1];
+  var _useState23 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(true),
+    _useState24 = _slicedToArray(_useState23, 2),
+    loadingPermission = _useState24[0],
+    setLoadingPermission = _useState24[1];
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     var storesUserId = localStorage.getItem('user');
     var fetchUserAndAccess = /*#__PURE__*/function () {
@@ -746,11 +782,11 @@ function MarketingViewAdmin() {
         }
         try {
           var _resAccess$data;
-          var resUser = yield axios__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_42__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
+          var resUser = yield axios__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_44__/* .ENDPOINT_URL */ .m, "/get-employeeuser/").concat(storesUserId));
           var name = resUser.data.data.employeeName;
           var role = resUser.data.data.role;
           var id = resUser.data.data._id;
-          dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__/* .setUser */ .gV)({
+          dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .setUser */ .gV)({
             userName: name,
             role,
             id
@@ -764,7 +800,7 @@ function MarketingViewAdmin() {
           }
 
           // Check GrantAccess permissions
-          var resAccess = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_43__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_42__/* .ENDPOINT_URL */ .m, "/grantAccess"));
+          var resAccess = yield (0,_utils_apiCache__WEBPACK_IMPORTED_MODULE_45__/* .cachedGet */ .Fe)("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_44__/* .ENDPOINT_URL */ .m, "/grantAccess"));
           var userAccess = resAccess === null || resAccess === void 0 || (_resAccess$data = resAccess.data) === null || _resAccess$data === void 0 || (_resAccess$data = _resAccess$data.data) === null || _resAccess$data === void 0 ? void 0 : _resAccess$data.find(row => row.userID === id);
           var isMarketingGranted = Boolean((userAccess === null || userAccess === void 0 ? void 0 : userAccess.marketing) || Array.isArray(userAccess === null || userAccess === void 0 ? void 0 : userAccess.modules) && userAccess.modules.some(m => {
             var _m$access, _m$access2;
@@ -786,31 +822,28 @@ function MarketingViewAdmin() {
   }, [dispatch, navigate]);
   var handleLogout = () => {
     localStorage.removeItem('user');
-    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_41__/* .setUser */ .gV)(null));
+    dispatch((0,_features_auth_authSlice__WEBPACK_IMPORTED_MODULE_43__/* .setUser */ .gV)(null));
     navigate('/');
   };
-  var handlePublish = /*#__PURE__*/function () {
+  var handleGeneratePreview = /*#__PURE__*/function () {
     var _ref4 = _asyncToGenerator(function* (e) {
       var _user$data, _user$data2;
       if (e && e.preventDefault) e.preventDefault();
       if (!brief.trim()) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Please enter a promotional brief first.');
+        react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.warning('Please enter a promotional brief first.');
         return;
       }
-      if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
-        react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.warning('Please select at least one target platform (Facebook, WhatsApp, or Instagram).');
-        return;
-      }
-      setLoading(true);
+      setLoadingPreview(true);
       setErrorMessage('');
-      setResult(null);
       var payload = {
         brief: brief.trim(),
         whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
         productImage: productImage || null,
+        previewOnly: true,
         platforms: {
           facebook: targetPlatforms.facebook,
           whatsapp: targetPlatforms.whatsapp,
+          whatsappStatus: targetPlatforms.whatsappStatus,
           instagram: targetPlatforms.instagram
         },
         userId: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.id) || localStorage.getItem('user'),
@@ -818,28 +851,89 @@ function MarketingViewAdmin() {
       };
       try {
         var resData = null;
-
-        // 1. If running inside Electron desktop app, execute locally via IPC (guarantees local canvas & FB photo upload)
         if (window.electron && typeof window.electron.runMarketing === 'function') {
           try {
-            console.log('[Marketing] Running directly via Electron local agent IPC...');
+            console.log('[Marketing] Generating preview via Electron local IPC...');
             resData = yield window.electron.runMarketing(payload);
           } catch (ipcErr) {
             console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
           }
         }
-
-        // 2. If not in Electron, try local microservice if running on workstation
         if (!resData) {
           try {
-            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', {
-              brief: payload.brief,
-              whatsappNumber: payload.whatsappNumber,
-              productImage: payload.productImage,
-              postToFacebook: payload.platforms.facebook,
-              sendWhatsApp: payload.platforms.whatsapp,
-              postToInstagram: payload.platforms.instagram
-            }, {
+            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
+              timeout: 45000
+            });
+            if (localRes.data && localRes.data.success) {
+              resData = localRes.data;
+            }
+          } catch (_) {}
+        }
+        if (!resData) {
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_44__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
+          resData = res.data;
+        }
+        if (resData && resData.success) {
+          setResult(resData);
+          setPreviewGenerated(true);
+          react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.success('🎨 Flyer preview generated! Review the card and click "Approve & Publish" when ready.');
+        } else {
+          var _resData;
+          var err = ((_resData = resData) === null || _resData === void 0 ? void 0 : _resData.error) || 'Preview generation failed.';
+          setErrorMessage(err);
+          react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.error(err);
+          if (resData) setResult(resData);
+        }
+      } catch (err) {
+        var _err$response;
+        console.error('Marketing preview failed:', err);
+        var serverErr = ((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message || 'Failed to generate flyer preview.';
+        setErrorMessage(serverErr);
+        react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.error(serverErr);
+      } finally {
+        setLoadingPreview(false);
+      }
+    });
+    return function handleGeneratePreview(_x) {
+      return _ref4.apply(this, arguments);
+    };
+  }();
+  var handleApproveAndPublish = /*#__PURE__*/function () {
+    var _ref5 = _asyncToGenerator(function* () {
+      var _user$data3, _user$data4;
+      if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.whatsappStatus && !targetPlatforms.instagram) {
+        react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.warning('Please select at least one target dispatch platform.');
+        return;
+      }
+      setLoadingPublish(true);
+      setErrorMessage('');
+      var payload = {
+        brief: brief.trim(),
+        whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
+        productImage: productImage || null,
+        previewOnly: false,
+        platforms: {
+          facebook: targetPlatforms.facebook,
+          whatsapp: targetPlatforms.whatsapp,
+          whatsappStatus: targetPlatforms.whatsappStatus,
+          instagram: targetPlatforms.instagram
+        },
+        userId: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.id) || localStorage.getItem('user'),
+        userName: (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.userName) || ''
+      };
+      try {
+        var resData = null;
+        if (window.electron && typeof window.electron.runMarketing === 'function') {
+          try {
+            console.log('[Marketing] Running publish via Electron local agent IPC...');
+            resData = yield window.electron.runMarketing(payload);
+          } catch (ipcErr) {
+            console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
+          }
+        }
+        if (!resData) {
+          try {
+            var localRes = yield axios__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A.post('http://127.0.0.1:5055/publish', payload, {
               timeout: 60000
             });
             if (localRes.data && localRes.data.success) {
@@ -847,10 +941,8 @@ function MarketingViewAdmin() {
             }
           } catch (_) {}
         }
-
-        // 3. Fall back to secure backend API endpoint
         if (!resData) {
-          var res = yield axios__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_42__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
+          var res = yield axios__WEBPACK_IMPORTED_MODULE_39__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_44__/* .API_BASE_URL */ .J, "/api/marketing/publish"), payload);
           resData = res.data;
         }
         if (resData && resData.success) {
@@ -861,32 +953,41 @@ function MarketingViewAdmin() {
           var igOk = (_resData$instagram = resData.instagram) === null || _resData$instagram === void 0 ? void 0 : _resData$instagram.success;
           var successChannels = [];
           if (fbOk) successChannels.push('Facebook');
-          if (waOk) successChannels.push('WhatsApp');
+          if (waOk) {
+            var _resData$whatsapp2, _resData$whatsapp3;
+            if ((_resData$whatsapp2 = resData.whatsapp) !== null && _resData$whatsapp2 !== void 0 && _resData$whatsapp2.statusStory && !targetPlatforms.whatsapp) {
+              successChannels.push('WhatsApp Status');
+            } else if ((_resData$whatsapp3 = resData.whatsapp) !== null && _resData$whatsapp3 !== void 0 && _resData$whatsapp3.statusStory) {
+              successChannels.push('WhatsApp DM & Status');
+            } else {
+              successChannels.push('WhatsApp');
+            }
+          }
           if (igOk) successChannels.push('Instagram');
           if (successChannels.length > 0) {
-            react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.success("\uD83C\uDF89 Flyer successfully dispatched to ".concat(successChannels.join(' & '), "!"));
+            react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.success("\uD83C\uDF89 Flyer successfully dispatched to ".concat(successChannels.join(' & '), "!"));
           } else {
-            react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.info('Flyer preview generated. Check platform statuses on the right.');
+            react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.info('Publishing completed. Check platform statuses on the right.');
           }
         } else {
-          var _resData;
-          var err = ((_resData = resData) === null || _resData === void 0 ? void 0 : _resData.error) || 'Campaign execution returned an error.';
+          var _resData2;
+          var err = ((_resData2 = resData) === null || _resData2 === void 0 ? void 0 : _resData2.error) || 'Campaign execution returned an error.';
           setErrorMessage(err);
-          react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.error(err);
+          react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.error(err);
           if (resData) setResult(resData);
         }
       } catch (err) {
-        var _err$response;
+        var _err$response2;
         console.error('Marketing publish failed:', err);
-        var serverErr = ((_err$response = err.response) === null || _err$response === void 0 || (_err$response = _err$response.data) === null || _err$response === void 0 ? void 0 : _err$response.error) || err.message || 'Failed to connect to marketing agent.';
+        var serverErr = ((_err$response2 = err.response) === null || _err$response2 === void 0 || (_err$response2 = _err$response2.data) === null || _err$response2 === void 0 ? void 0 : _err$response2.error) || err.message || 'Failed to connect to marketing agent.';
         setErrorMessage(serverErr);
-        react_toastify__WEBPACK_IMPORTED_MODULE_38__/* .toast */ .oR.error(serverErr);
+        react_toastify__WEBPACK_IMPORTED_MODULE_40__/* .toast */ .oR.error(serverErr);
       } finally {
-        setLoading(false);
+        setLoadingPublish(false);
       }
     });
-    return function handlePublish(_x) {
-      return _ref4.apply(this, arguments);
+    return function handleApproveAndPublish() {
+      return _ref5.apply(this, arguments);
     };
   }();
   if (loadingPermission) {
@@ -982,13 +1083,13 @@ function MarketingViewAdmin() {
       flexGrow: 1,
       fontWeight: 600
     }
-  }, "Marketing Campaign & Flyer Publisher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_45__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, {
-    name: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.userName) || '',
-    role: (user === null || user === void 0 || (_user$data4 = user.data) === null || _user$data4 === void 0 ? void 0 : _user$data4.role) || ''
+  }, "Marketing Campaign & Flyer Publisher"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_NotificationVIewInfo__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_MessageAdminView__WEBPACK_IMPORTED_MODULE_48__/* ["default"] */ .A, {
+    name: (user === null || user === void 0 || (_user$data5 = user.data) === null || _user$data5 === void 0 ? void 0 : _user$data5.userName) || '',
+    role: (user === null || user === void 0 || (_user$data6 = user.data) === null || _user$data6 === void 0 ? void 0 : _user$data6.role) || ''
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .A, {
     color: "inherit",
     onClick: handleLogout
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_47__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_NetworkLogoutIcon__WEBPACK_IMPORTED_MODULE_49__/* ["default"] */ .A, {
     style: {
       color: 'white'
     }
@@ -1010,7 +1111,7 @@ function MarketingViewAdmin() {
     sx: {
       height: '700px'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_44__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_component_SidebarDashE2__WEBPACK_IMPORTED_MODULE_46__/* ["default"] */ .A, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     component: "main",
     sx: {
       backgroundColor: theme => theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[900],
@@ -1078,7 +1179,7 @@ function MarketingViewAdmin() {
     color: "warning"
   }), " Campaign Brief & Details"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     component: "form",
-    onSubmit: handlePublish
+    onSubmit: handleGeneratePreview
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "subtitle2",
     sx: {
@@ -1090,10 +1191,13 @@ function MarketingViewAdmin() {
     fullWidth: true,
     multiline: true,
     rows: 4,
-    placeholder: "e.g. Offer for this Week Cement Sack Carrilu MOQ 500 sack $15.5 - Best quality for construction projects in Kolwezi!",
+    placeholder: "e.g. OFFER OF THIS WEEK CEMENT SACK $15.5 MOQ 500 - Best quality for construction projects in Kolwezi!",
     value: brief,
-    onChange: e => setBrief(e.target.value),
-    disabled: loading,
+    onChange: e => {
+      setBrief(e.target.value);
+      setPreviewGenerated(false);
+    },
+    disabled: loadingPreview || loadingPublish,
     required: true,
     sx: {
       mb: 2.5,
@@ -1121,7 +1225,7 @@ function MarketingViewAdmin() {
     color: "error",
     startIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_DeleteOutline__WEBPACK_IMPORTED_MODULE_31__/* ["default"] */ .A, null),
     onClick: handleRemoveImage,
-    disabled: loading,
+    disabled: loadingPreview || loadingPublish,
     sx: {
       textTransform: 'none',
       py: 0
@@ -1151,7 +1255,7 @@ function MarketingViewAdmin() {
       display: 'none'
     },
     onChange: handleImageUpload,
-    disabled: loading
+    disabled: loadingPreview || loadingPublish
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_CloudUpload__WEBPACK_IMPORTED_MODULE_30__/* ["default"] */ .A, {
     sx: {
       fontSize: 36,
@@ -1169,7 +1273,7 @@ function MarketingViewAdmin() {
     sx: {
       color: '#94a3b8'
     }
-  }, "PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio)")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, "PNG, JPG, WEBP up to 15MB (Fitted with preserved aspect ratio & 24px padding)")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
@@ -1228,7 +1332,7 @@ function MarketingViewAdmin() {
     placeholder: "+243 827 722 222",
     value: whatsappNumber,
     onChange: e => setWhatsappNumber(e.target.value),
-    disabled: loading,
+    disabled: loadingPreview || loadingPublish,
     sx: {
       mb: 2.5,
       backgroundColor: '#ffffff'
@@ -1244,7 +1348,7 @@ function MarketingViewAdmin() {
     sx: {
       display: 'flex',
       flexWrap: 'wrap',
-      gap: 2.5,
+      gap: 2,
       mb: 3
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
@@ -1253,7 +1357,7 @@ function MarketingViewAdmin() {
       onChange: e => setTargetPlatforms(_objectSpread(_objectSpread({}, targetPlatforms), {}, {
         facebook: e.target.checked
       })),
-      disabled: loading,
+      disabled: loadingPreview || loadingPublish,
       sx: {
         color: '#1877f2',
         '&.Mui-checked': {
@@ -1282,7 +1386,7 @@ function MarketingViewAdmin() {
       onChange: e => setTargetPlatforms(_objectSpread(_objectSpread({}, targetPlatforms), {}, {
         whatsapp: e.target.checked
       })),
-      disabled: loading,
+      disabled: loadingPreview || loadingPublish,
       sx: {
         color: '#25d366',
         '&.Mui-checked': {
@@ -1304,14 +1408,43 @@ function MarketingViewAdmin() {
       sx: {
         fontWeight: 500
       }
-    }, "WhatsApp Web Direct Message"))
+    }, "WhatsApp Direct Message"))
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      checked: targetPlatforms.whatsappStatus,
+      onChange: e => setTargetPlatforms(_objectSpread(_objectSpread({}, targetPlatforms), {}, {
+        whatsappStatus: e.target.checked
+      })),
+      disabled: loadingPreview || loadingPublish,
+      sx: {
+        color: '#10b981',
+        '&.Mui-checked': {
+          color: '#10b981'
+        }
+      }
+    }),
+    label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.8
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoStories__WEBPACK_IMPORTED_MODULE_38__/* ["default"] */ .A, {
+      sx: {
+        color: '#10b981'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      sx: {
+        fontWeight: 500
+      }
+    }, "WhatsApp Status (Story)"))
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       checked: targetPlatforms.instagram,
       onChange: e => setTargetPlatforms(_objectSpread(_objectSpread({}, targetPlatforms), {}, {
         instagram: e.target.checked
       })),
-      disabled: loading,
+      disabled: loadingPreview || loadingPublish,
       sx: {
         color: '#e1306c',
         '&.Mui-checked': {
@@ -1333,16 +1466,26 @@ function MarketingViewAdmin() {
       sx: {
         fontWeight: 500
       }
-    }, "Instagram Feed (@globalgate.sarl)"))
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    }, "Instagram Feed (@globalgate.sarl)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+      label: "Requires Scope",
+      size: "small",
+      sx: {
+        height: 18,
+        fontSize: '0.65rem',
+        backgroundColor: '#fef3c7',
+        color: '#b45309',
+        fontWeight: 600
+      }
+    }))
+  })), !previewGenerated ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
     type: "submit",
     variant: "contained",
     size: "large",
-    disabled: loading || !brief.trim(),
-    startIcon: loading ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+    disabled: loadingPreview || !brief.trim(),
+    startIcon: loadingPreview ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
       size: 20,
       color: "inherit"
-    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Send__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null),
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_AutoAwesome__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A, null),
     sx: {
       backgroundColor: '#30368a',
       py: 1.5,
@@ -1355,7 +1498,60 @@ function MarketingViewAdmin() {
         backgroundColor: '#202a5a'
       }
     }
-  }, loading ? 'Generating & Publishing...' : 'Generate & Publish Campaign'))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
+  }, loadingPreview ? 'Generating Flyer Preview...' : '🎨 Generate Flyer Preview') : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      gap: 2,
+      alignItems: 'center'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    type: "button",
+    variant: "contained",
+    size: "large",
+    disabled: loadingPublish,
+    onClick: handleApproveAndPublish,
+    startIcon: loadingPublish ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+      size: 20,
+      color: "inherit"
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_RocketLaunch__WEBPACK_IMPORTED_MODULE_37__/* ["default"] */ .A, null),
+    sx: {
+      backgroundColor: '#10b981',
+      py: 1.5,
+      px: 3.5,
+      fontSize: '1rem',
+      fontWeight: 600,
+      textTransform: 'none',
+      borderRadius: 1.5,
+      '&:hover': {
+        backgroundColor: '#059669'
+      }
+    }
+  }, loadingPublish ? 'Publishing to Selected Platforms...' : '🚀 Approve & Publish'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .A, {
+    type: "button",
+    variant: "outlined",
+    size: "large",
+    disabled: loadingPreview || loadingPublish,
+    onClick: handleGeneratePreview,
+    startIcon: loadingPreview ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_3__/* ["default"] */ .A, {
+      size: 18,
+      color: "inherit"
+    }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Refresh__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A, null),
+    sx: {
+      py: 1.5,
+      px: 2.5,
+      fontSize: '0.95rem',
+      fontWeight: 600,
+      textTransform: 'none',
+      borderRadius: 1.5,
+      borderColor: '#64748b',
+      color: '#334155',
+      '&:hover': {
+        borderColor: '#1e293b',
+        backgroundColor: '#f1f5f9'
+      }
+    }
+  }, "\uD83D\uDD04 Regenerate")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Ay, {
     item: true,
     xs: 12,
     md: 5
@@ -1376,7 +1572,28 @@ function MarketingViewAdmin() {
       color: '#202a5a',
       mb: 2
     }
-  }, "\uD83D\uDCCA Publication Results & Flyer Preview"), result ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, "\uD83D\uDCCA Publication Results & Flyer Preview"), result ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, null, result.previewOnly && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .A, {
+    severity: "info",
+    sx: {
+      mb: 2.5,
+      borderRadius: 1.5,
+      backgroundColor: '#eff6ff',
+      borderColor: '#bfdbfe',
+      color: '#1e3a8a'
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "body2",
+    sx: {
+      fontWeight: 600
+    }
+  }, "\uD83C\uDFA8 Flyer Preview Generated"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      display: 'block',
+      mt: 0.5,
+      color: '#2563eb'
+    }
+  }, "Review the generated layout below. When satisfied, click ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("strong", null, "\"\uD83D\uDE80 Approve & Publish\""), " on the left to broadcast to selected social channels.")), !result.previewOnly && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       flexDirection: 'column',
@@ -1460,13 +1677,13 @@ function MarketingViewAdmin() {
     sx: {
       fontWeight: 600
     }
-  }, result.whatsapp.success ? result.whatsapp.message || 'WhatsApp Delivered Successfully' : 'WhatsApp Delivery Failed')), result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, result.whatsapp.success ? result.whatsapp.message || 'WhatsApp Delivered Successfully' : 'WhatsApp Delivery Failed')), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       display: 'flex',
       alignItems: 'center',
-      gap: 1
+      gap: 0.8
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, result.whatsapp.target && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     label: result.whatsapp.target,
     size: "small",
     color: result.whatsapp.success ? "success" : "default"
@@ -1482,6 +1699,10 @@ function MarketingViewAdmin() {
     icon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_Launch__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A, {
       fontSize: "small"
     })
+  })), result.whatsapp.statusStory && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    label: "Status Story",
+    size: "small",
+    color: "success"
   }))), result.whatsapp.error && !result.whatsapp.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "caption",
     sx: {
@@ -1493,10 +1714,10 @@ function MarketingViewAdmin() {
   }, result.whatsapp.error, " \u2014 You can also click \"Open Chat\" above to dispatch directly via WhatsApp.")), result.instagram && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       p: 1.5,
-      backgroundColor: result.instagram.success ? '#fdf2f8' : '#fef2f2',
+      backgroundColor: result.instagram.success ? '#fdf2f8' : '#fffbeb',
       borderRadius: 1.5,
       border: '1px solid',
-      borderColor: result.instagram.success ? '#fbcfe8' : '#fecaca'
+      borderColor: result.instagram.success ? '#fbcfe8' : '#fef3c7'
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
@@ -1517,9 +1738,10 @@ function MarketingViewAdmin() {
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "body2",
     sx: {
-      fontWeight: 600
+      fontWeight: 600,
+      color: result.instagram.success ? '#1e293b' : '#92400e'
     }
-  }, result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Status / Notice')), result.instagram.postId && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+  }, result.instagram.success ? 'Published to Instagram Feed' : 'Instagram Scope Guidance')), result.instagram.postId ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
     label: "Post: ".concat(result.instagram.postId),
     size: "small",
     component: "a",
@@ -1536,18 +1758,29 @@ function MarketingViewAdmin() {
         color: '#fff !important'
       }
     })
+  }) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+    label: "Scope Required",
+    size: "small",
+    sx: {
+      height: 20,
+      fontSize: '0.7rem',
+      backgroundColor: '#fef3c7',
+      color: '#b45309',
+      fontWeight: 600
+    }
   })), result.instagram.error && !result.instagram.success && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "caption",
     sx: {
       color: '#b45309',
       display: 'block',
       mt: 0.75,
-      pl: 4
+      pl: 3.5,
+      lineHeight: 1.4
     }
   }, result.instagram.error))), result.flyerBase64 ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       textAlign: 'center',
-      mt: 2
+      mt: 1.5
     }
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "subtitle2",
@@ -1573,7 +1806,26 @@ function MarketingViewAdmin() {
     sx: {
       mt: 2
     }
-  }, "Flyer image is stored on local workstation."), ((_result$copy2 = result.copy) === null || _result$copy2 === void 0 ? void 0 : _result$copy2.caption) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+  }, "Flyer image is stored on local workstation."), (result.headline || ((_result$copy2 = result.copy) === null || _result$copy2 === void 0 ? void 0 : _result$copy2.headline)) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+    sx: {
+      mt: 2
+    }
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "subtitle2",
+    sx: {
+      fontWeight: 600,
+      color: '#475569',
+      mb: 0.5
+    }
+  }, "Flyer Headline:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .A, {
+    sx: {
+      p: 1.2,
+      backgroundColor: '#f1f5f9',
+      fontWeight: 700,
+      fontSize: '0.9rem',
+      color: '#0f172a'
+    }
+  }, result.headline || ((_result$copy3 = result.copy) === null || _result$copy3 === void 0 ? void 0 : _result$copy3.headline))), ((_result$copy4 = result.copy) === null || _result$copy4 === void 0 ? void 0 : _result$copy4.caption) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
     sx: {
       mt: 2
     }
@@ -1611,13 +1863,13 @@ function MarketingViewAdmin() {
     sx: {
       fontWeight: 500
     }
-  }, "No campaign published yet."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+  }, "No flyer preview generated yet."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
     variant: "body2",
     sx: {
       color: '#94a3b8',
       mt: 0.5
     }
-  }, "Enter your promotional brief on the left and click \"Generate & Publish\" to preview the generated flyer and post details here.")))))))));
+  }, "Enter your promotional brief on the left and click \"Generate Flyer Preview\" to review the card and copy before publishing.")))))))));
 }
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (MarketingViewAdmin);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, [
