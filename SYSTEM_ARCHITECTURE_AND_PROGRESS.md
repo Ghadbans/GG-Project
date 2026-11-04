@@ -289,6 +289,23 @@
     - **Defensive Status Evaluation Formula:** Always coerce inputs using `parseFloat(val) || 0`. If both `cleanPaidUSD <= 0 && cleanPaidFC <= 0`, status strictly evaluates to **`UnPaid`**. If remaining credit is settled (`cleanCreditUSD <= 0.05 && cleanCreditFC <= 10`), status evaluates to **`Paid`**. Only when payments have actually been made (`cleanPaidUSD > 0 || cleanPaidFC > 0`) and remaining credit is positive does status evaluate to **`Partially-Paid`**.
     - **Database Numeric Integrity:** Never persist `null` or empty strings in `amountPayUSD` or `amountPayFC`. Always persist sanitized numeric values (`0` when unpaid).
     - **Defensive Null-Safe Detail Rendering:** In `PayRollViewInformation.js` (and any detail view formatting monetary values), NEVER call `.toString()` or `?.toFixed(2).replace(...)` directly on unvalidated MongoDB fields. Always wrap numeric values in defensive helpers (`safeFormatMoney`, `safeFormatInt`, `safeFormatRateDollars`) to prevent unhandled `TypeError: Cannot read properties of null (reading 'toString')` or `reading 'replace'` from triggering a white screen crash.
+56. **Marketing Campaign & Automated Social Media Publishing Engine (Ver 3.6.14)**:
+    - **Module & Navigation**: Added under the left navigation drawer ("More Menu") directly above "Rate", strictly governed by `permissions.marketing === true` across user roles, admin, and CEO permissions schema in the backend and in the "Grant Access" UI. Username `GG` (system creator) possesses unconditional bypass access (`marketing: true` by default).
+    - **Facebook Integration & Permanent Token Rules**:
+      * Dedicated Facebook Page ID: `200999390054494` (`GG SARL`), Meta App ID: `1146628611373632`.
+      * Uses a permanent, never-expiring Page Access Token rule (`expires_at: 0`).
+      * **Strict Photo Posting Enforcement**: All promotional flyers MUST be dispatched via multipart buffer upload directly to `POST https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos` with `{ source, caption, access_token }`. The system must NEVER fall back to text-only status updates on `/{page-id}/feed`. If flyer image generation fails or produces a corrupt buffer (<1KB), dispatch must abort with an explicit error rather than degrading to a plain text post.
+    - **WhatsApp Dispatch Rule**:
+      * Local Chromium/Puppeteer execution with session persistence in `C:\Users\GG\fb-whatsapp-agent\.wwebjs_auth`.
+      * **Self-Messaging Resolution**: When the recipient matches the account's own registered phone number (`client.info.wid.user === cleanNumber`), WhatsApp Web rejects standard `${cleanNumber}@c.us` chats with internal store getter errors (`Data passed to getter must include an id property`). The dispatcher automatically detects self-messaging and routes directly to the internal serialized thread (`client.info.wid._serialized`). External contacts route to `cleanNumber + '@c.us'`.
+      * Use `await client.getChatById()` to prevent internal store getter errors, with direct client dispatch fallback to bypass `getChatModel` memoization crashes.
+      * **WebSocket Media Flush Delay**: Guarantees a mandatory `4000ms` buffer transmission delay (`setTimeout`) after `sendMessage` resolves before calling `client.destroy()`, ensuring large 1080×1080 flyer images complete WebSocket transmission to WhatsApp servers.
+    - **Flyer Graphics Engine & Visual Identity**:
+      * 1080×1080 canvas with brand colors (`#0a0f1d`, `#1e293b`, gold stripe `#f59e0b`, emerald banner `#10b981`), multiline dynamic text wrapping, and incoming product image attachment slot.
+      * High-res output is written to `C:\Users\GG\fb-whatsapp-agent\generated_flyer.png` on the local workstation and surfaced immediately in the desktop application as Base64 data URL.
+    - **Instagram Integration**:
+      * Direct publishing pipeline via Meta Graph API linked Instagram Business account (`@globalgate.sarl`) container (`POST /{ig_user_id}/media` followed by `POST /{ig_user_id}/media_publish`).
+
 ## Current Progress Log
 - **Payroll Payment Status Logic Correction & View White Screen Crash Fix (Ver 3.5.87)**:
   - **Problem Reported:**
@@ -3498,3 +3515,28 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Generated official Windows installer: `dist/Global Gate Setup 3.6.13.exe`, copied to `server/public/downloads/GlobalGateSetup.exe` and `server/public/downloads/GlobalGate-v3.6.13.exe`.
    - Built Android APK via Gradle (`assembleDebug`), copied to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v3.6.13.apk`.
    - Committed all changes and pushed to GitHub `origin main` for Railway cloud backend redeployment.
+
+
+### Version 3.6.14 (November 04, 2026) - Marketing Campaign & Social Media Auto-Publisher Module
+1. **Module Architecture & Access Control**:
+   - Implemented the complete **Marketing** module (`MarketingViewAdmin.js`) integrated into the left navigation drawer under "More Menu" directly above "Rate".
+   - Added granular boolean permission `marketing` to all roles/user schema in backend `grantAccessSchema.js` and in the "Grant Access" administrative management UI.
+   - Master account `GG` retains unconditional bypass access (`hasAccess = true`), while all other users are strictly guarded by `permissions.marketing === true`.
+
+2. **Facebook Photo Post Enforcement & Permanent Token Exchange**:
+   - Converted Meta Page token to a permanent, never-expiring Page Access Token (`expires_at: 0`) for Page `GG SARL` (`200999390054494`) under App ID `1146628611373632`.
+   - Stored permanent token in `C:\Users\GG\fb-whatsapp-agent\.env` and `server/routes/marketingRoutes.js`.
+   - Completely eradicated all `/feed` text-only fallback endpoints. All Facebook dispatches now strictly upload 1080×1080 image buffers to `POST /photos`, guaranteeing branded visual flyer posts.
+
+3. **WhatsApp Web Memoization & Delivery Hardening**:
+   - Diagnosed and resolved WhatsApp Web internal store error (`Data passed to getter must include an id property`) when sending to the business's own phone number (`+243 827 722 222`).
+   - Implemented automatic self-message detection: routes self-messages to `client.info.wid._serialized` ("Message Yourself" thread) and external contacts to `cleanNumber + '@c.us'`.
+   - Implemented `4000ms` WebSocket media buffer flush delay prior to session teardown, ensuring 1080×1080 flyer images are completely received by WhatsApp servers.
+   - Added state sync trigger on authenticated event to guarantee `ready` event fires instantly on session restore.
+
+4. **Flyer Canvas Engine & Product Image Support**:
+   - 1080×1080 branded flyer generator using `@napi-rs/canvas` with brand colors (`#0a0f1d`, `#1e293b`, gold bar `#f59e0b`, emerald button `#10b981`), dynamic multiline text wrapping, and incoming product image attachment slot.
+   - Saves high-res output directly to `C:\Users\GG\fb-whatsapp-agent\generated_flyer.png` on the local workstation.
+
+5. **Instagram Business Publishing Pipeline**:
+   - Integrated Instagram containerized publishing pipeline architecture via Meta Graph API linked Instagram Business account (`@globalgate.sarl`) container (`POST /{ig_user_id}/media` followed by `POST /{ig_user_id}/media_publish`).
