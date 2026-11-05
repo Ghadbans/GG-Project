@@ -810,7 +810,10 @@ function MaintenanceFormView() {
 
     const data = {
        _id: v4(),
-       customerName, serviceNumber, serviceDate, actionTaken: actionTaken || '', visitDate, itemDescriptionInfo: itemDescriptionInfo || '', warranty, defectDescription: defectDescription || '', technicianAssign, brand: brand || '', model, serviceName, action, serialNo: serialNo || '', status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
+       customerName, serviceNumber,
+       serviceDate: serviceDate && dayjs.isDayjs(serviceDate) ? serviceDate.toDate() : (serviceDate ? new Date(serviceDate) : new Date()),
+       actionTaken: actionTaken || '',
+       visitDate: visitDate && dayjs.isDayjs(visitDate) ? visitDate.toDate() : (visitDate ? new Date(visitDate) : null), itemDescriptionInfo: itemDescriptionInfo || '', warranty, defectDescription: defectDescription || '', technicianAssign, brand: brand || '', model, serviceName, action, serialNo: serialNo || '', status, items: itemsWithoutData, adjustmentNumber, adjustment, totalInvoice, subTotal,
        note, totalLaborFees, laborPercentage, totalDiscount, laborDiscount, laborQty, totalLaborFeesGenerale, synced: false,
        includeAssetControl, assetControlReport
     };

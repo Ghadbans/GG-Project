@@ -884,7 +884,8 @@ function MaintenanceUpdateView() {
 
     const data = {
       customerName,
-      serviceDate,
+      serviceDate: serviceDate && dayjs.isDayjs(serviceDate) ? serviceDate.toDate() : (serviceDate ? new Date(serviceDate) : new Date()),
+      visitDate: visitDate && dayjs.isDayjs(visitDate) ? visitDate.toDate() : (visitDate ? new Date(visitDate) : null),
       actionTaken: actionTaken || '',
       itemDescriptionInfo: itemDescriptionInfo || '',
       warranty,

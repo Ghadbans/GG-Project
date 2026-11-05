@@ -15,17 +15,31 @@ const maintenanceSchema= new Schema(
         trim: true,
         },
       serviceDate: {
-      type: Date,
-      trim: true,
-      required: true
+        type: Date,
+        trim: true,
+        required: true,
+        set: (v) => {
+          if (!v) return new Date();
+          if (typeof v === 'object' && v.$d) return new Date(v.$d);
+          if (typeof v === 'object' && Object.keys(v).length === 0) return new Date();
+          const d = new Date(v);
+          return isNaN(d.getTime()) ? new Date() : d;
+        }
       },
       technicianAssign:{
         type: String,
         trim: true,
       },
       visitDate: {
-      type: Date,
-      trim: true,
+        type: Date,
+        trim: true,
+        set: (v) => {
+          if (!v) return null;
+          if (typeof v === 'object' && v.$d) return new Date(v.$d);
+          if (typeof v === 'object' && Object.keys(v).length === 0) return null;
+          const d = new Date(v);
+          return isNaN(d.getTime()) ? null : d;
+        }
       },
       status: {
         type: String,
@@ -38,9 +52,10 @@ const maintenanceSchema= new Schema(
           if (upper === 'CANCEL') return 'Cancel';
           if (upper === 'PENDING') return 'Pending';
           if (upper === 'CLOSE' || upper === 'CLOSED') return 'Close';
+          if (upper === 'CONVERTED') return 'Converted';
           return v;
         },
-        enum: ['Open', 'Reschedule','Cancel','Pending','Close', 'OPEN', 'RESCHEDULE', 'CANCEL', 'PENDING', 'CLOSE', 'CLOSED'],
+        enum: ['Open', 'Reschedule','Cancel','Pending','Close', 'Converted', 'OPEN', 'RESCHEDULE', 'CANCEL', 'PENDING', 'CLOSE', 'CLOSED', 'CONVERTED'],
         default: 'Open'
       },
       itemDescriptionInfo: {
