@@ -349,3 +349,15 @@ input[id*="password" i],
 input[id*="email" i] {
     text-transform: none !important;
 }
+
+
+/* Universal Capital Letters for Data Tables, DataGrid Cells, and View Descriptions across all business modules */
+table:not(.no-uppercase):not(.login100-form) td:not(.no-uppercase):not(.keep-case),
+table:not(.no-uppercase):not(.login100-form) th:not(.no-uppercase):not(.keep-case),
+.tableInfo10 td:not(.no-uppercase):not(.keep-case),
+.tableInfo10 th:not(.no-uppercase):not(.keep-case),
+.MuiTableCell-root:not(.no-uppercase):not(.keep-case),
+.MuiDataGrid-cell:not(.no-uppercase):not(.keep-case),
+.MuiDataGrid-columnHeaderTitle:not(.no-uppercase):not(.keep-case) {
+    text-transform: uppercase !important;
+}

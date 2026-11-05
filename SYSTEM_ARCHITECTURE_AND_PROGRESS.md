@@ -3700,3 +3700,29 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Rebuilt frontend with `npm run build:electron` into `build/`.
    - Packaged Windows desktop executable via `electron-builder` (`npm run make:win`) into `dist/Global Gate Setup 3.6.18.exe`.
    - Updated release installers in `server/public/downloads/GlobalGate-v3.6.18.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+
+
+### Version 3.6.19 (November 05, 2026) - Universal Capital Letters Across All Modules & Tables (Typing, Saving & Display)
+1. **The Root Cause Resolution**:
+   - The user identified that while typing in inputs, text was visually showing in uppercase due to CSS `text-transform: uppercase`, but the underlying DOM and React state values remained lowercase (when Caps Lock was OFF). Upon saving, records were stored as lowercase in MongoDB and displayed as lowercase in tables/reports (e.g. `whish`, `tmb`, `sofl` under Daily Expenses Cash Overview).
+   - The user required all modules and sub-modules to strictly take and store only capital letters, with explicit exemption for the Login page.
+
+2. **Multi-Layer Universal Uppercase Implementation**:
+   - **Layer 1 (Real-time Typing Interception in DOM)**:
+     * In `src/js/index.js`, mounted global capturing listeners for `beforeinput` and `input`.
+     * `beforeinput`: Intercepts `insertText` keystrokes and natively inserts uppercase text (`upper = e.data.toUpperCase()`) via `document.execCommand('insertText')` with native prototype setter fallback.
+     * `input`: Intercepts paste, autofill, and input updates, updating `target.value` to uppercase via prototype setter and preserving caret position.
+     * Guaranteed that React synthetic `onChange` handlers and component states receive real uppercase strings as the user types.
+     * Explicitly exempted Login elements (`.wrap-login100`, `.login100-form`, `[type="password"]`, `[type="email"]`, `.no-uppercase`, route `/` or `/login`).
+   - **Layer 2 (Client-side Axios Request Sanitizer)**:
+     * In `src/js/index.js`, added recursive `sanitizeUppercasePayload(data)` interceptor on all `POST`, `PUT`, `PATCH` requests.
+     * Automatically converts all string properties (notes, descriptions, names, remarks, categories) to uppercase before sending to backend.
+     * Exempts passwords, emails, auth tokens, media base64, URLs, and MongoDB 24-hex ObjectIDs.
+     * Bypasses auth endpoints (`/login`, `/auth`, `/employeeuser`, etc.).
+   - **Layer 3 (Display Layer CSS)**:
+     * In `src/js/css/Side.css`, added universal uppercase display rules for all tables, table cells (`td`, `th`), `.tableInfo10`, `.MuiTableCell-root`, and `.MuiDataGrid-cell`.
+     * Guarantees that historical records and existing database values immediately display in capital letters across all modules and sub-modules.
+     * In `DailyExpenseAdminView.js`, explicitly uppercase-rendered Cash table notes `(Item.note || '').toUpperCase()`.
+   - **Layer 4 (Backend Express Middleware & MongoDB Auto-Repair)**:
+     * In `server/index.js`, mounted `sanitizeBackendUppercase` middleware on all non-auth `POST`, `PUT`, `PATCH` requests, ensuring any client payload is stored in uppercase in MongoDB.
+     * In server background startup maintenance (`setImmediate`), added auto-repair for existing `cash` collection documents, converting historical lowercase notes (e.g., `whish`, `tmb`, `sofl`) to uppercase.

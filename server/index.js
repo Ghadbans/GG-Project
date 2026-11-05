@@ -55,6 +55,33 @@ mongoDbConnection().then(() => {
       console.error('Payroll auto-repair error:', e.message);
     }
 
+    // Auto-repair existing Cash collection notes to uppercase
+    try {
+      const cashColl = mongoose.connection.db.collection('cash');
+      const cashDocs = await cashColl.find({ 'amount.note': { $exists: true } }).toArray();
+      for (const doc of cashDocs) {
+        if (Array.isArray(doc.amount)) {
+          let changed = false;
+          const updatedAmount = doc.amount.map(item => {
+            if (item && item.note && typeof item.note === 'string') {
+              const upperNote = item.note.toUpperCase();
+              if (item.note !== upperNote) {
+                changed = true;
+                return { ...item, note: upperNote };
+              }
+            }
+            return item;
+          });
+          if (changed) {
+            await cashColl.updateOne({ _id: doc._id }, { $set: { amount: updatedAmount } });
+          }
+        }
+      }
+      console.log('Cash collection notes uppercase auto-repair completed.');
+    } catch (e) {
+      console.warn('Cash notes uppercase repair warning:', e.message);
+    }
+
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;
@@ -154,6 +181,61 @@ const io = new Server(server, {
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+// Universal Uppercase Sanitizer for Incoming Business Payloads
+function sanitizeBackendUppercase(data, keyPath = '') {
+  if (data === null || data === undefined) return data;
+  if (typeof data === 'string') {
+    const lowerKey = keyPath.toLowerCase();
+    if (
+      lowerKey.includes('password') ||
+      lowerKey.includes('email') ||
+      lowerKey.includes('token') ||
+      lowerKey.includes('url') ||
+      lowerKey.includes('image') ||
+      lowerKey.includes('photo') ||
+      lowerKey.includes('icon') ||
+      lowerKey.includes('avatar') ||
+      lowerKey.includes('file') ||
+      lowerKey.includes('path') ||
+      lowerKey.includes('hash') ||
+      lowerKey.includes('signature') ||
+      lowerKey.includes('auth') ||
+      data.startsWith('data:') ||
+      data.startsWith('http://') ||
+      data.startsWith('https://') ||
+      data.startsWith('blob:') ||
+      data.startsWith('sidecar://') ||
+      (/^[0-9a-fA-F]{24}$/.test(data) && (lowerKey.includes('id') || lowerKey.includes('_id'))) ||
+      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data)
+    ) {
+      return data;
+    }
+    return data.toUpperCase();
+  }
+  if (Array.isArray(data)) {
+    return data.map((item, idx) => sanitizeBackendUppercase(item, keyPath + '[' + idx + ']'));
+  }
+  if (typeof data === 'object') {
+    const clean = {};
+    for (const k of Object.keys(data)) {
+      clean[k] = sanitizeBackendUppercase(data[k], k);
+    }
+    return clean;
+  }
+  return data;
+}
+
+app.use((req, res, next) => {
+  const reqUrl = (req.originalUrl || req.url || '').toLowerCase();
+  const isAuthRoute = reqUrl.includes('/auth') || reqUrl.includes('/login') || reqUrl.includes('/employeeuser') || reqUrl.includes('/adminuser');
+  if (!isAuthRoute && ['POST', 'PUT', 'PATCH'].includes(req.method) && req.body && typeof req.body === 'object') {
+    try {
+      req.body = sanitizeBackendUppercase(req.body);
+    } catch (_) {}
+  }
+  next();
+});
 app.use(function (req, res, next) {
   req.io = io;
   return next();
@@ -200,7 +282,7 @@ const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.5.87-payroll-fix]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.18', attachments: true, uptime: process.uptime() })); // health check
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.19', attachments: true, uptime: process.uptime() })); // health check
 
 // DEBUG & INIT ROUTES
 app.get('/debug-db', async (req, res) => {

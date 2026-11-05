@@ -326,7 +326,7 @@ function DailyExpenses() {
     const handleChangeAmount = (e, i) => {
       const { name, value } = e.target;
       const list = [...amount];
-      list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : value;
+      list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : (name === 'note' ? (value || '').toUpperCase() : value);
       list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC'] || 0) / (parseFloat(list[i]['rate']) || 1)) + parseFloat(list[i]['amountUsd'] || 0)) * 100) / 100
     setAmount(list)
@@ -458,7 +458,7 @@ function DailyExpenses() {
     e.preventDefault();
     setSaving('true')
     const data = {
-      cashDate, cashNumber, rate, totalCash, amount, Create, synced: false
+      cashDate, cashNumber, rate, totalCash, amount: (amount || []).map(a => ({ ...a, note: (a.note !== undefined ? String(a.note).toUpperCase() : '') })), Create, synced: false
     }
     try {
       const res = await axios.post(ENDPOINT_URL + '/create-cash', data);

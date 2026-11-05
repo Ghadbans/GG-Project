@@ -312,7 +312,7 @@ function DailyExpenseAdminView() {
   const handleChangeAmount = (e, i) => {
     const { name, value } = e.target;
     const list = [...amount];
-    list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : value;
+    list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : (name === 'note' ? (value || '').toUpperCase() : value);
     list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseInt(list[i]['amountFC']) / list[i]['rate']) + list[i]['amountUsd']) * 100) / 100
     setAmount(list)
@@ -507,7 +507,7 @@ function DailyExpenseAdminView() {
   const handleSubmitUpdate = async (e) => {
     e.preventDefault();
     const data = {
-      cashDate, totalCash: totalCashInfo, amount, updateS: false
+      cashDate, totalCash: totalCashInfo, amount: (amount || []).map(a => ({ ...a, note: (a.note !== undefined ? String(a.note).toUpperCase() : '') })), updateS: false
     }
     try {
       const res = await axios.put(`${ENDPOINT_URL}/update-cash/${viewId}`, data);
@@ -703,7 +703,7 @@ function DailyExpenseAdminView() {
     const handleChangeAmount1 = (e, i) => {
       const { name, value } = e.target;
       const list = [...amount1];
-      list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : value;
+      list[i][name] = (name === 'amountFC' || name === 'amountUsd' || name === 'rate') ? value.replace(/,/g, '') : (name === 'note' ? (value || '').toUpperCase() : value);
       list[i]['rate'] = rate
     list[i]['total'] = Math.round(((parseFloat(list[i]['amountFC']) / list[i]['rate']) + parseFloat(list[i]['amountUsd'])) * 100) / 100
     setAmount1(list)
@@ -910,7 +910,7 @@ function DailyExpenseAdminView() {
                                   row2.amount?.map((Item, i) => (
                                     <tr key={Item.idRow}>
                                       <td style={{ border: '1px solid gray', width: '100px' }}>{i + 1}</td>
-                                      <td style={{ border: '1px solid gray', width: '100px' }} colSpan={4}>{Item.note !== undefined ? Item.note : ''}</td>
+                                      <td style={{ border: '1px solid gray', width: '100px', textTransform: 'uppercase' }} colSpan={4}>{Item.note !== undefined ? String(Item.note).toUpperCase() : ''}</td>
                                       {
                                         parseFloat(Item.amountFC) !== 0 ?
                                           <>
