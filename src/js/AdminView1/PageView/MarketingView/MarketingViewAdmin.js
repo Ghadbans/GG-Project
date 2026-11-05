@@ -114,7 +114,7 @@ function MarketingViewAdmin() {
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
-    whatsappStatus: true,
+    whatsappStatus: false,
     instagram: true,
   });
   const [previewGenerated, setPreviewGenerated] = useState(false);
@@ -641,6 +641,17 @@ function MarketingViewAdmin() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <AutoStoriesIcon sx={{ color: '#10b981' }} />
                             <Typography sx={{ fontWeight: 500 }}>WhatsApp Status (Story)</Typography>
+                            <Chip
+                              label="(Manual / Mobile only)"
+                              size="small"
+                              sx={{
+                                height: 20,
+                                fontSize: '0.65rem',
+                                backgroundColor: '#fef3c7',
+                                color: '#b45309',
+                                fontWeight: 600,
+                              }}
+                            />
                           </Box>
                         }
                       />

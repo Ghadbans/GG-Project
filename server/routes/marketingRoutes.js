@@ -3,6 +3,8 @@ const router = express.Router();
 const path = require('path');
 const fs = require('fs');
 const { execFile } = require('child_process');
+const axios = require('axios');
+const FormData = require('form-data');
 const GrantAccess = require('../model/grantAccessSchema');
 
 // Path to local fb-whatsapp-agent
@@ -216,7 +218,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
       // Parse Facebook Post ID from stdout if available
       let fbPostId = null;
-      const fbMatch = stdout.match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/Post ID:\s*([^\s\n\r]+)/i);
+      const fbMatch = stdout.match(/Live Feed Post Published ID:\s*([^\s\n\r]+)/i) || stdout.match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/Post ID:\s*([^\s\n\r]+)/i);
       if (fbMatch) {
         fbPostId = fbMatch[1];
       }
@@ -289,49 +291,40 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
     let fbResult = null;
     if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
-      // 2-STAGE ATTACHED MEDIA FEED PUBLISHING
+      // 2-STAGE ATTACHED MEDIA FEED PUBLISHING (Exact Meta Implementation)
       const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
       latestFlyerBuffer = svgBuffer;
-      const blob = new Blob([svgBuffer], { type: 'image/svg+xml' });
 
-      // Step A: Upload image silently without publishing to album
+      // Step 1: Upload photo without publishing it to the album
       const uploadForm = new FormData();
-      uploadForm.append('source', blob, 'flyer.svg');
+      uploadForm.append('source', svgBuffer, { filename: 'flyer.png', contentType: 'image/png' });
       uploadForm.append('published', 'false');
-      uploadForm.append('temporary', 'true');
       uploadForm.append('access_token', FB_PAGE_ACCESS_TOKEN);
 
-      const uploadUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`;
-      const uploadRes = await fetch(uploadUrl, { method: 'POST', body: uploadForm });
-      const uploadData = await uploadRes.json();
+      const photoRes = await axios.post(
+        `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`,
+        uploadForm,
+        { headers: uploadForm.getHeaders() }
+      );
+      const photoId = photoRes.data.id;
 
-      if (uploadData.id) {
-        const photoId = uploadData.id;
-        // Step B: Publish directly to the Page Timeline Feed
-        const feedUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed`;
-        const feedRes = await fetch(feedUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            message: caption,
-            attached_media: [{ media_fbid: photoId }],
-            access_token: FB_PAGE_ACCESS_TOKEN
-          })
-        });
-        const feedData = await feedRes.json();
-        if (feedData.id) {
-          fbResult = {
-            success: true,
-            postId: feedData.id,
-            photoId: photoId,
-            postUrl: `https://www.facebook.com/${feedData.id}`
-          };
-        } else {
-          fbResult = { success: false, error: feedData.error?.message || 'Facebook feed publish failed' };
+      // Step 2: Publish a real post to the Page Feed with the photo attached
+      const feedRes = await axios.post(
+        `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed`,
+        {
+          message: caption,
+          attached_media: [{ media_fbid: photoId }],
+          access_token: FB_PAGE_ACCESS_TOKEN
         }
-      } else {
-        fbResult = { success: false, error: uploadData.error?.message || 'Facebook photo silent upload failed' };
-      }
+      );
+
+      console.log('✅ Live Feed Post Published ID:', feedRes.data.id);
+      fbResult = {
+        success: true,
+        postId: feedRes.data.id,
+        photoId: photoId,
+        postUrl: `https://www.facebook.com/${feedRes.data.id}`
+      };
     }
 
     let igResult = null;

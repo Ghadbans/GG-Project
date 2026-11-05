@@ -3668,3 +3668,35 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Packaged Windows desktop executable via `electron-builder` (`npm run make:win`) into `dist/Global Gate Setup 3.6.17.exe` (95.7 MB).
    - Synchronized release installers to server download repositories: `server/public/downloads/GlobalGate-v3.6.17.exe` and `server/public/downloads/GlobalGateSetup.exe`.
    - Committed and pushed to GitHub `origin main` to trigger live Railway deployment and distribution sync.
+
+### Version 3.6.18 (November 05, 2026) - Strict Facebook Axios/Form-Data Attached Media Pipeline & WhatsApp Status Default Deselection
+1. **Strict 2-Step Facebook Attached Media Implementation**:
+   - Replaced all legacy direct photo uploads and native fetch/Blob calls in `agent.js` and `server/routes/marketingRoutes.js` with the exact 2-step `axios` + `form-data` attached_media pipeline:
+     * **Step 1 (Silent Photo Upload via form-data stream)**:
+       ```javascript
+       const uploadForm = new FormData();
+       uploadForm.append('source', fs.createReadStream(flyerPath));
+       uploadForm.append('published', 'false');
+       uploadForm.append('access_token', process.env.FB_PAGE_ACCESS_TOKEN);
+       const photoRes = await axios.post(`https://graph.facebook.com/v21.0/${process.env.FB_PAGE_ID}/photos`, uploadForm, { headers: uploadForm.getHeaders() });
+       const photoId = photoRes.data.id;
+       ```
+     * **Step 2 (Public Timeline Feed Post with attached_media)**:
+       ```javascript
+       const feedRes = await axios.post(`https://graph.facebook.com/v21.0/${process.env.FB_PAGE_ID}/feed`, {
+         message: caption,
+         attached_media: [{ media_fbid: photoId }],
+         access_token: process.env.FB_PAGE_ACCESS_TOKEN
+       });
+       console.log('✅ Live Feed Post Published ID:', feedRes.data.id);
+       ```
+   - Updated post ID parsing in `main.js` and `server/routes/marketingRoutes.js` to match `Live Feed Post Published ID:` first.
+   - Verified that live posts publish directly onto the public Page Timeline Feed (`/feed`) with `timeline_visibility: 'normal'` and appear under the main public "Posts" feed.
+2. **WhatsApp Status Story UI Default & Badge**:
+   - In `MarketingViewAdmin.js`, default-unchecked the "WhatsApp Status (Story)" platform option (`whatsappStatus: false`) so users primarily rely on the fully operational automated WhatsApp Direct Message.
+   - Added badge: `<Chip label="(Manual / Mobile only)" size="small" sx={{ height: 20, fontSize: '0.65rem', backgroundColor: '#fef3c7', color: '#b45309', fontWeight: 600 }} />` directly adjacent to the checkbox label.
+3. **Packaging & Release**:
+   - AST validation passed across all 239 source files with 0 errors.
+   - Rebuilt frontend with `npm run build:electron` into `build/`.
+   - Packaged Windows desktop executable via `electron-builder` (`npm run make:win`) into `dist/Global Gate Setup 3.6.18.exe`.
+   - Updated release installers in `server/public/downloads/GlobalGate-v3.6.18.exe` and `server/public/downloads/GlobalGateSetup.exe`.

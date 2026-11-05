@@ -375,7 +375,7 @@ ipcMain.handle('run-marketing', async (event, payload) => {
       }
 
       let fbPostId = null;
-      const fbMatch = (stdout || '').match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || (stdout || '').match(/Post ID:\s*([^\s\n\r]+)/i);
+      const fbMatch = (stdout || '').match(/Live Feed Post Published ID:\s*([^\s\n\r]+)/i) || (stdout || '').match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || (stdout || '').match(/Post ID:\s*([^\s\n\r]+)/i);
       if (fbMatch) {
         fbPostId = fbMatch[1];
       }
