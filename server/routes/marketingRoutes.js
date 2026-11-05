@@ -289,29 +289,48 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
     let fbResult = null;
     if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
-      // STRICT PHOTO PUBLISHING: Convert SVG to buffer and post to /photos
+      // 2-STAGE ATTACHED MEDIA FEED PUBLISHING
       const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
       latestFlyerBuffer = svgBuffer;
       const blob = new Blob([svgBuffer], { type: 'image/svg+xml' });
-      const formData = new FormData();
-      formData.append('source', blob, 'flyer.svg');
-      formData.append('caption', caption);
-      formData.append('published', 'true');
-      formData.append('no_story', 'false');
-      formData.append('access_token', FB_PAGE_ACCESS_TOKEN);
 
-      const fbUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos?published=true&no_story=false`;
-      const fbRes = await fetch(fbUrl, { method: 'POST', body: formData });
-      const fbData = await fbRes.json();
-      if (fbData.post_id || fbData.id) {
-        const pid = fbData.post_id || fbData.id;
-        fbResult = {
-          success: true,
-          postId: pid,
-          postUrl: `https://www.facebook.com/${pid}`
-        };
+      // Step A: Upload image silently without publishing to album
+      const uploadForm = new FormData();
+      uploadForm.append('source', blob, 'flyer.svg');
+      uploadForm.append('published', 'false');
+      uploadForm.append('temporary', 'true');
+      uploadForm.append('access_token', FB_PAGE_ACCESS_TOKEN);
+
+      const uploadUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`;
+      const uploadRes = await fetch(uploadUrl, { method: 'POST', body: uploadForm });
+      const uploadData = await uploadRes.json();
+
+      if (uploadData.id) {
+        const photoId = uploadData.id;
+        // Step B: Publish directly to the Page Timeline Feed
+        const feedUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed`;
+        const feedRes = await fetch(feedUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            message: caption,
+            attached_media: [{ media_fbid: photoId }],
+            access_token: FB_PAGE_ACCESS_TOKEN
+          })
+        });
+        const feedData = await feedRes.json();
+        if (feedData.id) {
+          fbResult = {
+            success: true,
+            postId: feedData.id,
+            photoId: photoId,
+            postUrl: `https://www.facebook.com/${feedData.id}`
+          };
+        } else {
+          fbResult = { success: false, error: feedData.error?.message || 'Facebook feed publish failed' };
+        }
       } else {
-        fbResult = { success: false, error: fbData.error?.message || 'Facebook photo upload failed' };
+        fbResult = { success: false, error: uploadData.error?.message || 'Facebook photo silent upload failed' };
       }
     }
 

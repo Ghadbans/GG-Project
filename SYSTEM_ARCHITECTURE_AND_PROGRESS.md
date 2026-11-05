@@ -3650,3 +3650,18 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
 2. **Quality Gate Verification & Version Increment**:
    - `npm run prebuild` verified across all 239 source files with 0 errors.
    - Bumper version to `3.6.16` across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
+
+### Version 3.6.17 (November 05, 2026) - Facebook 2-Stage Attached Media Timeline Feed & WhatsApp Status Story Upgrade
+1. **Facebook 2-Stage Attached Media Feed Pipeline**:
+   - Completely resolved the issue where direct photo uploads only stored images in the Page's photo album without creating a public feed story under the main "Posts" timeline tab.
+   - Replaced direct photo upload with Meta's official 2-step media feed pipeline across `agent.js` and `server/routes/marketingRoutes.js`:
+     * **Step A (Silent Media Staging)**: Image uploaded to `POST /v21.0/{page-id}/photos` with `published: 'false'` and `temporary: 'true'`. Returns temporary `photoId`.
+     * **Step B (Timeline Feed Publishing)**: Directly dispatches to `POST /v21.0/{page-id}/feed` with `message: caption` and `attached_media: [{ media_fbid: photoId }]`. Returns the live timeline `finalPostId` (`{page-id}_{post-id}`).
+   - Forces Meta to generate a first-class timeline post visible immediately to all page followers, visitors, and news feeds identical to manual posts published from Meta Business Suite.
+2. **WhatsApp Status Story Dispatch Upgrade**:
+   - In `sendViaWhatsApp` inside `agent.js`, updated status publishing to leverage `client.sendStatus(media, { caption })` with automated fallback to `(await client.getChatById('status@broadcast')).sendMessage(media, { caption })`.
+   - Preserved 4000ms WebSocket buffer flush delay prior to browser teardown to ensure full delivery of 1080x1080 media.
+3. **Multi-Platform Verification & SOP Compliance**:
+   - AST validation passed with 0 errors across 239 source files (`npm run prebuild`).
+   - Incremented version to `v3.6.17` across all project configuration files.
+   - Committed and pushed to GitHub `origin main` to trigger Railway backend deployment.

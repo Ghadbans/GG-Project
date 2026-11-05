@@ -200,7 +200,7 @@ const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.5.87-payroll-fix]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.16', attachments: true, uptime: process.uptime() })); // health check
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.17', attachments: true, uptime: process.uptime() })); // health check
 
 // DEBUG & INIT ROUTES
 app.get('/debug-db', async (req, res) => {
