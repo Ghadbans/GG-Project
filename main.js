@@ -327,9 +327,15 @@ ipcMain.handle('run-marketing', async (event, payload) => {
     };
   }
 
+  // Clear previous flyer before generating new one so stale flyers are never returned
+  if (fs.existsSync(flyerPath)) {
+    try {
+      fs.unlinkSync(flyerPath);
+    } catch (_) {}
+  }
+
   const postToFacebook = platforms.facebook !== false;
   const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
-  const sendWhatsAppStatus = Boolean(platforms.whatsappStatus);
   const postToInstagram = Boolean(platforms.instagram);
 
   let tempProductImagePath = null;
@@ -340,6 +346,11 @@ ipcMain.handle('run-marketing', async (event, payload) => {
       fs.writeFileSync(tempProductImagePath, Buffer.from(base64Data, 'base64'));
     } catch (e) {
       console.warn('Could not write temp product image:', e.message);
+    }
+  } else {
+    const oldTemp = path.join(agentDir, 'temp_product.png');
+    if (fs.existsSync(oldTemp)) {
+      try { fs.unlinkSync(oldTemp); } catch (_) {}
     }
   }
 
@@ -354,7 +365,6 @@ ipcMain.handle('run-marketing', async (event, payload) => {
   } else {
     args.push(postToFacebook ? '--fb' : '--no-fb');
     args.push(sendWhatsApp ? '--send-wa' : '--no-wa');
-    if (sendWhatsAppStatus) args.push('--wa-status');
     args.push(postToInstagram ? '--send-ig' : '--no-ig');
   }
 

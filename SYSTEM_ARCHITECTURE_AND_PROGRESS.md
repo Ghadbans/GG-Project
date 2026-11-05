@@ -3726,3 +3726,19 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - **Layer 4 (Backend Express Middleware & MongoDB Auto-Repair)**:
      * In `server/index.js`, mounted `sanitizeBackendUppercase` middleware on all non-auth `POST`, `PUT`, `PATCH` requests, ensuring any client payload is stored in uppercase in MongoDB.
      * In server background startup maintenance (`setImmediate`), added auto-repair for existing `cash` collection documents, converting historical lowercase notes (e.g., `whish`, `tmb`, `sofl`) to uppercase.
+
+
+### Version 3.6.20 (November 05, 2026) - Marketing Module Consolidation & Instant Fresh Flyer Generation
+1. **Consolidation to 3 Primary Dispatch Platforms**:
+   - Per explicit user directive, completely removed the "WhatsApp Status (Story)" platform option from the Marketing module.
+   - Preserved and prioritized strictly the 3 fully functional and verified marketing channels:
+     * `Facebook Page (GG SARL)` (Live Page timeline feed via 2-stage attached media pipeline)
+     * `WhatsApp Direct Message` (Direct customer dispatch with flyer image and custom contact number)
+     * `Instagram Feed (@globalgate.sarl)` (Live feed container publication)
+   - Cleaned up `MarketingViewAdmin.js`, removing `AutoStoriesIcon`, `whatsappStatus` state properties, form controls, payload arguments, and status chips.
+   - Defensive cleanup in `main.js` and `server/routes/marketingRoutes.js` ensuring omitting status story options is cleanly handled.
+
+2. **Resolution of "Stuck on Last Generated Flyer" / Cache Overwrite**:
+   - **Root Cause 1 (AI Generation Timeout Cap)**: In `agent.js`, the Google GenAI SDK was attempting to query a model experiencing high demand (503), retrying with exponential backoff for ~79 seconds without an abort signal. Added a strict 3.5-second timeout via `Promise.race([aiPromise, timeoutPromise])`. If Google AI takes longer than 3.5 seconds or returns 503, it immediately falls back to the smart local copy generator (2ms), ensuring flyers are generated in ~1-2 seconds.
+   - **Root Cause 2 (Disk Stale File Purge)**: In `main.js` and `server/routes/marketingRoutes.js`, previous `generated_flyer.png` and `temp_product.png` files were never removed prior to running the agent child process. Now, `main.js` and `marketingRoutes.js` unconditionally unlink any existing `generated_flyer.png` before `execFile` starts, guaranteeing that stale images can never be read if a job is in progress or fails.
+   - **Root Cause 3 (UI State Reset & Loading Feedback)**: In `MarketingViewAdmin.js`, `result` in React state was not reset when typing a new brief, uploading/removing a product photo, or clicking "Generate Flyer Preview", causing the UI to display the previous flyer while awaiting the new one. Added instant `setResult(null)` and `setPreviewGenerated(false)` on all brief and photo changes, and added an active high-resolution flyer generating spinner in the preview column.

@@ -170,6 +170,13 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
   if (fs.existsSync(AGENT_SCRIPT)) {
     console.log('[Marketing] Executing local agent script at:', AGENT_SCRIPT);
 
+    // Clear previous flyer before generating new one so stale flyers are never returned
+    if (fs.existsSync(AGENT_FLYER)) {
+      try {
+        fs.unlinkSync(AGENT_FLYER);
+      } catch (_) {}
+    }
+
     let tempProductImagePath = null;
     if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
       try {
@@ -178,6 +185,11 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         fs.writeFileSync(tempProductImagePath, Buffer.from(base64Data, 'base64'));
       } catch (e) {
         console.warn('[Marketing] Could not write temp product image:', e.message);
+      }
+    } else {
+      const oldTemp = path.join(AGENT_DIR, 'temp_product.png');
+      if (fs.existsSync(oldTemp)) {
+        try { fs.unlinkSync(oldTemp); } catch (_) {}
       }
     }
 

@@ -39,7 +39,6 @@ import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import SendIcon from '@mui/icons-material/Send';
 import RefreshIcon from '@mui/icons-material/Refresh';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
-import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -114,7 +113,6 @@ function MarketingViewAdmin() {
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
-    whatsappStatus: false,
     instagram: true,
   });
   const [previewGenerated, setPreviewGenerated] = useState(false);
@@ -139,6 +137,7 @@ function MarketingViewAdmin() {
       setProductImage(uploadEvent.target.result);
       setProductImageName(file.name);
       setPreviewGenerated(false);
+      setResult(null);
     };
     reader.readAsDataURL(file);
   };
@@ -147,6 +146,7 @@ function MarketingViewAdmin() {
     setProductImage(null);
     setProductImageName('');
     setPreviewGenerated(false);
+    setResult(null);
   };
 
   // Access Permission Verification
@@ -215,6 +215,8 @@ function MarketingViewAdmin() {
 
     setLoadingPreview(true);
     setErrorMessage('');
+    setResult(null);
+    setPreviewGenerated(false);
 
     const payload = {
       brief: brief.trim(),
@@ -224,7 +226,6 @@ function MarketingViewAdmin() {
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
-        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -278,7 +279,7 @@ function MarketingViewAdmin() {
   };
 
   const handleApproveAndPublish = async () => {
-    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.whatsappStatus && !targetPlatforms.instagram) {
+    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
       toast.warning('Please select at least one target dispatch platform.');
       return;
     }
@@ -294,7 +295,6 @@ function MarketingViewAdmin() {
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
-        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -335,15 +335,7 @@ function MarketingViewAdmin() {
 
         const successChannels = [];
         if (fbOk) successChannels.push('Facebook');
-        if (waOk) {
-          if (resData.whatsapp?.statusStory && !targetPlatforms.whatsapp) {
-            successChannels.push('WhatsApp Status');
-          } else if (resData.whatsapp?.statusStory) {
-            successChannels.push('WhatsApp DM & Status');
-          } else {
-            successChannels.push('WhatsApp');
-          }
-        }
+        if (waOk) successChannels.push('WhatsApp');
         if (igOk) successChannels.push('Instagram');
 
         if (successChannels.length > 0) {
@@ -483,6 +475,7 @@ function MarketingViewAdmin() {
                       onChange={(e) => {
                         setBrief(e.target.value);
                         setPreviewGenerated(false);
+                        setResult(null);
                       }}
                       disabled={loadingPreview || loadingPublish}
                       required
@@ -631,33 +624,6 @@ function MarketingViewAdmin() {
                       <FormControlLabel
                         control={
                           <Checkbox
-                            checked={targetPlatforms.whatsappStatus}
-                            onChange={(e) => setTargetPlatforms({ ...targetPlatforms, whatsappStatus: e.target.checked })}
-                            disabled={loadingPreview || loadingPublish}
-                            sx={{ color: '#10b981', '&.Mui-checked': { color: '#10b981' } }}
-                          />
-                        }
-                        label={
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
-                            <AutoStoriesIcon sx={{ color: '#10b981' }} />
-                            <Typography sx={{ fontWeight: 500 }}>WhatsApp Status (Story)</Typography>
-                            <Chip
-                              label="(Manual / Mobile only)"
-                              size="small"
-                              sx={{
-                                height: 20,
-                                fontSize: '0.65rem',
-                                backgroundColor: '#fef3c7',
-                                color: '#b45309',
-                                fontWeight: 600,
-                              }}
-                            />
-                          </Box>
-                        }
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
                             checked={targetPlatforms.instagram}
                             onChange={(e) => setTargetPlatforms({ ...targetPlatforms, instagram: e.target.checked })}
                             disabled={loadingPreview || loadingPublish}
@@ -754,7 +720,17 @@ function MarketingViewAdmin() {
                     📊 Publication Results & Flyer Preview
                   </Typography>
 
-                  {result ? (
+                  {loadingPreview ? (
+                    <Box sx={{ textAlign: 'center', py: 10 }}>
+                      <CircularProgress size={52} sx={{ color: '#2563eb', mb: 2 }} />
+                      <Typography variant="body1" sx={{ fontWeight: 600, color: '#1e293b' }}>
+                        🎨 Generating High-Resolution Flyer...
+                      </Typography>
+                      <Typography variant="caption" sx={{ color: '#64748b', display: 'block', mt: 0.5 }}>
+                        Composing graphics & formatting copy on 1080x1080 canvas...
+                      </Typography>
+                    </Box>
+                  ) : result ? (
                     <Box>
                       {/* Preview Mode Alert Banner */}
                       {result.previewOnly && (
@@ -826,9 +802,6 @@ function MarketingViewAdmin() {
                                         icon={<LaunchIcon fontSize="small" />}
                                       />
                                     </>
-                                  )}
-                                  {result.whatsapp.statusStory && (
-                                    <Chip label="Status Story" size="small" color="success" />
                                   )}
                                 </Box>
                               </Box>
