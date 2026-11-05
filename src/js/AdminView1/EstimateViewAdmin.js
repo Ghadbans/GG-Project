@@ -24,6 +24,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import {  Table, IconButton, styled, TableBody, TableCell, TableHead, TableRow, Checkbox, TableContainer, Paper, Typography, Modal, Box, Grid, FormControl, InputLabel, Select, MenuItem, Backdrop, Autocomplete, TextField  } from '@mui/material';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, EditNote as EditNoteIcon, Send as SendIcon, Cancel as CancelIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
@@ -592,25 +593,9 @@ function EstimateViewAdmin() {
     { field: 'estimateNumber', headerName: 'Quotation#', minWidth: 100, flex: 1, valueFormatter: (params) => 'Q-' + String(params?.value || '').padStart(6, '0') },
     { field: 'estimateSubject', headerName: 'Subject', minWidth: 150, flex: 1.5 },
     {
-      field: 'status', headerName: 'Status', minWidth: 110, flex: 1, renderCell: (params) => {
-        const s = String(params.row.status || '').toUpperCase();
-        return (
-          <Typography
-            sx={{
-              color:
-                s === "DRAFT" ? "gray" :
-                s === "SENT" ? "#1976d2" :
-                s === "DECLINE" ? "#d32f2f" :
-                s === "APPROVED" ? "#339ba5" :
-                s === "INVOICED" ? "#6a1b9a" :
-                s === "PENDING" ? "#ed6c02" :
-                s === "CONVERTED" ? "#0288d1" : "#30368a"
-            }}
-          >
-            {params.row.status}
-          </Typography>
-        );
-      }
+      field: 'status', headerName: 'Status', minWidth: 110, flex: 1, renderCell: (params) => (
+        renderStatusBadge(params.row.status)
+      )
     },
     { field: 'subTotal', headerName: 'Amount', minWidth: 90, flex: 1, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {

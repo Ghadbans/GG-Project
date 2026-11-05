@@ -25,6 +25,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { NavLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Close, MailOutline, Assignment as AssignmentIcon, HourglassEmpty as HourglassEmptyIcon, Autorenew as AutorenewIcon, Block as BlockIcon } from '@mui/icons-material';
 import { ENDPOINT_URL } from '../apiConfig';
 import dayjs from 'dayjs';
@@ -463,22 +464,9 @@ function PurchasesViewAdmin() {
     { field: 'customerName', headerName: 'Customer Name', minWidth: 150, flex: 1.5, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '') },
     { field: 'description', headerName: 'Description', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.description !== undefined ? params.row.description : '' },
     {
-      field: 'statusInfo', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
-        const s = String(params.row.statusInfo || '').toUpperCase();
-        return (
-          <Typography
-            sx={{
-              color:
-                s === "PENDING" ? "#ed6c02" :
-                (s === "ON-GOING" || s === "ONGOING") ? "#1976d2" :
-                s === "STOPPED" ? "#d32f2f" :
-                s === "COMPLETED" ? "#2e7d32" : "#30368a"
-            }}
-          >
-            {params.row.statusInfo !== undefined ? params.row.statusInfo : ''}
-          </Typography>
-        );
-      }
+      field: 'statusInfo', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => (
+        renderStatusBadge(params.row.statusInfo)
+      )
     },
     { field: 'purchaseAmount1', headerName: 'Amount 1', minWidth: 100, flex: 1, renderCell: (params) => `$ ${parseFloat(params.row.purchaseAmount1).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {

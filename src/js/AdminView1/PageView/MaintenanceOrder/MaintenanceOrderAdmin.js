@@ -39,6 +39,7 @@ import MessageAdminView from '../../MessageAdminView';
 import NotificationVIewInfo from '../../NotificationVIewInfo';
 import { isNativeMobile, useIsMobile } from '../../../utils/isMobile';
 import MobileCardList from '../../../component/MobileCardList';
+import { renderStatusBadge } from '../../../utils/formatUtils';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -522,30 +523,10 @@ function MaintenanceOrderAdmin() {
     { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 220, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '') },
     { field: 'brand', headerName: 'Item Brand', width: sideBar ? 100 : 140, },
     {
-      field: 'status', headerName: 'Status', width: 100, renderCell: (params) => (
-        <div>
-          {
-            params.row.status === 'Close' && params.row.Converted === true ? "Converted" :
-              <Typography
-                sx={{
-                  color: (() => {
-                    const s = String(params.row.status || '').toUpperCase();
-                    if (s === "OPEN") return "#1976d2";
-                    if (s === "PENDING") return "#ed6c02";
-                    if (s === "RESCHEDULE") return "#9c27b0";
-                    if (s === "CANCEL") return "#d32f2f";
-                    if (s === "CLOSE" || s === "CLOSED") return "#2e7d32";
-                    if (s === "CONVERTED") return "#0288d1";
-                    return "#30368a";
-                  })()
-                }}
-              >
-                {params.row.status}
-              </Typography>
-
-          }
-        </div>
-      )
+      field: 'status', headerName: 'Status', width: 100, renderCell: (params) => {
+        const isConverted = (params.row.status === 'Close' && (params.row.Converted === true || params.row.Converted === 'true')) || params.row.status === 'Converted' || (params.row.Converted === true || params.row.Converted === 'true');
+        return renderStatusBadge(isConverted ? 'Converted' : params.row.status);
+      }
     },
     { field: 'defectDescription', headerName: 'Defect', width: sideBar ? 130 : 150 },
     { field: 'itemDescriptionInfo', headerName: 'I-Description', width: sideBar ? 130 : 150, renderCell: (params) => <span style={{ textTransform: 'uppercase' }}>{String(Array.isArray(params.value) ? params.value.join(', ') : (params.value || '')).toUpperCase()}</span> },

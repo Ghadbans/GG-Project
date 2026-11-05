@@ -39,6 +39,7 @@ import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
+import { renderStatusBadge } from '../utils/formatUtils';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -648,23 +649,7 @@ function InvoiceViewAdmin() {
         const isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;
         const fallbackStatus = (parseFloat(params.row.total) > 0 && parseFloat(params.row.balanceDue) > 0) ? 'Partially-Paid' : 'Sent';
         const displayStatus = isActuallyPaid ? "Paid" : (params.row.status || fallbackStatus);
-        const s = String(displayStatus || '').toUpperCase();
-        const displayColor = isActuallyPaid ? "#4caf50" : (
-          s === "DRAFT" ? "gray" :
-          s === "SENT" ? "#1976d2" :
-          s === "DECLINE" ? "#d32f2f" :
-          s === "PENDING" ? "#ed6c02" :
-          s === "PAID" ? "#2e7d32" :
-          (s === "PARTIALLY-PAID" || s === "PARTIALLY_PAID") ? "#fb8c00" :
-          s === "FREE OF CHARGE" ? "#9c27b0" :
-          s === "VOID" ? "#757575" : "#30368a"
-        );
-
-        return (
-          <Typography color={displayColor}>
-            {displayStatus}
-          </Typography>
-        );
+        return renderStatusBadge(displayStatus);
       }
     },
     { 

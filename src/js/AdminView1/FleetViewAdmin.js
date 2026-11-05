@@ -14,6 +14,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import axios from 'axios';
 import { ENDPOINT_URL } from '../apiConfig';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Delete, Edit, Visibility } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
@@ -155,20 +156,7 @@ export default function FleetViewAdmin() {
     { field: 'carModel', headerName: 'Model', flex: 1 },
     { field: 'plateNumber', headerName: 'Plate #', flex: 1 },
     { field: 'branchId', headerName: 'Branch', flex: 1, valueFormatter: (params) => params.value || 'HQ' },
-    { 
-      field: 'status', 
-      headerName: 'Status', 
-      flex: 1,
-      renderCell: (params) => {
-         const s = String(params.row.status || '').toUpperCase();
-         let color = '#30368a';
-         if (s === 'RUNNING') color = '#4caf50'; // green
-         else if (s === 'STOPPED') color = '#ff9800'; // orange
-         else if (s === 'DAMAGED') color = '#f44336'; // red
-         else if (s === 'SOLD') color = '#757575'; // gray
-         return <span style={{ color, fontWeight: 'bold' }}>{params.row.status}</span>;
-      }
-    },
+    { field: 'status', headerName: 'Status', flex: 1, renderCell: (params) => renderStatusBadge(params.row.status) },
     {
       field: 'documents',
       headerName: 'Expiring Soon',

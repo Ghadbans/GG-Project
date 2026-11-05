@@ -26,6 +26,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Print, Assignment as AssignmentIcon, PendingActions as PendingActionsIcon, EditNote as EditNoteIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
@@ -717,27 +718,9 @@ function SellShopInvoiceView() {
     { field: 'factureNumber', headerName: 'Invoice#', width: 100, renderCell: (params) => (<div> <span>S-00</span><span>{params.row.factureNumber}</span> </div>) },
     { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 300, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase() },
     {
-      field: 'status', headerName: 'Status', width: sideBar ? 100 : 150, renderCell: (params) => {
-        const s = String(params.row.status || '').toUpperCase();
-        return (
-          <Typography
-            sx={{
-              color:
-                s === "DRAFT" ? "gray" :
-                s === "SENT" ? "#1976d2" :
-                s === "DECLINE" ? "#d32f2f" :
-                s === "PENDING" ? "#ed6c02" :
-                s === "PAID" ? "#2e7d32" :
-                (s === "PARTIALLY-PAID" || s === "PARTIALLY_PAID") ? "#fb8c00" :
-                s === "REFUNDED" ? "#795548" :
-                (s === "PARTIALLY-REFUNDED" || s === "PARTIALLY_REFUNDED") ? "#ff9800" :
-                s === "VOID" ? "#d32f2f" : "#30368a"
-            }}
-          >
-            {params.row.status}
-          </Typography>
-        );
-      }
+      field: 'status', headerName: 'Status', width: sideBar ? 100 : 150, renderCell: (params) => (
+        renderStatusBadge(params.row.status)
+      )
     },
     { field: 'dateField', headerName: 'Date', width: 150 },
     { field: 'totalInvoice', headerName: 'I-Amount', width: sideBar ? 150 : 200, renderCell: (params) => `FC${(parseFloat(params.row?.totalInvoice) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },

@@ -25,6 +25,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
 import { ENDPOINT_URL } from '../apiConfig';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import Loader from '../component/Loader';
@@ -458,24 +459,7 @@ function TewmViewAdmin() {
   const columns1 = [
     { field: 'dataField', headerName: 'Date', width: 100 },
     { field: 'employeeName', headerName: 'EmployeeName', width: 200 },
-    {
-      field: 'status', headerName: 'Address', width: 180, renderCell: (params) => {
-        const s = String(params.row.status || '').toUpperCase();
-        return (
-          <Typography
-            sx={{
-              color:
-                s === "RESIGN" ? "#801313" :
-                s === "SUSPENDED" ? "#fb8c00" :
-                s === "FIRED" ? "#d32f2f" :
-                (s === "EMPLOYED" || s === "ACTIVE") ? "#1976d2" : "#30368a"
-            }}
-          >
-            {params.row.status !== undefined ? params.row.status : 'Undefined'}
-          </Typography>
-        );
-      }
-    },
+    { field: 'status', headerName: 'Status', width: 180, renderCell: (params) => renderStatusBadge(params.row.status) },
     { field: 'employeeRole', headerName: 'Role', width: sideBar ? 100 : 200 },
     { field: 'salary', headerName: 'Salary', width: sideBar ? 200 : 240, renderCell: (params) => <span>FC{parseFloat(Number(params.row.salary) + Number(params.row.basicTransport) + Number(params.row.foodBasic) + Number(params.row.bounceAllowances) + Number(params.row.other)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span> },
     { field: 'department', headerName: 'Department', width: 150 },

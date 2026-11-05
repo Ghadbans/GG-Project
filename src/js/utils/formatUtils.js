@@ -1,3 +1,5 @@
+import React from 'react';
+
 /**
  * Global Gate Enterprise Defensive Formatting & Extraction Utility
  * Provides null-safe numerical and entity formatting across Desktop, Web, and Mobile.
@@ -183,6 +185,60 @@ export const safeString = (val, fallback = '') => {
   return String(val);
 };
 
+/**
+ * Universal Status Badge Styling Matching Payment Received
+ */
+export const getStatusBadgeStyle = (status) => {
+  const s = String(status || '').trim().toUpperCase();
+  // Green: Paid, Cleared, Completed, Close, Closed, Running, Success, Approved
+  if (['PAID', 'CLEARED', 'COMPLETED', 'CLOSE', 'CLOSED', 'RUNNING', 'SUCCESS', 'APPROVED'].includes(s)) {
+    return { bg: '#dcfce7', color: '#166534' };
+  }
+  // Blue: Sent, On-Going, Ongoing, Open, Employed, Active, In-Progress
+  if (['SENT', 'ON-GOING', 'ONGOING', 'OPEN', 'EMPLOYED', 'ACTIVE', 'IN-PROGRESS'].includes(s)) {
+    return { bg: '#dbeafe', color: '#1e40af' };
+  }
+  // Amber/Orange: Pending, Partially-Paid, Partially_Paid, Suspended
+  if (['PENDING', 'PARTIALLY-PAID', 'PARTIALLY_PAID', 'SUSPENDED'].includes(s)) {
+    return { bg: '#fef3c7', color: '#92400e' };
+  }
+  // Red: Decline, Declined, Cancel, Cancelled, Stopped, Fired, Damaged, Void, Voided, Refund
+  if (['DECLINE', 'DECLINED', 'CANCEL', 'CANCELLED', 'STOPPED', 'FIRED', 'DAMAGED', 'VOID', 'VOIDED', 'REFUND'].includes(s)) {
+    return { bg: '#fee2e2', color: '#b91c1c' };
+  }
+  // Purple/Teal: Converted, Invoiced, Reschedule, Free of Charge
+  if (['CONVERTED', 'CONVERTE', 'INVOICED', 'RESCHEDULE', 'FREE OF CHARGE'].includes(s)) {
+    return { bg: '#f3e8ff', color: '#7e22ce' };
+  }
+  // Default Gray: Draft, Resign, Sold, Idle, None
+  return { bg: '#f1f5f9', color: '#475569' };
+};
+
+export const renderStatusBadge = (status, customLabel) => {
+  const displayLabel = String(customLabel || status || '').trim().toUpperCase();
+  const { bg, color } = getStatusBadgeStyle(status || customLabel);
+  const isVoid = displayLabel === 'VOID' || displayLabel === 'VOIDED';
+  return React.createElement(
+    'span',
+    {
+      style: {
+        backgroundColor: bg,
+        color: color,
+        textDecoration: isVoid ? 'line-through' : 'none',
+        padding: '3px 8px',
+        borderRadius: '4px',
+        fontSize: '11px',
+        fontWeight: 'bold',
+        display: 'inline-block',
+        whiteSpace: 'nowrap',
+        letterSpacing: '0.3px',
+        lineHeight: '1.2'
+      }
+    },
+    displayLabel
+  );
+};
+
 export default {
   safeNumber,
   formatUSD,
@@ -194,6 +250,8 @@ export default {
   normalizeImageDataUrl,
   formatPurchaseReasonDisplay,
   getPurchaseReasonDisplay,
-  safeString
+  safeString,
+  getStatusBadgeStyle,
+  renderStatusBadge
 };
 

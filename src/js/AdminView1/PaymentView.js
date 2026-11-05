@@ -24,6 +24,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { cachedGet } from '../utils/apiCache';
 import { Add, Close, MailOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from "react-redux"
@@ -709,25 +710,7 @@ const toggleDrawer = () => {
                           const columns = [
                                     {field: 'invoiceNumber', headerName: 'Invoice#', width:140},
                                     {field: 'customer', headerName: 'Customer Name', width:sideBar?240:350, valueGetter:(params)=> (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase()},
-                                    {field: 'status', headerName: 'Status', width:140, renderCell: (params)=> (
-                                      <Typography
-                                      color={
-                                        params.row.status === "Draft"
-                                        ? "gray":params.row.status === "Sent"
-                                        ? "blue":
-                                        params.row.status === "Decline"
-                                        ? "red":
-                                        params.row.status === "Pending"
-                                        ? "#801313":
-                                        params.row.status === "Paid"
-                                        ? "#339ba5":
-                                        params.row.status === "Partially-Paid"
-                                        ? "#fb8c00":"black"
-                                     }
-                                      >
-                                  {params.row.status}
-                                      </Typography>
-                                    )},
+                                    {field: 'status', headerName: 'Status', width:140, renderCell: (params)=> renderStatusBadge(params.row.status)},
                                     {field: 'daysPastDue', headerName: 'Period', width:240,renderCell: (params)=> params.row.overdue === true ?
                                     <Typography
                                     color={params.row.daysPastDue > 0
@@ -752,23 +735,7 @@ const toggleDrawer = () => {
                                         </span>
                                       );
                                     }},
-                                    {field: 'status', headerName: 'Status', width:110, renderCell: (params)=> {
-                                      const st = params.row.status || 'Cleared';
-                                      let bg = '#dcfce7';
-                                      let color = '#166534';
-                                      if (st === 'Pending') {
-                                        bg = '#fef3c7';
-                                        color = '#92400e';
-                                      } else if (st === 'Voided') {
-                                        bg = '#f1f5f9';
-                                        color = '#64748b';
-                                      }
-                                      return (
-                                        <span style={{ backgroundColor: bg, color: color, textDecoration: st === 'Voided' ? 'line-through' : 'none', padding: '3px 8px', borderRadius: '4px', fontSize: '11px', fontWeight: 'bold', display: 'inline-block', whiteSpace: 'nowrap' }}>
-                                          {st.toUpperCase()}
-                                        </span>
-                                      );
-                                    }},
+                                    {field: 'status', headerName: 'Status', width:110, renderCell: (params)=> renderStatusBadge(params.row.status || 'Cleared')},
                                     {field: 'description', headerName: 'Description', width:sideBar?180:220},
                                     {field: 'dateField', headerName: 'Date', width:130},
                                        {field: 'modes', headerName: 'Mode', width:130, renderCell: (params)=> {

@@ -24,6 +24,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import axios from 'axios';
 import { cachedGet } from '../utils/apiCache';
+import { renderStatusBadge } from '../utils/formatUtils';
 import { ENDPOINT_URL } from '../apiConfig';
 import { Add, Close, MailOutline, Person2Outlined, PersonOffRounded, Assignment as AssignmentIcon, HourglassEmpty as HourglassEmptyIcon, Autorenew as AutorenewIcon, Block as BlockIcon } from '@mui/icons-material';
 import dayjs from 'dayjs';
@@ -501,22 +502,9 @@ function ProjectViewAdmin() {
     { field: 'projectName', headerName: 'Project Name', minWidth: 200, flex: 2 },
     { field: 'description', headerName: 'Description', minWidth: 150, flex: 1.5 },
     {
-      field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
-        const s = String(params.row.status || '').toUpperCase();
-        return (
-          <Typography
-            sx={{
-              color:
-                s === "PENDING" ? "#ed6c02" :
-                (s === "ON-GOING" || s === "ONGOING") ? "#1976d2" :
-                s === "STOPPED" ? "#d32f2f" :
-                s === "COMPLETED" ? "#2e7d32" : "#30368a"
-            }}
-          >
-            {params.row.status}
-          </Typography>
-        );
-      }
+      field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => (
+        renderStatusBadge(params.row.status)
+      )
     },
     {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (

@@ -3833,3 +3833,57 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Windows desktop executable packaged via electron-builder (`npm run make:win`).
    - Updated release installers in `server/public/downloads/GlobalGate-v3.6.22.exe` and `server/public/downloads/GlobalGateSetup.exe`.
    - Committed and pushed to GitHub `origin main` to trigger live Railway cloud deployment.
+
+---
+
+## Version 3.6.23 - Universal Status Badge & Chip Display Standardization Across All Modules
+**Release Date**: November 5, 2026
+
+### 1. Problem Statement & Design Objective
+- **User Requirement**: Standardize the Status column typography, layout, and visual styling across ALL modules to match the elegant badge/chip presentation in the **Payment Received** tab (`PaymentView.js:767`).
+- **Previous State**: Various modules rendered plain text with inconsistent font weights (`fontWeight: 600` or `bold`), unpadded colors directly on white backgrounds, or disparate MUI `Typography` styles, creating visual inconsistency across Invoices, Quotations, Projects, Purchases, Maintenance, POS, Payments, Fleet, and Team.
+
+### 2. Architectural Solution: Centralized Status Badge Helper (`src/js/utils/formatUtils.js`)
+- Designed and exported reusable badge generation utilities:
+  - `getStatusBadgeStyle(status)`: Maps status tokens to accessible, high-contrast, modern UI badge color pairs (light tint background + deep tone text):
+    * **Green (`#dcfce7` bg / `#166534` text)**: `PAID`, `CLEARED`, `COMPLETED`, `CLOSE`, `CLOSED`, `RUNNING`, `SUCCESS`, `APPROVED`.
+    * **Blue (`#dbeafe` bg / `#1e40af` text)**: `SENT`, `ON-GOING`, `ONGOING`, `OPEN`, `EMPLOYED`, `ACTIVE`, `IN-PROGRESS`.
+    * **Amber (`#fef3c7` bg / `#92400e` text)**: `PENDING`, `PARTIALLY-PAID`, `PARTIALLY_PAID`, `SUSPENDED`.
+    * **Red (`#fee2e2` bg / `#b91c1c` text)**: `DECLINE`, `DECLINED`, `CANCEL`, `CANCELLED`, `STOPPED`, `FIRED`, `DAMAGED`, `VOID`, `VOIDED`, `REFUND`.
+    * **Purple (`#f3e8ff` bg / `#7e22ce` text)**: `CONVERTED`, `CONVERTE`, `INVOICED`, `RESCHEDULE`, `FREE OF CHARGE`.
+    * **Slate Gray (`#f1f5f9` bg / `#475569` text)**: `DRAFT`, `RESIGN`, `SOLD`, `IDLE`, `NONE`.
+  - `renderStatusBadge(status, customLabel)`:
+    * Implemented using `React.createElement('span', ...)` to guarantee zero JSX syntax issues in Node prebuild and AST checking scripts.
+    * Uniform layout: `padding: '3px 8px'`, `borderRadius: '4px'`, `fontSize: '11px'`, `fontWeight: 'bold'`, `display: 'inline-block'`, `whiteSpace: 'nowrap'`, `textTransform: 'uppercase'`, `lineHeight: '1.2'`.
+    * Automatically applies `textDecoration: 'line-through'` for `VOID` and `VOIDED` records.
+
+### 3. Comprehensive Module Updates
+The standardized `renderStatusBadge` helper was seamlessly integrated into all 10 core modules:
+1. **Invoice Module (`src/js/AdminView1/InvoiceViewAdmin.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(displayStatus)`.
+2. **Maintenance Module (`src/js/AdminView1/MaintenanceViewAdmin.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(isConverted ? 'Converted' : params.row.status)`.
+3. **Maintenance Orders (`src/js/AdminView1/PageView/MaintenanceOrder/MaintenanceOrderAdmin.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(isConverted ? 'Converted' : params.row.status)`.
+4. **Projects (`src/js/AdminView1/ProjectViewAdmin.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(params.row.status)`.
+5. **Purchase Requests (`src/js/AdminView1/PurchasesViewAdmin.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(params.row.statusInfo)`.
+6. **Quotations / Estimates (`src/js/AdminView1/EstimateViewAdmin.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(params.row.status)`.
+7. **POS Invoices (`src/js/AdminView1/SellShopInvoiceView.js`)**:
+   - Replaced raw `<Typography>` with `renderStatusBadge(params.row.status)`.
+8. **Payments (`src/js/AdminView1/PaymentView.js`)**:
+   - Tab 1 Invoices DataGrid: Replaced plain `<Typography>` with `renderStatusBadge(params.row.status)`.
+   - Tab 2 Payment Received: Standardized `renderStatusBadge(params.row.status || 'Cleared')`.
+9. **Fleet Management (`src/js/AdminView1/FleetViewAdmin.js`)**:
+   - Replaced plain colored text with `renderStatusBadge(params.row.status)`.
+10. **Employee / Team Management (`src/js/AdminView1/TewmViewAdmin.js`)**:
+   - Standardized Tab 2 employment status column header and cell with `renderStatusBadge(params.row.status)`.
+
+### 4. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified across all 239 source files with 0 errors via `npm run prebuild`.
+- **Version Bump**: Incremented version to `v3.6.23` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled both desktop Electron and Web Portal bundles (`webpack.prod.js` and `webpack.web.prod.js`).
+- **Windows Executable**: Generated `dist/Global Gate Setup 3.6.23.exe` and synchronized to `server/public/downloads/GlobalGate-v3.6.23.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Cloud Synchronization**: Committed and pushed to GitHub `origin main` to trigger live Railway backend redeployment and Cloudflare Pages sync.
