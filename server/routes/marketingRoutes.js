@@ -300,7 +300,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       formData.append('no_story', 'false');
       formData.append('access_token', FB_PAGE_ACCESS_TOKEN);
 
-      const fbUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`;
+      const fbUrl = `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos?published=true&no_story=false`;
       const fbRes = await fetch(fbUrl, { method: 'POST', body: formData });
       const fbData = await fbRes.json();
       if (fbData.post_id || fbData.id) {

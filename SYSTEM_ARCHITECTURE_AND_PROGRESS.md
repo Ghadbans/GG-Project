@@ -3640,3 +3640,13 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - Web application bundle compiled into `dist_web/`.
    - Android Capacitor assets synchronized and native debug APK compiled via Gradle into `GlobalGate-v3.6.15.apk` and `GlobalGate.apk`.
    - Windows desktop installer compiled into `Global Gate Setup 3.6.15.exe`, `GlobalGate-v3.6.15.exe`, and `GlobalGateSetup.exe`.
+
+### Version 3.6.16 (November 05, 2026) - Facebook Photo Timeline Visibility Fortification
+1. **Explicit Dual-Layer Timeline Publishing Payload**:
+   - In both `C:\Users\GG\fb-whatsapp-agent\agent.js` and `server/routes/marketingRoutes.js`, the photo upload endpoint `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos` explicitly includes:
+     * Multipart form-data fields: `formData.append('published', 'true')` and `formData.append('no_story', 'false')`.
+     * URL query parameters: `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos?published=true&no_story=false`.
+   - Guarantees Meta publishes the image directly as a public story on the Page's public timeline/feed so outside visitors and followers can immediately see and interact with the promotional flyer.
+2. **Quality Gate Verification & Version Increment**:
+   - `npm run prebuild` verified across all 239 source files with 0 errors.
+   - Bumper version to `3.6.16` across `package.json`, `server/package.json`, `server/index.js`, and `server/routes/downloadRoutes.js`.
