@@ -5,66 +5,10 @@ import { Provider } from "react-redux";
 import { store } from "./app/store";
 import axios from 'axios';
 
-// --- Universal Uppercase Data Sanitizer for API Requests ---
-function sanitizeUppercasePayload(data, keyPath = '') {
-  if (data === null || data === undefined) return data;
-  if (typeof data === 'string') {
-    const lowerKey = keyPath.toLowerCase();
-    // Exclude security / credential / URL / media / binary / identifier fields
-    if (
-      lowerKey.includes('password') ||
-      lowerKey.includes('email') ||
-      lowerKey.includes('token') ||
-      lowerKey.includes('url') ||
-      lowerKey.includes('image') ||
-      lowerKey.includes('photo') ||
-      lowerKey.includes('icon') ||
-      lowerKey.includes('avatar') ||
-      lowerKey.includes('file') ||
-      lowerKey.includes('path') ||
-      lowerKey.includes('hash') ||
-      lowerKey.includes('signature') ||
-      lowerKey.includes('auth') ||
-      data.startsWith('data:') ||
-      data.startsWith('http://') ||
-      data.startsWith('https://') ||
-      data.startsWith('blob:') ||
-      data.startsWith('sidecar://') ||
-      (/^[0-9a-fA-F]{24}$/.test(data) && (lowerKey.includes('id') || lowerKey.includes('_id'))) ||
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data)
-    ) {
-      return data;
-    }
-    return data.toUpperCase();
-  }
-  if (Array.isArray(data)) {
-    return data.map((item, idx) => sanitizeUppercasePayload(item, `${keyPath}[${idx}]`));
-  }
-  if (typeof data === 'object') {
-    if (typeof FormData !== 'undefined' && data instanceof FormData) return data;
-    if (typeof Blob !== 'undefined' && data instanceof Blob) return data;
-    const clean = {};
-    for (const k of Object.keys(data)) {
-      clean[k] = sanitizeUppercasePayload(data[k], k);
-    }
-    return clean;
-  }
-  return data;
-}
-
-// --- Axios Request Interceptor for Branch Prefixing & Universal Uppercase Sanitization ---
+// --- Axios Request Interceptor for Branch Prefixing ---
 axios.interceptors.request.use((config) => {
-  const url = config.url || '';
-  const bypassUppercaseEndpoints = ['/login', '/auth', '/employee-login', '/admin-login', '/get-employeeuser', '/get-adminuser'];
-  const shouldBypassUppercase = bypassUppercaseEndpoints.some(ep => url.includes(ep));
-
-  if (!shouldBypassUppercase && ['post', 'put', 'patch'].includes((config.method || '').toLowerCase())) {
-    if (config.data && typeof config.data === 'object' && !(typeof FormData !== 'undefined' && config.data instanceof FormData)) {
-      config.data = sanitizeUppercasePayload(config.data);
-    }
-  }
-
   const selectedBranch = localStorage.getItem('selectedBranch') || 'ALL';
+  const url = config.url || '';
   
   if (selectedBranch && selectedBranch !== 'ALL') {
     const bypassEndpoints = ['/create-notification', '/login', '/grantAccess', '/companyProfile', '/employeeuser', '/rename-branch', '/transfer-item', '/expensesCategory', '/itemTransferHistory'];
@@ -236,21 +180,27 @@ if (typeof window !== 'undefined') {
     const tag = (el.tagName || '').toUpperCase();
     if (tag !== 'INPUT' && tag !== 'TEXTAREA') return true;
 
-    // Type exemptions: passwords, emails, files, checkboxes, dates, numbers, etc.
+    // Type exemptions: passwords, emails, files, checkboxes, dates, numbers, hidden, etc.
     const type = (el.type || 'text').toLowerCase();
-    if (['password', 'email', 'file', 'checkbox', 'radio', 'color', 'range', 'date', 'time', 'datetime-local', 'month', 'week', 'number'].includes(type)) {
+    if (['password', 'email', 'file', 'checkbox', 'radio', 'color', 'range', 'date', 'time', 'datetime-local', 'month', 'week', 'number', 'hidden'].includes(type)) {
       return true;
     }
 
-    // Name / ID exemptions (passwords, emails, tokens, keys)
+    // Class exemptions (MUI Select native input, hidden controls, date pickers)
+    const className = String(el.className || '').toLowerCase();
+    if (className.includes('muiselect-nativeinput') || className.includes('no-uppercase')) {
+      return true;
+    }
+
+    // Name / ID exemptions (passwords, emails, tokens, keys, select fields)
     const name = (el.name || '').toLowerCase();
     const id = (el.id || '').toLowerCase();
-    if (name.includes('password') || name.includes('email') || id.includes('password') || id.includes('email')) {
+    if (name.includes('password') || name.includes('email') || id.includes('password') || id.includes('email') || id.includes('accountname') || id.includes('status') || id.includes('mode')) {
       return true;
     }
 
     // Container exemptions: Login page or elements marked no-uppercase
-    if (el.closest('.wrap-login100, .login100-form, .container-login100, .no-uppercase, .user-account-container, .user-account-modal, [data-no-uppercase="true"]')) {
+    if (el.closest('.wrap-login100, .login100-form, .container-login100, .no-uppercase, .user-account-container, .user-account-modal, [data-no-uppercase="true"], .MuiSelect-root')) {
       return true;
     }
 

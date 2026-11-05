@@ -527,18 +527,19 @@ function MaintenanceOrderAdmin() {
           {
             params.row.status === 'Close' && params.row.Converted === true ? "Converted" :
               <Typography
-                color={
-                  params.row.status === "Open"
-                    ? "blue" :
-                    params.row.status === "Pending"
-                      ? "#801313" :
-                      params.row.status === "Reschedule"
-                        ? "Orange" :
-                        params.row.status === "Cancel"
-                          ? "red" :
-                          params.row.status === "Close"
-                            ? "green" : "black"
-                }
+                sx={{
+                  fontWeight: 600,
+                  color: (() => {
+                    const s = String(params.row.status || '').toUpperCase();
+                    if (s === "OPEN") return "#1976d2";
+                    if (s === "PENDING") return "#ed6c02";
+                    if (s === "RESCHEDULE") return "#9c27b0";
+                    if (s === "CANCEL") return "#d32f2f";
+                    if (s === "CLOSE" || s === "CLOSED") return "#2e7d32";
+                    if (s === "CONVERTED") return "#0288d1";
+                    return "#30368a";
+                  })()
+                }}
               >
                 {params.row.status}
               </Typography>

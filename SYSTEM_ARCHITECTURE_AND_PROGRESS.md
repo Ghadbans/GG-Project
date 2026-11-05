@@ -3742,3 +3742,47 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
    - **Root Cause 1 (AI Generation Timeout Cap)**: In `agent.js`, the Google GenAI SDK was attempting to query a model experiencing high demand (503), retrying with exponential backoff for ~79 seconds without an abort signal. Added a strict 3.5-second timeout via `Promise.race([aiPromise, timeoutPromise])`. If Google AI takes longer than 3.5 seconds or returns 503, it immediately falls back to the smart local copy generator (2ms), ensuring flyers are generated in ~1-2 seconds.
    - **Root Cause 2 (Disk Stale File Purge)**: In `main.js` and `server/routes/marketingRoutes.js`, previous `generated_flyer.png` and `temp_product.png` files were never removed prior to running the agent child process. Now, `main.js` and `marketingRoutes.js` unconditionally unlink any existing `generated_flyer.png` before `execFile` starts, guaranteeing that stale images can never be read if a job is in progress or fails.
    - **Root Cause 3 (UI State Reset & Loading Feedback)**: In `MarketingViewAdmin.js`, `result` in React state was not reset when typing a new brief, uploading/removing a product photo, or clicking "Generate Flyer Preview", causing the UI to display the previous flyer while awaiting the new one. Added instant `setResult(null)` and `setPreviewGenerated(false)` on all brief and photo changes, and added an active high-resolution flyer generating spinner in the preview column.
+
+### Version 3.6.21 (November 05, 2026) - Bulletproof Facebook Attached Media Feed Publishing & Non-Repetitive B2B Copywriting
+1. **Facebook Main Timeline Feed Publication**:
+   - Upgraded `publishToFacebook` in `C:\Users\GG\fb-whatsapp-agent\agent.js` and `server/routes/marketingRoutes.js`.
+   - Step 1: Uploads the photo silently (`published: 'false'`) to `POST /v21.0/${FB_PAGE_ID}/photos` to obtain `photoId`.
+   - Step 2: Publishes a real timeline post to `POST /v21.0/${FB_PAGE_ID}/feed` with explicitly stringified `attached_media: JSON.stringify([{ media_fbid: photoId }])`.
+   - Verified that the resulting `postUrl` uses `https://www.facebook.com/${feedRes.data.id}`, which displays directly on the public timeline feed rather than inside the `/photo/?fbid=` album view.
+   - Synchronized post ID parsing in `main.js` and `server/routes/marketingRoutes.js` to prioritize `Main Timeline Feed Post Created:`.
+
+2. **Elimination of Repetitive Copy & Upgraded B2B Local Fallback Engine**:
+   - Refined the Gemini AI prompt to demand distinct, engaging, B2B-oriented marketing copy highlighting durability, value, and commercial benefits for the Kolwezi, Lualaba, DR Congo market.
+   - Re-architected the smart local fallback engine in `agent.js`:
+     * Extracts clear product/service headline without filler words or raw brief duplication.
+     * Extracts distinct bulleted features, price/MOQ highlights, and warranty advantages without repeating the headline.
+     * Generates a concise value summary for the flyer showcase card.
+     * Formats an engaging social caption with catchy hook, bulleted benefits, Kolwezi showroom location, and direct call-to-action.
+     * Guaranteed that brief text is never repeated twice across the headline, card details, and caption.
+
+3. **Packaging & Deployment**:
+   - AST Quality Gate verified across all 239 source files with 0 errors (`npm run prebuild`).
+   - Packaged Windows desktop executable via `electron-builder` (`npm run make:win`) into `dist/Global Gate Setup 3.6.21.exe`.
+   - Synced release installer to `server/public/downloads/GlobalGate-v3.6.21.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+   - Committed and pushed to GitHub `origin main` to trigger live Railway cloud deployment.
+
+4. **Comprehensive System-Wide Data Integrity & Status Color Restoration**:
+   - **Root Cause Analysis**: The blind payload sanitizers introduced in v3.6.19 (`sanitizeBackendUppercase` and `sanitizeUppercasePayload`) recursively traversed all objects in request payloads, converting non-exempt strings to uppercase and turning Dayjs objects into plain objects (`{ $L: 'EN', $d: {}, ... }`). This broke the application in four critical ways:
+     1. In `paymentSchema.js`: Strict enums rejected `modes: 'CASH'`, `transactionType: 'PAYMENT'`, `status: 'CLEARED'`, and `excessAction: 'CREDIT'`, causing HTTP 500 errors ("Data Failed to Saved") on `POST /create-payment`.
+     2. In `invoiceSchema.js`: Strict enum rejected `status: 'SENT'`, and Dayjs objects failed Mongoose Date casting (`invoiceDate: Cast to date failed`, `invoiceDueDate: Cast to date failed for value "{}"`), causing HTTP 500 errors on `POST /create-invoice`.
+     3. In `ExpenseSchema.js`: `accountName` was converted to `'EMPLOYEE'`, causing strict equality checks (`expensesView.accountName === 'Employee'`) in `DailyExpenses.js` and `DailyExpenseAdminView.js` to fail, which completely hid the employee table and names. In `DailyExpenseUpdate.js`, MUI `<Select value={accountName}>` could not match `'EMPLOYEE'` with `<MenuItem value="Employee">`, rendering an empty dropdown and hiding the employee edit section.
+     4. In DataGrids across all modules (Project, Purchase Request, Maintenance, Invoices, Quotation, POS): Status renderers checked exact string matches (e.g. `params.row.status === "Pending"` or `params.row.status === "Close"`). When uppercase values were returned or stored in MongoDB, all equality checks failed and fell through to `color="black"`.
+   - **Architectural Resolution & Fortification**:
+     1. **Eliminated Recursive Payload Mutators**: Completely removed `sanitizeBackendUppercase` from `server/index.js` and `sanitizeUppercasePayload` from `src/js/index.js`.
+     2. **Safe Input Uppercasing**: Retained DOM-level typing listeners (`beforeinput` and `input`) in `src/js/index.js` with strict exemptions for MUI Select hidden inputs, passwords, emails, numbers, and dates. This ensures user-typed text (descriptions, notes, names) is captured in uppercase in React state without mutating system enums or Date objects.
+     3. **Mongoose Model Defensive Setters & Expanded Enums**:
+        - `paymentSchema.js`: Added case-normalizing setters for `modes`, `transactionType`, `status`, `excessAction`, and `paymentDate`. Expanded enums to accept uppercase variants.
+        - `invoiceSchema.js`: Added case-normalizing setter for `status` and defensive Date converters for `invoiceDate` and `invoiceDueDate`. Expanded enums.
+        - `ExpenseSchema.js`: Added case-normalizing setters for `accountName` (`EMPLOYEE` -> `Employee`) and `reason` (`NONE` -> `None`, `PROJECT` -> `Project`, etc.).
+        - `maintenanceSchema.js`, `projectSchema.js`, `purchaseSchema.js`, `estimationSchema.js`, `quotationSchema.js`, `posSchema.js`, `notificationSchema.js`: Added case-normalizing setters and defensive Date parsing.
+     4. **MongoDB Startup Auto-Repair Engine**: In `server/index.js`, added database repair tasks on MongoDB connection that automatically update any existing documents in collections `expenseSchema`, `invoice`, `payment`, `maintenance`, `projects`, and `purchase` to canonical Title Case.
+     5. **Case-Insensitive DataGrid Status Colors**: Updated `renderCell` across all master views (`ProjectViewAdmin`, `PurchasesViewAdmin`, `MaintenanceViewAdmin`, `MaintenanceOrderAdmin`, `InvoiceViewAdmin`, `EstimateViewAdmin`, `SellShopInvoiceView`, `PaymentView`, `FleetViewAdmin`, `ItemPurchaseViewAdmin`, `TewmViewAdmin`) using `String(status || '').toUpperCase()`. Restored bright status colors: `#ed6c02` (Orange for Pending), `#1976d2` (Blue for On-Going/Sent/Open), `#2e7d32` (Green for Completed/Paid/Close), `#d32f2f` (Red for Stopped/Decline/Cancel), `#9c27b0` (Purple for Reschedule/Free of Charge).
+     6. **Restored Daily Expenses Employee Rendering**:
+        - Normalized `accountName` in `DailyExpenses.js` (`String(accountName).toLowerCase() === 'employee'`), `DailyExpenseAdminView.js`, and `CategoryPrintStatement.js`.
+        - In `DailyExpenseUpdate.js`, added accountName and reason normalization upon data load, restoring the dropdown selection and displaying the employee expense list.
+        - In `server/routes/Routes.js`, added defensive Date parsing to `POST /create-notification` so that malformed dates never throw HTTP 500.

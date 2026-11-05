@@ -160,10 +160,12 @@ export default function FleetViewAdmin() {
       headerName: 'Status', 
       flex: 1,
       renderCell: (params) => {
-         let color = 'black';
-         if (params.row.status === 'Running') color = '#4caf50'; // green
-         else if (params.row.status === 'Stopped') color = '#ff9800'; // orange
-         else if (params.row.status === 'Damaged') color = '#f44336'; // red
+         const s = String(params.row.status || '').toUpperCase();
+         let color = '#30368a';
+         if (s === 'RUNNING') color = '#4caf50'; // green
+         else if (s === 'STOPPED') color = '#ff9800'; // orange
+         else if (s === 'DAMAGED') color = '#f44336'; // red
+         else if (s === 'SOLD') color = '#757575'; // gray
          return <span style={{ color, fontWeight: 'bold' }}>{params.row.status}</span>;
       }
     },

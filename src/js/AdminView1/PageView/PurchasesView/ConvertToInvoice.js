@@ -877,8 +877,8 @@ function ConvertToInvoice() {
       const res = await axios.post(apiUrl, {
         customerName,
         invoiceNumber,
-        invoiceDate,
-        invoiceDueDate,
+        invoiceDate: invoiceDate && dayjs.isDayjs(invoiceDate) ? invoiceDate.toDate() : (invoiceDate ? new Date(invoiceDate) : new Date()),
+        invoiceDueDate: invoiceDueDate && dayjs.isDayjs(invoiceDueDate) ? invoiceDueDate.toDate() : (invoiceDueDate ? new Date(invoiceDueDate) : new Date()),
         invoiceSubject,
         invoiceDefect,
         status: finalBalanceDue === 0 ? 'Paid' : (finalPaidAmount > 0 ? 'Partially-Paid' : 'Sent'),

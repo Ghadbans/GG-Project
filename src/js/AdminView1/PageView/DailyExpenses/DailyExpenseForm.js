@@ -525,7 +525,7 @@ function DailyExpenseForm() {
       vatAmount: CheckTvA ? Number(total) * 0.16 : 0,
       TvaAmount: CheckTvA ? Number(total) * 0.16 : 0,
       taxUSD: CheckTvA ? Number(total) * 0.16 : 0,
-      rate: accountName === 'Employee' ? PayRate : rate
+      rate: String(accountName || '').toLowerCase() === 'employee' ? PayRate : rate
       , total, expenseNumber, accountNameInfo, reason, Create, synced: false
     }
     try {
@@ -854,7 +854,7 @@ function DailyExpenseForm() {
                   </Grid>
 
                   {
-                    accountName === 'Employee' ?
+                    String(accountName || '').toLowerCase() === 'employee' ?
                       <>
                         <Grid item xs={12}>
                           <FormControl sx={{ width: '100%' }}>

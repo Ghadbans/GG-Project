@@ -613,7 +613,7 @@ function PaymentInformationForm() {
       amount,
       bankCharge,
       modes,
-      paymentDate,
+      paymentDate: paymentDate && dayjs.isDayjs(paymentDate) ? paymentDate.toDate() : (paymentDate ? new Date(paymentDate) : new Date()),
       TotalAmount,
       paymentNumber,
       description,

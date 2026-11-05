@@ -82,6 +82,99 @@ mongoDbConnection().then(() => {
       console.warn('Cash notes uppercase repair warning:', e.message);
     }
 
+    // Auto-repair Expense collection: accountName and reason normalization
+    try {
+      const expenseColl = mongoose.connection.db.collection('expenseSchema');
+      await expenseColl.updateMany({ accountName: /^employee$/i }, { $set: { accountName: 'Employee' } });
+      await expenseColl.updateMany({ accountName: /^office$/i }, { $set: { accountName: 'Office' } });
+      await expenseColl.updateMany({ accountName: /^project$/i }, { $set: { accountName: 'Project' } });
+      await expenseColl.updateMany({ accountName: /^maintenance$/i }, { $set: { accountName: 'Maintenance' } });
+      await expenseColl.updateMany({ accountName: /^receivables$/i }, { $set: { accountName: 'Receivables' } });
+      await expenseColl.updateMany({ reason: /^office$/i }, { $set: { reason: 'Office' } });
+      await expenseColl.updateMany({ reason: /^project$/i }, { $set: { reason: 'Project' } });
+      await expenseColl.updateMany({ reason: /^maintenance$/i }, { $set: { reason: 'Maintenance' } });
+      await expenseColl.updateMany({ reason: /^none$/i }, { $set: { reason: 'None' } });
+      console.log('Expense collection accountName & reason auto-repair completed.');
+    } catch (e) {
+      console.warn('Expense auto-repair warning:', e.message);
+    }
+
+    // Auto-repair Invoices: status normalization
+    try {
+      const invColl = mongoose.connection.db.collection('invoice');
+      await invColl.updateMany({ status: /^draft$/i }, { $set: { status: 'Draft' } });
+      await invColl.updateMany({ status: /^sent$/i }, { $set: { status: 'Sent' } });
+      await invColl.updateMany({ status: /^decline$/i }, { $set: { status: 'Decline' } });
+      await invColl.updateMany({ status: /^pending$/i }, { $set: { status: 'Pending' } });
+      await invColl.updateMany({ status: /^paid$/i }, { $set: { status: 'Paid' } });
+      await invColl.updateMany({ status: /^(partially-paid|partially_paid)$/i }, { $set: { status: 'Partially-Paid' } });
+      await invColl.updateMany({ status: /^void$/i }, { $set: { status: 'Void' } });
+      await invColl.updateMany({ status: /^free of charge$/i }, { $set: { status: 'Free of Charge' } });
+      console.log('Invoice status auto-repair completed.');
+    } catch (e) {
+      console.warn('Invoice auto-repair warning:', e.message);
+    }
+
+    // Auto-repair Payments: modes, transactionType, status, excessAction normalization
+    try {
+      const payColl = mongoose.connection.db.collection('payment');
+      await payColl.updateMany({ modes: /^cash$/i }, { $set: { modes: 'Cash' } });
+      await payColl.updateMany({ modes: /^bank transfer$/i }, { $set: { modes: 'Bank Transfer' } });
+      await payColl.updateMany({ modes: /^credit$/i }, { $set: { modes: 'Credit' } });
+      await payColl.updateMany({ modes: /^(credit-account|credit_account)$/i }, { $set: { modes: 'Credit-Account' } });
+      await payColl.updateMany({ transactionType: /^payment$/i }, { $set: { transactionType: 'Payment' } });
+      await payColl.updateMany({ transactionType: /^refund$/i }, { $set: { transactionType: 'Refund' } });
+      await payColl.updateMany({ status: /^cleared$/i }, { $set: { status: 'Cleared' } });
+      await payColl.updateMany({ status: /^pending$/i }, { $set: { status: 'Pending' } });
+      await payColl.updateMany({ status: /^voided$/i }, { $set: { status: 'Voided' } });
+      await payColl.updateMany({ excessAction: /^credit$/i }, { $set: { excessAction: 'Credit' } });
+      await payColl.updateMany({ excessAction: /^return$/i }, { $set: { excessAction: 'Return' } });
+      console.log('Payment collection auto-repair completed.');
+    } catch (e) {
+      console.warn('Payment auto-repair warning:', e.message);
+    }
+
+    // Auto-repair Maintenance: status normalization
+    try {
+      const maintColl = mongoose.connection.db.collection('maintenance');
+      await maintColl.updateMany({ status: /^open$/i }, { $set: { status: 'Open' } });
+      await maintColl.updateMany({ status: /^pending$/i }, { $set: { status: 'Pending' } });
+      await maintColl.updateMany({ status: /^reschedule$/i }, { $set: { status: 'Reschedule' } });
+      await maintColl.updateMany({ status: /^cancel$/i }, { $set: { status: 'Cancel' } });
+      await maintColl.updateMany({ status: /^(close|closed)$/i }, { $set: { status: 'Close' } });
+      console.log('Maintenance status auto-repair completed.');
+    } catch (e) {
+      console.warn('Maintenance auto-repair warning:', e.message);
+    }
+
+    // Auto-repair Projects: status normalization
+    try {
+      const projColl = mongoose.connection.db.collection('projects');
+      await projColl.updateMany({ status: /^pending$/i }, { $set: { status: 'Pending' } });
+      await projColl.updateMany({ status: /^(on-going|ongoing)$/i }, { $set: { status: 'On-Going' } });
+      await projColl.updateMany({ status: /^stopped$/i }, { $set: { status: 'Stopped' } });
+      await projColl.updateMany({ status: /^completed$/i }, { $set: { status: 'Completed' } });
+      console.log('Project status auto-repair completed.');
+    } catch (e) {
+      console.warn('Project auto-repair warning:', e.message);
+    }
+
+    // Auto-repair Purchases: status and statusInfo normalization
+    try {
+      const purColl = mongoose.connection.db.collection('purchase');
+      await purColl.updateMany({ statusInfo: /^pending$/i }, { $set: { statusInfo: 'Pending' } });
+      await purColl.updateMany({ statusInfo: /^(on-going|ongoing)$/i }, { $set: { statusInfo: 'On-Going' } });
+      await purColl.updateMany({ statusInfo: /^stopped$/i }, { $set: { statusInfo: 'Stopped' } });
+      await purColl.updateMany({ statusInfo: /^completed$/i }, { $set: { statusInfo: 'Completed' } });
+      await purColl.updateMany({ status: /^pending$/i }, { $set: { status: 'Pending' } });
+      await purColl.updateMany({ status: /^(on-going|ongoing)$/i }, { $set: { status: 'On-Going' } });
+      await purColl.updateMany({ status: /^stopped$/i }, { $set: { status: 'Stopped' } });
+      await purColl.updateMany({ status: /^completed$/i }, { $set: { status: 'Completed' } });
+      console.log('Purchase status auto-repair completed.');
+    } catch (e) {
+      console.warn('Purchase auto-repair warning:', e.message);
+    }
+
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;
@@ -182,60 +275,6 @@ const io = new Server(server, {
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-// Universal Uppercase Sanitizer for Incoming Business Payloads
-function sanitizeBackendUppercase(data, keyPath = '') {
-  if (data === null || data === undefined) return data;
-  if (typeof data === 'string') {
-    const lowerKey = keyPath.toLowerCase();
-    if (
-      lowerKey.includes('password') ||
-      lowerKey.includes('email') ||
-      lowerKey.includes('token') ||
-      lowerKey.includes('url') ||
-      lowerKey.includes('image') ||
-      lowerKey.includes('photo') ||
-      lowerKey.includes('icon') ||
-      lowerKey.includes('avatar') ||
-      lowerKey.includes('file') ||
-      lowerKey.includes('path') ||
-      lowerKey.includes('hash') ||
-      lowerKey.includes('signature') ||
-      lowerKey.includes('auth') ||
-      data.startsWith('data:') ||
-      data.startsWith('http://') ||
-      data.startsWith('https://') ||
-      data.startsWith('blob:') ||
-      data.startsWith('sidecar://') ||
-      (/^[0-9a-fA-F]{24}$/.test(data) && (lowerKey.includes('id') || lowerKey.includes('_id'))) ||
-      /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(data)
-    ) {
-      return data;
-    }
-    return data.toUpperCase();
-  }
-  if (Array.isArray(data)) {
-    return data.map((item, idx) => sanitizeBackendUppercase(item, keyPath + '[' + idx + ']'));
-  }
-  if (typeof data === 'object') {
-    const clean = {};
-    for (const k of Object.keys(data)) {
-      clean[k] = sanitizeBackendUppercase(data[k], k);
-    }
-    return clean;
-  }
-  return data;
-}
-
-app.use((req, res, next) => {
-  const reqUrl = (req.originalUrl || req.url || '').toLowerCase();
-  const isAuthRoute = reqUrl.includes('/auth') || reqUrl.includes('/login') || reqUrl.includes('/employeeuser') || reqUrl.includes('/adminuser');
-  if (!isAuthRoute && ['POST', 'PUT', 'PATCH'].includes(req.method) && req.body && typeof req.body === 'object') {
-    try {
-      req.body = sanitizeBackendUppercase(req.body);
-    } catch (_) {}
-  }
-  next();
-});
 app.use(function (req, res, next) {
   req.io = io;
   return next();
@@ -282,7 +321,7 @@ const fleetRoute = require('./routes/fleet');
 app.use("/endpoint/fleet", fleetRoute);
 
 app.get('/test', (req, res) => res.send('Backend is LIVE and UPDATED! [v3.5.87-payroll-fix]'));
-app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.20', attachments: true, uptime: process.uptime() })); // health check
+app.get('/status', (req, res) => res.json({ status: 'ok', version: '3.6.21', attachments: true, uptime: process.uptime() })); // health check
 
 // DEBUG & INIT ROUTES
 app.get('/debug-db', async (req, res) => {

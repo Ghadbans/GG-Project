@@ -19,43 +19,16 @@ const invoiceSchema= new Schema(
         unique:true
       },
       invoiceDate: {
-      type: Date,
-      trim: true,
-      required: true
-      },
-      invoiceDueDate: {
         type: Date,
         trim: true,
-        required: true },
-      invoiceSubject: {
-        type: String,
-        trim: true },
-      overdue: {
-        type: Boolean,
-        trim: true },
-      daysPastDue: {
-        type: Number,
-        trim: true },
-      invoiceStatus: {
-        type: String,
-        trim: true },
-      invoicePurchase: {
-        type: String,
-        trim: true },
-      invoiceDefect: {
-        type: String,
-        trim: true },
-      status: {
-        type: String,
-        trim: true,
-        enum: ['Draft', 'Sent', 'Decline','Pending','Paid','Partially-Paid','Void','Free of Charge'],
-        default: 'Draft'
-      },
-      items:[  ], 
-      subTotal: {
-        type: Number,
-        trim: true,
-        required: true
+        required: true,
+        set: (v) => {
+          if (!v) return new Date();
+          if (typeof v === 'object' && v.$d) return new Date(v.$d);
+          if (typeof v === 'object' && Object.keys(v).length === 0) return new Date();
+          const d = new Date(v);
+          return isNaN(d.getTime()) ? new Date() : d;
+        }
       },
       total: {
         type: Number,

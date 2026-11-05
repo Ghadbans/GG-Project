@@ -124,7 +124,7 @@ const CategoryPrintStatement = forwardRef(({
               let details = row.description || '-';
               if ((row.accountName === 'Project' || row.accountName === 'Maintenance') && row.accountNameInfo?.name) {
                 details = row.accountNameInfo.name + (row.description ? ` (${row.description})` : '');
-              } else if (row.accountName === 'Employee' && Array.isArray(row.employeeName) && row.employeeName.length > 0) {
+              } else if (String(row.accountName || '').toLowerCase() === 'employee' && Array.isArray(row.employeeName) && row.employeeName.length > 0) {
                 details = row.employeeName.map(emp => `${emp.employee || 'Employee'} (FC ${Number(emp.amount || 0).toLocaleString()} / $${Number(emp.total || 0).toFixed(2)})`).join('; ');
               }
 

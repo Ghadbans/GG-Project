@@ -970,12 +970,12 @@ function DailyExpenseAdminView() {
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
                                     {
-                                      (item.accountName === 'Project' || item.accountName === 'Maintenance') && (
+                                      ['project', 'maintenance'].includes(String(item.accountName || '').toLowerCase()) && (
                                         item.accountNameInfo?.name
                                       )
                                     }
                                     {
-                                      item.accountName === 'Employee' && (
+                                      String(item.accountName || '').toLowerCase() === 'employee' && (
                                         <section>
                                           {
                                             item.employeeName.map((Item) => (

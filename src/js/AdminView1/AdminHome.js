@@ -427,7 +427,7 @@ function AdminHome() {
 
 
         safeGet(`${ENDPOINT_URL}/pos?summary=true`).then(resPosInvoice => {
-          setPosInvoice(resPosInvoice.data?.data?.filter(row => row.status === 'Paid').map(row => ({
+          setPosInvoice(resPosInvoice.data?.data?.filter(row => String(row.status || '').toLowerCase() === 'paid').map(row => ({
             ...row,
             id: row._id,
             factureNumber: 'S-' + (row.factureNumber || "").toString().padStart(6, '0'),
@@ -465,7 +465,7 @@ function AdminHome() {
             infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
           })).reverse();
           setAllInvoices(processedInvoices);
-          setInvoice(processedInvoices.filter(row => row.status === 'Paid'));
+          setInvoice(processedInvoices.filter(row => String(row.status || '').toLowerCase() === 'paid'));
 
           setPurchase(resPurchase.data.data.map(row => ({
             ...row,
@@ -475,7 +475,7 @@ function AdminHome() {
         });
 
         safeGet(`${ENDPOINT_URL}/maintenance?summary=true`).then(resMaintenance => {
-          setMaintenance(resMaintenance.data?.data?.filter(row => row.status === 'Close').map(row => ({
+          setMaintenance(resMaintenance.data?.data?.filter(row => String(row.status || '').toLowerCase() === 'close').map(row => ({
             ...row,
             id: row._id,
             maintenanceNumber: "M-" + (row.maintenanceNumber || row.serviceNumber || "").toString().padStart(6, '0'),
@@ -487,7 +487,7 @@ function AdminHome() {
         });
 
         safeGet(`${ENDPOINT_URL}/projects`).then(resProject => {
-          setProject(resProject.data?.data?.filter(row => row.status === 'Completed').map(row => ({
+          setProject(resProject.data?.data?.filter(row => String(row.status || '').toLowerCase() === 'completed').map(row => ({
             ...row,
             id: row._id,
             projectNumber: "P-" + (row.projectNumber || "").toString().padStart(6, '0'),

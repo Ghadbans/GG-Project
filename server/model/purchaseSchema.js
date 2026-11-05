@@ -29,14 +29,18 @@ const purchaseSchema = new Schema(
       },
       statusInfo: {
         type: String,
-        trim: true },
-      items:[  ],
-      status: {
-        type: String,
-        trim: true },
-      description: {
-        type: String,
-        trim: true },
+        trim: true,
+        set: (v) => {
+          if (!v) return 'Pending';
+          const upper = String(v).toUpperCase().trim();
+          if (upper === 'PENDING') return 'Pending';
+          if (upper === 'ON-GOING' || upper === 'ONGOING') return 'On-Going';
+          if (upper === 'STOPPED') return 'Stopped';
+          if (upper === 'COMPLETED') return 'Completed';
+          return v;
+        },
+        default: 'Pending'
+      },
       purchaseAmount1: {
         type: Number,
         trim: true,

@@ -499,8 +499,29 @@ function isValidCustomer(customerName) {
 
 // Create invoice
 Route.route("/create-invoice").post(async (req, res, next) => {
-  if (!req.body.invoiceDueDate) {
+  // Defensive normalization for Dayjs / Object wrapped dates
+  if (req.body.invoiceDate) {
+    if (typeof req.body.invoiceDate === 'object') {
+      if (req.body.invoiceDate.$d) {
+        req.body.invoiceDate = new Date(req.body.invoiceDate.$d);
+      } else if (req.body.invoiceDate.$isDayjsObject || req.body.invoiceDate._isAMomentObject) {
+        req.body.invoiceDate = new Date(req.body.invoiceDate);
+      } else if (Object.keys(req.body.invoiceDate).length === 0) {
+        req.body.invoiceDate = new Date();
+      }
+    }
+  } else {
+    req.body.invoiceDate = new Date();
+  }
+
+  if (!req.body.invoiceDueDate || (typeof req.body.invoiceDueDate === 'object' && Object.keys(req.body.invoiceDueDate).length === 0)) {
     req.body.invoiceDueDate = new Date();
+  } else if (typeof req.body.invoiceDueDate === 'object') {
+    if (req.body.invoiceDueDate.$d) {
+      req.body.invoiceDueDate = new Date(req.body.invoiceDueDate.$d);
+    } else if (req.body.invoiceDueDate.$isDayjsObject || req.body.invoiceDueDate._isAMomentObject) {
+      req.body.invoiceDueDate = new Date(req.body.invoiceDueDate);
+    }
   }
   
   if (!isValidCustomer(req.body.customerName)) {

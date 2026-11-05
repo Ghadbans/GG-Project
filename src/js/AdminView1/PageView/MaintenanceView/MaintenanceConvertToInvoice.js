@@ -814,8 +814,8 @@ function MaintenanceConvertToInvoice() {
     const data = {
       customerName,
       invoiceNumber,
-      invoiceDate,
-      invoiceDueDate,
+      invoiceDate: invoiceDate && dayjs.isDayjs(invoiceDate) ? invoiceDate.toDate() : (invoiceDate ? new Date(invoiceDate) : new Date()),
+      invoiceDueDate: invoiceDueDate && dayjs.isDayjs(invoiceDueDate) ? invoiceDueDate.toDate() : (invoiceDueDate ? new Date(invoiceDueDate) : new Date()),
       invoiceSubject,
       invoiceDefect,
       status,

@@ -26,12 +26,26 @@ const paymentSchema = new Schema({
     },
     modes: {
       type: String,
-      enum: [ 'Bank Transfer', 'Cash','Credit','Credit-Account'],
+      set: (v) => {
+        if (!v) return 'Cash';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'CASH') return 'Cash';
+        if (upper === 'BANK TRANSFER') return 'Bank Transfer';
+        if (upper === 'CREDIT') return 'Credit';
+        if (upper === 'CREDIT-ACCOUNT' || upper === 'CREDIT_ACCOUNT') return 'Credit-Account';
+        return v;
+      },
+      enum: ['Bank Transfer', 'Cash','Credit','Credit-Account', 'BANK TRANSFER', 'CASH', 'CREDIT', 'CREDIT-ACCOUNT'],
       default: 'Cash'
     },
     paymentDate: {
       type: Date,
-      required: true
+      required: true,
+      set: (v) => {
+        if (!v) return new Date();
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? new Date() : d;
+      }
     },
     paymentNumber: {
       type: Number,
@@ -51,12 +65,27 @@ const paymentSchema = new Schema({
     },
     transactionType: {
       type: String,
-      enum: ['Payment', 'Refund'],
+      set: (v) => {
+        if (!v) return 'Payment';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'PAYMENT') return 'Payment';
+        if (upper === 'REFUND') return 'Refund';
+        return v;
+      },
+      enum: ['Payment', 'Refund', 'PAYMENT', 'REFUND'],
       default: 'Payment'
     },
     status: {
       type: String,
-      enum: ['Cleared', 'Pending', 'Voided'],
+      set: (v) => {
+        if (!v) return 'Cleared';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'CLEARED') return 'Cleared';
+        if (upper === 'PENDING') return 'Pending';
+        if (upper === 'VOIDED') return 'Voided';
+        return v;
+      },
+      enum: ['Cleared', 'Pending', 'Voided', 'CLEARED', 'PENDING', 'VOIDED'],
       default: 'Cleared'
     },
     description: {
@@ -69,7 +98,14 @@ const paymentSchema = new Schema({
     },
     excessAction: {
       type: String,
-      enum: ['Credit', 'Return'],
+      set: (v) => {
+        if (!v) return 'Credit';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'CREDIT') return 'Credit';
+        if (upper === 'RETURN') return 'Return';
+        return v;
+      },
+      enum: ['Credit', 'Return', 'CREDIT', 'RETURN'],
       default: 'Credit'
     },
     returnUSD: {

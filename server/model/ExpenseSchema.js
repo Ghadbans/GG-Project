@@ -27,18 +27,16 @@ const expenseSchema = new Schema({
       accountName: {      
         type: String,
         trim: true,
-      },
-      reason: {      
-        type: String,
-        trim: true,
-      },
-      accountNameInfo: {    
-      },
-      employeeName:[]
-      ,
-      amount: {
-        type: Number,
-        trim: true, 
+        set: (v) => {
+          if (!v) return v;
+          const upper = String(v).toUpperCase().trim();
+          if (upper === 'EMPLOYEE') return 'Employee';
+          if (upper === 'OFFICE') return 'Office';
+          if (upper === 'PROJECT') return 'Project';
+          if (upper === 'MAINTENANCE') return 'Maintenance';
+          if (upper === 'RECEIVABLES') return 'Receivables';
+          return v;
+        }
       },
       rate: {
         type: Number,

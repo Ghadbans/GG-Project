@@ -751,9 +751,10 @@ function ItemPurchaseViewAdmin() {
           status = 'Paid';
         }
 
-        let color = 'red';
-        if (status === 'Paid') color = 'blue';
-        else if (status === 'Partially-Paid') color = 'orange';
+        const s = String(status || '').toUpperCase();
+        let color = '#d32f2f'; // red for UnPaid
+        if (s === 'PAID') color = '#1976d2'; // blue
+        else if (s === 'PARTIALLY-PAID' || s === 'PARTIALLY_PAID') color = '#ed6c02'; // orange
 
         return (
           <span style={{ color, fontWeight: 'bold' }}>

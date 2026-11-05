@@ -30,7 +30,19 @@ const quotationSchema = new Schema(
     status: {
       type: String,
       trim: true,
-      enum: ['Draft', 'Sent', 'Decline', 'Approved', 'Invoiced', 'Pending', 'Converted'],
+      set: (v) => {
+        if (!v) return 'Draft';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'DRAFT') return 'Draft';
+        if (upper === 'SENT') return 'Sent';
+        if (upper === 'DECLINE') return 'Decline';
+        if (upper === 'APPROVED') return 'Approved';
+        if (upper === 'INVOICED') return 'Invoiced';
+        if (upper === 'PENDING') return 'Pending';
+        if (upper === 'CONVERTED') return 'Converted';
+        return v;
+      },
+      enum: ['Draft', 'Sent', 'Decline','Approved','Invoiced','Pending','Converted', 'DRAFT', 'SENT', 'DECLINE', 'APPROVED', 'INVOICED', 'PENDING', 'CONVERTED'],
       default: 'Draft'
     },
     items: [],

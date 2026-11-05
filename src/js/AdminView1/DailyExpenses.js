@@ -1027,7 +1027,7 @@ function DailyExpenses() {
                 </Typography>
                 <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
                   {
-                    expensesView.accountName === 'Employee' ?
+                    String(expensesView.accountName || '').toLowerCase() === 'employee' ?
                       (
                         <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
 

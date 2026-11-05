@@ -463,24 +463,23 @@ function PurchasesViewAdmin() {
     { field: 'customerName', headerName: 'Customer Name', minWidth: 150, flex: 1.5, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '') },
     { field: 'description', headerName: 'Description', minWidth: 150, flex: 1.5, valueGetter: (params) => params.row.description !== undefined ? params.row.description : '' },
     {
-      field: 'statusInfo', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => (
-        <Typography
-          color={
-            params.row.statusInfo !== undefined && params.row.statusInfo === "Pending"
-              ? "gray" :
-              params.row.statusInfo !== undefined && params.row.statusInfo === "On-Going"
-                ? "blue" :
-                params.row.statusInfo !== undefined && params.row.statusInfo === "Stopped"
-                  ? "red" :
-                  params.row.statusInfo !== undefined && params.row.statusInfo === "Pending"
-                    ? "Orange" :
-                    params.row.statusInfo !== undefined && params.row.statusInfo === "Completed"
-                      ? "green" : "black"
-          }
-        >
-          {params.row.statusInfo !== undefined ? params.row.statusInfo : ''}
-        </Typography>
-      )
+      field: 'statusInfo', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
+        const s = String(params.row.statusInfo || '').toUpperCase();
+        return (
+          <Typography
+            sx={{
+              fontWeight: 600,
+              color:
+                s === "PENDING" ? "#ed6c02" :
+                (s === "ON-GOING" || s === "ONGOING") ? "#1976d2" :
+                s === "STOPPED" ? "#d32f2f" :
+                s === "COMPLETED" ? "#2e7d32" : "#30368a"
+            }}
+          >
+            {params.row.statusInfo !== undefined ? params.row.statusInfo : ''}
+          </Typography>
+        );
+      }
     },
     { field: 'purchaseAmount1', headerName: 'Amount 1', minWidth: 100, flex: 1, renderCell: (params) => `$ ${parseFloat(params.row.purchaseAmount1).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {

@@ -198,10 +198,23 @@ function DailyExpenseUpdate() {
         setRate(res.data.data.rate);
         setTotal(res.data.data.total);
         setExpenseNumber(Number(res.data?.data?.expenseNumber || res.data?.expenseNumber || 0));
-        setAccountName(res.data.data.accountName);
+        const rawAccount = res.data.data.accountName || '';
+        const normalizedAccount =
+          /^employee$/i.test(rawAccount) ? 'Employee' :
+          /^office$/i.test(rawAccount) ? 'Office' :
+          /^project$/i.test(rawAccount) ? 'Project' :
+          /^maintenance$/i.test(rawAccount) ? 'Maintenance' :
+          /^receivables$/i.test(rawAccount) ? 'Receivables' : rawAccount;
+        setAccountName(normalizedAccount);
         setEmployeeName(res.data.data.employeeName);
         setAccountNameInfo(res.data.data.accountNameInfo);
-        setReason1(res.data.data.reason);
+        const rawReason = res.data.data.reason || '';
+        const normalizedReason =
+          /^office$/i.test(rawReason) ? 'Office' :
+          /^project$/i.test(rawReason) ? 'Project' :
+          /^maintenance$/i.test(rawReason) ? 'Maintenance' :
+          /^none$/i.test(rawReason) ? 'None' : rawReason;
+        setReason1(normalizedReason);
         const hasTva = res.data.data.CheckTvA || res.data.data.checkTvA || res.data.data.CheckTva || res.data.data.hasTVA || res.data.data.tva || false;
         setCheckTvA(hasTva);
         setTax(res.data.data.tax || (hasTva ? (Number(res.data?.data?.total || res.data?.total || 0)) * 0.16 : 0));
@@ -825,7 +838,7 @@ function DailyExpenseUpdate() {
                     </LocalizationProvider>
                   </Grid>
                   {
-                    accountName === 'Employee' ?
+                    String(accountName || '').toLowerCase() === 'employee' ?
                       <>
                         <Grid item xs={12}>
                           <FormControl sx={{ width: '100%' }}>

@@ -647,14 +647,16 @@ function InvoiceViewAdmin() {
       field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
         const isActuallyPaid = parseFloat(params.row.balanceDue) <= 0 && parseFloat(params.row.totalInvoice) > 0;
         const displayStatus = isActuallyPaid ? "Paid" : params.row.status;
+        const s = String(params.row.status || '').toUpperCase();
         const displayColor = isActuallyPaid ? "#4caf50" : (
-          params.row.status === "Draft" ? "gray" :
-          params.row.status === "Sent" ? "blue" :
-          params.row.status === "Decline" ? "red" :
-          params.row.status === "Pending" ? "#801313" :
-          params.row.status === "Paid" ? "#4caf50" :
-          params.row.status === "Partially-Paid" ? "#fb8c00" :
-          params.row.status === "Free of Charge" ? "#9c27b0" : "black"
+          s === "DRAFT" ? "gray" :
+          s === "SENT" ? "#1976d2" :
+          s === "DECLINE" ? "#d32f2f" :
+          s === "PENDING" ? "#ed6c02" :
+          s === "PAID" ? "#2e7d32" :
+          (s === "PARTIALLY-PAID" || s === "PARTIALLY_PAID") ? "#fb8c00" :
+          s === "FREE OF CHARGE" ? "#9c27b0" :
+          s === "VOID" ? "#757575" : "#30368a"
         );
 
         return (

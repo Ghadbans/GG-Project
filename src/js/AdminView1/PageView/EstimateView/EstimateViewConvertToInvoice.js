@@ -609,9 +609,9 @@ function EstimateViewConvertToInvoice() {
       const res = await axios.post(`${ENDPOINT_URL}/create-invoice`, {
         customerName,
         invoiceNumber,
-        invoiceDate,
+        invoiceDate: invoiceDate && dayjs.isDayjs(invoiceDate) ? invoiceDate.toDate() : (invoiceDate ? new Date(invoiceDate) : new Date()),
         invoiceName,
-        invoiceDueDate,
+        invoiceDueDate: invoiceDueDate && dayjs.isDayjs(invoiceDueDate) ? invoiceDueDate.toDate() : (invoiceDueDate ? new Date(invoiceDueDate) : new Date()),
         invoiceSubject: estimateSubject,
         invoiceDefect: estimateDefect,
         status,

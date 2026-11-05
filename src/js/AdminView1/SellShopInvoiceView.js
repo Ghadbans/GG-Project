@@ -717,31 +717,28 @@ function SellShopInvoiceView() {
     { field: 'factureNumber', headerName: 'Invoice#', width: 100, renderCell: (params) => (<div> <span>S-00</span><span>{params.row.factureNumber}</span> </div>) },
     { field: 'customer', headerName: 'Customer Name', width: sideBar ? 180 : 300, valueGetter: (params) => (params.row?.customerName?.Customer || params.row?.customerName?.customerName || (typeof params.row?.customerName === 'string' ? params.row.customerName : '') || '').toUpperCase() },
     {
-            field: 'status', headerName: 'Status', width: sideBar ? 100 : 150, renderCell: (params) => (
-        <Typography
-          color={
-            params.row.status === "Draft"
-              ? "gray" : params.row.status === "Sent"
-                ? "blue" :
-                params.row.status === "Decline"
-                  ? "red" :
-                  params.row.status === "Pending"
-                    ? "#801313" :
-                    params.row.status === "Paid"
-                      ? "#4caf50" :
-                      params.row.status === "Partially-Paid"
-                        ? "#fb8c00" :
-                        params.row.status === "Refunded"
-                          ? "#795548" :
-                          params.row.status === "Partially-Refunded"
-                            ? "#ff9800" :
-                            params.row.status === "Void"
-                              ? "red" : "black"
-          }
-        >
-          {params.row.status}
-        </Typography>
-      )
+      field: 'status', headerName: 'Status', width: sideBar ? 100 : 150, renderCell: (params) => {
+        const s = String(params.row.status || '').toUpperCase();
+        return (
+          <Typography
+            sx={{
+              fontWeight: 600,
+              color:
+                s === "DRAFT" ? "gray" :
+                s === "SENT" ? "#1976d2" :
+                s === "DECLINE" ? "#d32f2f" :
+                s === "PENDING" ? "#ed6c02" :
+                s === "PAID" ? "#2e7d32" :
+                (s === "PARTIALLY-PAID" || s === "PARTIALLY_PAID") ? "#fb8c00" :
+                s === "REFUNDED" ? "#795548" :
+                (s === "PARTIALLY-REFUNDED" || s === "PARTIALLY_REFUNDED") ? "#ff9800" :
+                s === "VOID" ? "#d32f2f" : "#30368a"
+            }}
+          >
+            {params.row.status}
+          </Typography>
+        );
+      }
     },
     { field: 'dateField', headerName: 'Date', width: 150 },
     { field: 'totalInvoice', headerName: 'I-Amount', width: sideBar ? 150 : 200, renderCell: (params) => `FC${(parseFloat(params.row?.totalInvoice) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },

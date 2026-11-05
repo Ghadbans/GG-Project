@@ -592,23 +592,26 @@ function EstimateViewAdmin() {
     { field: 'estimateNumber', headerName: 'Quotation#', minWidth: 100, flex: 1, valueFormatter: (params) => 'Q-' + String(params?.value || '').padStart(6, '0') },
     { field: 'estimateSubject', headerName: 'Subject', minWidth: 150, flex: 1.5 },
     {
-      field: 'status', headerName: 'Status', minWidth: 110, flex: 1, renderCell: (params) => (
-        <Typography
-          color={
-            params.row.status === "Draft"
-              ? "gray" : params.row.status === "Sent"
-                ? "blue" :
-                params.row.status === "Decline"
-                  ? "red" :
-                  params.row.status === "Approved"
-                    ? "#339ba5" :
-                    params.row.status === "Invoiced"
-                      ? "#6a1b9a" : "black"
-          }
-        >
-          {params.row.status}
-        </Typography>
-      )
+      field: 'status', headerName: 'Status', minWidth: 110, flex: 1, renderCell: (params) => {
+        const s = String(params.row.status || '').toUpperCase();
+        return (
+          <Typography
+            sx={{
+              fontWeight: 600,
+              color:
+                s === "DRAFT" ? "gray" :
+                s === "SENT" ? "#1976d2" :
+                s === "DECLINE" ? "#d32f2f" :
+                s === "APPROVED" ? "#339ba5" :
+                s === "INVOICED" ? "#6a1b9a" :
+                s === "PENDING" ? "#ed6c02" :
+                s === "CONVERTED" ? "#0288d1" : "#30368a"
+            }}
+          >
+            {params.row.status}
+          </Typography>
+        );
+      }
     },
     { field: 'subTotal', headerName: 'Amount', minWidth: 90, flex: 1, renderCell: (params) => `$${params.row.totalInvoice?.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}` },
     {

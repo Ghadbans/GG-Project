@@ -12,11 +12,18 @@ const projectSchema = new Schema(
     },
     status: {
       type: String,
-      trim: true },
-    phase:[],
-    description: {
-      type: String,
-      trim: true },
+      trim: true,
+      set: (v) => {
+        if (!v) return 'Pending';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'PENDING') return 'Pending';
+        if (upper === 'ON-GOING' || upper === 'ONGOING') return 'On-Going';
+        if (upper === 'STOPPED') return 'Stopped';
+        if (upper === 'COMPLETED') return 'Completed';
+        return v;
+      },
+      default: 'Pending'
+    },
     projectNumber: {
         type: Number,
         required: true,

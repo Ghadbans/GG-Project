@@ -14,9 +14,14 @@ const notificationSchema = new Schema(
       type: String,
       trim: true,
     },
-    dateNotification:{
-    type: Date,
-    trim: true,
+    dateNotification: {
+      type: Date,
+      default: Date.now,
+      set: (v) => {
+        if (!v) return new Date();
+        const d = new Date(v);
+        return isNaN(d.getTime()) ? new Date() : d;
+      }
     },
     branchId: { type: String, default: 'HQ' },
 },

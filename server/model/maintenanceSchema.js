@@ -30,7 +30,17 @@ const maintenanceSchema= new Schema(
       status: {
         type: String,
         trim: true,
-        enum: ['Open', 'Reschedule','Cancel','Pending','Close'],
+        set: (v) => {
+          if (!v) return 'Open';
+          const upper = String(v).toUpperCase().trim();
+          if (upper === 'OPEN') return 'Open';
+          if (upper === 'RESCHEDULE') return 'Reschedule';
+          if (upper === 'CANCEL') return 'Cancel';
+          if (upper === 'PENDING') return 'Pending';
+          if (upper === 'CLOSE' || upper === 'CLOSED') return 'Close';
+          return v;
+        },
+        enum: ['Open', 'Reschedule','Cancel','Pending','Close', 'OPEN', 'RESCHEDULE', 'CANCEL', 'PENDING', 'CLOSE', 'CLOSED'],
         default: 'Open'
       },
       itemDescriptionInfo: {

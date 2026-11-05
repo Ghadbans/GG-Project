@@ -501,23 +501,23 @@ function ProjectViewAdmin() {
     { field: 'projectName', headerName: 'Project Name', minWidth: 200, flex: 2 },
     { field: 'description', headerName: 'Description', minWidth: 150, flex: 1.5 },
     {
-      field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => (
-        <Typography
-          color={
-            params.row.status === "Pending"
-              ? "gray" : params.row.status === "On-Going"
-                ? "blue" :
-                params.row.status === "Stopped"
-                  ? "red" :
-                  params.row.status === "Pending"
-                    ? "Orange" :
-                    params.row.status === "Completed"
-                      ? "green" : "black"
-          }
-        >
-          {params.row.status}
-        </Typography>
-      )
+      field: 'status', headerName: 'Status', minWidth: 100, flex: 1, renderCell: (params) => {
+        const s = String(params.row.status || '').toUpperCase();
+        return (
+          <Typography
+            sx={{
+              fontWeight: 600,
+              color:
+                s === "PENDING" ? "#ed6c02" :
+                (s === "ON-GOING" || s === "ONGOING") ? "#1976d2" :
+                s === "STOPPED" ? "#d32f2f" :
+                s === "COMPLETED" ? "#2e7d32" : "#30368a"
+            }}
+          >
+            {params.row.status}
+          </Typography>
+        );
+      }
     },
     {
       field: 'view', headerName: 'View', width: 60, minWidth: 60, renderCell: (params) => (

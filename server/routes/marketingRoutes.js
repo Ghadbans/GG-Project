@@ -230,7 +230,7 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
 
       // Parse Facebook Post ID from stdout if available
       let fbPostId = null;
-      const fbMatch = stdout.match(/Live Feed Post Published ID:\s*([^\s\n\r]+)/i) || stdout.match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/Post ID:\s*([^\s\n\r]+)/i);
+      const fbMatch = stdout.match(/Main Timeline Feed Post Created:\s*([^\s\n\r]+)/i) || stdout.match(/Live Feed Post Published ID:\s*([^\s\n\r]+)/i) || stdout.match(/Facebook post published! Post ID:\s*([^\s\n\r]+)/i) || stdout.match(/Post ID:\s*([^\s\n\r]+)/i);
       if (fbMatch) {
         fbPostId = fbMatch[1];
       }
@@ -320,17 +320,17 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
       );
       const photoId = photoRes.data.id;
 
-      // Step 2: Publish a real post to the Page Feed with the photo attached
+      // Step 2: Publish a REAL post to the Page Feed with attached_media JSON stringified
       const feedRes = await axios.post(
         `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed`,
         {
           message: caption,
-          attached_media: [{ media_fbid: photoId }],
+          attached_media: JSON.stringify([{ media_fbid: photoId }]),
           access_token: FB_PAGE_ACCESS_TOKEN
         }
       );
 
-      console.log('✅ Live Feed Post Published ID:', feedRes.data.id);
+      console.log('✅ Main Timeline Feed Post Created:', feedRes.data.id);
       fbResult = {
         success: true,
         postId: feedRes.data.id,
