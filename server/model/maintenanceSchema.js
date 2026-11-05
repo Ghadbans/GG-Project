@@ -20,7 +20,14 @@ const maintenanceSchema= new Schema(
         required: true,
         set: (v) => {
           if (!v) return new Date();
-          if (typeof v === 'object' && v.$d) return new Date(v.$d);
+          if (v instanceof Date && !isNaN(v.getTime())) return v;
+          if (typeof v === 'object') {
+            if (v.$d instanceof Date && !isNaN(v.$d.getTime())) return v.$d;
+            if (v['$y'] !== undefined) {
+              const d = new Date(Number(v['$y']), Number(v['$M'] !== undefined ? v['$M'] : 0), Number(v['$D'] !== undefined ? v['$D'] : 1), Number(v['$H'] !== undefined ? v['$H'] : 0), Number(v['$m'] !== undefined ? v['$m'] : 0), Number(v['$s'] !== undefined ? v['$s'] : 0));
+              if (!isNaN(d.getTime())) return d;
+            }
+          }
           if (typeof v === 'object' && Object.keys(v).length === 0) return new Date();
           const d = new Date(v);
           return isNaN(d.getTime()) ? new Date() : d;
@@ -35,7 +42,14 @@ const maintenanceSchema= new Schema(
         trim: true,
         set: (v) => {
           if (!v) return null;
-          if (typeof v === 'object' && v.$d) return new Date(v.$d);
+          if (v instanceof Date && !isNaN(v.getTime())) return v;
+          if (typeof v === 'object') {
+            if (v.$d instanceof Date && !isNaN(v.$d.getTime())) return v.$d;
+            if (v['$y'] !== undefined) {
+              const d = new Date(Number(v['$y']), Number(v['$M'] !== undefined ? v['$M'] : 0), Number(v['$D'] !== undefined ? v['$D'] : 1), Number(v['$H'] !== undefined ? v['$H'] : 0), Number(v['$m'] !== undefined ? v['$m'] : 0), Number(v['$s'] !== undefined ? v['$s'] : 0));
+              if (!isNaN(d.getTime())) return d;
+            }
+          }
           if (typeof v === 'object' && Object.keys(v).length === 0) return null;
           const d = new Date(v);
           return isNaN(d.getTime()) ? null : d;

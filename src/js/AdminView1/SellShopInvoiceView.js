@@ -722,7 +722,6 @@ function SellShopInvoiceView() {
         return (
           <Typography
             sx={{
-              fontWeight: 600,
               color:
                 s === "DRAFT" ? "gray" :
                 s === "SENT" ? "#1976d2" :

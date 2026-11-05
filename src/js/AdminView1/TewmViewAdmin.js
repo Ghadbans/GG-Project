@@ -464,7 +464,6 @@ function TewmViewAdmin() {
         return (
           <Typography
             sx={{
-              fontWeight: 600,
               color:
                 s === "RESIGN" ? "#801313" :
                 s === "SUSPENDED" ? "#fb8c00" :

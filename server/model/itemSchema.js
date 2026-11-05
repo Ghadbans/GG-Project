@@ -8,6 +8,13 @@ const itemSchema = new Schema(
       type: String,
       required: true,
       trim: true,
+      set: (v) => {
+        if (!v) return 'Goods';
+        const upper = String(v).toUpperCase().trim();
+        if (upper === 'GOODS' || upper === 'PRODUCT') return 'Goods';
+        if (upper === 'SERVICES' || upper === 'SERVICE') return 'Services';
+        return v;
+      }
     },
     itemName: {
       type: String,
@@ -92,7 +99,14 @@ const itemSchema = new Schema(
     },
     condition: {
       type: String,
-      enum: ['New', 'Used'],
+      set: (v) => {
+        if (!v) return 'New';
+        const s = String(v).trim().toUpperCase();
+        if (s === 'NEW') return 'New';
+        if (s === 'USED') return 'Used';
+        return v;
+      },
+      enum: ['New', 'Used', 'NEW', 'USED'],
       default: 'New',
       trim: true
     },

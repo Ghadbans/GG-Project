@@ -279,7 +279,8 @@ function ConvertToInvoice() {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-purchase/${id}`)
         setCustomer(res.data.data.customerName);
-        setProjectID(res.data.data.projectName?._id || res.data.data.projectName);
+        const pId = res.data.data.projectName?._id || (typeof res.data.data.projectName === 'string' ? res.data.data.projectName : '');
+        setProjectID(pId);
         const purchaseItems = (res.data.data.items || []).map(item => {
           const isDivider = Boolean(item?.newDescription && String(item.newDescription).trim() !== '' && (!item.itemName || (typeof item.itemName === 'string' ? item.itemName.trim() === '' : !item.itemName._id && !item.itemName.itemName))); if (isDivider) return item;
           const rate = getProjectItemRate(item);
@@ -305,7 +306,16 @@ function ConvertToInvoice() {
         SetItems(purchaseItems);
         setPurchaseName(res.data.data._id);
         setNoteInfo(res.data.data.noteInfo);
-        setInvoiceSubject(res.data.data.projectName?.projectName || res.data.data.projectName || '');
+        let subject = res.data.data.projectName?.projectName || (typeof res.data.data.projectName === 'string' && res.data.data.projectName.length < 24 ? res.data.data.projectName : '') || res.data.data.description || '';
+        if (!subject && pId) {
+          try {
+            const projRes = await axios.get(`${ENDPOINT_URL}/get-projects/${pId}`);
+            if (projRes.data?.data) {
+              subject = projRes.data.data.description || projRes.data.data.projectName || '';
+            }
+          } catch (_) {}
+        }
+        setInvoiceSubject(subject || res.data.data.purchaseName || 'PROJECT CONVERSION');
         setInvoiceDefect(res.data.data.estimateDefect);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -879,9 +889,9 @@ function ConvertToInvoice() {
         invoiceNumber,
         invoiceDate: invoiceDate && dayjs.isDayjs(invoiceDate) ? invoiceDate.toDate() : (invoiceDate ? new Date(invoiceDate) : new Date()),
         invoiceDueDate: invoiceDueDate && dayjs.isDayjs(invoiceDueDate) ? invoiceDueDate.toDate() : (invoiceDueDate ? new Date(invoiceDueDate) : new Date()),
-        invoiceSubject,
+        invoiceSubject: (invoiceSubject && String(invoiceSubject).trim()) || 'PROJECT CONVERSION',
         invoiceDefect,
-        status: finalBalanceDue === 0 ? 'Paid' : (finalPaidAmount > 0 ? 'Partially-Paid' : 'Sent'),
+        status: (finalBalanceDue === 0 && parseFloat(totalInvoice) > 0) ? 'Paid' : (finalPaidAmount > 0 ? 'Partially-Paid' : 'Sent'),
         items,
         subTotal, noteInfo,
         invoiceName,

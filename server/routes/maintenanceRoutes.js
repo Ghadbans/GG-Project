@@ -367,29 +367,24 @@ function isValidCustomer(customerName) {
 }
 
 // Create maintenance
-Route.route("/create-maintenance").post(async (req, res, next) => {
-  if (req.body.serviceDate) {
-    if (typeof req.body.serviceDate === 'object') {
-      if (req.body.serviceDate.$d) {
-        req.body.serviceDate = new Date(req.body.serviceDate.$d);
-      } else if (req.body.serviceDate.$isDayjsObject || req.body.serviceDate._isAMomentObject) {
-        req.body.serviceDate = new Date(req.body.serviceDate);
-      } else if (Object.keys(req.body.serviceDate).length === 0) {
-        req.body.serviceDate = new Date();
-      }
+const parseSafeDate = (v, nullable = false) => {
+  if (!v) return nullable ? null : new Date();
+  if (v instanceof Date && !isNaN(v.getTime())) return v;
+  if (typeof v === 'object') {
+    if (v.$d instanceof Date && !isNaN(v.$d.getTime())) return v.$d;
+    if (v['$y'] !== undefined) {
+      const d = new Date(Number(v['$y']), Number(v['$M'] !== undefined ? v['$M'] : 0), Number(v['$D'] !== undefined ? v['$D'] : 1), Number(v['$H'] !== undefined ? v['$H'] : 0), Number(v['$m'] !== undefined ? v['$m'] : 0), Number(v['$s'] !== undefined ? v['$s'] : 0));
+      if (!isNaN(d.getTime())) return d;
     }
-  } else {
-    req.body.serviceDate = new Date();
   }
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? (nullable ? null : new Date()) : d;
+};
 
-  if (req.body.visitDate && typeof req.body.visitDate === 'object') {
-    if (req.body.visitDate.$d) {
-      req.body.visitDate = new Date(req.body.visitDate.$d);
-    } else if (req.body.visitDate.$isDayjsObject || req.body.visitDate._isAMomentObject) {
-      req.body.visitDate = new Date(req.body.visitDate);
-    } else if (Object.keys(req.body.visitDate).length === 0) {
-      req.body.visitDate = null;
-    }
+Route.route("/create-maintenance").post(async (req, res, next) => {
+  req.body.serviceDate = parseSafeDate(req.body.serviceDate, false);
+  if (req.body.visitDate) {
+    req.body.visitDate = parseSafeDate(req.body.visitDate, true);
   }
   const { customerName,serviceNumber,action,
     serviceName,serviceDate,laborQty,totalLaborFeesGenerale,
@@ -535,23 +530,11 @@ Route.route('/technician-update-maintenance/:id').put(async (req, res, next) => 
 Route.route("/update-maintenance/:id").put(async (req, res, next) => {
   try {
     const updatePayload = { ...req.body };
-    if (updatePayload.serviceDate && typeof updatePayload.serviceDate === 'object') {
-      if (updatePayload.serviceDate.$d) {
-        updatePayload.serviceDate = new Date(updatePayload.serviceDate.$d);
-      } else if (updatePayload.serviceDate.$isDayjsObject || updatePayload.serviceDate._isAMomentObject) {
-        updatePayload.serviceDate = new Date(updatePayload.serviceDate);
-      } else if (Object.keys(updatePayload.serviceDate).length === 0) {
-        delete updatePayload.serviceDate;
-      }
+    if (updatePayload.serviceDate !== undefined) {
+      updatePayload.serviceDate = parseSafeDate(updatePayload.serviceDate, false);
     }
-    if (updatePayload.visitDate && typeof updatePayload.visitDate === 'object') {
-      if (updatePayload.visitDate.$d) {
-        updatePayload.visitDate = new Date(updatePayload.visitDate.$d);
-      } else if (updatePayload.visitDate.$isDayjsObject || updatePayload.visitDate._isAMomentObject) {
-        updatePayload.visitDate = new Date(updatePayload.visitDate);
-      } else if (Object.keys(updatePayload.visitDate).length === 0) {
-        updatePayload.visitDate = null;
-      }
+    if (updatePayload.visitDate !== undefined) {
+      updatePayload.visitDate = parseSafeDate(updatePayload.visitDate, true);
     }
     
     // If customerName is explicitly passed but invalid/empty/blank, do NOT wipe out existing customer in DB

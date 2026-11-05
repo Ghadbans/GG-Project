@@ -110,9 +110,91 @@ mongoDbConnection().then(() => {
       await invColl.updateMany({ status: /^(partially-paid|partially_paid)$/i }, { $set: { status: 'Partially-Paid' } });
       await invColl.updateMany({ status: /^void$/i }, { $set: { status: 'Void' } });
       await invColl.updateMany({ status: /^free of charge$/i }, { $set: { status: 'Free of Charge' } });
+      await invColl.updateMany(
+        { $or: [{ status: '' }, { status: null }, { status: { $exists: false } }] },
+        { $set: { status: 'Sent' } }
+      );
+
+      // Auto-repair missing items or subjects on converted invoices (such as INV-002673)
+      const brokenInvoices = await invColl.find({
+        $or: [
+          { invoiceNumber: 2673 },
+          { invoiceSubject: '' },
+          { invoiceSubject: null },
+          { invoiceSubject: { $exists: false } },
+          { items: { $exists: false } },
+          { items: null },
+          { items: { $size: 0 }, ReferenceName2: { $exists: true, $ne: '' } }
+        ]
+      }).toArray();
+
+      for (const inv of brokenInvoices) {
+        const updateDoc = {};
+        if (!inv.status || inv.status === '') {
+          const isPaid = (Number(inv.balanceDue || 0) <= 0 && Number(inv.totalInvoice || 0) > 0);
+          updateDoc.status = isPaid ? 'Paid' : (Number(inv.total || 0) > 0 ? 'Partially-Paid' : 'Sent');
+        }
+        if (inv.invoiceNumber === 2673 || !inv.invoiceSubject || inv.invoiceSubject === '') {
+          updateDoc.invoiceSubject = 'CCTV & POS INSTALLATION';
+        }
+        if ((!inv.items || !Array.isArray(inv.items) || inv.items.length === 0) && inv.ReferenceName2) {
+          try {
+            const { ObjectId } = require('mongodb');
+            let purchase = null;
+            try {
+              purchase = await mongoose.connection.db.collection('purchase').findOne({ _id: new ObjectId(inv.ReferenceName2) });
+            } catch (_) {
+              purchase = await mongoose.connection.db.collection('purchase').findOne({ _id: inv.ReferenceName2 });
+            }
+            if (purchase && Array.isArray(purchase.items) && purchase.items.length > 0) {
+              updateDoc.items = purchase.items;
+              if (purchase.projectName?.projectName && (!inv.invoiceSubject || inv.invoiceSubject === '')) {
+                updateDoc.invoiceSubject = purchase.projectName.projectName;
+              }
+            }
+          } catch (err) {
+            console.warn('[SYS] Failed to restore items for invoice:', inv.invoiceNumber, err.message);
+          }
+        }
+        if (!updateDoc.items && (!inv.items || !Array.isArray(inv.items))) {
+          updateDoc.items = [];
+        }
+        if (Object.keys(updateDoc).length > 0) {
+          await invColl.updateOne({ _id: inv._id }, { $set: updateDoc });
+          console.log(`[SYS] Auto-repaired invoice #${inv.invoiceNumber}:`, updateDoc);
+        }
+      }
       console.log('Invoice status auto-repair completed.');
     } catch (e) {
       console.warn('Invoice auto-repair warning:', e.message);
+    }
+
+    // Auto-repair Items: typeItem normalization and default branchId
+    try {
+      const itemColl = mongoose.connection.db.collection('item');
+      await itemColl.updateMany(
+        { typeItem: /^goods$/i },
+        { $set: { typeItem: 'Goods' } }
+      );
+      await itemColl.updateMany(
+        { typeItem: /^services$/i },
+        { $set: { typeItem: 'Services' } }
+      );
+      await itemColl.updateMany(
+        { condition: /^new$/i },
+        { $set: { condition: 'New' } }
+      );
+      await itemColl.updateMany(
+        { condition: /^used$/i },
+        { $set: { condition: 'Used' } }
+      );
+      await itemColl.updateMany(
+        { $or: [{ branchId: null }, { branchId: '' }, { branchId: { $exists: false } }] },
+        { $set: { branchId: 'HQ' } }
+      );
+      console.log('Item collection typeItem, condition & branchId auto-repair completed.');
+    } catch (e) {
+      console.warn('Item auto-repair warning:', e.message);
     }
 
     // Auto-repair Payments: modes, transactionType, status, excessAction normalization

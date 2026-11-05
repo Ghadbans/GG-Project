@@ -975,10 +975,10 @@ function DailyExpenseAdminView() {
                                       )
                                     }
                                     {
-                                      String(item.accountName || '').toLowerCase() === 'employee' && (
+                                      (String(item.accountName || '').toLowerCase() === 'employee' || (Array.isArray(item.employeeName) && item.employeeName.length > 0)) && (
                                         <section>
                                           {
-                                            item.employeeName.map((Item) => (
+                                            (Array.isArray(item.employeeName) ? item.employeeName : []).map((Item) => (
                                               <p key={Item.idRow}>
                                                 <span>{Item.employee} </span> <span> $ {Item.total}</span>
                                               </p>

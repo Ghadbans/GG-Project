@@ -533,13 +533,12 @@ function MaintenanceViewAdmin() {
           <div>
             {
               isConverted ? (
-                <Typography sx={{ color: '#00838f', fontWeight: 600 }}>
+                <Typography sx={{ color: '#00838f' }}>
                   Converted
                 </Typography>
               ) : (
                 <Typography
                   sx={{
-                    fontWeight: 600,
                     color: (() => {
                       const s = String(params.row.status || '').toUpperCase();
                       if (s === "OPEN") return "#1976d2";

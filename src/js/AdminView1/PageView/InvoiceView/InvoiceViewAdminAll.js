@@ -380,7 +380,7 @@ function InvoiceViewAdminAll() {
 
   const relatedPurchase = invoice.filter((row) => row._id === id).map((row) => ({
     ...row,
-    items: row.items.map((Item) => {
+    items: (row.items || []).map((Item) => {
       const newAllOutReturnInfo = newAllOutReturn !== null ? newAllOutReturn.find((Item1) => Item1.Id === Item.itemName?._id) : null
       return ({
         ...Item,
@@ -410,23 +410,24 @@ function InvoiceViewAdminAll() {
     const fetchInvoice = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-invoice/${id}`)
-        setReferenceName(res.data.data.invoiceName);
-        setCustomerName(res.data.data.customerName);
-        setCustomerName1(res.data.data.customerName.customerName.replace(/\s+/g, '_').replace(/\./g, ''));
-        setCustomerID(res.data.data.customerName._id);
-        setItems(res.data.data.items);
+        setReferenceName(res.data?.data?.invoiceName);
+        setCustomerName(res.data?.data?.customerName);
+        setCustomerName1(res.data?.data?.customerName?.customerName?.replace(/\s+/g, '_').replace(/\./g, '') || '');
+        setCustomerID(res.data?.data?.customerName?._id);
+        const fetchedItems = res.data?.data?.items || [];
+        setItems(fetchedItems);
         setInvoiceNumber(Number(res.data?.data?.invoiceNumber || res.data?.invoiceNumber || 0));
-        const totalInfo = res.data.data.items.map((row) =>
+        const totalInfo = fetchedItems.map((row) =>
         ({
-          total: row.itemOut * row.itemCost
+          total: (row.itemOut || 0) * (row.itemCost || 0)
         })
         )
-        const totalInfoSell = res.data.data.items.map((row) =>
+        const totalInfoSell = fetchedItems.map((row) =>
         ({
-          total: row.itemQty * row.itemRate
+          total: (row.itemQty || 0) * (row.itemRate || 0)
         })
         )
-        const sellInfo = (res.data.data.totalInvoice)
+        const sellInfo = Number(res.data?.data?.totalInvoice || 0)
         setTotalSell(sellInfo.toFixed(2));
         const costInfo = totalInfo.reduce((sum, row) => sum + row.total, 0)
         setTotalCost(costInfo.toFixed(2))
@@ -438,7 +439,7 @@ function InvoiceViewAdminAll() {
   }, [id])
 
   const showDiscount = useMemo(() => {
-    return items.some(item => item.itemDiscount > 0)
+    return (items || []).some(item => (item?.itemDiscount || 0) > 0)
   }, [items])
 
   const Gain = isNaN(totalSell - totalCost) ? 0 : parseFloat(totalSell - totalCost).toFixed(2)
@@ -460,29 +461,29 @@ function InvoiceViewAdminAll() {
         const filteredEstimate = purchaseResponse.data?.data?.filter((row) => row.ReferenceName2 === id)
         setPurchase(filteredEstimate.map((row) => ({
           ...row,
-          items: row.items.map((Item) => ({
+          items: (row.items || []).map((Item) => ({
             ...Item,
-            totalCostInfo: Item.itemOut * Item.itemCost,
+            totalCostInfo: (Item.itemOut || 0) * (Item.itemCost || 0),
           })),
-          infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+          infoCost: (row.items || []).reduce((sum, ITem) => sum + ((ITem.itemOut || 0) * (ITem.itemCost || 0)), 0),
         })));
         const filteredMaintenance = maintenanceResponse.data?.data?.filter((row) => row.ReferenceName === referenceName)
         const filteredMaintenance2 = maintenanceResponse.data?.data?.filter((row) => row.ReferenceName === id)
         setService2(filteredMaintenance2.map((row) => ({
           ...row,
-          items: row.items.map((Item) => ({
+          items: (row.items || []).map((Item) => ({
             ...Item,
-            totalCostInfo: Item.itemOut * Item.itemCost,
+            totalCostInfo: (Item.itemOut || 0) * (Item.itemCost || 0),
           })),
-          infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+          infoCost: (row.items || []).reduce((sum, ITem) => sum + ((ITem.itemOut || 0) * (ITem.itemCost || 0)), 0),
         })))
         setService(filteredMaintenance.map((row) => ({
           ...row,
-          items: row.items.map((Item) => ({
+          items: (row.items || []).map((Item) => ({
             ...Item,
-            totalCostInfo: Item.itemOut * Item.itemCost,
+            totalCostInfo: (Item.itemOut || 0) * (Item.itemCost || 0),
           })),
-          infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+          infoCost: (row.items || []).reduce((sum, ITem) => sum + ((ITem.itemOut || 0) * (ITem.itemCost || 0)), 0),
         })));
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -949,7 +950,7 @@ function InvoiceViewAdminAll() {
   const data4 = invoice.filter(row => row._id === id).map((row) => ({
     noteInfo: 'Note ' + row.noteInfo,
   }))
-  const data5 = items.map((Item, i) => {
+  const data5 = (items || []).map((Item, i) => {
     return ({
       no: i + 1,
       item: typeof Item.itemName === 'string' ? Item.itemName : (Item.itemName?.itemName || ''),
@@ -2270,7 +2271,7 @@ function InvoiceViewAdminAll() {
                                                 </thead>
                                                 <tbody>
                                                   {
-                                                    row.items.map((Item, i) => {
+                                                    (row.items || []).map((Item, i) => {
                                                       const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                       return (
                                                         <tr key={Item.idRow}>
@@ -2333,7 +2334,7 @@ function InvoiceViewAdminAll() {
                                               </thead>
                                               <tbody>
                                                 {
-                                                  row1.items.map((Item, i) => {
+                                                  (row1.items || []).map((Item, i) => {
                                                     const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                     return (
                                                       <tr key={Item.idRow}>
@@ -2399,7 +2400,7 @@ function InvoiceViewAdminAll() {
                                               </thead>
                                               <tbody>
                                                 {
-                                                  row2.items.map((Item, i) => {
+                                                  (row2.items || []).map((Item, i) => {
                                                     const relatedUnit = item.find((Item1) => Item1._id === Item.itemName?._id)
                                                     return (
                                                       <tr key={Item.idRow}>

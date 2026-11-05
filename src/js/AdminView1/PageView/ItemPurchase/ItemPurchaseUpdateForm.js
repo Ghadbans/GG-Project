@@ -419,7 +419,7 @@ function ItemPurchaseUpdateForm() {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=1&limit=50&search=${encodeURIComponent(autocompleteSearch)}`);
         // Filter out items already in the purchase list
-        const searchResults = res.data.items.filter(row => row.typeItem === "Goods");
+        const searchResults = res.data.items.filter(row => String(row.typeItem || '').toLowerCase() === "goods" || !row.typeItem);
         setAutocompleteOptions(searchResults);
         setAutocompleteLoading(false);
       } catch (error) {
@@ -588,7 +588,7 @@ function ItemPurchaseUpdateForm() {
   const deleteItem = idRow => {
     setItems(items => items.filter((Item) => Item.idRow !== idRow));
   };
-  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
+  const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && (String(option.typeItem || '').toLowerCase() === "goods" || !option.typeItem)))
   const [openAutocomplete1, setOpenAutocomplete1] = useState(false);
 
   const handleOpenOpenAutocomplete1 = (e) => {

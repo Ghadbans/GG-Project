@@ -286,7 +286,7 @@ function ItemPurchaseViewForm() {
         try {
           const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=${shopPage}&limit=20&search=${encodeURIComponent(shopSearch)}`)
           setShopTotalPages(res.data.totalPages)
-          setShopItems(res.data.items.filter((row) => row.typeItem === "Goods").reverse())
+          setShopItems(res.data.items.filter((row) => String(row.typeItem || '').toLowerCase() === "goods" || !row.typeItem).reverse())
           setShopLoading(false)
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -329,7 +329,7 @@ function ItemPurchaseViewForm() {
           try {
             const res = await axios.get(`${ENDPOINT_URL}/item-shop?page=1&limit=50&search=${encodeURIComponent(autocompleteSearch)}`);
             // Filter out items already in the purchase list
-            const searchResults = res.data.items.filter(row => row.typeItem === "Goods");
+            const searchResults = res.data.items.filter(row => String(row.typeItem || '').toLowerCase() === "goods" || !row.typeItem);
             setAutocompleteOptions(searchResults);
             setAutocompleteLoading(false);
           } catch (error) {
@@ -621,7 +621,7 @@ if (itemArray.length > 0) {
 }
  },[itemArray,rate])
 
- const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && option.typeItem === "Goods"))
+ const filterItemInformation = ItemInformation.filter(option => !items.find((row) => option._id === row.itemName?._id && (String(option.typeItem || '').toLowerCase() === "goods" || !option.typeItem)))
 {/** purchase start**/}
 // Safe Update Logic: handleUpdatePurchase will now fetch and merge records on-the-fly during submission
 const arrayItemRelated = items.filter((row)=>row.itemQty !== 0 && row.itemQty !== '').map(row => ({

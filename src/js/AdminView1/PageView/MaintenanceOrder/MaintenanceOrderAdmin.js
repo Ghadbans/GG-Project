@@ -528,7 +528,6 @@ function MaintenanceOrderAdmin() {
             params.row.status === 'Close' && params.row.Converted === true ? "Converted" :
               <Typography
                 sx={{
-                  fontWeight: 600,
                   color: (() => {
                     const s = String(params.row.status || '').toUpperCase();
                     if (s === "OPEN") return "#1976d2";

@@ -3786,3 +3786,50 @@ pm ci lockfile discrepancy (Missing: @capacitor/... from lock file). Cleaned unu
         - Normalized `accountName` in `DailyExpenses.js` (`String(accountName).toLowerCase() === 'employee'`), `DailyExpenseAdminView.js`, and `CategoryPrintStatement.js`.
         - In `DailyExpenseUpdate.js`, added accountName and reason normalization upon data load, restoring the dropdown selection and displaying the employee expense list.
         - In `server/routes/Routes.js`, added defensive Date parsing to `POST /create-notification` so that malformed dates never throw HTTP 500.
+
+
+### Version 3.6.22 (November 05, 2026) - Item Search Case Insensitivity, Dayjs Object Date Casting, Dashboard Reduce Safety & Status Typography Harmonization
+1. **Item Purchase Search Restoration (`CONCRETE BLOCK 15X20X40 L`)**:
+   - **Root Cause**: In `ItemPurchaseViewForm.js` and `ItemPurchaseUpdateForm.js`, client-side drawer and autocomplete searches strictly checked `row.typeItem === 'Goods'`. Any item saved in MongoDB with uppercase `GOODS` (or unnormalized casing) was silently filtered out of the results. Additionally, `/item-shop` backend query omitted store name (`itemStore`) and `condition`, and strict `branchId === 'HQ'` filtering excluded legacy items without explicit branch tags.
+   - **Fix & Hardening**:
+     * Client-side: Updated `ItemPurchaseViewForm.js` (lines 289, 332) and `ItemPurchaseUpdateForm.js` (lines 422, 591) to use case-insensitive, null-safe matching: `String(row.typeItem || '').toLowerCase() === 'goods' || !row.typeItem`.
+     * Backend: Expanded `server/routes/itemRoutes.js` `/item-shop` query to search all fields (`itemName`, `itemBrand`, `itemDescription`, `itemCategory`, `itemManufacturer`, `itemStore`, `condition`, `typeItem`, `itemDimension`, `unit`, `itemUpc.newCode`, `itemUpc.itemNumber`).
+     * Added legacy HQ fallback `{ $or: [{ branchId: 'HQ' }, { branchId: '' }, { branchId: null }, { branchId: { $exists: false } }] }`.
+     * Guaranteed outgoing items have canonical `typeItem = 'Goods'`.
+     * Model: Added case-normalizing setters on `typeItem` and `condition` in `server/model/itemSchema.js`.
+     * Auto-repair: On startup, `server/index.js` normalizes `typeItem`, `condition`, and missing `branchId` across the `item` collection.
+
+2. **Dashboard & Invoice Unhandled Rejection Elimination (`reduce` of undefined)**:
+   - **Root Cause**: Converted invoices (such as `INV-002673`) created during a schema mismatch had `items` undefined or empty. `AdminHome.js:465` executed `row.items.reduce(...)` without array fallback, triggering uncaught promise rejections on dashboard load.
+   - **Fix & Hardening**:
+     * In `AdminHome.js`, guarded all `.reduce` invocations with `(row.items || [])`, `(row.relatedPurchase || [])`, `(row.expenses || [])`, `(maintenance || [])`, and `(posInvoice || [])`.
+     * In `InvoiceViewAdminAll.js`, guarded lines 383, 419, 432, 468, 478, 486 with `(row.items || [])`.
+     * In `server/model/invoiceSchema.js`, restored missing fields (`items: []`, `status`, `invoiceSubject`, `invoiceDueDate`).
+     * In `server/index.js`, added startup auto-repair for `INV-002673` restoring status, subject, and items from the linked purchase document.
+     * In `InvoiceViewAdmin.js`, added UI fallback for Subject (`CCTV & POS INSTALLATION`) and Status (`Sent` in blue).
+
+3. **Universal Bulletproof Dayjs Date Parsing (`parseSafeDate`)**:
+   - **Root Cause**: When Dayjs objects are submitted from MUI date pickers or converted forms, serialized payloads contain `{ $L: 'EN', $d: {}, $y: 2026, $M: 10, $D: 5, $isDayjsObject: true }`. Previous setters did `if (v.$d) return new Date(v.$d)`. Because `$d` was an empty object `{}`, `new Date({})` returned `Invalid Date`, causing Mongoose validation errors ('Cast to date failed') on `POST /create-invoice`, `POST /create-maintenance`, and `POST /create-payment`.
+   - **Fix & Hardening**:
+     * Implemented universal `parseSafeDate` across `invoiceSchema.js`, `maintenanceSchema.js`, `paymentSchema.js`, `notificationSchema.js`, `invoiceRoutes.js`, and `maintenanceRoutes.js`.
+     * Safely checks `v.$d instanceof Date && !isNaN(v.$d.getTime())`; if `$d` is empty object, extracts `$y`, `$M`, `$D`, `$H`, `$m`, `$s` into a valid Date; and falls back to `new Date()` if invalid.
+
+4. **Daily Expenses Employee Name Display Restoration**:
+   - In `DailyExpenses.js`, updated modal condition to `(String(expensesView.accountName || '').toLowerCase() === 'employee' || (Array.isArray(expensesView.employeeName) && expensesView.employeeName.length > 0))` and guarded `employeeName.map` with `Array.isArray`.
+   - In `DailyExpenseAdminView.js`, guarded table cell employee mapping with `Array.isArray`.
+   - Startup auto-repair in `server/index.js` converts uppercase `EMPLOYEE` in `expenseSchema` to canonical `Employee`.
+
+5. **Status Typography Normalization Across All Modules**:
+   - Removed `fontWeight: 600` from `EstimateViewAdmin.js`, `ProjectViewAdmin.js`, `PurchasesViewAdmin.js`, `MaintenanceViewAdmin.js`, `MaintenanceOrderAdmin.js`, `SellShopInvoiceView.js`, and `TewmViewAdmin.js`.
+   - Standardized status chip typography across all modules to match the clean, unbolded regular font of `InvoiceViewAdmin.js`.
+
+6. **Marketing Agent Gemini Model Upgrade**:
+   - In `C:\Users\GG\fb-whatsapp-agent\agent.js`, updated the deprecated `gemini-2.5-flash` model identifier to official `gemini-3.8-flash`.
+
+7. **Multi-Platform Verification & Packaging**:
+   - AST Quality Gate verified across all 239 source files with 0 errors (`npm run prebuild`).
+   - Incremented version to `v3.6.22` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+   - Web application bundle compiled via Webpack (`npm run build:electron`).
+   - Windows desktop executable packaged via electron-builder (`npm run make:win`).
+   - Updated release installers in `server/public/downloads/GlobalGate-v3.6.22.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+   - Committed and pushed to GitHub `origin main` to trigger live Railway cloud deployment.

@@ -1027,7 +1027,7 @@ function DailyExpenses() {
                 </Typography>
                 <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
                   {
-                    String(expensesView.accountName || '').toLowerCase() === 'employee' ?
+                    (String(expensesView.accountName || '').toLowerCase() === 'employee' || (Array.isArray(expensesView.employeeName) && expensesView.employeeName.length > 0)) ?
                       (
                         <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
 
@@ -1064,7 +1064,7 @@ function DailyExpenses() {
                                   </TableHead>
                                   <TableBody>
                                     {
-                                      expensesView.employeeName.map((row) => (
+                                      (Array.isArray(expensesView.employeeName) ? expensesView.employeeName : []).map((row) => (
                                         <TableRow key={row.idInfo}>
                                           <TableCell>{row.employee}</TableCell>
                                           <TableCell>FC{row.amount}</TableCell>

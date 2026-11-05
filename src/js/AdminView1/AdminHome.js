@@ -433,7 +433,7 @@ function AdminHome() {
             factureNumber: 'S-' + (row.factureNumber || "").toString().padStart(6, '0'),
             dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
             infoSell: Math.round(((row.TotalAmountPaid - (row.tax || 0)) / (row.rate || (!isNaN(systemRate) ? systemRate : 1))) * 100) / 100,
-            infoCost: (row.items.reduce((sum, ITem) => sum + (ITem.itemQty * ITem.itemCost), 0)) / (row.rate || (!isNaN(systemRate) ? systemRate : 1))
+            infoCost: ((row.items || []).reduce((sum, ITem) => sum + ((ITem?.itemQty || 0) * (ITem?.itemCost || 0)), 0)) / (row.rate || (!isNaN(systemRate) ? systemRate : 1))
           })).reverse());
         });
 
@@ -456,20 +456,20 @@ function AdminHome() {
           safeGet(`${ENDPOINT_URL}/invoice?summary=true`),
           safeGet(`${ENDPOINT_URL}/purchase?summary=true`)
         ]).then(([resInvoice, resPurchase]) => {
-          const processedInvoices = resInvoice.data.data.map(row => ({
+          const processedInvoices = (resInvoice?.data?.data || []).map(row => ({
             ...row,
             id: row._id,
             invoiceNumber: 'INV-' + (row.invoiceNumber || "").toString().padStart(6, '0'),
             dateField: dayjs(row.invoiceDate).format('DD/MM/YYYY'),
             infoSell: row.totalInvoice,
-            infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+            infoCost: (row.items || []).reduce((sum, ITem) => sum + ((ITem?.itemOut || 0) * (ITem?.itemCost || 0)), 0),
           })).reverse();
           setAllInvoices(processedInvoices);
           setInvoice(processedInvoices.filter(row => String(row.status || '').toLowerCase() === 'paid'));
 
-          setPurchase(resPurchase.data.data.map(row => ({
+          setPurchase((resPurchase?.data?.data || []).map(row => ({
             ...row,
-            infoCost: row.items.reduce((sum, ITem) => sum + (ITem.itemOut * ITem.itemCost), 0),
+            infoCost: (row.items || []).reduce((sum, ITem) => sum + ((ITem?.itemOut || 0) * (ITem?.itemCost || 0)), 0),
             RelatedInvoice: resInvoice.data?.data?.find(inv => inv.ReferenceName2 === row._id)
           })));
         });
@@ -596,41 +596,38 @@ function AdminHome() {
 
 
 
-  const projectWithAll = project.map((row) => {
-    const relatedExpenses = expenses.filter((row2) => row2.accountNameInfo !== undefined ? row2.accountNameInfo._id === row._id : null)
-    const relatedPurchase = purchase.filter((row3) => row3.projectName._id === row._id)
+  const projectWithAll = (project || []).map((row) => {
+    const relatedExpenses = (expenses || []).filter((row2) => row2.accountNameInfo !== undefined ? row2.accountNameInfo?._id === row._id : null)
+    const relatedPurchase = (purchase || []).filter((row3) => row3.projectName?._id === row._id || row3.projectName === row._id)
     return ({
       ...row,
       expenses: relatedExpenses,
       relatedPurchase,
-      totalSell: relatedPurchase.filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice.totalInvoice) || 0), 0),
-      totalExpenses: relatedExpenses?.reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0),
-      totalItemCost: relatedPurchase?.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0)
+      totalSell: (relatedPurchase || []).filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice?.totalInvoice) || 0), 0),
+      totalExpenses: (relatedExpenses || []).reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0),
+      totalItemCost: (relatedPurchase || []).reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0)
     })
   })
-  const filterInvoice = invoice.filter((row) =>
-    !purchase.some((Item) => Item._id === row.ReferenceName2) && !relatedMaintenance.some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName)
+  const filterInvoice = (invoice || []).filter((row) =>
+    !(purchase || []).some((Item) => Item._id === row.ReferenceName2) && !(relatedMaintenance || []).some((Item2) => Item2.ReferenceName === row._id && Item2._id === row.ReferenceName)
   )
 
   const totalSellInvoice = filterInvoice.length > 0 ? filterInvoice.reduce((sum, item) => sum + (parseFloat(item.infoSell) || 0), 0) : 0
   const totalCostInvoice = filterInvoice.length > 0 ? filterInvoice.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) : 0
   const invoiceRevenue = totalSellInvoice - totalCostInvoice
 
-  const totalPOSSellInvoice = posInvoice.length > 0 ? posInvoice.reduce((sum, item) => sum + (parseFloat(item.infoSell) || 0), 0) : 0
-  const totalPOSCostInvoice = posInvoice.length > 0 ? posInvoice.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) : 0
+  const totalPOSSellInvoice = (posInvoice || []).length > 0 ? posInvoice.reduce((sum, item) => sum + (parseFloat(item.infoSell) || 0), 0) : 0
+  const totalPOSCostInvoice = (posInvoice || []).length > 0 ? posInvoice.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) : 0
   const invoicePOSRevenue = totalPOSSellInvoice - totalPOSCostInvoice
 
-
-
-  const projectCostInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.relatedPurchase.reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) }, 0) : 0
-  const projectExpensesInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.expenses.reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0) }, 0) : 0
-  const projectSellInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + row.relatedPurchase.filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice.totalInvoice) || 0), 0) }, 0) : 0
+  const projectCostInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + (row.relatedPurchase || []).reduce((sum, item) => sum + (parseFloat(item.infoCost) || 0), 0) }, 0) : 0
+  const projectExpensesInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + (row.expenses || []).reduce((sum, item) => sum + (parseFloat(item.total) || 0), 0) }, 0) : 0
+  const projectSellInfo = projectWithAll.length > 0 ? projectWithAll.reduce((acc, row) => { return acc + (row.relatedPurchase || []).filter((item) => item.RelatedInvoice !== undefined).reduce((sum, item) => sum + (parseFloat(item.RelatedInvoice?.totalInvoice) || 0), 0) }, 0) : 0
   const projectRevenue = projectSellInfo - (projectCostInfo + projectExpensesInfo)
 
-
-  const totalMaintenanceRevenue = maintenance.length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoSell) || 0), 0) : 0
-  const totalMaintenanceCost = maintenance.length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoCost) || 0), 0) : 0
-  const totalMaintenanceLaborFees = maintenance.reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0)
+  const totalMaintenanceRevenue = (maintenance || []).length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoSell) || 0), 0) : 0
+  const totalMaintenanceCost = (maintenance || []).length > 0 ? maintenance.reduce((sum, row) => sum + (parseFloat(row.infoCost) || 0), 0) : 0
+  const totalMaintenanceLaborFees = (maintenance || []).reduce((sum, row) => sum + (parseFloat(row.totalLaborFeesGenerale) || 0), 0)
 
 
   const monthsOfYear = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -651,8 +648,8 @@ function AdminHome() {
     
     // Business Rule: Use sum of applied amounts (TotalAmount) instead of gross amount (item.amount)
     // to ensure 'Credit' (unapplied balance) is not counted in Cash In.
-    const appliedTotal = (item.TotalAmount?.length > 0) 
-      ? item.TotalAmount.reduce((s, it) => s + parseFloat(it.total || it.amount || 0), 0)
+    const appliedTotal = (Array.isArray(item.TotalAmount) && item.TotalAmount.length > 0) 
+      ? item.TotalAmount.reduce((s, it) => s + parseFloat(it?.total || it?.amount || 0), 0)
       : parseFloat(item.amount || 0);
 
     const val = isFinite(appliedTotal) ? appliedTotal : 0;

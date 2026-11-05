@@ -87,11 +87,23 @@ Route.route("/item", cors(corsOptionsDelegate)).get(async (req, res, next) => {
   try {
     const rawBranchId = req.query.branchId;
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
-    const filter = branchId && branchId !== 'ALL' ? { branchId } : {};
+    const filter = (branchId && branchId !== 'ALL')
+      ? (branchId === 'HQ' ? { $or: [{ branchId: 'HQ' }, { branchId: '' }, { branchId: null }, { branchId: { $exists: false } }] } : { branchId })
+      : {};
     const projection = req.query.summary === 'true' 
-      ? { itemName: 1, itemBrand: 1, unit: 1, itemUnit: 1, cost: 1, itemCost: 1, price: 1, category: 1, storeName: 1, itemSellingPrice: 1, itemCostPrice: 1, itemQuantity: 1, stock: 1 } 
+      ? { itemName: 1, itemBrand: 1, unit: 1, itemUnit: 1, cost: 1, itemCost: 1, price: 1, category: 1, storeName: 1, itemSellingPrice: 1, itemCostPrice: 1, itemQuantity: 1, stock: 1, typeItem: 1 } 
       : { data: 0 };
     const result = await itemSchema.find(filter, projection).sort({ _id: -1 }).lean().exec();
+    (result || []).forEach(item => {
+      if (item) {
+        const t = String(item.typeItem || '').trim().toUpperCase();
+        if (t === 'GOODS' || t === 'PRODUCT' || !t) {
+          item.typeItem = 'Goods';
+        } else if (t === 'SERVICES' || t === 'SERVICE') {
+          item.typeItem = 'Services';
+        }
+      }
+    });
     res.json({
       data: result,
       message: "Data successfully fetched!",
@@ -211,6 +223,18 @@ Route.route("/item-Information").get(async (req, res) => {
       itemSchema.countDocuments(query),
     ]);
 
+    // Guarantee typeItem is normalized so client-side filters never mismatch case
+    (itemI || []).forEach(item => {
+      if (item) {
+        const t = String(item.typeItem || '').trim().toUpperCase();
+        if (t === 'GOODS' || t === 'PRODUCT' || !t) {
+          item.typeItem = 'Goods';
+        } else if (t === 'SERVICES' || t === 'SERVICE') {
+          item.typeItem = 'Services';
+        }
+      }
+    });
+
     res.status(200).json({ itemI, data: itemI, totalItem, totalPages: Math.ceil(totalItem / Number(limit)) });
   } catch (error) {
     res.status(500).json({ message: "An error occurred while fetching data.", error: error.message });
@@ -224,22 +248,49 @@ Route.route("/item-shop").get(async (req, res) => {
     const branchId = Array.isArray(rawBranchId) ? rawBranchId[0] : rawBranchId;
     const skip = (page - 1) * limit;
 
-    const query = {}
-    if (branchId && branchId !== 'ALL') query.branchId = branchId;
+    const andConditions = [];
+    if (branchId && branchId !== 'ALL') {
+      if (branchId === 'HQ') {
+        andConditions.push({
+          $or: [
+            { branchId: 'HQ' },
+            { branchId: '' },
+            { branchId: null },
+            { branchId: { $exists: false } }
+          ]
+        });
+      } else {
+        andConditions.push({ branchId });
+      }
+    }
 
-    if (search.trim()) {
-      const searchTerms = search.split(' ').map(term => new RegExp(term, 'i'));
-      query.$and = searchTerms.map(term => ({
-        $or: [
+    if (search && search.trim()) {
+      const rawTerms = search.trim().split(/\s+/).filter(Boolean);
+      rawTerms.forEach(rawTerm => {
+        const escaped = rawTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const term = new RegExp(escaped, 'i');
+        const numTerm = !isNaN(Number(rawTerm)) && Number(rawTerm) > 0 ? Number(rawTerm) : null;
+        const orConditions = [
           { itemName: term },
           { itemBrand: term },
           { itemDescription: term },
           { itemCategory: term },
+          { itemManufacturer: term },
+          { itemStore: term },
+          { condition: term },
+          { typeItem: term },
+          { itemDimension: term },
+          { unit: term },
           { 'itemUpc.newCode': term },
-          { 'itemUpc.itemNumber': isNaN(Number(search)) ? null : Number(search)  },
-        ],
-      }));
+        ];
+        if (numTerm !== null) {
+          orConditions.push({ 'itemUpc.itemNumber': numTerm });
+        }
+        andConditions.push({ $or: orConditions });
+      });
     }
+
+    const query = andConditions.length > 0 ? { $and: andConditions } : {};
 
     const items = await itemSchema.find(query)
       .sort({ _id: -1 })
@@ -247,6 +298,19 @@ Route.route("/item-shop").get(async (req, res) => {
       .limit(parseInt(limit))
       .select('typeItem itemName itemCategory itemQuantity itemDimension itemWeight unit itemUpc itemBrand itemManufacturer itemCostPrice itemSellingPrice itemDescription isUsed condition data contentType')
       .lean();
+
+    // Guarantee typeItem is normalized so client-side filters never mismatch case
+    (items || []).forEach(item => {
+      if (item) {
+        const t = String(item.typeItem || '').trim().toUpperCase();
+        if (t === 'GOODS' || t === 'PRODUCT' || !t) {
+          item.typeItem = 'Goods';
+        } else if (t === 'SERVICES' || t === 'SERVICE') {
+          item.typeItem = 'Services';
+        }
+      }
+    });
+
     const totalItem = await itemSchema.countDocuments(query);
 
     res.status(200).json({

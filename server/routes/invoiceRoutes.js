@@ -497,32 +497,24 @@ function isValidCustomer(customerName) {
   return false;
 }
 
+const parseSafeDate = (v) => {
+  if (!v) return new Date();
+  if (v instanceof Date && !isNaN(v.getTime())) return v;
+  if (typeof v === 'object') {
+    if (v.$d instanceof Date && !isNaN(v.$d.getTime())) return v.$d;
+    if (v['$y'] !== undefined) {
+      const d = new Date(Number(v['$y']), Number(v['$M'] !== undefined ? v['$M'] : 0), Number(v['$D'] !== undefined ? v['$D'] : 1), Number(v['$H'] !== undefined ? v['$H'] : 0), Number(v['$m'] !== undefined ? v['$m'] : 0), Number(v['$s'] !== undefined ? v['$s'] : 0));
+      if (!isNaN(d.getTime())) return d;
+    }
+  }
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? new Date() : d;
+};
+
 // Create invoice
 Route.route("/create-invoice").post(async (req, res, next) => {
-  // Defensive normalization for Dayjs / Object wrapped dates
-  if (req.body.invoiceDate) {
-    if (typeof req.body.invoiceDate === 'object') {
-      if (req.body.invoiceDate.$d) {
-        req.body.invoiceDate = new Date(req.body.invoiceDate.$d);
-      } else if (req.body.invoiceDate.$isDayjsObject || req.body.invoiceDate._isAMomentObject) {
-        req.body.invoiceDate = new Date(req.body.invoiceDate);
-      } else if (Object.keys(req.body.invoiceDate).length === 0) {
-        req.body.invoiceDate = new Date();
-      }
-    }
-  } else {
-    req.body.invoiceDate = new Date();
-  }
-
-  if (!req.body.invoiceDueDate || (typeof req.body.invoiceDueDate === 'object' && Object.keys(req.body.invoiceDueDate).length === 0)) {
-    req.body.invoiceDueDate = new Date();
-  } else if (typeof req.body.invoiceDueDate === 'object') {
-    if (req.body.invoiceDueDate.$d) {
-      req.body.invoiceDueDate = new Date(req.body.invoiceDueDate.$d);
-    } else if (req.body.invoiceDueDate.$isDayjsObject || req.body.invoiceDueDate._isAMomentObject) {
-      req.body.invoiceDueDate = new Date(req.body.invoiceDueDate);
-    }
-  }
+  req.body.invoiceDate = parseSafeDate(req.body.invoiceDate);
+  req.body.invoiceDueDate = parseSafeDate(req.body.invoiceDueDate);
   
   if (!isValidCustomer(req.body.customerName)) {
     if (req.body.ReferenceName2) {
@@ -558,7 +550,22 @@ Route.route("/create-invoice").post(async (req, res, next) => {
     invoiceName,Position,
     note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref
   } = req.body
-   try {
+  let finalStatus = (status && String(status).trim()) ? status : 'Sent';
+  let finalSubject = (invoiceSubject && String(invoiceSubject).trim()) ? invoiceSubject : '';
+  if (!finalSubject && ReferenceName2) {
+    try {
+      const purchaseSchema = require('../model/purchaseSchema');
+      const purchase = await purchaseSchema.findById(ReferenceName2);
+      if (purchase) {
+        finalSubject = purchase.projectName?.projectName || purchase.description || purchase.purchaseName || '';
+      }
+    } catch (_) {}
+  }
+  if (!finalSubject) {
+    finalSubject = 'INVOICE';
+  }
+
+  try {
     const branchId = req.body.branchId || req.query.branchId;
     
       const matchStage = branchId ? { branchId } : {};
@@ -577,10 +584,10 @@ Route.route("/create-invoice").post(async (req, res, next) => {
           invoiceNumber: finalNumber,
           invoiceDate,
           invoiceDueDate,
-          invoiceSubject,
+          invoiceSubject: finalSubject,
           invoicePurchase,
           invoiceDefect,
-          status,
+          status: finalStatus,
           items,Position,
           subTotal,
           ReferenceName,ReferenceName2,

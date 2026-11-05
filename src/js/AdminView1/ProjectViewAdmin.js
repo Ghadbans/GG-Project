@@ -506,7 +506,6 @@ function ProjectViewAdmin() {
         return (
           <Typography
             sx={{
-              fontWeight: 600,
               color:
                 s === "PENDING" ? "#ed6c02" :
                 (s === "ON-GOING" || s === "ONGOING") ? "#1976d2" :
