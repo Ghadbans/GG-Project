@@ -336,6 +336,7 @@ ipcMain.handle('run-marketing', async (event, payload) => {
 
   const postToFacebook = platforms.facebook !== false;
   const sendWhatsApp = Boolean(platforms.whatsapp && whatsappNumber);
+  const sendWhatsAppStatus = Boolean(platforms.whatsappStatus);
   const postToInstagram = Boolean(platforms.instagram);
 
   let tempProductImagePath = null;
@@ -365,6 +366,7 @@ ipcMain.handle('run-marketing', async (event, payload) => {
   } else {
     args.push(postToFacebook ? '--fb' : '--no-fb');
     args.push(sendWhatsApp ? '--send-wa' : '--no-wa');
+    if (sendWhatsAppStatus) args.push('--wa-status');
     args.push(postToInstagram ? '--send-ig' : '--no-ig');
   }
 

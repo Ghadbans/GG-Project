@@ -107,12 +107,13 @@ function MarketingViewAdmin() {
 
   // Form State
   const [brief, setBrief] = useState('');
-  const [whatsappNumber, setWhatsappNumber] = useState('+243 827 722 222');
+  const [whatsappNumber, setWhatsappNumber] = useState('');
   const [productImage, setProductImage] = useState(null);
   const [productImageName, setProductImageName] = useState('');
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
+    whatsappStatus: false,
     instagram: true,
   });
   const [previewGenerated, setPreviewGenerated] = useState(false);
@@ -226,6 +227,7 @@ function MarketingViewAdmin() {
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
+        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -284,7 +286,7 @@ function MarketingViewAdmin() {
   };
 
   const handleApproveAndPublish = async () => {
-    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
+    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.whatsappStatus && !targetPlatforms.instagram) {
       toast.warning('Please select at least one target dispatch platform.');
       return;
     }
@@ -300,6 +302,7 @@ function MarketingViewAdmin() {
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
+        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -345,7 +348,15 @@ function MarketingViewAdmin() {
 
         const successChannels = [];
         if (fbOk) successChannels.push('Facebook');
-        if (waOk) successChannels.push('WhatsApp');
+        if (waOk) {
+          if (resData.whatsapp?.statusStory && targetPlatforms.whatsapp && whatsappNumber) {
+            successChannels.push('WhatsApp (DM & Story)');
+          } else if (resData.whatsapp?.statusStory) {
+            successChannels.push('WhatsApp Story');
+          } else {
+            successChannels.push('WhatsApp');
+          }
+        }
         if (igOk) successChannels.push('Instagram');
 
         if (successChannels.length > 0) {
@@ -583,12 +594,15 @@ function MarketingViewAdmin() {
                       )}
                     </Box>
 
-                    <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
-                      WhatsApp Contact Number (Optional)
+                    <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 0.5 }}>
+                      WhatsApp Target Recipient Phone (Optional - Direct Message)
+                    </Typography>
+                    <Typography variant="caption" sx={{ color: '#64748b', display: 'block', mb: 1 }}>
+                      Enter a customer's phone or your personal mobile number to receive the flyer directly with notification. (Note: +243 827 722 222 is the company sender account; sending to it delivers to your WhatsApp "Message yourself").
                     </Typography>
                     <TextField
                       fullWidth
-                      placeholder="+243 827 722 222"
+                      placeholder="e.g. +243 999 123 456 (or your personal mobile number)"
                       value={whatsappNumber}
                       onChange={(e) => setWhatsappNumber(e.target.value)}
                       disabled={loadingPreview || loadingPublish}
@@ -628,6 +642,23 @@ function MarketingViewAdmin() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <WhatsAppIcon sx={{ color: '#25d366' }} />
                             <Typography sx={{ fontWeight: 500 }}>WhatsApp Direct Message</Typography>
+                          </Box>
+                        }
+                      />
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={targetPlatforms.whatsappStatus}
+                            onChange={(e) => setTargetPlatforms({ ...targetPlatforms, whatsappStatus: e.target.checked })}
+                            disabled={loadingPreview || loadingPublish}
+                            sx={{ color: '#059669', '&.Mui-checked': { color: '#059669' } }}
+                          />
+                        }
+                        label={
+                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
+                            <WhatsAppIcon sx={{ color: '#059669' }} />
+                            <Typography sx={{ fontWeight: 500 }}>WhatsApp Status (Story)</Typography>
+                            <Chip label="All Contacts" size="small" sx={{ height: 18, fontSize: '0.65rem', backgroundColor: '#ecfdf5', color: '#047857', fontWeight: 600 }} />
                           </Box>
                         }
                       />

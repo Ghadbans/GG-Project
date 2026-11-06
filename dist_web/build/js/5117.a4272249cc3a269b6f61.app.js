@@ -674,7 +674,7 @@ function MarketingViewAdmin() {
     _useState4 = _slicedToArray(_useState3, 2),
     brief = _useState4[0],
     setBrief = _useState4[1];
-  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('+243 827 722 222'),
+  var _useState5 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(''),
     _useState6 = _slicedToArray(_useState5, 2),
     whatsappNumber = _useState6[0],
     setWhatsappNumber = _useState6[1];
@@ -689,6 +689,7 @@ function MarketingViewAdmin() {
   var _useState1 = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
       facebook: true,
       whatsapp: true,
+      whatsappStatus: false,
       instagram: true
     }),
     _useState10 = _slicedToArray(_useState1, 2),
@@ -824,6 +825,7 @@ function MarketingViewAdmin() {
         platforms: {
           facebook: targetPlatforms.facebook,
           whatsapp: targetPlatforms.whatsapp,
+          whatsappStatus: targetPlatforms.whatsappStatus,
           instagram: targetPlatforms.instagram
         },
         userId: (user === null || user === void 0 || (_user$data = user.data) === null || _user$data === void 0 ? void 0 : _user$data.id) || localStorage.getItem('user'),
@@ -886,7 +888,7 @@ function MarketingViewAdmin() {
   var handleApproveAndPublish = /*#__PURE__*/function () {
     var _ref5 = _asyncToGenerator(function* () {
       var _user$data3, _user$data4;
-      if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
+      if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.whatsappStatus && !targetPlatforms.instagram) {
         react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.warning('Please select at least one target dispatch platform.');
         return;
       }
@@ -900,6 +902,7 @@ function MarketingViewAdmin() {
         platforms: {
           facebook: targetPlatforms.facebook,
           whatsapp: targetPlatforms.whatsapp,
+          whatsappStatus: targetPlatforms.whatsappStatus,
           instagram: targetPlatforms.instagram
         },
         userId: (user === null || user === void 0 || (_user$data3 = user.data) === null || _user$data3 === void 0 ? void 0 : _user$data3.id) || localStorage.getItem('user'),
@@ -942,7 +945,16 @@ function MarketingViewAdmin() {
           var igOk = (_resData$instagram = resData.instagram) === null || _resData$instagram === void 0 ? void 0 : _resData$instagram.success;
           var successChannels = [];
           if (fbOk) successChannels.push('Facebook');
-          if (waOk) successChannels.push('WhatsApp');
+          if (waOk) {
+            var _resData$whatsapp2, _resData$whatsapp3;
+            if ((_resData$whatsapp2 = resData.whatsapp) !== null && _resData$whatsapp2 !== void 0 && _resData$whatsapp2.statusStory && targetPlatforms.whatsapp && whatsappNumber) {
+              successChannels.push('WhatsApp (DM & Story)');
+            } else if ((_resData$whatsapp3 = resData.whatsapp) !== null && _resData$whatsapp3 !== void 0 && _resData$whatsapp3.statusStory) {
+              successChannels.push('WhatsApp Story');
+            } else {
+              successChannels.push('WhatsApp');
+            }
+          }
           if (igOk) successChannels.push('Instagram');
           if (successChannels.length > 0) {
             react_toastify__WEBPACK_IMPORTED_MODULE_39__/* .toast */ .oR.success("\uD83C\uDF89 Flyer successfully dispatched to ".concat(successChannels.join(' & '), "!"));
@@ -1306,11 +1318,18 @@ function MarketingViewAdmin() {
     sx: {
       fontWeight: 600,
       color: '#475569',
+      mb: 0.5
+    }
+  }, "WhatsApp Target Recipient Phone (Optional - Direct Message)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+    variant: "caption",
+    sx: {
+      color: '#64748b',
+      display: 'block',
       mb: 1
     }
-  }, "WhatsApp Contact Number (Optional)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, "Enter a customer's phone or your personal mobile number to receive the flyer directly with notification. (Note: +243 827 722 222 is the company sender account; sending to it delivers to your WhatsApp \"Message yourself\")."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     fullWidth: true,
-    placeholder: "+243 827 722 222",
+    placeholder: "e.g. +243 999 123 456 (or your personal mobile number)",
     value: whatsappNumber,
     onChange: e => setWhatsappNumber(e.target.value),
     disabled: loadingPreview || loadingPublish,
@@ -1390,6 +1409,45 @@ function MarketingViewAdmin() {
         fontWeight: 500
       }
     }, "WhatsApp Direct Message"))
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
+    control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
+      checked: targetPlatforms.whatsappStatus,
+      onChange: e => setTargetPlatforms(_objectSpread(_objectSpread({}, targetPlatforms), {}, {
+        whatsappStatus: e.target.checked
+      })),
+      disabled: loadingPreview || loadingPublish,
+      sx: {
+        color: '#059669',
+        '&.Mui-checked': {
+          color: '#059669'
+        }
+      }
+    }),
+    label: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A, {
+      sx: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: 0.8
+      }
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_icons_material_WhatsApp__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .A, {
+      sx: {
+        color: '#059669'
+      }
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, {
+      sx: {
+        fontWeight: 500
+      }
+    }, "WhatsApp Status (Story)"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .A, {
+      label: "All Contacts",
+      size: "small",
+      sx: {
+        height: 18,
+        fontSize: '0.65rem',
+        backgroundColor: '#ecfdf5',
+        color: '#047857',
+        fontWeight: 600
+      }
+    }))
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
     control: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, {
       checked: targetPlatforms.instagram,

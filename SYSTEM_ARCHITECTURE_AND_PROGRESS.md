@@ -4160,3 +4160,43 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
 
 
+## Version 3.6.29 - WhatsApp Web Multi-Device LID Protocol Fortification, Self-Messaging Architecture Clarification, and WhatsApp Status Story Channel (Nov 2026)
+
+### 1. Root Cause Identification
+1. **WhatsApp Direct Message "Not Received" (`agent.js` & `MarketingViewAdmin.js`)**:
+   - The user reported: *"in facebook posted the flye in the photos album . in instagram done ... in whatsapp i didnt reveice any Direct Message !"* with a screenshot showing:
+     - Facebook Page: Published (Post ID `200999390054494_1116902644423687`)
+     - Instagram Feed: Published (Post ID `18133603153612603`)
+     - WhatsApp: Delivered Successfully (`+243 827 722 222`)
+   - Investigation of the local agent's authenticated session in `C:\Users\GG\fb-whatsapp-agent\.wwebjs_auth` revealed:
+     - The logged-in WhatsApp sender account IS `+243 827 722 222` (`Global Gate`).
+     - In `MarketingViewAdmin.js`, the recipient phone input was hardcoded with default initial state `useState('+243 827 722 222')`.
+     - When the campaign was published with the default value, the system sent the flyer to `+243 827 722 222` itself.
+     - In WhatsApp protocol, when an account sends a message to itself, WhatsApp delivers it into the **"Message yourself" (or "You")** conversation at the very top of the chat list.
+     - Crucially, WhatsApp mobile clients deliberately suppress ringtones and push notification banners for self-messages (notes to oneself). The user was waiting for an incoming push notification sound, which never triggers for self-messages.
+     - Querying the local WhatsApp Web collection confirmed the message was successfully delivered with `ack: 3` (ACK_READ / blue double ticks) to `169006996672576@lid` (`+243 827 722 222`).
+2. **Modern WhatsApp Multi-Device LID Protocol Routing**:
+   - Modern WhatsApp multi-device contacts use Linked Device Identifiers (`@lid`) alongside `@c.us`. Sending directly to raw `@c.us` without ID resolution can cause silent drops or routing delays on certain client configurations.
+3. **Facebook Album vs Feed Display Behavior**:
+   - The user noted: *"in facebook posted the flye in the photos album ."*
+   - On Meta's Facebook Page platform, when a post is created with an attached photo or via `/photos` with a caption, Facebook automatically archives and indexes the photo inside the Page's "Timeline Photos" album (`status_type: "added_photos"`). Concurrently, the post appears on the Page's main timeline feed (`https://www.facebook.com/1116912984422653/posts/1116902644423687`) with the full promotional caption and high-resolution flyer image. This is standard Meta architecture.
+
+### 2. Implementation Changes
+1. **WhatsApp Web Modern Multi-Device Protocol Resolution (`C:\Users\GG\fb-whatsapp-agent\agent.js`)**:
+   - Updated `sendViaWhatsApp` to resolve target numbers via official `client.getNumberId(cleanNumber)`. This properly maps numbers to their active `@lid` or `@c.us` identifier.
+   - Enforced `{ waitUntilMsgSent: true }` in `client.sendMessage(...)` and added a 4000ms WebSocket buffer flush before closing the session to guarantee full network transmission.
+   - Added `isSelf` detection: when the recipient number matches the sender's own number (`+243 827 722 222`), the response message explicitly specifies: `Delivered to "Message yourself" (Your own WhatsApp)`.
+2. **Social Marketing UI Clarification & WhatsApp Story Integration (`MarketingViewAdmin.js` & `main.js`)**:
+   - Initialized `whatsappNumber` to empty string `''` with placeholder `e.g. +243 999 123 456 (or your personal mobile number)` so users don't inadvertently send to the company sender number when intending to receive an incoming mobile notification.
+   - Added clear explanatory helper text under the input: `Enter a customer's phone or your personal mobile number to receive the flyer directly with notification. (Note: +243 827 722 222 is the company sender account; sending to it delivers to your WhatsApp "Message yourself").`
+   - Added a **WhatsApp Status (Story)** target checkbox with an "All Contacts" chip in both `MarketingViewAdmin.js` and Electron `main.js` (`--wa-status`), allowing one-click publishing of promotional flyers to Global Gate's WhatsApp Status story so all contacts can see it.
+   - Updated the result view and toast notifications to differentiate between WhatsApp Direct Message, WhatsApp Story, and dual dispatch.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified 0 syntax errors across 239 source files via `npm run prebuild`.
+- **Version Bump**: Bumped to `v3.6.29` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop Electron and Web Portal bundles (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.29.exe` (95.83 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.29.exe`, `GlobalGate-v3.6.29.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.01 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.29.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
