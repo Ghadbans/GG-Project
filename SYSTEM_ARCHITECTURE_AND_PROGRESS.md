@@ -342,6 +342,21 @@
       * **Crash-Proof Typography Evaluation**:
         All table row item header Typography elements MUST guard against `null` or `'empty'` before calling `.toUpperCase()`. Never use bare `{Item.itemName ? Item.itemName.itemName.toUpperCase() : ''}`, which crashes if `Item.itemName.itemName` is null. Instead, use `{Item.itemName?.itemName && String(Item.itemName.itemName).trim().toLowerCase() !== 'empty' ? Item.itemName.itemName.toUpperCase() : (typeof Item.itemName === 'string' && Item.itemName.trim().toLowerCase() !== 'empty' ? Item.itemName.toUpperCase() : '')}`.
 
+59. **Primary Key Architecture & Strict Prohibition of Client-Side UUIDs for ObjectId Schemas (Ver 3.6.26)**:
+    - In MongoDB collections that use native `ObjectId` for their primary `_id` (such as `ExpenseSchema.js`), client-side forms (`DailyExpenseForm.js`, etc.) must NEVER assign `_id: v4()` or any 36-character hyphenated UUID string. Attempting to save a 36-char UUID string into an ObjectId path throws an unhandled MongoDB `BSONError: Cast to ObjectId failed for value ... (type string) at path "_id"`, crashing Express routes with HTTP 500.
+    - Client-side creation payloads must omit `_id` entirely, allowing MongoDB to automatically generate standard 24-character hexadecimal `ObjectId`s.
+    - Backend API creation endpoints (`POST /create-expense`, etc.) must defensively inspect and strip invalid `_id` values: `if (docData._id && (!mongoose.Types.ObjectId.isValid(docData._id) || String(docData._id).length !== 24)) { delete docData._id; }`.
+    - In update endpoints (`PUT /update-.../:id`), always execute `delete updateData._id;` to ensure immutable primary keys are never modified.
+60. **Submenu Navigation Persistence & Multi-Module Drawer State Preservation (Ver 3.6.25)**:
+    - When child pages belong to a dedicated submenu section (e.g. Block Factory: `BlockConfigView`, `BlockProductionView`, `BlockMixerView`, `BlockDamageView`, `BlockSalesView`, `BlockTrackingView`, `WorkerPaymentView`), the sidebar drawer (`SidebarDash.js`) MUST implement route-aware state initialization:
+      `const isBlockFactoryRoute = ['/BlockConfigView', ...].includes(location.pathname);`
+      `const [show1, setShow1] = useState(() => isBlockFactoryRoute ? 5 : (onView5 || 1));`
+    - A reactive `useEffect` on `[location.pathname]` must maintain `show1 = 5` when transitioning between sibling sub-modules, preventing the navigation drawer from inadvertently resetting back to the root Dashboard menu.
+    - The drawer "Close" button (`onClick={() => handleShow(1)}`) must remain preserved to allow users to intentionally switch back to the Main Menu when desired.
+61. **UI Toast Import Invariant & Catch Block Resilience (Ver 3.6.26)**:
+    - Whenever `toast.error()` or `toast.success()` is invoked in component catch blocks, `import { toast } from 'react-toastify';` MUST be explicitly imported at the top of the file.
+    - Missing toast imports cause secondary runtime `ReferenceError: toast is not defined` crashes that mask genuine backend error messages from the user.
+
 ## Current Progress Log
 - **Universal Item Row Clearing & Free-Text Write-In Toggle Fortification across 27 Modules & Submodules (Ver 3.6.14)**:
   - **Problem Reported:**
