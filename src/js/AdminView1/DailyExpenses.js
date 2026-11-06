@@ -245,7 +245,9 @@ function DailyExpenses() {
         dataField: dayjs(item.expenseDate).format('DD/MM/YYYY'),
         category: item.expenseCategory?.expensesCategory || item.expenseCategory || '',
         name: item.accountNameInfo?.name || '',
-        employee: Array.isArray(item.employeeName) ? item.employeeName.map((row) => row.employee || row) : []
+        employee: Array.isArray(item.employeeName) && item.employeeName.length > 0
+          ? item.employeeName.map((row) => row.employee || row.name || (typeof row === 'string' ? row : '')).filter(Boolean).join(', ')
+          : (typeof item.employee === 'string' ? item.employee : (item.accountNameInfo?.name || ''))
       }));
       SetTotalPage(Math.ceil(res.data.totalItem / limit));
       setTotalItemCount(res.data.totalItem); // Ensure totalPage is correctly calculated

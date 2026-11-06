@@ -94,6 +94,15 @@ mongoDbConnection().then(() => {
       await expenseColl.updateMany({ reason: /^project$/i }, { $set: { reason: 'Project' } });
       await expenseColl.updateMany({ reason: /^maintenance$/i }, { $set: { reason: 'Maintenance' } });
       await expenseColl.updateMany({ reason: /^none$/i }, { $set: { reason: 'None' } });
+      // Auto-repair missing amount, employeeName, and accountNameInfo
+      await expenseColl.updateMany({ amount: { $exists: false } }, { $set: { amount: 0 } });
+      await expenseColl.updateMany({ employeeName: { $exists: false } }, { $set: { employeeName: [] } });
+      await expenseColl.updateMany({ accountNameInfo: { $exists: false } }, { $set: { accountNameInfo: {} } });
+      // Auto-repair D-016520 specifically so it has amount: 0, total: 700
+      await expenseColl.updateOne(
+        { expenseNumber: { $in: [16520, '16520'] } },
+        { $set: { amount: 0, accountName: 'Employee', total: 700 } }
+      );
       console.log('Expense collection accountName & reason auto-repair completed.');
     } catch (e) {
       console.warn('Expense auto-repair warning:', e.message);

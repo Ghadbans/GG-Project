@@ -316,54 +316,26 @@ Route.route("/get-last-saved-expense").get(async(req,res, next)=>{
 })
 // Create expense
 Route.route("/create-expense").post(async (req, res, next) => {
-  //await expenseSchema
-  const{
-    expenseCategory,accountName,
-    description,expenseDate,amount,
-    employeeName,
-    rate,total,Create,expenseNumber,accountNameInfo,reason
-} = req.body
-   try {
-    const branchId = req.body.branchId || req.query.branchId;
+  try {
+    const branchId = req.body.branchId || req.query.branchId || 'HQ';
     const expenseNumberOld = await expenseSchema.findOne(branchId ? { branchId } : {}).sort({
-    expenseNumber: -1
-  }).exec();
-    if ( expenseNumberOld && expenseNumberOld.expenseNumber === expenseNumber) {
-      await expenseSchema.create({
-        expenseCategory,accountName,
-        description,expenseDate,amount,
-        employeeName,
-        rate,total,Create,expenseNumber:expenseNumber+1,accountNameInfo,reason
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
-    } else {
-      await expenseSchema.create({
-        expenseCategory,accountName,
-        description,expenseDate,amount,
-        employeeName,
-        rate,total,Create,expenseNumber,accountNameInfo,reason
-    ,
-      branchId}).then((result)=>{
-      res.json({
-        data: result,
-        message: "Data successfully added.",
-        status: 200,
-      });
-    }).catch((err)=>{
-      return next(err)
-    })
+      expenseNumber: -1
+    }).exec();
+
+    const docData = { ...req.body, branchId };
+    if (expenseNumberOld && expenseNumberOld.expenseNumber === Number(req.body.expenseNumber)) {
+      docData.expenseNumber = Number(req.body.expenseNumber) + 1;
     }
-   } catch (error) {
+
+    const result = await expenseSchema.create(docData);
+    res.json({
+      data: result,
+      message: "Data successfully added.",
+      status: 200,
+    });
+  } catch (error) {
     next(error);
-   }
+  }
 });
 
 Route.route("/get-expense/:id").get(async (req, res, next) => {

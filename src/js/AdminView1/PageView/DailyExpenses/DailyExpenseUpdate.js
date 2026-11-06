@@ -206,7 +206,7 @@ function DailyExpenseUpdate() {
           /^maintenance$/i.test(rawAccount) ? 'Maintenance' :
           /^receivables$/i.test(rawAccount) ? 'Receivables' : rawAccount;
         setAccountName(normalizedAccount);
-        setEmployeeName(res.data.data.employeeName);
+        setEmployeeName(Array.isArray(res.data.data.employeeName) ? res.data.data.employeeName : []);
         setAccountNameInfo(res.data.data.accountNameInfo);
         const rawReason = res.data.data.reason || '';
         const normalizedReason =
@@ -279,7 +279,7 @@ function DailyExpenseUpdate() {
   {/** Employee Start */ }
   const filterEmployee = employee.filter((row) => row.status !== 'Suspended' && row.status !== 'Fired' && row.status !== 'Resign')
   const addItem = () => {
-    setEmployeeName([...employeeName, {
+    setEmployeeName([...(Array.isArray(employeeName) ? employeeName : []), {
       idInfo: v4(),
       idRow: "",
       employee: "",
@@ -291,7 +291,7 @@ function DailyExpenseUpdate() {
   }
   const handleChangeEmployee = (e, i) => {
     const { name, value } = e.target;
-    const list = [...employeeName];
+    const list = [...(Array.isArray(employeeName) ? employeeName : [])];
     list[i][name] = value;
     if (!list[i]['rate'] || parseFloat(list[i]['rate']) === 0) {
       list[i]['rate'] = rate;
@@ -326,14 +326,17 @@ function DailyExpenseUpdate() {
   };
   useEffect(() => {
     // Only run this if we are in Employee mode
+        // Only run this if we are in Employee mode
     if (accountName !== 'Employee') return;
+    const list = Array.isArray(employeeName) ? employeeName : [];
+    if (list.length === 0) return;
 
-    const sum = employeeName.reduce((acc, row) => acc + (parseFloat(row.total) || 0), 0);
+    const sum = list.reduce((acc, row) => acc + (parseFloat(row.total) || 0), 0);
     const result = Math.round(sum * 100) / 100;
     setTotal(result);
     setTax(CheckTvA ? result * 0.16 : 0);
 
-    const sum1 = employeeName.reduce((acc, row) => acc + (parseFloat(row.amount) || 0), 0);
+    const sum1 = list.reduce((acc, row) => acc + (parseFloat(row.amount) || 0), 0);
     const result1 = Math.round(sum1 * 100) / 100;
     setAmount(result1);
   }, [employeeName, CheckTvA, accountName]); // Added missing dependencies
@@ -997,7 +1000,7 @@ function DailyExpenseUpdate() {
                                   <tbody>
                                     {
                                       employeeName ?
-                                        employeeName.map((row, i) => (
+                                        (Array.isArray(employeeName) ? employeeName : []).map((row, i) => (
 
                                           <tr key={row.idInfo}>
                                             <td><DragIndicatorRounded /></td>

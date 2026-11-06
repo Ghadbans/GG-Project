@@ -3887,3 +3887,75 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Production Bundles**: Compiled both desktop Electron and Web Portal bundles (`webpack.prod.js` and `webpack.web.prod.js`).
 - **Windows Executable**: Generated `dist/Global Gate Setup 3.6.23.exe` and synchronized to `server/public/downloads/GlobalGate-v3.6.23.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Cloud Synchronization**: Committed and pushed to GitHub `origin main` to trigger live Railway backend redeployment and Cloudflare Pages sync.
+
+---
+
+## Version 3.6.24 - Daily Expenses Employee Schema Restoration, Reduce Crash Elimination & View Per Day Total Fix
+**Release Date**: November 6, 2026
+
+### 1. Problem Statement & Root Cause Analysis
+- **User Issue**:
+  1. White screen crash on editing expenses: `TypeError: Cannot read properties of undefined (reading 'reduce') at DailyExpenseUpdate.js:331:30`.
+  2. Employee name missing after saving (`D-016520` showed blank Employee Name in the main Daily Expenses table and View Per Day).
+  3. `Expenses Daily Information` (View Per Day tab) showed `DAILY EXPENSES TOTAL: FC NAN` and Total $ `$0.00` despite description stating 350$ + 350$ ($700).
+- **Deep Root Causes**:
+  1. **Silent Mongoose Field Stripping (`server/model/ExpenseSchema.js`)**:
+     * Mongoose operates in strict mode by default. `server/model/ExpenseSchema.js` omitted `employeeName`, `amount`, `accountNameInfo`, `reason`, and `synced`.
+     * Consequently, whenever an expense was created or updated via Mongoose (`.create()` or `.findByIdAndUpdate()`), Mongoose silently stripped `employeeName`, `amount`, and `accountNameInfo` from the document before persisting to MongoDB.
+  2. **Uncaught Reduce Crash on Undefined (`DailyExpenseUpdate.js:331`)**:
+     * In `DailyExpenseUpdate.js`, line 331 executed `employeeName.reduce(...)` inside a `useEffect` triggered when `accountName === 'Employee'`.
+     * Because `res.data.data.employeeName` was stripped in the database (or undefined on initial fetch), calling `.reduce()` directly on undefined crashed React with an unhandled TypeError, rendering a blank white screen.
+  3. **NaN Calculations in Daily Expenses View Per Day (`DailyExpenseAdminView.js:547`)**:
+     * `totalDay` and `totalDayFC` used `row => parseFloat(row.amount) === 0` and `row => parseFloat(row.amount) !== 0`.
+     * When `row.amount` is `undefined` (or for USD-only expenses), `parseFloat(undefined)` evaluates to `NaN`.
+     * `NaN === 0` evaluates to `false` (dropping the $700 total from `totalDay`).
+     * `NaN !== 0` evaluates to `true` (including `row` in `totalDayFC`), adding `NaN` to the running sum and outputting `FC NAN`.
+     * Table row cells checked `item.amount === 0` strictly, causing Total $ to display `$ 0` instead of `$ 700.00`.
+
+### 2. Comprehensive Architectural Fixes
+1. **Model Hardening (`server/model/ExpenseSchema.js`)**:
+   - Added all missing fields explicitly: `employeeName: { type: Array, default: [] }`, `amount: { type: Number, default: 0 }`, `accountNameInfo: { type: Schema.Types.Mixed, default: {} }`, `reason: { type: String, default: '' }`, `synced: { type: Boolean, default: false }`, `CheckTva`, `taxUSD`.
+   - Enabled `{ collection: "expenseSchema", strict: false }` to permanently prevent Mongoose from stripping any client-supplied fields.
+2. **Backend Route Data Integrity (`server/routes/expenseRoutes.js`)**:
+   - Updated `POST /create-expense` to pass all request body fields cleanly (`docData = { ...req.body, branchId }`), ensuring zero dropped parameters.
+3. **Database Auto-Repair on Startup (`server/index.js`)**:
+   - Added automated updates on Railway startup:
+     * `amount: { $exists: false }` -> `$set: { amount: 0 }`
+     * `employeeName: { $exists: false }` -> `$set: { employeeName: [] }`
+     * `accountNameInfo: { $exists: false }` -> `$set: { accountNameInfo: {} }`
+     * Repaired `D-016520` explicitly with `amount: 0`, `accountName: 'Employee'`, and `total: 700`.
+4. **Defensive Guarding in Edit & Form Views (`DailyExpenseUpdate.js` & `DailyExpenseForm.js`)**:
+   - Guarded `.reduce()` calls in `useEffect`:
+     ```javascript
+     const list = Array.isArray(employeeName) ? employeeName : [];
+     if (list.length === 0) return;
+     const sum = list.reduce((acc, row) => acc + (parseFloat(row.total) || 0), 0);
+     const sum1 = list.reduce((acc, row) => acc + (parseFloat(row.amount) || 0), 0);
+     ```
+   - Guarded `setEmployeeName(Array.isArray(res.data.data.employeeName) ? res.data.data.employeeName : [])`.
+   - Guarded all `.map()` rendering calls with `(Array.isArray(employeeName) ? employeeName : []).map(...)`.
+5. **View Per Day Mathematical Stability (`DailyExpenseAdminView.js`)**:
+   - Bulletproofed `totalDay` and `totalDayFC` using safe numerical parsing:
+     ```javascript
+     const totalDay = (expensesFiltered || []).reduce((sum, row) => {
+       const amt = parseFloat(row?.amount) || 0;
+       const tot = parseFloat(row?.total) || 0;
+       return amt === 0 ? Math.round((sum + tot) * 100) / 100 : sum;
+     }, 0);
+     const totalDayFC = (expensesFiltered || []).reduce((sum, row) => {
+       const amt = parseFloat(row?.amount) || 0;
+       return amt > 0 ? Math.round((sum + amt) * 100) / 100 : sum;
+     }, 0);
+     ```
+   - Fixed table cell displays to output proper formatted amounts (`$ 700.00` and `FC 0.00`).
+   - Added fallback for Account Name rendering when `employeeName` array is empty (`item.accountNameInfo?.name || item.employee || ''`).
+6. **Main Daily Expenses Table String Formatter (`DailyExpenses.js`)**:
+   - Formatted `employee` column as a joined string rather than raw array so employee names render consistently in DataGrid.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified across all 239 source files with 0 errors via `npm run prebuild`.
+- **Version Bump**: Incremented version to `v3.6.24` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop Electron and Web Portal bundles via Webpack (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.24.exe` and synchronized to `server/public/downloads/GlobalGate-v3.6.24.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Cloud Synchronization**: Committed and pushed to GitHub `origin main` to deploy Railway backend and Cloudflare Pages.
+

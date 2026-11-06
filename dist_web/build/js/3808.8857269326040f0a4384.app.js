@@ -2449,13 +2449,13 @@ function DailyExpenses() {
       try {
         var res = yield axios__WEBPACK_IMPORTED_MODULE_36__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_38__/* .ENDPOINT_URL */ .m, "/expense-Information?page=").concat(page + 1, "&limit=").concat(limit, "&search=").concat(encodeURIComponent(searchTerm.trim()), "&filterField=").concat(encodeURIComponent(filterField.trim()), "&filterValue=").concat(encodeURIComponent(filterValue.trim())));
         var formatDate = res.data.itemI.map(item => {
-          var _item$expenseCategory, _item$accountNameInfo;
+          var _item$expenseCategory, _item$accountNameInfo, _item$accountNameInfo2;
           return _objectSpread(_objectSpread({}, item), {}, {
             id: item._id,
             dataField: dayjs__WEBPACK_IMPORTED_MODULE_47___default()(item.expenseDate).format('DD/MM/YYYY'),
             category: ((_item$expenseCategory = item.expenseCategory) === null || _item$expenseCategory === void 0 ? void 0 : _item$expenseCategory.expensesCategory) || item.expenseCategory || '',
             name: ((_item$accountNameInfo = item.accountNameInfo) === null || _item$accountNameInfo === void 0 ? void 0 : _item$accountNameInfo.name) || '',
-            employee: Array.isArray(item.employeeName) ? item.employeeName.map(row => row.employee || row) : []
+            employee: Array.isArray(item.employeeName) && item.employeeName.length > 0 ? item.employeeName.map(row => row.employee || row.name || (typeof row === 'string' ? row : '')).filter(Boolean).join(', ') : typeof item.employee === 'string' ? item.employee : ((_item$accountNameInfo2 = item.accountNameInfo) === null || _item$accountNameInfo2 === void 0 ? void 0 : _item$accountNameInfo2.name) || ''
           });
         });
         SetTotalPage(Math.ceil(res.data.totalItem / limit));

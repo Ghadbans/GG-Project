@@ -366,14 +366,17 @@ function DailyExpenseForm() {
   };
   useEffect(() => {
     // Only run this if we are in Employee mode
+        // Only run this if we are in Employee mode
     if (accountName !== 'Employee') return;
+    const list = Array.isArray(employeeName) ? employeeName : [];
+    if (list.length === 0) return;
 
-    const sum = employeeName.reduce((acc, row) => acc + (parseFloat(row.total) || 0), 0);
+    const sum = list.reduce((acc, row) => acc + (parseFloat(row.total) || 0), 0);
     const result = Math.round(sum * 100) / 100;
     setTotal(result);
     setTax(CheckTvA ? result * 0.16 : 0);
 
-    const sum1 = employeeName.reduce((acc, row) => acc + (parseFloat(row.amount) || 0), 0);
+    const sum1 = list.reduce((acc, row) => acc + (parseFloat(row.amount) || 0), 0);
     const result1 = Math.round(sum1 * 100) / 100;
     setAmount(result1);
   }, [employeeName, CheckTvA, accountName]); // Added missing dependencies
@@ -1010,7 +1013,7 @@ function DailyExpenseForm() {
                                   <tbody>
                                     {
                                       employeeName ?
-                                        employeeName.map((row, i) => (
+                                        (Array.isArray(employeeName) ? employeeName : []).map((row, i) => (
 
                                           <tr key={row.idInfo}>
                                             <td><DragIndicatorRounded /></td>

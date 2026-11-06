@@ -1162,8 +1162,15 @@ function DailyExpenseAdminView() {
     });
     setFilterTotalPayment(totalExpenses);
   }, [startDate, endDate, payment]);
-  var totalDay = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) === 0).reduce((sum, row) => Math.round((sum + parseFloat(row.total)) * 100) / 100, 0) : 0;
-  var totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0;
+  var totalDay = (expensesFiltered || []).reduce((sum, row) => {
+    var amt = parseFloat(row === null || row === void 0 ? void 0 : row.amount) || 0;
+    var tot = parseFloat(row === null || row === void 0 ? void 0 : row.total) || 0;
+    return amt === 0 ? Math.round((sum + tot) * 100) / 100 : sum;
+  }, 0);
+  var totalDayFC = (expensesFiltered || []).reduce((sum, row) => {
+    var amt = parseFloat(row === null || row === void 0 ? void 0 : row.amount) || 0;
+    return amt > 0 ? Math.round((sum + amt) * 100) / 100 : sum;
+  }, 0);
   var getPaymentRowValues = row => {
     var isVoided = row.status === 'Voided';
     var isRefund = row.transactionType === 'Refund';
@@ -1265,10 +1272,10 @@ function DailyExpenseAdminView() {
   var totalPaymentFC = totalPaymentFC1 + totalPosFC;
   var totalPaymentUSD = totalPaymentUSD1 + totalPosUSD;
   var totalCashUSD = filterTotal2.length > 0 ? filterTotal2.reduce((acc, row) => {
-    return acc + row.amount.filter(item => parseFloat(item.amountFC) === 0).reduce((sum, item) => Math.round((sum + parseFloat(item.total)) * 100) / 100, 0);
+    return acc + (Array.isArray(row.amount) ? row.amount : []).filter(item => parseFloat(item.amountFC) === 0).reduce((sum, item) => Math.round((sum + parseFloat(item.total)) * 100) / 100, 0);
   }, 0) : 0;
   var totalCashFC = filterTotal2.length > 0 ? filterTotal2.reduce((acc, row) => {
-    return acc + row.amount.filter(item => parseFloat(item.amountFC) !== 0).reduce((sum, item) => Math.round((sum + parseFloat(item.amountFC)) * 100) / 100, 0);
+    return acc + (Array.isArray(row.amount) ? row.amount : []).filter(item => parseFloat(item.amountFC) !== 0).reduce((sum, item) => Math.round((sum + parseFloat(item.amountFC)) * 100) / 100, 0);
   }, 0) : 0;
   var totalItemPurchase = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + (parseFloat(row.paymentUSD) || 0), 0) : 0;
   var totalItemPurchaseFC = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + (parseFloat(row.paymentFC) || 0), 0) : 0;
@@ -1683,7 +1690,7 @@ function DailyExpenseAdminView() {
         border: '1px solid gray'
       }
     }, "Total $"))), /*#__PURE__*/react.createElement("tbody", null, newArray.map(item => {
-      var _item$expenseCategory, _item$expenseCategory2, _item$accountNameInfo;
+      var _item$expenseCategory, _item$expenseCategory2, _item$accountNameInfo, _item$accountNameInfo2;
       return /*#__PURE__*/react.createElement("tr", {
         key: item._id
       }, dayjs_min_default()(item.expenseDate).format('DD/MM') === dayjs_min_default()(row).format('DD/MM') ? /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("td", {
@@ -1702,9 +1709,9 @@ function DailyExpenseAdminView() {
         style: {
           border: '1px solid gray'
         }
-      }, ['project', 'maintenance'].includes(String(item.accountName || '').toLowerCase()) && ((_item$accountNameInfo = item.accountNameInfo) === null || _item$accountNameInfo === void 0 ? void 0 : _item$accountNameInfo.name), (String(item.accountName || '').toLowerCase() === 'employee' || Array.isArray(item.employeeName) && item.employeeName.length > 0) && /*#__PURE__*/react.createElement("section", null, (Array.isArray(item.employeeName) ? item.employeeName : []).map(Item => /*#__PURE__*/react.createElement("p", {
-        key: Item.idRow
-      }, /*#__PURE__*/react.createElement("span", null, Item.employee, " "), " ", /*#__PURE__*/react.createElement("span", null, " $ ", Item.total))))), /*#__PURE__*/react.createElement("td", {
+      }, ['project', 'maintenance'].includes(String(item.accountName || '').toLowerCase()) && ((_item$accountNameInfo = item.accountNameInfo) === null || _item$accountNameInfo === void 0 ? void 0 : _item$accountNameInfo.name), String(item.accountName || '').toLowerCase() === 'employee' && (Array.isArray(item.employeeName) && item.employeeName.length > 0 ? /*#__PURE__*/react.createElement("section", null, item.employeeName.map((Item, idx) => /*#__PURE__*/react.createElement("p", {
+        key: Item.idRow || Item.idInfo || idx
+      }, /*#__PURE__*/react.createElement("span", null, Item.employee || Item.name || '', " "), " ", /*#__PURE__*/react.createElement("span", null, " $ ", Item.total || 0)))) : ((_item$accountNameInfo2 = item.accountNameInfo) === null || _item$accountNameInfo2 === void 0 ? void 0 : _item$accountNameInfo2.name) || (Array.isArray(item.employee) ? item.employee.join(', ') : item.employee) || '')), /*#__PURE__*/react.createElement("td", {
         style: {
           border: '1px solid gray'
         }
@@ -1712,11 +1719,11 @@ function DailyExpenseAdminView() {
         style: {
           border: '1px solid gray'
         }
-      }, /*#__PURE__*/react.createElement("span", null, "FC "), item.amount !== 0 ? (parseFloat(item.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0), /*#__PURE__*/react.createElement("td", {
+      }, /*#__PURE__*/react.createElement("span", null, "FC "), (parseFloat(item.amount) || 0) > 0 ? (parseFloat(item.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'), /*#__PURE__*/react.createElement("td", {
         style: {
           border: '1px solid gray'
         }
-      }, /*#__PURE__*/react.createElement("span", null, "$ "), item.amount === 0 ? (parseFloat(item.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0)) : null);
+      }, /*#__PURE__*/react.createElement("span", null, "$ "), (parseFloat(item.amount) || 0) === 0 ? (parseFloat(item.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00')) : null);
     }), /*#__PURE__*/react.createElement("tr", null, /*#__PURE__*/react.createElement("td", {
       style: {
         border: '1px solid gray'

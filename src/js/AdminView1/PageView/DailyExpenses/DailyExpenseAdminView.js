@@ -544,8 +544,15 @@ function DailyExpenseAdminView() {
     setFilterTotalPayment(totalExpenses)
   }, [startDate, endDate, payment])
 
-  const totalDay = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) === 0).reduce((sum, row) => Math.round((sum + parseFloat(row.total)) * 100) / 100, 0) : 0
-  const totalDayFC = expensesFiltered.length > 0 ? expensesFiltered.filter(row => parseFloat(row.amount) !== 0).reduce((sum, row) => Math.round((sum + parseFloat(row.amount)) * 100) / 100, 0) : 0
+    const totalDay = (expensesFiltered || []).reduce((sum, row) => {
+    const amt = parseFloat(row?.amount) || 0;
+    const tot = parseFloat(row?.total) || 0;
+    return amt === 0 ? Math.round((sum + tot) * 100) / 100 : sum;
+  }, 0);
+  const totalDayFC = (expensesFiltered || []).reduce((sum, row) => {
+    const amt = parseFloat(row?.amount) || 0;
+    return amt > 0 ? Math.round((sum + amt) * 100) / 100 : sum;
+  }, 0);
 
   const getPaymentRowValues = (row) => {
     const isVoided = row.status === 'Voided';
@@ -662,10 +669,10 @@ function DailyExpenseAdminView() {
 
 
   const totalCashUSD = filterTotal2.length > 0 ? filterTotal2.reduce((acc, row) => {
-    return acc + row.amount.filter(item => parseFloat(item.amountFC) === 0).reduce((sum, item) => Math.round((sum + parseFloat(item.total)) * 100) / 100, 0)
+    return acc + (Array.isArray(row.amount) ? row.amount : []).filter(item => parseFloat(item.amountFC) === 0).reduce((sum, item) => Math.round((sum + parseFloat(item.total)) * 100) / 100, 0)
   }, 0) : 0
   const totalCashFC = filterTotal2.length > 0 ? filterTotal2.reduce((acc, row) => {
-    return acc + row.amount.filter(item => parseFloat(item.amountFC) !== 0).reduce((sum, item) => Math.round((sum + parseFloat(item.amountFC)) * 100) / 100, 0)
+    return acc + (Array.isArray(row.amount) ? row.amount : []).filter(item => parseFloat(item.amountFC) !== 0).reduce((sum, item) => Math.round((sum + parseFloat(item.amountFC)) * 100) / 100, 0)
   }, 0) : 0
   const totalItemPurchase = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + (parseFloat(row.paymentUSD) || 0), 0) : 0
   const totalItemPurchaseFC = itemPurchaseFiltered.length > 0 ? itemPurchaseFiltered.reduce((sum, row) => sum + (parseFloat(row.paymentFC) || 0), 0) : 0
@@ -975,17 +982,20 @@ function DailyExpenseAdminView() {
                                       )
                                     }
                                     {
-                                      (String(item.accountName || '').toLowerCase() === 'employee' || (Array.isArray(item.employeeName) && item.employeeName.length > 0)) && (
-                                        <section>
-                                          {
-                                            (Array.isArray(item.employeeName) ? item.employeeName : []).map((Item) => (
-                                              <p key={Item.idRow}>
-                                                <span>{Item.employee} </span> <span> $ {Item.total}</span>
-                                              </p>
-                                            ))
-                                          }
-                                        </section>
-
+                                      String(item.accountName || '').toLowerCase() === 'employee' && (
+                                        Array.isArray(item.employeeName) && item.employeeName.length > 0 ? (
+                                          <section>
+                                            {
+                                              item.employeeName.map((Item, idx) => (
+                                                <p key={Item.idRow || Item.idInfo || idx}>
+                                                  <span>{Item.employee || Item.name || ''} </span> <span> $ {Item.total || 0}</span>
+                                                </p>
+                                              ))
+                                            }
+                                          </section>
+                                        ) : (
+                                          item.accountNameInfo?.name || (Array.isArray(item.employee) ? item.employee.join(', ') : item.employee) || ''
+                                        )
                                       )
                                     }
                                   </td>
@@ -993,10 +1003,10 @@ function DailyExpenseAdminView() {
                                     {item.description}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
-                                    <span>FC </span>{item.amount !== 0 ? (parseFloat(item.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                    <span>FC </span>{(parseFloat(item.amount) || 0) > 0 ? (parseFloat(item.amount) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}
                                   </td>
                                   <td style={{ border: '1px solid gray' }}>
-                                    <span>$ </span>{item.amount === 0 ? (parseFloat(item.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : 0}
+                                    <span>$ </span>{(parseFloat(item.amount) || 0) === 0 ? (parseFloat(item.total) || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '0.00'}
                                   </td>
                                 </>
                               )
