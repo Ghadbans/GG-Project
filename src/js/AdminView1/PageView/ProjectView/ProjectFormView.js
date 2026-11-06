@@ -666,7 +666,7 @@ function ProjectFormView() {
                     </LocalizationProvider>
                   </Grid>
                   <Grid item xs={6}>
-                    <SmartTextInput required id="ProjectName" name="ProjectName" value={ProjectName} label="Project Name" onChange={(val) => setProjectName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
+                    <SmartTextInput required id="ProjectName" name="ProjectName" value={projectName} label="Project Name" onChange={(val) => setProjectName(val)} sx={{ width: "100%", backgroundColor: "white" }} mode="upper" />
                   </Grid>
                   <Grid item xs={6}>
 

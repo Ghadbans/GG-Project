@@ -2250,7 +2250,7 @@ function ProjectFormView() {
     required: true,
     id: "ProjectName",
     name: "ProjectName",
-    value: ProjectName,
+    value: projectName,
     label: "Project Name",
     onChange: val => setProjectName(val),
     sx: {

@@ -48,7 +48,11 @@ if ($foundApk) {
     Write-Host "APK Location: $($foundApk.FullName)" -ForegroundColor Cyan
     Write-Host "APK Size: $sizeMb MB" -ForegroundColor Cyan
     Write-Host "Last Modified: $($foundApk.LastWriteTime)" -ForegroundColor Cyan
+    $pkg = Get-Content "$root\package.json" | ConvertFrom-Json
     $destApk = "$root\server\public\downloads\GlobalGate.apk"
+    $verApk = "$root\server\public\downloads\GlobalGate-v$($pkg.version).apk"
+    Copy-Item -Path $foundApk.FullName -Destination $verApk -Force
+    Write-Host "COPIED TO SERVER DOWNLOADS: $verApk" -ForegroundColor Green
     Copy-Item -Path $foundApk.FullName -Destination $destApk -Force
     Write-Host "COPIED TO SERVER DOWNLOADS: $destApk" -ForegroundColor Green
 } else {

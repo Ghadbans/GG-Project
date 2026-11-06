@@ -356,6 +356,12 @@
 61. **UI Toast Import Invariant & Catch Block Resilience (Ver 3.6.26)**:
     - Whenever `toast.error()` or `toast.success()` is invoked in component catch blocks, `import { toast } from 'react-toastify';` MUST be explicitly imported at the top of the file.
     - Missing toast imports cause secondary runtime `ReferenceError: toast is not defined` crashes that mask genuine backend error messages from the user.
+62. **Multi-Platform APK Compilation Requirement (Ver 3.6.27)**:
+    - Bumping `package.json` and compiling Webpack bundles updates web clients (Cloudflare Pages) and desktop Electron, but does NOT automatically update installed Android mobile clients.
+    - Whenever a mobile version update or bugfix is released, always run `powershell -ExecutionPolicy Bypass -File scripts/build-apk.ps1` to sync Capacitor assets, compile the Android APK via Gradle (`gradlew.bat assembleDebug`), and copy the binary to `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v{version}.apk`.
+63. **Strict Form State Identifier Casing Invariant (Ver 3.6.27)**:
+    - React state identifiers and JSX props are case-sensitive. Declaring `const [projectName, setProjectName] = useState("")` and referencing `<SmartTextInput value={ProjectName} ... />` causes an unhandled runtime `ReferenceError: ProjectName is not defined`, crashing the React component tree into a white screen.
+    - Always verify strict casing matches between state variables and component prop bindings across all forms.
 
 ## Current Progress Log
 - **Universal Item Row Clearing & Free-Text Write-In Toggle Fortification across 27 Modules & Submodules (Ver 3.6.14)**:
@@ -4045,3 +4051,36 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Production Bundles**: Recompiled via Webpack (`npm run build`).
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.26.exe` (95.8 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.26.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
+## Version 3.6.27 - ProjectFormView ReferenceError Fix and Android Mobile APK Synchronization (Nov 2026)
+
+### 1. Root Cause Identification
+1. **White Screen Crash on "Add a New Project" (`ProjectFormView.js`)**:
+   - The user reported: *"i wantted to Add a new project .. this comes up white screen and this ERror"*, uploading console screenshots showing:
+     `Uncaught ReferenceError: ProjectName is not defined at ProjectFormView.js:669:89`.
+   - In `src/js/AdminView1/PageView/ProjectView/ProjectFormView.js`, line 669 passed:
+     `<SmartTextInput ... value={ProjectName} ... />` with an uppercase `P`.
+   - The state hook was declared as `const [projectName, setProjectName] = useState("");`.
+   - In JavaScript, referencing undefined identifier `ProjectName` throws a runtime `ReferenceError`, unmounting the React tree into a white screen.
+2. **Mobile Client vs Web Portal Version Disparity (`v3.6.15` vs `v3.6.26`)**:
+   - The user reported: *"the mobile application is showing version 3.6.15 and web application showing version 3.6.26 !!!what you forgett to update the mobile application !?"*.
+   - Web portal assets auto-deploy to Cloudflare Pages on git push, reflecting new versions immediately.
+   - The mobile Android client is a compiled Capacitor native APK running bundled local assets. Bumping `package.json` without running `scripts/build-apk.ps1` left the installed APK frozen at v3.6.15.
+
+### 2. Implementation Changes
+1. **Case-Sensitivity Fix in `ProjectFormView.js`**:
+   - Corrected line 669 from `value={ProjectName}` to `value={projectName}`.
+2. **Automated Version-Scoped APK Script (`scripts/build-apk.ps1`)**:
+   - Updated `scripts/build-apk.ps1` to read the exact version from `package.json`.
+   - After compiling `app-debug.apk` via Gradle, the script copies the binary to both `server/public/downloads/GlobalGate.apk` and `server/public/downloads/GlobalGate-v$($pkg.version).apk`.
+3. **Android APK Compilation**:
+   - Executed `powershell -ExecutionPolicy Bypass -File scripts/build-apk.ps1`, generating a freshly compiled Capacitor Android APK (15.01 MB).
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified 0 syntax errors across 239 source files via `npm run prebuild`.
+- **Version Bump**: Bumped to `v3.6.27` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop Electron and Web Portal bundles (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.27.exe` (95.82 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.27.exe`, `GlobalGateSetup.exe`, and `server/public/downloads/Global Gate Setup 3.6.27.exe`.
+- **Android APK**: Synchronized `server/public/downloads/GlobalGate-v3.6.27.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
