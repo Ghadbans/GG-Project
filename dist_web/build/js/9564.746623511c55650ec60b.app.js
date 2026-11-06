@@ -3144,22 +3144,22 @@ function ConvertToInvoice() {
       var _ref9 = _asyncToGenerator(function* () {
         if (projectId && customer !== null && customer !== void 0 && customer._id) {
           try {
-            var _resPayments$data;
+            var _resPayments$data, _resCustomer$data;
             var _yield$Promise$all = yield Promise.all([axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/payment")), axios__WEBPACK_IMPORTED_MODULE_32__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_33__/* .ENDPOINT_URL */ .m, "/get-customer/").concat(customer._id))]),
               _yield$Promise$all2 = _slicedToArray(_yield$Promise$all, 2),
               resPayments = _yield$Promise$all2[0],
               resCustomer = _yield$Promise$all2[1];
-            var projectPayments = (_resPayments$data = resPayments.data) === null || _resPayments$data === void 0 || (_resPayments$data = _resPayments$data.data) === null || _resPayments$data === void 0 ? void 0 : _resPayments$data.filter(pay => {
+            var projectPayments = (((_resPayments$data = resPayments.data) === null || _resPayments$data === void 0 ? void 0 : _resPayments$data.data) || []).filter(pay => {
               var _pay$TotalAmount;
-              return (_pay$TotalAmount = pay.TotalAmount) === null || _pay$TotalAmount === void 0 ? void 0 : _pay$TotalAmount.some(item => item.id === projectId);
+              return pay.status !== 'Voided' && ((_pay$TotalAmount = pay.TotalAmount) === null || _pay$TotalAmount === void 0 ? void 0 : _pay$TotalAmount.some(item => String(item.id) === String(projectId)));
             });
             var sum = projectPayments.reduce((acc, pay) => {
-              var _pay$TotalAmount$find;
-              var projectAmount = ((_pay$TotalAmount$find = pay.TotalAmount.find(item => item.id === projectId)) === null || _pay$TotalAmount$find === void 0 ? void 0 : _pay$TotalAmount$find.amount) || 0;
-              return acc + Number(projectAmount);
+              var projectItem = pay.TotalAmount.find(item => String(item.id) === String(projectId));
+              var projectAmount = (projectItem === null || projectItem === void 0 ? void 0 : projectItem.total) !== undefined ? projectItem.total : (projectItem === null || projectItem === void 0 ? void 0 : projectItem.amount) !== undefined ? projectItem.amount : (projectItem === null || projectItem === void 0 ? void 0 : projectItem.amountPaidUSD) || 0;
+              return acc + Number(projectAmount || 0);
             }, 0);
             setProjectAdvancesSum(sum);
-            setCurrentCredit(resCustomer.data.data.credit || 0);
+            setCurrentCredit(((_resCustomer$data = resCustomer.data) === null || _resCustomer$data === void 0 || (_resCustomer$data = _resCustomer$data.data) === null || _resCustomer$data === void 0 ? void 0 : _resCustomer$data.credit) || 0);
             setTotal(sum);
           } catch (error) {
             console.error("Error fetching project payments/credit:", error);
@@ -3921,6 +3921,11 @@ function ConvertToInvoice() {
           invoicePurchase: 'Purchased',
           Position: 'Last',
           ReferenceName2: id,
+          projectId: projectId,
+          Ref: {
+            _id: projectId,
+            projectName: invoiceSubject
+          },
           total: finalPaidAmount,
           balanceDue: finalBalanceDue,
           totalW,

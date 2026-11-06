@@ -172,6 +172,10 @@ const invoiceSchema = new Schema(
       type: String,
       trim: true
     },
+    projectId: {
+      type: String,
+      trim: true
+    },
     actionTaken: {
       type: String,
       trim: true

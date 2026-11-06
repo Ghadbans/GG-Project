@@ -19,29 +19,45 @@ let latestFlyerBuffer = null;
 const FB_PAGE_ID = process.env.FB_PAGE_ID || '200999390054494';
 const FB_PAGE_ACCESS_TOKEN = process.env.FB_PAGE_ACCESS_TOKEN || 'EAAQS2kcRZBkABS3b5Bms9NfCQU4uM3qkyCxn6RMZBZCOCIMqhFzo8HUagkrZAmlsyWDm28b7lYEZCHGXNhzCavZCXH0voFuwWnafqtlzed80lhZCNzu2qXtX5b1WIPw3FwDBEnIpI23DgIcmBjCPIj8NgYZB7WcPp021uIvR0H8VapmiSIdpTn1L9wsLtRsvbHpgbeMC';
 
-function generateSvgFlyerBase64(headline, details, badge = 'SPECIAL OFFER') {
+function generateSvgFlyerBase64(headline, details, badge = 'SPECIAL OFFER', productImage = null) {
   const safeBadge = String(badge || 'SPECIAL OFFER').toUpperCase();
   const safeHeadline = String(headline || 'PROMOTIONAL OFFER').toUpperCase();
   const safeDetails = String(details || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
   
+  let contentSvg = '';
+  if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+    contentSvg = `
+      <rect x="90" y="320" width="900" height="490" rx="20" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+      <image href="${productImage}" x="110" y="340" width="860" height="270" preserveAspectRatio="xMidYMid meet" />
+      <text x="540" y="650" font-family="Arial, sans-serif" font-weight="900" font-size="32" fill="#f8fafc" text-anchor="middle">${safeHeadline.substring(0, 45)}</text>
+      <foreignObject x="130" y="670" width="820" height="120">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif; font-size: 20px; color: #cbd5e1; text-align: center; line-height: 1.4;">
+          ${safeDetails.substring(0, 200)}
+        </div>
+      </foreignObject>
+    `;
+  } else {
+    contentSvg = `
+      <rect x="90" y="340" width="900" height="460" rx="20" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+      <text x="540" y="440" font-family="Arial, sans-serif" font-weight="900" font-size="40" fill="#f8fafc" text-anchor="middle">${safeHeadline.substring(0, 45)}</text>
+      <foreignObject x="130" y="490" width="820" height="280">
+        <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif; font-size: 26px; color: #cbd5e1; text-align: center; line-height: 1.5;">
+          ${safeDetails}
+        </div>
+      </foreignObject>
+    `;
+  }
+
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
     <rect width="1080" height="1080" fill="#141a29"/>
-    <rect x="0" y="0" width="1080" height="24" fill="#f59e0b"/>
-    <text x="540" y="160" font-family="Arial, sans-serif" font-weight="900" font-size="64" fill="#ffffff" text-anchor="middle" letter-spacing="6">GLOBAL GATE</text>
-    <text x="540" y="210" font-family="Arial, sans-serif" font-weight="600" font-size="24" fill="#f59e0b" text-anchor="middle" letter-spacing="4">OFFICIAL PROMOTION</text>
+    <rect x="0" y="0" width="1080" height="20" fill="#f59e0b"/>
+    <text x="540" y="140" font-family="Arial, sans-serif" font-weight="900" font-size="64" fill="#ffffff" text-anchor="middle" letter-spacing="6">GLOBAL GATE</text>
+    <text x="540" y="190" font-family="Arial, sans-serif" font-weight="600" font-size="22" fill="#f59e0b" text-anchor="middle" letter-spacing="4">OFFICIAL PROMOTION</text>
     
-    <rect x="360" y="270" width="360" height="60" rx="30" fill="#ef4444"/>
-    <text x="540" y="312" font-family="Arial, sans-serif" font-weight="800" font-size="28" fill="#ffffff" text-anchor="middle">${safeBadge}</text>
+    <rect x="360" y="235" width="360" height="54" rx="27" fill="#ef4444"/>
+    <text x="540" y="272" font-family="Arial, sans-serif" font-weight="800" font-size="26" fill="#ffffff" text-anchor="middle">${safeBadge}</text>
     
-    <rect x="90" y="370" width="900" height="430" rx="24" fill="#1e293b" stroke="#334155" stroke-width="3"/>
-    
-    <text x="540" y="470" font-family="Arial, sans-serif" font-weight="900" font-size="40" fill="#f8fafc" text-anchor="middle">${safeHeadline.substring(0, 40)}</text>
-    
-    <foreignObject x="140" y="520" width="800" height="240">
-      <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Arial, sans-serif; font-size: 26px; color: #cbd5e1; text-align: center; line-height: 1.5;">
-        ${safeDetails}
-      </div>
-    </foreignObject>
+    ${contentSvg}
     
     <rect x="290" y="850" width="500" height="80" rx="40" fill="#10b981"/>
     <text x="540" y="902" font-family="Arial, sans-serif" font-weight="800" font-size="30" fill="#ffffff" text-anchor="middle">💬 WhatsApp: +243 827 722 222</text>
@@ -116,7 +132,8 @@ router.get('/status', (req, res) => {
  */
 router.get('/flyer', (req, res) => {
   if (latestFlyerBuffer) {
-    res.setHeader('Content-Type', 'image/png');
+    const isSvg = latestFlyerBuffer.toString('utf8', 0, 100).includes('<svg');
+    res.setHeader('Content-Type', isSvg ? 'image/svg+xml' : 'image/png');
     return res.end(latestFlyerBuffer);
   }
   if (fs.existsSync(AGENT_FLYER)) {
@@ -298,45 +315,94 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
     let headline = String(brief).replace(/(offer for this week|offer|special offer|promo|promotion|pour cette semaine)\s*[:-]?\s*/gi, '').trim();
     if (headline.length > 40) headline = headline.substring(0, 40) + '...';
 
-    const flyerBase64 = generateSvgFlyerBase64(headline, brief, badge);
+    const flyerBase64 = generateSvgFlyerBase64(headline, brief, badge, productImage);
     const caption = `🔥 **GLOBAL GATE - SPECIAL PROMOTION** 🔥\n\n📢 **${headline.toUpperCase()}**\n\n✨ **Details:** ${brief}\n\n📞 **Contact us today:** +243 827 722 222\n#GlobalGate #Promotion #SpecialOffer`;
 
+    const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
+    latestFlyerBuffer = svgBuffer;
+
+    // IF PREVIEW ONLY: DO NOT DISPATCH TO SOCIAL MEDIA PLATFORMS
+    if (previewOnly) {
+      return res.json({
+        success: true,
+        previewOnly: true,
+        brief,
+        headline,
+        copy: {
+          badge,
+          headline,
+          details: brief,
+          caption
+        },
+        flyerBase64,
+        facebook: { success: false, postId: null, postUrl: null, error: null },
+        whatsapp: { success: false, error: null },
+        instagram: { success: false, postId: null, postUrl: null, error: null }
+      });
+    }
+
+    // DISPATCH STAGE: User clicked "Approve & Publish"
     let fbResult = null;
     if (postToFacebook && FB_PAGE_ACCESS_TOKEN && FB_PAGE_ID) {
-      // 2-STAGE ATTACHED MEDIA FEED PUBLISHING (Exact Meta Implementation)
-      const svgBuffer = Buffer.from(flyerBase64.replace(/^data:image\/svg\+xml;base64,/, ''), 'base64');
-      latestFlyerBuffer = svgBuffer;
+      try {
+        let photoId = null;
 
-      // Step 1: Upload photo without publishing it to the album
-      const uploadForm = new FormData();
-      uploadForm.append('source', svgBuffer, { filename: 'flyer.png', contentType: 'image/png' });
-      uploadForm.append('published', 'false');
-      uploadForm.append('access_token', FB_PAGE_ACCESS_TOKEN);
+        // Step 1: If product image is provided and is a valid raster base64 (PNG/JPG/WEBP), upload to Photos API
+        if (productImage && typeof productImage === 'string' && productImage.startsWith('data:image')) {
+          const match = productImage.match(/^data:(image\/[a-zA-Z0-9+.-]+);base64,(.+)$/);
+          if (match) {
+            try {
+              const mimeType = match[1];
+              const ext = mimeType.includes('png') ? 'png' : (mimeType.includes('jpeg') || mimeType.includes('jpg') ? 'jpg' : 'png');
+              const rasterBuf = Buffer.from(match[2], 'base64');
+              const uploadForm = new FormData();
+              uploadForm.append('source', rasterBuf, { filename: `flyer.${ext}`, contentType: mimeType });
+              uploadForm.append('published', 'false');
+              uploadForm.append('access_token', FB_PAGE_ACCESS_TOKEN);
 
-      const photoRes = await axios.post(
-        `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`,
-        uploadForm,
-        { headers: uploadForm.getHeaders() }
-      );
-      const photoId = photoRes.data.id;
-
-      // Step 2: Publish a REAL post to the Page Feed with attached_media JSON stringified
-      const feedRes = await axios.post(
-        `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed`,
-        {
-          message: caption,
-          attached_media: JSON.stringify([{ media_fbid: photoId }]),
-          access_token: FB_PAGE_ACCESS_TOKEN
+              const photoRes = await axios.post(
+                `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos`,
+                uploadForm,
+                { headers: uploadForm.getHeaders(), timeout: 30000 }
+              );
+              if (photoRes.data && photoRes.data.id) {
+                photoId = photoRes.data.id;
+              }
+            } catch (pErr) {
+              console.warn('[Marketing] Photo upload failed, continuing with feed post:', pErr.response?.data?.error?.message || pErr.message);
+            }
+          }
         }
-      );
 
-      console.log('✅ Main Timeline Feed Post Created:', feedRes.data.id);
-      fbResult = {
-        success: true,
-        postId: feedRes.data.id,
-        photoId: photoId,
-        postUrl: `https://www.facebook.com/${feedRes.data.id}`
-      };
+        // Step 2: Publish to Page Feed
+        const feedPayload = {
+          message: caption,
+          access_token: FB_PAGE_ACCESS_TOKEN
+        };
+        if (photoId) {
+          feedPayload.attached_media = JSON.stringify([{ media_fbid: photoId }]);
+        }
+
+        const feedRes = await axios.post(
+          `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/feed`,
+          feedPayload,
+          { timeout: 30000 }
+        );
+
+        console.log('✅ Main Timeline Feed Post Created:', feedRes.data.id);
+        fbResult = {
+          success: true,
+          postId: feedRes.data.id,
+          photoId: photoId,
+          postUrl: `https://www.facebook.com/${feedRes.data.id}`
+        };
+      } catch (fbErr) {
+        console.error('[Marketing] Facebook publish error:', fbErr.response?.data || fbErr.message);
+        fbResult = {
+          success: false,
+          error: fbErr.response?.data?.error?.message || fbErr.message || 'Facebook publication failed'
+        };
+      }
     }
 
     let igResult = null;
@@ -382,10 +448,10 @@ router.post('/publish', verifyMarketingAccess, async (req, res) => {
         caption
       },
       flyerBase64,
-      facebook: fbResult || { success: false, error: 'Facebook publish failed or not selected.' },
+      facebook: fbResult || { success: false, error: postToFacebook ? 'Facebook publish failed.' : 'Facebook dispatch not selected.' },
       whatsapp: {
         success: false,
-        error: 'WhatsApp Web dispatch requires the local agent running on the workstation.'
+        error: 'WhatsApp Web automated dispatch requires the local agent running on the workstation.'
       },
       instagram: igResult || {
         success: false,

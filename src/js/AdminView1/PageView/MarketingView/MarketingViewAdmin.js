@@ -238,7 +238,12 @@ function MarketingViewAdmin() {
       if (window.electron && typeof window.electron.runMarketing === 'function') {
         try {
           console.log('[Marketing] Generating preview via Electron local IPC...');
-          resData = await window.electron.runMarketing(payload);
+          const ipcRes = await window.electron.runMarketing(payload);
+          if (ipcRes && ipcRes.success) {
+            resData = ipcRes;
+          } else {
+            console.warn('[Marketing] Electron local IPC did not return success, trying fallbacks...', ipcRes?.error);
+          }
         } catch (ipcErr) {
           console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
         }
@@ -246,7 +251,7 @@ function MarketingViewAdmin() {
 
       if (!resData) {
         try {
-          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 45000 });
+          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 10000 });
           if (localRes.data && localRes.data.success) {
             resData = localRes.data;
           }
@@ -307,7 +312,12 @@ function MarketingViewAdmin() {
       if (window.electron && typeof window.electron.runMarketing === 'function') {
         try {
           console.log('[Marketing] Running publish via Electron local agent IPC...');
-          resData = await window.electron.runMarketing(payload);
+          const ipcRes = await window.electron.runMarketing(payload);
+          if (ipcRes && ipcRes.success) {
+            resData = ipcRes;
+          } else {
+            console.warn('[Marketing] Electron local agent IPC failed, falling back to server...', ipcRes?.error);
+          }
         } catch (ipcErr) {
           console.warn('[Marketing] Electron IPC error, falling back:', ipcErr);
         }
@@ -315,7 +325,7 @@ function MarketingViewAdmin() {
 
       if (!resData) {
         try {
-          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 60000 });
+          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 15000 });
           if (localRes.data && localRes.data.success) {
             resData = localRes.data;
           }

@@ -1189,6 +1189,22 @@ function DailyExpenseAdminView() {
         isRefund
       };
     }
+
+    // Credit-Account (Credit Applied) settles invoices without receiving new cash in hand today
+    if (row.modes === 'Credit-Account') {
+      return {
+        grossFC: 0,
+        grossUSD: 0,
+        returnFC: 0,
+        returnUSD: 0,
+        netFC: 0,
+        netUSD: 0,
+        credit: 0,
+        isVoided: false,
+        isRefund: false,
+        isCreditApplied: true
+      };
+    }
     var payFC = parseFloat(row.PaymentReceivedFC) || 0;
     var payUSD = parseFloat(row.PaymentReceivedUSD) || 0;
     var retFC = parseFloat(row.returnFC) || 0;
@@ -1225,7 +1241,7 @@ function DailyExpenseAdminView() {
       }
       credit = 0;
     } else {
-      if (row.reason === 'Customer Credit' || row.reason === 'Project') {
+      if (row.reason === 'Customer Credit') {
         if (payUSD === 0 && payFC === 0) {
           grossUSD = rem > 0 ? rem : amt;
         } else {
@@ -2135,7 +2151,12 @@ function DailyExpenseAdminView() {
           color: '#b91c1c',
           fontWeight: 'bold'
         }
-      }, "-$ ", Math.abs(getPaymentRowValues(item).grossUSD).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("span", null, "$ "), getPaymentRowValues(item).grossUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react.createElement("td", {
+      }, "-$ ", Math.abs(getPaymentRowValues(item).grossUSD).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : item.modes === 'Credit-Account' ? /*#__PURE__*/react.createElement("span", {
+        style: {
+          color: '#3730a3',
+          fontWeight: 'bold'
+        }
+      }, "$ ", parseFloat(item.PaymentReceivedUSD || item.amount || 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')) : /*#__PURE__*/react.createElement(react.Fragment, null, /*#__PURE__*/react.createElement("span", null, "$ "), getPaymentRowValues(item).grossUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ','))), /*#__PURE__*/react.createElement("td", {
         style: {
           border: '1px solid gray',
           opacity: item.status === 'Voided' ? 0.6 : 1

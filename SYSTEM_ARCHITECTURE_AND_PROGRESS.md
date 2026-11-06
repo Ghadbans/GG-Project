@@ -362,6 +362,28 @@
 63. **Strict Form State Identifier Casing Invariant (Ver 3.6.27)**:
     - React state identifiers and JSX props are case-sensitive. Declaring `const [projectName, setProjectName] = useState("")` and referencing `<SmartTextInput value={ProjectName} ... />` causes an unhandled runtime `ReferenceError: ProjectName is not defined`, crashing the React component tree into a white screen.
     - Always verify strict casing matches between state variables and component prop bindings across all forms.
+64. **Project Advance Payments to Converted Invoice Reconciliation Standard (Ver 3.6.28)**:
+    - **Reconciliation Scope**: When a project is converted to an invoice, any advance payments made towards that project must automatically and permanently carry over to the resulting invoice.
+    - **Extraction Invariant**: In `syncInvoiceBalances` (`server/utils/invoiceBalanceUtils.js`), payments must be queried across all matching dimensions:
+      1. Matching invoice ID: `'TotalAmount.id': invId`
+      2. Matching project ID: `'TotalAmount.id': invoice.projectId`
+      3. Matching project reference ID: `'TotalAmount.id': invoice.Ref?._id`
+      4. Matching linked purchase project reference: `'TotalAmount.id': purchase.projectName._id`
+    - **Amount Resolution Robustness**: Always extract payment amounts with `item.total !== undefined ? item.total : (item.amount !== undefined ? item.amount : item.amountPaidUSD || 0)` because historical payment rows use varying property keys (`total`, `amount`, `amountPaidUSD`).
+    - **Balance Due & Status Automation**:
+      `balanceDue = Math.max(0, totalInvoice - totalPaid)`
+      `status = totalPaid >= totalInvoice ? 'Paid' : (totalPaid > 0 ? 'Partially-Paid' : 'Sent')`.
+    - **Decoupled Store Credit Invariant**: Payments with `reason === 'Project'` must NEVER be categorized as `Customer Credit` in `PaymentInformationForm.js` or `PaymentInformationUpdate.js`. Project payments are advances against contract milestone deliverables and must never create duplicate store credit in the customer's credit balance.
+65. **Cash Drawer Integrity Standard - Exclusion of Credit Applied from Net Cash in Hand (Ver 3.6.28)**:
+    - In `DailyExpenseAdminView.js`, payments made using store credit (`modes === 'Credit-Account'`) represent credit ledger debits, NOT physical cash drawer receipts.
+    - `getPaymentRowValues` and daily summary aggregations must strictly exclude `modes === 'Credit-Account'` from `Daily Payment Received Total (Net Cash in Hand)` and physical Cash in Drawer summaries (`CASH (USD/FC)`).
+    - `Credit-Account` rows must be highlighted with dedicated indigo/purple badge styling (`#3730a3`) and explicitly tagged as `[Credit Applied]` to preserve accounting transparency without falsely inflating cash tallies.
+66. **Social Marketing Dispatch Fault-Isolation & Media Format Standard (Ver 3.6.28)**:
+    - **Preview-Only Strict Isolation**: When `previewOnly: true`, backend marketing endpoints (`/api/marketing/publish`) MUST NEVER make network requests or publish calls to Facebook Graph API, Instagram, or WhatsApp. It must exclusively generate the flyer preview and structured copy and return status 200 immediately.
+    - **Meta Graph API Image Format Compliance**: Facebook Photos API (`POST /{page-id}/photos`) strictly requires raster binary image bytes (PNG, JPG, WEBP). Raw SVG XML text (even when Base64-decoded) is rejected by Facebook with HTTP 400 (`Param source must be a valid image file`). When cloud fallback generates an SVG flyer, the dispatcher must:
+      1. Inspect `productImage`: if the user uploaded a valid raster image (PNG/JPG), upload its real binary buffer to `POST /{page-id}/photos`.
+      2. If no raster image is available or if photo upload fails, gracefully publish directly to `POST /{page-id}/feed` with the formatted message copy and contact details.
+    - **Non-Crashing Fault Isolation**: Social media publishing failures on Facebook or Instagram MUST be caught internally in dedicated try/catch blocks and returned as `{ success: false, error: ... }` within the JSON response. Under no circumstances should an external API error throw an unhandled 500 error that crashes the entire endpoint.
 
 ## Current Progress Log
 - **Universal Item Row Clearing & Free-Text Write-In Toggle Fortification across 27 Modules & Submodules (Ver 3.6.14)**:
@@ -4083,4 +4105,58 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.27.exe` (95.82 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.27.exe`, `GlobalGateSetup.exe`, and `server/public/downloads/Global Gate Setup 3.6.27.exe`.
 - **Android APK**: Synchronized `server/public/downloads/GlobalGate-v3.6.27.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
+## Version 3.6.28 - Payment System Architecture Fortification, Project-to-Invoice Balance Sync, and Social Marketing Photo Dispatch Standard (Nov 2026)
+
+### 1. Root Cause Identification
+1. **Zero Advance Payment Carry-Over on Converted Invoices (`ConvertToInvoice.js` & `invoiceBalanceUtils.js`)**:
+   - The user requested: *"when the project is converted to invoice the payment should reflect in invoices balanceDue = totalInvoice - totalPaid Status updates automatically: totalPaid >= totalInvoice"*.
+   - In `ConvertToInvoice.js:228`, project payments were extracted using `item.amount`, which was undefined on payment objects (payments use `total` or `amountPaidUSD`), resulting in `0` initial project payment recognized.
+   - More critically, whenever `syncInvoiceBalances` ran on backend updates, it only queried `'TotalAmount.id': invId`, completely disregarding payments made to the source project ID or purchase reference, thereby wiping out project advances and resetting `balanceDue` to the full invoice total.
+2. **Customer Credit Row Initialization & False Store Credit on Project Payments (`PaymentInformationForm.js`)**:
+   - When selecting `reason === 'Customer Credit'` for refunds, the table row initialized with `paidAmount: 0` and `maxRefundable: 0`, displaying `$0` available refund despite the customer holding positive store credit.
+   - When recording a payment for `reason === 'Project'`, `remainingValue` mistakenly grouped `Project` with `Customer Credit`, causing project advance payments to inject fake duplicate store credit into the customer's account.
+   - In refunds, `calcCredit` did not subtract `Refund` transactions against customer credit, and `modes` dropdown allowed contradictory combinations (e.g. paying into customer credit using customer credit, or refunding store credit back to store credit).
+3. **Cash Drawer Inflation via Store Credit in Daily Expenses (`DailyExpenseAdminView.js`)**:
+   - In `DailyExpenseAdminView.js`, payments made with `modes === 'Credit-Account'` (store credit applied to settle bills) were being added directly into `Daily Payment Received Total (Net Cash in Hand)` and physical Cash in Drawer tallies. Paying with virtual store credit does not bring physical cash into the drawer, falsifying the register reconciliation.
+4. **Facebook Graph API HTTP 400 on Cloud Marketing Dispatch (`marketingRoutes.js:316`)**:
+   - The user reported: `Marketing preview failed: AxiosError: Request failed with status code 400` with Railway logs showing `url: 'https://graph.facebook.com/v21.0/200999390054494/photos'`.
+   - On Railway, the cloud fallback generated an SVG flyer string (`generateSvgFlyerBase64`), stripped the data prefix, and posted the raw SVG XML buffer to `https://graph.facebook.com/v21.0/${FB_PAGE_ID}/photos` with header `image/png`.
+   - Meta Graph API verifies image magic bytes: uploading SVG text disguised as PNG fails with HTTP 400 (`Param source must be a valid image file`).
+   - Furthermore, Strategy 3 executed photo uploading and feed publishing unconditionally without checking `if (previewOnly)`, triggering premature Facebook publishing attempts during preview generation.
+   - When Facebook rejected the request, the catch block threw an unhandled 500 error, crashing the entire UI with a red error alert.
+
+### 2. Implementation Changes
+1. **Invoice Project Payment Synchronization (`server/utils/invoiceBalanceUtils.js` & `ConvertToInvoice.js`)**:
+   - Extended `syncInvoiceBalances` to query payments by:
+     - `'TotalAmount.id': invId`
+     - `'TotalAmount.id': invoice.projectId`
+     - `'TotalAmount.id': invoice.Ref?._id`
+     - Reference to linked purchase project (`purchase.projectName._id`).
+   - Standardized amount extraction: `item.total !== undefined ? item.total : (item.amount !== undefined ? item.amount : item.amountPaidUSD || 0)`.
+   - Guaranteed automatic balance recalculation: `balanceDue = Math.max(0, totalInvoice - totalPaid)` and status auto-transition (`totalPaid >= totalInvoice` -> `Paid`, `totalPaid > 0` -> `Partially-Paid`, `totalPaid <= 0` -> `Sent`).
+   - In `ConvertToInvoice.js`, linked `projectId: projectId` and passed project advance payments via `item.total ?? item.amount ?? item.amountPaidUSD`.
+2. **Payment Module Decoupling & Customer Credit Fortification (`PaymentInformationForm.js` & `PaymentInformationUpdate.js`)**:
+   - Fixed `reason === 'Customer Credit'` refund row to initialize with `paidAmount: oldCredit || 0` and `maxRefundable: oldCredit || 0`.
+   - Decoupled `reason === 'Project'` from `Customer Credit` in `remainingValue` calculation (`parseFloat(amount || 0) - PaymentInfo`), completely preventing project advances from creating false store credit.
+   - Updated `calcCredit` to properly subtract refunds against customer credit (`oldCredit - refAmt`).
+   - Cleaned payment modes dropdown: hides `Credit` deposit option during refunds and hides `Use Customer Credit` when depositing into Customer Credit.
+3. **Cash Drawer Isolation of Credit Applied (`DailyExpenseAdminView.js`)**:
+   - In `getPaymentRowValues`, guarded `row.modes === 'Credit-Account'` so that store credit applications contribute $0 to `Daily Payment Received Total (Net Cash in Hand)` and cash summaries.
+   - Styled `Credit-Account` rows with distinct purple text (`#3730a3`) and labeled as `[Credit Applied]` for transparent auditing.
+4. **Social Marketing Fault-Isolation & Media Validation (`server/routes/marketingRoutes.js` & `MarketingViewAdmin.js`)**:
+   - **Preview-Only Strict Guard**: When `previewOnly: true`, Strategy 3 strictly returns status 200 with the generated SVG flyer base64 and copy without initiating any network requests to Facebook, Instagram, or WhatsApp.
+   - **Product Image Embedding**: Enhanced `generateSvgFlyerBase64` to accept `productImage` and embed it cleanly inside an SVG container with preserved aspect ratio, headline, and details.
+   - **Safe Meta Graph API Publishing**: When `previewOnly: false`, if `productImage` is provided (genuine PNG/JPG binary), uploads the real raster buffer to `POST /photos`. If no raster photo is available or if photo upload fails, publishes cleanly to `POST /feed` with message copy and contact details.
+   - **Fault-Isolated Error Handling**: Wrapped Facebook and Instagram dispatch in individual `try/catch` blocks so platform errors are captured in `fbResult.error` and returned in status 200 without crashing the endpoint or UI.
+   - In `MarketingViewAdmin.js`, improved fallback transitions from Electron IPC to local daemon to cloud server API.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified 0 syntax errors across 239 source files via `npm run prebuild`.
+- **Version Bump**: Bumped to `v3.6.28` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop Electron and Web Portal bundles (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.28.exe` (95.83 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.28.exe`, `GlobalGate-v3.6.28.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.01 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.28.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
 

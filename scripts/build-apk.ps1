@@ -1,17 +1,44 @@
+param(
+    [switch]$SkipWebBuild
+)
+
 $ErrorActionPreference = "Stop"
 
 $root = "D:\GG\GG-Managment2026\ancient-kepler Pro"
 $androidDir = "$root\android"
 
 # Set environment paths
-$env:JAVA_HOME = "C:\Users\GG\.jdks\jbr-21.0.11"
+$possibleJavaHomes = @(
+    "C:\Program Files\Android\Android Studio\jbr",
+    "C:\Users\GG\.jdks\jbr-21.0.11",
+    "C:\Program Files\Java\jdk-21",
+    "C:\Program Files\Java\jdk-17"
+)
+foreach ($jh in $possibleJavaHomes) {
+    if (Test-Path "$jh\bin\java.exe") {
+        $env:JAVA_HOME = $jh
+        break
+    }
+}
+if (-not $env:JAVA_HOME) {
+    $javaCmd = Get-Command java -ErrorAction SilentlyContinue
+    if ($javaCmd) {
+        $env:JAVA_HOME = Split-Path (Split-Path $javaCmd.Source)
+    }
+}
 $env:ANDROID_HOME = "C:\Users\GG\AppData\Local\Android\Sdk"
 $env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
 
-Write-Host "=== 1. COMPILING WEB BUNDLE & SYNCING CAPACITOR ANDROID ==="
-Set-Location $root
-npm run build:web
-npx cap sync android
+if (-not $SkipWebBuild) {
+    Write-Host "=== 1. COMPILING WEB BUNDLE & SYNCING CAPACITOR ANDROID ==="
+    Set-Location $root
+    npm run build:web
+    npx cap sync android
+} else {
+    Write-Host "=== 1. SYNCING CAPACITOR ANDROID (SKIPPING WEB BUILD) ==="
+    Set-Location $root
+    npx cap sync android
+}
 
 Write-Host "=== 2. COMPILING APK VIA GRADLE ==="
 Set-Location $androidDir

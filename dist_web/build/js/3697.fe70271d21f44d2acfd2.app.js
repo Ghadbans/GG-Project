@@ -631,6 +631,23 @@ function PaymentInformationUpdate() {
                 };
               });
               setInvoice([...(invoice1 || []), ...exInvoice]);
+            } else if (reason === "Customer Credit") {
+              setInvoice([{
+                id: customerId,
+                customerName: customerName,
+                total: 0,
+                amountPaidFC: 0,
+                amountPaidUSD: 0,
+                rateChange: rate || 1,
+                totalConverted: 0,
+                Ref: 'Credit',
+                balanceDue: oldCredit || 0,
+                paidAmount: oldCredit || 0,
+                maxRefundable: oldCredit || 0,
+                invoiceAmount: oldCredit || 0,
+                status: "",
+                invoiceDate: new Date()
+              }]);
             } else if (reason === "Project") {
               var _resProject$data;
               var filterData2 = (((_resProject$data = resProject.data) === null || _resProject$data === void 0 ? void 0 : _resProject$data.data) || []).filter(row => {
@@ -714,7 +731,7 @@ function PaymentInformationUpdate() {
   var totalConvertedFc = Math.round(PaymentReceivedFC / rate * 100) / 100;
   var totalUSdInfo = Math.round((parseFloat(totalConvertedFc) + parseFloat(PaymentReceivedUSD)) * 100) / 100;
   var remainingInvoice = balanceDueInfo - PaymentInfo;
-  var remainingValue = reason === "Project" || reason === "Customer Credit" ? parseFloat(amount) : parseFloat(amount) - PaymentInfo;
+  var remainingValue = reason === "Customer Credit" ? parseFloat(amount || 0) : parseFloat(amount || 0) - PaymentInfo;
   var remaining = Math.round(remainingValue * 100) / 100;
   var _useState45 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(null),
     _useState46 = _slicedToArray(_useState45, 2),

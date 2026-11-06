@@ -221,16 +221,17 @@ function ConvertToInvoice() {
             axios.get(`${ENDPOINT_URL}/get-customer/${customer._id}`)
           ]);
 
-          const projectPayments = resPayments.data?.data?.filter(pay =>
-            pay.TotalAmount?.some(item => item.id === projectId)
+          const projectPayments = (resPayments.data?.data || []).filter(pay =>
+            pay.status !== 'Voided' && pay.TotalAmount?.some(item => String(item.id) === String(projectId))
           );
           const sum = projectPayments.reduce((acc, pay) => {
-            const projectAmount = pay.TotalAmount.find(item => item.id === projectId)?.amount || 0;
-            return acc + Number(projectAmount);
+            const projectItem = pay.TotalAmount.find(item => String(item.id) === String(projectId));
+            const projectAmount = projectItem?.total !== undefined ? projectItem.total : (projectItem?.amount !== undefined ? projectItem.amount : (projectItem?.amountPaidUSD || 0));
+            return acc + Number(projectAmount || 0);
           }, 0);
 
           setProjectAdvancesSum(sum);
-          setCurrentCredit(resCustomer.data.data.credit || 0);
+          setCurrentCredit(resCustomer.data?.data?.credit || 0);
           setTotal(sum);
         } catch (error) {
           console.error("Error fetching project payments/credit:", error);
@@ -898,6 +899,8 @@ function ConvertToInvoice() {
         invoicePurchase: 'Purchased',
         Position: 'Last',
         ReferenceName2: id,
+        projectId: projectId,
+        Ref: { _id: projectId, projectName: invoiceSubject },
         total: finalPaidAmount,
         balanceDue: finalBalanceDue,
         totalW,

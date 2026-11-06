@@ -340,6 +340,23 @@ function PaymentInformationUpdate() {
               };
             });
             setInvoice([...(invoice1 || []), ...exInvoice]);
+          } else if (reason === "Customer Credit") {
+            setInvoice([{
+              id: customerId,
+              customerName: customerName,
+              total: 0,
+              amountPaidFC: 0,
+              amountPaidUSD: 0,
+              rateChange: rate || 1,
+              totalConverted: 0,
+              Ref: 'Credit',
+              balanceDue: oldCredit || 0,
+              paidAmount: oldCredit || 0,
+              maxRefundable: oldCredit || 0,
+              invoiceAmount: oldCredit || 0,
+              status: "",
+              invoiceDate: new Date()
+            }]);
           } else if (reason === "Project") {
             const filterData2 = (resProject.data?.data || []).filter((row) => {
               const rowCustId = row.customerName?._id || row.customerName?.id || row.customerId;
@@ -423,7 +440,7 @@ function PaymentInformationUpdate() {
   const totalUSdInfo = Math.round((parseFloat(totalConvertedFc) + parseFloat(PaymentReceivedUSD)) * 100) / 100;
 
   const remainingInvoice = balanceDueInfo - PaymentInfo
-  const remainingValue = (reason === "Project" || reason === "Customer Credit") ? parseFloat(amount) : (parseFloat(amount) - PaymentInfo);
+  const remainingValue = reason === "Customer Credit" ? parseFloat(amount || 0) : (parseFloat(amount || 0) - PaymentInfo);
   const remaining = Math.round(remainingValue * 100) / 100
 
   const [oldCredit, setOldCredit] = useState(null)

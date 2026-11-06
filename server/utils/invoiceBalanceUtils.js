@@ -18,10 +18,29 @@ async function syncInvoiceBalances(invoiceIds) {
       const invoice = await invoiceSchema.findById(invId);
       if (!invoice) continue;
 
-      // Find all non-voided payments matching this invoice ID
+      let matchingIds = [invId.toString()];
+      if (invoice.projectId) {
+        matchingIds.push(invoice.projectId.toString());
+      }
+      if (invoice.Ref && invoice.Ref._id) {
+        matchingIds.push(invoice.Ref._id.toString());
+      }
+      if (invoice.ReferenceName2) {
+        try {
+          const purchaseSchema = require('../model/purchaseSchema');
+          const purchase = await purchaseSchema.findById(invoice.ReferenceName2).lean();
+          if (purchase) {
+            matchingIds.push(purchase._id.toString());
+            const pId = purchase.projectName?._id || purchase.projectName?.id || (typeof purchase.projectName === 'string' && purchase.projectName.length === 24 ? purchase.projectName : null);
+            if (pId) matchingIds.push(pId.toString());
+          }
+        } catch (_) {}
+      }
+
+      // Find all non-voided payments matching this invoice ID or its project/purchase ID
       const payments = await paymentSchema.find({
         status: { $nin: ['Voided', 'Void'] },
-        'TotalAmount.id': invId
+        'TotalAmount.id': { $in: matchingIds }
       }).lean();
 
       let totalPaid = 0;
@@ -29,8 +48,8 @@ async function syncInvoiceBalances(invoiceIds) {
         if (p.TotalAmount && Array.isArray(p.TotalAmount)) {
           p.TotalAmount.forEach(item => {
             const itemIdStr = item?.id ? item.id.toString() : null;
-            if (itemIdStr === invId) {
-              const amt = parseFloat(item.total || item.amount || 0);
+            if (itemIdStr && matchingIds.includes(itemIdStr)) {
+              const amt = parseFloat(item.total !== undefined ? item.total : (item.amount !== undefined ? item.amount : (item.amountPaidUSD || 0)));
               if (!isNaN(amt) && amt > 0) {
                 if (p.transactionType === 'Refund') {
                   totalPaid -= amt;

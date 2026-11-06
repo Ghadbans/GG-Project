@@ -603,6 +603,8 @@ function PaymentInformationForm() {
                 totalConverted: 0,
                 Ref: 'Credit',
                 balanceDue: oldCredit || 0,
+                paidAmount: oldCredit || 0,
+                maxRefundable: oldCredit || 0,
                 invoiceAmount: oldCredit || 0,
                 status: "",
                 invoiceDate: new Date()
@@ -678,7 +680,7 @@ function PaymentInformationForm() {
   var totalConvertedFc = Math.round(PaymentReceivedFC / rate * 100) / 100;
   var totalUSdInfo = Math.round((parseFloat(totalConvertedFc) + parseFloat(PaymentReceivedUSD)) * 100) / 100;
   var remainingInvoice = transactionType === 'Payment' ? balanceDueInfo - PaymentInfo : balanceDueInfo + PaymentInfo;
-  var remainingValue = reason === "Project" || reason === "Customer Credit" ? parseFloat(amount) : parseFloat(amount) - PaymentInfo;
+  var remainingValue = reason === "Customer Credit" ? parseFloat(amount || 0) : parseFloat(amount || 0) - PaymentInfo;
   var remaining = transactionType === 'Payment' ? Math.round(remainingValue * 100) / 100 : -Math.round(remainingValue * 100) / 100;
   var _useState39 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(0),
     _useState40 = _slicedToArray(_useState39, 2),
@@ -709,10 +711,17 @@ function PaymentInformationForm() {
             var paymentsList = ((_resPay$data = resPay.data) === null || _resPay$data === void 0 ? void 0 : _resPay$data.data) || [];
             var calcCredit = 0;
             paymentsList.forEach(row => {
-              if (row.modes === 'Credit' || row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return' || row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return') {
-                calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
-              } else if (row.modes === 'Credit-Account') {
-                calcCredit -= parseFloat(row.amount || 0);
+              if (row.status === 'Voided') return;
+              if (row.transactionType === 'Refund') {
+                if (row.reason === 'Customer Credit') {
+                  calcCredit -= parseFloat(row.amount || row.PaymentReceivedUSD || 0);
+                }
+              } else {
+                if (row.modes === 'Credit' || row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return' || row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return') {
+                  calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
+                } else if (row.modes === 'Credit-Account') {
+                  calcCredit -= parseFloat(row.amount || 0);
+                }
               }
             });
             var validCredit = Math.max(0, calcCredit);
@@ -734,21 +743,28 @@ function PaymentInformationForm() {
     setCredit = _useState48[1];
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(() => {
     var computedCredit = oldCredit;
-    if (modes === 'Credit') {
-      computedCredit = parseFloat(oldCredit || 0) + parseFloat(amount || 0);
-    } else if (modes === 'Credit-Account') {
-      computedCredit = Math.max(0, parseFloat(oldCredit || 0) - PaymentInfo);
-    } else if (remaining > 0) {
-      if (excessAction === 'Return') {
-        var totalReturnUSDVal = (parseFloat(returnUSD) || 0) + (parseFloat(returnFC) || 0) / (parseFloat(rate) || 1);
-        var unreturned = Math.max(0, remaining - totalReturnUSDVal);
-        computedCredit = parseFloat(oldCredit || 0) + unreturned;
-      } else {
-        computedCredit = parseFloat(oldCredit || 0) + parseFloat(remaining || 0);
+    if (transactionType === 'Refund') {
+      if (reason === 'Customer Credit') {
+        var refAmt = parseFloat(amount || 0) || PaymentInfo || 0;
+        computedCredit = Math.max(0, parseFloat(oldCredit || 0) - refAmt);
+      }
+    } else {
+      if (modes === 'Credit') {
+        computedCredit = parseFloat(oldCredit || 0) + parseFloat(amount || 0);
+      } else if (modes === 'Credit-Account') {
+        computedCredit = Math.max(0, parseFloat(oldCredit || 0) - PaymentInfo);
+      } else if (remaining > 0) {
+        if (excessAction === 'Return') {
+          var totalReturnUSDVal = (parseFloat(returnUSD) || 0) + (parseFloat(returnFC) || 0) / (parseFloat(rate) || 1);
+          var unreturned = Math.max(0, remaining - totalReturnUSDVal);
+          computedCredit = parseFloat(oldCredit || 0) + unreturned;
+        } else {
+          computedCredit = parseFloat(oldCredit || 0) + parseFloat(remaining || 0);
+        }
       }
     }
     setCredit(Math.max(0, computedCredit));
-  }, [oldCredit, remaining, modes, amount, PaymentInfo, excessAction, returnUSD, returnFC, rate]);
+  }, [oldCredit, remaining, modes, amount, PaymentInfo, excessAction, returnUSD, returnFC, rate, transactionType, reason]);
   var TotalAmount = invoice.length > 0 ? invoice.filter(row => parseFloat(row.total) !== 0) : null;
   var handleUpdateInvoice = /*#__PURE__*/function () {
     var _ref12 = _asyncToGenerator(function* () {
@@ -1703,9 +1719,9 @@ function PaymentInformationForm() {
     value: "Cash"
   }, "Cash"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Bank Transfer"
-  }, "Bank Transfer"), reason !== "Project" && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, "Bank Transfer"), transactionType === 'Payment' && reason === 'Customer Credit' && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Credit"
-  }, "Credit (Deposit to Customer Credit)"), reason !== "Project" && oldCredit > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
+  }, "Credit (Deposit to Customer Credit)"), transactionType === 'Payment' && reason !== 'Customer Credit' && oldCredit > 0 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     value: "Credit-Account"
   }, "Use Customer Credit ($", oldCredit === null || oldCredit === void 0 ? void 0 : oldCredit.toFixed(2), " Available)")))), customerId && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .Ay, {
     item: true,

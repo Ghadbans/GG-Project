@@ -335,6 +335,8 @@ function PaymentInformationForm() {
               totalConverted: 0,
               Ref: 'Credit',
               balanceDue: oldCredit || 0,
+              paidAmount: oldCredit || 0,
+              maxRefundable: oldCredit || 0,
               invoiceAmount: oldCredit || 0,
               status: "",
               invoiceDate: new Date()
@@ -404,7 +406,7 @@ function PaymentInformationForm() {
   const totalUSdInfo = Math.round((parseFloat(totalConvertedFc) + parseFloat(PaymentReceivedUSD)) * 100) / 100;
 
   const remainingInvoice = transactionType === 'Payment' ? balanceDueInfo - PaymentInfo : balanceDueInfo + PaymentInfo
-  const remainingValue = (reason === "Project" || reason === "Customer Credit") ? parseFloat(amount) : (parseFloat(amount) - PaymentInfo);
+  const remainingValue = reason === "Customer Credit" ? parseFloat(amount || 0) : (parseFloat(amount || 0) - PaymentInfo);
   const remaining = transactionType === 'Payment'
     ? Math.round(remainingValue * 100) / 100
     : -Math.round(remainingValue * 100) / 100
@@ -425,10 +427,17 @@ function PaymentInformationForm() {
           const paymentsList = resPay.data?.data || [];
           let calcCredit = 0;
           paymentsList.forEach(row => {
-            if (row.modes === 'Credit' || (row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return') || (row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return')) {
-              calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
-            } else if (row.modes === 'Credit-Account') {
-              calcCredit -= parseFloat(row.amount || 0);
+            if (row.status === 'Voided') return;
+            if (row.transactionType === 'Refund') {
+              if (row.reason === 'Customer Credit') {
+                calcCredit -= parseFloat(row.amount || row.PaymentReceivedUSD || 0);
+              }
+            } else {
+              if (row.modes === 'Credit' || (row.modes === 'Cash' && row.remaining > 0 && row.excessAction !== 'Return') || (row.modes === 'Bank Transfer' && row.remaining > 0 && row.excessAction !== 'Return')) {
+                calcCredit += parseFloat(row.remaining !== undefined && row.remaining !== null ? row.remaining : row.amount || 0);
+              } else if (row.modes === 'Credit-Account') {
+                calcCredit -= parseFloat(row.amount || 0);
+              }
             }
           });
           const validCredit = Math.max(0, calcCredit);
@@ -444,21 +453,28 @@ function PaymentInformationForm() {
   const [credit, setCredit] = useState(0)
   useEffect(() => {
     let computedCredit = oldCredit;
-    if (modes === 'Credit') {
-      computedCredit = parseFloat(oldCredit || 0) + parseFloat(amount || 0);
-    } else if (modes === 'Credit-Account') {
-      computedCredit = Math.max(0, parseFloat(oldCredit || 0) - PaymentInfo);
-    } else if (remaining > 0) {
-      if (excessAction === 'Return') {
-        const totalReturnUSDVal = (parseFloat(returnUSD) || 0) + ((parseFloat(returnFC) || 0) / (parseFloat(rate) || 1));
-        const unreturned = Math.max(0, remaining - totalReturnUSDVal);
-        computedCredit = parseFloat(oldCredit || 0) + unreturned;
-      } else {
-        computedCredit = parseFloat(oldCredit || 0) + parseFloat(remaining || 0);
+    if (transactionType === 'Refund') {
+      if (reason === 'Customer Credit') {
+        const refAmt = parseFloat(amount || 0) || PaymentInfo || 0;
+        computedCredit = Math.max(0, parseFloat(oldCredit || 0) - refAmt);
+      }
+    } else {
+      if (modes === 'Credit') {
+        computedCredit = parseFloat(oldCredit || 0) + parseFloat(amount || 0);
+      } else if (modes === 'Credit-Account') {
+        computedCredit = Math.max(0, parseFloat(oldCredit || 0) - PaymentInfo);
+      } else if (remaining > 0) {
+        if (excessAction === 'Return') {
+          const totalReturnUSDVal = (parseFloat(returnUSD) || 0) + ((parseFloat(returnFC) || 0) / (parseFloat(rate) || 1));
+          const unreturned = Math.max(0, remaining - totalReturnUSDVal);
+          computedCredit = parseFloat(oldCredit || 0) + unreturned;
+        } else {
+          computedCredit = parseFloat(oldCredit || 0) + parseFloat(remaining || 0);
+        }
       }
     }
     setCredit(Math.max(0, computedCredit));
-  }, [oldCredit, remaining, modes, amount, PaymentInfo, excessAction, returnUSD, returnFC, rate])
+  }, [oldCredit, remaining, modes, amount, PaymentInfo, excessAction, returnUSD, returnFC, rate, transactionType, reason])
 
   const TotalAmount = invoice.length > 0 ? invoice.filter((row) => parseFloat(row.total) !== 0) : null
 
@@ -1204,8 +1220,8 @@ function PaymentInformationForm() {
                       >
                         <MenuItem value="Cash">Cash</MenuItem>
                         <MenuItem value="Bank Transfer">Bank Transfer</MenuItem>
-                        {reason !== "Project" && <MenuItem value="Credit">Credit (Deposit to Customer Credit)</MenuItem>}
-                        {reason !== "Project" && oldCredit > 0 && <MenuItem value="Credit-Account">Use Customer Credit (${oldCredit?.toFixed(2)} Available)</MenuItem>}
+                        {transactionType === 'Payment' && reason === 'Customer Credit' && <MenuItem value="Credit">Credit (Deposit to Customer Credit)</MenuItem>}
+                        {transactionType === 'Payment' && reason !== 'Customer Credit' && oldCredit > 0 && <MenuItem value="Credit-Account">Use Customer Credit (${oldCredit?.toFixed(2)} Available)</MenuItem>}
                       </Select>
                     </FormControl>
                   </Grid>

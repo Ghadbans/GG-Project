@@ -591,13 +591,19 @@ Route.route("/create-invoice").post(async (req, res, next) => {
           items,Position,
           subTotal,
           ReferenceName,ReferenceName2,
+          projectId: req.body.projectId || (req.body.Ref && req.body.Ref._id ? req.body.Ref._id : null),
           total,noteInfo,
           balanceDue,
           totalW,actionTaken,
           invoiceName: 'INV-' + String(finalNumber).padStart(6, '0'),
           note,Create,shipping,adjustment,adjustmentNumber,totalInvoice,terms,Ref,
           branchId
-        }).then((result)=>{
+        }).then(async (result)=>{
+          if (result && result._id) {
+            try {
+              await syncInvoiceBalances([result._id]);
+            } catch (_) {}
+          }
           res.json({ data: result, message: "Data successfully added.", status: 200 });
         }).catch((err)=>{
           return next(err);

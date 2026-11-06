@@ -573,6 +573,22 @@ function DailyExpenseAdminView() {
       };
     }
 
+    // Credit-Account (Credit Applied) settles invoices without receiving new cash in hand today
+    if (row.modes === 'Credit-Account') {
+      return {
+        grossFC: 0,
+        grossUSD: 0,
+        returnFC: 0,
+        returnUSD: 0,
+        netFC: 0,
+        netUSD: 0,
+        credit: 0,
+        isVoided: false,
+        isRefund: false,
+        isCreditApplied: true
+      };
+    }
+
     const payFC = parseFloat(row.PaymentReceivedFC) || 0;
     const payUSD = parseFloat(row.PaymentReceivedUSD) || 0;
     const retFC = parseFloat(row.returnFC) || 0;
@@ -611,7 +627,7 @@ function DailyExpenseAdminView() {
       }
       credit = 0;
     } else {
-      if (row.reason === 'Customer Credit' || row.reason === 'Project') {
+      if (row.reason === 'Customer Credit') {
         if (payUSD === 0 && payFC === 0) {
           grossUSD = rem > 0 ? rem : amt;
         } else {
@@ -1248,6 +1264,8 @@ function DailyExpenseAdminView() {
                                           <span style={{ color: '#94a3b8', textDecoration: 'line-through' }}>$ 0.00</span>
                                         ) : item.transactionType === 'Refund' ? (
                                           <span style={{ color: '#b91c1c', fontWeight: 'bold' }}>-$ {Math.abs(getPaymentRowValues(item).grossUSD).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
+                                        ) : item.modes === 'Credit-Account' ? (
+                                          <span style={{ color: '#3730a3', fontWeight: 'bold' }}>$ {(parseFloat(item.PaymentReceivedUSD || item.amount || 0)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</span>
                                         ) : (
                                           <><span>$ </span>{getPaymentRowValues(item).grossUSD.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</>
                                         )}
