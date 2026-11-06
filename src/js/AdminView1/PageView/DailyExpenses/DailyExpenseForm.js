@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import SmartTextInput from '../../../component/SmartTextInput';
 import React, { useEffect, useState } from 'react';
 import SidebarDash1 from '../../../component/SidebarDash1';
@@ -513,7 +514,6 @@ function DailyExpenseForm() {
     e.preventDefault();
     setSaving('true')
     const data = {
-      _id: v4(),
       expenseCategory, accountName,
       description,
       expenseDate: expenseDate ? (expenseDate.toDate ? expenseDate.toDate() : (expenseDate.$d ? expenseDate.$d : new Date(expenseDate))) : new Date(),

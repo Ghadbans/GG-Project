@@ -359,6 +359,9 @@ Route.route("/create-expense").post(async (req, res, next) => {
       expenseNumber: targetNum,
       expenseDate: parseSafeDate(req.body.expenseDate),
     };
+    if (docData._id && (!mongoose.Types.ObjectId.isValid(docData._id) || String(docData._id).length !== 24)) {
+      delete docData._id;
+    }
 
     let result;
     try {
@@ -401,6 +404,7 @@ Route.route("/get-expense/:id").get(async (req, res, next) => {
 Route.route("/update-expense/:id").put(async (req, res, next) => {
   try {
     const updateData = { ...req.body };
+    delete updateData._id;
     if (updateData.expenseDate) {
       updateData.expenseDate = parseSafeDate(updateData.expenseDate);
     }

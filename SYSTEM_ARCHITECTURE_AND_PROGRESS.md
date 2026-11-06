@@ -4002,3 +4002,31 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Production Bundles**: Successfully compiled desktop Electron and Web Portal bundles via Webpack (`npm run build`).
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.25.exe` (95.8 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.25.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+
+## Version 3.6.26 - Elimination of Client-Side UUID _id BSONError and Missing Toast Import Fix (Nov 2026)
+
+### 1. Root Cause Identification
+1. **BSONError on `_id` Casting (`POST /create-expense` HTTP 500)**:
+   - In `DailyExpenseForm.js:516`, the client form explicitly assigned `_id: v4()` (generating a 36-character hyphenated UUID string such as `"2906802e-97fb-44b4-89f8-6e7da2cbad1e"`).
+   - Because `ExpenseSchema.js` uses standard Mongoose `ObjectId` for its primary key (which strictly requires a 24-character hexadecimal format), MongoDB threw:
+     `expenseSchema validation failed: _id: Cast to ObjectId failed for value "2906802e-97fb-44b4-89f8-6e7da2cbad1e" (type string) at path "_id" because of "BSONError"`.
+   - This caused Express on Railway to immediately reject the creation with HTTP 500.
+2. **Missing `toast` Import ReferenceError in Error Catch**:
+   - When the HTTP 500 error occurred, execution reached the `catch (error)` block in `DailyExpenseForm.js` and `DailyExpenseUpdate.js`, which attempted to call `toast.error(...)`.
+   - Because `toast` had not been imported from `react-toastify`, the runtime threw `Unhandled Promise Rejection: ReferenceError: toast is not defined at DailyExpenseForm.js:550:15`, masking the server response and presenting an uncaught promise rejection in the UI.
+
+### 2. Implementation Changes
+1. **Removal of Client-Side UUID Generation (`DailyExpenseForm.js`)**:
+   - Removed `_id: v4()` from `data` payload on line 516. The client now lets MongoDB auto-generate its native, clean 24-character `ObjectId`.
+2. **Server-Side Sanitization & Stripping of Invalid `_id` (`server/routes/expenseRoutes.js`)**:
+   - In `POST /create-expense`: added defensive guard checking `if (docData._id && (!mongoose.Types.ObjectId.isValid(docData._id) || String(docData._id).length !== 24)) { delete docData._id; }` to permanently protect against any non-ObjectId values.
+   - In `PUT /update-expense/:id`: added `delete updateData._id;` to ensure immutable ID stability.
+3. **Missing `toast` Import Added**:
+   - Added `import { toast } from 'react-toastify';` at the top of both `DailyExpenseForm.js` and `DailyExpenseUpdate.js`.
+
+### 3. Verification & Deployment
+- **Quality Gate**: Verified 0 syntax errors across 239 source files via `npm run prebuild`.
+- **Version Bump**: Bumped to `v3.6.26` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Recompiled via Webpack (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.26.exe` (95.8 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.26.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
