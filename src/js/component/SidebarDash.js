@@ -44,7 +44,7 @@ const isInstalledApp = typeof window !== 'undefined' && Boolean(
   (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches)
 );
 
-function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
+function SidebarDash({ onView2, onView3, onView4, onView5, onView6, isSubmenu }) {
   const navigate = useNavigate();
   const location = useLocation();
   const isActive = (path) => {
@@ -52,7 +52,31 @@ function SidebarDash({ onView2, onView3, onView4, onView6, isSubmenu }) {
   }
 
   const isNestedSubmenu = Boolean(isSubmenu || onView2 || onView3 || onView4 || onView6);
-  const [show1, setShow1] = useState(1);
+  const isBlockFactoryRoute = [
+    '/BlockConfigView',
+    '/BlockProductionView',
+    '/BlockMixerView',
+    '/BlockDamageView',
+    '/BlockSalesView',
+    '/BlockTrackingView',
+    '/WorkerPaymentView'
+  ].includes(location.pathname);
+
+  const [show1, setShow1] = useState(() => {
+    if (onView2) return 2;
+    if (onView3) return 3;
+    if (onView4) return 4;
+    if (onView5) return 5;
+    if (onView6) return 6;
+    if (isBlockFactoryRoute) return 5;
+    return 1;
+  });
+
+  useEffect(() => {
+    if (isBlockFactoryRoute) {
+      setShow1(5);
+    }
+  }, [location.pathname, isBlockFactoryRoute]);
   const [view, setView] = useState(0);
   const handleShow = (e) => {
     setShow1(e);

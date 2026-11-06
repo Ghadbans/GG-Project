@@ -2031,7 +2031,7 @@ function DailyExpenseUpdate() {
         dateNotification: dateComment
       };
       try {
-        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification/"), data);
+        yield axios__WEBPACK_IMPORTED_MODULE_35__/* ["default"] */ .A.post("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/create-notification"), data);
       } catch (error) {
         console.log(error);
       }
@@ -2047,7 +2047,7 @@ function DailyExpenseUpdate() {
         expenseCategory,
         accountName,
         description,
-        expenseDate,
+        expenseDate: expenseDate ? expenseDate.toDate ? expenseDate.toDate() : expenseDate.$d ? expenseDate.$d : new Date(expenseDate) : new Date(),
         amount,
         employeeName,
         CheckTvA,
@@ -2075,6 +2075,8 @@ function DailyExpenseUpdate() {
         }
       } catch (error) {
         if (error) {
+          var _error$response;
+          toast.error((error === null || error === void 0 || (_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'Error updating expense. Please try again.');
           handleError();
         }
       }
@@ -2859,6 +2861,10 @@ function DailyExpenseUpdate() {
     name: "amount",
     type: "number",
     label: "Total FC",
+    InputLabelProps: {
+      shrink: true
+    },
+    size: "small",
     value: amount,
     sx: {
       width: '200px',
@@ -2873,6 +2879,10 @@ function DailyExpenseUpdate() {
     name: "total",
     type: "number",
     label: "Total $",
+    InputLabelProps: {
+      shrink: true
+    },
+    size: "small",
     value: total,
     sx: {
       width: '200px',
@@ -2893,6 +2903,10 @@ function DailyExpenseUpdate() {
   }, "-"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement("td", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A, {
     disabled: true,
     label: "Tax $",
+    InputLabelProps: {
+      shrink: true
+    },
+    size: "small",
     value: tax.toFixed(2),
     sx: {
       width: '200px',

@@ -3959,3 +3959,46 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.24.exe` and synchronized to `server/public/downloads/GlobalGate-v3.6.24.exe` and `server/public/downloads/GlobalGateSetup.exe`.
 - **Cloud Synchronization**: Committed and pushed to GitHub `origin main` to deploy Railway backend and Cloudflare Pages.
 
+
+## Version 3.6.25 - Daily Expense Date Safety & Conflict Resolution, MUI Input Label Overlap Fix, and Block Factory Sidebar Navigation Persistence (Nov 2026)
+
+### 1. Root Cause Analysis
+1. **Daily Expense Save Failure (HTTP 500)**:
+   - When submitting expenses from `DailyExpenseForm.js`, `expenseDate` was received as a serialized Dayjs object (`{ $L, $d, $y, $M, $D }`). Because `ExpenseSchema.js` lacked a `parseSafeDate` setter, Mongoose failed validation with `Cast to date failed for value ... (type Object) at path "expenseDate"`.
+   - Furthermore, `server/routes/expenseRoutes.js` lacked robust duplicate key conflict resolution for `expenseNumber`. When a recreated expense matched an existing number in the branch, MongoDB threw `E11000 duplicate key error collection: expenseSchema index: branchId_1_expenseNumber_1 dup key`, which crashed Express with an unhandled 500 error.
+2. **MUI Input Label Text Overlapping (`T1505000FC`)**:
+   - In both `DailyExpenseForm.js` and `DailyExpenseUpdate.js`, the controlled `<TextField label="Total FC" value={amount} />` and `<TextField label="Total $" value={total} />` lacked `InputLabelProps={{ shrink: true }}`. As a result, MUI's floating label rendered directly inside the input container over the pre-filled number instead of floating to the border.
+3. **Notification Trailing Slash 500 (`DailyExpenseUpdate.js`)**:
+   - `DailyExpenseUpdate.js` invoked `axios.post('${ENDPOINT_URL}/create-notification/', data)` with a trailing slash, causing routing mismatch and unnecessary 500 errors in browser console.
+4. **Block Factory Left Menu Resetting to Dashboard Main Menu**:
+   - In `SidebarDash.js`, the menu state defaulted to `show1 = 1` (Main Menu: Dashboard, Customer, Store, etc.).
+   - All 7 Block Factory views (`BlockConfigView`, `BlockProductionView`, `BlockMixerView`, `BlockDamageView`, `BlockSalesView`, `BlockTrackingView`, `WorkerPaymentView`) rendered `<SidebarDash />` directly without passing route awareness.
+   - When the user navigated between sub-modules (e.g. from Production to Inventory), the new view mounted `<SidebarDash />`, resetting `show1` to `1` and forcing the sidebar back to the Dashboard main menu instead of staying on "Block Factory Menu".
+
+### 2. Comprehensive Implementation & Engineering Changes
+1. **Mongoose Schema Date Hardening (`server/model/ExpenseSchema.js`)**:
+   - Implemented `parseSafeDate(v)` utility function supporting Dayjs internal representations (`$d`, `$y`, `$M`, `$D`), timestamps, ISO strings, and standard Date objects.
+   - Assigned `set: parseSafeDate` to `expenseDate` with `default: () => new Date()`.
+2. **Conflict-Free Expense Number Assignment & Retry Logic (`server/routes/expenseRoutes.js`)**:
+   - In `POST /create-expense`, added proactive number checking: if `expenseNumber` is omitted, invalid, or already exists for the given branch, queries the branch's highest `expenseNumber` and assigns `highest + 1`.
+   - Wrapped `expenseSchema.create` in a catch block specifically for MongoDB code 11000 duplicate key collisions to immediately re-query the latest maximum number and retry creation safely.
+   - In `PUT /update-expense/:id`, ensured `req.body.expenseDate` is sanitized with `parseSafeDate`.
+3. **MUI Floating Label Overlap Elimination (`DailyExpenseForm.js` & `DailyExpenseUpdate.js`)**:
+   - Added `InputLabelProps={{ shrink: true }}` and `size="small"` to `Total FC` and `Total $` TextFields in `DailyExpenseForm.js`.
+   - Added `InputLabelProps={{ shrink: true }}` and `size="small"` to `Total FC`, `Total $`, and `Tax $` TextFields in `DailyExpenseUpdate.js`.
+   - Sanitized `expenseDate` prior to API calls (`.toDate()` fallback) and added user-facing error toasts (`toast.error(...)`) on save/update failures.
+   - Corrected `/create-notification/` to `/create-notification` in `DailyExpenseUpdate.js`.
+4. **Block Factory Sidebar Menu Persistence (`SidebarDash.js` & All 7 Block Views)**:
+   - Added `isBlockFactoryRoute` detection across all 7 Block Factory paths:
+     `['/BlockConfigView', '/BlockProductionView', '/BlockMixerView', '/BlockDamageView', '/BlockSalesView', '/BlockTrackingView', '/WorkerPaymentView']`.
+   - Extended `SidebarDash` to accept `onView5` and initialize `show1` state to `5` whenever `onView5 === 5` or `isBlockFactoryRoute` is true.
+   - Added reactive `useEffect` on `[location.pathname, isBlockFactoryRoute]` to maintain `show1 = 5` when navigating between Block Factory sub-modules.
+   - Preserved manual "Close" toggle functionality (`handleShow(1)`) so users can still seamlessly access the Main Menu from any Block Factory page.
+   - Updated all 7 Block Factory views to pass `<SidebarDash onView5={5} />`.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified 0 syntax errors across 239 source files via `npm run prebuild`.
+- **Version Bump**: Incremented version to `v3.6.25` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Successfully compiled desktop Electron and Web Portal bundles via Webpack (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.25.exe` (95.8 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.25.exe` and `server/public/downloads/GlobalGateSetup.exe`.
+- **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).

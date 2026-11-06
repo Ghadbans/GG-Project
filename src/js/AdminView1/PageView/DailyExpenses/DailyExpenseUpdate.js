@@ -479,7 +479,7 @@ function DailyExpenseUpdate() {
       dateNotification: dateComment
     };
     try {
-      await axios.post(`${ENDPOINT_URL}/create-notification/`, data)
+      await axios.post(`${ENDPOINT_URL}/create-notification`, data)
     } catch (error) {
       console.log(error)
     }
@@ -488,7 +488,9 @@ function DailyExpenseUpdate() {
     e.preventDefault();
     const data = {
       expenseCategory, accountName,
-      description, expenseDate, amount,
+      description,
+      expenseDate: expenseDate ? (expenseDate.toDate ? expenseDate.toDate() : (expenseDate.$d ? expenseDate.$d : new Date(expenseDate))) : new Date(),
+      amount,
       employeeName,
       CheckTvA,
       checkTvA: CheckTvA,
@@ -511,6 +513,7 @@ function DailyExpenseUpdate() {
       }
     } catch (error) {
       if (error) {
+        toast.error(error?.response?.data?.message || 'Error updating expense. Please try again.');
         handleError();
       }
     }
@@ -1103,6 +1106,8 @@ function DailyExpenseUpdate() {
                                           name='amount'
                                           type='number'
                                           label='Total FC'
+                                          InputLabelProps={{ shrink: true }}
+                                          size="small"
                                           value={amount}
                                           sx={{ width: '200px', backgroundColor: 'white' }}
                                         />
@@ -1116,6 +1121,8 @@ function DailyExpenseUpdate() {
                                           name='total'
                                           type='number'
                                           label='Total $'
+                                          InputLabelProps={{ shrink: true }}
+                                          size="small"
                                           value={total}
                                           sx={{ width: '200px', backgroundColor: 'white' }}
                                         />
@@ -1135,6 +1142,8 @@ function DailyExpenseUpdate() {
                                         <TextField
                                           disabled
                                           label='Tax $'
+                                          InputLabelProps={{ shrink: true }}
+                                          size="small"
                                           value={tax.toFixed(2)}
                                           sx={{ width: '200px', backgroundColor: 'white' }}
                                         />

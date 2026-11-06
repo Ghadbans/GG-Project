@@ -52,6 +52,27 @@ let RateReturnSchema = require("../model/rateReturnSchema");
 
 const { object } = require("joi");
 
+const parseSafeDate = (v) => {
+  if (!v) return new Date();
+  if (v instanceof Date && !isNaN(v.getTime())) return v;
+  if (typeof v === 'object') {
+    if (v.$d instanceof Date && !isNaN(v.$d.getTime())) return v.$d;
+    if (v['$y'] !== undefined) {
+      const d = new Date(
+        Number(v['$y']),
+        Number(v['$M'] !== undefined ? v['$M'] : 0),
+        Number(v['$D'] !== undefined ? v['$D'] : 1),
+        Number(v['$H'] !== undefined ? v['$H'] : 0),
+        Number(v['$m'] !== undefined ? v['$m'] : 0),
+        Number(v['$s'] !== undefined ? v['$s'] : 0)
+      );
+      if (!isNaN(d.getTime())) return d;
+    }
+  }
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? new Date() : d;
+};
+
 // const nodemailer = require('nodemailer');
 // const crypto = require('crypto');
 // const bcrypt = require('bcrypt');
@@ -318,16 +339,40 @@ Route.route("/get-last-saved-expense").get(async(req,res, next)=>{
 Route.route("/create-expense").post(async (req, res, next) => {
   try {
     const branchId = req.body.branchId || req.query.branchId || 'HQ';
-    const expenseNumberOld = await expenseSchema.findOne(branchId ? { branchId } : {}).sort({
-      expenseNumber: -1
-    }).exec();
-
-    const docData = { ...req.body, branchId };
-    if (expenseNumberOld && expenseNumberOld.expenseNumber === Number(req.body.expenseNumber)) {
-      docData.expenseNumber = Number(req.body.expenseNumber) + 1;
+    let targetNum = Number(req.body.expenseNumber);
+    if (!targetNum || isNaN(targetNum)) {
+      const highest = await expenseSchema.findOne(branchId ? { branchId } : {}).sort({
+        expenseNumber: -1
+      }).exec();
+      targetNum = (highest?.expenseNumber || 0) + 1;
+    } else {
+      const existing = await expenseSchema.findOne({ branchId, expenseNumber: targetNum }).exec();
+      if (existing) {
+        const highest = await expenseSchema.findOne({ branchId }).sort({ expenseNumber: -1 }).exec();
+        targetNum = Math.max(targetNum, (highest?.expenseNumber || 0)) + 1;
+      }
     }
 
-    const result = await expenseSchema.create(docData);
+    const docData = {
+      ...req.body,
+      branchId,
+      expenseNumber: targetNum,
+      expenseDate: parseSafeDate(req.body.expenseDate),
+    };
+
+    let result;
+    try {
+      result = await expenseSchema.create(docData);
+    } catch (createErr) {
+      if (createErr.code === 11000) {
+        const highest = await expenseSchema.findOne({ branchId }).sort({ expenseNumber: -1 }).exec();
+        docData.expenseNumber = (highest?.expenseNumber || 0) + 1;
+        result = await expenseSchema.create(docData);
+      } else {
+        throw createErr;
+      }
+    }
+
     res.json({
       data: result,
       message: "Data successfully added.",
@@ -354,19 +399,21 @@ Route.route("/get-expense/:id").get(async (req, res, next) => {
 });
 
 Route.route("/update-expense/:id").put(async (req, res, next) => {
-  await expenseSchema
-    .findByIdAndUpdate(req.params.id, {
-      $set: req.body,
-    })
-    .then((result) => {
-      res.json({
-        data: result,
-        msg: "Data successfully updated.",
-      });
-    })
-    .catch((err) => {
-      return next(err);
+  try {
+    const updateData = { ...req.body };
+    if (updateData.expenseDate) {
+      updateData.expenseDate = parseSafeDate(updateData.expenseDate);
+    }
+    const result = await expenseSchema.findByIdAndUpdate(req.params.id, {
+      $set: updateData,
     });
+    res.json({
+      data: result,
+      msg: "Data successfully updated.",
+    });
+  } catch (err) {
+    return next(err);
+  }
 });
 
 Route.route("/delete-expense/:id").delete(async (req, res) => {

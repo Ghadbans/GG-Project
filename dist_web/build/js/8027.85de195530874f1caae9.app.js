@@ -2098,7 +2098,7 @@ function DailyExpenseForm() {
         expenseCategory,
         accountName,
         description,
-        expenseDate,
+        expenseDate: expenseDate ? expenseDate.toDate ? expenseDate.toDate() : expenseDate.$d ? expenseDate.$d : new Date(expenseDate) : new Date(),
         amount,
         employeeName,
         CheckTvA,
@@ -2134,7 +2134,9 @@ function DailyExpenseForm() {
         }
       } catch (error) {
         if (error) {
+          var _error$response;
           setSaving('');
+          toast.error((error === null || error === void 0 || (_error$response = error.response) === null || _error$response === void 0 || (_error$response = _error$response.data) === null || _error$response === void 0 ? void 0 : _error$response.message) || 'Error saving expense. Please try again.');
           handleError();
         }
       }
@@ -2880,6 +2882,10 @@ function DailyExpenseForm() {
     name: "amount",
     type: "number",
     label: "Total FC",
+    InputLabelProps: {
+      shrink: true
+    },
+    size: "small",
     value: amount,
     sx: {
       width: '200px',
@@ -2894,6 +2900,10 @@ function DailyExpenseForm() {
     name: "total",
     type: "number",
     label: "Total $",
+    InputLabelProps: {
+      shrink: true
+    },
+    size: "small",
     value: total,
     sx: {
       width: '200px',

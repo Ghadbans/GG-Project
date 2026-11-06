@@ -515,7 +515,9 @@ function DailyExpenseForm() {
     const data = {
       _id: v4(),
       expenseCategory, accountName,
-      description, expenseDate, amount,
+      description,
+      expenseDate: expenseDate ? (expenseDate.toDate ? expenseDate.toDate() : (expenseDate.$d ? expenseDate.$d : new Date(expenseDate))) : new Date(),
+      amount,
       employeeName,
       CheckTvA,
       checkTvA: CheckTvA,
@@ -545,6 +547,7 @@ function DailyExpenseForm() {
     } catch (error) {
       if (error) {
         setSaving('')
+        toast.error(error?.response?.data?.message || 'Error saving expense. Please try again.');
         handleError();
       }
     }
@@ -1117,6 +1120,8 @@ function DailyExpenseForm() {
                                           name='amount'
                                           type='number'
                                           label='Total FC'
+                                          InputLabelProps={{ shrink: true }}
+                                          size="small"
                                           value={amount}
                                           sx={{ width: '200px', backgroundColor: 'white' }}
                                         />
@@ -1130,6 +1135,8 @@ function DailyExpenseForm() {
                                           name='total'
                                           type='number'
                                           label='Total $'
+                                          InputLabelProps={{ shrink: true }}
+                                          size="small"
                                           value={total}
                                           sx={{ width: '200px', backgroundColor: 'white' }}
                                         />

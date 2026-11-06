@@ -227,7 +227,7 @@ function BlockMixerView() {
                 open={sideBar}
                 sx={{ width: drawerWidth, flexShrink: 0, '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' } }}
             >
-                <Toolbar /><Box sx={{ overflow: 'auto' }}><List><SidebarDash /></List></Box>
+                <Toolbar /><Box sx={{ overflow: 'auto' }}><List><SidebarDash onView5={5} /></List></Box>
             </Drawer>
             <MainContent open={sideBar}>
                 <Toolbar />
