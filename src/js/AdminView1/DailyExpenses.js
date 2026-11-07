@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {  toast } from 'react-toastify';
 import './view.css';
 import SidebarDash from '../component/SidebarDash';
@@ -44,6 +44,10 @@ import MessageAdminView from './MessageAdminView';
 import NotificationVIewInfo from './NotificationVIewInfo';
 import { isNativeMobile, useIsMobile } from '../utils/isMobile';
 import MobileCardList from '../component/MobileCardList';
+import { useReactToPrint } from 'react-to-print';
+import PrintHeader from '../component/PrintHeader';
+import PrintFooter from '../component/PrintFooter';
+import LocalPrintshop from '@mui/icons-material/LocalPrintshop';
 
 
 const DeleteTooltip = styled(({ className, ...props }) => (
@@ -597,31 +601,53 @@ function DailyExpenses() {
   };
   const [openView, setOpenView] = useState(false);
   const [idView, setIdView] = useState(null);
-  const [expensesView, setExpensesView] = useState(null)
-  const handleOpenView = (id) => {
+  const [expensesView, setExpensesView] = useState(null);
+  const [autoPrintAfterLoad, setAutoPrintAfterLoad] = useState(false);
+  const printExpenseRef = useRef(null);
+
+  const handlePrintExpense = useReactToPrint({
+    content: () => printExpenseRef.current,
+    documentTitle: `Expense_D-${String(expensesView?.expenseNumber || 0).padStart(6, '0')}`,
+    pageStyle: `@page { size: A4 portrait; margin: 8mm 10mm 10mm 10mm; } @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .no-print { display: none !important; } }`,
+  });
+
+  const handleOpenView = (id, shouldAutoPrint = false) => {
+    setAutoPrintAfterLoad(Boolean(shouldAutoPrint));
     setOpenView(true);
-    setIdView(id)
-  }
+    setIdView(id);
+  };
   const handleCloseView = () => {
     setOpenView(false);
     setIdView(null);
     setExpensesView(null);
+    setAutoPrintAfterLoad(false);
     setSelectedRows([]);
   };
   useEffect(() => {
+    let isMounted = true;
     const fetchData2 = async () => {
-
       if (idView !== null) {
         try {
-          const res = await axios.get(`${ENDPOINT_URL}/get-expense/${idView}`)
-          setExpensesView(res.data.data)
+          const res = await axios.get(`${ENDPOINT_URL}/get-expense/${idView}`);
+          if (!isMounted) return;
+          setExpensesView(res.data.data);
+          if (autoPrintAfterLoad) {
+            setTimeout(() => {
+              if (handlePrintExpense) {
+                handlePrintExpense();
+              }
+              if (isMounted) setAutoPrintAfterLoad(false);
+            }, 500);
+          }
         } catch (error) {
           console.error('Fetch detail error:', error);
+          if (isMounted) setAutoPrintAfterLoad(false);
         }
       }
-    }
-    fetchData2()
-  }, [idView])
+    };
+    fetchData2();
+    return () => { isMounted = false; };
+  }, [idView, autoPrintAfterLoad, handlePrintExpense]);
   const columns = [
     { field: 'expenseNumber', headerName: 'E-Number', width: 140, renderCell: (params) => ' D-' + String(params.row.expenseNumber).padStart(6, '0') },
     { field: 'dataField', headerName: 'Date', width: 80 },
@@ -637,6 +663,17 @@ function DailyExpenses() {
           <span>
             <IconButton disabled={DailyEInfoV.length === 0} onClick={() => handleOpenView(params.row._id)}>
               <VisibilityIcon style={{ color: '#202a5a' }} />
+            </IconButton>
+          </span>
+        </ViewTooltip>
+      )
+    },
+    {
+      field: 'print', headerName: 'Print', width: 50, renderCell: (params) => (
+        <ViewTooltip title="Print">
+          <span>
+            <IconButton disabled={DailyEInfoV.length === 0} onClick={() => handleOpenView(params.row._id, true)}>
+              <LocalPrintshop style={{ color: '#202a5a' }} />
             </IconButton>
           </span>
         </ViewTooltip>
@@ -1015,53 +1052,88 @@ function DailyExpenses() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={{ ...style, width: 850 }}>
-          <ViewTooltip title="Close" placement='left'>
-            <IconButton onClick={handleCloseView} style={{ position: 'relative', float: 'right' }}>
-              <Close style={{ color: '#202a5a' }} />
-            </IconButton>
-          </ViewTooltip>
+        <Box sx={{
+          ...style,
+          width: { xs: '95%', sm: 800, md: 850 },
+          maxHeight: '90vh',
+          overflowY: 'auto',
+          '@media print': {
+            position: 'static',
+            top: 'auto',
+            left: 'auto',
+            transform: 'none',
+            width: '100%',
+            maxHeight: 'none',
+            overflow: 'visible',
+            boxShadow: 'none',
+            border: 'none',
+            p: 0,
+            m: 0,
+            backgroundColor: '#fff'
+          }
+        }}>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', width: '100%', gap: 1, mb: 1, position: 'relative', zIndex: 1000, '@media print': { display: 'none' } }} className="no-print">
+            <ViewTooltip title="Print Expense Voucher" placement='bottom'>
+              <IconButton onClick={handlePrintExpense} style={{ zIndex: 1000 }}>
+                <LocalPrintshop style={{ color: '#202a5a' }} />
+              </IconButton>
+            </ViewTooltip>
+            <ViewTooltip title="Close" placement='bottom'>
+              <IconButton onClick={handleCloseView} style={{ zIndex: 1000 }}>
+                <Close style={{ color: '#202a5a' }} />
+              </IconButton>
+            </ViewTooltip>
+          </Box>
           {
             expensesView !== null ?
-              <div>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                  EXPENSE D-{String(expensesView.expenseNumber).padStart(6, '0')} CREATED BY {expensesView.Create !== undefined ? expensesView.Create.person : ''} on {expensesView.Create.dateComment}
-                </Typography>
-                <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
+              <div ref={printExpenseRef} style={{ padding: '0px 20px 0px 20px' }}>
+                <Box sx={{ display: 'none', '@media print': { display: 'block', marginBottom: '20px' } }}>
+                  <PrintHeader branchId={expensesView.branchId || ""} />
+                </Box>
+                <Box sx={{ borderBottom: '2px solid #202a5a', pb: 1, mb: 2 }}>
+                  <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ fontWeight: 'bold', color: '#202a5a' }}>
+                    EXPENSE VOUCHER: D-{String(expensesView.expenseNumber || 0).padStart(6, '0')}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'text.secondary', mt: 0.5 }}>
+                    Created by <strong>{expensesView.Create !== undefined ? expensesView.Create.person : ''}</strong> on {expensesView.Create?.dateComment || ''}
+                  </Typography>
+                </Box>
+                <Grid container style={{ alignItems: 'center', padding: '0px' }} spacing={2}>
                   {
                     (String(expensesView.accountName || '').toLowerCase() === 'employee' || (Array.isArray(expensesView.employeeName) && expensesView.employeeName.length > 0)) ?
                       (
-                        <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-
+                        <Grid container style={{ alignItems: 'center', padding: '0px' }} spacing={2}>
                           <Grid item xs={12}>
-                            <Box sx={{ height: 600, width: '100%' }}>
+                            <Box sx={{ width: '100%', '@media print': { height: 'auto', overflow: 'visible' } }}>
                               <Table style={{ marginBottom: '5px' }}>
                                 <TableBody>
                                   <TableRow>
-                                    <TableCell sx={{ textAlign: 'center' }} colSpan={4}>{expensesView.reason === 'Project' ? (expensesView.accountNameInfo?.name || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || '') : 'EMPLOYEE EXPENSE INFORMATION'}</TableCell>
+                                    <TableCell sx={{ textAlign: 'center', fontWeight: 'bold', backgroundColor: '#f0f4f8' }} colSpan={4}>
+                                      {expensesView.reason === 'Project' ? (expensesView.accountNameInfo?.name || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || '') : 'EMPLOYEE EXPENSE INFORMATION'}
+                                    </TableCell>
                                   </TableRow>
                                   <TableRow>
-                                    <TableCell>Category</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold', width: '25%' }}>Category</TableCell>
                                     <TableCell colSpan={3}>{typeof expensesView.expenseCategory === 'object' ? (expensesView.expenseCategory?.expensesCategory || expensesView.expenseCategory?.name || '') : (expensesView.expenseCategory || '')}</TableCell>
                                   </TableRow>
                                   <TableRow>
-                                    <TableCell>Expense Date</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Expense Date</TableCell>
                                     <TableCell colSpan={3}>{dayjs(expensesView.expenseDate).format('DD/MM/YYYY')}</TableCell>
                                   </TableRow>
                                   <TableRow>
-                                    <TableCell>Description</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
                                     <TableCell colSpan={3}>{expensesView.description}</TableCell>
                                   </TableRow>
                                 </TableBody>
                               </Table>
-                              <TableContainer sx={{ maxHeight: 400 }}>
-                                <Table aria-label="collapsible table" stickyHeader>
+                              <TableContainer sx={{ maxHeight: 400, '@media print': { maxHeight: 'none', overflow: 'visible' } }}>
+                                <Table aria-label="collapsible table" stickyHeader size="small">
                                   <TableHead>
-                                    <TableRow>
-                                      <TableCell>Employee</TableCell>
-                                      <TableCell>Amount (FC)</TableCell>
-                                      <TableCell>Rate</TableCell>
-                                      <TableCell>Amount ($)</TableCell>
+                                    <TableRow sx={{ backgroundColor: '#f5f5f5' }}>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>Employee</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>Amount (FC)</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>Rate</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>Amount ($)</TableCell>
                                     </TableRow>
                                   </TableHead>
                                   <TableBody>
@@ -1069,23 +1141,23 @@ function DailyExpenses() {
                                       (Array.isArray(expensesView.employeeName) ? expensesView.employeeName : []).map((row) => (
                                         <TableRow key={row.idInfo}>
                                           <TableCell>{row.employee}</TableCell>
-                                          <TableCell>FC{row.amount}</TableCell>
+                                          <TableCell>FC{(row.amount || 0).toLocaleString()}</TableCell>
                                           <TableCell>{row.rate}</TableCell>
-                                          <TableCell>${row.total}</TableCell>
+                                          <TableCell>${(row.total || 0).toLocaleString()}</TableCell>
                                         </TableRow>
                                       ))
                                     }
                                     <TableRow>
-                                      <TableCell>TVA (16%)</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>TVA (16%)</TableCell>
                                       <TableCell>{hasTvaValue(expensesView) ? 'Yes' : 'No'}</TableCell>
-                                      <TableCell>Tax</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>Tax</TableCell>
                                       <TableCell>${getTaxValue(expensesView).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
                                     </TableRow>
-                                    <TableRow>
-                                      <TableCell>Total</TableCell>
-                                      <TableCell>FC{expensesView.amount}</TableCell>
-                                      <TableCell>-</TableCell>
-                                      <TableCell>${expensesView.total}</TableCell>
+                                    <TableRow sx={{ backgroundColor: '#f0f4f8' }}>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>Total</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>FC{(expensesView.amount || 0).toLocaleString()}</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold' }}>-</TableCell>
+                                      <TableCell sx={{ fontWeight: 'bold', color: '#202a5a' }}>${(expensesView.total || 0).toLocaleString()}</TableCell>
                                     </TableRow>
                                   </TableBody>
                                 </Table>
@@ -1096,14 +1168,13 @@ function DailyExpenses() {
                       )
                       :
                       (
-                        <Grid container style={{ alignItems: 'center', padding: '15px' }} spacing={2}>
-
+                        <Grid container style={{ alignItems: 'center', padding: '0px' }} spacing={2}>
                           <Grid item xs={12}>
-                            <Box sx={{ height: 600, width: '100%' }}>
+                            <Box sx={{ width: '100%', '@media print': { height: 'auto', overflow: 'visible' } }}>
                               <Table style={{ marginBottom: '5px' }}>
                                 <TableBody>
                                   <TableRow>
-                                    <TableCell>Expense Date</TableCell>
+                                    <TableCell sx={{ fontWeight: 'bold', width: '25%' }}>Expense Date</TableCell>
                                     <TableCell colSpan={3}>{dayjs(expensesView.expenseDate).format('DD/MM/YYYY')}</TableCell>
                                   </TableRow>
                                 </TableBody>
@@ -1111,63 +1182,62 @@ function DailyExpenses() {
                                   expensesView.accountName === 'Office' || expensesView.accountName === 'Home' ?
                                     (<TableBody>
                                       <TableRow>
-                                        <TableCell>Category</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
                                         <TableCell colSpan={3}>{typeof expensesView.expenseCategory === 'object' ? (expensesView.expenseCategory?.expensesCategory || expensesView.expenseCategory?.name || '') : (expensesView.expenseCategory || '')}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>Account</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Account</TableCell>
                                         <TableCell colSpan={3}>{expensesView.accountName}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>Description</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
                                         <TableCell colSpan={3}>{expensesView.description}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>TVA (16%)</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>TVA (16%)</TableCell>
                                         <TableCell>{hasTvaValue(expensesView) ? 'Yes' : 'No'}</TableCell>
-                                        <TableCell>Tax</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Tax</TableCell>
                                         <TableCell>${getTaxValue(expensesView).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
                                       </TableRow>
-                                      <TableRow>
-                                        <TableCell>Amount</TableCell>
-                                        <TableCell>FC{expensesView.amount}</TableCell>
-                                        <TableCell>{expensesView.rate}</TableCell>
-                                        <TableCell>${expensesView.total}</TableCell>
+                                      <TableRow sx={{ backgroundColor: '#f0f4f8' }}>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Amount</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>FC{(expensesView.amount || 0).toLocaleString()}</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Rate: {expensesView.rate}</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold', color: '#202a5a' }}>${(expensesView.total || 0).toLocaleString()}</TableCell>
                                       </TableRow>
                                     </TableBody>)
                                     :
                                     (<TableBody>
                                       <TableRow>
-                                        <TableCell>Category</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Category</TableCell>
                                         <TableCell colSpan={3}>{typeof expensesView.expenseCategory === 'object' ? (expensesView.expenseCategory?.expensesCategory || expensesView.expenseCategory?.name || '') : (expensesView.expenseCategory || '')}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>Account</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Account</TableCell>
                                         <TableCell colSpan={3}>{expensesView.accountName}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>Description</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
                                         <TableCell colSpan={3}>{expensesView.description}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>Project Name</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Project / Maintenance</TableCell>
                                         <TableCell colSpan={3}>{expensesView.accountNameInfo?.name || (typeof expensesView.accountNameInfo === 'string' ? expensesView.accountNameInfo : '') || ''}</TableCell>
                                       </TableRow>
                                       <TableRow>
-                                        <TableCell>TVA (16%)</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>TVA (16%)</TableCell>
                                         <TableCell>{hasTvaValue(expensesView) ? 'Yes' : 'No'}</TableCell>
-                                        <TableCell>Tax</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Tax</TableCell>
                                         <TableCell>${getTaxValue(expensesView).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</TableCell>
                                       </TableRow>
-                                      <TableRow>
-                                        <TableCell>Amount</TableCell>
-                                        <TableCell>FC{expensesView.amount}</TableCell>
-                                        <TableCell>{expensesView.rate}</TableCell>
-                                        <TableCell>${expensesView.total}</TableCell>
+                                      <TableRow sx={{ backgroundColor: '#f0f4f8' }}>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Amount</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>FC{(expensesView.amount || 0).toLocaleString()}</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold' }}>Rate: {expensesView.rate}</TableCell>
+                                        <TableCell sx={{ fontWeight: 'bold', color: '#202a5a' }}>${(expensesView.total || 0).toLocaleString()}</TableCell>
                                       </TableRow>
                                     </TableBody>)
                                 }
-
                               </Table>
                             </Box>
                           </Grid>
@@ -1175,10 +1245,32 @@ function DailyExpenses() {
                       )
                   }
                 </Grid>
+                <Box sx={{ display: 'none', '@media print': { display: 'block', mt: 4 } }}>
+                  <Grid container spacing={3} sx={{ textAlign: 'center', pt: 3 }}>
+                    <Grid item xs={4}>
+                      <Box sx={{ borderTop: '1px solid #333', pt: 1 }}>
+                        <Typography variant="caption" sx={{ fontWeight: 'bold', textTransform: 'uppercase', display: 'block' }}>Prepared By</Typography>
+                        <Typography variant="body2">{expensesView.Create?.person || ''}</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Box sx={{ borderTop: '1px solid #333', pt: 1 }}>
+                        <Typography variant="caption" sx={{ fontWeight: 'bold', textTransform: 'uppercase', display: 'block' }}>Verified By</Typography>
+                      </Box>
+                    </Grid>
+                    <Grid item xs={4}>
+                      <Box sx={{ borderTop: '1px solid #333', pt: 1 }}>
+                        <Typography variant="caption" sx={{ fontWeight: 'bold', textTransform: 'uppercase', display: 'block' }}>Approved By / Cashier</Typography>
+                      </Box>
+                    </Grid>
+                  </Grid>
+                </Box>
+                <Box sx={{ display: 'none', '@media print': { display: 'block', marginTop: '20px' } }}>
+                  <PrintFooter branchId={expensesView.branchId || ""} />
+                </Box>
               </div>
               : null
           }
-
         </Box>
       </Modal>
       <Modal

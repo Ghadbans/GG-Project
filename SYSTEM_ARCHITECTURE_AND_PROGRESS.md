@@ -4329,3 +4329,57 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.32.exe` (95.80 MB) and copied to server downloads.
 - **Android APK**: Compiled via Gradle (`GlobalGate-v3.6.32.apk` and `GlobalGate.apk`, 15.02 MB).
 - **Deployment**: Pushed to GitHub `origin main`.
+
+
+---
+
+## [2026-11-07] - Release v3.6.33: Daily Expenses Voucher Print & Maintenance/Project Dropdown Filtering
+
+### 1. Requirements & Problem Analysis
+1. **Daily Expenses Voucher Print (`DailyExpenses.js`)**:
+   - The user requested: *"i need to be able to make print out for the DAILY EXPENSES !"*, uploading a screenshot of the Expense Details modal (`EXPENSE D-016538 CREATED BY GG Created on 07/11/2026`).
+   - Previously, the details modal in `DailyExpenses.js` only provided an `X` (close) button and lacked any print functionality.
+   - Users required an official, branded printable voucher (A4 portrait) containing the company header, expense voucher number `D-XXXXXX`, creation metadata, expense category, account, project/maintenance reference, description, employee breakdown (if applicable), tax/TVA breakdown, total amounts in USD & FC, signature authorization lines (Prepared By, Verified By, Approved By / Cashier), and company footer.
+2. **Maintenance Orders Filtering in Daily Expenses (`DailyExpenseForm.js`, `DailyExpenseUpdate.js`)**:
+   - The user noted: *"and here to when an maintenance order is already converted they cannt add any expenses anymore ! its already converted to an invoice .. so the converted maintenance orders no supposed to show here same the projects should only show with status is ON-GOING !!"*
+   - Converted maintenance orders (`Converted: true`, `Converted: 'true'`, or `status: 'Converted'`) were previously being populated in the dropdown (1,098 converted orders out of 1,322 total), allowing expenses to be mistakenly attached to billed orders.
+   - Projects in Daily Expenses also needed to strictly show only `ON-GOING` projects (ignoring pending, completed, or closed projects) across all roles.
+
+### 2. Implementation Changes
+1. **`DailyExpenses.js` - Voucher Print System**:
+   - Integrated `useReactToPrint` hook from `'react-to-print'`.
+   - Added `PrintHeader` and `PrintFooter` components with dynamic branch resolution (`branchId`).
+   - Added a top action bar in the modal header with a dedicated `LocalPrintshop` Print button alongside the Close button.
+   - Added a `Print` action icon column in the master DataGrid table next to `View`, allowing one-click printing directly from the list.
+   - Added print-specific CSS media styles:
+     - Automatically suppresses modal backdrops, scroll clipping, and navigation elements.
+     - Unrolls table containers (`maxHeight: 'none'`, `overflow: 'visible'`).
+     - Inserts the official company logo header and contact footer on print media.
+     - Adds formal 3-column voucher authorization signature lines: `Prepared By`, `Verified By`, and `Approved By / Cashier`.
+2. **`DailyExpenseForm.js` & `DailyExpenseUpdate.js` - Filtering Logic**:
+   - Filtered maintenance orders on fetch:
+     ```javascript
+     const isConverted = (m) => {
+       if (!m) return false;
+       if (m.Converted === true || m.Converted === 'true') return true;
+       return String(m.status || '').toLowerCase().trim() === 'converted';
+     };
+     const activeMaintenance = (maintenanceResponse.data?.data || []).filter((row) => !isConverted(row));
+     setMaintenance(activeMaintenance);
+     ```
+   - Filtered projects to strictly `ON-GOING` status for all users:
+     ```javascript
+     const isOngoing = (st) => String(st || '').toLowerCase().replace(/[^a-z]/g, '') === 'ongoing';
+     const ongoingProjects = (projectResponse.data?.data || []).filter((row) => isOngoing(row.status));
+     setProject(ongoingProjects);
+     setProject2(ongoingProjects);
+     ```
+   - Hardened maintenance `Autocomplete` option labels and renderers against null or non-object `customerName`.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Verification**: Verified with `node scripts/pre-build-check.js` (0 errors across 239 files).
+- **Version Bump**: Bumped to `v3.6.33` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.33.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.33.exe`, `GlobalGate-v3.6.33.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.33.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Deployment**: Pushed to GitHub `origin main`.

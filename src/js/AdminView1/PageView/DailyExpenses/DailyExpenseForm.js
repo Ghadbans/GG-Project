@@ -218,11 +218,23 @@ function DailyExpenseForm() {
           axios.get(`${ENDPOINT_URL}/employee`),
           axios.get(`${ENDPOINT_URL}/maintenance`)
         ]);
-        setProject(projectResponse.data.data || []);
-        setProject2(projectResponse.data?.data?.filter((row) => row.status === "On-Going") || []);
+
+        const isOngoing = (st) => String(st || '').toLowerCase().replace(/[^a-z]/g, '') === 'ongoing';
+        const isConverted = (m) => {
+          if (!m) return false;
+          if (m.Converted === true || m.Converted === 'true') return true;
+          const s = String(m.status || '').toLowerCase().trim();
+          return s === 'converted';
+        };
+
+        const ongoingProjects = (projectResponse.data?.data || []).filter((row) => isOngoing(row.status));
+        setProject(ongoingProjects);
+        setProject2(ongoingProjects);
         setCategories(categoryResponse.data.data || []);
         setEmployee(employeeResponse.data.data || []);
-        setMaintenance(maintenanceResponse.data?.data || []);
+
+        const activeMaintenance = (maintenanceResponse.data?.data || []).filter((row) => !isConverted(row));
+        setMaintenance(activeMaintenance);
       } catch (error) {
         console.log(error)
       }
@@ -995,12 +1007,14 @@ function DailyExpenseForm() {
                                   <div>
                                     <Autocomplete
                                       options={maintenance}
-                                      getOptionLabel={(option) => `M-${String(option.serviceNumber || 0).padStart(6, '0')} - ${option.customerName?.customerName || ''}`}
-                                      renderOption={(props, option) => (
-                                        <Box {...props}>
-                                          {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.itemDescriptionInfo || option.model || ''}
-                                        </Box>
-                                      )}
+                                      getOptionLabel={(option) => `M-${String(option?.serviceNumber || 0).padStart(6, '0')} - ${option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || ''}`}
+                                      renderOption={(props, option) => {
+                                        const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                        const sNum = `M-${String(option?.serviceNumber || 0).padStart(6, '0')}`;
+                                        const desc = option?.itemDescriptionInfo || option?.model || '';
+                                        const parts = [cust, sNum, desc].filter(Boolean);
+                                        return <Box {...props}>{parts.join(' | ')}</Box>;
+                                      }}
                                       onChange={(e, newValue) => handleChangeMaintenance(newValue ? newValue : '')}
                                       inputValue={inputValueMaintenance}
                                       onInputChange={(event, newInputValue) => {
@@ -1301,12 +1315,14 @@ function DailyExpenseForm() {
                                     <div>
                                       <Autocomplete
                                         options={maintenance}
-                                        getOptionLabel={(option) => `M-${String(option.serviceNumber || 0).padStart(6, '0')} - ${option.customerName?.customerName || ''}`}
-                                        renderOption={(props, option) => (
-                                          <Box {...props}>
-                                            {option.customerName?.customerName} | M-{String(option.serviceNumber || 0).padStart(6, '0')} | {option.itemDescriptionInfo || option.model || ''}
-                                          </Box>
-                                        )}
+                                        getOptionLabel={(option) => `M-${String(option?.serviceNumber || 0).padStart(6, '0')} - ${option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || ''}`}
+                                        renderOption={(props, option) => {
+                                          const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                          const sNum = `M-${String(option?.serviceNumber || 0).padStart(6, '0')}`;
+                                          const desc = option?.itemDescriptionInfo || option?.model || '';
+                                          const parts = [cust, sNum, desc].filter(Boolean);
+                                          return <Box {...props}>{parts.join(' | ')}</Box>;
+                                        }}
                                         onChange={(e, newValue) => handleChangeMaintenance(newValue ? newValue : '')}
                                         inputValue={inputValueMaintenance}
                                         onInputChange={(event, newInputValue) => {
