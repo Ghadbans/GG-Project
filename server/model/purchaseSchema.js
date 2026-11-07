@@ -41,6 +41,15 @@ const purchaseSchema = new Schema(
         },
         default: 'Pending'
       },
+      items: [ ],
+      status: {
+        type: String,
+        trim: true
+      },
+      description: {
+        type: String,
+        trim: true
+      },
       purchaseAmount1: {
         type: Number,
         trim: true,
@@ -66,7 +75,7 @@ const purchaseSchema = new Schema(
    
     branchId: { type: String, default: 'HQ' } },
   {
-    collection: "purchase" }
+    collection: "purchase", strict: false }
 );
 
 

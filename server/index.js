@@ -266,6 +266,31 @@ mongoDbConnection().then(() => {
       console.warn('Purchase auto-repair warning:', e.message);
     }
 
+    // Auto-repair PUR-00177 missing items if stripped by previous schema bug
+    try {
+      const purColl = mongoose.connection.db.collection('purchase');
+      const itemColl = mongoose.connection.db.collection('items');
+      const pur177 = await purColl.findOne({ purchaseNumber: { $in: [177, '177'] } });
+      if (pur177 && (!pur177.items || pur177.items.length === 0)) {
+        const metalTube = await itemColl.findOne({ itemName: /METAL TUBE 40X40/i });
+        const restoredItem = {
+          idRow: '1',
+          itemName: metalTube || { itemName: 'METAL TUBE 40X40' },
+          itemDescription: 'SQURE TUBE 40X40 1.2MM 6M',
+          itemQty: 1,
+          itemCost: 10.5,
+          totalCost: 10.5,
+          itemBuy: 0,
+          totalGenerale: 0,
+          itemOut: 0
+        };
+        await purColl.updateOne({ _id: pur177._id }, { $set: { items: [restoredItem], purchaseAmount1: 10.5, purchaseAmount2: 0 } });
+        console.log('PUR-00177 items auto-repaired successfully.');
+      }
+    } catch (e) {
+      console.warn('PUR-00177 repair warning:', e.message);
+    }
+
     const collectionsToClean = ["purchase", "purchases", "itemPurchase", "itempurchases", "PurchaseOrder", "purchaseOrders"];
     try {
       const db = mongoose.connection.db;

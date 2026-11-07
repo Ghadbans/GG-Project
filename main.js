@@ -374,8 +374,16 @@ ipcMain.handle('run-marketing', async (event, payload) => {
     args.push(`--product-image=${tempProductImagePath}`);
   }
 
+  const waCount = String(whatsappNumber || '').split(/[,;]+/).filter((s) => s.trim()).length;
+  const execTimeout = 120000 + Math.max(0, waCount - 1) * 35000;
+
   return new Promise((resolve) => {
-    execFile('node', args, { cwd: agentDir, timeout: 120000 }, (error, stdout, stderr) => {
+    execFile('node', args, { cwd: agentDir, timeout: execTimeout, maxBuffer: 20 * 1024 * 1024 }, (error, stdout, stderr) => {
+      let waReport = null;
+      const reportMatch = (stdout || '').match(/WA_REPORT_JSON:(\{.*\})/);
+      if (reportMatch) {
+        try { waReport = JSON.parse(reportMatch[1]); } catch (_) {}
+      }
       let flyerBase64 = null;
       if (fs.existsSync(flyerPath)) {
         try {
@@ -428,9 +436,14 @@ ipcMain.handle('run-marketing', async (event, payload) => {
           success: waSuccess || waStatusSuccess,
           target: whatsappNumber,
           statusStory: waStatusSuccess,
-          message: (waSuccess && waStatusSuccess)
-            ? 'WhatsApp Delivered to Contact & Status Story'
-            : (waStatusSuccess ? 'WhatsApp Published to Status Story' : (waSuccess ? 'WhatsApp Delivered Successfully' : null)),
+          report: waReport,
+          message: (waReport && waReport.details && waReport.details.length === 1 && waReport.details[0].self && waReport.sent === 1)
+            ? 'Delivered to "Message yourself" (Your own WhatsApp)'
+            : waReport
+            ? `WhatsApp: ${waReport.sent} sent` + (waReport.failed ? `, ${waReport.failed} failed` : '') + (waReport.skipped ? `, ${waReport.skipped} skipped (daily limit)` : '')
+            : ((waSuccess && waStatusSuccess)
+              ? 'WhatsApp Delivered to Contact & Status Story'
+              : (waStatusSuccess ? 'WhatsApp Published to Status Story' : (waSuccess ? 'WhatsApp Delivered Successfully' : null))),
           error: (!waSuccess && !waStatusSuccess && (sendWhatsApp || sendWhatsAppStatus) && !previewOnly)
             ? 'WhatsApp automated dispatch timed out or was not delivered'
             : null

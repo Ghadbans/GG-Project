@@ -6,6 +6,7 @@ const { execFile } = require('child_process');
 const axios = require('axios');
 const FormData = require('form-data');
 const GrantAccess = require('../model/grantAccessSchema');
+const MarketingRecipient = require('../model/marketingRecipientSchema');
 
 // Path to local fb-whatsapp-agent
 const AGENT_DIR = 'C:\\Users\\GG\\fb-whatsapp-agent';
@@ -125,6 +126,39 @@ router.get('/status', (req, res) => {
     localAgentExists,
     facebookConfigured: Boolean(FB_PAGE_ACCESS_TOKEN || localAgentExists)
   });
+});
+
+/**
+ * GET /recipients - Saved WhatsApp recipient customer IDs (selection list)
+ */
+router.get('/recipients', verifyMarketingAccess, async (req, res) => {
+  try {
+    const doc = await MarketingRecipient.findOne({ key: 'whatsapp' }).lean();
+    res.json({ success: true, customerIds: doc?.customerIds || [] });
+  } catch (err) {
+    console.error('[Marketing] Load recipients error:', err.message);
+    res.status(500).json({ success: false, error: 'Failed to load saved recipients.' });
+  }
+});
+
+/**
+ * PUT /recipients - Save (replace) the WhatsApp recipient customer ID list
+ */
+router.put('/recipients', verifyMarketingAccess, async (req, res) => {
+  try {
+    const ids = Array.isArray(req.body?.customerIds)
+      ? [...new Set(req.body.customerIds.map((x) => String(x)).filter(Boolean))]
+      : [];
+    const doc = await MarketingRecipient.findOneAndUpdate(
+      { key: 'whatsapp' },
+      { customerIds: ids, updatedBy: req.body?.userName || req.headers['x-user-name'] || '' },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    ).lean();
+    res.json({ success: true, customerIds: doc.customerIds });
+  } catch (err) {
+    console.error('[Marketing] Save recipients error:', err.message);
+    res.status(500).json({ success: false, error: 'Failed to save recipients.' });
+  }
 });
 
 /**

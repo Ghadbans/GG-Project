@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import '../../view.css';
 import {
   Box,
@@ -17,6 +17,10 @@ import {
   Alert,
   IconButton,
   Paper,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
   styled
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
@@ -113,7 +117,6 @@ function MarketingViewAdmin() {
   const [targetPlatforms, setTargetPlatforms] = useState({
     facebook: true,
     whatsapp: true,
-    whatsappStatus: false,
     instagram: true,
   });
   const [previewGenerated, setPreviewGenerated] = useState(false);
@@ -121,6 +124,95 @@ function MarketingViewAdmin() {
   const [loadingPublish, setLoadingPublish] = useState(false);
   const [result, setResult] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
+
+  // WhatsApp recipients (saved customer selection list)
+  const SELF_NUMBER = '+243827722222';
+  const [customers, setCustomers] = useState([]);
+  const [savedRecipientIds, setSavedRecipientIds] = useState([]);
+  const [includeSavedList, setIncludeSavedList] = useState(true);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [pickerSelection, setPickerSelection] = useState([]);
+  const [pickerSearch, setPickerSearch] = useState('');
+  const [savingList, setSavingList] = useState(false);
+
+  const getCustomerPhone = (c) => {
+    const candidates = [c?.customerPhone, c?.customerCompanyPhone];
+    for (const p of candidates) {
+      const digits = String(p || '').replace(/[^0-9]/g, '');
+      if (digits.length >= 9 && digits.length <= 15) return String(p).trim();
+    }
+    return '';
+  };
+
+  const customersWithPhone = useMemo(
+    () => (customers || []).filter((c) => getCustomerPhone(c)),
+    [customers]
+  );
+
+  const savedRecipients = useMemo(
+    () => customersWithPhone.filter((c) => savedRecipientIds.includes(String(c._id))),
+    [customersWithPhone, savedRecipientIds]
+  );
+
+  const pickerFiltered = useMemo(() => {
+    const q = pickerSearch.trim().toLowerCase();
+    const list = !q
+      ? customersWithPhone
+      : customersWithPhone.filter((c) =>
+          `${c.Customer || ''} ${c.customerFullName || ''} ${c.companyName || ''} ${getCustomerPhone(c)}`
+            .toLowerCase()
+            .includes(q)
+        );
+    return list
+      .slice()
+      .sort((a, b) => String(a.Customer || a.customerFullName || '').localeCompare(String(b.Customer || b.customerFullName || '')));
+  }, [customersWithPhone, pickerSearch]);
+
+  const marketingHeaders = () => ({
+    'x-user-name': user?.data?.userName || '',
+    'x-user-id': user?.data?.id || localStorage.getItem('user') || '',
+  });
+
+  const openRecipientPicker = () => {
+    setPickerSelection(savedRecipientIds.filter((id) => customersWithPhone.some((c) => String(c._id) === id)));
+    setPickerSearch('');
+    setPickerOpen(true);
+  };
+
+  const togglePickerCustomer = (id) => {
+    const sid = String(id);
+    setPickerSelection((prev) => (prev.includes(sid) ? prev.filter((x) => x !== sid) : [...prev, sid]));
+  };
+
+  const saveRecipientList = async () => {
+    setSavingList(true);
+    try {
+      const ids = pickerSelection.map(String);
+      await axios.put(
+        `${API_BASE_URL}/api/marketing/recipients`,
+        { customerIds: ids, userName: user?.data?.userName || '' },
+        { headers: marketingHeaders() }
+      );
+      setSavedRecipientIds(ids);
+      setIncludeSavedList(ids.length > 0);
+      setPickerOpen(false);
+      toast.success(`WhatsApp recipients list saved (${ids.length} customers).`);
+    } catch (err) {
+      console.error('Save recipients failed:', err);
+      toast.error(err.response?.data?.error || 'Failed to save recipients list.');
+    } finally {
+      setSavingList(false);
+    }
+  };
+
+  // Builds the comma separated WhatsApp recipients: Global Gate number ALWAYS first.
+  const buildWhatsappNumbers = () => {
+    if (!targetPlatforms.whatsapp) return '';
+    const list = [SELF_NUMBER];
+    if (whatsappNumber.trim()) list.push(whatsappNumber.trim());
+    if (includeSavedList) savedRecipients.forEach((c) => list.push(getCustomerPhone(c)));
+    return list.join(',');
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files?.[0];
@@ -200,6 +292,32 @@ function MarketingViewAdmin() {
     fetchUserAndAccess();
   }, [dispatch, navigate]);
 
+  // Load customers (phone source) and the saved WhatsApp recipients list
+  useEffect(() => {
+    if (loadingPermission || !hasAccess || !user?.data?.userName) return;
+    let cancelled = false;
+    (async () => {
+      try {
+        const resCustomers = await cachedGet(`${ENDPOINT_URL}/customer`);
+        if (!cancelled) setCustomers(resCustomers?.data?.data || []);
+      } catch (err) {
+        console.warn('[Marketing] Could not load customers:', err.message);
+      }
+      try {
+        const resSaved = await axios.get(`${API_BASE_URL}/api/marketing/recipients`, { headers: marketingHeaders() });
+        if (!cancelled) {
+          const ids = (resSaved.data?.customerIds || []).map(String);
+          setSavedRecipientIds(ids);
+          setIncludeSavedList(ids.length > 0);
+        }
+      } catch (err) {
+        console.warn('[Marketing] Could not load saved recipients:', err.message);
+      }
+    })();
+    return () => { cancelled = true; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loadingPermission, hasAccess, user?.data?.userName]);
+
   const handleLogout = () => {
     localStorage.removeItem('user');
     dispatch(setUser(null));
@@ -221,13 +339,12 @@ function MarketingViewAdmin() {
 
     const payload = {
       brief: brief.trim(),
-      whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
+      whatsappNumber: buildWhatsappNumbers(),
       productImage: productImage || null,
       previewOnly: true,
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
-        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -286,9 +403,17 @@ function MarketingViewAdmin() {
   };
 
   const handleApproveAndPublish = async () => {
-    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.whatsappStatus && !targetPlatforms.instagram) {
+    if (!targetPlatforms.facebook && !targetPlatforms.whatsapp && !targetPlatforms.instagram) {
       toast.warning('Please select at least one target dispatch platform.');
       return;
+    }
+
+    const externalCount = buildWhatsappNumbers().split(',').filter(Boolean).length - 1;
+    if (targetPlatforms.whatsapp && externalCount > 0) {
+      const ok = window.confirm(
+        `The flyer will be sent on WhatsApp to Global Gate plus up to ${externalCount} other number(s), one by one with a 8-20 second pause between messages (this can take several minutes).\n\nContinue?`
+      );
+      if (!ok) return;
     }
 
     setLoadingPublish(true);
@@ -296,13 +421,12 @@ function MarketingViewAdmin() {
 
     const payload = {
       brief: brief.trim(),
-      whatsappNumber: targetPlatforms.whatsapp ? whatsappNumber.trim() : '',
+      whatsappNumber: buildWhatsappNumbers(),
       productImage: productImage || null,
       previewOnly: false,
       platforms: {
         facebook: targetPlatforms.facebook,
         whatsapp: targetPlatforms.whatsapp,
-        whatsappStatus: targetPlatforms.whatsappStatus,
         instagram: targetPlatforms.instagram,
       },
       userId: user?.data?.id || localStorage.getItem('user'),
@@ -328,7 +452,7 @@ function MarketingViewAdmin() {
 
       if (!resData) {
         try {
-          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 15000 });
+          const localRes = await axios.post('http://127.0.0.1:5055/publish', payload, { timeout: 120000 + Math.max(0, (payload.whatsappNumber.match(/,/g) || []).length) * 35000 });
           if (localRes.data && localRes.data.success) {
             resData = localRes.data;
           }
@@ -348,15 +472,7 @@ function MarketingViewAdmin() {
 
         const successChannels = [];
         if (fbOk) successChannels.push('Facebook');
-        if (waOk) {
-          if (resData.whatsapp?.statusStory && targetPlatforms.whatsapp && whatsappNumber) {
-            successChannels.push('WhatsApp (DM & Story)');
-          } else if (resData.whatsapp?.statusStory) {
-            successChannels.push('WhatsApp Story');
-          } else {
-            successChannels.push('WhatsApp');
-          }
-        }
+        if (waOk) successChannels.push('WhatsApp');
         if (igOk) successChannels.push('Instagram');
 
         if (successChannels.length > 0) {
@@ -595,19 +711,112 @@ function MarketingViewAdmin() {
                     </Box>
 
                     <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 0.5 }}>
-                      WhatsApp Target Recipient Phone (Optional - Direct Message)
+                      WhatsApp Recipients (Direct Message)
                     </Typography>
                     <Typography variant="caption" sx={{ color: '#64748b', display: 'block', mb: 1 }}>
-                      Enter a customer's phone or your personal mobile number to receive the flyer directly with notification. (Note: +243 827 722 222 is the company sender account; sending to it delivers to your WhatsApp "Message yourself").
+                      The flyer is ALWAYS sent to Global Gate (+243 827 722 222 - "Message yourself"). Optionally add one more number below and/or include your saved customers list. Messages go out one by one with a random 8-20 second pause (safety limit: {50} external messages per day).
                     </Typography>
                     <TextField
                       fullWidth
-                      placeholder="e.g. +243 999 123 456 (or your personal mobile number)"
+                      placeholder="Additional number (optional) e.g. +243 999 123 456"
                       value={whatsappNumber}
                       onChange={(e) => setWhatsappNumber(e.target.value)}
                       disabled={loadingPreview || loadingPublish}
-                      sx={{ mb: 2.5, backgroundColor: '#ffffff' }}
+                      sx={{ mb: 1.5, backgroundColor: '#ffffff' }}
                     />
+                    <Box sx={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 1.5, mb: 2.5 }}>
+                      <Button
+                        variant="outlined"
+                        startIcon={<WhatsAppIcon />}
+                        onClick={openRecipientPicker}
+                        disabled={loadingPreview || loadingPublish}
+                        sx={{ textTransform: 'none', fontWeight: 600, color: '#128c7e', borderColor: '#128c7e' }}
+                      >
+                        Select Customers ({savedRecipients.length} saved)
+                      </Button>
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={includeSavedList}
+                            onChange={(e) => setIncludeSavedList(e.target.checked)}
+                            disabled={loadingPreview || loadingPublish || savedRecipients.length === 0}
+                            sx={{ color: '#25d366', '&.Mui-checked': { color: '#25d366' } }}
+                          />
+                        }
+                        label={`Also send to saved list (${savedRecipients.length})`}
+                      />
+                    </Box>
+
+                    <Dialog open={pickerOpen} onClose={() => setPickerOpen(false)} fullWidth maxWidth="sm">
+                      <DialogTitle sx={{ fontWeight: 700, color: '#202a5a' }}>
+                        Select WhatsApp Recipients
+                      </DialogTitle>
+                      <DialogContent dividers>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          placeholder="Search customer name or phone..."
+                          value={pickerSearch}
+                          onChange={(e) => setPickerSearch(e.target.value)}
+                          sx={{ mb: 1.5 }}
+                        />
+                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1, flexWrap: 'wrap' }}>
+                          <Chip label={`${pickerSelection.length} selected`} size="small" color="success" />
+                          <Button size="small" onClick={() => setPickerSelection((prev) => Array.from(new Set([...prev, ...pickerFiltered.map((c) => c._id)])))}>
+                            Select all shown
+                          </Button>
+                          <Button size="small" color="inherit" onClick={() => setPickerSelection([])}>
+                            Clear all
+                          </Button>
+                        </Box>
+                        <Box sx={{ maxHeight: 360, overflowY: 'auto' }}>
+                          {pickerFiltered.length === 0 && (
+                            <Typography variant="body2" sx={{ color: '#64748b', p: 2 }}>
+                              No customers with a valid phone number found.
+                            </Typography>
+                          )}
+                          {pickerFiltered.slice(0, 300).map((c) => (
+                            <FormControlLabel
+                              key={c._id}
+                              sx={{ display: 'flex', mr: 0, borderBottom: '1px solid #f1f5f9' }}
+                              control={
+                                <Checkbox
+                                  size="small"
+                                  checked={pickerSelection.includes(c._id)}
+                                  onChange={() => togglePickerCustomer(c._id)}
+                                />
+                              }
+                              label={
+                                <Box>
+                                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                                    {c.Customer || c.customerFullName || c.companyName || 'Unnamed'}
+                                  </Typography>
+                                  <Typography variant="caption" sx={{ color: '#64748b' }}>
+                                    {getCustomerPhone(c)}
+                                  </Typography>
+                                </Box>
+                              }
+                            />
+                          ))}
+                          {pickerFiltered.length > 300 && (
+                            <Typography variant="caption" sx={{ color: '#64748b', display: 'block', p: 1 }}>
+                              Showing first 300 matches - refine the search to see more.
+                            </Typography>
+                          )}
+                        </Box>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button onClick={() => setPickerOpen(false)} color="inherit">Cancel</Button>
+                        <Button
+                          variant="contained"
+                          onClick={saveRecipientList}
+                          disabled={savingList}
+                          sx={{ backgroundColor: '#128c7e', '&:hover': { backgroundColor: '#0e6e63' } }}
+                        >
+                          {savingList ? 'Saving...' : 'Save List'}
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
 
                     <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#475569', mb: 1 }}>
                       Target Dispatch Platforms:
@@ -642,23 +851,6 @@ function MarketingViewAdmin() {
                           <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
                             <WhatsAppIcon sx={{ color: '#25d366' }} />
                             <Typography sx={{ fontWeight: 500 }}>WhatsApp Direct Message</Typography>
-                          </Box>
-                        }
-                      />
-                      <FormControlLabel
-                        control={
-                          <Checkbox
-                            checked={targetPlatforms.whatsappStatus}
-                            onChange={(e) => setTargetPlatforms({ ...targetPlatforms, whatsappStatus: e.target.checked })}
-                            disabled={loadingPreview || loadingPublish}
-                            sx={{ color: '#059669', '&.Mui-checked': { color: '#059669' } }}
-                          />
-                        }
-                        label={
-                          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
-                            <WhatsAppIcon sx={{ color: '#059669' }} />
-                            <Typography sx={{ fontWeight: 500 }}>WhatsApp Status (Story)</Typography>
-                            <Chip label="All Contacts" size="small" sx={{ height: 18, fontSize: '0.65rem', backgroundColor: '#ecfdf5', color: '#047857', fontWeight: 600 }} />
                           </Box>
                         }
                       />
@@ -828,7 +1020,7 @@ function MarketingViewAdmin() {
                                   </Typography>
                                 </Box>
                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8 }}>
-                                  {result.whatsapp.target && (
+                                  {result.whatsapp.target && !result.whatsapp.report && (
                                     <>
                                       <Chip label={result.whatsapp.target} size="small" color={result.whatsapp.success ? "success" : "default"} />
                                       <Chip
@@ -846,6 +1038,30 @@ function MarketingViewAdmin() {
                                   )}
                                 </Box>
                               </Box>
+                              {result.whatsapp.report && Array.isArray(result.whatsapp.report.details) && (
+                                <Box sx={{ mt: 1, pl: 0.5 }}>
+                                  <Typography variant="caption" sx={{ display: 'block', fontWeight: 700, color: '#334155', mb: 0.5 }}>
+                                    Report: {result.whatsapp.report.sent} sent · {result.whatsapp.report.failed} failed
+                                    {result.whatsapp.report.skipped ? ` · ${result.whatsapp.report.skipped} skipped` : ''}
+                                  </Typography>
+                                  <Box sx={{ maxHeight: 180, overflowY: 'auto' }}>
+                                    {result.whatsapp.report.details.map((d, idx) => {
+                                      const cust = customers.find((c) => String(getCustomerPhone(c)).replace(/[^0-9]/g, '').slice(-9) === String(d.number).slice(-9));
+                                      const label = d.self ? 'Global Gate (Message yourself)' : (cust?.Customer || cust?.customerFullName || '');
+                                      return (
+                                        <Typography
+                                          key={`${d.number}-${idx}`}
+                                          variant="caption"
+                                          sx={{ display: 'block', color: d.status === 'sent' ? '#15803d' : (d.status === 'failed' ? '#dc2626' : '#b45309') }}
+                                        >
+                                          {d.status === 'sent' ? '✅' : (d.status === 'failed' ? '❌' : '⏭️')} {label ? `${label} - ` : ''}+{d.number}
+                                          {d.error ? ` (${d.error})` : ''}
+                                        </Typography>
+                                      );
+                                    })}
+                                  </Box>
+                                </Box>
+                              )}
                               {result.whatsapp.error && !result.whatsapp.success && (
                                 <Typography variant="caption" sx={{ color: '#dc2626', display: 'block', mt: 0.75, pl: 4 }}>
                                   {result.whatsapp.error} — You can also click "Open Chat" above to dispatch directly via WhatsApp.

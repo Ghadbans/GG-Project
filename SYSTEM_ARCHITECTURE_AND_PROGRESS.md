@@ -4200,3 +4200,44 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.01 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.29.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
 
+## Version 3.6.30 - Purchase Schema Items Restoration, Sub-Sidebar Main Menu Loop Fix, and Marketing WhatsApp Multi-Recipient Safety System (Nov 2026)
+
+### 1. Root Cause Identification
+1. **Purchase Request Items Missing After Saving (`server/model/purchaseSchema.js`)**:
+   - The user reported: *"why the items is not showing in the PURCHASE REQUEST after adding them !! this modules and submodules should be 100% accurate ! not supposed to face this problems !"* uploading screenshots of PUR-00177 where line items (e.g. `METAL TUBE 40X40`) were added in `PurchaseFormUpdate.js` and confirmed saved, but rendered completely empty in both `PurchasesViewAdminAll.js` (Purchase Information) and `ProjectViewInformation.js` (Project Purchase Tab).
+   - Investigation of Git history on `server/model/purchaseSchema.js` revealed that during an earlier status setter update, lines `items: [ ]`, `status: { type: String, trim: true }`, and `description: { type: String, trim: true }` were accidentally omitted.
+   - Because Mongoose enforces `strict: true` by default, any field not defined in the schema is stripped during `findByIdAndUpdate` (`$set: req.body`). Consequently, saving purchases updated totals (`purchaseAmount1`) but silently wiped the `items` array from the database.
+2. **Sub-Sidebar Main Menu Recursive Loop (`SidebarDashE2.js`, `SideMaintenance.js`, `SideMaintenanceMenu.js`, `SideShop.js`)**:
+   - The user reported: *"if press on the Main Menu it will not take me back to the main menu that it has the dasboad .. ! i have to close the More Menu to go back to the Main Menu ... I need when i press on the Main Menu takes me back to the Main Menu ."*
+   - In sub-sidebars (`SidebarDashE2`, `SideMaintenance`, etc.), the "Main Menu" view was rendering `<SidebarDash onView2={2} />` (or `onView3={3}`, `onView4={4}`, `onView6={6}`).
+   - Passing `onViewX` instructed `SidebarDash` to immediately switch back into that sub-menu instead of displaying the primary top-level Main Menu (`show1 = 1`). This caused a recursive nesting loop where clicking "Main Menu" simply re-opened the sub-menu.
+3. **Marketing WhatsApp Recipient Customization & Always-Self Delivery**:
+   - The user requested:
+     - Always send to `+243 827 722 222` ("Message yourself") automatically, even when an external recipient number is entered.
+     - Remove the WhatsApp Status (Story) option.
+     - Allow selecting specific clients from the Customer module, with a persistent saved list that can be updated anytime without re-selecting contacts each campaign.
+     - Dispatch messages one by one with a random 8–20 second pause to safeguard against WhatsApp spam bans, with a full progress report at the end.
+
+### 2. Implementation Changes
+1. **Purchase Schema Restoration & PUR-00177 Auto-Repair (`server/model/purchaseSchema.js` & `server/index.js`)**:
+   - Restored `items: [ ]`, `status: { type: String, trim: true }`, and `description: { type: String, trim: true }` in `purchaseSchema.js`.
+   - Added `strict: false` to the schema options to permanently prevent Mongoose from stripping items or movement fields.
+   - Added startup auto-repair in `server/index.js` to restore the `METAL TUBE 40X40` line item on PUR-00177 if missing.
+2. **Sub-Sidebar Main Menu Navigation Unlinking**:
+   - Updated `SidebarDashE2.js`, `SideMaintenance.js`, `SideMaintenanceMenu.js`, and `SideShop.js` so that clicking "Main Menu" renders `<SidebarDash isSubmenu={true} />` without any `onView` prop override.
+   - This cleanly displays the true top-level Main Menu (with Dashboard right at the top, followed by Customer, Store, POS, Block Factory, Quotation, Invoice, Payment, Daily Expenses, Project, Purchases Request, Maintenance, Reports).
+3. **Marketing WhatsApp Client Selection & Rate-Limited Dispatch (`MarketingViewAdmin.js`, `main.js`, `server/routes/marketingRoutes.js`, `agent.js`)**:
+   - WhatsApp dispatch ALWAYS includes the company's own number (`+243 827 722 222` - "Message yourself") first.
+   - Created persistent model `MarketingRecipient` and API endpoints (`GET /api/marketing/recipients`, `PUT /api/marketing/recipients`) to save selected customer recipient IDs company-wide.
+   - Added a Customer Recipient Picker modal with real-time search, select all, and save actions.
+   - Enhanced `agent.js` to dispatch to multiple recipients sequentially with a random 8–20 second delay, daily 50-recipient anti-ban threshold, and structured report logging (`sent`, `failed`, `skipped`).
+   - Removed the WhatsApp Status (Story) option from the UI and backend pipelines.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified 0 syntax errors across 239 source files via `npm run prebuild`.
+- **Version Bump**: Bumped to `v3.6.30` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop Electron and Web Portal bundles (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.30.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.30.exe`, `GlobalGate-v3.6.30.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.30.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
+

@@ -133,10 +133,10 @@ function SideShop({ onView, isSubmenu }) {
             <ListItemText primary="Close" />
           </ListItemButton>
           <Divider />
-          <ListSubheader component="div" inset>
+          <ListSubheader component="div" inset sx={{ fontWeight: 'bold', color: '#30368a' }}>
             Main Menu
           </ListSubheader>
-          <SidebarDash onView4={4} isSubmenu={true} />
+          <SidebarDash isSubmenu={true} />
         </div>
         : null}
     </>
