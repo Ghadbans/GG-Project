@@ -716,8 +716,15 @@ function MakePurchaseConvertToProject() {
                     <Autocomplete
                       disableClearable
                       options={projects}
-                      getOptionLabel={(option) => option.projectName}
-                      renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                      getOptionLabel={(option) => option?.projectName ? (typeof option.projectName === 'string' ? option.projectName : String(option.projectName)) : ''}
+                      renderOption={(props, option) => {
+                        const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                        const pNum = option?.projectNumber ? `P-${String(option.projectNumber).padStart(6, '0')}` : '';
+                        const pName = option?.projectName || '';
+                        const desc = option?.description || '';
+                        const parts = [pNum, cust, pName, desc].filter(Boolean);
+                        return <Box {...props}>{parts.join(' | ')}</Box>;
+                      }}
                       onChange={(e, newValue) => {
                         handleChangeProject(newValue);
                       }}
@@ -726,12 +733,17 @@ function MakePurchaseConvertToProject() {
                         setInputValue2(newInputValue);
                       }}
                       filterOptions={(options, { inputValue }) => {
-                        return options.filter(
-                          (option) =>
-                            option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                            option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                            option.description.toLowerCase().includes(inputValue.toLowerCase())
-                        )
+                        const lower = (inputValue || '').trim().toLowerCase();
+                        if (!lower) return options;
+                        return options.filter((option) => {
+                          if (!option) return false;
+                          const cust = (option.customerName?.customerName || (typeof option.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                          const pName = (option.projectName || '').toLowerCase();
+                          const desc = (option.description || '').toLowerCase();
+                          const pNum = option.projectNumber ? `p-${String(option.projectNumber).padStart(6, '0')}`.toLowerCase() : '';
+                          const pNumRaw = String(option.projectNumber || '');
+                          return cust.includes(lower) || pName.includes(lower) || desc.includes(lower) || pNum.includes(lower) || pNumRaw.includes(lower);
+                        });
                       }}
                       PaperComponent={({ children, ...other }) => (
 

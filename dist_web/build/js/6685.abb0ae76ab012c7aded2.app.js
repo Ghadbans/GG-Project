@@ -2289,8 +2289,16 @@ function MakePurchaseConvertToProject() {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
     disableClearable: true,
     options: projects,
-    getOptionLabel: option => option.projectName,
-    renderOption: (props, option) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, " ", option.customerName.customerName, " | ", option.projectName, " | ", option.description),
+    getOptionLabel: option => option !== null && option !== void 0 && option.projectName ? typeof option.projectName === 'string' ? option.projectName : String(option.projectName) : '',
+    renderOption: (props, option) => {
+      var _option$customerName;
+      var cust = (option === null || option === void 0 || (_option$customerName = option.customerName) === null || _option$customerName === void 0 ? void 0 : _option$customerName.customerName) || (typeof (option === null || option === void 0 ? void 0 : option.customerName) === 'string' ? option.customerName : '') || '';
+      var pNum = option !== null && option !== void 0 && option.projectNumber ? "P-".concat(String(option.projectNumber).padStart(6, '0')) : '';
+      var pName = (option === null || option === void 0 ? void 0 : option.projectName) || '';
+      var desc = (option === null || option === void 0 ? void 0 : option.description) || '';
+      var parts = [pNum, cust, pName, desc].filter(Boolean);
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .A, props, parts.join(' | '));
+    },
     onChange: (e, newValue) => {
       handleChangeProject(newValue);
     },
@@ -2300,7 +2308,18 @@ function MakePurchaseConvertToProject() {
     },
     filterOptions: (options, _ref17) => {
       var inputValue = _ref17.inputValue;
-      return options.filter(option => option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) || option.projectName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+      var lower = (inputValue || '').trim().toLowerCase();
+      if (!lower) return options;
+      return options.filter(option => {
+        var _option$customerName2;
+        if (!option) return false;
+        var cust = (((_option$customerName2 = option.customerName) === null || _option$customerName2 === void 0 ? void 0 : _option$customerName2.customerName) || (typeof option.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+        var pName = (option.projectName || '').toLowerCase();
+        var desc = (option.description || '').toLowerCase();
+        var pNum = option.projectNumber ? "p-".concat(String(option.projectNumber).padStart(6, '0')).toLowerCase() : '';
+        var pNumRaw = String(option.projectNumber || '');
+        return cust.includes(lower) || pName.includes(lower) || desc.includes(lower) || pNum.includes(lower) || pNumRaw.includes(lower);
+      });
     },
     PaperComponent: _ref18 => {
       var children = _ref18.children,

@@ -1460,12 +1460,15 @@ const handleQty = async () => {
                          setInputValue3(newInputValue);
                        }}
                        filterOptions={(options,{inputValue})=>{
-                         return options.filter(
-                           (option)=>
-                           option.supplierName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                           option.storeName.toLowerCase().includes(inputValue.toLowerCase()) ||
-                           option.description.toLowerCase().includes(inputValue.toLowerCase()) 
-                         )
+                         const lower = (inputValue || '').trim().toLowerCase();
+                         if (!lower) return options;
+                         return options.filter((option) => {
+                           if (!option) return false;
+                           const supp = (option.supplierName || '').toLowerCase();
+                           const store = (option.storeName || '').toLowerCase();
+                           const desc = (option.description || '').toLowerCase();
+                           return supp.includes(lower) || store.includes(lower) || desc.includes(lower);
+                         })
                         }}
                         PaperComponent={({children, ...other})=>(
                           <Box {...other} sx={{backgroundColor:'white', left:'0',marginTop:'10px'}}>

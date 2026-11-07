@@ -892,8 +892,15 @@ function DailyExpenseUpdate() {
                                       user.data.role === 'CEO' ?
                                         <Autocomplete
                                           options={project}
-                                          getOptionLabel={(option) => option.projectName.toUpperCase()}
-                                          renderOption={(props, option) => (<Box {...props}> {option.customerName.customerName} | {option.projectName} | {option.description}</Box>)}
+                                          getOptionLabel={(option) => option?.projectName ? (typeof option.projectName === 'string' ? option.projectName.toUpperCase() : String(option.projectName).toUpperCase()) : ''}
+                                          renderOption={(props, option) => {
+                                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                            const pNum = option?.projectNumber ? `P-${String(option.projectNumber).padStart(6, '0')}` : '';
+                                            const pName = option?.projectName || '';
+                                            const desc = option?.description || '';
+                                            const parts = [pNum, cust, pName, desc].filter(Boolean);
+                                            return <Box {...props}>{parts.join(' | ')}</Box>;
+                                          }}
                                           renderInput={(params) => <TextField {...params} label="Project Name" />}
                                           onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
                                           inputValue={inputValueProject}
@@ -901,20 +908,31 @@ function DailyExpenseUpdate() {
                                             setInputValueProject(newInputValue);
                                           }}
                                           filterOptions={(options, { inputValue }) => {
-                                            const lower = (inputValue || '').toLowerCase();
-                                            return options.filter(
-                                              (option) =>
-                                                (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(lower)) ||
-                                                (option.projectName && option.projectName.toLowerCase().includes(lower)) ||
-                                                (option.description && option.description.toLowerCase().includes(lower))
-                                            )
+                                            const lower = (inputValue || '').trim().toLowerCase();
+                                            if (!lower) return options;
+                                            return options.filter((option) => {
+                                              if (!option) return false;
+                                              const cust = (option.customerName?.customerName || (typeof option.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                                              const pName = (option.projectName || '').toLowerCase();
+                                              const desc = (option.description || '').toLowerCase();
+                                              const pNum = option.projectNumber ? `p-${String(option.projectNumber).padStart(6, '0')}`.toLowerCase() : '';
+                                              const pNumRaw = String(option.projectNumber || '');
+                                              return cust.includes(lower) || pName.includes(lower) || desc.includes(lower) || pNum.includes(lower) || pNumRaw.includes(lower);
+                                            });
                                           }}
                                           sx={{ width: '100%', backgroundColor: 'white' }}
                                         />
                                         : <Autocomplete
                                           options={project2}
-                                          getOptionLabel={(option) => option.projectName ? option.projectName.toUpperCase() : ''}
-                                          renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || ''} | {option.projectName || ''} | {option.description || ''}</Box>)}
+                                          getOptionLabel={(option) => option?.projectName ? (typeof option.projectName === 'string' ? option.projectName.toUpperCase() : String(option.projectName).toUpperCase()) : ''}
+                                          renderOption={(props, option) => {
+                                            const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                            const pNum = option?.projectNumber ? `P-${String(option.projectNumber).padStart(6, '0')}` : '';
+                                            const pName = option?.projectName || '';
+                                            const desc = option?.description || '';
+                                            const parts = [pNum, cust, pName, desc].filter(Boolean);
+                                            return <Box {...props}>{parts.join(' | ')}</Box>;
+                                          }}
                                           renderInput={(params) => <TextField {...params} label="Project Name" />}
                                           onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
                                           inputValue={inputValueProject}
@@ -922,13 +940,17 @@ function DailyExpenseUpdate() {
                                             setInputValueProject(newInputValue);
                                           }}
                                           filterOptions={(options, { inputValue }) => {
-                                            const lower = (inputValue || '').toLowerCase();
-                                            return options.filter(
-                                              (option) =>
-                                                (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(lower)) ||
-                                                (option.projectName && option.projectName.toLowerCase().includes(lower)) ||
-                                                (option.description && option.description.toLowerCase().includes(lower))
-                                            )
+                                            const lower = (inputValue || '').trim().toLowerCase();
+                                            if (!lower) return options;
+                                            return options.filter((option) => {
+                                              if (!option) return false;
+                                              const cust = (option.customerName?.customerName || (typeof option.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                                              const pName = (option.projectName || '').toLowerCase();
+                                              const desc = (option.description || '').toLowerCase();
+                                              const pNum = option.projectNumber ? `p-${String(option.projectNumber).padStart(6, '0')}`.toLowerCase() : '';
+                                              const pNumRaw = String(option.projectNumber || '');
+                                              return cust.includes(lower) || pName.includes(lower) || desc.includes(lower) || pNum.includes(lower) || pNumRaw.includes(lower);
+                                            });
                                           }}
                                           sx={{ width: '100%', backgroundColor: 'white' }}
                                         />
@@ -1199,28 +1221,47 @@ function DailyExpenseUpdate() {
                                               user.data.role === 'CEO' ?
                                                 (<Autocomplete
                                                   options={project}
-                                                  getOptionLabel={(option) => option.projectName ? option.projectName.toUpperCase() : ''}
-                                                  renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || ''} | {option.projectName || ''} | {option.description || ''}</Box>)}
+                                                  getOptionLabel={(option) => option?.projectName ? (typeof option.projectName === 'string' ? option.projectName.toUpperCase() : String(option.projectName).toUpperCase()) : ''}
+                                                  renderOption={(props, option) => {
+                                                    const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                                    const pNum = option?.projectNumber ? `P-${String(option.projectNumber).padStart(6, '0')}` : '';
+                                                    const pName = option?.projectName || '';
+                                                    const desc = option?.description || '';
+                                                    const parts = [pNum, cust, pName, desc].filter(Boolean);
+                                                    return <Box {...props}>{parts.join(' | ')}</Box>;
+                                                  }}
                                                   onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
                                                   inputValue={inputValueProject}
                                                   onInputChange={(event, newInputValue) => {
                                                     setInputValueProject(newInputValue);
                                                   }}
                                                   filterOptions={(options, { inputValue }) => {
-                                                    return options.filter(
-                                                      (option) =>
-                                                        (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase())) ||
-                                                        (option.projectName && option.projectName.toLowerCase().includes(inputValue.toLowerCase())) ||
-                                                        (option.description && option.description.toLowerCase().includes(inputValue.toLowerCase()))
-                                                    )
+                                                    const lower = (inputValue || '').trim().toLowerCase();
+                                                    if (!lower) return options;
+                                                    return options.filter((option) => {
+                                                      if (!option) return false;
+                                                      const cust = (option.customerName?.customerName || (typeof option.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                                                      const pName = (option.projectName || '').toLowerCase();
+                                                      const desc = (option.description || '').toLowerCase();
+                                                      const pNum = option.projectNumber ? `p-${String(option.projectNumber).padStart(6, '0')}`.toLowerCase() : '';
+                                                      const pNumRaw = String(option.projectNumber || '');
+                                                      return cust.includes(lower) || pName.includes(lower) || desc.includes(lower) || pNum.includes(lower) || pNumRaw.includes(lower);
+                                                    });
                                                   }}
                                                   renderInput={(params) => <TextField {...params} label="Project Name" />}
                                                   sx={{ width: '100%', backgroundColor: 'white' }}
                                                 />)
                                                 : (<Autocomplete
                                                    options={project2}
-                                                   getOptionLabel={(option) => option.projectName ? option.projectName.toUpperCase() : ''}
-                                                   renderOption={(props, option) => (<Box {...props}> {option.customerName?.customerName || ''} | {option.projectName || ''} | {option.description || ''}</Box>)}
+                                                   getOptionLabel={(option) => option?.projectName ? (typeof option.projectName === 'string' ? option.projectName.toUpperCase() : String(option.projectName).toUpperCase()) : ''}
+                                                   renderOption={(props, option) => {
+                                                     const cust = option?.customerName?.customerName || (typeof option?.customerName === 'string' ? option.customerName : '') || '';
+                                                     const pNum = option?.projectNumber ? `P-${String(option.projectNumber).padStart(6, '0')}` : '';
+                                                     const pName = option?.projectName || '';
+                                                     const desc = option?.description || '';
+                                                     const parts = [pNum, cust, pName, desc].filter(Boolean);
+                                                     return <Box {...props}>{parts.join(' | ')}</Box>;
+                                                   }}
                                                    renderInput={(params) => <TextField {...params} label="Project Name" />}
                                                    onChange={(e, newValue) => handleChangeProject(newValue ? newValue : '')}
                                                    inputValue={inputValueProject}
@@ -1228,13 +1269,17 @@ function DailyExpenseUpdate() {
                                                      setInputValueProject(newInputValue);
                                                    }}
                                                    filterOptions={(options, { inputValue }) => {
-                                                     const lower = (inputValue || '').toLowerCase();
-                                                     return options.filter(
-                                                       (option) =>
-                                                         (option.customerName?.customerName && option.customerName.customerName.toLowerCase().includes(lower)) ||
-                                                         (option.projectName && option.projectName.toLowerCase().includes(lower)) ||
-                                                         (option.description && option.description.toLowerCase().includes(lower))
-                                                     )
+                                                     const lower = (inputValue || '').trim().toLowerCase();
+                                                     if (!lower) return options;
+                                                     return options.filter((option) => {
+                                                       if (!option) return false;
+                                                       const cust = (option.customerName?.customerName || (typeof option.customerName === 'string' ? option.customerName : '') || '').toLowerCase();
+                                                       const pName = (option.projectName || '').toLowerCase();
+                                                       const desc = (option.description || '').toLowerCase();
+                                                       const pNum = option.projectNumber ? `p-${String(option.projectNumber).padStart(6, '0')}`.toLowerCase() : '';
+                                                       const pNumRaw = String(option.projectNumber || '');
+                                                       return cust.includes(lower) || pName.includes(lower) || desc.includes(lower) || pNum.includes(lower) || pNumRaw.includes(lower);
+                                                     });
                                                    }}
                                                    sx={{ width: '100%', backgroundColor: 'white' }}
                                                  />)

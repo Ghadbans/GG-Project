@@ -3900,7 +3900,15 @@ function ConvertPoToIP() {
     },
     filterOptions: (options, _ref20) => {
       var inputValue = _ref20.inputValue;
-      return options.filter(option => option.supplierName.toLowerCase().includes(inputValue.toLowerCase()) || option.storeName.toLowerCase().includes(inputValue.toLowerCase()) || option.description.toLowerCase().includes(inputValue.toLowerCase()));
+      var lower = (inputValue || '').trim().toLowerCase();
+      if (!lower) return options;
+      return options.filter(option => {
+        if (!option) return false;
+        var supp = (option.supplierName || '').toLowerCase();
+        var store = (option.storeName || '').toLowerCase();
+        var desc = (option.description || '').toLowerCase();
+        return supp.includes(lower) || store.includes(lower) || desc.includes(lower);
+      });
     },
     PaperComponent: _ref21 => {
       var children = _ref21.children,

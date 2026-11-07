@@ -4290,3 +4290,42 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.31.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.31.exe`, `GlobalGate-v3.6.31.exe`, and `GlobalGateSetup.exe`.
 - **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.31.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Cloud Synchronization**: Committed and pushed to GitHub `origin main`.
+
+
+---
+
+## [2026-11-07] - Release v3.6.32: Bulletproof Autocomplete Search & Filter Crash Fixes
+
+### 1. Root Cause Identification
+1. **Search Crash in Daily Expenses (`DailyExpenseForm.js:1203:70`)**:
+   - The user reported: *"while im searching !!! doing this errorr but if isearched for on going project TMB BANK is taking it only this i dont know why ?"* uploading a screenshot showing:
+     `TypeError: Cannot read properties of undefined (reading 'toLowerCase') at DailyExpenseForm.js:1203:70 at Array.filter (<anonymous>) at filterOptions (DailyExpenseForm.js:1199:62)`
+   - In `DailyExpenseForm.js` (lines 916-923, 937-944, 1198-1205, 1219-1226) and `DailyExpenseUpdate.js`, the project search filter executed:
+     ```javascript
+     option.customerName.customerName.toLowerCase().includes(inputValue.toLowerCase()) ||
+     option.projectName.toLowerCase().includes(inputValue.toLowerCase()) ||
+     option.description.toLowerCase().includes(inputValue.toLowerCase())
+     ```
+   - Many projects in MongoDB (e.g. historical projects or projects created without description) have `description: undefined` or `null`, and some have `customerName` as a raw string or `null`.
+   - The search loop crashed as soon as it encountered any project where `description` or `customerName` was not a fully populated object.
+   - P-000179 (TMB BANK / TEST) only worked if its fields happened to be strings and evaluated first, but typing any character that hit an undefined field immediately triggered a fatal React error.
+
+### 2. Implementation Changes
+1. **`DailyExpenseForm.js` & `DailyExpenseUpdate.js`**:
+   - Replaced all 8 Project Autocomplete filter, label, and render blocks across CEO and User branches with a crash-proof, multi-attribute filter.
+   - Extracted Customer Name safely whether `customerName` is an object (`{ customerName: "..." }`, `{ name: "..." }`), a plain string, or null.
+   - Guarded `description` and `projectName` with fallback empty strings.
+   - Added support for searching by Project Number (`P-000179` or `179`) in addition to Customer Name, Project Name, and Description.
+   - Standardized `getOptionLabel` to safely handle non-string or null `projectName`.
+   - Updated `renderOption` to cleanly display: `[Project #] | [Customer Name] | [Project Name] | [Description]`.
+2. **Global Codebase Protection**:
+   - Updated `MakePurchaseConvertToProject.js` to guard project filtering and options.
+   - Updated `ItemPurchaseUpdateForm.js`, `ItemPurchaseViewForm.js`, and `ConvertPoToIP.js` to guard `supplierName`, `storeName`, and `description` against `undefined` during search filtering.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Verification**: Verified with `node scripts/pre-build-check.js` (0 errors across 239 files).
+- **Version Bump**: Bumped to `v3.6.32` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.32.exe` (95.80 MB) and copied to server downloads.
+- **Android APK**: Compiled via Gradle (`GlobalGate-v3.6.32.apk` and `GlobalGate.apk`, 15.02 MB).
+- **Deployment**: Pushed to GitHub `origin main`.
