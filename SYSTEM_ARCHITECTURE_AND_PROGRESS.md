@@ -4241,3 +4241,52 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.30.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Cloud Synchronization**: Pushed to GitHub `origin main` to trigger automatic deployment to Railway (`api.globalgate.sarl`) and Cloudflare Pages (`portal.globalgate.sarl`).
 
+
+
+---
+
+## [2026-11-07] - Release v3.6.31: Project Phase Null Guard, Purchase Menu Fixes & Payroll cleanPaidUSD Resolution
+
+### 1. Root Cause Identification
+1. **White Screen Error on Project Update (`ProjectUpdateView.js:790`)**:
+   - The user encountered `TypeError: Cannot read properties of undefined (reading 'map') at ProjectUpdateView.js:790:29` when attempting to edit a project or its purchases.
+   - When projects have no defined `phase` in MongoDB, `res.data.data.phase` returns `undefined`. Line 203 executed `setPhase(res.data.data.phase)`, overriding the default array with `undefined`. Subsequently, line 790 called `phase.map(...)`, crashing the component.
+2. **"Convert To Invoice" Missing in Project Purchase Tab (`ProjectViewInformation.js`)**:
+   - In the Purchase tab of `ProjectViewInformation.js`, the "Convert To Invoice" action was missing for `P-000179 | TEST` (referencing `PUR-00177`), while appearing on `P-000177 | KALIMA`.
+   - The conditional rendering restricted display strictly to `row.status === 'Draft' || row.status === 'Estimated'` or `row.status === 'Invoiced' || row.status === 'Make'`. Purchases created under projects typically start with status `Pending` or `On-Going`, causing the action to be completely hidden.
+3. **`MORE...` Menu Dropdown Far-Left Positioning Glitch (`ProjectViewInformation.js`)**:
+   - In `ProjectViewInformation.js`, clicking `MORE...` in the Purchase tab caused the popup menu to render on the far-left edge of the screen over the sidebar rather than directly below the button.
+   - Root causes:
+     - Duplicate DOM ID `id="demo-customized-menu"` colliding between the top project Options menu and the purchase item menu.
+     - Missing explicit `anchorOrigin` and `transformOrigin` positioning properties on the MUI `Menu` component.
+     - Rendering `<Menu>` inside `.map()` with a shared single `open1` Boolean without tying each menu to the specific purchase row ID.
+4. **Payroll Creation Error (`PayRollFormView.js:750`)**:
+   - Submitting a new payroll record failed with `Unhandled Promise Rejection: cleanPaidUSD is not defined at PayRollFormView.js:750:35`.
+   - The payload object referenced `cleanPaidUSD`, `cleanPaidFC`, `cleanCreditFC`, and `cleanCreditUSD` without them being declared in `PayRollFormView.js`.
+
+### 2. Implementation Changes
+1. **`ProjectUpdateView.js` Nullish Coalescing & Phase Safety**:
+   - Added array verification: `setPhase(Array.isArray(res.data?.data?.phase) ? res.data.data.phase : [])`.
+   - Guarded line 790 with `(phase || []).map(...)`.
+   - Guarded `handleAdd`, `handleChange`, and `handleDelete` with fallback `[...(phase || [])]`.
+   - Added null guards for `customerName`, `projectName`, `status`, `description`, `startDate`, `projectNumber`, and `visitDate`.
+2. **`ProjectViewInformation.js` Purchase Menu & Conversion Availability**:
+   - Updated condition so "Convert To Invoice" is always accessible: shows `Convert To Invoice (Again)` if already `Invoiced` or `Make`, and `Convert To Invoice` for all other statuses (`Pending`, `On-Going`, `Draft`, `Estimated`, etc.).
+   - Assigned unique DOM IDs: `id="project-purchase-menu-${row._id}"` and button `id="project-purchase-button-${row._id}"`.
+   - Added `activePurchaseId` state tracking so only the menu for the clicked purchase row is opened.
+   - Added explicit anchor and transform origins:
+     ```jsx
+     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+     transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+     ```
+3. **`PayRollFormView.js` Variable Definition**:
+   - Added definitions for `cleanPaidUSD`, `cleanPaidFC`, `cleanCreditUSD`, and `cleanCreditFC` matching `PayRollUpdateFormView.js`.
+   - Updated status calculation to evaluate cleaned numeric values against paid and credit thresholds.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Quality Gate**: Verified 0 syntax errors across 239 source files via `node scripts/pre-build-check.js`.
+- **Version Bump**: Bumped to `v3.6.31` across `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop Electron and Web Portal bundles (`npm run build`).
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.31.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.31.exe`, `GlobalGate-v3.6.31.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle (`scripts/build-apk.ps1`) to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.31.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Cloud Synchronization**: Committed and pushed to GitHub `origin main`.

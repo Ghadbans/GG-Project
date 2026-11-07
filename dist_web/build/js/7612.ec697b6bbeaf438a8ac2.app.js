@@ -2709,12 +2709,18 @@ function ProjectViewInformation() {
     _React$useState4 = _slicedToArray(_React$useState3, 2),
     anchorEl1 = _React$useState4[0],
     setAnchorEl1 = _React$useState4[1];
+  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState(null),
+    _React$useState6 = _slicedToArray(_React$useState5, 2),
+    activePurchaseId = _React$useState6[0],
+    setActivePurchaseId = _React$useState6[1];
   var open1 = Boolean(anchorEl1);
-  var handleClick2 = event => {
+  var handleClick2 = (event, purchaseId) => {
     setAnchorEl1(event.currentTarget);
+    setActivePurchaseId(purchaseId);
   };
   var handleCloseMenu2 = () => {
     setAnchorEl1(null);
+    setActivePurchaseId(null);
   };
   var _useState61 = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(1),
     _useState62 = _slicedToArray(_useState61, 2),
@@ -2878,10 +2884,10 @@ function ProjectViewInformation() {
     setPrintData(data);
     setAnchorEl1(null);
   };
-  var _React$useState5 = react__WEBPACK_IMPORTED_MODULE_2__.useState('1'),
-    _React$useState6 = _slicedToArray(_React$useState5, 2),
-    value3 = _React$useState6[0],
-    setValue3 = _React$useState6[1];
+  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_2__.useState('1'),
+    _React$useState8 = _slicedToArray(_React$useState7, 2),
+    value3 = _React$useState8[0],
+    setValue3 = _React$useState8[1];
   (0,react__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
     var result = localStorage.getItem('TabProjectView');
     if (result) {
@@ -2893,10 +2899,10 @@ function ProjectViewInformation() {
     setValue3(changeValue);
     localStorage.setItem('TabProjectView', changeValue);
   };
-  var _React$useState7 = react__WEBPACK_IMPORTED_MODULE_2__.useState(true),
-    _React$useState8 = _slicedToArray(_React$useState7, 2),
-    sideBar = _React$useState8[0],
-    setSideBar = _React$useState8[1];
+  var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_2__.useState(true),
+    _React$useState0 = _slicedToArray(_React$useState9, 2),
+    sideBar = _React$useState0[0],
+    setSideBar = _React$useState0[1];
   var toggleDrawer = () => {
     setSideBar(!sideBar);
   };
@@ -3216,10 +3222,10 @@ function ProjectViewInformation() {
     var row = props.row;
     var index = props.index;
     var relatedUnit = props.relatedUnit;
-    var _React$useState9 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
-      _React$useState0 = _slicedToArray(_React$useState9, 2),
-      open = _React$useState0[0],
-      setOpen = _React$useState0[1];
+    var _React$useState1 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
+      _React$useState10 = _slicedToArray(_React$useState1, 2),
+      open = _React$useState10[0],
+      setOpen = _React$useState10[1];
     var matchingMovements = (formatDate2 === null || formatDate2 === void 0 ? void 0 : formatDate2.filter(row1 => {
       var _row1$itemsQtyArray;
       return (_row1$itemsQtyArray = row1.itemsQtyArray) === null || _row1$itemsQtyArray === void 0 ? void 0 : _row1$itemsQtyArray.some(Item => isItemMatch(Item, row));
@@ -3415,10 +3421,10 @@ function ProjectViewInformation() {
   function Row(props) {
     var row = props.row;
     var index = props.index;
-    var _React$useState1 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
-      _React$useState10 = _slicedToArray(_React$useState1, 2),
-      open = _React$useState10[0],
-      setOpen = _React$useState10[1];
+    var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
+      _React$useState12 = _slicedToArray(_React$useState11, 2),
+      open = _React$useState12[0],
+      setOpen = _React$useState12[1];
     var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
     var handlePrintLocal = (0,react_to_print__WEBPACK_IMPORTED_MODULE_52__.useReactToPrint)({
       content: () => componentRef.current
@@ -3568,10 +3574,10 @@ function ProjectViewInformation() {
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "$"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, expenses[row].toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')))))))))));
   }
   function Row2(props) {
-    var _React$useState11 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
-      _React$useState12 = _slicedToArray(_React$useState11, 2),
-      open = _React$useState12[0],
-      setOpen = _React$useState12[1];
+    var _React$useState13 = react__WEBPACK_IMPORTED_MODULE_2__.useState(false),
+      _React$useState14 = _slicedToArray(_React$useState13, 2),
+      open = _React$useState14[0],
+      setOpen = _React$useState14[1];
     var componentRef = (0,react__WEBPACK_IMPORTED_MODULE_2__.useRef)();
     var handlePrintLocal = (0,react_to_print__WEBPACK_IMPORTED_MODULE_52__.useReactToPrint)({
       content: () => componentRef.current
@@ -4557,12 +4563,13 @@ function ProjectViewInformation() {
           fontWeight: 'bold'
         }
       }, "REFERENCE: "), "PUR-", String(row.purchaseNumber).padStart(6, '0'))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .A, {
-        "aria-controls": open1 ? 'demo-customized-menu' : undefined,
+        id: "project-purchase-button-".concat(row._id),
+        "aria-controls": open1 && activePurchaseId === row._id ? "project-purchase-menu-".concat(row._id) : undefined,
         "aria-haspopup": "true",
-        "aria-expanded": open1 ? 'true' : undefined,
+        "aria-expanded": open1 && activePurchaseId === row._id ? 'true' : undefined,
         variant: "contained",
         disableElevation: true,
-        onClick: handleClick2,
+        onClick: e => handleClick2(e, row._id),
         endIcon: /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material_KeyboardArrowDown__WEBPACK_IMPORTED_MODULE_50__/* ["default"] */ .A, null),
         sx: {
           bgcolor: 'gray',
@@ -4573,14 +4580,22 @@ function ProjectViewInformation() {
           }
         }
       }, "More..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .A, {
-        id: "demo-customized-menu",
+        id: "project-purchase-menu-".concat(row._id),
         MenuListProps: {
-          'aria-labelledby': 'demo-customized-button'
+          'aria-labelledby': "project-purchase-button-".concat(row._id)
         },
         anchorEl: anchorEl1,
-        open: open1,
+        open: open1 && activePurchaseId === row._id,
         onClose: handleCloseMenu2,
-        TransitionComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A
+        TransitionComponent: _mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .A,
+        anchorOrigin: {
+          vertical: 'bottom',
+          horizontal: 'right'
+        },
+        transformOrigin: {
+          vertical: 'top',
+          horizontal: 'right'
+        }
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, {
         onClick: handleCloseMenu2
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", {
@@ -4619,19 +4634,19 @@ function ProjectViewInformation() {
           gap: '20px',
           color: 'gray'
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_69__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null, (row.status === 'Draft' || row.status === 'Estimated') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_34__/* .NavLink */ .k2, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_icons_material__WEBPACK_IMPORTED_MODULE_69__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Export to Excel")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .A, null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .A, null, row.status === 'Invoiced' || row.status === 'Make' ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_34__/* .NavLink */ .k2, {
         to: "/ConvertToInvoice/".concat(row._id),
         className: "LinkName",
         style: {
           color: 'gray'
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Convert To Invoice")), (row.status === 'Invoiced' || row.status === 'Make') && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_34__/* .NavLink */ .k2, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Convert To Invoice (Again)")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_34__/* .NavLink */ .k2, {
         to: "/ConvertToInvoice/".concat(row._id),
         className: "LinkName",
         style: {
           color: 'gray'
         }
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Convert To Invoice (Again)")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("span", null, "Convert To Invoice")))))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("hr", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .A, {
         sx: {
           padding: '20px'
         }

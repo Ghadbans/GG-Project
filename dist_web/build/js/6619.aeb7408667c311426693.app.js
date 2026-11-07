@@ -4297,10 +4297,14 @@ function PayRollFormView() {
           react_toastify__WEBPACK_IMPORTED_MODULE_29__/* .toast */ .oR.error('Error checking for overlapping payroll periods.');
         }
       }
+      var cleanPaidUSD = amountPayUSD !== null && amountPayUSD !== undefined && amountPayUSD !== '' ? parseFloat(amountPayUSD) || 0 : 0;
+      var cleanPaidFC = amountPayFC !== null && amountPayFC !== undefined && amountPayFC !== '' ? parseFloat(amountPayFC) || 0 : 0;
+      var cleanCreditUSD = CreditUSD !== null && CreditUSD !== undefined ? parseFloat(CreditUSD) || 0 : 0;
+      var cleanCreditFC = CreditFC !== null && CreditFC !== undefined ? parseFloat(CreditFC) || 0 : 0;
       var status = '';
-      if (parseInt(amountPayUSD) === 0 && parseInt(amountPayFC) === 0) {
+      if (cleanPaidUSD <= 0 && cleanPaidFC <= 0) {
         status = 'UnPaid';
-      } else if (parseInt(CreditFC) === 0 && parseInt(CreditUSD) === 0) {
+      } else if (cleanCreditUSD <= 0.05 && cleanCreditFC <= 10) {
         status = 'Paid';
       } else {
         status = 'Partially-Paid';

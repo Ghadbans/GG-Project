@@ -1672,16 +1672,19 @@ function ProjectUpdateView() {
     var fetchData = /*#__PURE__*/function () {
       var _ref0 = _asyncToGenerator(function* () {
         try {
-          var _res$data, _res$data2;
+          var _res$data, _res$data2, _res$data3, _res$data4, _res$data5, _res$data6, _res$data7, _res$data8, _res$data9;
           var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/get-projects/").concat(id));
-          setCustomerName(res.data.data.customerName);
-          setProjectName(res.data.data.projectName);
-          setStatus(res.data.data.status);
-          setPhase(res.data.data.phase);
-          setDescription(res.data.data.description);
-          setStartDate(res.data.data.startDate);
-          setProjectNumber(Number(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.projectNumber) || ((_res$data2 = res.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.projectNumber) || 0));
-          setVisitDate(res.data.data.visitDate);
+          setCustomerName(((_res$data = res.data) === null || _res$data === void 0 || (_res$data = _res$data.data) === null || _res$data === void 0 ? void 0 : _res$data.customerName) || {
+            _id: "",
+            customerName: ""
+          });
+          setProjectName(((_res$data2 = res.data) === null || _res$data2 === void 0 || (_res$data2 = _res$data2.data) === null || _res$data2 === void 0 ? void 0 : _res$data2.projectName) || "");
+          setStatus(((_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 ? void 0 : _res$data3.status) || "Pending");
+          setPhase(Array.isArray((_res$data4 = res.data) === null || _res$data4 === void 0 || (_res$data4 = _res$data4.data) === null || _res$data4 === void 0 ? void 0 : _res$data4.phase) ? res.data.data.phase : []);
+          setDescription(((_res$data5 = res.data) === null || _res$data5 === void 0 || (_res$data5 = _res$data5.data) === null || _res$data5 === void 0 ? void 0 : _res$data5.description) || "");
+          setStartDate(((_res$data6 = res.data) === null || _res$data6 === void 0 || (_res$data6 = _res$data6.data) === null || _res$data6 === void 0 ? void 0 : _res$data6.startDate) || null);
+          setProjectNumber(Number(((_res$data7 = res.data) === null || _res$data7 === void 0 || (_res$data7 = _res$data7.data) === null || _res$data7 === void 0 ? void 0 : _res$data7.projectNumber) || ((_res$data8 = res.data) === null || _res$data8 === void 0 ? void 0 : _res$data8.projectNumber) || 0));
+          setVisitDate(((_res$data9 = res.data) === null || _res$data9 === void 0 || (_res$data9 = _res$data9.data) === null || _res$data9 === void 0 ? void 0 : _res$data9.visitDate) || null);
           setIsLoadingData(false);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -1701,11 +1704,11 @@ function ProjectUpdateView() {
     var handleFetch = /*#__PURE__*/function () {
       var _ref1 = _asyncToGenerator(function* () {
         try {
-          var _resCustomer$data, _res$data3;
+          var _resCustomer$data, _res$data0;
           var resCustomer = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/customer?summary=true"));
           setCustomer((((_resCustomer$data = resCustomer.data) === null || _resCustomer$data === void 0 ? void 0 : _resCustomer$data.data) || []).reverse());
           var res = yield axios__WEBPACK_IMPORTED_MODULE_33__/* ["default"] */ .A.get("".concat(_apiConfig__WEBPACK_IMPORTED_MODULE_36__/* .ENDPOINT_URL */ .m, "/purchase?summary=true&projectId=").concat(id));
-          (_res$data3 = res.data) === null || _res$data3 === void 0 || (_res$data3 = _res$data3.data) === null || _res$data3 === void 0 || _res$data3.filter(row => row.projectName !== undefined && row.projectName._id === id).map(row => setPurchase(row._id));
+          (_res$data0 = res.data) === null || _res$data0 === void 0 || (_res$data0 = _res$data0.data) === null || _res$data0 === void 0 || _res$data0.filter(row => row.projectName !== undefined && row.projectName._id === id).map(row => setPurchase(row._id));
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -1746,16 +1749,16 @@ function ProjectUpdateView() {
   };
   {/** Customer End */}
   var handleAdd = () => {
-    var abc = [...phase, []];
+    var abc = [...(phase || []), []];
     setPhase(abc);
   };
   var handleChange = (onChangeValue, i) => {
-    var inputData = [...phase];
+    var inputData = [...(phase || [])];
     inputData[i] = onChangeValue.target.value;
     setPhase(inputData);
   };
   var handleDelete = i => {
-    var deletePhase = [...phase];
+    var deletePhase = [...(phase || [])];
     deletePhase.splice(i, 1);
     setPhase(deletePhase);
   };
@@ -2458,7 +2461,7 @@ function ProjectUpdateView() {
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .Ay, {
     item: true,
     xs: 12
-  }, phase.map((data, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
+  }, (phase || []).map((data, i) => /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_2__.createElement("div", {
     key: i,
     style: {
       display: 'flex',

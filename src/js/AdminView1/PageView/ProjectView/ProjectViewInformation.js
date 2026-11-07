@@ -778,12 +778,15 @@ const isItemMatch = (item1, item2) => {
     setAnchorEl(null);
   };
   const [anchorEl1, setAnchorEl1] = React.useState(null);
+  const [activePurchaseId, setActivePurchaseId] = React.useState(null);
   const open1 = Boolean(anchorEl1);
-  const handleClick2 = (event) => {
+  const handleClick2 = (event, purchaseId) => {
     setAnchorEl1(event.currentTarget);
+    setActivePurchaseId(purchaseId);
   };
   const handleCloseMenu2 = () => {
     setAnchorEl1(null);
+    setActivePurchaseId(null);
   };
 
   const [show1, setShow1] = useState(1);
@@ -1932,12 +1935,13 @@ const isItemMatch = (item1, item2) => {
                                     </div>
                                     <div>
                                       <Button
-                                        aria-controls={open1 ? 'demo-customized-menu' : undefined}
+                                        id={`project-purchase-button-${row._id}`}
+                                        aria-controls={open1 && activePurchaseId === row._id ? `project-purchase-menu-${row._id}` : undefined}
                                         aria-haspopup="true"
-                                        aria-expanded={open1 ? 'true' : undefined}
+                                        aria-expanded={open1 && activePurchaseId === row._id ? 'true' : undefined}
                                         variant="contained"
                                         disableElevation
-                                        onClick={handleClick2}
+                                        onClick={(e) => handleClick2(e, row._id)}
                                         endIcon={<KeyboardArrowDownIcon />}
                                         sx={{
                                           bgcolor: 'gray', '&:hover': {
@@ -1950,14 +1954,22 @@ const isItemMatch = (item1, item2) => {
                                         More...
                                       </Button>
                                       <Menu
-                                        id="demo-customized-menu"
+                                        id={`project-purchase-menu-${row._id}`}
                                         MenuListProps={{
-                                          'aria-labelledby': 'demo-customized-button',
+                                          'aria-labelledby': `project-purchase-button-${row._id}`,
                                         }}
                                         anchorEl={anchorEl1}
-                                        open={open1}
+                                        open={open1 && activePurchaseId === row._id}
                                         onClose={handleCloseMenu2}
                                         TransitionComponent={Fade}
+                                        anchorOrigin={{
+                                          vertical: 'bottom',
+                                          horizontal: 'right',
+                                        }}
+                                        transformOrigin={{
+                                          vertical: 'top',
+                                          horizontal: 'right',
+                                        }}
                                       >
                                         <MenuItem onClick={handleCloseMenu2}>
                                           <span style={{ color: 'gray' }}>Purchase Reference</span>
@@ -1985,20 +1997,15 @@ const isItemMatch = (item1, item2) => {
                                         </MenuItem>
                                         <Divider />
                                         <MenuItem>
-                                          {
-                                            (row.status === 'Draft' || row.status === 'Estimated') && (
-                                              <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
-                                                <span>Convert To Invoice</span>
-                                              </NavLink>
-                                            )
-                                          }
-                                          {
-                                            (row.status === 'Invoiced' || row.status === 'Make') && (
-                                              <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
-                                                <span>Convert To Invoice (Again)</span>
-                                              </NavLink>
-                                            )
-                                          }
+                                          {(row.status === 'Invoiced' || row.status === 'Make') ? (
+                                            <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                              <span>Convert To Invoice (Again)</span>
+                                            </NavLink>
+                                          ) : (
+                                            <NavLink to={`/ConvertToInvoice/${row._id}`} className='LinkName' style={{ color: 'gray' }}>
+                                              <span>Convert To Invoice</span>
+                                            </NavLink>
+                                          )}
                                         </MenuItem>
                                       </Menu>
                                     </div>

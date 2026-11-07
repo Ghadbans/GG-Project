@@ -197,14 +197,14 @@ function ProjectUpdateView() {
     const fetchData = async () => {
       try {
         const res = await axios.get(`${ENDPOINT_URL}/get-projects/${id}`)
-        setCustomerName(res.data.data.customerName);
-        setProjectName(res.data.data.projectName);
-        setStatus(res.data.data.status);
-        setPhase(res.data.data.phase);
-        setDescription(res.data.data.description);
-        setStartDate(res.data.data.startDate);
+        setCustomerName(res.data?.data?.customerName || { _id: "", customerName: "" });
+        setProjectName(res.data?.data?.projectName || "");
+        setStatus(res.data?.data?.status || "Pending");
+        setPhase(Array.isArray(res.data?.data?.phase) ? res.data.data.phase : []);
+        setDescription(res.data?.data?.description || "");
+        setStartDate(res.data?.data?.startDate || null);
         setProjectNumber(Number(res.data?.data?.projectNumber || res.data?.projectNumber || 0));
-        setVisitDate(res.data.data.visitDate);
+        setVisitDate(res.data?.data?.visitDate || null);
         setIsLoadingData(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -255,16 +255,16 @@ function ProjectUpdateView() {
   }
   {/** Customer End */ }
   const handleAdd = () => {
-    const abc = [...phase, []]
+    const abc = [...(phase || []), []]
     setPhase(abc)
   };
   const handleChange = (onChangeValue, i) => {
-    const inputData = [...phase]
+    const inputData = [...(phase || [])]
     inputData[i] = onChangeValue.target.value;
     setPhase(inputData)
   };
   const handleDelete = (i) => {
-    const deletePhase = [...phase]
+    const deletePhase = [...(phase || [])]
     deletePhase.splice(i, 1)
     setPhase(deletePhase)
   };
@@ -787,7 +787,7 @@ function ProjectUpdateView() {
                   </Grid>
                   <Grid item xs={12}>
                     {
-                      phase.map((data, i) =>
+                      (phase || []).map((data, i) =>
                         <div key={i} style={{ display: 'flex', alignItems: 'center', padding: '10px' }}>
                           <Grid container style={{ alignItems: 'center' }} spacing={2}>
                             <Grid item xs={4}>
