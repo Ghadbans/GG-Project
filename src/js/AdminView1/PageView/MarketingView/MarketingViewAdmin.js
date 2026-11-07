@@ -21,6 +21,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
+  Tooltip,
   styled
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
@@ -42,6 +43,7 @@ import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import SendIcon from '@mui/icons-material/Send';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import CloseIcon from '@mui/icons-material/Close';
 import RocketLaunchIcon from '@mui/icons-material/RocketLaunch';
 import axios from 'axios';
 import { toast } from 'react-toastify';
@@ -133,19 +135,39 @@ function MarketingViewAdmin() {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [pickerSelection, setPickerSelection] = useState([]);
   const [pickerSearch, setPickerSearch] = useState('');
+  const [pickerTab, setPickerTab] = useState('withPhone'); // 'withPhone' | 'all' | 'selected'
   const [savingList, setSavingList] = useState(false);
+  const [refreshingCustomers, setRefreshingCustomers] = useState(false);
 
   const getCustomerPhone = (c) => {
-    const candidates = [c?.customerPhone, c?.customerCompanyPhone];
+    if (!c) return '';
+    const candidates = [
+      c?.customerCompanyPhone,
+      c?.customerPhone,
+      c?.phone,
+      c?.telephone,
+      c?.mobile,
+      c?.contactPhone,
+      c?.tel,
+      c?.whatsapp,
+    ];
     for (const p of candidates) {
-      const digits = String(p || '').replace(/[^0-9]/g, '');
-      if (digits.length >= 9 && digits.length <= 15) return String(p).trim();
+      if (!p) continue;
+      const str = String(p).trim();
+      if (!str) continue;
+      const parts = str.split(/[/,;\n]+/);
+      for (const part of parts) {
+        const d = part.replace(/[^0-9]/g, '');
+        if (d.length >= 7 && d.length <= 16) return part.trim();
+      }
+      const digits = str.replace(/[^0-9]/g, '');
+      if (digits.length >= 7 && digits.length <= 16) return str;
     }
     return '';
   };
 
   const customersWithPhone = useMemo(
-    () => (customers || []).filter((c) => getCustomerPhone(c)),
+    () => (customers || []).filter((c) => Boolean(getCustomerPhone(c))),
     [customers]
   );
 
@@ -154,19 +176,54 @@ function MarketingViewAdmin() {
     [customersWithPhone, savedRecipientIds]
   );
 
+  const reloadCustomers = async () => {
+    setRefreshingCustomers(true);
+    try {
+      const res = await axios.get(`${ENDPOINT_URL}/customer?_t=${Date.now()}`);
+      const list = res.data?.data || [];
+      setCustomers(list);
+      toast.success(`Refreshed ${list.length} customers from database.`);
+    } catch (err) {
+      console.error('Refresh customers error:', err);
+      toast.error('Failed to refresh customer list.');
+    } finally {
+      setRefreshingCustomers(false);
+    }
+  };
+
   const pickerFiltered = useMemo(() => {
     const q = pickerSearch.trim().toLowerCase();
-    const list = !q
-      ? customersWithPhone
-      : customersWithPhone.filter((c) =>
-          `${c.Customer || ''} ${c.customerFullName || ''} ${c.companyName || ''} ${getCustomerPhone(c)}`
-            .toLowerCase()
-            .includes(q)
-        );
+
+    let list = customers || [];
+    if (!q) {
+      if (pickerTab === 'withPhone') {
+        list = customersWithPhone;
+      } else if (pickerTab === 'selected') {
+        list = (customers || []).filter((c) => pickerSelection.includes(String(c._id)));
+      }
+    } else {
+      // When searching, search across ALL customers in DB so no customer is ever hidden!
+      list = (customers || []).filter((c) => {
+        const phone = getCustomerPhone(c);
+        const name1 = c.Customer || '';
+        const name2 = c.customerFullName || '';
+        const name3 = `${c.customerFirstName || ''} ${c.customerLastName || ''}`;
+        const comp = c.companyName || '';
+        const raw1 = c.customerPhone || '';
+        const raw2 = c.customerCompanyPhone || '';
+        const allText = `${name1} ${name2} ${name3} ${comp} ${phone} ${raw1} ${raw2}`.toLowerCase();
+        return allText.includes(q);
+      });
+    }
+
     return list
       .slice()
-      .sort((a, b) => String(a.Customer || a.customerFullName || '').localeCompare(String(b.Customer || b.customerFullName || '')));
-  }, [customersWithPhone, pickerSearch]);
+      .sort((a, b) => {
+        const nameA = String(a.Customer || a.customerFullName || a.companyName || '').trim();
+        const nameB = String(b.Customer || b.customerFullName || b.companyName || '').trim();
+        return nameA.localeCompare(nameB);
+      });
+  }, [customers, customersWithPhone, pickerSearch, pickerTab, pickerSelection]);
 
   const marketingHeaders = () => ({
     'x-user-name': user?.data?.userName || '',
@@ -174,8 +231,12 @@ function MarketingViewAdmin() {
   });
 
   const openRecipientPicker = () => {
-    setPickerSelection(savedRecipientIds.filter((id) => customersWithPhone.some((c) => String(c._id) === id)));
+    if (customers.length === 0) {
+      reloadCustomers();
+    }
+    setPickerSelection(savedRecipientIds.filter((id) => (customers || []).some((c) => String(c._id) === id)));
     setPickerSearch('');
+    setPickerTab('withPhone');
     setPickerOpen(true);
   };
 
@@ -298,7 +359,7 @@ function MarketingViewAdmin() {
     let cancelled = false;
     (async () => {
       try {
-        const resCustomers = await cachedGet(`${ENDPOINT_URL}/customer`);
+        const resCustomers = await axios.get(`${ENDPOINT_URL}/customer?_t=${Date.now()}`);
         if (!cancelled) setCustomers(resCustomers?.data?.data || []);
       } catch (err) {
         console.warn('[Marketing] Could not load customers:', err.message);
@@ -748,62 +809,147 @@ function MarketingViewAdmin() {
                     </Box>
 
                     <Dialog open={pickerOpen} onClose={() => setPickerOpen(false)} fullWidth maxWidth="sm">
-                      <DialogTitle sx={{ fontWeight: 700, color: '#202a5a' }}>
-                        Select WhatsApp Recipients
+                      <DialogTitle sx={{ fontWeight: 700, color: '#202a5a', display: 'flex', alignItems: 'center', justifyContent: 'space-between', pb: 1 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                          <span>Select WhatsApp Recipients</span>
+                          <Chip size="small" label={`${customersWithPhone.length} with phone / ${customers.length} total`} sx={{ fontSize: '11px', height: 22 }} />
+                        </Box>
+                        <Tooltip title="Refresh customers list from database">
+                          <span>
+                            <IconButton size="small" onClick={reloadCustomers} disabled={refreshingCustomers} sx={{ color: '#202a5a' }}>
+                              <RefreshIcon sx={{ animation: refreshingCustomers ? 'spin 1s linear infinite' : 'none', '@keyframes spin': { '0%': { transform: 'rotate(0deg)' }, '100%': { transform: 'rotate(360deg)' } } }} />
+                            </IconButton>
+                          </span>
+                        </Tooltip>
                       </DialogTitle>
                       <DialogContent dividers>
+                        <Box sx={{ display: 'flex', gap: 1, mb: 1.5, flexWrap: 'wrap' }}>
+                          <Chip
+                            label={`With Phone (${customersWithPhone.length})`}
+                            size="small"
+                            clickable
+                            color={pickerTab === 'withPhone' && !pickerSearch ? 'primary' : 'default'}
+                            variant={pickerTab === 'withPhone' && !pickerSearch ? 'filled' : 'outlined'}
+                            onClick={() => { setPickerTab('withPhone'); setPickerSearch(''); }}
+                          />
+                          <Chip
+                            label={`All Customers (${customers.length})`}
+                            size="small"
+                            clickable
+                            color={pickerTab === 'all' && !pickerSearch ? 'primary' : 'default'}
+                            variant={pickerTab === 'all' && !pickerSearch ? 'filled' : 'outlined'}
+                            onClick={() => { setPickerTab('all'); setPickerSearch(''); }}
+                          />
+                          <Chip
+                            label={`Selected (${pickerSelection.length})`}
+                            size="small"
+                            clickable
+                            color={pickerTab === 'selected' && !pickerSearch ? 'success' : 'default'}
+                            variant={pickerTab === 'selected' && !pickerSearch ? 'filled' : 'outlined'}
+                            onClick={() => { setPickerTab('selected'); setPickerSearch(''); }}
+                          />
+                        </Box>
                         <TextField
                           fullWidth
                           size="small"
-                          placeholder="Search customer name or phone..."
+                          placeholder="Search customer name, company, or phone number..."
                           value={pickerSearch}
                           onChange={(e) => setPickerSearch(e.target.value)}
                           sx={{ mb: 1.5 }}
+                          InputProps={{
+                            endAdornment: pickerSearch ? (
+                              <IconButton size="small" onClick={() => setPickerSearch('')}>
+                                <CloseIcon fontSize="small" />
+                              </IconButton>
+                            ) : null
+                          }}
                         />
-                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1, flexWrap: 'wrap' }}>
-                          <Chip label={`${pickerSelection.length} selected`} size="small" color="success" />
-                          <Button size="small" onClick={() => setPickerSelection((prev) => Array.from(new Set([...prev, ...pickerFiltered.map((c) => c._id)])))}>
-                            Select all shown
-                          </Button>
-                          <Button size="small" color="inherit" onClick={() => setPickerSelection([])}>
-                            Clear all
-                          </Button>
+                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', mb: 1, flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                          <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+                            <Chip label={`${pickerSelection.length} selected`} size="small" color="success" />
+                            <Button
+                              size="small"
+                              onClick={() => {
+                                const validIds = pickerFiltered.filter((c) => getCustomerPhone(c)).map((c) => String(c._id));
+                                setPickerSelection((prev) => Array.from(new Set([...prev, ...validIds])));
+                              }}
+                            >
+                              Select all valid shown
+                            </Button>
+                            <Button size="small" color="inherit" onClick={() => setPickerSelection([])}>
+                              Clear all
+                            </Button>
+                          </Box>
+                          <Typography variant="caption" sx={{ color: '#64748b', fontWeight: 600 }}>
+                            {pickerFiltered.length} shown
+                          </Typography>
                         </Box>
-                        <Box sx={{ maxHeight: 360, overflowY: 'auto' }}>
+                        <Box sx={{ maxHeight: 380, overflowY: 'auto' }}>
                           {pickerFiltered.length === 0 && (
-                            <Typography variant="body2" sx={{ color: '#64748b', p: 2 }}>
-                              No customers with a valid phone number found.
+                            <Typography variant="body2" sx={{ color: '#64748b', p: 3, textAlign: 'center' }}>
+                              {pickerSearch ? `No customers match "${pickerSearch}". Try clearing search or click "All Customers".` : 'No customers found.'}
                             </Typography>
                           )}
-                          {pickerFiltered.slice(0, 300).map((c) => (
-                            <FormControlLabel
-                              key={c._id}
-                              sx={{ display: 'flex', mr: 0, borderBottom: '1px solid #f1f5f9' }}
-                              control={
-                                <Checkbox
-                                  size="small"
-                                  checked={pickerSelection.includes(c._id)}
-                                  onChange={() => togglePickerCustomer(c._id)}
+                          {pickerFiltered.map((c) => {
+                            const phone = getCustomerPhone(c);
+                            const hasPhone = Boolean(phone);
+                            const isSelected = pickerSelection.includes(String(c._id));
+                            return (
+                              <Box
+                                key={c._id}
+                                sx={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'space-between',
+                                  py: 0.6,
+                                  px: 1,
+                                  borderBottom: '1px solid #f1f5f9',
+                                  backgroundColor: isSelected ? '#f0fdf4' : 'transparent',
+                                  '&:hover': { backgroundColor: isSelected ? '#dcfce7' : '#f8fafc' }
+                                }}
+                              >
+                                <FormControlLabel
+                                  sx={{ flex: 1, mr: 0, m: 0 }}
+                                  control={
+                                    <Checkbox
+                                      size="small"
+                                      checked={isSelected}
+                                      disabled={!hasPhone}
+                                      onChange={() => togglePickerCustomer(c._id)}
+                                    />
+                                  }
+                                  label={
+                                    <Box sx={{ ml: 0.5 }}>
+                                      <Typography variant="body2" sx={{ fontWeight: 600, color: hasPhone ? '#1e293b' : '#64748b' }}>
+                                        {c.Customer || c.customerFullName || c.companyName || 'Unnamed'}
+                                      </Typography>
+                                      {hasPhone ? (
+                                        <Typography variant="caption" sx={{ color: '#128c7e', fontWeight: 600 }}>
+                                          {phone}
+                                        </Typography>
+                                      ) : (
+                                        <Typography variant="caption" sx={{ color: '#d97706', fontStyle: 'italic' }}>
+                                          No phone on file (add in Customer module)
+                                        </Typography>
+                                      )}
+                                    </Box>
+                                  }
                                 />
-                              }
-                              label={
-                                <Box>
-                                  <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                                    {c.Customer || c.customerFullName || c.companyName || 'Unnamed'}
-                                  </Typography>
-                                  <Typography variant="caption" sx={{ color: '#64748b' }}>
-                                    {getCustomerPhone(c)}
-                                  </Typography>
-                                </Box>
-                              }
-                            />
-                          ))}
-                          {pickerFiltered.length > 300 && (
-                            <Typography variant="caption" sx={{ color: '#64748b', display: 'block', p: 1 }}>
-                              Showing first 300 matches - refine the search to see more.
-                            </Typography>
-                          )}
+                                {hasPhone && (
+                                  <Chip
+                                    size="small"
+                                    label="WhatsApp Ready"
+                                    variant="outlined"
+                                    sx={{ fontSize: '10px', height: 20, color: '#128c7e', borderColor: '#86efac' }}
+                                  />
+                                )}
+                              </Box>
+                            );
+                          })}
                         </Box>
+                        <Typography variant="caption" sx={{ color: '#64748b', display: 'block', pt: 1, textAlign: 'center' }}>
+                          Showing all {pickerFiltered.length} customers • {pickerSelection.length} selected for WhatsApp dispatch
+                        </Typography>
                       </DialogContent>
                       <DialogActions>
                         <Button onClick={() => setPickerOpen(false)} color="inherit">Cancel</Button>

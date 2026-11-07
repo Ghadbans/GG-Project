@@ -4383,3 +4383,41 @@ The standardized `renderStatusBadge` helper was seamlessly integrated into all 1
 - **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.33.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.33.exe`, `GlobalGate-v3.6.33.exe`, and `GlobalGateSetup.exe`.
 - **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.33.apk` and `server/public/downloads/GlobalGate.apk`.
 - **Deployment**: Pushed to GitHub `origin main`.
+
+
+---
+
+## [2026-11-07] - Release v3.6.34: Uncapped Full-Database WhatsApp Recipient Search & Live Refresh
+
+### 1. Requirements & Problem Analysis
+1. **Uncapped Recipient List**:
+   - The user reported: *"Select WhatsApp Recipients Showing first 300 matches - refine the search to see more. there is no refresh button and the seach is limited to only what is listed in the page !"*
+   - In `MarketingViewAdmin.js`, the recipient list was capped with `.slice(0, 300)`, hiding 102 customers out of the 402 in the database.
+   - Customers without a phone number matching the strict 9-15 digit regex were omitted before search, making it impossible to find them by name or company and giving the impression that search was limited only to what was visible on the screen.
+2. **Missing Refresh Functionality & Cache Stale Data**:
+   - There was no refresh button in the dialog to reload the latest customers from the database.
+   - Initial loading used `cachedGet`, which could serve stale data after new customers were registered.
+
+### 2. Implementation Changes
+1. **Live Refresh Button ([`MarketingViewAdmin.js`](file:///d:/GG/GG-Managment2026/ancient-kepler%20Pro/src/js/AdminView1/PageView/MarketingView/MarketingViewAdmin.js))**:
+   - Added a spinning live Refresh button (<RefreshIcon />) directly in the `DialogTitle` to re-fetch all customers from the backend database with cache-busting timestamp (`/endpoint/customer?_t=${Date.now()}`).
+   - Added automatic load on modal open if customer array is empty.
+2. **Uncapped List (Removed 300 Cap)**:
+   - Completely removed `.slice(0, 300)`. All matching customers are displayed in a smooth scrollable list with a clear match count.
+3. **Full-Database Search Across All Customers**:
+   - Upgraded search to check all customer fields: `Customer`, `customerFullName`, `customerFirstName`, `customerLastName`, `companyName`, and all phone fields (`customerPhone`, `customerCompanyPhone`, `phone`, `telephone`, `mobile`, `contactPhone`, `tel`, `whatsapp`).
+   - If a customer matching the search term has no phone number on file, they are displayed with an informative amber badge: `⚠️ No phone on file (add in Customer module)` and disabled checkbox.
+4. **Filter Tabs**:
+   - Added interactive filter chips:
+     * `With Phone (${count})` (default view)
+     * `All Customers (${total})`
+     * `Selected (${selectedCount})`
+   - Added a "Select all valid shown" button that safely selects all visible customers who have valid phone numbers.
+
+### 3. Multi-Platform Verification & Packaging
+- **AST Verification**: Verified with `node scripts/pre-build-check.js` (0 errors across 239 files).
+- **Version Bump**: Bumped to `v3.6.34` in `package.json`, `server/package.json`, and `server/routes/downloadRoutes.js`.
+- **Production Bundles**: Compiled desktop and web production bundles via Webpack.
+- **Windows Executable**: Packaged `dist/Global Gate Setup 3.6.34.exe` (95.80 MB) and synchronized to `server/public/downloads/Global Gate Setup 3.6.34.exe`, `GlobalGate-v3.6.34.exe`, and `GlobalGateSetup.exe`.
+- **Android APK**: Compiled via Gradle to `android/app/build/outputs/apk/debug/app-debug.apk` (15.02 MB) and synchronized to `server/public/downloads/GlobalGate-v3.6.34.apk` and `server/public/downloads/GlobalGate.apk`.
+- **Deployment**: Committed and pushed to GitHub `origin main`.
